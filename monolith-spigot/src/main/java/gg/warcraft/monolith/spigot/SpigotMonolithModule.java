@@ -65,6 +65,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         this.theEndName = theEndName;
     }
 
+    @Override
     protected void configure() {
         super.configure();
         configureBukkit();
