@@ -77,6 +77,11 @@ public interface PlayerDecorator extends Player {
     }
 
     @Override
+    default boolean isGrounded() {
+        return getPlayer().isGrounded();
+    }
+
+    @Override
     default boolean hasPermission(String permission) {
         return getPlayer().hasPermission(permission);
     }
