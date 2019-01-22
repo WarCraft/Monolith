@@ -98,6 +98,16 @@ public class SpigotPlayerAdapter implements PlayerServerAdapter {
     }
 
     @Override
+    public void setLevel(UUID playerId, int level) {
+        Player player = server.getPlayer(playerId);
+        if (player == null) {
+            return;
+        }
+
+        player.setLevel(level);
+    }
+
+    @Override
     public boolean giveItem(UUID playerId, Item item, boolean dropOnFullInventory) {
         Player player = server.getPlayer(playerId);
         if (player == null) {

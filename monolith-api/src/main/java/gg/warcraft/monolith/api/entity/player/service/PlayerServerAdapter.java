@@ -41,6 +41,12 @@ public interface PlayerServerAdapter {
     void setExperienceProgress(UUID playerId, float progress);
 
     /**
+     * @param playerId The id of the player. Can not be null.
+     * @param level    The new level of the player. Must be greater than 0.
+     */
+    void setLevel(UUID playerId, int level);
+
+    /**
      * @param playerId            The id of the player. Can not be null.
      * @param item                The item to add to the inventory. Can not be null.
      * @param dropOnFullInventory Whether or not to drop items that could not be added to the inventory.
