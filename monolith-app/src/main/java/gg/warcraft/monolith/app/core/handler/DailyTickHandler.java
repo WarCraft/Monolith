@@ -24,7 +24,7 @@ public class DailyTickHandler implements Runnable {
     @Override
     public void run() {
         String lastDailyTick = persistenceService.get(LAST_DAILY_TICK_KEY);
-        int lastDailyTickDay = Integer.parseInt(lastDailyTick);
+        int lastDailyTickDay = lastDailyTick != null ? Integer.parseInt(lastDailyTick) : -1;
 
         LocalDateTime currentUtcTime = LocalDateTime.now();
         LocalDateTime currentNewYorkTime = currentUtcTime.minusHours(5);

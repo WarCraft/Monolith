@@ -49,6 +49,10 @@ public class DefaultAttributeCommandService implements AttributeCommandService {
     @Override
     public void removeAttributeModifier(UUID entityId, AttributeModifier modifier) {
         Attributes attributes = repository.getAttributes(entityId);
+        if (attributes == null) {
+            return;
+        }
+
         Map<Attribute, Set<AttributeModifier>> newModifiers = attributes.getModifiers();
 
         Attribute attribute = modifier.getAttribute();
