@@ -75,6 +75,11 @@ public class SpigotOfflinePlayerData implements PlayerServerData {
     }
 
     @Override
+    public boolean isGrounded() {
+        return false;
+    }
+
+    @Override
     public boolean isSneaking() {
         throw new IllegalStateException("Failed to get sneaking for offline player with id " + player.getUniqueId());
     }

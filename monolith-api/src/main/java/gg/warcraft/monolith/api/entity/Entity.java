@@ -81,6 +81,11 @@ public interface Entity {
     AABBf getBoundingBox();
 
     /**
+     * @return True if this entity is standing on the ground, false otherwise.
+     */
+    boolean isGrounded();
+
+    /**
      * @param permission The permission. Can not be null or empty.
      * @return True if the entity has the permission favorably set, false otherwise.
      */

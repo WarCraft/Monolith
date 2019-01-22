@@ -105,6 +105,11 @@ public class LazyEntity implements Entity {
     }
 
     @Override
+    public boolean isGrounded() {
+        return serverData.get().isGrounded();
+    }
+
+    @Override
     public boolean hasPermission(String permission) {
         return serverData.get().hasPermission(permission);
     }

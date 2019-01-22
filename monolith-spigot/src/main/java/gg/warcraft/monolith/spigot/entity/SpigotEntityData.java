@@ -105,6 +105,11 @@ public class SpigotEntityData implements EntityServerData {
     }
 
     @Override
+    public boolean isGrounded() {
+        return entity.isOnGround();
+    }
+
+    @Override
     public boolean hasPermission(String permission) {
         return entity.hasPermission(permission);
     }
