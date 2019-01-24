@@ -151,12 +151,27 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
                 ladder.setFacingDirection(spigotFacingDirection);
                 spigotMaterialData = ladder;
                 break;
-            case LEVER:
+            case LEVER_BOTTOM_OFF_EAST:
+            case LEVER_EAST_OFF:
+            case LEVER_WEST_OFF:
+            case LEVER_SOUTH_OFF:
+            case LEVER_NORTH_OFF:
+            case LEVER_TOP_OFF_SOUTH:
+            case LEVER_TOP_OFF_EAST:
+            case LEVER_BOTTOM_OFF_SOUTH:
+            case LEVER_BOTTOM_ON_WEST:
+            case LEVER_EAST_ON:
+            case LEVER_WEST_ON:
+            case LEVER_SOUTH_ON:
+            case LEVER_NORTH_ON:
+            case LEVER_TOP_ON_NORTH:
+            case LEVER_TOP_ON_WEST:
+            case LEVER_BOTTOM_ON_NORTH:
                 LeverBlock leverBlock = (LeverBlock) block;
                 byte leverAdjustedTypeData;
                 switch (spigotFacingDirection) {
                     case NORTH:
-                        leverAdjustedTypeData = (byte) 5;
+                        leverAdjustedTypeData = (byte) 4;
                         break;
                     case EAST:
                         leverAdjustedTypeData = (byte) 1;
@@ -168,7 +183,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
                         leverAdjustedTypeData = (byte) 2;
                         break;
                     case UP:
-                        leverAdjustedTypeData = (byte) 4;
+                        leverAdjustedTypeData = (byte) 5;
                         break;
                     case DOWN:
                         leverAdjustedTypeData = (byte) 0;
