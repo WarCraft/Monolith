@@ -6,9 +6,14 @@ import gg.warcraft.monolith.api.item.ItemType;
 import gg.warcraft.monolith.api.item.Skull;
 import gg.warcraft.monolith.app.item.SimpleItem;
 import gg.warcraft.monolith.spigot.world.MaterialData;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagInt;
+import net.minecraft.server.v1_12_R1.NBTTagList;
+import net.minecraft.server.v1_12_R1.NBTTagString;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -55,6 +60,10 @@ public class SpigotItemMapper {
         MaterialData materialData = itemTypeMapper.map(item.getType());
         ItemStack itemStack = new ItemStack(materialData.getMaterial(), item.getStackSize(), (short) item.getDamage(),
                 materialData.getData());
+
+        // NOTE this is kinda hacky and means no one ever can have armor values on their items, we need to find an alternative for this
+        itemStack = removeArmorValues(itemStack);
+
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (item.getName() != null) {
             itemMeta.setDisplayName(item.getName());
@@ -82,5 +91,33 @@ public class SpigotItemMapper {
             return new SimpleItem(type, meta.getDisplayName(), item.getAmount(), item.getDurability(), lore);
         }
         return new SimpleItem(type, null, item.getAmount(), item.getDurability(), new ArrayList<>());
+    }
+
+    private ItemStack removeArmorValues(ItemStack item) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        NBTTagList modifiers = new NBTTagList();
+
+        NBTTagCompound toughness = new NBTTagCompound();
+        toughness.set("AttributeName", new NBTTagString("armorToughness"));
+        toughness.set("Name", new NBTTagString("armorToughness"));
+        toughness.set("Amount", new NBTTagInt(0));
+        toughness.set("Operation", new NBTTagInt(0));
+        toughness.set("UUIDLeast", new NBTTagInt(894654));
+        toughness.set("UUIDMost", new NBTTagInt(2872));
+        modifiers.add(toughness);
+
+        NBTTagCompound armor = new NBTTagCompound();
+        armor.set("AttributeName", new NBTTagString("generic.armor"));
+        armor.set("Name", new NBTTagString("generic.armor"));
+        armor.set("Amount", new NBTTagInt(0));
+        armor.set("Operation", new NBTTagInt(0));
+        armor.set("UUIDLeast", new NBTTagInt(894654));
+        armor.set("UUIDMost", new NBTTagInt(2872));
+        modifiers.add(armor);
+
+        compound.set("AttributeModifiers", modifiers);
+        nmsStack.setTag(compound);
+        return CraftItemStack.asBukkitCopy(nmsStack);
     }
 }
