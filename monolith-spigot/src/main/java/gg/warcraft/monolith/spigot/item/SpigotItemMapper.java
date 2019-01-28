@@ -65,6 +65,9 @@ public class SpigotItemMapper {
         itemStack = removeArmorValues(itemStack);
 
         ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) {
+            itemMeta = Bukkit.getItemFactory().getItemMeta(itemStack.getType());
+        }
         if (item.getName() != null) {
             itemMeta.setDisplayName(item.getName());
         }
