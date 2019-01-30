@@ -64,7 +64,7 @@ public enum ItemType {
     DETECTOR_RAIL("minecraft:detector_rail", 28),
     STICKY_PISTON("minecraft:sticky_piston", 29),
     COBWEB("minecraft:web", 30),
-    DEAD_SHRUB("minecraft:tallgrass", 31),
+    SHRUB("minecraft:tallgrass", 31),
     TALL_GRASS("minecraft:tallgrass", 31, 1),
     FERN("minecraft:tallgrass", 31, 2),
     DEAD_BUSH("minecraft:deadbush", 32),
