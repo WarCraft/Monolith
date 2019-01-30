@@ -42,7 +42,7 @@ public class SpigotInventoryEventMapper implements Listener {
             Menu menu = menuQueryService.getMenu(clickerId);
             if (menu != null) {
                 if (event.isLeftClick() || event.isRightClick()) {
-                    Button button = menu.getButtons().get(event.getSlot());
+                    Button button = menu.getButtons().get(event.getRawSlot());
                     if (button != null) {
                         Click click = new SimpleClick(clickerId, event.isLeftClick(), event.isShiftClick());
                         button.getAction().accept(click);
