@@ -19,6 +19,13 @@ public interface PreEvent extends Event {
     boolean isExplicitlyAllowed();
 
     /**
+     * @return True if this pre-event has been explicitly allowed or not been cancelled, false otherwise.
+     */
+    default boolean isAllowed() {
+        return isExplicitlyAllowed() || !isCancelled();
+    }
+
+    /**
      * Cancel this pre-event. If this pre-event is not explicitly allowed the native Minecraft event will be cancelled.
      */
     void cancel();

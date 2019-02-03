@@ -94,6 +94,12 @@ public interface EntityServerAdapter {
     void kill(UUID entityId);
 
     /**
+     * @param entityId The id of the entity to heal. Can not be null.
+     * @param amount   The heal amount.
+     */
+    void heal(UUID entityId, float amount);
+
+    /**
      * Sets an entity on fire for a duration.
      *
      * @param entityId The id of the entity.

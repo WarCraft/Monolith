@@ -8,8 +8,10 @@ import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
 import gg.warcraft.monolith.api.entity.event.EntityDamageEvent;
+import gg.warcraft.monolith.api.entity.event.EntityHealEvent;
 import gg.warcraft.monolith.api.entity.event.EntityHealthChangedEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreDamageEvent;
+import gg.warcraft.monolith.api.entity.event.EntityPreHealEvent;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
@@ -26,8 +28,10 @@ import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDamageEvent;
+import gg.warcraft.monolith.app.entity.event.SimpleEntityHealEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealthChangedEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDamageEvent;
+import gg.warcraft.monolith.app.entity.event.SimpleEntityPreHealEvent;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
@@ -110,31 +114,13 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
         entityServerAdapter.teleport(entityId, location, orientation);
     }
 
-    @Override
-    public void damage(UUID entityId, CombatValue amount) {
-        CombatValue damage = amount;
-        Entity entity = entityQueryService.getEntity(entityId);
-        EntityType entityType = entity.getType();
-        EntityPreDamageEvent entityPreDamageEvent = new SimpleEntityPreDamageEvent(entityId, entityType, damage, false);
-        eventService.publish(entityPreDamageEvent);
-        if (entityPreDamageEvent.isCancelled() && !entityPreDamageEvent.isExplicitlyAllowed()) {
-            return;
-        }
-
-        float previousHealth = entity.getHealth();
-
-        damage = entityPreDamageEvent.getDamage();
-        entityServerAdapter.damage(entityId, damage.getModifiedValue());
-
-        EntityDamageEvent entityDamageEvent = new SimpleEntityDamageEvent(entityId, entityType, damage);
-        eventService.publish(entityDamageEvent);
-
+    private void publishHealthChangedEvent(UUID entityId, EntityType entityType, float previousHealth) {
         Entity newEntity = entityQueryService.getEntity(entityId);
         if (newEntity.getAttributes() == null) {
             return; // FIXME not all entities on server have attributes, could this be due to migration?
         }
         float newHealth = newEntity.getHealth();
-        if (newHealth != previousHealth) { // FIXME should this in the event mappers instead? atm it will only trigger of Monolith health changes
+        if (newHealth != previousHealth) { // FIXME should this be in the server event mappers instead? atm it will only trigger of Monolith health changes
             float maxHealth = newEntity.getAttributes().getValue(GenericAttribute.MAX_HEALTH);
             float previousPercentHealth = previousHealth / maxHealth;
             float newPercentHealth = newHealth / maxHealth;
@@ -145,13 +131,50 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     }
 
     @Override
+    public void damage(UUID entityId, CombatValue amount) {
+        Entity entity = entityQueryService.getEntity(entityId);
+        EntityType entityType = entity.getType();
+        EntityPreDamageEvent entityPreDamageEvent = new SimpleEntityPreDamageEvent(entityId, entityType, amount, false);
+        eventService.publish(entityPreDamageEvent);
+        if (!entityPreDamageEvent.isAllowed()) {
+            return;
+        }
+
+        float previousHealth = entity.getHealth();
+
+        CombatValue damage = entityPreDamageEvent.getDamage();
+        entityServerAdapter.damage(entityId, damage.getModifiedValue());
+
+        EntityDamageEvent entityDamageEvent = new SimpleEntityDamageEvent(entityId, entityType, damage);
+        eventService.publish(entityDamageEvent);
+
+        publishHealthChangedEvent(entityId, entityType, previousHealth);
+    }
+
+    @Override
     public void kill(UUID entityId) {
         entityServerAdapter.kill(entityId);
     }
 
     @Override
     public void heal(UUID entityId, CombatValue amount) {
-        throw new IllegalStateException("Method not implemented");
+        Entity entity = entityQueryService.getEntity(entityId);
+        EntityType entityType = entity.getType();
+        EntityPreHealEvent entityPreHealEvent = new SimpleEntityPreHealEvent(entityId, entityType, amount, false);
+        eventService.publish(entityPreHealEvent);
+        if (!entityPreHealEvent.isAllowed()) {
+            return;
+        }
+
+        float previousHealth = entity.getHealth();
+
+        CombatValue heal = entityPreHealEvent.getHeal();
+        entityServerAdapter.heal(entityId, heal.getModifiedValue());
+
+        EntityHealEvent entityHealEvent = new SimpleEntityHealEvent(entityId, entityType, heal);
+        eventService.publish(entityHealEvent);
+
+        publishHealthChangedEvent(entityId, entityType, previousHealth);
     }
 
     @Override
