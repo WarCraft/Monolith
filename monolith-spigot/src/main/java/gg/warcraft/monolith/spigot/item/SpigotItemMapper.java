@@ -64,16 +64,18 @@ public class SpigotItemMapper {
         // NOTE this is kinda hacky and means no one ever can have armor values on their items, we need to find an alternative for this
         itemStack = removeArmorValues(itemStack);
 
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        if (itemMeta == null) {
-            itemMeta = Bukkit.getItemFactory().getItemMeta(itemStack.getType());
+        if (itemStack.getType() != Material.AIR) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            if (itemMeta == null) {
+                itemMeta = Bukkit.getItemFactory().getItemMeta(itemStack.getType());
+            }
+            if (item.getName() != null) {
+                itemMeta.setDisplayName(item.getName());
+            }
+            itemMeta.setLore(item.getLore());
+            itemMeta.addItemFlags(ItemFlag.values());
+            itemStack.setItemMeta(itemMeta);
         }
-        if (item.getName() != null) {
-            itemMeta.setDisplayName(item.getName());
-        }
-        itemMeta.setLore(item.getLore());
-        itemMeta.addItemFlags(ItemFlag.values());
-        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 

@@ -174,9 +174,8 @@ public class SpigotWorldEventMapper implements Listener {
                 itemInClickHand, playerId, wasCancelled);
         eventService.publish(blockPreInteractEvent);
 
-        boolean isCancelled = blockPreInteractEvent.isCancelled() && !blockPreInteractEvent.isExplicitlyAllowed();
-        if (isCancelled != event.isCancelled()) {
-            event.setCancelled(isCancelled);
+        if (!blockPreInteractEvent.isAllowed()) {
+            event.setCancelled(true);
         }
     }
 
@@ -187,9 +186,8 @@ public class SpigotWorldEventMapper implements Listener {
         BlockPreTriggerEvent blockPreTriggerEvent = new SimpleBlockPreTriggerEvent(block, playerId, wasCancelled);
         eventService.publish(blockPreTriggerEvent);
 
-        boolean isCancelled = blockPreTriggerEvent.isCancelled() && !blockPreTriggerEvent.isExplicitlyAllowed();
-        if (isCancelled != event.isCancelled()) {
-            event.setCancelled(isCancelled);
+        if (!blockPreTriggerEvent.isAllowed()) {
+            event.setCancelled(true);
         }
     }
 
