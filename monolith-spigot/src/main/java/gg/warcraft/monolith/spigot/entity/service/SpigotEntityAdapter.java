@@ -188,7 +188,9 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
         Entity entity = server.getEntity(entityId);
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
-            livingEntity.damage(-amount);
+            double maxHealth = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double newHealth = Math.min(livingEntity.getHealth() + amount, maxHealth);
+            livingEntity.setHealth(newHealth);
         }
     }
 
