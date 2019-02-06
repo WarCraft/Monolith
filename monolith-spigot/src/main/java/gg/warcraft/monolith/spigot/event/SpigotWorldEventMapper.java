@@ -174,8 +174,8 @@ public class SpigotWorldEventMapper implements Listener {
                 itemInClickHand, playerId, wasCancelled);
         eventService.publish(blockPreInteractEvent);
 
-        if (!blockPreInteractEvent.isAllowed()) {
-            event.setCancelled(true);
+        if (event.isCancelled() && blockPreInteractEvent.isAllowed()) {
+            event.setCancelled(false);
         }
     }
 

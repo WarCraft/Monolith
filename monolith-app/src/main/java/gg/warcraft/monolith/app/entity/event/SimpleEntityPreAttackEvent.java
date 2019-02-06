@@ -14,19 +14,26 @@ import java.util.UUID;
 
 public class SimpleEntityPreAttackEvent extends AbstractEntityPreEvent implements EntityPreAttackEvent {
     private final UUID attackerId;
+    private final UUID projectileId;
 
     private CombatValue damage;
 
-    public SimpleEntityPreAttackEvent(UUID entityId, EntityType entityType, UUID attackerId, CombatValue damage,
-                                      boolean cancelled) {
+    public SimpleEntityPreAttackEvent(UUID entityId, EntityType entityType, UUID attackerId, UUID projectileId,
+                                      CombatValue damage, boolean cancelled) {
         super(entityId, entityType, cancelled);
         this.attackerId = attackerId;
+        this.projectileId = projectileId;
         this.damage = damage;
     }
 
     @Override
     public UUID getAttackerId() {
         return attackerId;
+    }
+
+    @Override
+    public UUID getProjectileId() {
+        return projectileId;
     }
 
     @Override

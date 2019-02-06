@@ -36,6 +36,7 @@ import gg.warcraft.monolith.app.entity.event.SimpleEntitySpawnEvent;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
+import org.bukkit.Server;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -63,18 +64,20 @@ public class SpigotEntityEventMapper implements Listener {
     private final SpigotEntityTypeMapper entityTypeMapper;
     private final SpigotItemMapper itemMapper;
     private final SpigotLocationMapper locationMapper;
+    private final Server server;
 
     private final Map<Event, CombatValue> combatValues;
 
     @Inject
     public SpigotEntityEventMapper(EventService eventService, CombatFactory combatFactory,
                                    SpigotEntityTypeMapper entityTypeMapper, SpigotItemMapper itemMapper,
-                                   SpigotLocationMapper locationMapper) {
+                                   SpigotLocationMapper locationMapper, Server server) {
         this.eventService = eventService;
         this.combatFactory = combatFactory;
         this.entityTypeMapper = entityTypeMapper;
         this.itemMapper = itemMapper;
         this.locationMapper = locationMapper;
+        this.server = server;
 
         this.combatValues = new HashMap<>();
     }
@@ -152,7 +155,8 @@ public class SpigotEntityEventMapper implements Listener {
         LivingEntity entity = (LivingEntity) event.getEntity();
 
         org.bukkit.event.entity.EntityDamageEvent.DamageCause cause = event.getCause();
-        if (cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+        if (cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
+                cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.PROJECTILE) {
             onEntityPreAttackEvent((EntityDamageByEntityEvent) event);
             if (event.isCancelled()) {
                 return;
@@ -199,7 +203,8 @@ public class SpigotEntityEventMapper implements Listener {
         LivingEntity entity = (LivingEntity) event.getEntity();
 
         org.bukkit.event.entity.EntityDamageEvent.DamageCause cause = event.getCause();
-        if (cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+        if (cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
+                cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.PROJECTILE) {
             onEntityAttackEvent((EntityDamageByEntityEvent) event);
         }
 
@@ -236,13 +241,24 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = entityTypeMapper.map(entity.getType());
 
         Entity damager = event.getDamager();
-        UUID attackerId = getAttackerId(damager);
+        UUID attackerId = damager.getUniqueId();
+        UUID projectileId = null;
+        if (damager.getType() == org.bukkit.entity.EntityType.ARROW) {
+            ProjectileSource arrowSource = ((Arrow) damager).getShooter();
+            if (arrowSource instanceof LivingEntity) {
+                attackerId = ((LivingEntity) arrowSource).getUniqueId();
+                projectileId = damager.getUniqueId();
+            }
+        }
+        if (server.getPlayer(attackerId) == null && server.getEntity(attackerId) == null) {
+            return;
+        }
 
         CombatSource combatSource = combatFactory.createCombatSource(damager.getName(), attackerId);
         CombatValue damage = combatFactory.createCombatValue((float) event.getDamage(), new ArrayList<>(), combatSource);
 
         EntityPreAttackEvent entityPreAttackEvent = new SimpleEntityPreAttackEvent(entityId, entityType, attackerId,
-                damage, event.isCancelled());
+                projectileId, damage, event.isCancelled());
         eventService.publish(entityPreAttackEvent);
 
         combatValues.put(event, entityPreAttackEvent.getDamage());
@@ -258,10 +274,22 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = entityTypeMapper.map(entity.getType());
 
         Entity damager = event.getDamager();
-        UUID attackerId = getAttackerId(damager);
+        UUID attackerId = damager.getUniqueId();
+        UUID projectileId = null;
+        if (damager.getType() == org.bukkit.entity.EntityType.ARROW) {
+            ProjectileSource arrowSource = ((Arrow) damager).getShooter();
+            if (arrowSource instanceof LivingEntity) {
+                attackerId = ((LivingEntity) arrowSource).getUniqueId();
+                projectileId = damager.getUniqueId();
+            }
+        }
+        if (server.getPlayer(attackerId) == null && server.getEntity(attackerId) == null) {
+            return;
+        }
 
         CombatValue damage = combatValues.get(event);
-        EntityAttackEvent entityAttackEvent = new SimpleEntityAttackEvent(entityId, entityType, attackerId, damage);
+        EntityAttackEvent entityAttackEvent = new SimpleEntityAttackEvent(entityId, entityType, attackerId,
+                projectileId, damage);
         eventService.publish(entityAttackEvent);
     }
 

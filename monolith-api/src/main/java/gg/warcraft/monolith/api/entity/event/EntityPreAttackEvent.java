@@ -9,6 +9,8 @@ public interface EntityPreAttackEvent extends EntityPreEvent {
 
     UUID getAttackerId();
 
+    UUID getProjectileId();
+
     CombatValue getDamage();
 
     void setDamage(CombatValue damage);

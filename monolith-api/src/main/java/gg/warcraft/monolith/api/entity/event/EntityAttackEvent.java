@@ -8,5 +8,7 @@ public interface EntityAttackEvent extends EntityEvent {
 
     UUID getAttackerId();
 
+    UUID getProjectileId();
+
     CombatValue getDamage();
 }
