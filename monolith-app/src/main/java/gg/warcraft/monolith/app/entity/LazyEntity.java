@@ -85,6 +85,36 @@ public class LazyEntity implements Entity {
     }
 
     @Override
+    public int getDataInt(String key) {
+        String data = getData(key);
+        try {
+            return Integer.parseInt(data);
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+
+    @Override
+    public float getDataFoat(String key) {
+        String data = getData(key);
+        try {
+            return Float.parseFloat(data);
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean getDataBool(String key) {
+        String data = getData(key);
+        try {
+            return Boolean.parseBoolean(data);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
     public Attributes getAttributes() {
         return attributes.get();
     }

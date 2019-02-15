@@ -61,6 +61,24 @@ public interface Entity {
     String getData(String key);
 
     /**
+     * @param key The data. Can not be null.
+     * @return The integer value of the data.
+     */
+    int getDataInt(String key);
+
+    /**
+     * @param key The data. Can not be null.
+     * @return The float value of the data.
+     */
+    float getDataFoat(String key);
+
+    /**
+     * @param key The data. Can not be null.
+     * @return The boolean value of the data.
+     */
+    boolean getDataBool(String key);
+
+    /**
      * @return The attributes of this entity. Never null.
      */
     Attributes getAttributes();
