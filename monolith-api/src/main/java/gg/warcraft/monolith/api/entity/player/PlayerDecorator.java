@@ -127,6 +127,21 @@ public interface PlayerDecorator extends Player {
     }
 
     @Override
+    default int getDataInt(String key) {
+        return getPlayer().getDataInt(key);
+    }
+
+    @Override
+    default float getDataFoat(String key) {
+        return getPlayer().getDataFoat(key);
+    }
+
+    @Override
+    default boolean getDataBool(String key) {
+        return getPlayer().getDataBool(key);
+    }
+
+    @Override
     default GameMode getGameMode() {
         return getPlayer().getGameMode();
     }
