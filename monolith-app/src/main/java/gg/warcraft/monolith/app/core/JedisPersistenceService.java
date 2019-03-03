@@ -70,7 +70,7 @@ public class JedisPersistenceService implements PersistenceService {
 
     @Override
     public List<String> getList(String key) {
-        return retryWithResult(jedis -> jedis.lrange(key, -1, Integer.MAX_VALUE));
+        return retryWithResult(jedis -> jedis.lrange(key, 0, Integer.MAX_VALUE));
     }
 
     @Override
