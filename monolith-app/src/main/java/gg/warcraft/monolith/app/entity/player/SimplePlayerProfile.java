@@ -31,7 +31,7 @@ public class SimplePlayerProfile extends SimpleEntityProfile implements PlayerPr
         this.timePlayed = timePlayed;
         this.currencies = checkNotNull(currencies);
         this.lifetimeCurrencies = checkNotNull(lifetimeCurrencies);
-        this.statistics = statistics;
+        this.statistics = checkNotNull(statistics);
 
         checkArgument(timeConnected >= 0);
         checkArgument(timeFirstConnected >= 0);
@@ -87,7 +87,7 @@ public class SimplePlayerProfile extends SimpleEntityProfile implements PlayerPr
 
     @Override
     public Map<String, Integer> getStatistics() {
-        return statistics;
+        return new HashMap<>(statistics);
     }
 
     @Override

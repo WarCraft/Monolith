@@ -146,10 +146,10 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
         Map<String, Integer> newStatistics = profile.getStatistics();
 
         for (Statistic statistic : statistics) {
-            String statisticName = statistic.getName();
-            int currentValue = newStatistics.getOrDefault(statisticName, 0);
+            String statisticKey = statistic.getKey();
+            int currentValue = newStatistics.getOrDefault(statisticKey, 0);
             int newCurrentValue = currentValue + amount;
-            newStatistics.put(statisticName, newCurrentValue);
+            newStatistics.put(statisticKey, newCurrentValue);
         }
 
         PlayerProfile newProfile = profile.getCopyer()
@@ -158,7 +158,7 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
         playerProfileRepository.save(newProfile);
 
         for (Statistic statistic : statistics) {
-            int newCurrentValue = newStatistics.getOrDefault(statistic.getName(), 0);
+            int newCurrentValue = newStatistics.getOrDefault(statistic.getKey(), 0);
             PlayerStatisticChangedEvent event =
                     new SimplePlayerStatisticChangedEvent(playerId, statistic, amount, newCurrentValue);
             eventService.publish(event);
@@ -172,7 +172,7 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
         Map<String, Integer> newStatistics = profile.getStatistics();
 
         for (Statistic statistic : statistics) {
-            newStatistics.remove(statistic.getName());
+            newStatistics.remove(statistic.getKey());
         }
 
         PlayerProfile newProfile = profile.getCopyer()
@@ -181,7 +181,7 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
         playerProfileRepository.save(newProfile);
 
         for (Statistic statistic : statistics) {
-            int oldValue = oldStatistics.getOrDefault(statistic.getName(), 0);
+            int oldValue = oldStatistics.getOrDefault(statistic.getKey(), 0);
             PlayerStatisticChangedEvent event =
                     new SimplePlayerStatisticChangedEvent(playerId, statistic, -oldValue, 0);
             eventService.publish(event);
