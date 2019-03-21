@@ -41,7 +41,7 @@ public class SpigotPlayerAdapter implements PlayerServerAdapter {
         }
 
         OfflinePlayer offlinePlayer = server.getOfflinePlayer(playerId);
-        if (offlinePlayer != null) {
+        if (offlinePlayer.hasPlayedBefore()) {
             return new SpigotOfflinePlayerData(offlinePlayer);
         }
 
