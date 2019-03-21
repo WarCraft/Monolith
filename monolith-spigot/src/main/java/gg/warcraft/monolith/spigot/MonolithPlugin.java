@@ -30,6 +30,7 @@ import gg.warcraft.monolith.app.world.portal.handler.PortalEntryTaskHandler;
 import gg.warcraft.monolith.spigot.entity.handler.EntityRemovalHandler;
 import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.event.SpigotInventoryEventMapper;
+import gg.warcraft.monolith.spigot.event.SpigotItemEventMapper;
 import gg.warcraft.monolith.spigot.event.SpigotPlayerEventMapper;
 import gg.warcraft.monolith.spigot.event.SpigotProjectileEventMapper;
 import gg.warcraft.monolith.spigot.event.SpigotWorldEventMapper;
@@ -117,6 +118,9 @@ public class MonolithPlugin extends JavaPlugin {
 
         SpigotWorldEventMapper worldEventMapper = injector.getInstance(SpigotWorldEventMapper.class);
         pluginManager.registerEvents(worldEventMapper, this);
+
+        SpigotItemEventMapper itemEventMapper = injector.getInstance(SpigotItemEventMapper.class);
+        pluginManager.registerEvents(itemEventMapper, this);
     }
 
     @Override
