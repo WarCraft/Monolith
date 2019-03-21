@@ -53,6 +53,7 @@ import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 // TODO this class can do with some cleaning up
 public class SpigotWorldAdapter implements WorldServerAdapter {
@@ -315,13 +316,16 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     }
 
     @Override
-    public void dropItemsAt(List<Item> items, Location location) {
+    public List<UUID> dropItemsAt(List<Item> items, Location location) {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
         World world = spigotLocation.getWorld();
-        items.forEach(item -> {
-            ItemStack itemStack = itemMapper.map(item);
-            world.dropItem(spigotLocation, itemStack);
-        });
+        return items.stream()
+                .map(item -> {
+                    ItemStack itemStack = itemMapper.map(item);
+                    org.bukkit.entity.Item droppedItem = world.dropItem(spigotLocation, itemStack);
+                    return droppedItem.getUniqueId();
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

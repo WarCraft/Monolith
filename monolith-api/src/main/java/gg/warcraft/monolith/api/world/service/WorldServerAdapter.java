@@ -65,8 +65,9 @@ public interface WorldServerAdapter {
     /**
      * @param items    The items to drop. Can not be null, but can be empty. Items can not be null.
      * @param location The location to drop at. Can not be null.
+     * @return A list of ids of the dropped items. Never null, but can be empty.
      */
-    void dropItemsAt(List<Item> items, Location location);
+    List<UUID> dropItemsAt(List<Item> items, Location location);
 
     void spoofBlock(Block fakeBlock, UUID playerId);
 
