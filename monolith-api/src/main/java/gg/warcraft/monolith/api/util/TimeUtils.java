@@ -1,5 +1,9 @@
 package gg.warcraft.monolith.api.util;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 /**
  * This utility is injectable.
  * <p>
@@ -21,6 +25,21 @@ public interface TimeUtils {
     int MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
     int MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
     int MILLIS_PER_DAY = 24 * MILLIS_PER_HOUR;
+
+    /**
+     * @return The local server time. Never null.
+     */
+    LocalTime getServerTime();
+
+    /**
+     * @return The local server date. Never null.
+     */
+    LocalDate getServerDate();
+
+    /**
+     * @return The local server date time. Never null.
+     */
+    LocalDateTime getServerDateTime();
 
     /**
      * @param unixTimestamp The unix timestamp in milliseconds.

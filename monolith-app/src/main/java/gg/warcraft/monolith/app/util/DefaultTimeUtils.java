@@ -3,7 +3,15 @@ package gg.warcraft.monolith.app.util;
 import gg.warcraft.monolith.api.util.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 public class DefaultTimeUtils implements TimeUtils {
+    // TODO move into configuration file
+    private static final ZoneId TIME_ZONE = ZoneId.of("EST");
+
     private final Duration immediately;
     private final Duration oneMilli;
     private final Duration oneTick;
@@ -14,6 +22,21 @@ public class DefaultTimeUtils implements TimeUtils {
         this.oneMilli = createDurationInMillis(1);
         this.oneTick = createDurationInTicks(1);
         this.oneSecond = createDurationInSeconds(1);
+    }
+
+    @Override
+    public LocalTime getServerTime() {
+        return LocalTime.now(TIME_ZONE);
+    }
+
+    @Override
+    public LocalDate getServerDate() {
+        return LocalDate.now(TIME_ZONE);
+    }
+
+    @Override
+    public LocalDateTime getServerDateTime() {
+        return LocalDateTime.now(TIME_ZONE);
     }
 
     String getReadableAge(long age) {

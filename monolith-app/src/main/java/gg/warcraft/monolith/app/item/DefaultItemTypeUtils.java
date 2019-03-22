@@ -23,7 +23,7 @@ public class DefaultItemTypeUtils implements ItemTypeUtils {
 
     @Override
     public ItemType getType(int id, int data) {
-        int adjustedData = data & 0x3;
+        int adjustedData = data & 0x3; // TODO does this even apply here?
         ItemType type = types.get(id + ":" + adjustedData);
         if (type == null) {
             return types.get(id + ":0");
