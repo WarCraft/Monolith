@@ -12,27 +12,6 @@ public interface PlayerProfile extends EntityProfile {
      */
     UUID getPlayerId();
 
-    /**
-     * @return The unix timestamp in milliseconds when this player connected this session, or the previous session if
-     * they have since logged off.
-     */
-    long getTimeConnected();
-
-    /**
-     * @return The unix timestamp in milliseconds when this player first connected to the server.
-     */
-    long getTimeFirstConnected();
-
-    /**
-     * @return The unix timestamp in milliseconds when this player was last seen on the server.
-     */
-    long getTimeLastSeen();
-
-    /**
-     * @return The total amount of time in milliseconds this player has played on the server.
-     */
-    long getTimePlayed();
-
     Map<String, Integer> getCurrencies();
 
     Map<String, Integer> getLifetimeCurrencies();

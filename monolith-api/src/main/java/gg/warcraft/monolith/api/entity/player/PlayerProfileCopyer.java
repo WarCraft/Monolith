@@ -4,11 +4,11 @@ import java.util.Map;
 
 public interface PlayerProfileCopyer {
 
-    PlayerProfileCopyer withTimeConnected(long timeConnected);
+    PlayerProfileCopyer withTimeConnected(int timeConnected);
 
-    PlayerProfileCopyer withTimeLastSeen(long timeLastSeen);
+    PlayerProfileCopyer withTimeLastSeen(int timeLastSeen);
 
-    PlayerProfileCopyer withTimePlayed(long timePlayed);
+    PlayerProfileCopyer withTimePlayed(int timePlayed);
 
     PlayerProfileCopyer withCurrencies(Map<String, Integer> currencies);
 

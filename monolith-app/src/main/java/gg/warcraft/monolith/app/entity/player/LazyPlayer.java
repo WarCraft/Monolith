@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.player.GameMode;
+import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
+import gg.warcraft.monolith.api.entity.player.MonolithStatistic;
 import gg.warcraft.monolith.api.entity.player.Player;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
 import gg.warcraft.monolith.api.entity.player.PlayerServerData;
@@ -31,23 +33,39 @@ public class LazyPlayer extends LazyEntity implements Player {
     }
 
     @Override
-    public long getTimeConnected() {
-        return profile.get().getTimeConnected();
+    public int getTimeConnected() {
+        String timeConnected = profile.get().getData().getOrDefault(MonolithPlayerData.TIME_CONNECTED.getKey(), "0");
+        try {
+            return Integer.parseInt(timeConnected);
+        } catch (Exception ex) {
+            return 0;
+        }
     }
 
     @Override
-    public long getTimeFirstConnected() {
-        return profile.get().getTimeFirstConnected();
+    public int getTimeFirstConnected() {
+        String timeFirstConnected =
+                profile.get().getData().getOrDefault(MonolithPlayerData.TIME_FIRST_CONNECTED.getKey(), "0");
+        try {
+            return Integer.parseInt(timeFirstConnected);
+        } catch (Exception ex) {
+            return 0;
+        }
     }
 
     @Override
-    public long getTimeLastSeen() {
-        return profile.get().getTimeLastSeen();
+    public int getTimeLastSeen() {
+        String timeLastSeen = profile.get().getData().getOrDefault(MonolithPlayerData.TIME_LAST_SEEN.getKey(), "0");
+        try {
+            return Integer.parseInt(timeLastSeen);
+        } catch (Exception ex) {
+            return 0;
+        }
     }
 
     @Override
-    public long getTimePlayed() {
-        return profile.get().getTimePlayed();
+    public int getTimePlayed() {
+        return profile.get().getStatistics().get(MonolithStatistic.TIME_PLAYED.getKey());
     }
 
     @Override
@@ -78,5 +96,10 @@ public class LazyPlayer extends LazyEntity implements Player {
     @Override
     public boolean isSneaking() {
         return serverData.get().isSneaking();
+    }
+
+    @Override
+    public boolean isOnline() {
+        return serverData.get().isOnline();
     }
 }

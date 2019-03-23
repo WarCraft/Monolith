@@ -87,22 +87,22 @@ public interface PlayerDecorator extends Player {
     }
 
     @Override
-    default long getTimeConnected() {
+    default int getTimeConnected() {
         return getPlayer().getTimeConnected();
     }
 
     @Override
-    default long getTimeFirstConnected() {
+    default int getTimeFirstConnected() {
         return getPlayer().getTimeFirstConnected();
     }
 
     @Override
-    default long getTimeLastSeen() {
+    default int getTimeLastSeen() {
         return getPlayer().getTimeLastSeen();
     }
 
     @Override
-    default long getTimePlayed() {
+    default int getTimePlayed() {
         return getPlayer().getTimePlayed();
     }
 

@@ -96,8 +96,9 @@ public interface PlayerCommandService {
 
     /**
      * @param playerId The id of the player to update. Can not be null.
+     * @param force    Forces an update regardless of whether the player is online or offline.
      */
-    void update(UUID playerId);
+    void update(UUID playerId, boolean force);
 
     /**
      * @param playerId the id of the player. Can not be null.

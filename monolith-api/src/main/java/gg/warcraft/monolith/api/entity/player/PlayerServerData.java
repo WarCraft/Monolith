@@ -16,4 +16,9 @@ public interface PlayerServerData extends EntityServerData {
      * @return True if this player is sneaking, false otherwise.
      */
     boolean isSneaking();
+
+    /**
+     * @return True if this player is online, false otherwise.
+     */
+    boolean isOnline();
 }

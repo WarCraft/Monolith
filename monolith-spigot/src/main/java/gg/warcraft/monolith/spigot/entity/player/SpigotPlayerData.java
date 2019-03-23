@@ -50,4 +50,9 @@ public class SpigotPlayerData extends SpigotEntityData implements PlayerServerDa
     public boolean isSneaking() {
         return player.isSneaking();
     }
+
+    @Override
+    public boolean isOnline() {
+        return player.isOnline();
+    }
 }

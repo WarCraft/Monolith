@@ -47,8 +47,8 @@ public interface PlayerCommandServiceDecorator extends PlayerCommandService {
     }
 
     @Override
-    default void update(UUID playerId) {
-        getPlayerCommandService().update(playerId);
+    default void update(UUID playerId, boolean force) {
+        getPlayerCommandService().update(playerId, force);
     }
 
     @Override

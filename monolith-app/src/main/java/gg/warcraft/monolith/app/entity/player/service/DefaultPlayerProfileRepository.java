@@ -38,16 +38,11 @@ public class DefaultPlayerProfileRepository implements PlayerProfileRepository {
 
     PlayerProfile mapItemToProfile(PlayerProfileItem item) {
         UUID playerId = item.getPlayerId();
-        long timeConnected = item.getTimeConnected();
-        long timeFirstConnected = item.getTimeFirstConnected();
-        long timeLastSeen = item.getTimeLastSeen();
-        long timePlayed = item.getTimePlayed();
         Map<String, Integer> currencies = item.getCurrencies();
         Map<String, Integer> lifetimeCurrencies = item.getLifetimeCurrencies();
         Map<String, Integer> statistics = item.getStatistics();
         Map<String, String> data = item.getData();
-        return new SimplePlayerProfile(playerId, timeConnected, timeFirstConnected, timeLastSeen, timePlayed,
-                currencies, lifetimeCurrencies, statistics, data);
+        return new SimplePlayerProfile(playerId, currencies, lifetimeCurrencies, statistics, data);
     }
 
     @Override
@@ -70,16 +65,11 @@ public class DefaultPlayerProfileRepository implements PlayerProfileRepository {
 
     PlayerProfileItem mapProfileToItem(PlayerProfile profile) {
         UUID playerId = profile.getPlayerId();
-        long timeConnected = profile.getTimeConnected();
-        long timeFirstConnected = profile.getTimeFirstConnected();
-        long timeLastSeen = profile.getTimeLastSeen();
-        long timePlayed = profile.getTimePlayed();
         Map<String, Integer> currencies = profile.getCurrencies();
         Map<String, Integer> lifetimeCurrencies = profile.getLifetimeCurrencies();
         Map<String, Integer> statistics = profile.getStatistics();
         Map<String, String> data = profile.getData();
-        return new PlayerProfileItem(playerId, timeConnected, timeFirstConnected, timeLastSeen, timePlayed, currencies,
-                lifetimeCurrencies, statistics, data);
+        return new PlayerProfileItem(playerId, currencies, lifetimeCurrencies, statistics, data);
     }
 
     @Override

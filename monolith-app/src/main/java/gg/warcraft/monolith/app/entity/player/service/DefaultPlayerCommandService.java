@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.player.Currency;
+import gg.warcraft.monolith.api.entity.player.MonolithStatistic;
+import gg.warcraft.monolith.api.entity.player.Player;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
 import gg.warcraft.monolith.api.entity.player.Statistic;
 import gg.warcraft.monolith.api.entity.player.event.PlayerCurrencyGainedEvent;
@@ -11,6 +13,7 @@ import gg.warcraft.monolith.api.entity.player.event.PlayerCurrencyLostEvent;
 import gg.warcraft.monolith.api.entity.player.event.PlayerStatisticChangedEvent;
 import gg.warcraft.monolith.api.entity.player.service.PlayerCommandService;
 import gg.warcraft.monolith.api.entity.player.service.PlayerProfileRepository;
+import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
@@ -24,15 +27,18 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DefaultPlayerCommandService implements PlayerCommandService {
+    private final PlayerQueryService playerQueryService;
     private final PlayerProfileRepository playerProfileRepository;
     private final PlayerServerAdapter playerServerAdapter;
     private final TeamCommandService teamCommandService;
     private final EventService eventService;
 
     @Inject
-    public DefaultPlayerCommandService(PlayerProfileRepository playerProfileRepository,
+    public DefaultPlayerCommandService(PlayerQueryService playerQueryService,
+                                       PlayerProfileRepository playerProfileRepository,
                                        TeamCommandService teamCommandService, PlayerServerAdapter playerServerAdapter,
                                        EventService eventService) {
+        this.playerQueryService = playerQueryService;
         this.playerProfileRepository = playerProfileRepository;
         this.teamCommandService = teamCommandService;
         this.playerServerAdapter = playerServerAdapter;
@@ -189,10 +195,14 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     }
 
     @Override
-    public void update(UUID playerId) {
+    public void update(UUID playerId, boolean force) {
         // TODO make sure this doesn't get called when the player just logs in, as their time last seen will be long ago
         // TODO also make sure this doesn't do anything when the player is offline, add isOnline to PlayerServerData
         // TODO player can log off but still be in the iterator of the updater
+        Player player = playerQueryService.getPlayer(playerId);
+        if (player == null || (!force && !player.isOnline())) {
+            return;
+        }
 
         PlayerProfile profile = playerProfileRepository.get(playerId);
         if (profile == null) {
@@ -200,13 +210,20 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
                     ", profile doesn't exist");
         }
 
-        long newTimeLastSeen = System.currentTimeMillis();
-        long newTimePlayed = profile.getTimePlayed() + (newTimeLastSeen - profile.getTimeLastSeen());
+        int oldTimeLastSeen = player.getTimeLastSeen();
+        int newTimeLastSeen = (int) (System.currentTimeMillis() / 1000);
+        int oldTimePlayed = player.getStatistic(MonolithStatistic.TIME_PLAYED.getKey());
+        int newTimePlayed = oldTimePlayed + (newTimeLastSeen - oldTimeLastSeen);
         PlayerProfile newProfile = profile.getCopyer()
                 .withTimeLastSeen(newTimeLastSeen)
                 .withTimePlayed(newTimePlayed)
                 .copy();
         playerProfileRepository.save(newProfile);
+
+        int deltaTimePlayed = newTimePlayed - oldTimePlayed;
+        PlayerStatisticChangedEvent event =
+                new SimplePlayerStatisticChangedEvent(playerId, MonolithStatistic.TIME_PLAYED, deltaTimePlayed, newTimePlayed);
+        eventService.publish(event);
     }
 
     @Override

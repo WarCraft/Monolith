@@ -12,22 +12,22 @@ public interface Player extends Entity {
      * @return The unix timestamp in milliseconds when this player connected this session, or the previous session if
      * they have since logged off.
      */
-    long getTimeConnected();
+    int getTimeConnected();
 
     /**
      * @return The unix timestamp in milliseconds when this player first connected to the server.
      */
-    long getTimeFirstConnected();
+    int getTimeFirstConnected();
 
     /**
      * @return The unix timestamp in milliseconds when this player was last seen on the server.
      */
-    long getTimeLastSeen();
+    int getTimeLastSeen();
 
     /**
      * @return The total amount of time in milliseconds this player has played on the server.
      */
-    long getTimePlayed();
+    int getTimePlayed();
 
     /**
      * @param currency The currency. Can not be null or empty.
@@ -58,4 +58,9 @@ public interface Player extends Entity {
      * @return True if this player is sneaking, false otherwise.
      */
     boolean isSneaking();
+
+    /**
+     * @return True if this player is online, false otherwise.
+     */
+    boolean isOnline();
 }

@@ -85,6 +85,11 @@ public class SpigotOfflinePlayerData implements PlayerServerData {
     }
 
     @Override
+    public boolean isOnline() {
+        return false;
+    }
+
+    @Override
     public boolean hasPermission(String permission) {
         throw new IllegalStateException("Failed to get permission for offline player with id " + player.getUniqueId());
     }
