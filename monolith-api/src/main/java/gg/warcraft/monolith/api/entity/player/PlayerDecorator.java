@@ -155,4 +155,9 @@ public interface PlayerDecorator extends Player {
     default boolean isSneaking() {
         return getPlayer().isSneaking();
     }
+
+    @Override
+    default boolean isOnline() {
+        return getPlayer().isOnline();
+    }
 }
