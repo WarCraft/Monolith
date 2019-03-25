@@ -19,6 +19,7 @@ public class PlayerProfileUpdateHandler implements Runnable {
     private final PlayerCommandService playerCommandService;
     private final PlayerProfileRepository playerProfileRepository;
 
+    private long startTime;
     private Iterator<UUID> playerIds;
 
     @Inject
@@ -28,16 +29,21 @@ public class PlayerProfileUpdateHandler implements Runnable {
         this.playerQueryService = playerQueryService;
         this.playerCommandService = playerCommandService;
         this.playerProfileRepository = playerProfileRepository;
+        this.startTime = System.currentTimeMillis();
         this.playerIds = Collections.emptyIterator();
     }
 
     @Override
     public void run() {
         if (!playerIds.hasNext()) {
+            if ((System.currentTimeMillis() - startTime) < 2000) {
+                return;
+            }
             playerIds = playerQueryService.getOnlinePlayers().stream()
                     .map(Player::getId)
                     .iterator();
         }
+
         if (playerIds.hasNext()) {
             UUID playerId = playerIds.next();
             playerCommandService.update(playerId, false);

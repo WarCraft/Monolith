@@ -89,7 +89,7 @@ public class MonolithPlugin extends JavaPlugin {
         taskService.runTask(entityRemovalHandler, timeUtils.createDurationInSeconds(10), timeUtils.createDurationInSeconds(10));
 
         PlayerProfileUpdateHandler playerProfileUpdateHandler = injector.getInstance(PlayerProfileUpdateHandler.class);
-        taskService.runTask(playerProfileUpdateHandler, timeUtils.oneTick(), timeUtils.createDurationInSeconds(1));
+        taskService.runTask(playerProfileUpdateHandler, timeUtils.oneTick(), timeUtils.createDurationInTicks(1));
 
         PlayerHidingHandler playerHidingHandler = injector.getInstance(PlayerHidingHandler.class);
         eventService.subscribe(playerHidingHandler);
