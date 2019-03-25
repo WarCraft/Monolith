@@ -10,7 +10,7 @@ import java.time.ZoneId;
 
 public class DefaultTimeUtils implements TimeUtils {
     // TODO move into configuration file
-    private static final ZoneId TIME_ZONE = ZoneId.of("EST");
+    private static final ZoneId TIME_ZONE = ZoneId.of("America/New_York");
 
     private final Duration immediately;
     private final Duration oneMilli;
