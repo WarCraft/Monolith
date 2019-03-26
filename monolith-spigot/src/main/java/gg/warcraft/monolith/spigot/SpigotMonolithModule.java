@@ -33,6 +33,7 @@ import gg.warcraft.monolith.spigot.entity.player.SpigotPlayerDataFactory;
 import gg.warcraft.monolith.spigot.entity.player.hiding.SpigotPlayerHidingAdapter;
 import gg.warcraft.monolith.spigot.entity.player.service.SpigotPlayerAdapter;
 import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
+import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.menu.service.SpigotMenuAdapter;
 import gg.warcraft.monolith.spigot.world.Overworld;
 import gg.warcraft.monolith.spigot.world.TheEnd;
@@ -75,6 +76,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         configureEntity();
         configureMenu();
         configureWorld();
+        configureMapper();
     }
 
     private void configureBukkit() {
@@ -153,5 +155,13 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
         bind(WorldServerAdapter.class).to(SpigotWorldAdapter.class);
         expose(WorldServerAdapter.class);
+    }
+
+    private void configureMapper() {
+        bind(SpigotEntityAdapter.class);
+        expose(SpigotEntityAdapter.class);
+
+        bind(SpigotEntityEventMapper.class);
+        expose(SpigotEntityEventMapper.class);
     }
 }

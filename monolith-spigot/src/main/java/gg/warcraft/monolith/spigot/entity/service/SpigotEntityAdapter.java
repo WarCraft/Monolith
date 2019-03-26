@@ -3,6 +3,7 @@ package gg.warcraft.monolith.spigot.entity.service;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.combat.PotionEffect;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
+import gg.warcraft.monolith.api.combat.value.CombatValue;
 import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.AttributeModifier;
@@ -26,6 +27,9 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.joml.Vector3fc;
 
@@ -35,6 +39,7 @@ import java.util.stream.Collectors;
 
 public class SpigotEntityAdapter implements EntityServerAdapter {
     private final Server server;
+    private final Plugin plugin;
     private final AttributeQueryService attributeQueryService;
     private final DirectionUtils directionUtils;
     private final SpigotEntityTypeMapper entityTypeMapper;
@@ -44,12 +49,16 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
     private final GenericAttributeMapper genericAttributeMapper;
 
     @Inject
-    public SpigotEntityAdapter(Server server, AttributeQueryService attributeQueryService,
-                               DirectionUtils directionUtils, SpigotEntityTypeMapper entityTypeMapper,
-                               SpigotLocationMapper locationMapper, SpigotEntityDataFactory entityDataFactory,
+    public SpigotEntityAdapter(Server server, Plugin plugin,
+                               AttributeQueryService attributeQueryService,
+                               DirectionUtils directionUtils,
+                               SpigotEntityTypeMapper entityTypeMapper,
+                               SpigotLocationMapper locationMapper,
+                               SpigotEntityDataFactory entityDataFactory,
                                SpigotPotionEffectTypeMapper potionEffectTypeMapper,
                                GenericAttributeMapper genericAttributeMapper) {
         this.server = server;
+        this.plugin = plugin;
         this.attributeQueryService = attributeQueryService;
         this.directionUtils = directionUtils;
         this.entityTypeMapper = entityTypeMapper;
@@ -171,6 +180,17 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
             livingEntity.damage(amount);
+        }
+    }
+
+    @Override
+    public void damage(UUID entityId, CombatValue amount) {
+        Entity entity = server.getEntity(entityId);
+        if (entity instanceof LivingEntity) {
+            LivingEntity livingEntity = (LivingEntity) entity;
+            MetadataValue amountMetadata = new FixedMetadataValue(plugin, amount);
+            livingEntity.setMetadata(CombatValue.class.getCanonicalName(), amountMetadata);
+            livingEntity.damage(amount.getModifiedValue());
         }
     }
 

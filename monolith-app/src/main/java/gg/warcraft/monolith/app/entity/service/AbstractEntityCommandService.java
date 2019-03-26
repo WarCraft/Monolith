@@ -7,10 +7,8 @@ import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
-import gg.warcraft.monolith.api.entity.event.EntityDamageEvent;
 import gg.warcraft.monolith.api.entity.event.EntityHealEvent;
 import gg.warcraft.monolith.api.entity.event.EntityHealthChangedEvent;
-import gg.warcraft.monolith.api.entity.event.EntityPreDamageEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreHealEvent;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
@@ -27,10 +25,8 @@ import gg.warcraft.monolith.api.world.block.BlockUtils;
 import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityDamageEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealthChangedEvent;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDamageEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreHealEvent;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
@@ -132,23 +128,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
 
     @Override
     public void damage(UUID entityId, CombatValue amount) {
-        Entity entity = entityQueryService.getEntity(entityId);
-        EntityType entityType = entity.getType();
-        EntityPreDamageEvent entityPreDamageEvent = new SimpleEntityPreDamageEvent(entityId, entityType, amount, false);
-        eventService.publish(entityPreDamageEvent);
-        if (!entityPreDamageEvent.isAllowed()) {
-            return;
-        }
-
-        float previousHealth = entity.getHealth();
-
-        CombatValue damage = entityPreDamageEvent.getDamage();
-        entityServerAdapter.damage(entityId, damage.getModifiedValue());
-
-        EntityDamageEvent entityDamageEvent = new SimpleEntityDamageEvent(entityId, entityType, damage);
-        eventService.publish(entityDamageEvent);
-
-        publishHealthChangedEvent(entityId, entityType, previousHealth);
+        entityServerAdapter.damage(entityId, amount);
     }
 
     @Override

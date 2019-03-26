@@ -2,6 +2,7 @@ package gg.warcraft.monolith.api.entity.service;
 
 import gg.warcraft.monolith.api.combat.PotionEffect;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
+import gg.warcraft.monolith.api.combat.value.CombatValue;
 import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
@@ -87,6 +88,15 @@ public interface EntityServerAdapter {
      * @param amount   The damage amount.
      */
     void damage(UUID entityId, float amount);
+
+    /**
+     * Damages the entity by the given amount. This method will preserve the
+     * combat source of the damage.
+     *
+     * @param entityId The id of the entity to damage. Can not be null.
+     * @param amount   The damage amount.
+     */
+    void damage(UUID entityId, CombatValue amount);
 
     /**
      * @param entityId The id of the entity to kill. Can not be null.

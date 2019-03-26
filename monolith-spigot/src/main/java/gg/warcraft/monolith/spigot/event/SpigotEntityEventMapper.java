@@ -48,6 +48,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.ArrayList;
@@ -65,19 +67,21 @@ public class SpigotEntityEventMapper implements Listener {
     private final SpigotItemMapper itemMapper;
     private final SpigotLocationMapper locationMapper;
     private final Server server;
+    private final Plugin plugin;
 
     private final Map<Event, CombatValue> combatValues;
 
     @Inject
     public SpigotEntityEventMapper(EventService eventService, CombatFactory combatFactory,
                                    SpigotEntityTypeMapper entityTypeMapper, SpigotItemMapper itemMapper,
-                                   SpigotLocationMapper locationMapper, Server server) {
+                                   SpigotLocationMapper locationMapper, Server server, Plugin plugin) {
         this.eventService = eventService;
         this.combatFactory = combatFactory;
         this.entityTypeMapper = entityTypeMapper;
         this.itemMapper = itemMapper;
         this.locationMapper = locationMapper;
         this.server = server;
+        this.plugin = plugin;
 
         this.combatValues = new HashMap<>();
     }
@@ -154,10 +158,11 @@ public class SpigotEntityEventMapper implements Listener {
         }
         LivingEntity entity = (LivingEntity) event.getEntity();
 
+        CombatValue attackDamage = null;
         org.bukkit.event.entity.EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
                 cause == org.bukkit.event.entity.EntityDamageEvent.DamageCause.PROJECTILE) {
-            onEntityPreAttackEvent((EntityDamageByEntityEvent) event);
+            attackDamage = onEntityPreAttackEvent((EntityDamageByEntityEvent) event);
             if (event.isCancelled()) {
                 return;
             }
@@ -167,11 +172,27 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = entityTypeMapper.map(entity.getType());
         CombatValue damage = combatValues.get(event);
         if (damage == null) {
-            CombatSource combatSource = combatFactory.createCombatSource(event.getCause().name(), null);
-            damage = combatFactory.createCombatValue((float) event.getDamage(), new ArrayList<>(), combatSource);
+            if (attackDamage != null) {
+                damage = attackDamage;
+            } else {
+                List<MetadataValue> metaCombatValue = entity.getMetadata(CombatValue.class.getCanonicalName());
+                if (!metaCombatValue.isEmpty()) {
+                    damage = (CombatValue) metaCombatValue.get(0).value();
+                    entity.removeMetadata(CombatValue.class.getCanonicalName(), plugin);
+                } else {
+                    CombatSource combatSource = combatFactory.createCombatSource(event.getCause().name(), null);
+                    damage = combatFactory.createCombatValue((float) event.getDamage(), new ArrayList<>(), combatSource);
+                }
+            }
         }
         EntityPreDamageEvent entityPreDamageEvent = new SimpleEntityPreDamageEvent(entityId, entityType, damage, event.isCancelled());
         eventService.publish(entityPreDamageEvent);
+        if (!entityPreDamageEvent.isAllowed()) {
+            event.setCancelled(true);
+            return;
+        }
+
+        combatValues.put(event, entityPreDamageEvent.getDamage());
 
         if (damage.getModifiedValue() >= entity.getHealth()) {
             EntityPreFatalDamageEvent entityPreFatalDamageEvent =
@@ -190,7 +211,8 @@ public class SpigotEntityEventMapper implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR) // don't auto ignore cancelled until combat value is removed
+    @EventHandler(priority = EventPriority.MONITOR)
+    // don't auto ignore cancelled until combat value is removed
     public void onEntityDamageEvent(org.bukkit.event.entity.EntityDamageEvent event) {
         if (event.isCancelled()) {
             combatValues.remove(event);
@@ -223,6 +245,8 @@ public class SpigotEntityEventMapper implements Listener {
                     new SimpleEntityFatalDamageEvent(entityId, entityType, damage);
             eventService.publish(entityFatalDamageEvent);
         }
+
+        // TODO publish health changed event
     }
 
     private UUID getAttackerId(Entity damager) {
@@ -235,7 +259,7 @@ public class SpigotEntityEventMapper implements Listener {
         return damager.getUniqueId();
     }
 
-    private void onEntityPreAttackEvent(EntityDamageByEntityEvent event) {
+    private CombatValue onEntityPreAttackEvent(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
         UUID entityId = entity.getUniqueId();
         EntityType entityType = entityTypeMapper.map(entity.getType());
@@ -251,7 +275,7 @@ public class SpigotEntityEventMapper implements Listener {
             }
         }
         if (server.getPlayer(attackerId) == null && server.getEntity(attackerId) == null) {
-            return;
+            return null;
         }
 
         CombatSource combatSource = combatFactory.createCombatSource(damager.getName(), attackerId);
@@ -266,6 +290,8 @@ public class SpigotEntityEventMapper implements Listener {
 
         boolean isCancelled = entityPreAttackEvent.isCancelled() && !entityPreAttackEvent.isExplicitlyAllowed();
         event.setCancelled(isCancelled);
+
+        return damage;
     }
 
     private void onEntityAttackEvent(EntityDamageByEntityEvent event) {
