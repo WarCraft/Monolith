@@ -22,6 +22,8 @@ import gg.warcraft.monolith.api.entity.event.EntityPreFatalDamageEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreInteractEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreSpawnEvent;
 import gg.warcraft.monolith.api.entity.event.EntitySpawnEvent;
+import gg.warcraft.monolith.api.entity.status.Status;
+import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
 import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityAttackEvent;
@@ -65,6 +67,7 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class SpigotEntityEventMapper implements Listener {
+    private final StatusQueryService statusQueryService;
     private final EventService eventService;
     private final TaskService taskService;
     private final CombatFactory combatFactory;
@@ -77,13 +80,15 @@ public class SpigotEntityEventMapper implements Listener {
     private final Map<Event, CombatValue> combatValues;
 
     @Inject
-    public SpigotEntityEventMapper(EventService eventService,
+    public SpigotEntityEventMapper(StatusQueryService statusQueryService,
+                                   EventService eventService,
                                    TaskService taskService,
                                    CombatFactory combatFactory,
                                    SpigotEntityTypeMapper entityTypeMapper,
                                    SpigotItemMapper itemMapper,
                                    SpigotLocationMapper locationMapper,
                                    Server server, Plugin plugin) {
+        this.statusQueryService = statusQueryService;
         this.eventService = eventService;
         this.taskService = taskService;
         this.combatFactory = combatFactory;
@@ -180,6 +185,7 @@ public class SpigotEntityEventMapper implements Listener {
 
         UUID entityId = entity.getUniqueId();
         EntityType entityType = entityTypeMapper.map(entity.getType());
+        Status entityStatus = statusQueryService.getStatus(entityId);
         CombatValue damage = combatValues.get(event);
         if (damage == null) {
             if (attackDamage != null) {
@@ -197,6 +203,9 @@ public class SpigotEntityEventMapper implements Listener {
         }
         EntityPreDamageEvent entityPreDamageEvent = new SimpleEntityPreDamageEvent(entityId, entityType, damage, event.isCancelled());
         eventService.publish(entityPreDamageEvent);
+        if (entityPreDamageEvent.isAllowed()) {
+            entityStatus.getEffects().forEach(effect -> effect.onEntityPreDamageEvent(entityPreDamageEvent));
+        }
         if (!entityPreDamageEvent.isAllowed()) {
             event.setCancelled(true);
             return;
@@ -208,6 +217,9 @@ public class SpigotEntityEventMapper implements Listener {
             EntityPreFatalDamageEvent entityPreFatalDamageEvent =
                     new SimpleEntityPreFatalDamageEvent(entityId, entityType, damage, event.isCancelled());
             eventService.publish(entityPreFatalDamageEvent);
+            if (entityPreFatalDamageEvent.isAllowed()) {
+                entityStatus.getEffects().forEach(effect -> effect.onEntityPreFatalDamageEvent(entityPreFatalDamageEvent));
+            }
             if (entityPreFatalDamageEvent.isCancelled() && !entityPreFatalDamageEvent.isExplicitlyAllowed()) {
                 float adjustedDamage = (float) entity.getHealth() - 1;
                 List<CombatValueModifier> newModifiers = damage.getModifiers();
@@ -242,6 +254,7 @@ public class SpigotEntityEventMapper implements Listener {
 
         UUID entityId = entity.getUniqueId();
         EntityType entityType = entityTypeMapper.map(entity.getType());
+        Status entityStatus = statusQueryService.getStatus(entityId);
         CombatValue damage = combatValues.remove(event);
         if (damage == null) {
             CombatSource combatSource = combatFactory.createCombatSource(event.getCause().name(), null);
@@ -249,6 +262,7 @@ public class SpigotEntityEventMapper implements Listener {
         }
         EntityDamageEvent entityDamageEvent = new SimpleEntityDamageEvent(entityId, entityType, damage);
         eventService.publish(entityDamageEvent);
+        entityStatus.getEffects().forEach(effect -> effect.onEntityDamageEvent(entityDamageEvent));
 
         if (damage.getModifiedValue() >= entity.getHealth()) {
             EntityFatalDamageEvent entityFatalDamageEvent =
@@ -266,6 +280,7 @@ public class SpigotEntityEventMapper implements Listener {
             EntityHealthChangedEvent healthChangedEvent = new SimpleEntityHealthChangedEvent(entityId, entityType,
                     previousHealth, previousPercentHealth, currentHealth, currentPercentHealth);
             eventService.publish(healthChangedEvent);
+            entityStatus.getEffects().forEach(effect -> effect.onEntityHealthChangedEvent(healthChangedEvent));
         });
     }
 
@@ -343,11 +358,13 @@ public class SpigotEntityEventMapper implements Listener {
     public void onEntityDeathEvent(org.bukkit.event.entity.EntityDeathEvent event) {
         UUID entityId = event.getEntity().getUniqueId();
         EntityType entityType = entityTypeMapper.map(event.getEntityType());
+        Status entityStatus = statusQueryService.getStatus(entityId);
         List<Item> drops = event.getDrops().stream()
                 .map(itemMapper::map)
                 .collect(Collectors.toList());
         EntityDeathEvent entityDeathEvent = new SimpleEntityDeathEvent(entityId, entityType, drops);
         eventService.publish(entityDeathEvent);
+        entityStatus.getEffects().forEach(effect -> effect.onEntityDeathEvent(entityDeathEvent));
 
         List<ItemStack> spigotDrops = entityDeathEvent.getDrops().stream()
                 .map(itemMapper::map)
