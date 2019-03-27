@@ -8,11 +8,13 @@ import gg.warcraft.monolith.api.combat.value.CombatValue;
 import gg.warcraft.monolith.api.combat.value.CombatValueModifier;
 import gg.warcraft.monolith.api.combat.value.CombatValueModifierType;
 import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.TaskService;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.event.EntityAttackEvent;
 import gg.warcraft.monolith.api.entity.event.EntityDamageEvent;
 import gg.warcraft.monolith.api.entity.event.EntityDeathEvent;
 import gg.warcraft.monolith.api.entity.event.EntityFatalDamageEvent;
+import gg.warcraft.monolith.api.entity.event.EntityHealthChangedEvent;
 import gg.warcraft.monolith.api.entity.event.EntityInteractEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreAttackEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreDamageEvent;
@@ -26,6 +28,7 @@ import gg.warcraft.monolith.app.entity.event.SimpleEntityAttackEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDamageEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDeathEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityFatalDamageEvent;
+import gg.warcraft.monolith.app.entity.event.SimpleEntityHealthChangedEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityInteractEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreAttackEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDamageEvent;
@@ -37,6 +40,7 @@ import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
 import org.bukkit.Server;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -62,6 +66,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class SpigotEntityEventMapper implements Listener {
     private final EventService eventService;
+    private final TaskService taskService;
     private final CombatFactory combatFactory;
     private final SpigotEntityTypeMapper entityTypeMapper;
     private final SpigotItemMapper itemMapper;
@@ -72,10 +77,15 @@ public class SpigotEntityEventMapper implements Listener {
     private final Map<Event, CombatValue> combatValues;
 
     @Inject
-    public SpigotEntityEventMapper(EventService eventService, CombatFactory combatFactory,
-                                   SpigotEntityTypeMapper entityTypeMapper, SpigotItemMapper itemMapper,
-                                   SpigotLocationMapper locationMapper, Server server, Plugin plugin) {
+    public SpigotEntityEventMapper(EventService eventService,
+                                   TaskService taskService,
+                                   CombatFactory combatFactory,
+                                   SpigotEntityTypeMapper entityTypeMapper,
+                                   SpigotItemMapper itemMapper,
+                                   SpigotLocationMapper locationMapper,
+                                   Server server, Plugin plugin) {
         this.eventService = eventService;
+        this.taskService = taskService;
         this.combatFactory = combatFactory;
         this.entityTypeMapper = entityTypeMapper;
         this.itemMapper = itemMapper;
@@ -246,7 +256,17 @@ public class SpigotEntityEventMapper implements Listener {
             eventService.publish(entityFatalDamageEvent);
         }
 
-        // TODO publish health changed event
+        float previousHealth = (float) entity.getHealth();
+        float previousPercentHealth = previousHealth /
+                (float) entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        taskService.runNextTick(() -> {
+            float currentHealth = (float) entity.getHealth();
+            float currentPercentHealth = currentHealth /
+                    (float) entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            EntityHealthChangedEvent healthChangedEvent = new SimpleEntityHealthChangedEvent(entityId, entityType,
+                    previousHealth, previousPercentHealth, currentHealth, currentPercentHealth);
+            eventService.publish(healthChangedEvent);
+        });
     }
 
     private UUID getAttackerId(Entity damager) {
