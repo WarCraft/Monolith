@@ -18,6 +18,7 @@ import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
 import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.item.service.ItemStorageCommandService;
 import gg.warcraft.monolith.api.util.ColorCode;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyGainedEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyLostEvent;
@@ -28,6 +29,7 @@ import java.util.UUID;
 
 public class DefaultPlayerCommandService implements PlayerCommandService {
     private final PlayerQueryService playerQueryService;
+    private final ItemStorageCommandService itemStorageCommandService;
     private final PlayerProfileRepository playerProfileRepository;
     private final PlayerServerAdapter playerServerAdapter;
     private final TeamCommandService teamCommandService;
@@ -35,10 +37,13 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
 
     @Inject
     public DefaultPlayerCommandService(PlayerQueryService playerQueryService,
+                                       ItemStorageCommandService itemStorageCommandService,
                                        PlayerProfileRepository playerProfileRepository,
-                                       TeamCommandService teamCommandService, PlayerServerAdapter playerServerAdapter,
+                                       TeamCommandService teamCommandService,
+                                       PlayerServerAdapter playerServerAdapter,
                                        EventService eventService) {
         this.playerQueryService = playerQueryService;
+        this.itemStorageCommandService = itemStorageCommandService;
         this.playerProfileRepository = playerProfileRepository;
         this.teamCommandService = teamCommandService;
         this.playerServerAdapter = playerServerAdapter;
@@ -70,7 +75,21 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
 
     @Override
     public boolean giveItem(UUID playerId, Item item, boolean dropOnFullInventory) {
-        return playerServerAdapter.giveItem(playerId, item, dropOnFullInventory);
+        Player player = playerQueryService.getPlayer(playerId);
+        if (player == null) {
+            return false;
+        }
+
+        if (player.getInventory().getSpace() > 0) {
+            return playerServerAdapter.giveItem(playerId, item, dropOnFullInventory);
+        } else {
+            if (dropOnFullInventory) {
+                return playerServerAdapter.giveItem(playerId, item, dropOnFullInventory);
+            } else {
+                itemStorageCommandService.storeItem(item, playerId);
+                return true;
+            }
+        }
     }
 
     @Override

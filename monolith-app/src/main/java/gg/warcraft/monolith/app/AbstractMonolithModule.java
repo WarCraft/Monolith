@@ -63,6 +63,9 @@ import gg.warcraft.monolith.api.item.ItemBuilderFactory;
 import gg.warcraft.monolith.api.item.ItemReader;
 import gg.warcraft.monolith.api.item.ItemReaderFactory;
 import gg.warcraft.monolith.api.item.ItemTypeUtils;
+import gg.warcraft.monolith.api.item.service.ItemStorageCommandService;
+import gg.warcraft.monolith.api.item.service.ItemStorageQueryService;
+import gg.warcraft.monolith.api.item.service.ItemStorageRepository;
 import gg.warcraft.monolith.api.menu.ButtonBuilder;
 import gg.warcraft.monolith.api.menu.ButtonBuilderFactory;
 import gg.warcraft.monolith.api.menu.MenuBuilder;
@@ -151,6 +154,9 @@ import gg.warcraft.monolith.app.entity.team.service.DefaultTeamRepository;
 import gg.warcraft.monolith.app.item.DefaultItemTypeUtils;
 import gg.warcraft.monolith.app.item.SimpleItemBuilder;
 import gg.warcraft.monolith.app.item.SimpleItemReader;
+import gg.warcraft.monolith.app.item.service.DefaultItemStorageCommandService;
+import gg.warcraft.monolith.app.item.service.DefaultItemStorageQueryService;
+import gg.warcraft.monolith.app.item.service.DefaultItemStorageRepository;
 import gg.warcraft.monolith.app.menu.SimpleButtonBuilder;
 import gg.warcraft.monolith.app.menu.SimpleMenuBuilder;
 import gg.warcraft.monolith.app.menu.SkullButtonBuilder;
@@ -419,6 +425,15 @@ public class AbstractMonolithModule extends PrivateModule {
     private void configureItem() {
         bind(ItemTypeUtils.class).to(DefaultItemTypeUtils.class);
         expose(ItemTypeUtils.class);
+
+        bind(ItemStorageCommandService.class).to(DefaultItemStorageCommandService.class);
+        expose(ItemStorageCommandService.class);
+
+        bind(ItemStorageQueryService.class).to(DefaultItemStorageQueryService.class);
+        expose(ItemStorageQueryService.class);
+
+        bind(ItemStorageRepository.class).to(DefaultItemStorageRepository.class);
+        expose(ItemStorageRepository.class);
 
         install(new FactoryModuleBuilder()
                 .implement(ItemBuilder.class, SimpleItemBuilder.class)
