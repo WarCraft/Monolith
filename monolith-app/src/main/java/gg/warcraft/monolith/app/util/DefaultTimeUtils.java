@@ -63,7 +63,7 @@ public class DefaultTimeUtils implements TimeUtils {
     @Override
     public String getTimeToGoUntil(long unixTimestamp) {
         long current = System.currentTimeMillis();
-        long age = current - (unixTimestamp - current);
+        long age = unixTimestamp - current;
         return getReadableAge(age);
     }
 
