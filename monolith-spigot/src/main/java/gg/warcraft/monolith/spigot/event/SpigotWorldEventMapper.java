@@ -115,7 +115,8 @@ public class SpigotWorldEventMapper implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR) // return if cancelled after removing alternative drops
+    @EventHandler(priority = EventPriority.MONITOR)
+    // return if cancelled after removing alternative drops
     public void onBlockBreakEvent(org.bukkit.event.block.BlockBreakEvent event) {
         List<Item> alternativeDrops = alternativeDropsByEvent.remove(event);
         if (event.isCancelled()) {
@@ -176,6 +177,8 @@ public class SpigotWorldEventMapper implements Listener {
 
         if (event.isCancelled() && blockPreInteractEvent.isAllowed()) {
             event.setCancelled(false);
+        } else if (!blockPreInteractEvent.isAllowed()) {
+            event.setCancelled(true);
         }
     }
 
