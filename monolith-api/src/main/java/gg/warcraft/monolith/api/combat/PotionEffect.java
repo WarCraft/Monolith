@@ -26,4 +26,14 @@ public interface PotionEffect {
      * @return The duration of this potion effect. Never null.
      */
     Duration getDuration();
+
+    /**
+     * @return True if this potion effect is ambient, false otherwise.
+     */
+    boolean isAmbient();
+
+    /**
+     * @return True if this potion effect has particles, false otherwise.
+     */
+    boolean hasParticles();
 }

@@ -11,8 +11,14 @@ import java.util.UUID;
 
 public interface CombatFactory {
 
-    @Named("potion")
+    @Named("potionEffect")
     PotionEffect createPotionEffect(PotionEffectType type, int level, Duration duration);
+
+    @Named("visiblePotionEffect")
+    PotionEffect createVisiblePotionEffect(PotionEffectType type, int level, Duration duration);
+
+    @Named("ambientPotionEffect")
+    PotionEffect createAmbientPotionEffect(PotionEffectType type, int level, Duration duration);
 
     @Named("source")
     CombatSource createCombatSource(String name, UUID entityId);

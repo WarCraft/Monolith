@@ -99,9 +99,11 @@ import gg.warcraft.monolith.api.world.portal.service.PortalQueryService;
 import gg.warcraft.monolith.api.world.portal.service.PortalRepository;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
+import gg.warcraft.monolith.app.combat.AmbientPotionEffect;
 import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
 import gg.warcraft.monolith.app.combat.SimpleCombatSource;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
+import gg.warcraft.monolith.app.combat.VisiblePotionEffect;
 import gg.warcraft.monolith.app.combat.value.LazyCombatValue;
 import gg.warcraft.monolith.app.combat.value.SimpleCombatValueModifier;
 import gg.warcraft.monolith.app.command.ConsoleCommandSender;
@@ -238,7 +240,9 @@ public class AbstractMonolithModule extends PrivateModule {
         expose(PotionEffectTypeUtils.class);
 
         install(new FactoryModuleBuilder()
-                .implement(PotionEffect.class, Names.named("potion"), SimplePotionEffect.class)
+                .implement(PotionEffect.class, Names.named("potionEffect"), SimplePotionEffect.class)
+                .implement(PotionEffect.class, Names.named("visiblePotionEffect"), VisiblePotionEffect.class)
+                .implement(PotionEffect.class, Names.named("ambientPotionEffect"), AmbientPotionEffect.class)
                 .implement(CombatSource.class, Names.named("source"), SimpleCombatSource.class)
                 .implement(CombatValue.class, Names.named("value"), LazyCombatValue.class)
                 .implement(CombatValueModifier.class, Names.named("modifier"), SimpleCombatValueModifier.class)

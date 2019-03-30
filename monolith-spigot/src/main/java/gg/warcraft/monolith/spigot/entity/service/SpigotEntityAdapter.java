@@ -110,7 +110,8 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
             LivingEntity livingEntity = (LivingEntity) entity;
             org.bukkit.potion.PotionEffectType spigotPotionEffectType = potionEffectTypeMapper.map(effect.getType());
             org.bukkit.potion.PotionEffect spigotPotionEffect = new org.bukkit.potion.PotionEffect(
-                    spigotPotionEffectType, effect.getDuration().inTicks(), effect.getLevel() - 1, false, true);
+                    spigotPotionEffectType, effect.getDuration().inTicks(), effect.getLevel() - 1,
+                    effect.isAmbient(), effect.hasParticles());
             livingEntity.addPotionEffect(spigotPotionEffect);
         }
     }
