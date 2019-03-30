@@ -58,6 +58,10 @@ public class DefaultItemStorageRepository implements ItemStorageRepository {
     public List<Item> getStoredItems(UUID playerId) {
         String playerKey = getKeyFor(playerId);
         String currentItemsJson = persistenceService.get(playerKey);
+        if (currentItemsJson == null) {
+            return Collections.emptyList();
+        }
+
         try {
             List<ItemItem> currentItems = jsonMapper.readValue(currentItemsJson, new TypeReference<List<ItemItem>>() {
             });
