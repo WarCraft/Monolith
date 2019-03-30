@@ -11,11 +11,10 @@ import redis.clients.jedis.ScanResult;
 import redis.clients.jedis.Tuple;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -121,15 +120,15 @@ public class JedisPersistenceService implements PersistenceService {
     }
 
     @Override
-    public SortedMap<String, Double> getSortedSet(String key) {
+    public Map<String, Double> getSortedSet(String key) {
         int size = retryWithResult(jedis -> jedis.zcard(key).intValue());
         return getSortedSet(key, 0, size);
     }
 
     @Override
-    public SortedMap<String, Double> getSortedSet(String key, int start, int end) {
+    public Map<String, Double> getSortedSet(String key, int start, int end) {
         Set<Tuple> result = retryWithResult(jedis -> jedis.zrevrangeWithScores(key, start, end));
-        SortedMap<String, Double> resultAsMap = new TreeMap<>();
+        Map<String, Double> resultAsMap = new LinkedHashMap<>();
         result.forEach(tuple -> resultAsMap.put(tuple.getElement(), tuple.getScore()));
         return resultAsMap;
     }

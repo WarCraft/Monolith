@@ -3,7 +3,6 @@ package gg.warcraft.monolith.api.core;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 
 /**
  * This service is injectable.
@@ -92,9 +91,9 @@ public interface PersistenceService {
      */
     void removeSet(String key, List<String> values);
 
-    SortedMap<String, Double> getSortedSet(String key);
+    Map<String, Double> getSortedSet(String key);
 
-    SortedMap<String, Double> getSortedSet(String key, int start, int end);
+    Map<String, Double> getSortedSet(String key, int start, int end);
 
     void setSortedSet(String key, String field, double value);
 
