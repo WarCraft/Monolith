@@ -11,6 +11,7 @@ import java.util.Set;
 public class DefaultBlockTypeUtils implements BlockTypeUtils {
     private static final Map<String, BlockType> types = new HashMap<>();
     private static final Set<BlockType> NON_SOLIDS = new HashSet<>();
+    private static final Set<BlockType> LIQUIDS = new HashSet<>();
 
     static {
         for (BlockType type : BlockType.values()) {
@@ -23,6 +24,11 @@ public class DefaultBlockTypeUtils implements BlockTypeUtils {
         NON_SOLIDS.add(BlockType.TALL_GRASS);
         NON_SOLIDS.add(BlockType.FERN);
         NON_SOLIDS.add(BlockType.DEAD_BUSH);
+
+        LIQUIDS.add(BlockType.FLOWING_WATER);
+        LIQUIDS.add(BlockType.STILL_WATER);
+        LIQUIDS.add(BlockType.FLOWING_LAVA);
+        LIQUIDS.add(BlockType.STILL_LAVA);
     }
 
     @Override
@@ -42,6 +48,11 @@ public class DefaultBlockTypeUtils implements BlockTypeUtils {
     @Override
     public Set<BlockType> getNonSolids() {
         return new HashSet<>(NON_SOLIDS);
+    }
+
+    @Override
+    public Set<BlockType> getLiquids() {
+        return new HashSet<>(LIQUIDS);
     }
 
     @Override

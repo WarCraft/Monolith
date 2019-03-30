@@ -29,6 +29,11 @@ public interface BlockTypeUtils {
     Set<BlockType> getNonSolids();
 
     /**
+     * @return A set of block types which are considered to be liquid.
+     */
+    Set<BlockType> getLiquids();
+
+    /**
      * @param type The type.
      * @return True if the type is carpet, false otherwise.
      */
