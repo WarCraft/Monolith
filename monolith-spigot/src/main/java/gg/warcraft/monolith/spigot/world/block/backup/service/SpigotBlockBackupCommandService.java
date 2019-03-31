@@ -68,6 +68,7 @@ public class SpigotBlockBackupCommandService implements BlockBackupCommandServic
     public void restoreBlockBackup(UUID id) {
         BlockBackup blockBackup = blockBackupRepository.get(id);
         if (blockBackup == null) {
+            pluginLogger.warning("Attempted to restore block backup with unknown id: " + id);
             return;
         }
 
