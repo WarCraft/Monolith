@@ -6,7 +6,6 @@ import gg.warcraft.monolith.api.entity.team.service.TeamQueryService;
 import gg.warcraft.monolith.api.entity.team.service.TeamRepository;
 
 import java.util.List;
-import java.util.UUID;
 
 public class DefaultTeamQueryService implements TeamQueryService {
     private final TeamRepository teamRepository;
@@ -19,11 +18,6 @@ public class DefaultTeamQueryService implements TeamQueryService {
     @Override
     public Team getTeam(String name) {
         return teamRepository.getTeam(name);
-    }
-
-    @Override
-    public Team getTeam(UUID entityId) {
-        return teamRepository.getTeam(entityId);
     }
 
     @Override

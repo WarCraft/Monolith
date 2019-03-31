@@ -7,6 +7,7 @@ import gg.warcraft.monolith.api.entity.EntityProfile;
 import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.Equipment;
+import gg.warcraft.monolith.api.entity.MonolithEntityData;
 import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.team.Team;
@@ -76,7 +77,8 @@ public class LazyEntity implements Entity {
 
     @Override
     public Team getTeam() {
-        return teamQueryService.getTeam(getId());
+        String team = getData(MonolithEntityData.TEAM.getKey());
+        return teamQueryService.getTeam(team);
     }
 
     @Override

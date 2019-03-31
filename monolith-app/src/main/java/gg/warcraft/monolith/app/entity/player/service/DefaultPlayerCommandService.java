@@ -2,7 +2,10 @@ package gg.warcraft.monolith.app.entity.player.service;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
+import gg.warcraft.monolith.api.entity.MonolithEntityData;
+import gg.warcraft.monolith.api.entity.event.EntityTeamChangedEvent;
 import gg.warcraft.monolith.api.entity.player.Currency;
 import gg.warcraft.monolith.api.entity.player.MonolithStatistic;
 import gg.warcraft.monolith.api.entity.player.Player;
@@ -20,6 +23,7 @@ import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
 import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.item.service.ItemStorageCommandService;
 import gg.warcraft.monolith.api.util.ColorCode;
+import gg.warcraft.monolith.app.entity.event.SimpleEntityTeamChangedEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyGainedEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyLostEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerStatisticChangedEvent;
@@ -52,7 +56,25 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
 
     @Override
     public void setTeam(UUID playerId, Team team) {
-        teamCommandService.setTeam(team, playerId);
+        Player player = playerQueryService.getPlayer(playerId);
+        if (player == null) {
+            return;
+        }
+
+        PlayerProfile profile = playerProfileRepository.get(playerId);
+        String teamName = team != null ? team.getName() : null;
+        Team previousTeam = player.getTeam();
+
+        Map<String, String> newData = profile.getData();
+        newData.put(MonolithEntityData.TEAM.getKey(), teamName);
+        PlayerProfile newProfile = profile.getCopyer()
+                .withData(newData)
+                .copy();
+        playerProfileRepository.save(newProfile);
+
+        EntityTeamChangedEvent entityTeamChangedEvent = new SimpleEntityTeamChangedEvent(
+                playerId, EntityType.PLAYER, previousTeam, team);
+        eventService.publish(entityTeamChangedEvent);
     }
 
     @Override
