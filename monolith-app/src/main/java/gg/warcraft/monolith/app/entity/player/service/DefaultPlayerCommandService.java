@@ -190,6 +190,10 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     @Override
     public void increaseStatistics(UUID playerId, int amount, Statistic... statistics) {
         PlayerProfile profile = playerProfileRepository.get(playerId);
+        if (profile == null) {
+            return;
+        }
+
         Map<String, Integer> newStatistics = profile.getStatistics();
 
         for (Statistic statistic : statistics) {
