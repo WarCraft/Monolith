@@ -83,7 +83,11 @@ public class LazyEntity implements Entity {
 
     @Override
     public String getData(String key) {
-        return profile.get().getData().get(key);
+        EntityProfile entityProfile = profile.get();
+        if (entityProfile != null) {
+            return entityProfile.getData().get(key);
+        }
+        return null;
     }
 
     @Override
