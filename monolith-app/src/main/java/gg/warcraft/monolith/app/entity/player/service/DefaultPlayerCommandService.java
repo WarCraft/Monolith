@@ -80,6 +80,10 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     @Override
     public void setData(UUID playerId, String data, String value) {
         PlayerProfile profile = playerProfileRepository.get(playerId);
+        if (profile == null) {
+            return;
+        }
+
         Map<String, String> newData = profile.getData();
         if (value != null && !value.isEmpty()) {
             newData.put(data, value);
@@ -118,6 +122,9 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     public void addCurrency(UUID playerId, Currency currency, int amount) {
         String currencyName = currency.getName();
         PlayerProfile profile = playerProfileRepository.get(playerId);
+        if (profile == null) {
+            return;
+        }
 
         Map<String, Integer> newCurrencies = profile.getCurrencies();
         int currentAmount = newCurrencies.getOrDefault(currencyName, 0);
@@ -144,6 +151,10 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     public void removeCurrency(UUID playerId, Currency currency, int amount) {
         String currencyName = currency.getName();
         PlayerProfile profile = playerProfileRepository.get(playerId);
+        if (profile == null) {
+            return;
+        }
+
         Map<String, Integer> newCurrencies = profile.getCurrencies();
         int currentAmount = newCurrencies.getOrDefault(currencyName, 0);
         if (currentAmount < amount) {
@@ -167,6 +178,9 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     public void revokeCurrency(UUID playerId, Currency currency, int amount) {
         String currencyName = currency.getName();
         PlayerProfile profile = playerProfileRepository.get(playerId);
+        if (profile == null) {
+            return;
+        }
 
         Map<String, Integer> newCurrencies = profile.getCurrencies();
         int currentAmount = newCurrencies.getOrDefault(currencyName, 0);
@@ -219,6 +233,10 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
     @Override
     public void resetStatistics(UUID playerId, Statistic... statistics) {
         PlayerProfile profile = playerProfileRepository.get(playerId);
+        if (profile == null) {
+            return;
+        }
+
         Map<String, Integer> oldStatistics = profile.getStatistics();
         Map<String, Integer> newStatistics = profile.getStatistics();
 
