@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.world.location.Location;
 import java.util.UUID;
 
 public class SimpleEntityPreSpawnEvent extends AbstractEntityPreEvent implements EntityPreSpawnEvent {
-    private final Location location;
+    private Location location;
 
     public SimpleEntityPreSpawnEvent(UUID entityId, EntityType entityType, Location location, boolean cancelled) {
         super(entityId, entityType, cancelled);
@@ -18,5 +18,10 @@ public class SimpleEntityPreSpawnEvent extends AbstractEntityPreEvent implements
     @Override
     public Location getLocation() {
         return location;
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

@@ -1,8 +1,8 @@
-package gg.warcraft.monolith.api.entity.event;
+package gg.warcraft.monolith.api.entity.player.event;
 
 import gg.warcraft.monolith.api.world.location.Location;
 
-public interface EntityPreSpawnEvent extends EntityPreEvent {
+public interface PlayerPreRespawnEvent extends PlayerEvent {
 
     Location getLocation();
 

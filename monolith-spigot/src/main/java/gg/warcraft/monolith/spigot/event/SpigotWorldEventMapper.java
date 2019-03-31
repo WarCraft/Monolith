@@ -45,6 +45,7 @@ import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockFaceMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
+import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
@@ -72,13 +73,14 @@ public class SpigotWorldEventMapper implements Listener {
     private final SpigotEntityTypeMapper entityTypeMapper;
     private final WorldCommandService worldCommandService;
     private final LocationFactory locationFactory;
+    private final SpigotLocationMapper locationMapper;
 
     private final Map<Event, List<Item>> alternativeDropsByEvent;
 
     @Inject
     public SpigotWorldEventMapper(EventService eventService, SpigotBlockMapper blockMapper,
                                   SpigotBlockFaceMapper blockFaceMapper, SpigotItemMapper itemMapper,
-                                  SpigotEntityTypeMapper entityTypeMapper,
+                                  SpigotEntityTypeMapper entityTypeMapper, SpigotLocationMapper locationMapper,
                                   WorldCommandService worldCommandService, LocationFactory locationFactory) {
         this.eventService = eventService;
         this.blockMapper = blockMapper;
@@ -87,6 +89,7 @@ public class SpigotWorldEventMapper implements Listener {
         this.entityTypeMapper = entityTypeMapper;
         this.worldCommandService = worldCommandService;
         this.locationFactory = locationFactory;
+        this.locationMapper = locationMapper;
         this.alternativeDropsByEvent = new HashMap<>();
     }
 
@@ -256,7 +259,8 @@ public class SpigotWorldEventMapper implements Listener {
         for (Entity entity : chunk.getEntities()) {
             UUID entityId = entity.getUniqueId();
             EntityType entityType = entityTypeMapper.map(entity.getType());
-            EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, false);
+            Location entityLocation = locationMapper.map(entity.getLocation());
+            EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, entityLocation, false);
             eventService.publish(preRespawnEvent);
             if (!preRespawnEvent.isCancelled() || preRespawnEvent.isExplicitlyAllowed()) {
                 allowedRespawns.add(entity);
@@ -268,7 +272,8 @@ public class SpigotWorldEventMapper implements Listener {
         for (Entity entity : allowedRespawns) {
             UUID entityId = entity.getUniqueId();
             EntityType entityType = entityTypeMapper.map(entity.getType());
-            EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType);
+            Location entityLocation = locationMapper.map(entity.getLocation());
+            EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType, entityLocation);
             eventService.publish(respawnEvent);
         }
     }
