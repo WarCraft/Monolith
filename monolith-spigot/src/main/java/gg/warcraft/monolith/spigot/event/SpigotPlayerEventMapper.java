@@ -64,7 +64,7 @@ public class SpigotPlayerEventMapper implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerPreSpawnEvent(org.bukkit.event.player.PlayerRespawnEvent event) {
+    public void onPlayerPreRespawnEvent(org.bukkit.event.player.PlayerRespawnEvent event) {
         UUID playerId = event.getPlayer().getUniqueId();
         Location location = locationMapper.map(event.getRespawnLocation());
         PlayerPreRespawnEvent playerPreRespawnEvent =
@@ -78,7 +78,7 @@ public class SpigotPlayerEventMapper implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerSpawnEvent(org.bukkit.event.player.PlayerRespawnEvent event) {
+    public void onPlayerRespawnEvent(org.bukkit.event.player.PlayerRespawnEvent event) {
         UUID playerId = event.getPlayer().getUniqueId();
         Location location = locationMapper.map(event.getRespawnLocation());
         PlayerRespawnEvent playerRespawnEvent =

@@ -180,7 +180,8 @@ public class SpigotWorldEventMapper implements Listener {
 
         if (event.isCancelled() && blockPreInteractEvent.isAllowed()) {
             event.setCancelled(false);
-        } else if (!blockPreInteractEvent.isAllowed()) {
+        } else if (!event.isCancelled() && !blockPreInteractEvent.isAllowed()) {
+            // NOTE this weird logic is in place as otherwise bow shots dont work
             event.setCancelled(true);
         }
     }
