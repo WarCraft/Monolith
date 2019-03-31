@@ -262,6 +262,7 @@ public class SpigotWorldEventMapper implements Listener {
             Location entityLocation = locationMapper.map(entity.getLocation());
             EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, entityLocation, false);
             eventService.publish(preRespawnEvent);
+            // TODO if the spawn location is changed on the pre event nothing actually happens
             if (!preRespawnEvent.isCancelled() || preRespawnEvent.isExplicitlyAllowed()) {
                 allowedRespawns.add(entity);
             } else {
