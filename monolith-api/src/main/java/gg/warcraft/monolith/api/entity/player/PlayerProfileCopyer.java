@@ -10,6 +10,8 @@ public interface PlayerProfileCopyer {
 
     PlayerProfileCopyer withTimePlayed(int timePlayed);
 
+    PlayerProfileCopyer withTimePlayedOverflow(int overflow);
+
     PlayerProfileCopyer withCurrencies(Map<String, Integer> currencies);
 
     PlayerProfileCopyer withLifetimeCurrencies(Map<String, Integer> lifetimeCurrencies);

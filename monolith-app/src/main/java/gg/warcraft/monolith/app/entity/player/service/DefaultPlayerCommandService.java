@@ -7,6 +7,7 @@ import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.MonolithEntityData;
 import gg.warcraft.monolith.api.entity.event.EntityTeamChangedEvent;
 import gg.warcraft.monolith.api.entity.player.Currency;
+import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
 import gg.warcraft.monolith.api.entity.player.MonolithStatistic;
 import gg.warcraft.monolith.api.entity.player.Player;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
@@ -273,13 +274,24 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
                     ", profile doesn't exist");
         }
 
+        long now = System.currentTimeMillis();
         int oldTimeLastSeen = player.getTimeLastSeen();
-        int newTimeLastSeen = (int) (System.currentTimeMillis() / 1000);
+        int newTimeLastSeen = (int) (now / 1000);
         int oldTimePlayed = player.getStatistic(MonolithStatistic.TIME_PLAYED.getKey());
         int newTimePlayed = oldTimePlayed + (newTimeLastSeen - oldTimeLastSeen);
+
+        int oldTimePlayedOverflow = player.getDataInt(MonolithPlayerData.TIME_PLAYED_OVERFLOW.getKey());
+        int currentTimePlayedOverflow = (int) (now % 1000);
+        int newTimePlayedOverflow = oldTimePlayedOverflow + currentTimePlayedOverflow;
+        if (newTimePlayedOverflow >= 1000) {
+            newTimePlayedOverflow -= 1000;
+            newTimePlayed += 1;
+        }
+
         PlayerProfile newProfile = profile.getCopyer()
                 .withTimeLastSeen(newTimeLastSeen)
                 .withTimePlayed(newTimePlayed)
+                .withTimePlayedOverflow(newTimePlayedOverflow)
                 .copy();
         playerProfileRepository.save(newProfile);
 

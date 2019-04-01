@@ -44,6 +44,12 @@ public class SimplePlayerProfileCopyer implements PlayerProfileCopyer {
     }
 
     @Override
+    public PlayerProfileCopyer withTimePlayedOverflow(int overflow) {
+        this.data.put(MonolithPlayerData.TIME_PLAYED_OVERFLOW.getKey(), "" + overflow);
+        return this;
+    }
+
+    @Override
     public PlayerProfileCopyer withCurrencies(Map<String, Integer> currencies) {
         this.currencies.clear();
         this.currencies.putAll(currencies);

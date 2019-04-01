@@ -39,6 +39,7 @@ public class PlayerProfileUpdateHandler implements Runnable {
             if ((System.currentTimeMillis() - startTime) < 2000) {
                 return;
             }
+            startTime = System.currentTimeMillis();
             playerIds = playerQueryService.getOnlinePlayers().stream()
                     .map(Player::getId)
                     .iterator();
