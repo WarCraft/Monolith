@@ -13,6 +13,7 @@ import gg.warcraft.monolith.api.item.ItemType;
 import gg.warcraft.monolith.api.item.service.ItemStorageRepository;
 import gg.warcraft.monolith.app.item.persistence.ItemItem;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -65,6 +66,9 @@ public class DefaultItemStorageRepository implements ItemStorageRepository {
         try {
             List<ItemItem> currentItems = jsonMapper.readValue(currentItemsJson, new TypeReference<List<ItemItem>>() {
             });
+            if (currentItems == null) {
+                currentItems = new ArrayList<>();
+            }
             return currentItems.stream()
                     .map(this::mapItemItemToItem)
                     .collect(Collectors.toList());
@@ -82,6 +86,9 @@ public class DefaultItemStorageRepository implements ItemStorageRepository {
         try {
             List<ItemItem> currentItems = jsonMapper.readValue(currentItemsJson, new TypeReference<List<ItemItem>>() {
             });
+            if (currentItems == null) {
+                currentItems = new ArrayList<>();
+            }
             currentItems.add(itemToStore);
             String newItemsJson = jsonMapper.writeValueAsString(currentItems);
             persistenceService.set(playerKey, newItemsJson);
@@ -98,6 +105,9 @@ public class DefaultItemStorageRepository implements ItemStorageRepository {
         try {
             List<ItemItem> currentItems = jsonMapper.readValue(currentItemsJson, new TypeReference<List<ItemItem>>() {
             });
+            if (currentItems == null) {
+                currentItems = new ArrayList<>();
+            }
             currentItems.remove(itemToClaim);
             String newItemsJson = jsonMapper.writeValueAsString(currentItems);
             persistenceService.set(playerKey, newItemsJson);
