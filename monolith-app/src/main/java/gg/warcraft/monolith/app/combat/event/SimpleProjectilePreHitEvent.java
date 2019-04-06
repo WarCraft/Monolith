@@ -11,11 +11,14 @@ public class SimpleProjectilePreHitEvent extends AbstractProjectilePreEvent impl
     private final Block block;
     private final UUID entityId;
 
+    private boolean bounced;
+
     public SimpleProjectilePreHitEvent(UUID projectileId, ProjectileType projectileType, Block block, UUID entityId,
                                        boolean cancelled) {
         super(projectileId, projectileType, cancelled);
         this.block = block;
         this.entityId = entityId;
+        this.bounced = cancelled;
     }
 
     @Override
@@ -26,5 +29,15 @@ public class SimpleProjectilePreHitEvent extends AbstractProjectilePreEvent impl
     @Override
     public UUID getEntityId() {
         return entityId;
+    }
+
+    @Override
+    public boolean hasBounced() {
+        return bounced;
+    }
+
+    @Override
+    public void setBounced(boolean bounced) {
+        this.bounced = bounced;
     }
 }

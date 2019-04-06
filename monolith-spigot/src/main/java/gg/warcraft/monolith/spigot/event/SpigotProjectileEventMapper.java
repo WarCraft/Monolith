@@ -82,8 +82,11 @@ public class SpigotProjectileEventMapper implements Listener {
                 new SimpleProjectilePreHitEvent(projectile.getUniqueId(), ProjectileType.ARROW, block, entityId, false);
         eventService.publish(preHitEvent);
 
+        event.getEntity().setBounce(preHitEvent.hasBounced());
         boolean isCancelled = preHitEvent.isCancelled() && !preHitEvent.isExplicitlyAllowed();
-        event.getEntity().setBounce(isCancelled);
+        if (isCancelled) {
+            event.getEntity().remove();
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

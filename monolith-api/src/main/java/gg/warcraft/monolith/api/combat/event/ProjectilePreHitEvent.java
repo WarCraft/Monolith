@@ -9,4 +9,8 @@ public interface ProjectilePreHitEvent extends ProjectilePreEvent {
     Block getBlock();
 
     UUID getEntityId();
+
+    boolean hasBounced();
+
+    void setBounced(boolean bounced);
 }
