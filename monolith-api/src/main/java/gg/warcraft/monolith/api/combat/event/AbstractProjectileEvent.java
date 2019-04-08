@@ -7,10 +7,14 @@ import java.util.UUID;
 public abstract class AbstractProjectileEvent implements ProjectileEvent {
     private final UUID projectileId;
     private final ProjectileType projectileType;
+    private final UUID shooterId;
 
-    public AbstractProjectileEvent(UUID projectileId, ProjectileType projectileType) {
+    public AbstractProjectileEvent(UUID projectileId,
+                                   ProjectileType projectileType,
+                                   UUID shooterId) {
         this.projectileId = projectileId;
         this.projectileType = projectileType;
+        this.shooterId = shooterId;
     }
 
     @Override
@@ -21,5 +25,10 @@ public abstract class AbstractProjectileEvent implements ProjectileEvent {
     @Override
     public ProjectileType getProjectileType() {
         return projectileType;
+    }
+
+    @Override
+    public UUID getShooterId() {
+        return shooterId;
     }
 }

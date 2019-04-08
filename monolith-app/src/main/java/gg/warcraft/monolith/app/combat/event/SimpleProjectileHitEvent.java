@@ -11,8 +11,12 @@ public class SimpleProjectileHitEvent extends AbstractProjectileEvent implements
     private final Block block;
     private final UUID entityId;
 
-    public SimpleProjectileHitEvent(UUID projectileId, ProjectileType projectileType, Block block, UUID entityId) {
-        super(projectileId, projectileType);
+    public SimpleProjectileHitEvent(UUID projectileId,
+                                    ProjectileType projectileType,
+                                    UUID shooterId,
+                                    Block block,
+                                    UUID entityId) {
+        super(projectileId, projectileType, shooterId);
         this.block = block;
         this.entityId = entityId;
     }

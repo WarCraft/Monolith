@@ -9,9 +9,12 @@ import java.util.UUID;
 public class SimpleProjectilePrePickupEvent extends AbstractProjectilePreEvent implements ProjectilePrePickupEvent {
     private final UUID pickupEntityId;
 
-    public SimpleProjectilePrePickupEvent(UUID projectileId, ProjectileType projectileType, UUID pickupEntityId,
+    public SimpleProjectilePrePickupEvent(UUID projectileId,
+                                          ProjectileType projectileType,
+                                          UUID shooterId,
+                                          UUID pickupEntityId,
                                           boolean cancelled) {
-        super(projectileId, projectileType, cancelled);
+        super(projectileId, projectileType, shooterId, cancelled);
         this.pickupEntityId = pickupEntityId;
     }
 

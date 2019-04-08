@@ -72,14 +72,20 @@ public class SpigotProjectileEventMapper implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onProjectileHitEvent(org.bukkit.event.entity.ProjectileHitEvent event) {
         org.bukkit.entity.Projectile projectile = event.getEntity();
+        ProjectileSource shooter = projectile.getShooter();
+        UUID shooterId = null;
+        if (shooter instanceof Entity) {
+            shooterId = ((Entity) shooter).getUniqueId();
+        }
+
         Block block = blockMapper.map(event.getHitBlock());
         UUID entityId = null;
         if (event.getHitEntity() instanceof LivingEntity) {
             entityId = event.getHitEntity().getUniqueId();
         }
 
-        ProjectilePreHitEvent preHitEvent =
-                new SimpleProjectilePreHitEvent(projectile.getUniqueId(), ProjectileType.ARROW, block, entityId, false);
+        ProjectilePreHitEvent preHitEvent = new SimpleProjectilePreHitEvent(projectile.getUniqueId(),
+                ProjectileType.ARROW, shooterId, block, entityId, false);
         eventService.publish(preHitEvent);
 
         boolean isCancelled = preHitEvent.isCancelled() && !preHitEvent.isExplicitlyAllowed();
@@ -94,23 +100,36 @@ public class SpigotProjectileEventMapper implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onProjectileHitEventMonitor(org.bukkit.event.entity.ProjectileHitEvent event) {
         org.bukkit.entity.Projectile projectile = event.getEntity();
+        ProjectileSource shooter = projectile.getShooter();
+        UUID shooterId = null;
+        if (shooter instanceof Entity) {
+            shooterId = ((Entity) shooter).getUniqueId();
+        }
+
         Block block = blockMapper.map(event.getHitBlock());
         UUID entityId = null;
         if (event.getHitEntity() instanceof LivingEntity) {
             entityId = event.getHitEntity().getUniqueId();
         }
 
-        ProjectileHitEvent preHitEvent =
-                new SimpleProjectileHitEvent(projectile.getUniqueId(), ProjectileType.ARROW, block, entityId);
+        ProjectileHitEvent preHitEvent = new SimpleProjectileHitEvent(projectile.getUniqueId(),
+                ProjectileType.ARROW, shooterId, block, entityId);
         eventService.publish(preHitEvent);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerPrePickupArrowEvent(PlayerPickupArrowEvent event) {
-        UUID arrowId = event.getArrow().getUniqueId();
+        org.bukkit.entity.Projectile projectile = event.getArrow();
+        ProjectileSource shooter = projectile.getShooter();
+        UUID shooterId = null;
+        if (shooter instanceof Entity) {
+            shooterId = ((Entity) shooter).getUniqueId();
+        }
+
+        UUID arrowId = projectile.getUniqueId();
         UUID pickupEntityId = event.getPlayer().getUniqueId();
-        ProjectilePrePickupEvent prePickupEvent =
-                new SimpleProjectilePrePickupEvent(arrowId, ProjectileType.ARROW, pickupEntityId, event.isCancelled());
+        ProjectilePrePickupEvent prePickupEvent = new SimpleProjectilePrePickupEvent(arrowId,
+                ProjectileType.ARROW, shooterId, pickupEntityId, event.isCancelled());
         eventService.publish(prePickupEvent);
         boolean isCancelled = prePickupEvent.isCancelled() && !prePickupEvent.isExplicitlyAllowed();
         event.setCancelled(isCancelled);
@@ -118,10 +137,17 @@ public class SpigotProjectileEventMapper implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerPickupArrowEvent(PlayerPickupArrowEvent event) {
-        UUID arrowId = event.getArrow().getUniqueId();
+        org.bukkit.entity.Projectile projectile = event.getArrow();
+        ProjectileSource shooter = projectile.getShooter();
+        UUID shooterId = null;
+        if (shooter instanceof Entity) {
+            shooterId = ((Entity) shooter).getUniqueId();
+        }
+
+        UUID arrowId = projectile.getUniqueId();
         UUID pickupEntityId = event.getPlayer().getUniqueId();
-        ProjectilePickupEvent pickupEvent =
-                new SimpleProjectilePickupEvent(arrowId, ProjectileType.ARROW, pickupEntityId);
+        ProjectilePickupEvent pickupEvent = new SimpleProjectilePickupEvent(arrowId,
+                ProjectileType.ARROW, shooterId, pickupEntityId);
         eventService.publish(pickupEvent);
     }
 }

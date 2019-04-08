@@ -13,9 +13,13 @@ public class SimpleProjectilePreHitEvent extends AbstractProjectilePreEvent impl
 
     private boolean bounced;
 
-    public SimpleProjectilePreHitEvent(UUID projectileId, ProjectileType projectileType, Block block, UUID entityId,
+    public SimpleProjectilePreHitEvent(UUID projectileId,
+                                       ProjectileType projectileType,
+                                       UUID shooterId,
+                                       Block block,
+                                       UUID entityId,
                                        boolean cancelled) {
-        super(projectileId, projectileType, cancelled);
+        super(projectileId, projectileType, shooterId, cancelled);
         this.block = block;
         this.entityId = entityId;
         this.bounced = cancelled;

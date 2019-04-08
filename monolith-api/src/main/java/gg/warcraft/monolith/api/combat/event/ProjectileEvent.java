@@ -10,4 +10,6 @@ public interface ProjectileEvent extends Event {
     UUID getProjectileId();
 
     ProjectileType getProjectileType();
+
+    UUID getShooterId();
 }
