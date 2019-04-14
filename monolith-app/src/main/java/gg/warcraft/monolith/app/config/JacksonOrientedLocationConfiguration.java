@@ -3,10 +3,10 @@ package gg.warcraft.monolith.app.config;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gg.warcraft.monolith.api.config.OrientedLocationConfiguration;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 
 public class JacksonOrientedLocationConfiguration implements OrientedLocationConfiguration {
-    private final WorldType world;
+    private final World world;
     private final float x;
     private final float y;
     private final float z;
@@ -14,7 +14,7 @@ public class JacksonOrientedLocationConfiguration implements OrientedLocationCon
     private final float yaw;
 
     @JsonCreator
-    public JacksonOrientedLocationConfiguration(@JsonProperty("world") WorldType world,
+    public JacksonOrientedLocationConfiguration(@JsonProperty("world") World world,
                                                 @JsonProperty("x") float x,
                                                 @JsonProperty("y") float y,
                                                 @JsonProperty("z") float z,
@@ -29,7 +29,7 @@ public class JacksonOrientedLocationConfiguration implements OrientedLocationCon
     }
 
     @Override
-    public WorldType getWorld() {
+    public World getWorld() {
         return world;
     }
 

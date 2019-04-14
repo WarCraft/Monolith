@@ -59,13 +59,13 @@ public class SpigotEntityData implements EntityServerData {
 
     @Override
     public OrientedLocation getLocation() {
-        OrientedLocation location = locationMapper.map(entity);
+        OrientedLocation location = locationMapper.map(entity.getLocation());
         return checkNotNull(location);
     }
 
     @Override
     public OrientedLocation getEyeLocation() {
-        OrientedLocation eyeLocation = locationMapper.mapEye(entity);
+        OrientedLocation eyeLocation = locationMapper.map(entity.getEyeLocation());
         return checkNotNull(eyeLocation);
     }
 

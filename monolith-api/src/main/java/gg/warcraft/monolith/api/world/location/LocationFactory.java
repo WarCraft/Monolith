@@ -1,94 +1,80 @@
 package gg.warcraft.monolith.api.world.location;
 
-import com.google.inject.assistedinject.Assisted;
-import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.config.BlockLocationConfiguration;
 import gg.warcraft.monolith.api.config.LocationConfiguration;
 import gg.warcraft.monolith.api.config.OrientedLocationConfiguration;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
+import org.joml.Vector3fc;
 
 public interface LocationFactory {
 
     /**
-     * @param world The world.
-     * @param x     The X coordinate.
-     * @param y     The Y coordinate.
-     * @param z     The Z coordinate.
-     * @return The location in the given world at the specified coordinates. Never null.
+     * @return A new location in the given world at the specified coordinates.
      */
-    @Named("location")
-    Location createLocation(WorldType world,
-                            @Assisted("x") float x,
-                            @Assisted("y") float y,
-                            @Assisted("z") float z);
+    Location createLocation(World world, float x, float y, float z);
 
     /**
-     * @param configuration The location configuration. Can not be null.
-     * @return The location in the given world at the coordinates specified in the configuration. Never null.
+     * @return A new location in the world and at the coordinates as specified
+     * in the configuration.
      */
     default Location createLocation(LocationConfiguration configuration) {
         return createLocation(
                 configuration.getWorld(),
                 configuration.getX(),
                 configuration.getY(),
-                configuration.getZ());
+                configuration.getZ()
+        );
     }
 
     /**
-     * @param world The world.
-     * @param x     The X coordinate.
-     * @param y     The Y coordinate.
-     * @param z     The Z coordinate.
-     * @return The block location in the given world at the specified coordinates. Never null.
+     * @return A new block location in the given world at the specified
+     * coordinates.
      */
-    @Named("block")
-    BlockLocation createBlockLocation(WorldType world,
-                                      @Assisted("x") int x,
-                                      @Assisted("y") int y,
-                                      @Assisted("z") int z);
+    BlockLocation createBlockLocation(World world, int x, int y, int z);
 
     /**
-     * @param configuration The block location configuration. Can not be null.
-     * @return The location in the given world at the coordinates specified in the configuration. Never null.
+     * @return A new block location in the world and at the coordinates as
+     * specified in the configuration.
      */
-    default BlockLocation createBlockLocation(BlockLocationConfiguration configuration) {
+    default BlockLocation createBlockLocation(
+            BlockLocationConfiguration configuration) {
         return createBlockLocation(
                 configuration.getWorld(),
                 configuration.getX(),
                 configuration.getY(),
-                configuration.getZ());
+                configuration.getZ()
+        );
     }
 
     /**
-     * @param world The world.
-     * @param x     The X coordinate.
-     * @param y     The Y coordinate.
-     * @param z     The Z coordinate.
-     * @param pitch The orientation pitch.
-     * @param yaw   The orientation yaw.
-     * @return The oriented location in the given world at the specified coordinates with the specified orientation.
-     * Never null.
+     * @return A new oriented location in the given world at the specified
+     * coordinates with the specified orientation.
      */
-    @Named("oriented")
-    OrientedLocation createOrientedLocation(WorldType world,
-                                            @Assisted("x") float x,
-                                            @Assisted("y") float y,
-                                            @Assisted("z") float z,
-                                            @Assisted("pitch") float pitch,
-                                            @Assisted("yaw") float yaw);
+    OrientedLocation createOrientedLocation(World world,
+                                            float x, float y, float z,
+                                            float pitch, float yaw);
 
     /**
-     * @param configuration The oriented location configuration. Can not be null.
-     * @return The oriented location in the given world at the coordinates and with the orientation specified in the
-     * configuration. Never null.
+     * @return A new oriented location in the world and at the coordinates with
+     * the orientation as specified in the configuration.
      */
-    default OrientedLocation createOrientedLocation(OrientedLocationConfiguration configuration) {
+    default OrientedLocation createOrientedLocation(
+            OrientedLocationConfiguration configuration) {
         return createOrientedLocation(
                 configuration.getWorld(),
                 configuration.getX(),
                 configuration.getY(),
                 configuration.getZ(),
                 configuration.getPitch(),
-                configuration.getYaw());
+                configuration.getYaw()
+        );
     }
+
+    /**
+     * @return A new oriented location in the given world at the specified
+     * coordinates with the specified direction.
+     */
+    OrientedLocation createOrientedLocation(World world,
+                                            float x, float y, float z,
+                                            Vector3fc direction);
 }

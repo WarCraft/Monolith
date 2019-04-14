@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gg.warcraft.monolith.api.config.BoundingBlockBoxConfiguration;
 import gg.warcraft.monolith.api.config.Vector3iConfiguration;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 
 public class JacksonBoundingBlockBoxConfiguration implements BoundingBlockBoxConfiguration {
-    private final WorldType world;
+    private final World world;
     private final Vector3iConfiguration minimumCorner;
     private final Vector3iConfiguration maximumCorner;
 
     @JsonCreator
-    public JacksonBoundingBlockBoxConfiguration(@JsonProperty("world") WorldType world,
+    public JacksonBoundingBlockBoxConfiguration(@JsonProperty("world") World world,
                                                 @JsonProperty("minimumCorner") Vector3iConfiguration minimumCorner,
                                                 @JsonProperty("maximumCorner") Vector3iConfiguration maximumCorner) {
         this.world = world;
@@ -21,7 +21,7 @@ public class JacksonBoundingBlockBoxConfiguration implements BoundingBlockBoxCon
     }
 
     @Override
-    public WorldType getWorld() {
+    public World getWorld() {
         return world;
     }
 

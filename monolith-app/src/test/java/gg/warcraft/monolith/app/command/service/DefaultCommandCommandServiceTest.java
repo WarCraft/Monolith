@@ -7,12 +7,14 @@ import gg.warcraft.monolith.api.command.service.CommandRepository;
 import gg.warcraft.monolith.api.command.service.CommandServerAdapter;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 import static gg.warcraft.monolith.app.command.CommandTestUtils.randomArgument;
 import static gg.warcraft.monolith.app.command.CommandTestUtils.randomName;
@@ -29,11 +31,12 @@ public class DefaultCommandCommandServiceTest {
     @Mock private CommandServerAdapter mockCommandServerAdapter;
     @Mock private Command mockCommand;
     @Mock private CommandHandler mockCommandHandler;
+    @Mock private Logger mockLogger;
 
     @Before
     public void beforeEach() {
-        defaultCommandCommandService = new DefaultCommandCommandService(mockCommandQueryService, mockCommandRepository,
-                mockCommandServerAdapter);
+        defaultCommandCommandService = new DefaultCommandCommandService(mockCommandQueryService,
+                mockCommandRepository, mockCommandServerAdapter, mockLogger);
     }
 
     @After
@@ -75,6 +78,8 @@ public class DefaultCommandCommandServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    @Ignore
+    // NOTE this functionality has been replaced by simply logging a warning
     public void validateName_shouldThrowOnUnavailable() {
         // Given
         String name = randomName();
@@ -120,6 +125,8 @@ public class DefaultCommandCommandServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    @Ignore
+    // NOTE this functionality has been replaced by simply logging a warning
     public void validateAlias_shouldThrowOnUnavailable() {
         // Given
         String name = randomName();

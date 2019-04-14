@@ -1,10 +1,10 @@
 package gg.warcraft.monolith.api.config;
 
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 
 public interface BoundingBlockBoxConfiguration {
 
-    WorldType getWorld();
+    World getWorld();
 
     Vector3iConfiguration getMinimumcorner();
 

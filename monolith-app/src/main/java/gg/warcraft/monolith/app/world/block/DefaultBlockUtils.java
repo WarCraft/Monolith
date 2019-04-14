@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.app.world.block;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.BlockIntersection;
@@ -194,7 +194,7 @@ public class DefaultBlockUtils implements BlockUtils {
             }
         }
 
-        WorldType world = blocks.iterator().next().getLocation().getWorld().getType();
+        World world = blocks.iterator().next().getLocation().getWorld();
         Vector3ic minimumCorner = new Vector3i(minX, minY, minZ);
         Vector3ic maximumCorner = new Vector3i(maxX, maxY, maxZ);
         return boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
@@ -202,7 +202,7 @@ public class DefaultBlockUtils implements BlockUtils {
 
     @Override
     public List<Block> getWithinRadius(Location location, float radius) {
-        WorldType world = location.getWorld().getType();
+        World world = location.getWorld();
         Vector3ic minimumCorner = location.sub(radius, radius, radius)
                 .toBlockLocation()
                 .toVector();

@@ -77,7 +77,7 @@ public class DefaultBlockBackupRepository implements BlockBackupRepository {
 
     BlockBackupItem mapBackupToItem(BlockBackup backup) {
         BlockLocation location = backup.getLocation();
-        return new BlockBackupItem(backup.getId(), backup.getType(), backup.getData(), location.getWorld().getType(),
+        return new BlockBackupItem(backup.getId(), backup.getType(), backup.getData(), location.getWorld(),
                 location.getX(), location.getY(), location.getZ());
     }
 

@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.core.TaskService;
 import gg.warcraft.monolith.api.core.event.ServerShutdownEvent;
 import gg.warcraft.monolith.api.util.TimeUtils;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupQueryService;
@@ -135,7 +135,7 @@ public class MonolithPlugin extends JavaPlugin {
         float baseHealth = (float) localConfig.getDouble("baseHealth");
 
         String buildRepositoryWorldString = localConfig.getString("buildRepository.world");
-        WorldType buildRepositoryWorld = WorldType.valueOf(buildRepositoryWorldString);
+        World buildRepositoryWorld = World.valueOf(buildRepositoryWorldString);
         Vector3ic buildRepositoryMinimumCorner = new Vector3i(
                 localConfig.getInt("buildRepository.minimumCorner.x"),
                 localConfig.getInt("buildRepository.minimumCorner.y"),

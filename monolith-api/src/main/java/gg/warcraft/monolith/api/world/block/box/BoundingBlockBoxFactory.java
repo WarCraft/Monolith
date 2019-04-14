@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.world.block.box;
 
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.config.BoundingBlockBoxConfiguration;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
 
@@ -26,7 +26,7 @@ public interface BoundingBlockBoxFactory {
      * @param maximumCorner The maximum corner ,inclusive, of the bounding box.
      * @return A new {@code BoundingBlockBox} with boundaries at the specified corners. Never null.
      */
-    BoundingBlockBox createBoundingBlockBox(WorldType world, @Assisted("minimum") Vector3ic minimumCorner,
+    BoundingBlockBox createBoundingBlockBox(World world, @Assisted("minimum") Vector3ic minimumCorner,
                                             @Assisted("maximum") Vector3ic maximumCorner);
 
     /**
@@ -41,7 +41,7 @@ public interface BoundingBlockBoxFactory {
      * @return A new {@code BoundingBlockBox} with boundaries as specified in the configuration. Never null.
      */
     default BoundingBlockBox createBoundingBlockBox(BoundingBlockBoxConfiguration configuration) {
-        WorldType world = configuration.getWorld();
+        World world = configuration.getWorld();
         Vector3ic minimumCorner = new Vector3i(
                 configuration.getMinimumcorner().getX(),
                 configuration.getMinimumcorner().getY(),

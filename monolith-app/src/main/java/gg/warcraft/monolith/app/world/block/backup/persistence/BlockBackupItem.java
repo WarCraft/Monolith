@@ -2,7 +2,7 @@ package gg.warcraft.monolith.app.world.block.backup.persistence;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.BlockType;
 
 import java.util.UUID;
@@ -11,7 +11,7 @@ public class BlockBackupItem {
     private final UUID id;
     private final BlockType type;
     private final int data;
-    private final WorldType world;
+    private final World world;
     private final int x;
     private final int y;
     private final int z;
@@ -20,7 +20,7 @@ public class BlockBackupItem {
     public BlockBackupItem(@JsonProperty("id") UUID id,
                            @JsonProperty("type") BlockType type,
                            @JsonProperty("data") int data,
-                           @JsonProperty("world") WorldType world,
+                           @JsonProperty("world") World world,
                            @JsonProperty("x") int x,
                            @JsonProperty("y") int y,
                            @JsonProperty("z") int z) {
@@ -45,7 +45,7 @@ public class BlockBackupItem {
         return data;
     }
 
-    public WorldType getWorld() {
+    public World getWorld() {
         return world;
     }
 

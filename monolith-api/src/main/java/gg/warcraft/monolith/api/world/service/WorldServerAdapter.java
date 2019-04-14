@@ -4,7 +4,6 @@ import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.world.Sound;
 import gg.warcraft.monolith.api.world.SoundCategory;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.Sign;
@@ -26,7 +25,7 @@ public interface WorldServerAdapter {
      * @param type The type of world.
      * @return The world of this type.
      */
-    World getWorld(WorldType type);
+    World getWorld(World type);
 
     /**
      * @param world The world.
@@ -35,7 +34,7 @@ public interface WorldServerAdapter {
      * @param z     The Z coordinate.
      * @return The block in the given world at the specified coordinates.
      */
-    Block getBlockAt(WorldType world, int x, int y, int z);
+    Block getBlockAt(World world, int x, int y, int z);
 
     /**
      * @param world The world.
@@ -43,7 +42,7 @@ public interface WorldServerAdapter {
      * @param z     The Y coordinate.
      * @return The highest non-air block in the given world at the specified coordinates.
      */
-    Block getHighestBlockAt(WorldType world, int x, int z);
+    Block getHighestBlockAt(World world, int x, int z);
 
     /**
      * @param block The block to update. Can not be null.

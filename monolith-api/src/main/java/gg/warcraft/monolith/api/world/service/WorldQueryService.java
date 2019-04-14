@@ -1,7 +1,6 @@
 package gg.warcraft.monolith.api.world.service;
 
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.api.world.location.Location;
@@ -19,7 +18,7 @@ public interface WorldQueryService {
      * @param type The type of world.
      * @return The world of this type.
      */
-    World getWorld(WorldType type);
+    World getWorld(World type);
 
     /**
      * @param world The world.
@@ -28,14 +27,14 @@ public interface WorldQueryService {
      * @param z     The Z coordinate.
      * @return The block in the given world at the specified coordinates.
      */
-    Block getBlockAt(WorldType world, int x, int y, int z);
+    Block getBlockAt(World world, int x, int y, int z);
 
     /**
      * @param world  The world.
      * @param vector The vector.
      * @return The block at the given vector.
      */
-    Block getBlockAt(WorldType world, Vector3ic vector);
+    Block getBlockAt(World world, Vector3ic vector);
 
     /**
      * @param location The location.
@@ -55,7 +54,7 @@ public interface WorldQueryService {
      * @param z     The Y coordinate.
      * @return The highest non-air block in the given world at the specified coordinates.
      */
-    Block getHighestBlockAt(WorldType world, int x, int z);
+    Block getHighestBlockAt(World world, int x, int z);
 
     /**
      * @param location The location.

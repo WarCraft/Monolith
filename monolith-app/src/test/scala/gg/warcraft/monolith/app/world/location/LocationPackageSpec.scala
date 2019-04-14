@@ -1,13 +1,71 @@
-package gg.warcraft.monolith.app.world.location;
+package gg.warcraft.monolith.app.world.location
 
-import gg.warcraft.monolith.api.world.location.OrientedLocation;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
-import org.junit.Assert;
-import org.junit.Test;
+import org.scalatest.{FlatSpec, GivenWhenThen}
 
-public class SimpleOrientedLocationTest {
-    private static final float DELTA = 1E-10f;
+class LocationPackageSpec extends FlatSpec with GivenWhenThen {
+
+  "validateWorld" should "accept any world" in {
+    val world = random.world.world()
+    validateWorld(world)
+  }
+
+  it should "reject null" in {
+    assertThrows[IllegalArgumentException] {
+      validateWorld(null)
+    }
+  }
+
+  "validatePitch" should "accept the lower bound edge case" in {
+    validatePitch(-90)
+  }
+
+  it should "accept the upper bound edge case" in {
+    validatePitch(90)
+  }
+
+  it should "reject the lower bound edge case" in {
+    assertThrows[IllegalArgumentException] {
+      validatePitch(-90 - Float.MinPositiveValue)
+    }
+  }
+
+  it should "reject the upper bound edge case" in {
+    assertThrows[IllegalArgumentException] {
+      validatePitch(90 + Float.MinPositiveValue)
+    }
+  }
+
+  "validateYaw" should "accept the lower bound edge case" in {
+    validateYaw(-180)
+  }
+
+  it should "accept the upper bound edge case" in {
+    validateYaw(180 - Float.MinPositiveValue)
+  }
+
+  it should "reject the lower bound edge case" in {
+    assertThrows[IllegalArgumentException] {
+      validateYaw(-180 - Float.MinPositiveValue)
+    }
+  }
+
+  it should "reject the upper bound edge case" in {
+    assertThrows[IllegalArgumentException] {
+      validateYaw(180)
+    }
+  }
+
+  "orientationToDirection" should "" in {
+
+  }
+
+  "directionToOrientation" should "" in {
+
+  }
+}
+
+/*
+   private static final float DELTA = 1E-10f;
 
     @Test
     public void constructor_shouldCalculateCorrectDirectionLookingUp() {
@@ -19,7 +77,7 @@ public class SimpleOrientedLocationTest {
 
         // When
         OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.getDirection();
+        Vector3fc direction = location.toDirection();
 
         // Then
         Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
@@ -73,7 +131,7 @@ public class SimpleOrientedLocationTest {
 
         // When
         OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.getDirection();
+        Vector3fc direction = location.toDirection();
 
         // Then
         Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
@@ -109,7 +167,7 @@ public class SimpleOrientedLocationTest {
 
         // When
         OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.getDirection();
+        Vector3fc direction = location.toDirection();
 
         // Then
         Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
@@ -145,7 +203,7 @@ public class SimpleOrientedLocationTest {
 
         // When
         OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.getDirection();
+        Vector3fc direction = location.toDirection();
 
         // Then
         Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
@@ -181,7 +239,7 @@ public class SimpleOrientedLocationTest {
 
         // When
         OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.getDirection();
+        Vector3fc direction = location.toDirection();
 
         // Then
         Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
@@ -217,7 +275,7 @@ public class SimpleOrientedLocationTest {
 
         // When
         OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.getDirection();
+        Vector3fc direction = location.toDirection();
 
         // Then
         Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
@@ -282,4 +340,4 @@ public class SimpleOrientedLocationTest {
         // When
         new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
     }
-}
+ */

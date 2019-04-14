@@ -15,7 +15,7 @@ import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingServerAdapter;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
 import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 import gg.warcraft.monolith.app.AbstractMonolithModule;
@@ -39,9 +39,10 @@ import gg.warcraft.monolith.spigot.world.Overworld;
 import gg.warcraft.monolith.spigot.world.TheEnd;
 import gg.warcraft.monolith.spigot.world.TheNether;
 import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupCommandService;
+import gg.warcraft.monolith.spigot.world.location.ScalaSpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.service.SpigotWorldAdapter;
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.joml.Vector3ic;
 
@@ -55,7 +56,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
     public SpigotMonolithModule(String configurationService, String gitHubAccount, String gitHubRepository,
                                 String persistenceService, String redisHost, int redisPort,
-                                float baseHealth, WorldType buildRepositoryWorld,
+                                float baseHealth, World buildRepositoryWorld,
                                 Vector3ic buildRepositoryMinimumCorner, Vector3ic buildRepositoryMaximumCorner,
                                 Plugin plugin, String overworldName, String theNetherName, String theEndName) {
         super(configurationService, gitHubAccount, gitHubRepository, persistenceService, redisHost, redisPort,
@@ -77,6 +78,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         configureMenu();
         configureWorld();
         configureMapper();
+        configureScala(); // TODO remove when all mappers have been moved over
     }
 
     private void configureBukkit() {
@@ -88,14 +90,14 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         expose(Server.class);
 
         // Bukkit world bindings
-        bind(World.class).annotatedWith(Overworld.class).toProvider(() -> plugin.getServer().getWorld(overworldName));
-        expose(Key.get(World.class, Overworld.class));
+        bind(org.bukkit.World.class).annotatedWith(Overworld.class).toProvider(() -> plugin.getServer().getWorld(overworldName));
+        expose(Key.get(org.bukkit.World.class, Overworld.class));
 
-        bind(World.class).annotatedWith(TheNether.class).toProvider(() -> plugin.getServer().getWorld(theNetherName));
-        expose(Key.get(World.class, TheNether.class));
+        bind(org.bukkit.World.class).annotatedWith(TheNether.class).toProvider(() -> plugin.getServer().getWorld(theNetherName));
+        expose(Key.get(org.bukkit.World.class, TheNether.class));
 
-        bind(World.class).annotatedWith(TheEnd.class).toProvider(() -> plugin.getServer().getWorld(theEndName));
-        expose(Key.get(World.class, TheEnd.class));
+        bind(org.bukkit.World.class).annotatedWith(TheEnd.class).toProvider(() -> plugin.getServer().getWorld(theEndName));
+        expose(Key.get(org.bukkit.World.class, TheEnd.class));
     }
 
     private void configureCommand() {
@@ -163,5 +165,10 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
         bind(SpigotEntityEventMapper.class);
         expose(SpigotEntityEventMapper.class);
+    }
+
+    private void configureScala() {
+        bind(SpigotLocationMapper.class).to(ScalaSpigotLocationMapper.class);
+        expose(SpigotLocationMapper.class);
     }
 }

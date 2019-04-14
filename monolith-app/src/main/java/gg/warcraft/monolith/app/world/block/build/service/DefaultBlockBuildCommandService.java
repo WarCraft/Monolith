@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.BlockType;
@@ -48,7 +47,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     public DefaultBlockBuildCommandService(WorldQueryService worldQueryService, WorldCommandService worldCommandService,
                                            BlockBuildRepository buildRepository,
                                            BlockUtils blockUtils, BoundingBlockBoxFactory blockBoxFactory,
-                                           @PluginLogger Logger logger, @Named("BuildRepositoryWorld") WorldType world,
+                                           @PluginLogger Logger logger, @Named("BuildRepositoryWorld") World world,
                                            @Named("BuildRepositoryMinimumCorner") Vector3ic minimumCorner,
                                            @Named("BuildRepositoryMaximumCorner") Vector3ic maximumCorner) {
         this.worldQueryService = worldQueryService;
@@ -118,7 +117,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
 
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
         Vector3i maximumCorner = new Vector3i(maxX, maxY, maxZ);
-        return blockBoxFactory.createBoundingBlockBox(world.getType(), minimumCorner, maximumCorner);
+        return blockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
     }
 
     BlockBuild initializeBuild(Sign sign) {

@@ -78,7 +78,7 @@ import gg.warcraft.monolith.api.util.MathUtils;
 import gg.warcraft.monolith.api.util.StringUtils;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.DirectionUtils;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
 import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
 import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
@@ -200,13 +200,13 @@ public class AbstractMonolithModule extends PrivateModule {
     private final String gitHubAccount;
     private final String gitHubRepository;
     private final float baseHealth;
-    private final WorldType buildRepositoryWorld;
+    private final World buildRepositoryWorld;
     private final Vector3ic buildRepositoryMinimumCorner;
     private final Vector3ic buildRepositoryMaximumCorner;
 
     public AbstractMonolithModule(String configurationService, String gitHubAccount, String gitHubRepository,
                                   String persistenceService, String redisHost, int redisPort,
-                                  float baseHealth, WorldType buildRepositoryWorld,
+                                  float baseHealth, World buildRepositoryWorld,
                                   Vector3ic buildRepositoryMinimumCorner, Vector3ic buildRepositoryMaximumCorner) {
         this.configurationService = configurationService;
         this.gitHubAccount = gitHubAccount;
@@ -577,7 +577,7 @@ public class AbstractMonolithModule extends PrivateModule {
         expose(PortalRepository.class);
 
         // Misc world bindings
-        bind(WorldType.class).annotatedWith(Names.named("BuildRepositoryWorld"))
+        bind(World.class).annotatedWith(Names.named("BuildRepositoryWorld"))
                 .toInstance(buildRepositoryWorld);
         bind(Vector3ic.class).annotatedWith(Names.named("BuildRepositoryMinimumCorner"))
                 .toInstance(buildRepositoryMinimumCorner);

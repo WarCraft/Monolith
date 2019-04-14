@@ -1,6 +1,8 @@
 buildscript {
     repositories {
-        maven { url 'https://plugins.gradle.org/m2/' }
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
     }
 
     dependencies {
@@ -12,9 +14,7 @@ subprojects {
     group = 'gg.warcraft'
     version = '1.0.0-SNAPSHOT'
 
-    apply plugin: 'java'
-    apply plugin: 'java-library'
-    apply plugin: 'idea'
+    apply plugin: 'scala'
     apply plugin: 'maven-publish'
     apply plugin: 'com.github.johnrengelman.shadow'
 
@@ -26,9 +26,13 @@ subprojects {
     }
 
     dependencies {
-        testImplementation 'junit:junit:4.12'
-        testImplementation 'org.mockito:mockito-core:2.18.3'
-        testImplementation 'org.apache.commons:commons-lang3:3.3.1'
+        compile 'org.scala-lang:scala-library:2.12.8'
+
+        testCompile 'junit:junit:4.12' // TODO remove
+        testCompile 'org.mockito:mockito-core:2.18.3' // TODO remove
+        testCompile 'org.apache.commons:commons-lang3:3.3.1' // TODO rem.
+        testCompile 'org.scalatest:scalatest_2.12:3.0.7'
+        testCompile 'org.scalamock:scalamock-scalatest-support_2.12:3.6.0'
     }
 
     tasks.withType(JavaCompile) {
@@ -36,9 +40,16 @@ subprojects {
         options.compilerArgs << '-parameters'
     }
 
+    tasks.withType(ScalaCompile) {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << '-parameters'
+    }
+
     publishing {
         publications {
-            mavenJava(MavenPublication) { from components.java }
+            mavenJava(MavenPublication) {
+                from components.java
+            }
         }
     }
 

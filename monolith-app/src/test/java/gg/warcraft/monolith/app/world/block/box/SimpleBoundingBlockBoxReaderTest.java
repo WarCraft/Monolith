@@ -3,7 +3,6 @@ package gg.warcraft.monolith.app.world.block.box;
 import gg.warcraft.monolith.api.util.Offset;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
@@ -31,7 +30,6 @@ public class SimpleBoundingBlockBoxReaderTest {
 
     @Mock private WorldQueryService mockWorldQueryService;
     @Mock private BoundingBlockBox mockBoundingBlockBox;
-    @Mock private World mockWorld;
     @Mock private Block mockBlock11;
     @Mock private Block mockBlock13;
     @Mock private Block mockBlock31;
@@ -39,8 +37,8 @@ public class SimpleBoundingBlockBoxReaderTest {
 
     @Before
     public void beforeEach() {
-        when(mockWorld.getType()).thenReturn(WorldType.OVERWORLD);
-        when(mockBoundingBlockBox.getWorld()).thenReturn(mockWorld);
+        World world = World.OVERWORLD;
+        when(mockBoundingBlockBox.getWorld()).thenReturn(world);
 
         when(mockBoundingBlockBox.getNorthBoundary()).thenReturn(1);
         when(mockBoundingBlockBox.getEastBoundary()).thenReturn(3);
@@ -87,15 +85,15 @@ public class SimpleBoundingBlockBoxReaderTest {
         Block mockBlock23 = mock(Block.class);
         Block mockBlock32 = mock(Block.class);
 
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 1, 0, 1)).thenReturn(mockBlock11);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 1, 0, 2)).thenReturn(mockBlock12);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 1, 0, 3)).thenReturn(mockBlock13);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 2, 0, 1)).thenReturn(mockBlock21);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 2, 0, 2)).thenReturn(mockBlock22);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 2, 0, 3)).thenReturn(mockBlock23);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 3, 0, 1)).thenReturn(mockBlock31);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 3, 0, 2)).thenReturn(mockBlock32);
-        when(mockWorldQueryService.getBlockAt(mockWorld.getType(), 3, 0, 3)).thenReturn(mockBlock33);
+        when(mockWorldQueryService.getBlockAt(world, 1, 0, 1)).thenReturn(mockBlock11);
+        when(mockWorldQueryService.getBlockAt(world, 1, 0, 2)).thenReturn(mockBlock12);
+        when(mockWorldQueryService.getBlockAt(world, 1, 0, 3)).thenReturn(mockBlock13);
+        when(mockWorldQueryService.getBlockAt(world, 2, 0, 1)).thenReturn(mockBlock21);
+        when(mockWorldQueryService.getBlockAt(world, 2, 0, 2)).thenReturn(mockBlock22);
+        when(mockWorldQueryService.getBlockAt(world, 2, 0, 3)).thenReturn(mockBlock23);
+        when(mockWorldQueryService.getBlockAt(world, 3, 0, 1)).thenReturn(mockBlock31);
+        when(mockWorldQueryService.getBlockAt(world, 3, 0, 2)).thenReturn(mockBlock32);
+        when(mockWorldQueryService.getBlockAt(world, 3, 0, 3)).thenReturn(mockBlock33);
 
         northSimpleBoundingBlockBoxReader = new SimpleBoundingBlockBoxReader(mockWorldQueryService, mockBoundingBlockBox, Direction.NORTH);
         eastSimpleBoundingBlockBoxReader = new SimpleBoundingBlockBoxReader(mockWorldQueryService, mockBoundingBlockBox, Direction.EAST);

@@ -2,7 +2,6 @@ package gg.warcraft.monolith.app.world.service;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.api.world.location.Location;
@@ -19,23 +18,23 @@ public class DefaultWorldQueryService implements WorldQueryService {
     }
 
     @Override
-    public World getWorld(WorldType type) {
+    public World getWorld(World type) {
         return serverAdapter.getWorld(type);
     }
 
     @Override
-    public Block getBlockAt(WorldType world, int x, int y, int z) {
+    public Block getBlockAt(World world, int x, int y, int z) {
         return serverAdapter.getBlockAt(world, x, y, z);
     }
 
     @Override
-    public Block getBlockAt(WorldType world, Vector3ic vector) {
+    public Block getBlockAt(World world, Vector3ic vector) {
         return serverAdapter.getBlockAt(world, vector.x(), vector.y(), vector.z());
     }
 
     @Override
     public Block getBlockAt(BlockLocation location) {
-        return serverAdapter.getBlockAt(location.getWorld().getType(),
+        return serverAdapter.getBlockAt(location.getWorld(),
                 location.getX(), location.getY(), location.getZ());
     }
 
@@ -45,13 +44,13 @@ public class DefaultWorldQueryService implements WorldQueryService {
     }
 
     @Override
-    public Block getHighestBlockAt(WorldType world, int x, int z) {
+    public Block getHighestBlockAt(World world, int x, int z) {
         return serverAdapter.getHighestBlockAt(world, x, z);
     }
 
     @Override
     public Block getHighestBlockAt(BlockLocation location) {
         World world = location.getWorld();
-        return serverAdapter.getHighestBlockAt(world.getType(), location.getX(), location.getZ());
+        return serverAdapter.getHighestBlockAt(world, location.getX(), location.getZ());
     }
 }

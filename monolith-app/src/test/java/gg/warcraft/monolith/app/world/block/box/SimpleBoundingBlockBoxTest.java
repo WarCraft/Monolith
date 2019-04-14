@@ -1,7 +1,6 @@
 package gg.warcraft.monolith.app.world.block.box;
 
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.api.world.location.LocationFactory;
@@ -28,16 +27,14 @@ public class SimpleBoundingBlockBoxTest {
 
     @Mock private WorldQueryService mockWorldQueryService;
     @Mock private LocationFactory mockLocationFactory;
-    @Mock private World mockWorld;
     @Mock private BlockLocation mockBlockLocation;
 
     @Before
     public void beforeEach() {
-        WorldType world = WorldType.OVERWORLD;
-        when(mockWorld.getType()).thenReturn(WorldType.OVERWORLD);
-        when(mockWorldQueryService.getWorld(world)).thenReturn(mockWorld);
+        World world = World.OVERWORLD;
+        when(mockWorldQueryService.getWorld(world)).thenReturn(world);
 
-        when(mockBlockLocation.getWorld()).thenReturn(mockWorld);
+        when(mockBlockLocation.getWorld()).thenReturn(world);
 
         Vector3i minimumCorner = new Vector3i(0, 0, 0);
         Vector3i maximumCorner = new Vector3i(9, 9, 9);
@@ -55,7 +52,7 @@ public class SimpleBoundingBlockBoxTest {
 
     @After
     public void afterEach() {
-        reset(mockWorldQueryService, mockLocationFactory, mockWorld, mockBlockLocation);
+        reset(mockWorldQueryService, mockLocationFactory, mockBlockLocation);
     }
 
     @Test

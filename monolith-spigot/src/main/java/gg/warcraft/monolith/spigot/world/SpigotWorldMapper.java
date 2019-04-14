@@ -2,10 +2,12 @@ package gg.warcraft.monolith.spigot.world;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.WorldType;
-import gg.warcraft.monolith.app.world.SimpleWorld;
 
 import javax.annotation.Nullable;
+
+import static gg.warcraft.monolith.api.world.World.OVERWORLD;
+import static gg.warcraft.monolith.api.world.World.THE_END;
+import static gg.warcraft.monolith.api.world.World.THE_NETHER;
 
 public class SpigotWorldMapper {
     private final org.bukkit.World overworld;
@@ -22,11 +24,7 @@ public class SpigotWorldMapper {
     }
 
     public org.bukkit.World map(World world) {
-        return map(world.getType());
-    }
-
-    public org.bukkit.World map(WorldType type) {
-        switch (type) {
+        switch (world) {
             case THE_NETHER:
                 return nether;
             case THE_END:
@@ -40,12 +38,12 @@ public class SpigotWorldMapper {
     public World map(org.bukkit.World world) {
         switch (world.getEnvironment()) {
             case NETHER:
-                return new SimpleWorld(WorldType.THE_NETHER);
+                return THE_NETHER;
             case THE_END:
-                return new SimpleWorld(WorldType.THE_END);
+                return THE_END;
             case NORMAL:
             default:
-                return new SimpleWorld(WorldType.OVERWORLD);
+                return OVERWORLD;
         }
     }
 }

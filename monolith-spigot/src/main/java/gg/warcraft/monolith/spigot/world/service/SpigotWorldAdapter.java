@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.Sound;
 import gg.warcraft.monolith.api.world.SoundCategory;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
@@ -31,7 +31,6 @@ import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockTypeMapper;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Arrow;
@@ -87,20 +86,20 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     }
 
     @Override
-    public gg.warcraft.monolith.api.world.World getWorld(WorldType type) {
+    public gg.warcraft.monolith.api.world.World getWorld(World type) {
         return worldMapper.map(worldMapper.map(type));
     }
 
     @Override
-    public Block getBlockAt(WorldType world, int x, int y, int z) {
-        World spigotWorld = worldMapper.map(world);
+    public Block getBlockAt(World world, int x, int y, int z) {
+        org.bukkit.World spigotWorld = worldMapper.map(world);
         org.bukkit.block.Block spigotBlock = spigotWorld.getBlockAt(x, y, z);
         return blockMapper.map(spigotBlock);
     }
 
     @Override
-    public Block getHighestBlockAt(WorldType world, int x, int z) {
-        World spigotWorld = worldMapper.map(world);
+    public Block getHighestBlockAt(World world, int x, int z) {
+        org.bukkit.World spigotWorld = worldMapper.map(world);
         org.bukkit.block.Block spigotBlock = spigotWorld.getHighestBlockAt(x, z);
         while (blockTypeUtils.getNonSolids().contains(blockMapper.map(spigotBlock).getType())) {
             spigotBlock = spigotBlock.getRelative(BlockFace.DOWN);
@@ -318,7 +317,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     @Override
     public List<UUID> dropItemsAt(List<Item> items, Location location) {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
-        World world = spigotLocation.getWorld();
+        org.bukkit.World world = spigotLocation.getWorld();
         return items.stream()
                 .map(item -> {
                     ItemStack itemStack = itemMapper.map(item);
@@ -341,7 +340,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     @Override
     public void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch) {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
-        World world = spigotLocation.getWorld();
+        org.bukkit.World world = spigotLocation.getWorld();
         org.bukkit.Sound spigotSound = soundMapper.map(sound);
         org.bukkit.SoundCategory spigotSoundCategory = soundCategoryMapper.map(category);
         world.playSound(spigotLocation, spigotSound, spigotSoundCategory, volume, pitch);
@@ -350,7 +349,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     @Override
     public void strikeLightning(Location location, boolean ambient) {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
-        World world = spigotLocation.getWorld();
+        org.bukkit.World world = spigotLocation.getWorld();
         if (ambient) {
             world.strikeLightningEffect(spigotLocation);
         } else {
@@ -361,7 +360,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     @Override
     public void createExplosion(Location location, boolean ambient) {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
-        World world = spigotLocation.getWorld();
+        org.bukkit.World world = spigotLocation.getWorld();
         int strength = ambient ? 0 : 1;
         world.createExplosion(location.getX(), location.getY(), location.getZ(), strength, !ambient, !ambient);
     }
@@ -369,7 +368,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
     @Override
     public UUID createArrow(UUID shooterId, Location location, Vector3f direction, float speed, float spread) {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
-        World spigotWorld = spigotLocation.getWorld();
+        org.bukkit.World spigotWorld = spigotLocation.getWorld();
         Vector spigotDirection = new Vector(direction.x(), direction.y(), direction.z());
         Arrow arrow = spigotWorld.spawnArrow(spigotLocation, spigotDirection, speed, spread);
 

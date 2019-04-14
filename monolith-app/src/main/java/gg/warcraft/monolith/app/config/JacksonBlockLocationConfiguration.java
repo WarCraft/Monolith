@@ -3,16 +3,16 @@ package gg.warcraft.monolith.app.config;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gg.warcraft.monolith.api.config.BlockLocationConfiguration;
-import gg.warcraft.monolith.api.world.WorldType;
+import gg.warcraft.monolith.api.world.World;
 
 public class JacksonBlockLocationConfiguration implements BlockLocationConfiguration {
-    private final WorldType world;
+    private final World world;
     private final int x;
     private final int y;
     private final int z;
 
     @JsonCreator
-    public JacksonBlockLocationConfiguration(@JsonProperty("world") WorldType world,
+    public JacksonBlockLocationConfiguration(@JsonProperty("world") World world,
                                              @JsonProperty("x") int x,
                                              @JsonProperty("y") int y,
                                              @JsonProperty("z") int z) {
@@ -23,7 +23,7 @@ public class JacksonBlockLocationConfiguration implements BlockLocationConfigura
     }
 
     @Override
-    public WorldType getWorld() {
+    public World getWorld() {
         return world;
     }
 

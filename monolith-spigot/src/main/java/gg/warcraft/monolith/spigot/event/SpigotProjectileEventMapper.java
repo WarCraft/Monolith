@@ -99,6 +99,10 @@ public class SpigotProjectileEventMapper implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onProjectileHitEventMonitor(org.bukkit.event.entity.ProjectileHitEvent event) {
+        if (event.getEntity().isDead() || event.getEntity().doesBounce()) {
+            return;
+        }
+
         org.bukkit.entity.Projectile projectile = event.getEntity();
         ProjectileSource shooter = projectile.getShooter();
         UUID shooterId = null;
@@ -112,9 +116,9 @@ public class SpigotProjectileEventMapper implements Listener {
             entityId = event.getHitEntity().getUniqueId();
         }
 
-        ProjectileHitEvent preHitEvent = new SimpleProjectileHitEvent(projectile.getUniqueId(),
+        ProjectileHitEvent hitEvent = new SimpleProjectileHitEvent(projectile.getUniqueId(),
                 ProjectileType.ARROW, shooterId, block, entityId);
-        eventService.publish(preHitEvent);
+        eventService.publish(hitEvent);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

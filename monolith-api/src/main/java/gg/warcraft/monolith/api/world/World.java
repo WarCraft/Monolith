@@ -1,13 +1,10 @@
 package gg.warcraft.monolith.api.world;
 
 /**
- * The World interface serves as an abstraction layer between Monolith plugin code and the eventual server
- * implementation the plugin is run on.
+ * World represents the three types of worlds a location could be long to.
  */
-public interface World {
-
-    /**
-     * @return The type of this world.
-     */
-    WorldType getType();
+public enum World {
+    OVERWORLD,
+    THE_NETHER,
+    THE_END
 }

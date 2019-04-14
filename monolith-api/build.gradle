@@ -1,7 +1,7 @@
 dependencies {
-    api 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
-    api 'com.google.guava:guava:27.0-jre'
-    api 'com.google.inject:guice:4.2.1-SNAPSHOT'
-    api 'com.google.inject.extensions:guice-assistedinject:4.2.1-SNAPSHOT'
-    api 'org.joml:joml:1.9.9'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+    compile 'com.google.guava:guava:27.0-jre'
+    compile 'com.google.inject:guice:4.2.1-SNAPSHOT'
+    compile 'com.google.inject.extensions:guice-assistedinject:4.2.1-SNAPSHOT'
+    compile 'org.joml:joml:1.9.9'
 }
