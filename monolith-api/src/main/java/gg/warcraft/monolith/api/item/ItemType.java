@@ -354,7 +354,7 @@ public enum ItemType {
     SPRUCE_DOOR_BLOCK("minecraft:spruce_door", 193),
     BIRCH_DOOR_BLOCK("minecraft:birch_door", 194),
     JUNGLE_DOOR_BLOCK("minecraft:jungle_door", 195),
-    ACACIA_DOOR_BLOCK("minecraft:acacia_door", 196),
+    ACACIA_DOOR_BLOCK("minecraft:acacia_door", 196), // TODO remove all these door block items? they dont appear to be actual items
     DARK_OAK_DOOR_BLOCK("minecraft:dark_oak_door", 197),
     END_ROD("minecraft:end_rod", 198),
     CHORUS_PLANT("minecraft:chorus_plant", 199),
