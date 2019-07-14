@@ -10,6 +10,10 @@ case class Orientation(
   validatePitch(pitch)
   validateYaw(yaw)
 
+  def getPitch: Float = pitch
+
+  def getYaw: Float = yaw
+
   def toVector: Vector3f = orientationToDirection(pitch, yaw)
 
   def withPitch(pitch: Float): Orientation = copy(pitch = pitch)
