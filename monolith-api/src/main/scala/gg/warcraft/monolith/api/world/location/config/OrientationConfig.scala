@@ -6,4 +6,8 @@ import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
 case class OrientationConfig(
   @JsonProperty("pitch") pitch: Float,
   @JsonProperty("yaw") yaw: Float,
-)
+) {
+  def getPitch: Float = pitch
+
+  def getYaw: Float = yaw
+}
