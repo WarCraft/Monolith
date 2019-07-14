@@ -24,7 +24,6 @@ import gg.warcraft.monolith.api.world.chunk.event.ChunkPreUnloadEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkUnloadedEvent;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.api.world.location.Location;
-import gg.warcraft.monolith.api.world.location.LocationFactory;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDespawnEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDespawnEvent;
@@ -72,7 +71,6 @@ public class SpigotWorldEventMapper implements Listener {
     private final SpigotItemMapper itemMapper;
     private final SpigotEntityTypeMapper entityTypeMapper;
     private final WorldCommandService worldCommandService;
-    private final LocationFactory locationFactory;
     private final SpigotLocationMapper locationMapper;
 
     private final Map<Event, List<Item>> alternativeDropsByEvent;
@@ -81,14 +79,13 @@ public class SpigotWorldEventMapper implements Listener {
     public SpigotWorldEventMapper(EventService eventService, SpigotBlockMapper blockMapper,
                                   SpigotBlockFaceMapper blockFaceMapper, SpigotItemMapper itemMapper,
                                   SpigotEntityTypeMapper entityTypeMapper, SpigotLocationMapper locationMapper,
-                                  WorldCommandService worldCommandService, LocationFactory locationFactory) {
+                                  WorldCommandService worldCommandService) {
         this.eventService = eventService;
         this.blockMapper = blockMapper;
         this.blockFaceMapper = blockFaceMapper;
         this.itemMapper = itemMapper;
         this.entityTypeMapper = entityTypeMapper;
         this.worldCommandService = worldCommandService;
-        this.locationFactory = locationFactory;
         this.locationMapper = locationMapper;
         this.alternativeDropsByEvent = new HashMap<>();
     }
@@ -133,7 +130,7 @@ public class SpigotWorldEventMapper implements Listener {
 
         if (alternativeDrops != null && !alternativeDrops.isEmpty()) {
             BlockLocation blockLocation = block.getLocation();
-            Location dropLocation = locationFactory.createLocation(blockLocation.getWorld(),
+            Location dropLocation = new Location(blockLocation.getWorld(),
                     blockLocation.getX() + 0.5f, blockLocation.getY() + 0.5f, blockLocation.getZ() + 0.5f);
             worldCommandService.dropItemsAt(alternativeDrops, dropLocation);
         }

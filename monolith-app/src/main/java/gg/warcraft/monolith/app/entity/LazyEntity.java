@@ -13,7 +13,8 @@ import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.entity.team.service.TeamQueryService;
 import gg.warcraft.monolith.api.util.Lazy;
-import gg.warcraft.monolith.api.world.location.OrientedLocation;
+import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.location.Orientation;
 import org.joml.AABBf;
 import org.joml.Vector3f;
 
@@ -56,13 +57,23 @@ public class LazyEntity implements Entity {
     }
 
     @Override
-    public OrientedLocation getLocation() {
+    public Location getLocation() {
         return serverData.get().getLocation();
     }
 
     @Override
-    public OrientedLocation getEyeLocation() {
+    public Orientation getOrientation() {
+        return serverData.get().getOrientation();
+    }
+
+    @Override
+    public Location getEyeLocation() {
         return serverData.get().getEyeLocation();
+    }
+
+    @Override
+    public Orientation getEyeOrientation() {
+        return serverData.get().getEyeOrientation();
     }
 
     @Override

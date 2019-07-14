@@ -6,7 +6,8 @@ import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.Equipment;
 import gg.warcraft.monolith.api.item.Item;
-import gg.warcraft.monolith.api.world.location.OrientedLocation;
+import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.location.Orientation;
 import gg.warcraft.monolith.app.entity.SimpleEquipment;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
@@ -58,15 +59,29 @@ public class SpigotEntityData implements EntityServerData {
     }
 
     @Override
-    public OrientedLocation getLocation() {
-        OrientedLocation location = locationMapper.map(entity.getLocation());
+    public Location getLocation() {
+        Location location = locationMapper.map(entity.getLocation());
         return checkNotNull(location);
     }
 
     @Override
-    public OrientedLocation getEyeLocation() {
-        OrientedLocation eyeLocation = locationMapper.map(entity.getEyeLocation());
+    public Orientation getOrientation() {
+        Orientation orientation =
+                locationMapper.mapWithOrientation(entity.getLocation())._2();
+        return checkNotNull(orientation);
+    }
+
+    @Override
+    public Location getEyeLocation() {
+        Location eyeLocation = locationMapper.map(entity.getEyeLocation());
         return checkNotNull(eyeLocation);
+    }
+
+    @Override
+    public Orientation getEyeOrientation() {
+        Orientation orientation =
+                locationMapper.mapWithOrientation(entity.getEyeLocation())._2();
+        return checkNotNull(orientation);
     }
 
     @Override

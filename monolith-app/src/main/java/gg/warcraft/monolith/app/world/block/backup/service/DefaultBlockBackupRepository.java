@@ -9,7 +9,6 @@ import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupRepository;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.LocationFactory;
 import gg.warcraft.monolith.app.world.block.backup.SimpleBlockBackup;
 import gg.warcraft.monolith.app.world.block.backup.persistence.BlockBackupItem;
 
@@ -24,15 +23,13 @@ public class DefaultBlockBackupRepository implements BlockBackupRepository {
     private static final String KEY_PREFIX = "blockbackup:";
 
     private final PersistenceService persistenceService;
-    private final LocationFactory locationFactory;
     private final ObjectMapper jsonMapper;
     private final Logger pluginLogger;
 
     @Inject
-    public DefaultBlockBackupRepository(PersistenceService persistenceService, LocationFactory locationFactory,
+    public DefaultBlockBackupRepository(PersistenceService persistenceService,
                                         @JsonMapper ObjectMapper jsonMapper, @PluginLogger Logger pluginLogger) {
         this.persistenceService = persistenceService;
-        this.locationFactory = locationFactory;
         this.jsonMapper = jsonMapper;
         this.pluginLogger = pluginLogger;
     }
@@ -42,8 +39,7 @@ public class DefaultBlockBackupRepository implements BlockBackupRepository {
     }
 
     BlockBackup mapItemToBackup(BlockBackupItem item) {
-        BlockLocation location =
-                locationFactory.createBlockLocation(item.getWorld(), item.getX(), item.getY(), item.getZ());
+        BlockLocation location = new BlockLocation(item.getWorld(), item.getX(), item.getY(), item.getZ());
         return new SimpleBlockBackup(item.getId(), item.getType(), item.getData(), location);
     }
 

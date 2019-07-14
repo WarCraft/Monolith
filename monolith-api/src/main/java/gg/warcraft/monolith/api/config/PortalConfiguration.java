@@ -1,12 +1,13 @@
 package gg.warcraft.monolith.api.config;
 
 import gg.warcraft.monolith.api.world.Direction;
+import gg.warcraft.monolith.api.world.location.config.LocationConfig;
 
 public interface PortalConfiguration {
 
-    LocationConfiguration getEntryLocation();
+    LocationConfig getEntryLocation();
 
-    LocationConfiguration getExitLocation();
+    LocationConfig getExitLocation();
 
     Direction getExitOrientation();
 }

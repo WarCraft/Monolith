@@ -6,7 +6,8 @@ import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.item.Inventory;
-import gg.warcraft.monolith.api.world.location.OrientedLocation;
+import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.location.Orientation;
 import org.joml.AABBf;
 import org.joml.Vector3f;
 
@@ -32,13 +33,23 @@ public interface PlayerDecorator extends Player {
     }
 
     @Override
-    default OrientedLocation getLocation() {
+    default Location getLocation() {
         return getPlayer().getLocation();
     }
 
     @Override
-    default OrientedLocation getEyeLocation() {
+    default Orientation getOrientation() {
+        return getPlayer().getOrientation();
+    }
+
+    @Override
+    default Location getEyeLocation() {
         return getPlayer().getEyeLocation();
+    }
+
+    @Override
+    default Orientation getEyeOrientation() {
+        return getPlayer().getEyeOrientation();
     }
 
     @Override

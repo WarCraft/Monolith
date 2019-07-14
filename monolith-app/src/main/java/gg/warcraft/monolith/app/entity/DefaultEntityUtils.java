@@ -10,8 +10,6 @@ import gg.warcraft.monolith.api.world.block.BlockIntersection;
 import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
 import gg.warcraft.monolith.api.world.location.Location;
-import gg.warcraft.monolith.api.world.location.LocationFactory;
-import gg.warcraft.monolith.api.world.location.OrientedLocation;
 import org.joml.AABBf;
 import org.joml.Intersectionf;
 import org.joml.LineSegmentf;
@@ -25,15 +23,13 @@ import java.util.function.Predicate;
 
 public class DefaultEntityUtils implements EntityUtils {
     private final EntityQueryService entityQueryService;
-    private final LocationFactory locationFactory;
     private final BlockUtils blockUtils;
     private final BlockTypeUtils blockTypeUtils;
 
     @Inject
-    public DefaultEntityUtils(EntityQueryService entityQueryService, LocationFactory locationFactory,
+    public DefaultEntityUtils(EntityQueryService entityQueryService,
                               BlockUtils blockUtils, BlockTypeUtils blockTypeUtils) {
         this.entityQueryService = entityQueryService;
-        this.locationFactory = locationFactory;
         this.blockUtils = blockUtils;
         this.blockTypeUtils = blockTypeUtils;
     }
@@ -53,7 +49,7 @@ public class DefaultEntityUtils implements EntityUtils {
         float centerY = boundingBox.minY + deltaY;
         float centerZ = boundingBox.minZ + deltaZ;
 
-        Location center = locationFactory.createLocation(origin.getWorld(), centerX, centerY, centerZ);
+        Location center = new Location(origin.getWorld(), centerX, centerY, centerZ);
         LineSegmentf intersectionLine = new LineSegmentf(originVector, targetVector);
         List<Entity> nearbyEntities = entityQueryService.getNearbyEntities(center, deltaX, deltaY, deltaZ);
         float closestIntersectionScalar = Float.MAX_VALUE;
@@ -76,7 +72,7 @@ public class DefaultEntityUtils implements EntityUtils {
         if (closestIntersectedEntity != null) {
             Vector3fc distanceAlongRay = targetVector.min(originVector, new Vector3f()).mul(closestIntersectionScalar);
             Vector3fc intersection = originVector.add(distanceAlongRay, new Vector3f());
-            Location intersectionLocation = locationFactory.createLocation(origin.getWorld(),
+            Location intersectionLocation = new Location(origin.getWorld(),
                     intersection.x(), intersection.y(), intersection.z());
             return new SimpleEntityIntersection(closestIntersectedEntity, intersectionLocation);
         }
@@ -86,8 +82,8 @@ public class DefaultEntityUtils implements EntityUtils {
     @Override
     public EntityTarget calculateTarget(UUID entityId, float range, boolean ignoreFriendlies) {
         Entity entity = entityQueryService.getEntity(entityId);
-        OrientedLocation origin = entity.getEyeLocation();
-        Vector3fc direction = origin.toDirection();
+        Location origin = entity.getEyeLocation();
+        Vector3fc direction = entity.getEyeOrientation().toVector();
         Location target = origin.add(direction.mul(range, new Vector3f()));
 
         BlockIntersection blockIntersection = blockUtils.intersectBlock(origin, target, blockTypeUtils.getNonSolids());

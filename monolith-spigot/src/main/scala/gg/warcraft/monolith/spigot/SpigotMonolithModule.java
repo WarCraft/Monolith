@@ -39,8 +39,6 @@ import gg.warcraft.monolith.spigot.world.Overworld;
 import gg.warcraft.monolith.spigot.world.TheEnd;
 import gg.warcraft.monolith.spigot.world.TheNether;
 import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupCommandService;
-import gg.warcraft.monolith.spigot.world.location.ScalaSpigotLocationMapper;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.service.SpigotWorldAdapter;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -78,7 +76,6 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         configureMenu();
         configureWorld();
         configureMapper();
-        configureScala(); // TODO remove when all mappers have been moved over
     }
 
     private void configureBukkit() {
@@ -165,10 +162,5 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
         bind(SpigotEntityEventMapper.class);
         expose(SpigotEntityEventMapper.class);
-    }
-
-    private void configureScala() {
-        bind(SpigotLocationMapper.class).to(ScalaSpigotLocationMapper.class);
-        expose(SpigotLocationMapper.class);
     }
 }

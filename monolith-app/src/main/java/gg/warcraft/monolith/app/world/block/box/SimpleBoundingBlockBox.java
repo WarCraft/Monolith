@@ -10,7 +10,6 @@ import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxReader;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.LocationFactory;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
@@ -24,7 +23,6 @@ import java.util.stream.Stream;
 
 public class SimpleBoundingBlockBox implements BoundingBlockBox {
     private final WorldQueryService worldQueryService;
-    private final LocationFactory locationFactory;
     private final World world;
     private final BlockLocation minimumCorner;
     private final BlockLocation maximumCorner;
@@ -36,15 +34,14 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     private final int maxZ;
 
     @Inject
-    public SimpleBoundingBlockBox(WorldQueryService worldQueryService, LocationFactory locationFactory,
+    public SimpleBoundingBlockBox(WorldQueryService worldQueryService,
                                   @Assisted World world, @Assisted("minimum") Vector3ic minimumCorner,
                                   @Assisted("maximum") Vector3ic maximumCorner) {
         this.worldQueryService = worldQueryService;
-        this.locationFactory = locationFactory;
         this.world = worldQueryService.getWorld(world);
-        this.minimumCorner = locationFactory.createBlockLocation(world, minimumCorner.x(), minimumCorner.y(),
+        this.minimumCorner = new BlockLocation(world, minimumCorner.x(), minimumCorner.y(),
                 minimumCorner.z());
-        this.maximumCorner = locationFactory.createBlockLocation(world, maximumCorner.x(), maximumCorner.y(),
+        this.maximumCorner = new BlockLocation(world, maximumCorner.x(), maximumCorner.y(),
                 maximumCorner.z());
         this.minX = Math.min(minimumCorner.x(), maximumCorner.x());
         this.maxX = Math.max(minimumCorner.x(), maximumCorner.x());
@@ -160,7 +157,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         pivotX + deltaNorthBoundary,
                         getUpperBoundary(),
                         pivotZ + deltaEastBoundary);
-                return new SimpleBoundingBlockBox(worldQueryService, locationFactory, world,
+                return new SimpleBoundingBlockBox(worldQueryService, world,
                         newMinimumCorner90, newMaximumCorner90);
             case 2:
                 Vector3i newMinimumCorner180 = new Vector3i(
@@ -171,7 +168,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         pivotX + deltaWestBoundary,
                         getUpperBoundary(),
                         pivotZ + deltaNorthBoundary);
-                return new SimpleBoundingBlockBox(worldQueryService, locationFactory, world,
+                return new SimpleBoundingBlockBox(worldQueryService, world,
                         newMinimumCorner180, newMaximumCorner180);
             case 3:
                 Vector3i newMinimumCorner270 = new Vector3i(
@@ -182,7 +179,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         pivotX + deltaSouthBoundary,
                         getUpperBoundary(),
                         pivotZ + deltaWestBoundary);
-                return new SimpleBoundingBlockBox(worldQueryService, locationFactory, world,
+                return new SimpleBoundingBlockBox(worldQueryService, world,
                         newMinimumCorner270, newMaximumCorner270);
             default:
                 throw new IllegalArgumentException("Failed to rotate bounding block box for illegal rotation of " + degrees);
@@ -193,7 +190,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     public BoundingBlockBox translate(Vector3ic vector) {
         Vector3i newMinimumCorner = new Vector3i(minimumCorner.toVector()).add(vector);
         Vector3i newMaximumCorner = new Vector3i(maximumCorner.toVector()).add(vector);
-        return new SimpleBoundingBlockBox(worldQueryService, locationFactory, world,
+        return new SimpleBoundingBlockBox(worldQueryService, world,
                 newMinimumCorner, newMaximumCorner);
     }
 

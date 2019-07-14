@@ -3,7 +3,6 @@ package gg.warcraft.monolith.app.world.block.box;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.LocationFactory;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
@@ -17,17 +16,16 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleBoundingBlockBoxTest {
     private SimpleBoundingBlockBox simpleBoundingBlockBox;
 
-    @Mock private WorldQueryService mockWorldQueryService;
-    @Mock private LocationFactory mockLocationFactory;
-    @Mock private BlockLocation mockBlockLocation;
+    @Mock
+    private WorldQueryService mockWorldQueryService;
+    @Mock
+    private BlockLocation mockBlockLocation;
 
     @Before
     public void beforeEach() {
@@ -43,16 +41,16 @@ public class SimpleBoundingBlockBoxTest {
         when(mockBlockMinimumCorner.toVector()).thenReturn(minimumCorner);
         BlockLocation mockBlockMaximumCorner = mock(BlockLocation.class);
         when(mockBlockMaximumCorner.toVector()).thenReturn(maximumCorner);
-        when(mockLocationFactory.createBlockLocation(world, 0, 0, 0)).thenReturn(mockBlockMinimumCorner);
-        when(mockLocationFactory.createBlockLocation(world, 9, 9, 9)).thenReturn(mockBlockMaximumCorner);
+        when(new BlockLocation(world, 0, 0, 0)).thenReturn(mockBlockMinimumCorner);
+        when(new BlockLocation(world, 9, 9, 9)).thenReturn(mockBlockMaximumCorner);
 
-        simpleBoundingBlockBox = new SimpleBoundingBlockBox(mockWorldQueryService, mockLocationFactory, world,
+        simpleBoundingBlockBox = new SimpleBoundingBlockBox(mockWorldQueryService, world,
                 minimumCorner, maximumCorner);
     }
 
     @After
     public void afterEach() {
-        reset(mockWorldQueryService, mockLocationFactory, mockBlockLocation);
+        reset(mockWorldQueryService, mockBlockLocation);
     }
 
     @Test

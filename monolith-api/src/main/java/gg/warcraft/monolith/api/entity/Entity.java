@@ -3,7 +3,8 @@ package gg.warcraft.monolith.api.entity;
 import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.team.Team;
-import gg.warcraft.monolith.api.world.location.OrientedLocation;
+import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.location.Orientation;
 import org.joml.AABBf;
 import org.joml.Vector3f;
 
@@ -32,12 +33,16 @@ public interface Entity {
     /**
      * @return The location of this entity. Never null.
      */
-    OrientedLocation getLocation();
+    Location getLocation();
+
+    Orientation getOrientation();
 
     /**
      * @return The eye location of this entity. Never null.
      */
-    OrientedLocation getEyeLocation();
+    Location getEyeLocation();
+
+    Orientation getEyeOrientation();
 
     /**
      * @return The velocity of this entity. Never null.

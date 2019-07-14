@@ -93,7 +93,6 @@ import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingCommandService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingQueryService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingRepository;
-import gg.warcraft.monolith.api.world.location.LocationFactory;
 import gg.warcraft.monolith.api.world.portal.service.PortalCommandService;
 import gg.warcraft.monolith.api.world.portal.service.PortalQueryService;
 import gg.warcraft.monolith.api.world.portal.service.PortalRepository;
@@ -182,7 +181,6 @@ import gg.warcraft.monolith.app.world.block.build.service.DefaultBlockBuildRepos
 import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingCommandService;
 import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingQueryService;
 import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingRepository;
-import gg.warcraft.monolith.app.world.location.DefaultLocationFactory;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalCommandService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalQueryService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalRepository;
@@ -519,9 +517,6 @@ public class AbstractMonolithModule extends PrivateModule {
         bind(DirectionUtils.class).to(DefaultDirectionUtils.class);
         expose(DirectionUtils.class);
 
-        bind(LocationFactory.class).to(DefaultLocationFactory.class);
-        expose(LocationFactory.class);
-
         // Block bindings
         bind(BlockUtils.class).to(DefaultBlockUtils.class);
         expose(BlockUtils.class);
@@ -530,7 +525,7 @@ public class AbstractMonolithModule extends PrivateModule {
         expose(BlockTypeUtils.class);
 
         install(new FactoryModuleBuilder()
-                .implement(BoundingBlockBox.class, SimpleBoundingBlockBox.class)
+                .implement(BoundingBlockBox.class, Names.named("simple"), SimpleBoundingBlockBox.class)
                 .build(BoundingBlockBoxFactory.class));
         expose(BoundingBlockBoxFactory.class);
 
