@@ -35,6 +35,17 @@ subprojects {
         testCompile 'org.scalamock:scalamock-scalatest-support_2.12:3.6.0'
     }
 
+    sourceSets {
+        main {
+            scala {
+                srcDirs = ['src/main/scala', 'src/main/java']
+            }
+            java {
+                srcDirs = []
+            }
+        }
+    }
+
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
         options.compilerArgs << '-parameters'
