@@ -55,7 +55,7 @@ case class BlockLocation(
 }
 
 object BlockLocation {
-  def apply(config: BlockLocationConfig) {
+  def apply(config: BlockLocationConfig): BlockLocation = {
     BlockLocation(config.world, config.x, config.y, config.z)
   }
 }

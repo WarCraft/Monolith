@@ -22,12 +22,12 @@ case class Orientation(
 }
 
 object Orientation {
-  def apply(direction: Vector3fc) {
+  def apply(direction: Vector3fc): Orientation = {
     val (pitch, yaw) = directionToOrientation(direction)
     Orientation(pitch, yaw)
   }
 
-  def apply(config: OrientationConfig) {
+  def apply(config: OrientationConfig): Orientation = {
     Orientation(config.pitch, config.yaw)
   }
 }

@@ -56,7 +56,7 @@ case class Location(
 }
 
 object Location {
-  def apply(config: LocationConfig) {
+  def apply(config: LocationConfig): Location = {
     Location(config.world, config.x, config.y, config.z)
   }
 }
