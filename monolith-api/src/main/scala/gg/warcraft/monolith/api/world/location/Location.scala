@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world.location
 
 import gg.warcraft.monolith.api.world.World
-import gg.warcraft.monolith.api.world.location.config.LocationConfig
+import gg.warcraft.monolith.api.world.location.config.{LocationConfig, LocationWithOrientationConfig}
 import org.joml.{Vector3f, Vector3fc}
 
 case class Location(
@@ -57,6 +57,10 @@ case class Location(
 
 object Location {
   def apply(config: LocationConfig): Location = {
+    Location(config.world, config.x, config.y, config.z)
+  }
+
+  def apply(config: LocationWithOrientationConfig): Location = {
     Location(config.world, config.x, config.y, config.z)
   }
 }

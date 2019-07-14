@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.location
 
-import gg.warcraft.monolith.api.world.location.config.OrientationConfig
+import gg.warcraft.monolith.api.world.location.config.{LocationWithOrientationConfig, OrientationConfig}
 import org.joml.{Vector3f, Vector3fc}
 
 case class Orientation(
@@ -28,6 +28,10 @@ object Orientation {
   }
 
   def apply(config: OrientationConfig): Orientation = {
+    Orientation(config.pitch, config.yaw)
+  }
+
+  def apply(config: LocationWithOrientationConfig): Orientation = {
     Orientation(config.pitch, config.yaw)
   }
 }
