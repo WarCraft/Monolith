@@ -8,6 +8,5 @@ case class OrientationConfig(
   @JsonProperty("yaw") yaw: Float,
 ) {
   def getPitch: Float = pitch
-
   def getYaw: Float = yaw
 }

@@ -11,10 +11,7 @@ case class BlockLocationConfig(
   @JsonProperty("z") z: Int
 ) {
   def getWorld: World = world
-
   def getX: Int = x
-
   def getY: Int = y
-
   def getZ: Int = z
 }

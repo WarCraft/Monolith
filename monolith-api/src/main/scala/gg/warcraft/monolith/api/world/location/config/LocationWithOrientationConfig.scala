@@ -13,14 +13,9 @@ case class LocationWithOrientationConfig(
   @JsonProperty("yaw") yaw: Float,
 ) {
   def getWorld: World = world
-
   def getX: Float = x
-
   def getY: Float = y
-
   def getZ: Float = z
-
   def getPitch: Float = pitch
-
   def getYaw: Float = yaw
 }

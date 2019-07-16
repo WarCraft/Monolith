@@ -11,10 +11,7 @@ case class LocationConfig(
   @JsonProperty("z") z: Float
 ) {
   def getWorld: World = world
-
   def getX: Float = x
-
   def getY: Float = y
-
   def getZ: Float = z
 }
