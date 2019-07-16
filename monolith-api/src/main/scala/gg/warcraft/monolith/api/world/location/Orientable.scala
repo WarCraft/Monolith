@@ -7,7 +7,6 @@ trait Orientable {
   val yaw: Float
 
   validatePitch(pitch)
-  validateYaw(yaw)
 
   def getPitch: Float = pitch
 

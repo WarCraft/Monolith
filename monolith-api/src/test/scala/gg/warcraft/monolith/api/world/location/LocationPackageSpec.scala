@@ -1,10 +1,16 @@
 package gg.warcraft.monolith.api.world.location
 
+import org.joml.Vector3f
+import org.scalactic.TolerantNumerics
 import org.scalatest.{FlatSpec, GivenWhenThen}
 
 class LocationPackageSpec extends FlatSpec with GivenWhenThen {
+  implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
 
-  "validateWorld" should "accept any world" in {
+  private val inverseTanOneDivSqrtTwoToDegrees =
+    Math.toDegrees(Math.atan(1.0 / Math.sqrt(2.0))).toFloat
+
+  "validateWorld" should "accept any non-null world" in {
     val world = random.world.world()
     validateWorld(world)
   }
@@ -25,319 +31,478 @@ class LocationPackageSpec extends FlatSpec with GivenWhenThen {
 
   it should "reject the lower bound edge case" in {
     assertThrows[IllegalArgumentException] {
-      validatePitch(-90 - Float.MinPositiveValue)
+      validatePitch(-90 - 1e-5f)
     }
   }
 
   it should "reject the upper bound edge case" in {
     assertThrows[IllegalArgumentException] {
-      validatePitch(90 + Float.MinPositiveValue)
+      validatePitch(90 + 1e-5f)
     }
   }
 
-  "validateYaw" should "accept the lower bound edge case" in {
-    validateYaw(-180)
+  "clampYaw" should "accept the lower bound edge case" in {
+    assert(clampYaw(-180) === -180f)
   }
 
   it should "accept the upper bound edge case" in {
-    validateYaw(180 - Float.MinPositiveValue)
+    assert(clampYaw(180 - 1e-5f) === 180f - 1e-5f)
   }
 
-  it should "reject the lower bound edge case" in {
-    assertThrows[IllegalArgumentException] {
-      validateYaw(-180 - Float.MinPositiveValue)
-    }
+  it should "adjust the lower bound edge case" in {
+    assert(clampYaw(-180 - 1e-5f) === 180f - 1e-5f)
   }
 
-  it should "reject the upper bound edge case" in {
-    assertThrows[IllegalArgumentException] {
-      validateYaw(180)
-    }
+  it should "adjust the upper bound edge case" in {
+    assert(clampYaw(180) === -180f)
   }
 
-  "orientationToDirection" should "" in {
+  "orientationToDirection" should "calculate up direction" in {
+    // Given
+    val pitch = -90f
+    val yaw = 0f
 
+    val expectedDirection = new Vector3f(0, 1, 0)
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
   }
 
-  "directionToOrientation" should "" in {
+  it should "calculate down direction" in {
+    // Given
+    val pitch = 90f
+    val yaw = 0f
 
+    val expectedDirection = new Vector3f(0, -1, 0)
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate north direction" in {
+    // Given
+    val pitch = 0f
+    val yaw = -180f
+
+    val expectedDirection = new Vector3f(0, 0, -1)
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate east direction" in {
+    // Given
+    val pitch = 0f
+    val yaw = -90f
+
+    val expectedDirection = new Vector3f(1, 0, 0)
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate south direction" in {
+    // Given
+    val pitch = 0f
+    val yaw = 0f
+
+    val expectedDirection = new Vector3f(0, 0, 1)
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate west direction" in {
+    // Given
+    val pitch = 0f
+    val yaw = 90f
+
+    val expectedDirection = new Vector3f(-1, 0, 0)
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate north-east-up direction" in {
+    // Given
+    val pitch = -inverseTanOneDivSqrtTwoToDegrees
+    val yaw = -135f
+
+    val expectedDirection = new Vector3f(1, 1, -1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate north-east-down direction" in {
+    // Given
+    val pitch = inverseTanOneDivSqrtTwoToDegrees
+    val yaw = -135f
+
+    val expectedDirection = new Vector3f(1, -1, -1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate south-east-up direction" in {
+    // Given
+    val pitch = -inverseTanOneDivSqrtTwoToDegrees
+    val yaw = -45f
+
+    val expectedDirection = new Vector3f(1, 1, 1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate south-east-down direction" in {
+    // Given
+    val pitch = inverseTanOneDivSqrtTwoToDegrees
+    val yaw = -45f
+
+    val expectedDirection = new Vector3f(1, -1, 1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate south-west-up direction" in {
+    // Given
+    val pitch = -inverseTanOneDivSqrtTwoToDegrees
+    val yaw = 45f
+
+    val expectedDirection = new Vector3f(-1, 1, 1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate south-west-down direction" in {
+    // Given
+    val pitch = inverseTanOneDivSqrtTwoToDegrees
+    val yaw = 45f
+
+    val expectedDirection = new Vector3f(-1, -1, 1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate north-west-up direction" in {
+    // Given
+    val pitch = -inverseTanOneDivSqrtTwoToDegrees
+    val yaw = 135f
+
+    val expectedDirection = new Vector3f(-1, 1, -1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  it should "calculate north-west-down direction" in {
+    // Given
+    val pitch = inverseTanOneDivSqrtTwoToDegrees
+    val yaw = 135f
+
+    val expectedDirection = new Vector3f(-1, -1, -1).normalize()
+
+    // When
+    val direction = orientationToDirection(pitch, yaw)
+
+    // Then
+    assert(direction.x() === expectedDirection.x())
+    assert(direction.y() === expectedDirection.y())
+    assert(direction.z() === expectedDirection.z())
+  }
+
+  "directionToOrientation" should "calculate up pitch yaw" in {
+    // Given
+    val direction = new Vector3f(0, 1, 0)
+
+    val expectedPitch = -90f
+    val expectedYaw = 0f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "should normalize vector calculating up pitch yaw" in {
+    // Given
+    val direction = new Vector3f(0, 5, 0)
+
+    val expectedPitch = -90f
+    val expectedYaw = 0f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate down pitch yaw" in {
+    // Given
+    val direction = new Vector3f(0, -1, 0)
+
+    val expectedPitch = 90f
+    val expectedYaw = 0f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate north pitch yaw" in {
+    // Given
+    val direction = new Vector3f(0, 0, -1)
+
+    val expectedPitch = 0f
+    val expectedYaw = -180f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate east pitch yaw" in {
+    // Given
+    val direction = new Vector3f(1, 0, 0)
+
+    val expectedPitch = 0f
+    val expectedYaw = -90f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate south pitch yaw" in {
+    // Given
+    val direction = new Vector3f(0, 0, 1)
+
+    val expectedPitch = 0f
+    val expectedYaw = 0f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate west pitch yaw" in {
+    // Given
+    val direction = new Vector3f(-1, 0, 0)
+
+    val expectedPitch = 0f
+    val expectedYaw = 90f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate north-east-up pitch yaw" in {
+    // Given
+    val direction = new Vector3f(1, 1, -1)
+
+    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = -135f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate north-east-down pitch yaw" in {
+    // Given
+    val direction = new Vector3f(1, -1, -1)
+
+    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = -135f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate south-east-up pitch yaw" in {
+    // Given
+    val direction = new Vector3f(1, 1, 1)
+
+    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = -45f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate south-east-down pitch yaw" in {
+    // Given
+    val direction = new Vector3f(1, -1, 1)
+
+    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = -45f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate south-west-up pitch yaw" in {
+    // Given
+    val direction = new Vector3f(-1, 1, 1)
+
+    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = 45f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate south-west-down pitch yaw" in {
+    // Given
+    val direction = new Vector3f(-1, -1, 1)
+
+    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = 45f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate north-west-up pitch yaw" in {
+    // Given
+    val direction = new Vector3f(-1, 1, -1)
+
+    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = 135f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
+  }
+
+  it should "calculate north-west-down pitch yaw" in {
+    // Given
+    val direction = new Vector3f(-1, -1, -1)
+
+    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+    val expectedYaw = 135f
+
+    // When
+    val (pitch, yaw) = directionToOrientation(direction)
+
+    // Then
+    assert(pitch === expectedPitch)
+    assert(yaw === expectedYaw)
   }
 }
-
-/*
-   private static final float DELTA = 1E-10f;
-
-    @Test
-    public void constructor_shouldCalculateCorrectDirectionLookingUp() {
-        // Given
-        float pitch = -90;
-        float yaw = 0;
-
-        Vector3fc expectedDirection = new Vector3f(0, 1, 0);
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.toDirection();
-
-        // Then
-        Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
-        Assert.assertEquals(expectedDirection.y(), direction.y(), DELTA);
-        Assert.assertEquals(expectedDirection.z(), direction.z(), DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectPitchYawLookingUp() {
-        // Given
-        Vector3fc direction = new Vector3f(0, 1, 0);
-
-        float expectedPitch = -90;
-        float expectedYaw = 0;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCorrectNonNormalizedDirectionLookingUp() {
-        // Given
-        Vector3fc direction = new Vector3f(0, 5, 0);
-
-        float expectedPitch = -90;
-        float expectedYaw = 0;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectDirectionLookingDown() {
-        // Given
-        float pitch = 90;
-        float yaw = 0;
-
-        Vector3fc expectedDirection = new Vector3f(0, -1, 0);
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.toDirection();
-
-        // Then
-        Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
-        Assert.assertEquals(expectedDirection.y(), direction.y(), DELTA);
-        Assert.assertEquals(expectedDirection.z(), direction.z(), DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectPitchYawLookingDown() {
-        // Given
-        Vector3fc direction = new Vector3f(0, -1, 0);
-
-        float expectedPitch = 90;
-        float expectedYaw = 0;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectDirectionLookingNorth() {
-        // Given
-        float pitch = 0;
-        float yaw = -180;
-
-        Vector3fc expectedDirection = new Vector3f(0, 0, -1);
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.toDirection();
-
-        // Then
-        Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
-        Assert.assertEquals(expectedDirection.y(), direction.y(), DELTA);
-        Assert.assertEquals(expectedDirection.z(), direction.z(), DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectPitchYawLookingNorth() {
-        // Given
-        Vector3fc direction = new Vector3f(0, 0, -1);
-
-        float expectedPitch = 0;
-        float expectedYaw = 180;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectDirectionLookingEast() {
-        // Given
-        float pitch = 0;
-        float yaw = -90;
-
-        Vector3fc expectedDirection = new Vector3f(1, 0, 0);
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.toDirection();
-
-        // Then
-        Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
-        Assert.assertEquals(expectedDirection.y(), direction.y(), DELTA);
-        Assert.assertEquals(expectedDirection.z(), direction.z(), DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectPitchYawLookingEast() {
-        // Given
-        Vector3fc direction = new Vector3f(1, 0, 0);
-
-        float expectedPitch = 0;
-        float expectedYaw = -90;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectDirectionLookingSouth() {
-        // Given
-        float pitch = 0;
-        float yaw = 0;
-
-        Vector3fc expectedDirection = new Vector3f(0, 0, 1);
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.toDirection();
-
-        // Then
-        Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
-        Assert.assertEquals(expectedDirection.y(), direction.y(), DELTA);
-        Assert.assertEquals(expectedDirection.z(), direction.z(), DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectPitchYawLookingSouth() {
-        // Given
-        Vector3fc direction = new Vector3f(0, 0, 1);
-
-        float expectedPitch = 0;
-        float expectedYaw = 0;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectDirectionLookingWest() {
-        // Given
-        float pitch = 0;
-        float yaw = 90;
-
-        Vector3fc expectedDirection = new Vector3f(-1, 0, 0);
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-        Vector3fc direction = location.toDirection();
-
-        // Then
-        Assert.assertEquals(expectedDirection.x(), direction.x(), DELTA);
-        Assert.assertEquals(expectedDirection.y(), direction.y(), DELTA);
-        Assert.assertEquals(expectedDirection.z(), direction.z(), DELTA);
-    }
-
-    @Test
-    public void constructor_shouldCalculateCorrectPitchYawLookingWest() {
-        // Given
-        Vector3fc direction = new Vector3f(-1, 0, 0);
-
-        float expectedPitch = 0;
-        float expectedYaw = 90;
-
-        // When
-        OrientedLocation location = new SimpleOrientedLocation(null, 0, 0, 0, direction);
-        float pitch = location.getPitch();
-        float yaw = location.getYaw();
-
-        // Then
-        Assert.assertEquals(expectedPitch, pitch, DELTA);
-        Assert.assertEquals(expectedYaw, yaw, DELTA);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_shouldRejectOutOfRangePositivePitch() {
-        // Given
-        float pitch = 90.1f;
-        float yaw = 0;
-
-        // When
-        new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_shouldRejectOutOfRangeNegativePitch() {
-        // Given
-        float pitch = -90.1f;
-        float yaw = 0;
-
-        // When
-        new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_shouldRejectOutOfRangePositiveYaw() {
-        // Given
-        float pitch = 0;
-        float yaw = 180;
-
-        // When
-        new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_shouldRejectOutOfRangeNegativeYaw() {
-        // Given
-        float pitch = 0;
-        float yaw = -180.1f;
-
-        // When
-        new SimpleOrientedLocation(null, 0, 0, 0, pitch, yaw);
-    }
- */

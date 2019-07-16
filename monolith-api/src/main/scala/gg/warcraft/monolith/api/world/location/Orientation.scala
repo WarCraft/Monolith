@@ -8,7 +8,6 @@ case class Orientation(
   yaw: Float,
 ) {
   validatePitch(pitch)
-  validateYaw(yaw)
 
   def getPitch: Float = pitch
 
