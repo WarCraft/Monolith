@@ -4,7 +4,7 @@ import org.joml.Vector3f
 import org.scalactic.TolerantNumerics
 import org.scalatest.{FlatSpec, GivenWhenThen}
 
-class LocationPackageSpec extends FlatSpec with GivenWhenThen {
+class PackageSpec extends FlatSpec with GivenWhenThen {
   implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
 
   private val inverseTanOneDivSqrtTwoToDegrees =
