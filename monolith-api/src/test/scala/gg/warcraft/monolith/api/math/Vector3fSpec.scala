@@ -1,688 +1,697 @@
 package gg.warcraft.monolith.api.math
 
 import org.scalactic.TolerantNumerics
-import org.scalatest.{FlatSpec, GivenWhenThen}
+import org.scalatest.{Outcome, fixture}
 
-class Vector3fSpec extends FlatSpec with GivenWhenThen {
+class Vector3fSpec extends fixture.FunSpec {
   private implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
 
   private val inverseTanOneDivSqrtTwoToDegrees =
     Math.toDegrees(Math.atan(1.0 / Math.sqrt(2.0))).toFloat
 
-  "pitchYawFactory" should "accept the lower bound pitch edge case" in {
-    Vector3f(-90, 0)
+  type FixtureParam = Vector3f
+
+  override def withFixture(test: OneArgTest): Outcome = {
+    val fixture = Vector3f(2, 4, 6)
+    try test(fixture)
+    finally {}
   }
 
-  it should "accept the upper bound pitch edge case" in {
-    Vector3f(-90, 0)
-  }
+  describe("Location") {
 
-  it should "reject the lower bound pitch edge case" in {
-    assertThrows[IllegalArgumentException] {
-      Vector3f(-90 - 1e-5f, 0)
+    describe(".lengthSquared") {
+
+      it("contains the squared length") { fixture =>
+        // Given
+        val expectedLengthSquared = 56f
+
+        // When
+        val lengthSquared = fixture.lengthSquared
+
+        // Then
+        assert(lengthSquared === expectedLengthSquared)
+      }
     }
-  }
 
-  it should "reject the upper bound pitch edge case" in {
-    assertThrows[IllegalArgumentException] {
-      Vector3f(90 + 1e-5f, 0)
+    describe(".length") {
+
+      it("contains the length") { fixture =>
+        // Given
+        val expectedLength = Math.sqrt(56f).toFloat
+
+        // When
+        val length = fixture.length
+
+        // Then
+        assert(length === expectedLength)
+      }
     }
-  }
-
-  it should "calculate up direction" in {
-    // Given
-    val pitch = -90f
-    val yaw = 0f
 
-    val expectedDirection = Vector3f(0, 1, 0)
+    describe(".inverseLength") {
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("contains the inverse length") { fixture =>
+        // Given
+        val expectedInverseLength = 1f / Math.sqrt(56f).toFloat
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate down direction" in {
-    // Given
-    val pitch = 90f
-    val yaw = 0f
+        // When
+        val inverseLength = fixture.inverseLength
 
-    val expectedDirection = Vector3f(0, -1, 0)
+        // Then
+        assert(inverseLength === expectedInverseLength)
+      }
+    }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+    describe("::this(Float, Float)") {
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate north direction" in {
-    // Given
-    val pitch = 0f
-    val yaw = -180f
+      it("accepts the lower bound pitch edge case") { _ =>
+        Vector3f(-90, 0)
+      }
 
-    val expectedDirection = Vector3f(0, 0, -1)
+      it("accepts the upper bound pitch edge case") { _ =>
+        Vector3f(-90, 0)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("rejects the lower bound pitch edge case") { _ =>
+        assertThrows[IllegalArgumentException] {
+          Vector3f(-90 - 1e-5f, 0)
+        }
+      }
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate east direction" in {
-    // Given
-    val pitch = 0f
-    val yaw = -90f
+      it("rejects the upper bound pitch edge case") { _ =>
+        assertThrows[IllegalArgumentException] {
+          Vector3f(90 + 1e-5f, 0)
+        }
+      }
 
-    val expectedDirection = Vector3f(1, 0, 0)
+      it("calculates an up rotation") { _ =>
+        // Given
+        val pitch = -90f
+        val yaw = 0f
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+        val expectedRotation = Vector3f(0, 1, 0)
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate south direction" in {
-    // Given
-    val pitch = 0f
-    val yaw = 0f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(0, 0, 1)
+        // Then
+        assert(rotation.x === expectedRotation.x)
+        assert(rotation.y === expectedRotation.y)
+        assert(rotation.z === expectedRotation.z)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a down rotation") { _ =>
+        // Given
+        val pitch = 90f
+        val yaw = 0f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate west direction" in {
-    // Given
-    val pitch = 0f
-    val yaw = 90f
+        val expectedRotation = Vector3f(0, -1, 0)
 
-    val expectedDirection = Vector3f(-1, 0, 0)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+        // Then
+        assert(rotation.x === expectedRotation.x)
+        assert(rotation.y === expectedRotation.y)
+        assert(rotation.z === expectedRotation.z)
+      }
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate north-east-up direction" in {
-    // Given
-    val pitch = -inverseTanOneDivSqrtTwoToDegrees
-    val yaw = -135f
+      it("calculates a north rotation") { _ =>
+        // Given
+        val pitch = 0f
+        val yaw = -180f
 
-    val expectedDirection = Vector3f(1, 1, -1).normalize
+        val expectedRotation = Vector3f(0, 0, -1)
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate north-east-down direction" in {
-    // Given
-    val pitch = inverseTanOneDivSqrtTwoToDegrees
-    val yaw = -135f
+        // Then
+        assert(rotation.x === expectedRotation.x)
+        assert(rotation.y === expectedRotation.y)
+        assert(rotation.z === expectedRotation.z)
+      }
 
-    val expectedDirection = Vector3f(1, -1, -1).normalize
+      it("calculates an east rotation") { _ =>
+        // Given
+        val pitch = 0f
+        val yaw = -90f
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+        val expectedRotation = Vector3f(1, 0, 0)
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
-
-  it should "calculate south-east-up direction" in {
-    // Given
-    val pitch = -inverseTanOneDivSqrtTwoToDegrees
-    val yaw = -45f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(1, 1, 1).normalize
+        // Then
+        assert(rotation.x === expectedRotation.x)
+        assert(rotation.y === expectedRotation.y)
+        assert(rotation.z === expectedRotation.z)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a south rotation") { _ =>
+        // Given
+        val pitch = 0f
+        val yaw = 0f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
+        val expectedRotation = Vector3f(0, 0, 1)
 
-  it should "calculate south-east-down direction" in {
-    // Given
-    val pitch = inverseTanOneDivSqrtTwoToDegrees
-    val yaw = -45f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(1, -1, 1).normalize
+        // Then
+        assert(rotation.x === expectedRotation.x)
+        assert(rotation.y === expectedRotation.y)
+        assert(rotation.z === expectedRotation.z)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a west rotation") { _ =>
+        // Given
+        val pitch = 0f
+        val yaw = 90f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
+        val expectedRotation = Vector3f(-1, 0, 0)
 
-  it should "calculate south-west-up direction" in {
-    // Given
-    val pitch = -inverseTanOneDivSqrtTwoToDegrees
-    val yaw = 45f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(-1, 1, 1).normalize
+        // Then
+        assert(rotation.x === expectedRotation.x)
+        assert(rotation.y === expectedRotation.y)
+        assert(rotation.z === expectedRotation.z)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a north-east-up rotation") { _ =>
+        // Given
+        val pitch = -inverseTanOneDivSqrtTwoToDegrees
+        val yaw = -135f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
+        val expectedRotation = Vector3f(1, 1, -1).normalize
 
-  it should "calculate south-west-down direction" in {
-    // Given
-    val pitch = inverseTanOneDivSqrtTwoToDegrees
-    val yaw = 45f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(-1, -1, 1).normalize
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a north-east-down rotation") { _ =>
+        // Given
+        val pitch = inverseTanOneDivSqrtTwoToDegrees
+        val yaw = -135f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
+        val expectedRotation = Vector3f(1, -1, -1).normalize
 
-  it should "calculate north-west-up direction" in {
-    // Given
-    val pitch = -inverseTanOneDivSqrtTwoToDegrees
-    val yaw = 135f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(-1, 1, -1).normalize
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a south-east-up rotation") { _ =>
+        // Given
+        val pitch = -inverseTanOneDivSqrtTwoToDegrees
+        val yaw = -45f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
+        val expectedRotation = Vector3f(1, 1, 1).normalize
 
-  it should "calculate north-west-down direction" in {
-    // Given
-    val pitch = inverseTanOneDivSqrtTwoToDegrees
-    val yaw = 135f
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedDirection = Vector3f(-1, -1, -1).normalize
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val direction = Vector3f(pitch, yaw)
+      it("calculates a south-east-down rotation") { _ =>
+        // Given
+        val pitch = inverseTanOneDivSqrtTwoToDegrees
+        val yaw = -45f
 
-    // Then
-    assert(direction.x === expectedDirection.x)
-    assert(direction.y === expectedDirection.y)
-    assert(direction.z === expectedDirection.z)
-  }
+        val expectedRotation = Vector3f(1, -1, 1).normalize
 
-  "lengthSquared" should "should contain the squared length" in {
-    // Given
-    val vector = Vector3f(2, 2, 2)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedLengthSquared = 12f
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val lengthSquared = vector.lengthSquared
+      it("calculates a south-west-up rotation") { _ =>
+        // Given
+        val pitch = -inverseTanOneDivSqrtTwoToDegrees
+        val yaw = 45f
 
-    // Then
-    assert(lengthSquared === expectedLengthSquared)
-  }
+        val expectedRotation = Vector3f(-1, 1, 1).normalize
 
-  "length" should "contain the length" in {
-    // Given
-    val vector = Vector3f(2, 2, 2)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedLength = Math.sqrt(12).toFloat
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val length = vector.length
+      it("calculates a south-west-down rotation") { _ =>
+        // Given
+        val pitch = inverseTanOneDivSqrtTwoToDegrees
+        val yaw = 45f
 
-    // Then
-    assert(length === expectedLength)
-  }
+        val expectedRotation = Vector3f(-1, -1, 1).normalize
 
-  "inverseLength" should "contain the inverse length" in {
-    // Given
-    val vector = Vector3f(2, 2, 2)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedInverseLength = 1f / Math.sqrt(12).toFloat
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val inverseLength = vector.inverseLength
+      it("calculates a north-west-up rotation") { _ =>
+        // Given
+        val pitch = -inverseTanOneDivSqrtTwoToDegrees
+        val yaw = 135f
 
-    // Then
-    assert(inverseLength === expectedInverseLength)
-  }
+        val expectedRotation = Vector3f(-1, 1, -1).normalize
 
-  "add" should "add to vector" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedUpdatedVector = Vector3f(4, 8, 12)
+        // Then
+        assert(rotation == expectedRotation)
+      }
 
-    // When
-    val updatedVector = vector.add(2, 4, 6)
+      it("calculates a north-west-down rotation") { _ =>
+        // Given
+        val pitch = inverseTanOneDivSqrtTwoToDegrees
+        val yaw = 135f
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        val expectedRotation = Vector3f(-1, -1, -1).normalize
 
-  "addVector" should "add to vector" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-    val updateVector = Vector3f(2, 4, 6)
+        // When
+        val rotation = Vector3f(pitch, yaw)
 
-    val expectedUpdatedVector = Vector3f(4, 8, 12)
+        // Then
+        assert(rotation == expectedRotation)
+      }
+    }
 
-    // When
-    val updatedVector = vector.add(updateVector)
+    describe("::add(Float, Float, Float)") {
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+      it("creates a copy of itself with the coordinates added") { fixture =>
+        // Given
+        val x = 2
+        val y = 4
+        val z = 6
 
-  "subtract" should "subtract from vector" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
+        val expectedCopy = Vector3f(4, 8, 12)
 
-    val expectedUpdatedVector = Vector3f(-4, 0, 4)
+        // When
+        val copy = fixture.add(x, y, z)
 
-    // When
-    val updatedVector = vector.subtract(6, 4, 2)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+    describe("::add(Vector3f)") {
 
-  "subtractVector" should "subtract from vector" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-    val updateVector = Vector3f(6, 4, 2)
+      it("creates a copy of itself with the vector added") { fixture =>
+        // Given
+        val vector = Vector3f(2, 4, 6)
 
-    val expectedUpdatedVector = Vector3f(-4, 0, 4)
+        val expectedCopy = Vector3f(4, 8, 12)
 
-    // When
-    val updatedVector = vector.subtract(updateVector)
+        // When
+        val copy = fixture.add(vector)
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-  "multiply" should "multiply by scalar" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
+    describe("::subtract(Float, Float, Float)") {
 
-    val expectedUpdatedVector = Vector3f(4, 8, 12)
+      it("creates a copy of itself with the coordinates subtracted") { fixture =>
+        // Given
+        val x = 6
+        val y = 4
+        val z = 2
 
-    // When
-    val updatedVector = vector.multiply(2)
+        val expectedCopy = Vector3f(-4, 0, 4)
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        // When
+        val copy = fixture.subtract(x, y, z)
 
-  "multiplyVector" should "multiply by individual scalars" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-    val updateVector = Vector3f(2, 4, 6)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    val expectedUpdatedVector = Vector3f(4, 16, 36)
+    describe("::subtract(Vector3f)") {
 
-    // When
-    val updatedVector = vector.multiply(updateVector)
+      it("creates a copy of itself with the vector subtracted") { fixture =>
+        // Given
+        val vector = Vector3f(6, 4, 2)
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        val expectedCopy = Vector3f(-4, 0, 4)
 
-  "distanceTo" should "return distance from this vector to that vector" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-    val otherVector = Vector3f(6, 4, 2)
+        // When
+        val copy = fixture.subtract(vector)
 
-    val expectedDistance = Math.sqrt(32).toFloat
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    // When
-    val distance = vector.distanceTo(otherVector)
+    describe("::multiply(Float)") {
 
-    // Then
-    assert(distance === expectedDistance)
-  }
+      it("creates a copy of itself multiplied by the scalar") { fixture =>
+        // Given
+        val scalar = 2
 
-  "toPitchYaw" should "calculate up pitch yaw" in {
-    // Given
-    val direction = Vector3f(0, 1, 0)
+        val expectedCopy = Vector3f(4, 8, 12)
 
-    val expectedPitch = -90f
-    val expectedYaw = 0f
+        // When
+        val copy = fixture.multiply(scalar)
 
-    // When
-    val rotation = direction.toPitchYaw
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+    describe("::multiply(Vector3f)") {
 
-  it should "should normalize vector calculating up pitch yaw" in {
-    // Given
-    val direction = Vector3f(0, 5, 0)
+      it("creates a copy of itself multiplied by the individual scalars") { fixture =>
+        // Given
+        val scalars = Vector3f(2, 4, 6)
 
-    val expectedPitch = -90f
-    val expectedYaw = 0f
+        val expectedCopy = Vector3f(4, 16, 36)
 
-    // When
-    val rotation = direction.toPitchYaw
+        // When
+        val copy = fixture.multiply(scalars)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-  it should "calculate down pitch yaw" in {
-    // Given
-    val direction = Vector3f(0, -1, 0)
+    describe("::distanceTo(Vector3f)") {
 
-    val expectedPitch = 90f
-    val expectedYaw = 0f
+      it("calculates the distance between this and that") { fixture =>
+        // Given
+        val that = Vector3f(6, 4, 2)
 
-    // When
-    val rotation = direction.toPitchYaw
+        val expectedDistance = Math.sqrt(32).toFloat
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        // When
+        val distance = fixture.distanceTo(that)
 
-  it should "calculate north pitch yaw" in {
-    // Given
-    val direction = Vector3f(0, 0, -1)
+        // Then
+        assert(distance == expectedDistance)
+      }
+    }
 
-    val expectedPitch = 0f
-    val expectedYaw = -180f
+    describe("::toPitchYaw") {
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate up pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(0, 1, 0)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = -90f
+        val expectedYaw = 0f
 
-  it should "calculate east pitch yaw" in {
-    // Given
-    val direction = Vector3f(1, 0, 0)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = 0f
-    val expectedYaw = -90f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("should normalize vector calculating up pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(0, 5, 0)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = -90f
+        val expectedYaw = 0f
 
-  it should "calculate south pitch yaw" in {
-    // Given
-    val direction = Vector3f(0, 0, 1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = 0f
-    val expectedYaw = 0f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate down pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(0, -1, 0)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = 90f
+        val expectedYaw = 0f
 
-  it should "calculate west pitch yaw" in {
-    // Given
-    val direction = Vector3f(-1, 0, 0)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = 0f
-    val expectedYaw = 90f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate north pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(0, 0, -1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = 0f
+        val expectedYaw = -180f
 
-  it should "calculate north-east-up pitch yaw" in {
-    // Given
-    val direction = Vector3f(1, 1, -1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = -135f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate east pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(1, 0, 0)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = 0f
+        val expectedYaw = -90f
 
-  it should "calculate north-east-down pitch yaw" in {
-    // Given
-    val direction = Vector3f(1, -1, -1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = -135f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate south pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(0, 0, 1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = 0f
+        val expectedYaw = 0f
 
-  it should "calculate south-east-up pitch yaw" in {
-    // Given
-    val direction = Vector3f(1, 1, 1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = -45f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate west pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(-1, 0, 0)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = 0f
+        val expectedYaw = 90f
 
-  it should "calculate south-east-down pitch yaw" in {
-    // Given
-    val direction = Vector3f(1, -1, 1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = -45f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate north-east-up pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(1, 1, -1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = -135f
 
-  it should "calculate south-west-up pitch yaw" in {
-    // Given
-    val direction = Vector3f(-1, 1, 1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = 45f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate north-east-down pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(1, -1, -1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = -135f
 
-  it should "calculate south-west-down pitch yaw" in {
-    // Given
-    val direction = Vector3f(-1, -1, 1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = 45f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate south-east-up pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(1, 1, 1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = -45f
 
-  it should "calculate north-west-up pitch yaw" in {
-    // Given
-    val direction = Vector3f(-1, 1, -1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = 135f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate south-east-down pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(1, -1, 1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = -45f
 
-  it should "calculate north-west-down pitch yaw" in {
-    // Given
-    val direction = Vector3f(-1, -1, -1)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
-    val expectedYaw = 135f
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val rotation = direction.toPitchYaw
+      it("calculate south-west-up pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(-1, 1, 1)
 
-    // Then
-    assert(rotation._1 === expectedPitch)
-    assert(rotation._2 === expectedYaw)
-  }
+        val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = 45f
 
-  "toVector3i" should "create a Vector3i" in {
-    // Given
-    val vector3f = Vector3f(1.5f, 2.7f, -3.9f)
+        // When
+        val rotation = direction.toPitchYaw
 
-    val expectedVector3i = Vector3i(1, 2, -3)
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    // When
-    val vector3i = vector3f.toVector3i
+      it("calculate south-west-down pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(-1, -1, 1)
 
-    // Then
-    assert(vector3i.x === expectedVector3i.x)
-    assert(vector3i.y === expectedVector3i.y)
-    assert(vector3i.z === expectedVector3i.z)
-  }
+        val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = 45f
 
-  /* Java interop */
+        // When
+        val rotation = direction.toPitchYaw
 
-  "withX" should "copy with x" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    val expectedCopy = Vector3f(8, 4, 6)
+      it("calculate north-west-up pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(-1, 1, -1)
 
-    // When
-    val copy = vector.withX(8)
+        val expectedPitch = -inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = 135f
 
-    // Then
-    assert(copy.x === expectedCopy.x)
-    assert(copy.y === expectedCopy.y)
-    assert(copy.z === expectedCopy.z)
-  }
+        // When
+        val rotation = direction.toPitchYaw
 
-  "withY" should "copy with y" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
 
-    val expectedCopy = Vector3f(2, 8, 6)
+      it("calculate north-west-down pitch yaw") { _ =>
+        // Given
+        val direction = Vector3f(-1, -1, -1)
 
-    // When
-    val copy = vector.withY(8)
+        val expectedPitch = inverseTanOneDivSqrtTwoToDegrees
+        val expectedYaw = 135f
 
-    // Then
-    assert(copy.x === expectedCopy.x)
-    assert(copy.y === expectedCopy.y)
-    assert(copy.z === expectedCopy.z)
-  }
+        // When
+        val rotation = direction.toPitchYaw
 
-  "withZ" should "copy with z" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
+        // Then
+        assert(rotation == (expectedPitch, expectedYaw))
+      }
+    }
 
-    val expectedCopy = Vector3f(2, 4, 8)
+    describe("::toVector3i") {
 
-    // When
-    val copy = vector.withZ(8)
+      it("creates a copy of itself as a Vector3i") { fixture =>
+        // Given
+        val expectedVector = Vector3i(2, 4, 6)
 
-    // Then
-    assert(copy.x === expectedCopy.x)
-    assert(copy.y === expectedCopy.y)
-    assert(copy.z === expectedCopy.z)
+        // When
+        val location = fixture.toVector3i
+
+        // Then
+        assert(location == expectedVector)
+      }
+    }
+
+    /* Java interop */
+
+    describe("::withX") {
+
+      it("creates a copy of itself with the new x coordinate") { fixture =>
+        // Given
+        val x = 8
+
+        val expectedCopy = Vector3f(8, 4, 6)
+
+        // When
+        val copy = fixture.withX(x)
+
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
+
+    describe("::withY") {
+
+      it("creates a copy of itself with the new y coordinate") { fixture =>
+        // Given
+        val y = 8
+
+        val expectedCopy = Vector3f(2, 8, 6)
+
+        // When
+        val copy = fixture.withY(y)
+
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
+
+    describe("::withZ") {
+
+      it("creates a copy of itself with the new z coordinate") { fixture =>
+        // Given
+        val z = 8
+
+        val expectedCopy = Vector3f(2, 4, 8)
+
+        // When
+        val copy = fixture.withZ(z)
+
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world
 
-import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
+import gg.warcraft.monolith.api.math.Vector3i
 
 case class BlockLocation(
   world: World,
@@ -21,14 +21,14 @@ case class BlockLocation(
 
   def add(loc: BlockLocation): BlockLocation = add(loc.x, loc.y, loc.z)
 
-  def sub(x: Int, y: Int, z: Int): BlockLocation =
+  def subtract(x: Int, y: Int, z: Int): BlockLocation =
     copy(translation = translation.subtract(x, y, z))
 
-  def sub(vec: Vector3i): BlockLocation = sub(vec.x, vec.y, vec.z)
+  def subtract(vec: Vector3i): BlockLocation = subtract(vec.x, vec.y, vec.z)
 
-  def sub(loc: BlockLocation): BlockLocation = sub(loc.x, loc.y, loc.z)
+  def subtract(loc: BlockLocation): BlockLocation = subtract(loc.x, loc.y, loc.z)
 
-  def toLocation: Location = Location(world, translation.toVector3f, Vector3f())
+  def toLocation: Location = Location(world, translation.toVector3f)
 
   /* Java interop */
 

@@ -1,161 +1,189 @@
 package gg.warcraft.monolith.api.math
 
-import org.scalatest.{FlatSpec, GivenWhenThen}
+import org.scalatest.{Outcome, fixture}
 
-class Vector3iSpec extends FlatSpec with GivenWhenThen {
+class Vector3iSpec extends fixture.FunSpec {
+  type FixtureParam = Vector3i
 
-  "add" should "add to vector" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
-
-    val expectedUpdatedVector = Vector3i(4, 8, 12)
-
-    // When
-    val updatedVector = vector.add(2, 4, 6)
-
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
+  override def withFixture(test: OneArgTest): Outcome = {
+    val fixture = Vector3i(2, 4, 6)
+    try test(fixture)
+    finally {}
   }
 
-  "addVector" should "add to vector" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
-    val updateVector = Vector3i(2, 4, 6)
+  describe("BlockLocation") {
 
-    val expectedUpdatedVector = Vector3i(4, 8, 12)
+    describe("::add(Int, Int, Int)") {
 
-    // When
-    val updatedVector = vector.add(updateVector)
+      it("creates a copy of itself with the coordinates added") { fixture =>
+        // Given
+        val x = 2
+        val y = 4
+        val z = 6
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        val expectedCopy = Vector3i(4, 8, 12)
 
-  "subtract" should "subtract from vector" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
+        // When
+        val copy = fixture.add(x, y, z)
 
-    val expectedUpdatedVector = Vector3i(-4, 0, 4)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    // When
-    val updatedVector = vector.subtract(6, 4, 2)
+    describe("::add(Vector3i)") {
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+      it("creates a copy of itself with the vector added") { fixture =>
+        // Given
+        val vector = Vector3i(2, 4, 6)
 
-  "subtractVector" should "subtract from vector" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
-    val updateVector = Vector3i(6, 4, 2)
+        val expectedCopy = Vector3i(4, 8, 12)
 
-    val expectedUpdatedVector = Vector3i(-4, 0, 4)
+        // When
+        val copy = fixture.add(vector)
 
-    // When
-    val updatedVector = vector.subtract(updateVector)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+    describe("::subtract(Int, Int, Int)") {
 
-  "multiply" should "multiply by scalar" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
+      it("creates a copy of itself with the coordinates subtracted") { fixture =>
+        // Given
+        val x = 6
+        val y = 4
+        val z = 2
 
-    val expectedUpdatedVector = Vector3i(4, 8, 12)
+        val expectedCopy = Vector3i(-4, 0, 4)
 
-    // When
-    val updatedVector = vector.multiply(2)
+        // When
+        val copy = fixture.subtract(x, y, z)
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-  "multiplyVector" should "multiply by individual scalars" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
-    val updateVector = Vector3i(2, 4, 6)
+    describe("::subtract(Vector3i)") {
 
-    val expectedUpdatedVector = Vector3i(4, 16, 36)
+      it("creates a copy of itself with the vector subtracted") { fixture =>
+        // Given
+        val vector = Vector3i(6, 4, 2)
 
-    // When
-    val updatedVector = vector.multiply(updateVector)
+        val expectedCopy = Vector3i(-4, 0, 4)
 
-    // Then
-    assert(updatedVector.x === expectedUpdatedVector.x)
-    assert(updatedVector.y === expectedUpdatedVector.y)
-    assert(updatedVector.z === expectedUpdatedVector.z)
-  }
+        // When
+        val copy = fixture.subtract(vector)
 
-  "toVector3f" should "create a Vector3f" in {
-    // Given
-    val vector3i = Vector3i(2, 4, 6)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    val expectedVector3f = Vector3f(2, 4, 6)
+    describe("::multiply(Int)") {
 
-    // When
-    val vector3f = vector3i.toVector3f
+      it("creates a copy of itself multiplied by the scalar") { fixture =>
+        // Given
+        val scalar = 2
 
-    // Then
-    assert(vector3f.x === expectedVector3f.x)
-    assert(vector3f.y === expectedVector3f.y)
-    assert(vector3f.z === expectedVector3f.z)
-  }
+        val expectedCopy = Vector3i(4, 8, 12)
 
-  /* Java interop */
+        // When
+        val copy = fixture.multiply(scalar)
 
-  "withX" should "copy with x" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    val expectedCopy = Vector3i(8, 4, 6)
+    describe("::multiply(Vector3i)") {
 
-    // When
-    val copy = vector.withX(8)
+      it("creates a copy of itself multiplied by the individual scalars") { fixture =>
+        // Given
+        val scalars = Vector3i(2, 4, 6)
 
-    // Then
-    assert(copy.x === expectedCopy.x)
-    assert(copy.y === expectedCopy.y)
-    assert(copy.z === expectedCopy.z)
-  }
+        val expectedCopy = Vector3i(4, 16, 36)
 
-  "withY" should "copy with y" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
+        // When
+        val copy = fixture.multiply(scalars)
 
-    val expectedCopy = Vector3i(2, 8, 6)
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
 
-    // When
-    val copy = vector.withY(8)
+    describe("::toVector3f") {
 
-    // Then
-    assert(copy.x === expectedCopy.x)
-    assert(copy.y === expectedCopy.y)
-    assert(copy.z === expectedCopy.z)
-  }
+      it("creates a copy of itself as a Vector3f") { fixture =>
+        // Given
+        val expectedVector = Vector3f(2, 4, 6)
 
-  "withZ" should "copy with z" in {
-    // Given
-    val vector = Vector3i(2, 4, 6)
+        // When
+        val location = fixture.toVector3f
 
-    val expectedCopy = Vector3i(2, 4, 8)
+        // Then
+        assert(location == expectedVector)
+      }
+    }
 
-    // When
-    val copy = vector.withZ(8)
+    /* Java interop */
 
-    // Then
-    assert(copy.x === expectedCopy.x)
-    assert(copy.y === expectedCopy.y)
-    assert(copy.z === expectedCopy.z)
+    describe("::withX") {
+
+      it("creates a copy of itself with the new x coordinate") { fixture =>
+        // Given
+        val x = 8
+
+        val expectedCopy = Vector3i(8, 4, 6)
+
+        // When
+        val copy = fixture.withX(x)
+
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
+
+    describe("::withY") {
+
+      it("creates a copy of itself with the new y coordinate") { fixture =>
+        // Given
+        val y = 8
+
+        val expectedCopy = Vector3i(2, 8, 6)
+
+        // When
+        val copy = fixture.withY(y)
+
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
+
+    describe("::withZ") {
+
+      it("creates a copy of itself with the new z coordinate") { fixture =>
+        // Given
+        val z = 8
+
+        val expectedCopy = Vector3i(2, 4, 8)
+
+        // When
+        val copy = fixture.withZ(z)
+
+        // Then
+        assert(!copy.eq(expectedCopy))
+        assert(copy == expectedCopy)
+      }
+    }
   }
 }
