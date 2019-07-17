@@ -1,20 +1,20 @@
 package gg.warcraft.monolith.api.world.config
 
 import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
-import gg.warcraft.monolith.api.math.Vector3f
+import gg.warcraft.monolith.api.math.config.Vector3fConfig
 import gg.warcraft.monolith.api.world.{Location, World}
 
 @JsonCreator
 case class LocationConfig(
   @JsonProperty("world") world: World,
-  @JsonProperty("translation") translation: Vector3f,
-  @JsonProperty("rotation") rotation: Vector3f
+  @JsonProperty("translation") translation: Vector3fConfig,
+  @JsonProperty("rotation") rotation: Vector3fConfig
 ) {
-  def toLocation: Location = Location(world, translation, rotation)
+  def toLocation: Location = Location(world, translation.toVector3f, rotation.toVector3f)
 
   /* Java interop */
 
   def getWorld: World = world
-  def getTranslation: Vector3f = translation
-  def getRotation: Vector3f = rotation
+  def getTranslation: Vector3fConfig = translation
+  def getRotation: Vector3fConfig = rotation
 }
