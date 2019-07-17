@@ -1,8 +1,7 @@
 package gg.warcraft.monolith.app.effect.vectors;
 
 import gg.warcraft.monolith.api.effect.EffectVectors;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.math.Vector3f;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class AbstractEffectVectorsTest {
 
         // When
         EffectVectors result = vectors.addOffset(offset);
-        List<Vector3fc> resultVectors = new ArrayList<>(result.getVectors());
+        List<Vector3f> resultVectors = new ArrayList<>(result.getVectors());
 
         // Then
         for (int i = 0; i < expectedVectors.length; i += 1) {
@@ -70,7 +69,7 @@ public class AbstractEffectVectorsTest {
 
         // When
         EffectVectors result = vectors.rotateAroundAxisX(rotation);
-        List<Vector3fc> resultVectors = new ArrayList<>(result.getVectors());
+        List<Vector3f> resultVectors = new ArrayList<>(result.getVectors());
 
         // Then
         for (int i = 0; i < expectedVectors.length; i += 1) {
@@ -103,7 +102,7 @@ public class AbstractEffectVectorsTest {
 
         // When
         EffectVectors result = vectors.rotateAroundAxisY(rotation);
-        List<Vector3fc> resultVectors = new ArrayList<>(result.getVectors());
+        List<Vector3f> resultVectors = new ArrayList<>(result.getVectors());
 
         // Then
         for (int i = 0; i < expectedVectors.length; i += 1) {
@@ -136,7 +135,7 @@ public class AbstractEffectVectorsTest {
 
         // When
         EffectVectors result = vectors.rotateAroundAxisZ(rotation);
-        List<Vector3fc> resultVectors = new ArrayList<>(result.getVectors());
+        List<Vector3f> resultVectors = new ArrayList<>(result.getVectors());
 
         // Then
         for (int i = 0; i < expectedVectors.length; i += 1) {

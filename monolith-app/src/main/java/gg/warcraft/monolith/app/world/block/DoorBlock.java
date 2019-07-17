@@ -1,10 +1,10 @@
 package gg.warcraft.monolith.app.world.block;
 
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.Door;
 import gg.warcraft.monolith.api.world.block.Hinge;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 
 public class DoorBlock extends SimpleDirectionalBlock implements Door {
     private final Hinge hinge;

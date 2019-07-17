@@ -3,16 +3,15 @@ package gg.warcraft.monolith.app.world.block.box;
 import com.google.common.base.MoreObjects;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxReader;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,14 +34,12 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
 
     @Inject
     public SimpleBoundingBlockBox(WorldQueryService worldQueryService,
-                                  @Assisted World world, @Assisted("minimum") Vector3ic minimumCorner,
-                                  @Assisted("maximum") Vector3ic maximumCorner) {
+                                  @Assisted World world, @Assisted("minimum") Vector3i minimumCorner,
+                                  @Assisted("maximum") Vector3i maximumCorner) {
         this.worldQueryService = worldQueryService;
         this.world = worldQueryService.getWorld(world);
-        this.minimumCorner = new BlockLocation(world, minimumCorner.x(), minimumCorner.y(),
-                minimumCorner.z());
-        this.maximumCorner = new BlockLocation(world, maximumCorner.x(), maximumCorner.y(),
-                maximumCorner.z());
+        this.minimumCorner = new BlockLocation(world, minimumCorner);
+        this.maximumCorner = new BlockLocation(world, maximumCorner);
         this.minX = Math.min(minimumCorner.x(), maximumCorner.x());
         this.maxX = Math.max(minimumCorner.x(), maximumCorner.x());
         this.minY = Math.min(minimumCorner.y(), maximumCorner.y());
@@ -187,9 +184,9 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     }
 
     @Override
-    public BoundingBlockBox translate(Vector3ic vector) {
-        Vector3i newMinimumCorner = new Vector3i(minimumCorner.toVector()).add(vector);
-        Vector3i newMaximumCorner = new Vector3i(maximumCorner.toVector()).add(vector);
+    public BoundingBlockBox translate(Vector3i vector) {
+        Vector3i newMinimumCorner = minimumCorner.getTranslation().add(vector);
+        Vector3i newMaximumCorner = maximumCorner.getTranslation().add(vector);
         return new SimpleBoundingBlockBox(worldQueryService, world,
                 newMinimumCorner, newMaximumCorner);
     }

@@ -6,7 +6,7 @@ import de.slikey.effectlib.util.ParticleEffect;
 import gg.warcraft.monolith.api.effect.Particle;
 import gg.warcraft.monolith.api.effect.ParticleType;
 import gg.warcraft.monolith.api.util.ColorHue;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
 import org.bukkit.Color;
 

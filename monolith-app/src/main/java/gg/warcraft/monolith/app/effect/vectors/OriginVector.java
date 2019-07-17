@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.app.effect.vectors;
 
-import org.joml.Vector3f;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 public class OriginVector extends PointVector {
 

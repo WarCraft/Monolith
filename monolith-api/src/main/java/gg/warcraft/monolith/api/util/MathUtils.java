@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.util;
 
-import org.joml.Vector3f;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 /**
  * This utility is injectable.

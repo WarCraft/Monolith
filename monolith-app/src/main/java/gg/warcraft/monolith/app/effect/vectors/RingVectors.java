@@ -2,8 +2,7 @@ package gg.warcraft.monolith.app.effect.vectors;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +11,7 @@ import java.util.Iterator;
 public class RingVectors extends AbstractEffectVectors {
     private static final float TWO_PI = 2 * (float) Math.PI;
 
-    private final Collection<Vector3fc> vectors;
+    private final Collection<Vector3f> vectors;
 
     @Inject
     public RingVectors(@Assisted float radius, @Assisted int count) {
@@ -28,12 +27,12 @@ public class RingVectors extends AbstractEffectVectors {
     }
 
     @Override
-    public Collection<Vector3fc> getVectors() {
+    public Collection<Vector3f> getVectors() {
         return vectors;
     }
 
     @Override
-    public Iterator<Vector3fc> iterator() {
+    public Iterator<Vector3f> iterator() {
         return vectors.iterator();
     }
 }

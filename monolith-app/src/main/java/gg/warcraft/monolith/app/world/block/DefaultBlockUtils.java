@@ -1,6 +1,9 @@
 package gg.warcraft.monolith.app.world.block;
 
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
@@ -11,14 +14,12 @@ import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import org.joml.AABBf;
 import org.joml.Intersectionf;
 import org.joml.Spheref;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -195,26 +196,27 @@ public class DefaultBlockUtils implements BlockUtils {
         }
 
         World world = blocks.iterator().next().getLocation().getWorld();
-        Vector3ic minimumCorner = new Vector3i(minX, minY, minZ);
-        Vector3ic maximumCorner = new Vector3i(maxX, maxY, maxZ);
+        Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
+        Vector3i maximumCorner = new Vector3i(maxX, maxY, maxZ);
         return boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
     }
 
     @Override
     public List<Block> getWithinRadius(Location location, float radius) {
         World world = location.getWorld();
-        Vector3ic minimumCorner = location.sub(radius, radius, radius)
+        Vector3i minimumCorner = location.sub(radius, radius, radius)
                 .toBlockLocation()
-                .toVector();
-        Vector3ic maximumCorner = location.add(1 + radius, 1 + radius, 1 + radius)
+                .getTranslation();
+        Vector3i maximumCorner = location.add(1 + radius, 1 + radius, 1 + radius)
                 .toBlockLocation()
-                .toVector();
+                .getTranslation();
         BoundingBlockBox box = boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
         Spheref sphere = new Spheref(location.getX(), location.getY(), location.getZ(), radius);
         return box.stream()
                 .filter(block -> {
                     Location blockLocation = block.getLocation().toLocation();
-                    AABBf blockBox = new AABBf(blockLocation.toVector(), blockLocation.add(1, 1, 1).toVector());
+                    Vector3fc jomlMinCorner = new Vector3f(blockLocation.x(), blockLocation.y(), blockLocation.z());
+                    AABBf blockBox = new AABBf(jomlMinCorner, jomlMinCorner.add(1, 1, 1, new Vector3f()));
                     return Intersectionf.testAabSphere(blockBox, sphere);
                 })
                 .collect(Collectors.toList());

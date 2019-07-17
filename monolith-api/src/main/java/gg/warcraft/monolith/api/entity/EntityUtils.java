@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.entity;
 
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.UUID;
 import java.util.function.Predicate;

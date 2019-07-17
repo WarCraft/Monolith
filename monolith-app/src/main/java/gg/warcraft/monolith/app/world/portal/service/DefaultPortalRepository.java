@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.app.world.portal.service;
 
 import com.google.inject.Singleton;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.portal.Portal;
 import gg.warcraft.monolith.api.world.portal.service.PortalRepository;
 

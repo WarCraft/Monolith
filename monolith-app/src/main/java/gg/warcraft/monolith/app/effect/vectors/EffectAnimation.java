@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.effect.vectors;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.effect.EffectVectors;
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EffectAnimation extends AbstractEffectVectors {
-    private static final Iterator<Vector3fc> EMPTY_ITERATOR;
+    private static final Iterator<Vector3f> EMPTY_ITERATOR;
 
     static {
-        List<Vector3fc> emptyList = Collections.emptyList();
+        List<Vector3f> emptyList = Collections.emptyList();
         EMPTY_ITERATOR = emptyList.iterator();
     }
 
@@ -31,14 +31,14 @@ public class EffectAnimation extends AbstractEffectVectors {
     }
 
     @Override
-    public Collection<Vector3fc> getVectors() {
+    public Collection<Vector3f> getVectors() {
         return vectors.stream()
                 .flatMap(effectVectors -> effectVectors.getVectors().stream())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Iterator<Vector3fc> iterator() {
+    public Iterator<Vector3f> iterator() {
         if (!iterator.hasNext()) {
             iterator = this.vectors.iterator();
         }

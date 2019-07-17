@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.util.Cancellable;
 import gg.warcraft.monolith.api.world.Direction;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.portal.Portal;
 import gg.warcraft.monolith.api.world.portal.service.PortalCommandService;
 import gg.warcraft.monolith.api.world.portal.service.PortalRepository;

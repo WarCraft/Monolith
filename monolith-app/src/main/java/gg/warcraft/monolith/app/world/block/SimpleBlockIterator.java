@@ -2,19 +2,18 @@ package gg.warcraft.monolith.app.world.block;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import gg.warcraft.monolith.api.math.Vector3f;
+import gg.warcraft.monolith.api.world.BlockLocation;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 public class SimpleBlockIterator implements BlockIterator {
     private final WorldQueryService worldQueryService;
     private final Location origin;
     private final float maxDistance;
-    private final Vector3fc direction;
+    private final Vector3f direction;
 
     private Location scanLocation;
     private float distance;
@@ -26,15 +25,15 @@ public class SimpleBlockIterator implements BlockIterator {
                                @Assisted("origin") Location origin, @Assisted("target") Location target) {
         this.worldQueryService = worldQueryService;
         this.origin = origin;
-        this.maxDistance = origin.toVector().distance(target.toVector());
-        this.direction = target.sub(origin).toVector().normalize();
+        this.maxDistance = origin.getTranslation().dist(target.getTranslation());
+        this.direction = target.sub(origin).getTranslation().normalize();
         this.scanLocation = origin;
         this.currentBlockLocation = null;
         this.nextBlockLocation = origin.toBlockLocation();
     }
 
     BlockLocation calculateNext() {
-        Vector3fc delta;
+        Vector3f delta;
         if (distance + 1 < maxDistance) {
             delta = direction;
             distance += 1;
@@ -45,7 +44,7 @@ public class SimpleBlockIterator implements BlockIterator {
             }
             return scanLocation.toBlockLocation();
         } else {
-            delta = direction.mul(maxDistance - distance, new Vector3f());
+            delta = direction.mul(maxDistance - distance);
             distance = maxDistance;
 
             scanLocation = scanLocation.add(delta);
@@ -61,7 +60,7 @@ public class SimpleBlockIterator implements BlockIterator {
         return currentBlockLocation.toLocation().add(0.5f, 0.5f, 0.5f);
         // FIXME
 //        System.out.println("DEBUG Calculating intersection for " + currentBlockLocation);
-//        Vector3fc blockMinimumCorner = currentBlockLocation.toLocation().toVector();
+//        Vector3f blockMinimumCorner = currentBlockLocation.toLocation().toVector();
 //        AABBf blockBoundingBox = new AABBf(blockMinimumCorner, blockMinimumCorner.add(1, 1, 1, new Vector3f()));
 //        Rayf iteratorRay = new Rayf(origin.toVector(), direction);
 //        Vector2f intersectionResult = new Vector2f();

@@ -2,11 +2,11 @@ package gg.warcraft.monolith.spigot.world.block.backup.service;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.PluginLogger;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupRepository;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.app.world.block.backup.SimpleBlockBackup;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockTypeMapper;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;

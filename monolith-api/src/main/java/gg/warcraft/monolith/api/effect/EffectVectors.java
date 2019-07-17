@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.effect;
 
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 import java.util.Collection;
 
@@ -8,14 +8,14 @@ import java.util.Collection;
  * EffectVectors are a collection of vectors in 3D space representing the offsets from a given location particles should
  * be rendered at to achieve the desired effect.
  */
-public interface EffectVectors extends Iterable<Vector3fc> {
+public interface EffectVectors extends Iterable<Vector3f> {
 
     /**
      * Returns the vectors of this collection.
      *
      * @return The vectors of this collection. Never null, but can be empty. Items are never null.
      */
-    Collection<Vector3fc> getVectors();
+    Collection<Vector3f> getVectors();
 
     /**
      * Creates a new {@code EffectVectors} offset by the given offset.
@@ -23,7 +23,7 @@ public interface EffectVectors extends Iterable<Vector3fc> {
      * @param offset The offset.
      * @return A new {@code EffectVectors} offset by the given offset. Never null.
      */
-    EffectVectors addOffset(Vector3fc offset);
+    EffectVectors addOffset(Vector3f offset);
 
     /**
      * Creates a new {@code EffectVectors} rotated by the given angle around the X axis.

@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.entity.player.event.PlayerDisconnectEvent;
 import gg.warcraft.monolith.api.entity.player.event.PlayerPreConnectEvent;
 import gg.warcraft.monolith.api.entity.player.event.PlayerPreRespawnEvent;
 import gg.warcraft.monolith.api.entity.player.event.PlayerRespawnEvent;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerConnectEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerDisconnectEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerPreConnectEvent;

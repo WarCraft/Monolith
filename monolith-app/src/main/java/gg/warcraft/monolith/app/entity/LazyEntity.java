@@ -12,11 +12,10 @@ import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.entity.team.service.TeamQueryService;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.util.Lazy;
-import gg.warcraft.monolith.api.world.location.Location;
-import gg.warcraft.monolith.api.world.location.Orientation;
+import gg.warcraft.monolith.api.world.Location;
 import org.joml.AABBf;
-import org.joml.Vector3f;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -62,18 +61,8 @@ public class LazyEntity implements Entity {
     }
 
     @Override
-    public Orientation getOrientation() {
-        return serverData.get().getOrientation();
-    }
-
-    @Override
     public Location getEyeLocation() {
         return serverData.get().getEyeLocation();
-    }
-
-    @Override
-    public Orientation getEyeOrientation() {
-        return serverData.get().getEyeOrientation();
     }
 
     @Override

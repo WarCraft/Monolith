@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gg.warcraft.monolith.api.config.PortalConfiguration;
 import gg.warcraft.monolith.api.world.Direction;
-import gg.warcraft.monolith.api.world.location.config.LocationConfig;
+import gg.warcraft.monolith.api.world.config.LocationConfig;
 
 public class JacksonPortalConfiguration implements PortalConfiguration {
     private final LocationConfig entryLocation;

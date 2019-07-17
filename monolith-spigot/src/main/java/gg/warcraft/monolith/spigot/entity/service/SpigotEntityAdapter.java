@@ -11,10 +11,11 @@ import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
 import gg.warcraft.monolith.api.entity.attribute.service.AttributeQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.util.Duration;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.DirectionUtils;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.spigot.combat.SpigotPotionEffectTypeMapper;
 import gg.warcraft.monolith.spigot.entity.GenericAttributeMapper;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityDataFactory;
@@ -31,7 +32,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
-import org.joml.Vector3fc;
 
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +95,7 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
     }
 
     @Override
-    public void setVelocity(UUID entityId, Vector3fc velocity) {
+    public void setVelocity(UUID entityId, Vector3f velocity) {
         Entity entity = server.getEntity(entityId);
         if (entity != null) {
             Vector newVelocity = new Vector(velocity.x(), velocity.y(), velocity.z());
@@ -241,7 +241,7 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
         Entity entity = server.getEntity(entityId);
         if (entity != null) {
             org.bukkit.Location newLocation = locationMapper.map(location);
-            Vector3fc direction = directionUtils.toVector(orientation);
+            Vector3f direction = directionUtils.toVector(orientation);
             newLocation.setDirection(new Vector(direction.x(), direction.y(), direction.z()));
             entity.teleport(newLocation);
         }

@@ -1,11 +1,10 @@
 package gg.warcraft.monolith.app.world.block.box;
 
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,11 +37,11 @@ public class SimpleBoundingBlockBoxTest {
         Vector3i maximumCorner = new Vector3i(9, 9, 9);
 
         BlockLocation mockBlockMinimumCorner = mock(BlockLocation.class);
-        when(mockBlockMinimumCorner.toVector()).thenReturn(minimumCorner);
+        when(mockBlockMinimumCorner.getTranslation()).thenReturn(minimumCorner);
         BlockLocation mockBlockMaximumCorner = mock(BlockLocation.class);
-        when(mockBlockMaximumCorner.toVector()).thenReturn(maximumCorner);
-        when(new BlockLocation(world, 0, 0, 0)).thenReturn(mockBlockMinimumCorner);
-        when(new BlockLocation(world, 9, 9, 9)).thenReturn(mockBlockMaximumCorner);
+        when(mockBlockMaximumCorner.getTranslation()).thenReturn(maximumCorner);
+        when(new BlockLocation(world, new Vector3i())).thenReturn(mockBlockMinimumCorner);
+        when(new BlockLocation(world, new Vector3i(9, 9, 9))).thenReturn(mockBlockMaximumCorner);
 
         simpleBoundingBlockBox = new SimpleBoundingBlockBox(mockWorldQueryService, world,
                 minimumCorner, maximumCorner);
@@ -98,7 +97,7 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void translate_shouldCorrectlyMoveBoundingBox() {
         // Given
-        Vector3ic translation = new Vector3i(3, -3, 3);
+        Vector3i translation = new Vector3i(3, -3, 3);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.translate(translation);

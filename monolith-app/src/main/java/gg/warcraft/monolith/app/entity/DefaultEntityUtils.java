@@ -6,16 +6,15 @@ import gg.warcraft.monolith.api.entity.EntityIntersection;
 import gg.warcraft.monolith.api.entity.EntityTarget;
 import gg.warcraft.monolith.api.entity.EntityUtils;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
+import gg.warcraft.monolith.api.math.Vector3f;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.block.BlockIntersection;
 import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
-import gg.warcraft.monolith.api.world.location.Location;
 import org.joml.AABBf;
 import org.joml.Intersectionf;
 import org.joml.LineSegmentf;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,9 +35,13 @@ public class DefaultEntityUtils implements EntityUtils {
 
     @Override
     public EntityIntersection intersectEntity(Location origin, Location target, Predicate<Entity> ignore) {
-        Vector3fc originVector = origin.toVector();
-        Vector3fc targetVector = target.toVector();
-        AABBf boundingBox = new AABBf(originVector, targetVector);
+        Vector3f originVector = origin.getTranslation();
+        Vector3f targetVector = target.getTranslation();
+        org.joml.Vector3f jomlOriginVec = new org.joml.Vector3f(originVector.getX(),
+                originVector.getY(), originVector.getZ());
+        org.joml.Vector3f jomlTargetVec = new org.joml.Vector3f(targetVector.getX(),
+                targetVector.getY(), targetVector.getZ());
+        AABBf boundingBox = new AABBf(jomlOriginVec, jomlTargetVec);
         boundingBox = boundingBox.correctBounds();
 
         float deltaX = (boundingBox.maxX - boundingBox.minX) * 0.5f;
@@ -49,8 +52,8 @@ public class DefaultEntityUtils implements EntityUtils {
         float centerY = boundingBox.minY + deltaY;
         float centerZ = boundingBox.minZ + deltaZ;
 
-        Location center = new Location(origin.getWorld(), centerX, centerY, centerZ);
-        LineSegmentf intersectionLine = new LineSegmentf(originVector, targetVector);
+        Location center = new Location(origin.getWorld(), new Vector3f(centerX, centerY, centerZ), new Vector3f());
+        LineSegmentf intersectionLine = new LineSegmentf(jomlOriginVec, jomlTargetVec);
         List<Entity> nearbyEntities = entityQueryService.getNearbyEntities(center, deltaX, deltaY, deltaZ);
         float closestIntersectionScalar = Float.MAX_VALUE;
         Entity closestIntersectedEntity = null;
@@ -70,10 +73,9 @@ public class DefaultEntityUtils implements EntityUtils {
         }
 
         if (closestIntersectedEntity != null) {
-            Vector3fc distanceAlongRay = targetVector.min(originVector, new Vector3f()).mul(closestIntersectionScalar);
-            Vector3fc intersection = originVector.add(distanceAlongRay, new Vector3f());
-            Location intersectionLocation = new Location(origin.getWorld(),
-                    intersection.x(), intersection.y(), intersection.z());
+            Vector3f distanceAlongRay = targetVector.sub(originVector).mul(closestIntersectionScalar);
+            Vector3f intersection = originVector.add(distanceAlongRay);
+            Location intersectionLocation = new Location(origin.getWorld(), intersection, new Vector3f());
             return new SimpleEntityIntersection(closestIntersectedEntity, intersectionLocation);
         }
         return null;
@@ -83,8 +85,8 @@ public class DefaultEntityUtils implements EntityUtils {
     public EntityTarget calculateTarget(UUID entityId, float range, boolean ignoreFriendlies) {
         Entity entity = entityQueryService.getEntity(entityId);
         Location origin = entity.getEyeLocation();
-        Vector3fc direction = entity.getEyeOrientation().toVector();
-        Location target = origin.add(direction.mul(range, new Vector3f()));
+        Vector3f direction = entity.getEyeLocation().getRotation();
+        Location target = origin.add(direction.mul(range));
 
         BlockIntersection blockIntersection = blockUtils.intersectBlock(origin, target, blockTypeUtils.getNonSolids());
 

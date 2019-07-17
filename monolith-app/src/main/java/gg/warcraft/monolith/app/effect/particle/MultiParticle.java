@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.effect.particle;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.effect.Particle;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.ArrayList;
 import java.util.Arrays;

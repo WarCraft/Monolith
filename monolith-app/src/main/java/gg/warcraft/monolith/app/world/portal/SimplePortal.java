@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.world.portal;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.util.Cancellable;
 import gg.warcraft.monolith.api.world.Direction;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.portal.Portal;
 
 import java.util.function.Predicate;

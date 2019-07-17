@@ -2,7 +2,9 @@ package gg.warcraft.monolith.spigot.world.service;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Direction;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.Sound;
 import gg.warcraft.monolith.api.world.SoundCategory;
 import gg.warcraft.monolith.api.world.World;
@@ -16,7 +18,6 @@ import gg.warcraft.monolith.api.world.block.Hinge;
 import gg.warcraft.monolith.api.world.block.Sign;
 import gg.warcraft.monolith.api.world.block.Slab;
 import gg.warcraft.monolith.api.world.block.Trapdoor;
-import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 import gg.warcraft.monolith.app.world.block.DoorBlock;
 import gg.warcraft.monolith.app.world.block.LeverBlock;
@@ -48,7 +49,6 @@ import org.bukkit.material.TrapDoor;
 import org.bukkit.material.WoodenStep;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
-import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.UUID;

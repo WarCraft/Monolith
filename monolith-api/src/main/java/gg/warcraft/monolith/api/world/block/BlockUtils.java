@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world.block;
 
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
-import gg.warcraft.monolith.api.world.location.Location;
 
 import java.util.Collection;
 import java.util.List;

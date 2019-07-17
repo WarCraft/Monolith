@@ -26,7 +26,8 @@ public class SimpleButtonBuilder implements ButtonBuilder {
         this.icon = icon;
         this.title = ColorCode.WHITE + title;
         this.tooltip = new ArrayList<>();
-        this.action = click -> {};
+        this.action = click -> {
+        };
     }
 
     @Override

@@ -1,16 +1,18 @@
-package gg.warcraft.monolith.api.world.location.config
+package gg.warcraft.monolith.api.math.config
 
 import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
-import gg.warcraft.monolith.api.world.World
+import gg.warcraft.monolith.api.math.Vector3i
 
 @JsonCreator
-case class BlockLocationConfig(
-  @JsonProperty("world") world: World,
+case class Vector3iConfig(
   @JsonProperty("x") x: Int,
   @JsonProperty("y") y: Int,
   @JsonProperty("z") z: Int
 ) {
-  def getWorld: World = world
+  def toVector3i: Vector3i = Vector3i(x, y, z)
+
+  /* Java interop */
+
   def getX: Int = x
   def getY: Int = y
   def getZ: Int = z

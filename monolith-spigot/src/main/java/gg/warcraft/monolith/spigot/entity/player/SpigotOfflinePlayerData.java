@@ -5,11 +5,10 @@ import gg.warcraft.monolith.api.entity.Equipment;
 import gg.warcraft.monolith.api.entity.player.GameMode;
 import gg.warcraft.monolith.api.entity.player.PlayerServerData;
 import gg.warcraft.monolith.api.item.Inventory;
-import gg.warcraft.monolith.api.world.location.Location;
-import gg.warcraft.monolith.api.world.location.Orientation;
+import gg.warcraft.monolith.api.math.Vector3f;
+import gg.warcraft.monolith.api.world.Location;
 import org.bukkit.OfflinePlayer;
 import org.joml.AABBf;
-import org.joml.Vector3f;
 
 import java.util.UUID;
 
@@ -41,18 +40,8 @@ public class SpigotOfflinePlayerData implements PlayerServerData {
     }
 
     @Override
-    public Orientation getOrientation() {
-        throw new IllegalStateException("Failed to get orientation for offline player with id " + player.getUniqueId());
-    }
-
-    @Override
     public Location getEyeLocation() {
         throw new IllegalStateException("Failed to get eye location for offline player with id " + player.getUniqueId());
-    }
-
-    @Override
-    public Orientation getEyeOrientation() {
-        throw new IllegalStateException("Failed to get eye orientation for offline player with id " + player.getUniqueId());
     }
 
     @Override

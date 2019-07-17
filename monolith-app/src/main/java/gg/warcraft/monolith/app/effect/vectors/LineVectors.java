@@ -2,34 +2,33 @@ package gg.warcraft.monolith.app.effect.vectors;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class LineVectors extends AbstractEffectVectors {
-    private final Collection<Vector3fc> vectors;
+    private final Collection<Vector3f> vectors;
 
     @Inject
-    public LineVectors(@Assisted("origin") Vector3fc origin, @Assisted("target") Vector3fc target,
+    public LineVectors(@Assisted("origin") Vector3f origin, @Assisted("target") Vector3f target,
                        @Assisted int count) {
         this.vectors = new ArrayList<>();
-        Vector3f delta = new Vector3f(target).sub(origin).mul(1f / count);
+        Vector3f delta = target.sub(origin).mul(1f / count);
         for (int i = 0; i <= count; i += 1) {
-            Vector3f multipliedDelta = new Vector3f(delta).mul(i);
-            vectors.add(new Vector3f(origin).add(multipliedDelta));
+            Vector3f multipliedDelta = delta.mul(i);
+            vectors.add(origin.add(multipliedDelta));
         }
     }
 
     @Override
-    public Collection<Vector3fc> getVectors() {
+    public Collection<Vector3f> getVectors() {
         return vectors;
     }
 
     @Override
-    public Iterator<Vector3fc> iterator() {
+    public Iterator<Vector3f> iterator() {
         return vectors.iterator();
     }
 }

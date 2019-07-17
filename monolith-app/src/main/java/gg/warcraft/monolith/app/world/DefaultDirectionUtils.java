@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.app.world;
 
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.DirectionUtils;
-import org.joml.Vector3f;
 
 public class DefaultDirectionUtils implements DirectionUtils {
 

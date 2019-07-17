@@ -2,16 +2,15 @@ package gg.warcraft.monolith.app.effect.vectors;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.util.MathUtils;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class SphereVectors extends AbstractEffectVectors {
-    private final Collection<Vector3fc> vectors;
+    private final Collection<Vector3f> vectors;
 
     @Inject
     public SphereVectors(MathUtils mathUtils, @Assisted float radius, @Assisted int count) {
@@ -23,12 +22,12 @@ public class SphereVectors extends AbstractEffectVectors {
     }
 
     @Override
-    public Collection<Vector3fc> getVectors() {
+    public Collection<Vector3f> getVectors() {
         return vectors;
     }
 
     @Override
-    public Iterator<Vector3fc> iterator() {
+    public Iterator<Vector3f> iterator() {
         return vectors.iterator();
     }
 }

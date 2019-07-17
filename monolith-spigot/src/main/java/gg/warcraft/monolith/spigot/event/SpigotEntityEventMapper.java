@@ -25,7 +25,7 @@ import gg.warcraft.monolith.api.entity.event.EntitySpawnEvent;
 import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
 import gg.warcraft.monolith.api.item.Item;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityAttackEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDamageEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDeathEvent;

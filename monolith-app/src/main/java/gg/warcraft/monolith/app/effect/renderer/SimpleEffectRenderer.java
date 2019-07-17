@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.effect.EffectRenderer;
 import gg.warcraft.monolith.api.effect.EffectVectors;
 import gg.warcraft.monolith.api.effect.Particle;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 public class SimpleEffectRenderer implements EffectRenderer {
     private final Particle particle;

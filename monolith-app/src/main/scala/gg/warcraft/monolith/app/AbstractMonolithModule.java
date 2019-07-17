@@ -66,6 +66,7 @@ import gg.warcraft.monolith.api.item.ItemTypeUtils;
 import gg.warcraft.monolith.api.item.service.ItemStorageCommandService;
 import gg.warcraft.monolith.api.item.service.ItemStorageQueryService;
 import gg.warcraft.monolith.api.item.service.ItemStorageRepository;
+import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.menu.ButtonBuilder;
 import gg.warcraft.monolith.api.menu.ButtonBuilderFactory;
 import gg.warcraft.monolith.api.menu.MenuBuilder;
@@ -186,7 +187,6 @@ import gg.warcraft.monolith.app.world.portal.service.DefaultPortalQueryService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalRepository;
 import gg.warcraft.monolith.app.world.service.DefaultWorldCommandService;
 import gg.warcraft.monolith.app.world.service.DefaultWorldQueryService;
-import org.joml.Vector3ic;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -199,13 +199,13 @@ public class AbstractMonolithModule extends PrivateModule {
     private final String gitHubRepository;
     private final float baseHealth;
     private final World buildRepositoryWorld;
-    private final Vector3ic buildRepositoryMinimumCorner;
-    private final Vector3ic buildRepositoryMaximumCorner;
+    private final Vector3i buildRepositoryMinimumCorner;
+    private final Vector3i buildRepositoryMaximumCorner;
 
     public AbstractMonolithModule(String configurationService, String gitHubAccount, String gitHubRepository,
                                   String persistenceService, String redisHost, int redisPort,
                                   float baseHealth, World buildRepositoryWorld,
-                                  Vector3ic buildRepositoryMinimumCorner, Vector3ic buildRepositoryMaximumCorner) {
+                                  Vector3i buildRepositoryMinimumCorner, Vector3i buildRepositoryMaximumCorner) {
         this.configurationService = configurationService;
         this.gitHubAccount = gitHubAccount;
         this.gitHubRepository = gitHubRepository;
@@ -574,9 +574,9 @@ public class AbstractMonolithModule extends PrivateModule {
         // Misc world bindings
         bind(World.class).annotatedWith(Names.named("BuildRepositoryWorld"))
                 .toInstance(buildRepositoryWorld);
-        bind(Vector3ic.class).annotatedWith(Names.named("BuildRepositoryMinimumCorner"))
+        bind(Vector3i.class).annotatedWith(Names.named("BuildRepositoryMinimumCorner"))
                 .toInstance(buildRepositoryMinimumCorner);
-        bind(Vector3ic.class).annotatedWith(Names.named("BuildRepositoryMaximumCorner"))
+        bind(Vector3i.class).annotatedWith(Names.named("BuildRepositoryMaximumCorner"))
                 .toInstance(buildRepositoryMaximumCorner);
     }
 }

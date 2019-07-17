@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block;
 
-import gg.warcraft.monolith.api.world.location.BlockLocation;
+import gg.warcraft.monolith.api.world.BlockLocation;
 
 /**
  * A Block represents a block as found on the server.

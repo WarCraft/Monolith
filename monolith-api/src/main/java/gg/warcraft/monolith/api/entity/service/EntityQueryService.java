@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.entity.service;
 
 import gg.warcraft.monolith.api.entity.Entity;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.List;
 import java.util.UUID;

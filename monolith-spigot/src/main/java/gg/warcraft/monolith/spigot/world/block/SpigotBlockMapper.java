@@ -1,11 +1,11 @@
 package gg.warcraft.monolith.spigot.world.block;
 
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.Hinge;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.app.world.block.ChestBlock;
 import gg.warcraft.monolith.app.world.block.DoorBlock;
 import gg.warcraft.monolith.app.world.block.GateBlock;

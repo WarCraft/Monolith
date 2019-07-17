@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.app.util;
 
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.util.MathUtils;
-import org.joml.Vector3f;
 
 import java.util.Random;
 

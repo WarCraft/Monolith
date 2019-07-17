@@ -14,6 +14,7 @@ import gg.warcraft.monolith.api.entity.player.PlayerServerData;
 import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingServerAdapter;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
+import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
@@ -42,7 +43,6 @@ import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupC
 import gg.warcraft.monolith.spigot.world.service.SpigotWorldAdapter;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
-import org.joml.Vector3ic;
 
 import java.util.logging.Logger;
 
@@ -55,7 +55,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
     public SpigotMonolithModule(String configurationService, String gitHubAccount, String gitHubRepository,
                                 String persistenceService, String redisHost, int redisPort,
                                 float baseHealth, World buildRepositoryWorld,
-                                Vector3ic buildRepositoryMinimumCorner, Vector3ic buildRepositoryMaximumCorner,
+                                Vector3i buildRepositoryMinimumCorner, Vector3i buildRepositoryMaximumCorner,
                                 Plugin plugin, String overworldName, String theNetherName, String theEndName) {
         super(configurationService, gitHubAccount, gitHubRepository, persistenceService, redisHost, redisPort,
                 baseHealth, buildRepositoryWorld, buildRepositoryMinimumCorner, buildRepositoryMaximumCorner);

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.event.AbstractEntityEvent;
 import gg.warcraft.monolith.api.entity.event.EntityInteractEvent;
 import gg.warcraft.monolith.api.item.Item;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.UUID;
 

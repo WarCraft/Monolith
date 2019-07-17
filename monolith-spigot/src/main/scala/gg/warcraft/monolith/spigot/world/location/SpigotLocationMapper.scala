@@ -1,7 +1,8 @@
 package gg.warcraft.monolith.spigot.world.location
 
 import com.google.inject.Inject
-import gg.warcraft.monolith.api.world.location.{BlockLocation, Location, Orientation}
+import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
+import gg.warcraft.monolith.api.world.{BlockLocation, Location}
 import gg.warcraft.monolith.spigot.world.{SpigotBlock, SpigotLocation, SpigotWorldMapper}
 
 class SpigotLocationMapper @Inject()(
@@ -24,13 +25,13 @@ class SpigotLocationMapper @Inject()(
     new SpigotLocation(world, x, y, z)
   }
 
-  def map(location: Location, orientation: Orientation): SpigotLocation = {
+  def map(location: Location, pitchYaw: (Float, Float)): SpigotLocation = {
     val world = worldMapper.map(location.getWorld)
     val x = location.getX
     val y = location.getY
     val z = location.getZ
-    val pitch = orientation.pitch
-    val yaw = orientation.yaw
+    val pitch = pitchYaw._1
+    val yaw = pitchYaw._2
     new SpigotLocation(world, x, y, z, yaw, pitch)
   }
 
@@ -39,7 +40,7 @@ class SpigotLocationMapper @Inject()(
     val x = block.getX
     val y = block.getY
     val z = block.getZ
-    BlockLocation(world, x, y, z)
+    BlockLocation(world, Vector3i(x, y, z))
   }
 
   def map(location: SpigotLocation): Location = {
@@ -49,16 +50,7 @@ class SpigotLocationMapper @Inject()(
     val z = location.getZ.toFloat
     val pitch = location.getPitch
     val yaw = location.getYaw
-    Location(world, x, y, z)
-  }
-
-  def mapWithOrientation(location: SpigotLocation): (Location, Orientation) = {
-    val world = worldMapper.map(location.getWorld)
-    val x = location.getX.toFloat
-    val y = location.getY.toFloat
-    val z = location.getZ.toFloat
-    val pitch = location.getPitch
-    val yaw = location.getYaw
-    (Location(world, x, y, z), Orientation(pitch, yaw))
+    location.getPitch
+    Location(world, Vector3f(x, y, z), Vector3f(pitch, yaw))
   }
 }

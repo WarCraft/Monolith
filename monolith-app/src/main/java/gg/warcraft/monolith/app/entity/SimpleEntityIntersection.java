@@ -2,7 +2,7 @@ package gg.warcraft.monolith.app.entity;
 
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityIntersection;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 public class SimpleEntityIntersection implements EntityIntersection {
     private final Entity entity;

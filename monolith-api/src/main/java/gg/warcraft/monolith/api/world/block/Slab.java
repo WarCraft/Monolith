@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block;
 
-import gg.warcraft.monolith.api.world.location.BlockLocation;
+import gg.warcraft.monolith.api.world.BlockLocation;
 
 public interface Slab extends Block {
 

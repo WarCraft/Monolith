@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.core.PluginLogger;
+import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
@@ -18,8 +19,6 @@ import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.world.block.build.SimpleBlockBuild;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,8 +47,8 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
                                            BlockBuildRepository buildRepository,
                                            BlockUtils blockUtils, BoundingBlockBoxFactory blockBoxFactory,
                                            @PluginLogger Logger logger, @Named("BuildRepositoryWorld") World world,
-                                           @Named("BuildRepositoryMinimumCorner") Vector3ic minimumCorner,
-                                           @Named("BuildRepositoryMaximumCorner") Vector3ic maximumCorner) {
+                                           @Named("BuildRepositoryMinimumCorner") Vector3i minimumCorner,
+                                           @Named("BuildRepositoryMaximumCorner") Vector3i maximumCorner) {
         this.worldQueryService = worldQueryService;
         this.worldCommandService = worldCommandService;
         this.buildRepository = buildRepository;

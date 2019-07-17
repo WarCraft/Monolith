@@ -3,9 +3,8 @@ package gg.warcraft.monolith.api.world.block.box;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.config.BoundingBlockBoxConfiguration;
+import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.World;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
 
 /**
  * This factory is injectable.
@@ -28,8 +27,8 @@ public interface BoundingBlockBoxFactory {
      * @return A new {@code BoundingBlockBox} with boundaries at the specified corners. Never null.
      */
     @Named("simple")
-    BoundingBlockBox createBoundingBlockBox(World world, @Assisted("minimum") Vector3ic minimumCorner,
-                                            @Assisted("maximum") Vector3ic maximumCorner);
+    BoundingBlockBox createBoundingBlockBox(World world, @Assisted("minimum") Vector3i minimumCorner,
+                                            @Assisted("maximum") Vector3i maximumCorner);
 
     /**
      * Creates a new {@code BoundingBlockBox} from the configuration.
@@ -44,11 +43,11 @@ public interface BoundingBlockBoxFactory {
      */
     default BoundingBlockBox createBoundingBlockBox(BoundingBlockBoxConfiguration configuration) {
         World world = configuration.getWorld();
-        Vector3ic minimumCorner = new Vector3i(
+        Vector3i minimumCorner = new Vector3i(
                 configuration.getMinimumcorner().getX(),
                 configuration.getMinimumcorner().getY(),
                 configuration.getMinimumcorner().getZ());
-        Vector3ic maximumCorner = new Vector3i(
+        Vector3i maximumCorner = new Vector3i(
                 configuration.getMaximumcorner().getX(),
                 configuration.getMaximumcorner().getY(),
                 configuration.getMaximumcorner().getZ());

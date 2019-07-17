@@ -1,9 +1,8 @@
 package gg.warcraft.monolith.api.entity;
 
-import gg.warcraft.monolith.api.world.location.Location;
-import gg.warcraft.monolith.api.world.location.Orientation;
+import gg.warcraft.monolith.api.math.Vector3f;
+import gg.warcraft.monolith.api.world.Location;
 import org.joml.AABBf;
-import org.joml.Vector3f;
 
 import java.util.UUID;
 
@@ -29,14 +28,10 @@ public interface EntityServerData {
      */
     Location getLocation();
 
-    Orientation getOrientation();
-
     /**
      * @return The eye location of the entity. Never null.
      */
     Location getEyeLocation();
-
-    Orientation getEyeOrientation();
 
     /**
      * @return The velocity of the entity. Never null.

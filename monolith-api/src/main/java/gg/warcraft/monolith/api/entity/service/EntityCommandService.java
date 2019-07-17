@@ -5,10 +5,10 @@ import gg.warcraft.monolith.api.combat.PotionEffectType;
 import gg.warcraft.monolith.api.combat.value.CombatValue;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.team.Team;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.util.Duration;
 import gg.warcraft.monolith.api.world.Direction;
-import gg.warcraft.monolith.api.world.location.Location;
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.UUID;
 
@@ -24,7 +24,7 @@ public interface EntityCommandService {
      * @param entityId The id of the entity. Can not be null.
      * @param velocity The new velocity of the entity. Can not be null.
      */
-    void setVelocity(UUID entityId, Vector3fc velocity);
+    void setVelocity(UUID entityId, Vector3f velocity);
 
     /**
      * @param entityId The id of the entity. Can not be null.
@@ -125,7 +125,7 @@ public interface EntityCommandService {
      * @param direction The direction.
      * @param distance  The distance in blocks.
      */
-    void knockback(UUID entityId, Vector3fc direction, float distance);
+    void knockback(UUID entityId, Vector3f direction, float distance);
 
     /**
      * Knocks an entity back a distance from a point of impact.
@@ -151,7 +151,7 @@ public interface EntityCommandService {
      * @param direction The direction.
      * @param distance  The distance in blocks.
      */
-    void leap(UUID entityId, Vector3fc direction, float distance);
+    void leap(UUID entityId, Vector3f direction, float distance);
 
     /**
      * Sucks an entity towards a point.

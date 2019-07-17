@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block.backup.service;
 
-import gg.warcraft.monolith.api.world.location.BlockLocation;
+import gg.warcraft.monolith.api.world.BlockLocation;
 
 import java.util.UUID;
 

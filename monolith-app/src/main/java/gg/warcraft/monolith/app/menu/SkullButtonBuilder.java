@@ -25,7 +25,8 @@ public class SkullButtonBuilder implements ButtonBuilder {
         this.playerName = playerName;
         this.title = ColorCode.WHITE + title;
         this.tooltip = new ArrayList<>();
-        this.action = click -> {};
+        this.action = click -> {
+        };
     }
 
     @Override

@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.app.world.block;
 
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.Chest;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 
 public class ChestBlock extends SimpleDirectionalBlock implements Chest {
 

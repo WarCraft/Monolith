@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.effect;
 
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
-import org.joml.Vector3fc;
+import gg.warcraft.monolith.api.math.Vector3f;
 
 /**
  * This factory is injectable.
@@ -43,7 +43,7 @@ public interface EffectVectorsFactory {
      * @return A new {@code EffectVectors} in the shape of a line. Never null.
      */
     @Named("line")
-    EffectVectors createLineVectors(@Assisted("origin") Vector3fc origin, @Assisted("target") Vector3fc target,
+    EffectVectors createLineVectors(@Assisted("origin") Vector3f origin, @Assisted("target") Vector3f target,
                                     int count);
 
     /**
@@ -61,7 +61,7 @@ public interface EffectVectorsFactory {
      * @return A new {@code EffectVectors} consisting of one point. Never null.
      */
     @Named("point")
-    EffectVectors createPointVector(Vector3fc point);
+    EffectVectors createPointVector(Vector3f point);
 
     /**
      * Creates a new {@code EffectVectors} in the shape of a ring.

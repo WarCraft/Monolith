@@ -8,6 +8,9 @@ import gg.warcraft.monolith.api.entity.event.EntityPreDespawnEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreRespawnEvent;
 import gg.warcraft.monolith.api.entity.event.EntityRespawnEvent;
 import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.math.Vector3f;
+import gg.warcraft.monolith.api.world.BlockLocation;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.event.BlockBreakEvent;
@@ -22,8 +25,6 @@ import gg.warcraft.monolith.api.world.block.event.BlockTriggerEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkLoadedEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkPreUnloadEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkUnloadedEvent;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDespawnEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDespawnEvent;
@@ -131,7 +132,7 @@ public class SpigotWorldEventMapper implements Listener {
         if (alternativeDrops != null && !alternativeDrops.isEmpty()) {
             BlockLocation blockLocation = block.getLocation();
             Location dropLocation = new Location(blockLocation.getWorld(),
-                    blockLocation.getX() + 0.5f, blockLocation.getY() + 0.5f, blockLocation.getZ() + 0.5f);
+                    blockLocation.getTranslation().toVector3f().add(0.5f, 0.5f, 0.5f), new Vector3f());
             worldCommandService.dropItemsAt(alternativeDrops, dropLocation);
         }
     }

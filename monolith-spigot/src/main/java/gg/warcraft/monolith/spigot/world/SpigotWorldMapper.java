@@ -5,9 +5,7 @@ import gg.warcraft.monolith.api.world.World;
 
 import javax.annotation.Nullable;
 
-import static gg.warcraft.monolith.api.world.World.OVERWORLD;
-import static gg.warcraft.monolith.api.world.World.THE_END;
-import static gg.warcraft.monolith.api.world.World.THE_NETHER;
+import static gg.warcraft.monolith.api.world.World.*;
 
 public class SpigotWorldMapper {
     private final org.bukkit.World overworld;

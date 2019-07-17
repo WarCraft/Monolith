@@ -15,21 +15,20 @@ import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityRepository;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
+import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.util.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.Direction;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
-import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealthChangedEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreHealEvent;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +69,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     }
 
     @Override
-    public void setVelocity(UUID entityId, Vector3fc velocity) {
+    public void setVelocity(UUID entityId, Vector3f velocity) {
         entityServerAdapter.setVelocity(entityId, velocity);
     }
 
@@ -226,13 +225,13 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     }
 
     @Override
-    public void knockback(UUID entityId, Vector3fc direction, float distance) {
+    public void knockback(UUID entityId, Vector3f direction, float distance) {
         float strength = knockbackStrength.computeIfAbsent(distance, this::calculateKnockbackStrength);
-        Vector3f knockback = new Vector3f(direction);
-        knockback.y = 0;
-        knockback.normalize();
-        knockback.y = 0.1f;
-        knockback.normalize();
+        Vector3f knockback = direction
+                .withY(0)
+                .normalize()
+                .withY(0.1f)
+                .normalize();
         Vector3f velocity = knockback.mul(strength);
         this.setVelocity(entityId, velocity);
     }
@@ -244,7 +243,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
             throw new IllegalArgumentException("Failed to apply knockback to null entity with id " + entityId);
         }
 
-        Vector3f direction = source.sub(entity.getLocation().toVector()).toVector();
+        Vector3f direction = source.sub(entity.getLocation()).getTranslation();
         this.knockback(entityId, direction, distance);
     }
 
@@ -309,18 +308,18 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     }
 
     @Override
-    public void leap(UUID entityId, Vector3fc direction, float distance) {
+    public void leap(UUID entityId, Vector3f direction, float distance) {
         Entity entity = entityQueryService.getEntity(entityId);
         if (entity == null) {
             throw new IllegalArgumentException("Failed to apply leap to null entity with id " + entityId);
         }
 
         float strength = leapStrength.computeIfAbsent(distance, this::calculateLeapStrength);
-        Vector3f leap = new Vector3f(direction);
-        leap.y = 0;
-        leap.normalize();
-        leap.y = distance <= 10f ? 0.4f : 0.25f;
-        leap.normalize();
+        Vector3f leap = direction
+                .withY(0)
+                .normalize()
+                .withY(distance <= 10f ? 0.4f : 0.25f)
+                .normalize();
         Vector3f velocity = leap.mul(strength);
         Vector3f newVelocity = entity.getVelocity().add(velocity);
         this.setVelocity(entityId, newVelocity);
@@ -334,11 +333,11 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
         }
 
         this.heavy(entityId, timeUtils.oneSecond());
-        Vector3f direction = source.toVector().sub(entity.getLocation().toVector());
+        Vector3f direction = source.sub(entity.getLocation()).getTranslation();
         direction.normalize().mul(0.05f * strength);
-        Vector3f newVelocity = entity.getVelocity();
-        newVelocity.x = direction.x;
-        newVelocity.z = direction.z;
+        Vector3f newVelocity = entity.getVelocity()
+                .withX(direction.getX())
+                .withZ(direction.getZ());
         this.setVelocity(entityId, newVelocity);
     }
 }

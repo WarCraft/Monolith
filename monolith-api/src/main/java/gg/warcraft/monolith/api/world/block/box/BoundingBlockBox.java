@@ -1,11 +1,11 @@
 package gg.warcraft.monolith.api.world.block.box;
 
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
-import org.joml.Vector3ic;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -85,7 +85,7 @@ public interface BoundingBlockBox extends Predicate<BlockLocation> {
      * @param vector The translation.
      * @return A copy of this bounding box translated by the specified vector.
      */
-    BoundingBlockBox translate(Vector3ic vector);
+    BoundingBlockBox translate(Vector3i vector);
 
     /**
      * @return A lazy stream of all blocks within this bounding box.

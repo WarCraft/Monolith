@@ -1,13 +1,13 @@
 package gg.warcraft.monolith.app.world.service;
 
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.Location;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
-import org.joml.Vector3ic;
 
 public class DefaultWorldQueryService implements WorldQueryService {
     private final WorldServerAdapter serverAdapter;
@@ -28,7 +28,7 @@ public class DefaultWorldQueryService implements WorldQueryService {
     }
 
     @Override
-    public Block getBlockAt(World world, Vector3ic vector) {
+    public Block getBlockAt(World world, Vector3i vector) {
         return serverAdapter.getBlockAt(world, vector.x(), vector.y(), vector.z());
     }
 

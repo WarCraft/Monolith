@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.app.world.block;
 
 import com.google.common.base.MoreObjects;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 
 import java.util.Objects;
 

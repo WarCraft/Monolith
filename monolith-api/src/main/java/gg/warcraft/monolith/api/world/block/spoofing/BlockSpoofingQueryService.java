@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world.block.spoofing;
 
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 
 import java.util.List;
 import java.util.UUID;

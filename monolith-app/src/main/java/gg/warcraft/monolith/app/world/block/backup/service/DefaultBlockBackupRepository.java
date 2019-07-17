@@ -6,9 +6,10 @@ import com.google.inject.Singleton;
 import gg.warcraft.monolith.api.core.JsonMapper;
 import gg.warcraft.monolith.api.core.PersistenceService;
 import gg.warcraft.monolith.api.core.PluginLogger;
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupRepository;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 import gg.warcraft.monolith.app.world.block.backup.SimpleBlockBackup;
 import gg.warcraft.monolith.app.world.block.backup.persistence.BlockBackupItem;
 
@@ -39,7 +40,7 @@ public class DefaultBlockBackupRepository implements BlockBackupRepository {
     }
 
     BlockBackup mapItemToBackup(BlockBackupItem item) {
-        BlockLocation location = new BlockLocation(item.getWorld(), item.getX(), item.getY(), item.getZ());
+        BlockLocation location = new BlockLocation(item.getWorld(), new Vector3i(item.getX(), item.getY(), item.getZ()));
         return new SimpleBlockBackup(item.getId(), item.getType(), item.getData(), location);
     }
 

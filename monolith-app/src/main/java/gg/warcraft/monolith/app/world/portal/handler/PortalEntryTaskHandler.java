@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.world.Direction;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.portal.service.PortalQueryService;
 
 public class PortalEntryTaskHandler implements Runnable {

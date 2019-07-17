@@ -1,10 +1,10 @@
 package gg.warcraft.monolith.api.world.service;
 
+import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
+import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
-import gg.warcraft.monolith.api.world.location.Location;
-import org.joml.Vector3ic;
 
 /**
  * This service is injectable.
@@ -34,7 +34,7 @@ public interface WorldQueryService {
      * @param vector The vector.
      * @return The block at the given vector.
      */
-    Block getBlockAt(World world, Vector3ic vector);
+    Block getBlockAt(World world, Vector3i vector);
 
     /**
      * @param location The location.

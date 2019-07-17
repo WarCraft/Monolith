@@ -7,6 +7,7 @@ import gg.warcraft.monolith.api.Monolith;
 import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.core.TaskService;
 import gg.warcraft.monolith.api.core.event.ServerShutdownEvent;
+import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
@@ -39,8 +40,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.joml.Vector3i;
-import org.joml.Vector3ic;
 
 import java.util.Arrays;
 import java.util.List;
@@ -136,11 +135,11 @@ public class MonolithPlugin extends JavaPlugin {
 
         String buildRepositoryWorldString = localConfig.getString("buildRepository.world");
         World buildRepositoryWorld = World.valueOf(buildRepositoryWorldString);
-        Vector3ic buildRepositoryMinimumCorner = new Vector3i(
+        Vector3i buildRepositoryMinimumCorner = new Vector3i(
                 localConfig.getInt("buildRepository.minimumCorner.x"),
                 localConfig.getInt("buildRepository.minimumCorner.y"),
                 localConfig.getInt("buildRepository.minimumCorner.z"));
-        Vector3ic buildRepositoryMaximumCorner = new Vector3i(
+        Vector3i buildRepositoryMaximumCorner = new Vector3i(
                 localConfig.getInt("buildRepository.maximumCorner.x"),
                 localConfig.getInt("buildRepository.maximumCorner.y"),
                 localConfig.getInt("buildRepository.maximumCorner.z"));

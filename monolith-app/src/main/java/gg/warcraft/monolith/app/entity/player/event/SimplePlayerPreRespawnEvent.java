@@ -2,7 +2,7 @@ package gg.warcraft.monolith.app.entity.player.event;
 
 import gg.warcraft.monolith.api.entity.player.event.AbstractPlayerEvent;
 import gg.warcraft.monolith.api.entity.player.event.PlayerPreRespawnEvent;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.UUID;
 

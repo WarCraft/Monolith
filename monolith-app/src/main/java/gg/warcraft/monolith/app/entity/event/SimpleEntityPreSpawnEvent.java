@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.entity.event;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.event.AbstractEntityPreEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreSpawnEvent;
-import gg.warcraft.monolith.api.world.location.Location;
+import gg.warcraft.monolith.api.world.Location;
 
 import java.util.UUID;
 

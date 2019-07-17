@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world.block;
 
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
-import gg.warcraft.monolith.api.world.location.BlockLocation;
 
 public interface Gate extends DirectionalBlock {
 
