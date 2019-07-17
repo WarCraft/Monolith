@@ -50,13 +50,13 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
 
     @Override
     public boolean test(BlockLocation location) {
-        if (location.getWorld() != world) {
+        if (location.world() != world) {
             return false;
         }
 
-        int x = location.getX();
-        int y = location.getY();
-        int z = location.getZ();
+        int x = location.x();
+        int y = location.y();
+        int z = location.z();
         return x >= minX && x <= maxX &&
                 y >= minY && y <= maxY &&
                 z >= minZ && z <= maxZ;
@@ -122,8 +122,8 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
 
     @Override
     public BoundingBlockBox rotateY(BlockLocation pivot, int degrees) {
-        int pivotX = pivot.getX();
-        int pivotZ = pivot.getZ();
+        int pivotX = pivot.x();
+        int pivotZ = pivot.z();
         int deltaNorthBoundary = pivotZ - getNorthBoundary();
         int deltaEastBoundary = getEastBoundary() - pivotX;
         int deltaSouthBoundary = getSouthBoundary() - pivotZ;
@@ -185,8 +185,8 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
 
     @Override
     public BoundingBlockBox translate(Vector3i vector) {
-        Vector3i newMinimumCorner = minimumCorner.getTranslation().add(vector);
-        Vector3i newMaximumCorner = maximumCorner.getTranslation().add(vector);
+        Vector3i newMinimumCorner = minimumCorner.translation().add(vector);
+        Vector3i newMaximumCorner = maximumCorner.translation().add(vector);
         return new SimpleBoundingBlockBox(worldQueryService, world,
                 newMinimumCorner, newMaximumCorner);
     }

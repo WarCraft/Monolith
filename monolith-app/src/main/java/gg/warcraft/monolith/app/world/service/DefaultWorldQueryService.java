@@ -34,8 +34,8 @@ public class DefaultWorldQueryService implements WorldQueryService {
 
     @Override
     public Block getBlockAt(BlockLocation location) {
-        return serverAdapter.getBlockAt(location.getWorld(),
-                location.getX(), location.getY(), location.getZ());
+        return serverAdapter.getBlockAt(location.world(),
+                location.x(), location.y(), location.z());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class DefaultWorldQueryService implements WorldQueryService {
 
     @Override
     public Block getHighestBlockAt(BlockLocation location) {
-        World world = location.getWorld();
-        return serverAdapter.getHighestBlockAt(world, location.getX(), location.getZ());
+        World world = location.world();
+        return serverAdapter.getHighestBlockAt(world, location.x(), location.z());
     }
 }

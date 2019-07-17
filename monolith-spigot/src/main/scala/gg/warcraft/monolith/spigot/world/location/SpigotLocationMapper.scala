@@ -10,26 +10,26 @@ class SpigotLocationMapper @Inject()(
 ) {
 
   def map(location: BlockLocation): SpigotLocation = {
-    val world = worldMapper.map(location.getWorld)
-    val x = location.getX
-    val y = location.getY
-    val z = location.getZ
+    val world = worldMapper.map(location.world)
+    val x = location.x
+    val y = location.y
+    val z = location.z
     new SpigotLocation(world, x, y, z)
   }
 
   def map(location: Location): SpigotLocation = {
-    val world = worldMapper.map(location.getWorld)
-    val x = location.getX
-    val y = location.getY
-    val z = location.getZ
+    val world = worldMapper.map(location.world)
+    val x = location.x
+    val y = location.y
+    val z = location.z
     new SpigotLocation(world, x, y, z)
   }
 
   def map(location: Location, pitchYaw: (Float, Float)): SpigotLocation = {
-    val world = worldMapper.map(location.getWorld)
-    val x = location.getX
-    val y = location.getY
-    val z = location.getZ
+    val world = worldMapper.map(location.world)
+    val x = location.x
+    val y = location.y
+    val z = location.z
     val pitch = pitchYaw._1
     val yaw = pitchYaw._2
     new SpigotLocation(world, x, y, z, yaw, pitch)

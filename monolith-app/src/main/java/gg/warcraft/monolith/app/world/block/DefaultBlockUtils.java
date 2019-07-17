@@ -60,7 +60,7 @@ public class DefaultBlockUtils implements BlockUtils {
     public Set<Block> getAdjacentBlocksX(Block block) {
         Set<Block> blocks = new HashSet<>();
         BlockLocation location = block.getLocation();
-        int currentX = location.getX();
+        int currentX = location.x();
 
         BlockLocation leftNeighbourLocation = location.withX(currentX - 1);
         Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
@@ -77,7 +77,7 @@ public class DefaultBlockUtils implements BlockUtils {
     public Set<Block> getAdjacentBlocksY(Block block) {
         Set<Block> blocks = new HashSet<>();
         BlockLocation location = block.getLocation();
-        int currentY = location.getY();
+        int currentY = location.y();
 
         BlockLocation leftNeighbourLocation = location.withY(currentY - 1);
         Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
@@ -94,7 +94,7 @@ public class DefaultBlockUtils implements BlockUtils {
     public Set<Block> getAdjacentBlocksZ(Block block) {
         Set<Block> blocks = new HashSet<>();
         BlockLocation location = block.getLocation();
-        int currentZ = location.getZ();
+        int currentZ = location.z();
 
         BlockLocation leftNeighbourLocation = location.withZ(currentZ - 1);
         Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
@@ -134,9 +134,9 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Block getRelative(Block block, BlockFace at) {
         BlockLocation location = block.getLocation();
-        int currentX = location.getX();
-        int currentY = location.getY();
-        int currentZ = location.getZ();
+        int currentX = location.x();
+        int currentY = location.y();
+        int currentZ = location.z();
         switch (at) {
             case NORTH:
                 BlockLocation northLocation = location.withZ(currentZ - 1);
@@ -175,27 +175,27 @@ public class DefaultBlockUtils implements BlockUtils {
         int maxZ = Integer.MIN_VALUE;
         for (Block block : blocks) {
             BlockLocation location = block.getLocation();
-            if (location.getX() < minX) {
-                minX = location.getX();
+            if (location.x() < minX) {
+                minX = location.x();
             }
-            if (location.getX() > maxX) {
-                maxX = location.getX();
+            if (location.x() > maxX) {
+                maxX = location.x();
             }
-            if (location.getY() < minY) {
-                minY = location.getY();
+            if (location.y() < minY) {
+                minY = location.y();
             }
-            if (location.getY() > maxY) {
-                maxY = location.getY();
+            if (location.y() > maxY) {
+                maxY = location.y();
             }
-            if (location.getZ() < minZ) {
-                minZ = location.getZ();
+            if (location.z() < minZ) {
+                minZ = location.z();
             }
-            if (location.getZ() > maxZ) {
-                maxZ = location.getZ();
+            if (location.z() > maxZ) {
+                maxZ = location.z();
             }
         }
 
-        World world = blocks.iterator().next().getLocation().getWorld();
+        World world = blocks.iterator().next().getLocation().world();
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
         Vector3i maximumCorner = new Vector3i(maxX, maxY, maxZ);
         return boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
@@ -203,15 +203,15 @@ public class DefaultBlockUtils implements BlockUtils {
 
     @Override
     public List<Block> getWithinRadius(Location location, float radius) {
-        World world = location.getWorld();
-        Vector3i minimumCorner = location.sub(radius, radius, radius)
+        World world = location.world();
+        Vector3i minimumCorner = location.subtract(radius, radius, radius)
                 .toBlockLocation()
-                .getTranslation();
+                .translation();
         Vector3i maximumCorner = location.add(1 + radius, 1 + radius, 1 + radius)
                 .toBlockLocation()
-                .getTranslation();
+                .translation();
         BoundingBlockBox box = boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
-        Spheref sphere = new Spheref(location.getX(), location.getY(), location.getZ(), radius);
+        Spheref sphere = new Spheref(location.x(), location.y(), location.z(), radius);
         return box.stream()
                 .filter(block -> {
                     Location blockLocation = block.getLocation().toLocation();

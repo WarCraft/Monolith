@@ -362,7 +362,7 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
         org.bukkit.Location spigotLocation = locationMapper.map(location);
         org.bukkit.World world = spigotLocation.getWorld();
         int strength = ambient ? 0 : 1;
-        world.createExplosion(location.getX(), location.getY(), location.getZ(), strength, !ambient, !ambient);
+        world.createExplosion(location.x(), location.y(), location.z(), strength, !ambient, !ambient);
     }
 
     @Override

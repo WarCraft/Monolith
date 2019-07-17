@@ -17,7 +17,7 @@ public class CircleVectors extends AbstractEffectVectors {
         this.vectors = new ArrayList<>(count);
         for (int i = 0; i < count; ++i) {
             Vector3f vector = mathUtils.randomVector();
-            vector.mul(radius).withY(0);
+            vector.multiply(radius).withY(0);
             vectors.add(vector);
         }
     }

@@ -103,15 +103,15 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         }
 
         World world = buildRepositoryBoundingBox.getWorld();
-        int minX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().getX(), Integer::min);
-        int maxX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().getX(), Integer::max);
-        int minZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().getZ(), Integer::min);
-        int maxZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().getZ(), Integer::max);
+        int minX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().x(), Integer::min);
+        int maxX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().x(), Integer::max);
+        int minZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().z(), Integer::min);
+        int maxZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().z(), Integer::max);
 
-        int minY = sign.getLocation().getY() + 1;
+        int minY = sign.getLocation().y() + 1;
         int maxY = findMinMaxCoordinate(glassBlocks, block -> {
             Block highestBlock = worldQueryService.getHighestBlockAt(block.getLocation());
-            return highestBlock.getLocation().getY();
+            return highestBlock.getLocation().y();
         }, Integer::max);
 
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);

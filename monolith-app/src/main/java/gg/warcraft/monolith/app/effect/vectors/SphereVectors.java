@@ -16,7 +16,7 @@ public class SphereVectors extends AbstractEffectVectors {
     public SphereVectors(MathUtils mathUtils, @Assisted float radius, @Assisted int count) {
         this.vectors = new ArrayList<>(count);
         for (int i = 0; i < count; ++i) {
-            Vector3f vector = mathUtils.randomVector().mul(radius);
+            Vector3f vector = mathUtils.randomVector().multiply(radius);
             vectors.add(vector);
         }
     }

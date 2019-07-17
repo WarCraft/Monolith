@@ -10,6 +10,10 @@ case class BlockLocation(
   val y: Int = translation.y
   val z: Int = translation.z
 
+  def this(world: World, x: Int, y: Int, z: Int) {
+    this(world, Vector3i(x, y, z))
+  }
+
   def add(x: Int, y: Int, z: Int): BlockLocation =
     copy(translation = translation.add(x, y, z))
 
@@ -18,7 +22,7 @@ case class BlockLocation(
   def add(loc: BlockLocation): BlockLocation = add(loc.x, loc.y, loc.z)
 
   def sub(x: Int, y: Int, z: Int): BlockLocation =
-    copy(translation = translation.sub(x, y, z))
+    copy(translation = translation.subtract(x, y, z))
 
   def sub(vec: Vector3i): BlockLocation = sub(vec.x, vec.y, vec.z)
 
@@ -27,12 +31,6 @@ case class BlockLocation(
   def toLocation: Location = Location(world, translation.toVector3f, Vector3f())
 
   /* Java interop */
-
-  def getWorld: World = world
-  def getTranslation: Vector3i = translation
-  def getX: Int = translation.x
-  def getY: Int = translation.y
-  def getZ: Int = translation.z
 
   def withWorld(world: World): BlockLocation = copy(world = world)
   def withTranslation(translation: Vector3i): BlockLocation = copy(translation = translation)

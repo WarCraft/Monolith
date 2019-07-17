@@ -25,8 +25,8 @@ public class SimpleBlockIterator implements BlockIterator {
                                @Assisted("origin") Location origin, @Assisted("target") Location target) {
         this.worldQueryService = worldQueryService;
         this.origin = origin;
-        this.maxDistance = origin.getTranslation().dist(target.getTranslation());
-        this.direction = target.sub(origin).getTranslation().normalize();
+        this.maxDistance = origin.translation().distanceTo(target.translation());
+        this.direction = target.subtract(origin).translation().normalize();
         this.scanLocation = origin;
         this.currentBlockLocation = null;
         this.nextBlockLocation = origin.toBlockLocation();
@@ -44,7 +44,7 @@ public class SimpleBlockIterator implements BlockIterator {
             }
             return scanLocation.toBlockLocation();
         } else {
-            delta = direction.mul(maxDistance - distance);
+            delta = direction.multiply(maxDistance - distance);
             distance = maxDistance;
 
             scanLocation = scanLocation.add(delta);

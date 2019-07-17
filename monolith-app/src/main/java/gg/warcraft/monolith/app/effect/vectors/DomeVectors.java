@@ -17,7 +17,7 @@ public class DomeVectors extends AbstractEffectVectors {
         this.vectors = new ArrayList<>(count);
         for (int i = 0; i < count; ++i) {
             Vector3f vector = mathUtils.randomVector();
-            vector.mul(radius).withY(Math.abs(vector.y()));
+            vector.multiply(radius).withY(Math.abs(vector.y()));
             vectors.add(vector);
         }
     }

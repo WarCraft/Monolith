@@ -169,7 +169,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
         }
 
         Block targetBlock = findBlockUnderFeet(entity);
-        int safeY = targetBlock.getLocation().getY() + 1;
+        int safeY = targetBlock.getLocation().y() + 1;
         Location safeLocation = entity.getLocation().withY(safeY);
         this.setVelocity(entityId, new Vector3f());
         this.teleport(entityId, safeLocation);
@@ -191,7 +191,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     private Block findBlockUnderFeet(Entity entity) {
         Block current = worldQueryService.getBlockAt(entity.getLocation());
         while (blockTypeUtils.getNonSolids().contains(current.getType())
-                && current.getLocation().getY() >= 0) {
+                && current.getLocation().y() >= 0) {
             current = blockUtils.getRelative(current, BlockFace.DOWN);
         }
         return current;
@@ -232,7 +232,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
                 .normalize()
                 .withY(0.1f)
                 .normalize();
-        Vector3f velocity = knockback.mul(strength);
+        Vector3f velocity = knockback.multiply(strength);
         this.setVelocity(entityId, velocity);
     }
 
@@ -243,7 +243,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
             throw new IllegalArgumentException("Failed to apply knockback to null entity with id " + entityId);
         }
 
-        Vector3f direction = source.sub(entity.getLocation()).getTranslation();
+        Vector3f direction = source.subtract(entity.getLocation()).translation();
         this.knockback(entityId, direction, distance);
     }
 
@@ -320,7 +320,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
                 .normalize()
                 .withY(distance <= 10f ? 0.4f : 0.25f)
                 .normalize();
-        Vector3f velocity = leap.mul(strength);
+        Vector3f velocity = leap.multiply(strength);
         Vector3f newVelocity = entity.getVelocity().add(velocity);
         this.setVelocity(entityId, newVelocity);
     }
@@ -333,11 +333,11 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
         }
 
         this.heavy(entityId, timeUtils.oneSecond());
-        Vector3f direction = source.sub(entity.getLocation()).getTranslation();
-        direction.normalize().mul(0.05f * strength);
+        Vector3f direction = source.subtract(entity.getLocation()).translation();
+        direction.normalize().multiply(0.05f * strength);
         Vector3f newVelocity = entity.getVelocity()
-                .withX(direction.getX())
-                .withZ(direction.getZ());
+                .withX(direction.x())
+                .withZ(direction.z());
         this.setVelocity(entityId, newVelocity);
     }
 }

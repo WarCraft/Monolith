@@ -35,12 +35,12 @@ public class DefaultEntityUtils implements EntityUtils {
 
     @Override
     public EntityIntersection intersectEntity(Location origin, Location target, Predicate<Entity> ignore) {
-        Vector3f originVector = origin.getTranslation();
-        Vector3f targetVector = target.getTranslation();
-        org.joml.Vector3f jomlOriginVec = new org.joml.Vector3f(originVector.getX(),
-                originVector.getY(), originVector.getZ());
-        org.joml.Vector3f jomlTargetVec = new org.joml.Vector3f(targetVector.getX(),
-                targetVector.getY(), targetVector.getZ());
+        Vector3f originVector = origin.translation();
+        Vector3f targetVector = target.translation();
+        org.joml.Vector3f jomlOriginVec = new org.joml.Vector3f(originVector.x(),
+                originVector.y(), originVector.z());
+        org.joml.Vector3f jomlTargetVec = new org.joml.Vector3f(targetVector.x(),
+                targetVector.y(), targetVector.z());
         AABBf boundingBox = new AABBf(jomlOriginVec, jomlTargetVec);
         boundingBox = boundingBox.correctBounds();
 
@@ -52,7 +52,7 @@ public class DefaultEntityUtils implements EntityUtils {
         float centerY = boundingBox.minY + deltaY;
         float centerZ = boundingBox.minZ + deltaZ;
 
-        Location center = new Location(origin.getWorld(), new Vector3f(centerX, centerY, centerZ), new Vector3f());
+        Location center = new Location(origin.world(), new Vector3f(centerX, centerY, centerZ), new Vector3f());
         LineSegmentf intersectionLine = new LineSegmentf(jomlOriginVec, jomlTargetVec);
         List<Entity> nearbyEntities = entityQueryService.getNearbyEntities(center, deltaX, deltaY, deltaZ);
         float closestIntersectionScalar = Float.MAX_VALUE;
@@ -73,9 +73,9 @@ public class DefaultEntityUtils implements EntityUtils {
         }
 
         if (closestIntersectedEntity != null) {
-            Vector3f distanceAlongRay = targetVector.sub(originVector).mul(closestIntersectionScalar);
+            Vector3f distanceAlongRay = targetVector.subtract(originVector).multiply(closestIntersectionScalar);
             Vector3f intersection = originVector.add(distanceAlongRay);
-            Location intersectionLocation = new Location(origin.getWorld(), intersection, new Vector3f());
+            Location intersectionLocation = new Location(origin.world(), intersection, new Vector3f());
             return new SimpleEntityIntersection(closestIntersectedEntity, intersectionLocation);
         }
         return null;
@@ -85,8 +85,8 @@ public class DefaultEntityUtils implements EntityUtils {
     public EntityTarget calculateTarget(UUID entityId, float range, boolean ignoreFriendlies) {
         Entity entity = entityQueryService.getEntity(entityId);
         Location origin = entity.getEyeLocation();
-        Vector3f direction = entity.getEyeLocation().getRotation();
-        Location target = origin.add(direction.mul(range));
+        Vector3f direction = entity.getEyeLocation().rotation();
+        Location target = origin.add(direction.multiply(range));
 
         BlockIntersection blockIntersection = blockUtils.intersectBlock(origin, target, blockTypeUtils.getNonSolids());
 

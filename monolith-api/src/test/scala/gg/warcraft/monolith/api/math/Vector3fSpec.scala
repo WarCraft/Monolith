@@ -330,7 +330,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     val expectedUpdatedVector = Vector3f(-4, 0, 4)
 
     // When
-    val updatedVector = vector.sub(6, 4, 2)
+    val updatedVector = vector.subtract(6, 4, 2)
 
     // Then
     assert(updatedVector.x === expectedUpdatedVector.x)
@@ -346,7 +346,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     val expectedUpdatedVector = Vector3f(-4, 0, 4)
 
     // When
-    val updatedVector = vector.sub(updateVector)
+    val updatedVector = vector.subtract(updateVector)
 
     // Then
     assert(updatedVector.x === expectedUpdatedVector.x)
@@ -361,7 +361,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     val expectedUpdatedVector = Vector3f(4, 8, 12)
 
     // When
-    val updatedVector = vector.mul(2)
+    val updatedVector = vector.multiply(2)
 
     // Then
     assert(updatedVector.x === expectedUpdatedVector.x)
@@ -377,7 +377,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     val expectedUpdatedVector = Vector3f(4, 16, 36)
 
     // When
-    val updatedVector = vector.mul(updateVector)
+    val updatedVector = vector.multiply(updateVector)
 
     // Then
     assert(updatedVector.x === expectedUpdatedVector.x)
@@ -393,7 +393,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     val expectedDistance = Math.sqrt(32).toFloat
 
     // When
-    val distance = vector.dist(otherVector)
+    val distance = vector.distanceTo(otherVector)
 
     // Then
     assert(distance === expectedDistance)
@@ -640,45 +640,6 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
   }
 
   /* Java interop */
-
-  "getX" should "return x" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-
-    val expectedX = 2f
-
-    // When
-    val x = vector.getX
-
-    // Then
-    assert(x === expectedX)
-  }
-
-  "getY" should "return y" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-
-    val expectedY = 4f
-
-    // When
-    val y = vector.getY
-
-    // Then
-    assert(y === expectedY)
-  }
-
-  "getZ" should "return z" in {
-    // Given
-    val vector = Vector3f(2, 4, 6)
-
-    val expectedZ = 6f
-
-    // When
-    val z = vector.getZ
-
-    // Then
-    assert(z === expectedZ)
-  }
 
   "withX" should "copy with x" in {
     // Given
