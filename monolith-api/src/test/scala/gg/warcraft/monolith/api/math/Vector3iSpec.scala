@@ -35,7 +35,7 @@ class Vector3iSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "sub" should "subtract from vector" in {
+  "subtract" should "subtract from vector" in {
     // Given
     val vector = Vector3i(2, 4, 6)
 
@@ -50,7 +50,7 @@ class Vector3iSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "subVector" should "subtract from vector" in {
+  "subtractVector" should "subtract from vector" in {
     // Given
     val vector = Vector3i(2, 4, 6)
     val updateVector = Vector3i(6, 4, 2)
@@ -66,7 +66,7 @@ class Vector3iSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "mul" should "multiply by scalar" in {
+  "multiply" should "multiply by scalar" in {
     // Given
     val vector = Vector3i(2, 4, 6)
 
@@ -81,7 +81,7 @@ class Vector3iSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "mulVector" should "multiply by individual scalars" in {
+  "multiplyVector" should "multiply by individual scalars" in {
     // Given
     val vector = Vector3i(2, 4, 6)
     val updateVector = Vector3i(2, 4, 6)

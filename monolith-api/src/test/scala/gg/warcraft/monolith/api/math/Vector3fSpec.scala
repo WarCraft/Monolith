@@ -4,7 +4,7 @@ import org.scalactic.TolerantNumerics
 import org.scalatest.{FlatSpec, GivenWhenThen}
 
 class Vector3fSpec extends FlatSpec with GivenWhenThen {
-  implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
+  private implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
 
   private val inverseTanOneDivSqrtTwoToDegrees =
     Math.toDegrees(Math.atan(1.0 / Math.sqrt(2.0))).toFloat
@@ -323,7 +323,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "sub" should "subtract from vector" in {
+  "subtract" should "subtract from vector" in {
     // Given
     val vector = Vector3f(2, 4, 6)
 
@@ -338,7 +338,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "subVector" should "subtract from vector" in {
+  "subtractVector" should "subtract from vector" in {
     // Given
     val vector = Vector3f(2, 4, 6)
     val updateVector = Vector3f(6, 4, 2)
@@ -354,7 +354,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "mul" should "multiply by scalar" in {
+  "multiply" should "multiply by scalar" in {
     // Given
     val vector = Vector3f(2, 4, 6)
 
@@ -369,7 +369,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "mulVector" should "multiply by individual scalars" in {
+  "multiplyVector" should "multiply by individual scalars" in {
     // Given
     val vector = Vector3f(2, 4, 6)
     val updateVector = Vector3f(2, 4, 6)
@@ -385,7 +385,7 @@ class Vector3fSpec extends FlatSpec with GivenWhenThen {
     assert(updatedVector.z === expectedUpdatedVector.z)
   }
 
-  "dist" should "return distance from this vector to that vector" in {
+  "distanceTo" should "return distance from this vector to that vector" in {
     // Given
     val vector = Vector3f(2, 4, 6)
     val otherVector = Vector3f(6, 4, 2)
