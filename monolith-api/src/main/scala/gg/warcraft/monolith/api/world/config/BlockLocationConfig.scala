@@ -10,9 +10,4 @@ case class BlockLocationConfig(
   @JsonProperty("translation") translation: Vector3iConfig
 ) {
   def toBlockLocation: BlockLocation = BlockLocation(world, translation.toVector3i)
-
-  /* Java interop */
-
-  def getWorld: World = world
-  def getTranslation: Vector3iConfig = translation
 }

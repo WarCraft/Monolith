@@ -11,10 +11,4 @@ case class LocationConfig(
   @JsonProperty("rotation") rotation: Vector3fConfig
 ) {
   def toLocation: Location = Location(world, translation.toVector3f, rotation.toVector3f)
-
-  /* Java interop */
-
-  def getWorld: World = world
-  def getTranslation: Vector3fConfig = translation
-  def getRotation: Vector3fConfig = rotation
 }

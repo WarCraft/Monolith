@@ -10,10 +10,4 @@ case class Vector3iConfig(
   @JsonProperty("z") z: Int
 ) {
   def toVector3i: Vector3i = Vector3i(x, y, z)
-
-  /* Java interop */
-
-  def getX: Int = x
-  def getY: Int = y
-  def getZ: Int = z
 }

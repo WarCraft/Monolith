@@ -10,10 +10,4 @@ case class Vector3fConfig(
   @JsonProperty("z") z: Float
 ) {
   def toVector3f: Vector3f = Vector3f(x, y, z)
-
-  /* Java interop */
-
-  def getX: Float = x
-  def getY: Float = y
-  def getZ: Float = z
 }
