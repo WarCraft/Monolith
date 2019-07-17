@@ -43,14 +43,8 @@ public interface BoundingBlockBoxFactory {
      */
     default BoundingBlockBox createBoundingBlockBox(BoundingBlockBoxConfiguration configuration) {
         World world = configuration.getWorld();
-        Vector3i minimumCorner = new Vector3i(
-                configuration.getMinimumcorner().getX(),
-                configuration.getMinimumcorner().getY(),
-                configuration.getMinimumcorner().getZ());
-        Vector3i maximumCorner = new Vector3i(
-                configuration.getMaximumcorner().getX(),
-                configuration.getMaximumcorner().getY(),
-                configuration.getMaximumcorner().getZ());
+        Vector3i minimumCorner = configuration.getMinimumcorner().toVector3i();
+        Vector3i maximumCorner = configuration.getMaximumcorner().toVector3i();
         return createBoundingBlockBox(world, minimumCorner, maximumCorner);
     }
 }
