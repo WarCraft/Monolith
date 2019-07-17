@@ -37,7 +37,7 @@ case class Vector3f(
 
     val pitch = Math.toDegrees(pitchRad)
     val unboundYaw = -Math.toDegrees(yawRad)
-    val yaw = if (unboundYaw == 180) -180 else unboundYaw
+    val yaw = if (unboundYaw == 180f) -180f else unboundYaw
     (pitch.toFloat, yaw.toFloat)
   }
 
@@ -58,19 +58,19 @@ case class Vector3f(
 
 object Vector3f {
   def apply(pitch: Float, yaw: Float): Vector3f = {
-    if (pitch < -90) {
+    if (pitch < -90f) {
       throw new IllegalArgumentException(s"pitch must be >= -90, but was $pitch")
-    } else if (pitch > 90) {
+    } else if (pitch > 90f) {
       throw new IllegalArgumentException(s"pitch must be <= 90, but was $pitch")
     }
 
     var clampedYaw = yaw
-    while (clampedYaw < -180) clampedYaw += 360
-    while (clampedYaw >= 180) clampedYaw -= 360
+    while (clampedYaw < -180f) clampedYaw += 360f
+    while (clampedYaw >= 180f) clampedYaw -= 360f
 
     // Add 90 degrees to correct for an extra rotation Minecraft added
-    val pitchRad = Math.toRadians(pitch + 90)
-    val yawRad = Math.toRadians(clampedYaw + 90)
+    val pitchRad = Math.toRadians(pitch + 90f)
+    val yawRad = Math.toRadians(clampedYaw + 90f)
 
     val sinPitchRad = Math.sin(pitchRad)
     val x = sinPitchRad * Math.cos(yawRad)
