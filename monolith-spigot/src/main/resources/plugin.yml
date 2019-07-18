@@ -1,8 +1,9 @@
 name: "WarCraft_Monolith"
-version: 1.0.0
+version: 2.0.0
 author: fishb6nes
 authors: [fishb6nes, cbngu]
 website: http://warcraft.gg
 
+api-version: "1.14"
 main: gg.warcraft.monolith.spigot.MonolithPlugin
 depend: [EffectLib]
