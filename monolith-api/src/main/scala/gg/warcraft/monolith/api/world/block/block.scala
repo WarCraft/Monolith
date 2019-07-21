@@ -3,8 +3,9 @@ package gg.warcraft.monolith.api.world.block
 import gg.warcraft.monolith.api.world.BlockLocation
 
 trait Block {
-  val `type`: BlockType
   val location: BlockLocation
+  val isLiquid: Boolean = false
+  val isSolid: Boolean = true
   def withLocation(loc: BlockLocation): Block
 }
 
