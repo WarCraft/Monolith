@@ -1,6 +1,6 @@
 dependencies {
     compile project(':monolith-app')
 
-    shadow('org.spigotmc:spigot:1.14.3-R0.1-SNAPSHOT') { exclude group: '*' }
-    shadow 'de.slikey:EffectLib:5.10-SNAPSHOT'
+    shadow('org.spigotmc:spigot:1.14.4-R0.1-SNAPSHOT') { exclude group: '*' }
+    shadow 'de.slikey:EffectLib:6.2-SNAPSHOT'
 }
