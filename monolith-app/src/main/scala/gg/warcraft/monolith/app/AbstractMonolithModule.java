@@ -82,7 +82,6 @@ import gg.warcraft.monolith.api.world.DirectionUtils;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
 import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
-import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupQueryService;
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupRepository;
@@ -170,7 +169,6 @@ import gg.warcraft.monolith.app.util.DefaultMathUtils;
 import gg.warcraft.monolith.app.util.DefaultStringUtils;
 import gg.warcraft.monolith.app.util.DefaultTimeUtils;
 import gg.warcraft.monolith.app.world.DefaultDirectionUtils;
-import gg.warcraft.monolith.app.world.block.DefaultBlockTypeUtils;
 import gg.warcraft.monolith.app.world.block.DefaultBlockUtils;
 import gg.warcraft.monolith.app.world.block.SimpleBlockIterator;
 import gg.warcraft.monolith.app.world.block.backup.service.DefaultBlockBackupQueryService;
@@ -520,9 +518,6 @@ public class AbstractMonolithModule extends PrivateModule {
         // Block bindings
         bind(BlockUtils.class).to(DefaultBlockUtils.class);
         expose(BlockUtils.class);
-
-        bind(BlockTypeUtils.class).to(DefaultBlockTypeUtils.class);
-        expose(BlockTypeUtils.class);
 
         install(new FactoryModuleBuilder()
                 .implement(BoundingBlockBox.class, Names.named("simple"), SimpleBoundingBlockBox.class)

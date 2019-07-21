@@ -111,7 +111,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     public List<Block> getBlocksOfType(BlockType... type) {
         Set<BlockType> types = new HashSet<>(Arrays.asList(type));
         return stream()
-                .filter(block -> types.contains(block.getType()))
+                .filter(block -> types.contains(block.type()))
                 .collect(Collectors.toList());
     }
 

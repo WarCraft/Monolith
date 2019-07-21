@@ -38,9 +38,9 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     return worldQueryService.getBlockAt(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
-                    int horizontalOffset = block.getLocation().x() - boundingBlockBox.getWestBoundary();
-                    int verticalOffset = block.getLocation().y() - boundingBlockBox.getLowerBoundary();
-                    int depthOffset = boundingBlockBox.getSouthBoundary() - block.getLocation().z();
+                    int horizontalOffset = block.location().x() - boundingBlockBox.getWestBoundary();
+                    int verticalOffset = block.location().y() - boundingBlockBox.getLowerBoundary();
+                    int depthOffset = boundingBlockBox.getSouthBoundary() - block.location().z();
                     return new SimpleOffset(horizontalOffset, verticalOffset, depthOffset);
                 };
                 break;
@@ -52,9 +52,9 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     return worldQueryService.getBlockAt(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
-                    int horizontalOffset = block.getLocation().z() - boundingBlockBox.getNorthBoundary();
-                    int verticalOffset = block.getLocation().y() - boundingBlockBox.getLowerBoundary();
-                    int depthOffset = block.getLocation().x() - boundingBlockBox.getWestBoundary();
+                    int horizontalOffset = block.location().z() - boundingBlockBox.getNorthBoundary();
+                    int verticalOffset = block.location().y() - boundingBlockBox.getLowerBoundary();
+                    int depthOffset = block.location().x() - boundingBlockBox.getWestBoundary();
                     return new SimpleOffset(horizontalOffset, verticalOffset, depthOffset);
                 };
                 break;
@@ -66,9 +66,9 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     return worldQueryService.getBlockAt(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
-                    int horizontalOffset = boundingBlockBox.getEastBoundary() - block.getLocation().x();
-                    int verticalOffset = block.getLocation().y() - boundingBlockBox.getLowerBoundary();
-                    int depthOffset = block.getLocation().z() - boundingBlockBox.getNorthBoundary();
+                    int horizontalOffset = boundingBlockBox.getEastBoundary() - block.location().x();
+                    int verticalOffset = block.location().y() - boundingBlockBox.getLowerBoundary();
+                    int depthOffset = block.location().z() - boundingBlockBox.getNorthBoundary();
                     return new SimpleOffset(horizontalOffset, verticalOffset, depthOffset);
                 };
                 break;
@@ -80,9 +80,9 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     return worldQueryService.getBlockAt(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
-                    int horizontalOffset = boundingBlockBox.getSouthBoundary() - block.getLocation().z();
-                    int verticalOffset = block.getLocation().y() - boundingBlockBox.getLowerBoundary();
-                    int depthOffset = boundingBlockBox.getEastBoundary() - block.getLocation().x();
+                    int horizontalOffset = boundingBlockBox.getSouthBoundary() - block.location().z();
+                    int verticalOffset = block.location().y() - boundingBlockBox.getLowerBoundary();
+                    int depthOffset = boundingBlockBox.getEastBoundary() - block.location().x();
                     return new SimpleOffset(horizontalOffset, verticalOffset, depthOffset);
                 };
                 break;

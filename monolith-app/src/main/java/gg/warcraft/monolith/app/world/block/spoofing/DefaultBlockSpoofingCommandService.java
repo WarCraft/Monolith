@@ -51,7 +51,7 @@ public class DefaultBlockSpoofingCommandService implements BlockSpoofingCommandS
         Arrays.stream(playerIds).forEach(playerId -> {
             List<Block> fakeBlocks = blockSpoofingRepository.getSpoofedBlocks(playerId);
             fakeBlocks.forEach(fakeBlock -> {
-                BlockLocation location = fakeBlock.getLocation();
+                BlockLocation location = fakeBlock.location();
                 Block realBlock = realBlocks.computeIfAbsent(location, worldQueryService::getBlockAt);
                 worldServerAdapter.spoofBlock(realBlock, playerId);
                 blockSpoofingRepository.delete(location, playerId);

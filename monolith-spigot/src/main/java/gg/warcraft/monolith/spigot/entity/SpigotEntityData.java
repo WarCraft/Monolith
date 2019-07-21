@@ -11,8 +11,8 @@ import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.app.entity.SimpleEquipment;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
-import net.minecraft.server.v1_12_R1.AxisAlignedBB;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
+import net.minecraft.server.v1_14_R1.AxisAlignedBB;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 import org.joml.AABBf;
@@ -100,8 +100,8 @@ public class SpigotEntityData implements EntityServerData {
     @Override
     public AABBf getBoundingBox() {
         AxisAlignedBB boundingBox = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
-        return new AABBf((float) boundingBox.a, (float) boundingBox.b, (float) boundingBox.c,
-                (float) boundingBox.d, (float) boundingBox.e, (float) boundingBox.f);
+        return new AABBf((float) boundingBox.minX, (float) boundingBox.minY, (float) boundingBox.minZ,
+                (float) boundingBox.maxX, (float) boundingBox.maxY, (float) boundingBox.maxZ);
     }
 
     @Override

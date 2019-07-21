@@ -7,6 +7,12 @@ import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
+import gg.warcraft.monolith.api.world.block.BlockFace.DOWN;
+import gg.warcraft.monolith.api.world.block.BlockFace.EAST;
+import gg.warcraft.monolith.api.world.block.BlockFace.NORTH;
+import gg.warcraft.monolith.api.world.block.BlockFace.SOUTH;
+import gg.warcraft.monolith.api.world.block.BlockFace.UP;
+import gg.warcraft.monolith.api.world.block.BlockFace.WEST;
 import gg.warcraft.monolith.api.world.block.BlockIntersection;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
 import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
@@ -52,14 +58,14 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Set<Block> getAdjacentBlocks(Block block, BlockType type) {
         return getAdjacentBlocks(block).stream()
-                .filter(adjacentBlock -> adjacentBlock.getType() == type)
+                .filter(adjacentBlock -> adjacentBlock.type() == type)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<Block> getAdjacentBlocksX(Block block) {
         Set<Block> blocks = new HashSet<>();
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentX = location.x();
 
         BlockLocation leftNeighbourLocation = location.withX(currentX - 1);
@@ -76,7 +82,7 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Set<Block> getAdjacentBlocksY(Block block) {
         Set<Block> blocks = new HashSet<>();
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentY = location.y();
 
         BlockLocation leftNeighbourLocation = location.withY(currentY - 1);
@@ -93,7 +99,7 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Set<Block> getAdjacentBlocksZ(Block block) {
         Set<Block> blocks = new HashSet<>();
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentZ = location.z();
 
         BlockLocation leftNeighbourLocation = location.withZ(currentZ - 1);
@@ -133,7 +139,7 @@ public class DefaultBlockUtils implements BlockUtils {
 
     @Override
     public Block getRelative(Block block, BlockFace at) {
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentX = location.x();
         int currentY = location.y();
         int currentZ = location.z();
@@ -174,7 +180,7 @@ public class DefaultBlockUtils implements BlockUtils {
         int minZ = Integer.MAX_VALUE;
         int maxZ = Integer.MIN_VALUE;
         for (Block block : blocks) {
-            BlockLocation location = block.getLocation();
+            BlockLocation location = block.location();
             if (location.x() < minX) {
                 minX = location.x();
             }
@@ -195,7 +201,7 @@ public class DefaultBlockUtils implements BlockUtils {
             }
         }
 
-        World world = blocks.iterator().next().getLocation().world();
+        World world = blocks.iterator().next().location().world();
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
         Vector3i maximumCorner = new Vector3i(maxX, maxY, maxZ);
         return boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
@@ -214,7 +220,7 @@ public class DefaultBlockUtils implements BlockUtils {
         Spheref sphere = new Spheref(location.x(), location.y(), location.z(), radius);
         return box.stream()
                 .filter(block -> {
-                    Location blockLocation = block.getLocation().toLocation();
+                    Location blockLocation = block.location().toLocation();
                     Vector3fc jomlMinCorner = new Vector3f(blockLocation.x(), blockLocation.y(), blockLocation.z());
                     AABBf blockBox = new AABBf(jomlMinCorner, jomlMinCorner.add(1, 1, 1, new Vector3f()));
                     return Intersectionf.testAabSphere(blockBox, sphere);
@@ -227,7 +233,7 @@ public class DefaultBlockUtils implements BlockUtils {
         BlockIterator blockIterator = blockIteratorFactory.createBlockIterator(origin, target);
         while (blockIterator.hasNext()) {
             Block currentBlock = blockIterator.next();
-            if (!ignore.contains(currentBlock.getType())) {
+            if (!ignore.contains(currentBlock.type())) {
                 Location intersection = blockIterator.calculateIntersection();
                 return new SimpleBlockIntersection(currentBlock, null, intersection);
             }

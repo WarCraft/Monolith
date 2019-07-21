@@ -29,6 +29,7 @@ subprojects {
 
     dependencies {
         compile 'org.scala-lang:scala-library:2.12.8'
+        compile 'com.beachape:enumeratum_2.12:1.5.13'
 
         testCompile 'junit:junit:4.12' // TODO remove
         testCompile 'org.mockito:mockito-core:2.18.3' // TODO remove

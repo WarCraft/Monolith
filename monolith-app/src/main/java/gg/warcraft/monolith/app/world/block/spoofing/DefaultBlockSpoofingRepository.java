@@ -41,7 +41,7 @@ public class DefaultBlockSpoofingRepository implements BlockSpoofingRepository {
     public void save(Block fakeBlock, UUID playerId) {
         Map<BlockLocation, Block> playerSpoofedBlocks =
                 spoofedBlocks.computeIfAbsent(playerId, key -> new HashMap<>());
-        playerSpoofedBlocks.put(fakeBlock.getLocation(), fakeBlock);
+        playerSpoofedBlocks.put(fakeBlock.location(), fakeBlock);
     }
 
     @Override
