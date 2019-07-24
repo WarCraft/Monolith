@@ -10,7 +10,7 @@ import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.app.entity.SimpleEquipment;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import net.minecraft.server.v1_14_R1.AxisAlignedBB;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;

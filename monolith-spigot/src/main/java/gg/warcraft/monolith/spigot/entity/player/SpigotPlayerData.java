@@ -10,7 +10,7 @@ import gg.warcraft.monolith.spigot.entity.SpigotEntityData;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.item.SpigotInventory;
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import org.bukkit.entity.Player;
 
 import static com.google.common.base.Preconditions.checkState;

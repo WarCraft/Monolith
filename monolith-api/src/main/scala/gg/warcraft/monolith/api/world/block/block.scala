@@ -44,6 +44,11 @@ trait OpenableBlock extends Block {
   def withOpen(open: Boolean): OpenableBlock
 }
 
+trait PottableBlock extends Block {
+  val potted: Boolean
+  def withPotted(potted: Boolean): PottableBlock
+}
+
 trait PowerableBlock extends Block {
   val powered: Boolean
   def withPowered(powered: Boolean): PowerableBlock

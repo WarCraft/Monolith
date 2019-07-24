@@ -20,7 +20,7 @@ import gg.warcraft.monolith.spigot.combat.SpigotPotionEffectTypeMapper;
 import gg.warcraft.monolith.spigot.entity.GenericAttributeMapper;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityDataFactory;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;

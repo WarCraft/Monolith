@@ -1,9 +1,8 @@
-package gg.warcraft.monolith.spigot.world.location
+package gg.warcraft.monolith.spigot.world
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
 import gg.warcraft.monolith.api.world.{BlockLocation, Location}
-import gg.warcraft.monolith.spigot.world.{SpigotBlock, SpigotLocation, SpigotWorldMapper}
 
 class SpigotLocationMapper @Inject()(
   private val worldMapper: SpigotWorldMapper

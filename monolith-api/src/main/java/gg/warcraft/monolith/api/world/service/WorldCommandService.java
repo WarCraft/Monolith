@@ -6,7 +6,6 @@ import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.Sound;
 import gg.warcraft.monolith.api.world.SoundCategory;
 import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.Sign;
 
 import java.util.List;
@@ -24,12 +23,6 @@ public interface WorldCommandService {
      * @param block The block to update. Can not be null.
      */
     void setBlock(Block block);
-
-    /**
-     * @param block The block to update. Can not be null.
-     * @param type  The new type. Can not be null.
-     */
-    void setBlockType(Block block, BlockType type);
 
     /**
      * @param sign  The sign to update. Can not be null.

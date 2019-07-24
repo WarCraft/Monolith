@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.effect.Particle;
 import gg.warcraft.monolith.api.effect.ParticleType;
 import gg.warcraft.monolith.api.util.ColorHue;
 import gg.warcraft.monolith.api.world.Location;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import org.bukkit.Color;
 
 public class ColorParticle implements Particle {

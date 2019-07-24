@@ -15,3 +15,14 @@ object AnvilState extends Enum[AnvilState] {
   case object CHIPPED extends AnvilState
   case object DAMAGED extends AnvilState
 }
+
+sealed trait SandstoneState extends EnumEntry with BlockState
+
+object SandstoneState extends Enum[SandstoneState] {
+  val values: IndexedSeq[SandstoneState] = findValues
+
+  case object NORMAL extends SandstoneState
+  case object CHISELED extends SandstoneState
+  case object CUT extends SandstoneState
+  case object SMOOTH extends SandstoneState
+}
