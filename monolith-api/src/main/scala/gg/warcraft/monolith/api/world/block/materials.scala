@@ -18,6 +18,8 @@ trait OreMaterial extends BlockMaterial
 
 trait PillarMaterial extends BlockMaterial
 
+trait PressurePlateMaterial extends BlockMaterial
+
 trait SlabMaterial extends BlockMaterial
 
 trait StairsMaterial extends BlockMaterial
@@ -25,6 +27,16 @@ trait StairsMaterial extends BlockMaterial
 trait TrapdoorMaterial extends BlockMaterial
 
 trait WallMaterial extends BlockMaterial
+
+sealed trait AirMaterial extends EnumEntry with BlockMaterial
+
+object AirMaterial extends Enum[AirMaterial] {
+  val values: IndexedSeq[AirMaterial] = findValues
+
+  case object NORMAL extends AirMaterial
+  case object CAVE extends AirMaterial
+  case object VOID extends AirMaterial
+}
 
 sealed trait BrickMaterial extends EnumEntry
   with FenceMaterial with SlabMaterial with StairsMaterial with WallMaterial
@@ -75,6 +87,16 @@ object FlowerMaterial extends Enum[FlowerMaterial] {
   case object WITHER_ROSE extends FlowerMaterial
 }
 
+sealed trait IceMaterial extends EnumEntry with BlockMaterial
+
+object IceMaterial extends Enum[IceMaterial] {
+  val values: IndexedSeq[IceMaterial] = findValues
+
+  case object NORMAL extends IceMaterial
+  case object PACKED extends IceMaterial
+  case object BLUE extends IceMaterial
+}
+
 sealed trait IronMaterial extends EnumEntry
   with DoorMaterial with TrapdoorMaterial
 
@@ -82,8 +104,6 @@ object IronMaterial extends Enum[IronMaterial] {
   val values: IndexedSeq[IronMaterial] = findValues
 
   case object IRON extends IronMaterial
-  case object NETHER_BRICK extends IronMaterial
-  case object RED_NETHER_BRICK extends IronMaterial
 }
 
 sealed trait MobHeadMaterial extends EnumEntry with BlockMaterial
@@ -130,6 +150,17 @@ object QuartzMaterial extends Enum[QuartzMaterial] {
   case object SMOOTH_QUARTZ extends QuartzMaterial
 }
 
+sealed trait RailsMaterial extends EnumEntry with BlockMaterial
+
+object RailsMaterial extends Enum[RailsMaterial] {
+  val values: IndexedSeq[RailsMaterial] = findValues
+
+  case object NORMAL extends RailsMaterial
+  case object ACTIVATOR extends RailsMaterial
+  case object DETECTOR extends RailsMaterial
+  case object POWERED extends RailsMaterial
+}
+
 sealed trait ResourceMaterial extends EnumEntry
   with MineralMaterial with OreMaterial
 
@@ -167,7 +198,8 @@ object SandstoneMaterial extends Enum[SandstoneMaterial] {
 }
 
 sealed trait StoneMaterial extends EnumEntry
-  with ButtonMaterial with SlabMaterial with StairsMaterial with WallMaterial
+  with ButtonMaterial with PressurePlateMaterial with SlabMaterial
+  with StairsMaterial with WallMaterial
 
 object StoneMaterial extends Enum[StoneMaterial] {
   val values: IndexedSeq[StoneMaterial] = findValues
@@ -192,6 +224,15 @@ object StoneMaterial extends Enum[StoneMaterial] {
 
   case object END_STONE extends StoneMaterial
   case object END_STONE_BRICK extends StoneMaterial
+}
+
+sealed trait WeightedPressurePlateMaterial extends EnumEntry with BlockMaterial
+
+object WeightedPressurePlateMaterial extends Enum[WeightedPressurePlateMaterial] {
+  val values: IndexedSeq[WeightedPressurePlateMaterial] = findValues
+
+  case object LIGHT extends WeightedPressurePlateMaterial
+  case object HEAVY extends WeightedPressurePlateMaterial
 }
 
 sealed trait WoodMaterial extends EnumEntry

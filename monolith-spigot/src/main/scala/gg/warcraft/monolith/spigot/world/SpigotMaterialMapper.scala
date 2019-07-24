@@ -7,6 +7,11 @@ class SpigotMaterialMapper {
 
   def map(material: Material): BlockMaterial = material match {
 
+    // AIR
+    case Material.AIR => AirMaterial.NORMAL
+    case Material.CAVE_AIR => AirMaterial.CAVE
+    case Material.VOID_AIR => AirMaterial.VOID
+
     // FLOWER
     case Material.ALLIUM => FlowerMaterial.ALLIUM
     case Material.AZURE_BLUET => FlowerMaterial.AZURE_BLUET
@@ -29,6 +34,10 @@ class SpigotMaterialMapper {
     case Material.SKELETON_SKULL | Material.SKELETON_WALL_SKULL => MobHeadMaterial.SKELETON
     case Material.WITHER_SKELETON_SKULL | Material.WITHER_SKELETON_WALL_SKULL => MobHeadMaterial.WITHER_SKELETON
     case Material.ZOMBIE_HEAD | Material.ZOMBIE_WALL_HEAD => MobHeadMaterial.ZOMBIE
+
+    // PILLAR
+    case Material.PURPUR_PILLAR => PurpurMaterial.PURPUR
+    case Material.QUARTZ_PILLAR => QuartzMaterial.QUARTZ
 
     // RESOURCE
     case Material.COAL_ORE => ResourceMaterial.COAL

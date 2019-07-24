@@ -74,6 +74,11 @@ trait PowerableBlock extends Block {
   def withPowered(powered: Boolean): PowerableBlock
 }
 
+trait SnowableBlock extends Block {
+  val snowy: Boolean
+  def withSnowy(snowy: Boolean): SnowableBlock
+}
+
 trait StatefulBlock[T] extends Block {
   val state: T
   def withState(state: T): StatefulBlock[T]

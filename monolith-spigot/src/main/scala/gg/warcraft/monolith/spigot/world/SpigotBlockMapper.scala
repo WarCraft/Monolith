@@ -21,6 +21,7 @@ class SpigotBlockMapper @Inject()(
 
   def map(block: SpigotBlock): Block = {
     val location = locationMapper.map(block.getLocation).toBlockLocation
+
     lazy val color = { materialMapper.mapColor(block.getType) }
     lazy val facing = { mapFace(block.getState.asInstanceOf[Directional].getFacing) }
     lazy val lit = { block.getState.asInstanceOf[Lightable].isLit }
@@ -30,14 +31,13 @@ class SpigotBlockMapper @Inject()(
     lazy val potted = { block.getType.name.startsWith("POTTED_") }
     lazy val powered = { block.getState.asInstanceOf[Powerable].isPowered }
     lazy val section = { mapBisection(block.getState.asInstanceOf[Bisected].getHalf) }
+    lazy val snowy = { block.getState.asInstanceOf[Snowable].isSnowy }
     lazy val state = { materialMapper.mapState(block.getType) }
     lazy val stripped = { block.getType.name.startsWith("STRIPPED_") }
     lazy val wet = { block.getState.asInstanceOf[Waterlogged].isWaterlogged }
+
     block.getType match {
-      case Material.ACTIVATOR_RAIL => null
-      case Material.AIR => Air(location)
-      case Material.ANDESITE => null
-      case Material.ANDESITE_WALL => null
+      case Material.AIR => Air(location, material.asInstanceOf[AirMaterial])
 
       // ANVIL
       case Material.ANVIL | Material.CHIPPED_ANVIL | Material.DAMAGED_ANVIL =>
@@ -80,23 +80,21 @@ class SpigotBlockMapper @Inject()(
       case Material.BEETROOTS => null
       case Material.BELL => Bell(location, facing)
       case Material.BLAST_FURNACE => BlastFurnace(location, facing, lit)
-      case Material.BLUE_ICE => null
       case Material.BONE_BLOCK => Bone(location, orientation)
       case Material.BOOKSHELF => Bookshelf(location)
       case Material.BREWING_STAND => BrewingStand(location)
-      case Material.BRICKS => null
-      case Material.BRICK_WALL => null
       case Material.BROWN_MUSHROOM => null
       case Material.BROWN_MUSHROOM_BLOCK => null
       case Material.BUBBLE_COLUMN => null
 
       // BUTTON
-      case Material.ACACIA_BUTTON | Material.BIRCH_BUTTON | Material.DARK_OAK_BUTTON |
+      case Material.STONE_BUTTON |
+           Material.ACACIA_BUTTON | Material.BIRCH_BUTTON | Material.DARK_OAK_BUTTON |
            Material.JUNGLE_BUTTON | Material.OAK_BUTTON | Material.SPRUCE_BUTTON =>
-        null
+        Button(location, material.asInstanceOf[ButtonMaterial], null) // TODO attachedTo
 
-      case Material.CACTUS => null
-      case Material.CAKE => null
+      case Material.CACTUS => Cactus(location, state.asInstanceOf[CactusState]) // TODO this wont work, state is not incl in mat
+      case Material.CAKE => Cake(location, state.asInstanceOf[CakeState]) // TODO this wont work, state is not incl in mat
       case Material.CAMPFIRE => null
 
       // CARPET
@@ -111,19 +109,15 @@ class SpigotBlockMapper @Inject()(
       case Material.CARTOGRAPHY_TABLE => CartographyTable(location)
       case Material.CARVED_PUMPKIN => null
       case Material.CAULDRON => null
-      case Material.CAVE_AIR => null
       case Material.CHAIN_COMMAND_BLOCK => null
       case Material.CHEST => null
       case Material.CHISELED_QUARTZ_BLOCK => null
       case Material.CHISELED_STONE_BRICKS => null
       case Material.CHORUS_FLOWER => null
       case Material.CHORUS_PLANT => null
-      case Material.CLAY => null
-      case Material.COARSE_DIRT => null
-      case Material.COBBLESTONE => null
-      case Material.COBBLESTONE_WALL => null
+      case Material.CLAY => Clay(location)
       case Material.COBWEB => Cobweb(location)
-      case Material.COCOA => null
+      case Material.COCOA => Cocoa(location, state.asInstanceOf[CocoaState], facing) // TODO this wont work, state is not incl in mat
       case Material.COMMAND_BLOCK => CommandBlock(location)
       case Material.COMPARATOR => null
       case Material.COMPOSTER => null
@@ -178,16 +172,11 @@ class SpigotBlockMapper @Inject()(
            Material.TUBE_CORAL_WALL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
         null
 
-      case Material.CRACKED_STONE_BRICKS => null
       case Material.CRAFTING_TABLE => CraftingTable(location)
-      case Material.DARK_PRISMARINE => null
       case Material.DAYLIGHT_DETECTOR => DaylightDetector(location)
       case Material.DEAD_BUSH => null
-      case Material.DETECTOR_RAIL => null
-      case Material.DIORITE => null
-      case Material.DIORITE_WALL => null
-      case Material.DIRT => Dirt(location)
-      case Material.DISPENSER => null
+      case Material.DIRT => Dirt(location) // TODO case Material.COARSE_DIRT => null
+      case Material.DISPENSER => Dispenser(location, facing, powered)
 
       // DOOR
       case Material.ACACIA_DOOR | Material.BIRCH_DOOR | Material.DARK_OAK_DOOR |
@@ -196,20 +185,18 @@ class SpigotBlockMapper @Inject()(
 
       case Material.DRAGON_EGG => null
       case Material.DRIED_KELP_BLOCK => DriedKelp(location)
-      case Material.DROPPER => null
+      case Material.DROPPER => Dropper(location, facing, powered)
       case Material.ENCHANTING_TABLE => EnchantingTable(location)
       case Material.ENDER_CHEST => null
       case Material.END_GATEWAY => null
       case Material.END_PORTAL => null
       case Material.END_PORTAL_FRAME => null
       case Material.END_ROD => EndRod(location, facing)
-      case Material.END_STONE => null
-      case Material.END_STONE_BRICKS => null
-      case Material.END_STONE_BRICK_WALL => null
       case Material.FARMLAND => Farmland(location)
 
       // FENCE
-      case Material.ACACIA_FENCE | Material.BIRCH_FENCE | Material.DARK_OAK_FENCE |
+      case Material.NETHER_BRICK_FENCE |
+           Material.ACACIA_FENCE | Material.BIRCH_FENCE | Material.DARK_OAK_FENCE |
            Material.JUNGLE_FENCE | Material.OAK_FENCE | Material.SPRUCE_FENCE =>
         null
 
@@ -238,8 +225,8 @@ class SpigotBlockMapper @Inject()(
            Material.WITHER_ROSE | Material.POTTED_WITHER_ROSE =>
         Flower(location, material.asInstanceOf[FlowerMaterial], potted)
 
-      case Material.FLOWER_POT => null
-      case Material.FROSTED_ICE => null
+      case Material.FLOWER_POT => FlowerPot(location)
+      case Material.FROSTED_ICE => Frost(location)
       case Material.FURNACE => Furnace(location, facing, lit)
 
       // GLASS
@@ -258,24 +245,19 @@ class SpigotBlockMapper @Inject()(
            Material.PURPLE_STAINED_GLASS_PANE | Material.RED_STAINED_GLASS_PANE | Material.WHITE_STAINED_GLASS_PANE | Material.YELLOW_STAINED_GLASS_PANE =>
         GlassPane(location, Option(color)) // TODO add orientation
 
-      // GLAZED_TERRACOTTA
-      case Material.BLACK_GLAZED_TERRACOTTA | Material.BLUE_GLAZED_TERRACOTTA | Material.BROWN_GLAZED_TERRACOTTA | Material.CYAN_GLAZED_TERRACOTTA |
-           Material.GRAY_GLAZED_TERRACOTTA | Material.GREEN_GLAZED_TERRACOTTA | Material.LIGHT_BLUE_GLAZED_TERRACOTTA | Material.LIGHT_GRAY_GLAZED_TERRACOTTA |
-           Material.LIME_GLAZED_TERRACOTTA | Material.MAGENTA_GLAZED_TERRACOTTA | Material.ORANGE_GLAZED_TERRACOTTA | Material.PINK_GLAZED_TERRACOTTA |
-           Material.PURPLE_GLAZED_TERRACOTTA | Material.RED_GLAZED_TERRACOTTA | Material.WHITE_GLAZED_TERRACOTTA | Material.YELLOW_GLAZED_TERRACOTTA =>
-        GlazedTerracotta(location, color)
-
       case Material.GLOWSTONE => Glowstone(location)
-      case Material.GRANITE => null
-      case Material.GRANITE_WALL => null
       case Material.GRASS => null
       case Material.GRASS_BLOCK => null
       case Material.GRASS_PATH => null
-      case Material.GRAVEL => null
+      case Material.GRAVEL => Gravel(location)
       case Material.GRINDSTONE => null
       case Material.HAY_BLOCK => HayBale(location, orientation)
       case Material.HOPPER => null
-      case Material.ICE => null
+
+      // ICE
+      case Material.ICE | Material.PACKED_ICE | Material.BLUE_ICE =>
+        Ice(location, material.asInstanceOf[IceMaterial])
+
       case Material.INFESTED_CHISELED_STONE_BRICKS => null
       case Material.INFESTED_COBBLESTONE => null
       case Material.INFESTED_CRACKED_STONE_BRICKS => null
@@ -284,7 +266,6 @@ class SpigotBlockMapper @Inject()(
       case Material.INFESTED_STONE_BRICKS => null
       case Material.IRON_BARS => null
       case Material.IRON_DOOR => null
-      case Material.IRON_TRAPDOOR => null
       case Material.JACK_O_LANTERN => null
       case Material.JIGSAW => Jigsaw(location, facing)
       case Material.JUKEBOX =>
@@ -337,17 +318,10 @@ class SpigotBlockMapper @Inject()(
            Material.ZOMBIE_HEAD | Material.ZOMBIE_WALL_HEAD =>
         MobHead(location, material.asInstanceOf[MobHeadMaterial]) // TODO map WALL MobHeads / attachedTo
 
-      case Material.MOSSY_COBBLESTONE => null
-      case Material.MOSSY_COBBLESTONE_WALL => null
-      case Material.MOSSY_STONE_BRICKS => null
-      case Material.MOSSY_STONE_BRICK_WALL => null
       case Material.MOVING_PISTON => null
       case Material.MUSHROOM_STEM => null
-      case Material.MYCELIUM => null
-      case Material.NETHERRACK => null
-      case Material.NETHER_BRICKS => null
-      case Material.NETHER_BRICK_FENCE => null
-      case Material.NETHER_BRICK_WALL => null
+      case Material.MYCELIUM => Mycelium(location, snowy)
+      case Material.NETHERRACK => Netherrack(location)
       case Material.NETHER_PORTAL => null
       case Material.NETHER_WART => null
       case Material.NETHER_WART_BLOCK => null
@@ -360,9 +334,14 @@ class SpigotBlockMapper @Inject()(
            Material.IRON_ORE | Material.LAPIS_ORE | Material.NETHER_QUARTZ_ORE | Material.REDSTONE_ORE =>
         Ore(location, material.asInstanceOf[OreMaterial])
 
-      case Material.PACKED_ICE => null
       case Material.PEONY => null
+
+      // PILLAR
+      case Material.PURPUR_PILLAR | Material.QUARTZ_PILLAR =>
+        Pillar(location, material.asInstanceOf[PillarMaterial])
+
       case Material.PISTON => null
+      case Material.STICKY_PISTON => null
       case Material.PISTON_HEAD => null
 
       // PLANKS
@@ -370,10 +349,7 @@ class SpigotBlockMapper @Inject()(
            Material.JUNGLE_PLANKS | Material.OAK_PLANKS | Material.SPRUCE_PLANKS =>
         Planks(location, material.asInstanceOf[WoodMaterial])
 
-      case Material.PODZOL => null
-      case Material.POLISHED_ANDESITE => null
-      case Material.POLISHED_DIORITE => null
-      case Material.POLISHED_GRANITE => null
+      case Material.PODZOL => Podzol(location, snowy)
       case Material.POTATOES => null
       case Material.POTTED_BAMBOO => null
       case Material.POTTED_BROWN_MUSHROOM => null
@@ -381,34 +357,29 @@ class SpigotBlockMapper @Inject()(
       case Material.POTTED_DEAD_BUSH => null
       case Material.POTTED_FERN => null
       case Material.POTTED_RED_MUSHROOM => null
-      case Material.POWERED_RAIL => null
 
       // PRESSURE_PLATE
-      case Material.STONE_PRESSURE_PLATE => null
-      case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => null
-      case Material.HEAVY_WEIGHTED_PRESSURE_PLATE => null
-      case Material.ACACIA_PRESSURE_PLATE | Material.BIRCH_PRESSURE_PLATE | Material.DARK_OAK_PRESSURE_PLATE |
+      case Material.STONE_PRESSURE_PLATE |
+           Material.ACACIA_PRESSURE_PLATE | Material.BIRCH_PRESSURE_PLATE | Material.DARK_OAK_PRESSURE_PLATE |
            Material.JUNGLE_PRESSURE_PLATE | Material.OAK_PRESSURE_PLATE | Material.SPRUCE_PRESSURE_PLATE =>
-        null
+        PressurePlate(location, material.asInstanceOf[PressurePlateMaterial], active)
+      case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
+        WeightedPressurePlate(location, material.asInstanceOf[WeightedPressurePlateMaterial],
+          state.asInstanceOf[WeightedPressurePlateState])
 
-      case Material.PRISMARINE => null
-      case Material.PRISMARINE_BRICKS => null
-      case Material.PRISMARINE_WALL => null
       case Material.PUMPKIN => null
       case Material.PUMPKIN_STEM | Material.ATTACHED_PUMPKIN_STEM => null
-      case Material.PURPUR_BLOCK => null
-      case Material.PURPUR_PILLAR => null
-      case Material.QUARTZ_PILLAR => null
-      case Material.RAIL => null
+
+      // RAILS
+      case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
+        Rails(location, material.asInstanceOf[RailsMaterial], state.asInstanceOf[RailsState], powered)
+
       case Material.REDSTONE_LAMP => null
       case Material.REDSTONE_TORCH => null
       case Material.REDSTONE_WALL_TORCH => null
       case Material.REDSTONE_WIRE => null
       case Material.RED_MUSHROOM => null
       case Material.RED_MUSHROOM_BLOCK => null
-      case Material.RED_NETHER_BRICKS => null
-      case Material.RED_NETHER_BRICK_WALL => null
-      case Material.RED_SANDSTONE_WALL => null
       case Material.REPEATER => null
       case Material.REPEATING_COMMAND_BLOCK => null
       case Material.ROSE_BUSH => null
@@ -423,8 +394,6 @@ class SpigotBlockMapper @Inject()(
            Material.CUT_SANDSTONE | Material.CUT_RED_SANDSTONE |
            Material.SMOOTH_SANDSTONE | Material.SMOOTH_RED_SANDSTONE =>
         Sandstone(location, material.asInstanceOf[SandstoneMaterial], state.asInstanceOf[SandstoneState])
-
-      case Material.SANDSTONE_WALL => null
 
       // SAPLING
       case Material.ACACIA_SAPLING | Material.POTTED_ACACIA_SAPLING |
@@ -461,18 +430,19 @@ class SpigotBlockMapper @Inject()(
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB | Material.RED_NETHER_BRICK_SLAB |
 
-           Material.PRISMARINE_SLAB | Material.PRISMARINE_BRICK_SLAB | Material.DARK_PRISMARINE_SLAB |
-
-           Material.PURPUR_SLAB |
-
            Material.SANDSTONE_SLAB | Material.CUT_SANDSTONE_SLAB | Material.SMOOTH_SANDSTONE_SLAB |
            Material.RED_SANDSTONE_SLAB | Material.CUT_RED_SANDSTONE_SLAB | Material.SMOOTH_RED_SANDSTONE_SLAB |
 
-           Material.STONE_SLAB | Material.SMOOTH_STONE_SLAB | Material.STONE_BRICK_SLAB | Material.MOSSY_STONE_BRICK_SLAB |
-           Material.COBBLESTONE_SLAB | Material.MOSSY_COBBLESTONE_SLAB | Material.END_STONE_BRICK_SLAB |
+           Material.STONE_SLAB | Material.SMOOTH_STONE_SLAB |
+           Material.STONE_BRICK_SLAB | Material.MOSSY_STONE_BRICK_SLAB |
+           Material.COBBLESTONE_SLAB | Material.MOSSY_COBBLESTONE_SLAB |
+
            Material.ANDESITE_SLAB | Material.DIORITE_SLAB | Material.GRANITE_SLAB |
            Material.POLISHED_ANDESITE_SLAB | Material.POLISHED_DIORITE_SLAB | Material.POLISHED_GRANITE_SLAB |
 
+           Material.END_STONE_BRICK_SLAB |
+           Material.PRISMARINE_SLAB | Material.PRISMARINE_BRICK_SLAB | Material.DARK_PRISMARINE_SLAB |
+           Material.PURPUR_SLAB |
            Material.QUARTZ_SLAB | Material.SMOOTH_QUARTZ_SLAB |
 
            Material.ACACIA_SLAB | Material.BIRCH_SLAB | Material.DARK_OAK_SLAB |
@@ -482,42 +452,53 @@ class SpigotBlockMapper @Inject()(
       case Material.SLIME_BLOCK => Slime(location)
       case Material.SMITHING_TABLE => SmithingTable(location)
       case Material.SMOKER => Smoker(location, facing, lit)
-      case Material.SMOOTH_QUARTZ => null
-      case Material.SMOOTH_STONE => null
       case Material.SNOW => SnowLayer(location)
       case Material.SNOW_BLOCK => Snow(location)
       case Material.SPAWNER => Spawner(location)
-      case Material.SPONGE | Material.WET_SPONGE =>
-        val wet = block.getType.name.startsWith("WET_")
-        Sponge(location, wet)
+
+      // SPONGE
+      case Material.SPONGE => Sponge(location, wet = false)
+      case Material.WET_SPONGE => Sponge(location, wet = true)
 
       // STAIRS
       case Material.BRICK_STAIRS | Material.NETHER_BRICK_STAIRS | Material.RED_NETHER_BRICK_STAIRS |
 
-           Material.PRISMARINE_STAIRS | Material.PRISMARINE_BRICK_STAIRS | Material.DARK_PRISMARINE_STAIRS |
-
-           Material.PURPUR_STAIRS |
-
            Material.SANDSTONE_STAIRS | Material.SMOOTH_SANDSTONE_STAIRS |
            Material.RED_SANDSTONE_STAIRS | Material.SMOOTH_RED_SANDSTONE_STAIRS |
 
-           Material.STONE_STAIRS | Material.STONE_BRICK_STAIRS | Material.MOSSY_STONE_BRICK_STAIRS |
-           Material.COBBLESTONE_STAIRS | Material.MOSSY_COBBLESTONE_STAIRS | Material.END_STONE_BRICK_STAIRS |
+           Material.STONE_STAIRS |
+           Material.STONE_BRICK_STAIRS | Material.MOSSY_STONE_BRICK_STAIRS |
+           Material.COBBLESTONE_STAIRS | Material.MOSSY_COBBLESTONE_STAIRS |
+
            Material.ANDESITE_STAIRS | Material.DIORITE_STAIRS | Material.GRANITE_STAIRS |
            Material.POLISHED_ANDESITE_STAIRS | Material.POLISHED_DIORITE_STAIRS | Material.POLISHED_GRANITE_STAIRS |
 
+           Material.END_STONE_BRICK_STAIRS |
+           Material.PRISMARINE_STAIRS | Material.PRISMARINE_BRICK_STAIRS | Material.DARK_PRISMARINE_STAIRS |
+           Material.PURPUR_STAIRS |
            Material.QUARTZ_STAIRS | Material.SMOOTH_QUARTZ_STAIRS |
 
            Material.ACACIA_STAIRS | Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
            Material.JUNGLE_STAIRS | Material.OAK_STAIRS | Material.SPRUCE_STAIRS =>
         Stairs(location, material.asInstanceOf[StairsMaterial], null, false) // TODO map attachedTo and inverted
 
-      case Material.STICKY_PISTON => null
-      case Material.STONE => null
-      case Material.STONECUTTER => null
-      case Material.STONE_BRICKS => null
-      case Material.STONE_BRICK_WALL => null
-      case Material.STONE_BUTTON => null
+      // STONE
+      case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
+
+           Material.STONE | Material.SMOOTH_STONE |
+           Material.STONE_BRICKS | Material.MOSSY_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
+           Material.COBBLESTONE | Material.MOSSY_COBBLESTONE |
+
+           Material.ANDESITE | Material.DIORITE | Material.GRANITE |
+           Material.POLISHED_ANDESITE | Material.POLISHED_DIORITE | Material.POLISHED_GRANITE |
+
+           Material.END_STONE | Material.END_STONE_BRICKS |
+           Material.PRISMARINE | Material.PRISMARINE_BRICKS | Material.DARK_PRISMARINE |
+           Material.PURPUR_BLOCK |
+           Material.QUARTZ | Material.SMOOTH_QUARTZ =>
+        Stone(location, material.asInstanceOf[StoneMaterial])
+
+      case Material.STONECUTTER => StoneCutter(location, facing)
       case Material.STRUCTURE_BLOCK => null
       case Material.STRUCTURE_VOID => null
       case Material.SUGAR_CANE => null
@@ -533,6 +514,11 @@ class SpigotBlockMapper @Inject()(
            Material.LIME_TERRACOTTA | Material.MAGENTA_TERRACOTTA | Material.ORANGE_TERRACOTTA | Material.PINK_TERRACOTTA |
            Material.PURPLE_TERRACOTTA | Material.RED_TERRACOTTA | Material.WHITE_TERRACOTTA | Material.YELLOW_TERRACOTTA =>
         Terracotta(location, Option(color))
+      case Material.BLACK_GLAZED_TERRACOTTA | Material.BLUE_GLAZED_TERRACOTTA | Material.BROWN_GLAZED_TERRACOTTA | Material.CYAN_GLAZED_TERRACOTTA |
+           Material.GRAY_GLAZED_TERRACOTTA | Material.GREEN_GLAZED_TERRACOTTA | Material.LIGHT_BLUE_GLAZED_TERRACOTTA | Material.LIGHT_GRAY_GLAZED_TERRACOTTA |
+           Material.LIME_GLAZED_TERRACOTTA | Material.MAGENTA_GLAZED_TERRACOTTA | Material.ORANGE_GLAZED_TERRACOTTA | Material.PINK_GLAZED_TERRACOTTA |
+           Material.PURPLE_GLAZED_TERRACOTTA | Material.RED_GLAZED_TERRACOTTA | Material.WHITE_GLAZED_TERRACOTTA | Material.YELLOW_GLAZED_TERRACOTTA =>
+        GlazedTerracotta(location, color)
 
       case Material.TNT =>
         val unstable = block.getState.asInstanceOf[SpigotTNT].isUnstable
@@ -540,16 +526,28 @@ class SpigotBlockMapper @Inject()(
       case Material.TORCH => null
 
       // TRAPDOOR
-      case Material.ACACIA_TRAPDOOR | Material.BIRCH_TRAPDOOR | Material.DARK_OAK_TRAPDOOR |
+      case Material.IRON_TRAPDOOR |
+           Material.ACACIA_TRAPDOOR | Material.BIRCH_TRAPDOOR | Material.DARK_OAK_TRAPDOOR |
            Material.JUNGLE_TRAPDOOR | Material.OAK_TRAPDOOR | Material.SPRUCE_TRAPDOOR =>
-        null
+        Trapdoor(location, material.asInstanceOf[TrapdoorMaterial], facing, inverted, open)
 
       case Material.TRAPPED_CHEST => null
       case Material.TRIPWIRE => null
       case Material.TRIPWIRE_HOOK => null
       case Material.TURTLE_EGG => null
       case Material.VINE => null
-      case Material.VOID_AIR => null
+
+      // WALL
+      case Material.BRICK_WALL | Material.NETHER_BRICK_WALL | Material.RED_NETHER_BRICK_WALL |
+
+           Material.PRISMARINE_WALL |
+
+           Material.SANDSTONE_WALL | Material.RED_SANDSTONE_WALL |
+
+           Material.STONE_BRICK_WALL | Material.MOSSY_STONE_BRICK_WALL | Material.END_STONE_BRICK_WALL |
+           Material.COBBLESTONE_WALL | Material.MOSSY_COBBLESTONE_WALL |
+           Material.ANDESITE_WALL | Material.DIORITE_WALL | Material.GRANITE_WALL =>
+        Wall(location, material.asInstanceOf[WallMaterial])
 
       case Material.WALL_TORCH => null
       case Material.WATER => null
