@@ -9,6 +9,11 @@ trait Block {
   def withLocation(loc: BlockLocation): Block
 }
 
+trait AttachableBlock extends Block {
+  val attachedTo: Option[Block]
+  def withAttachedTo(attachedTo: Option[Block]): AttachableBlock
+}
+
 trait AttachedBlock extends Block {
   val attachedTo: Block
   def withAttachedTo(attachedTo: Block): AttachedBlock
@@ -17,6 +22,11 @@ trait AttachedBlock extends Block {
 trait BisectedBlock extends Block {
   val section: BlockBisection
   def withSection(section: BlockBisection): BisectedBlock
+}
+
+trait ColorableBlock extends Block {
+  val color: Option[BlockColor]
+  def withColor(color: Option[BlockColor]): ColorableBlock
 }
 
 trait ColoredBlock extends Block {
@@ -34,6 +44,11 @@ trait InvertableBlock extends Block {
   def withInverted(inverted: Boolean): InvertableBlock
 }
 
+trait LightableBlock extends Block {
+  val lit: Boolean
+  def withLit(lit: Boolean): LightableBlock
+}
+
 trait MaterialBlock[T] extends Block {
   val material: T
   def withMaterial(material: T): MaterialBlock[T]
@@ -42,6 +57,11 @@ trait MaterialBlock[T] extends Block {
 trait OpenableBlock extends Block {
   val open: Boolean
   def withOpen(open: Boolean): OpenableBlock
+}
+
+trait OrientableBlock extends Block {
+  val orientation: BlockOrientation
+  def withOrientation(orientation: BlockOrientation): OrientableBlock
 }
 
 trait PottableBlock extends Block {

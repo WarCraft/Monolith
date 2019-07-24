@@ -17,6 +17,16 @@ case class Anvil(
   override def withFacing(facing: BlockFace): Anvil = copy(facing = facing)
 }
 
+case class Barrel(
+  location: BlockLocation,
+  facing: BlockFace,
+  open: Boolean
+) extends DirectionalBlock with OpenableBlock {
+  override def withLocation(loc: BlockLocation): Barrel = copy(location = loc)
+  override def withFacing(facing: BlockFace): Barrel = copy(facing = facing)
+  override def withOpen(open: Boolean): Barrel = copy(open = open)
+}
+
 case class Barrier(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): Barrier = copy(location = loc)
 }
@@ -25,6 +35,7 @@ case class Beacon(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): Beacon = copy(location = loc)
 }
 
+// TODO add occupied flag
 case class Bed(
   location: BlockLocation,
   color: BlockColor,
@@ -35,6 +46,46 @@ case class Bed(
   override def withColor(color: BlockColor): Bed = copy(color = color)
   override def withFacing(facing: BlockFace): Bed = copy(facing = facing)
   override def withSection(section: BlockBisection): Bed = copy(section = section)
+}
+
+case class Bedrock(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Bedrock = copy(location = loc)
+}
+
+// TODO add attachment val (NOTE this one is different for Bells from attachedTo)
+case class Bell(
+  location: BlockLocation,
+  facing: BlockFace,
+) extends DirectionalBlock {
+  override def withLocation(loc: BlockLocation): Bell = copy(location = loc)
+  override def withFacing(facing: BlockFace): Bell = copy(facing = facing)
+}
+
+case class BlastFurnace(
+  location: BlockLocation,
+  facing: BlockFace,
+  lit: Boolean
+) extends DirectionalBlock with LightableBlock {
+  override def withLocation(loc: BlockLocation): BlastFurnace = copy(location = loc)
+  override def withFacing(facing: BlockFace): BlastFurnace = copy(facing = facing)
+  override def withLit(lit: Boolean): BlastFurnace = copy(lit = lit)
+}
+
+case class Bone(
+  location: BlockLocation,
+  orientation: BlockOrientation
+) extends OrientableBlock {
+  override def withLocation(loc: BlockLocation): Bone = copy(location = loc)
+  override def withOrientation(orientation: BlockOrientation): Bone = copy(orientation = orientation)
+}
+
+case class Bookshelf(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Bookshelf = copy(location = loc)
+}
+
+// TODO add val which denotes which vials are filled
+case class BrewingStand(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): BrewingStand = copy(location = loc)
 }
 
 case class Brick(
@@ -130,6 +181,14 @@ case class CoralWallFan(
   override def withMaterial(mat: CoralMaterial): CoralWallFan = copy(material = mat)
 }
 
+case class CraftingTable(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): CraftingTable = copy(location = loc)
+}
+
+case class DaylightDetector(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): DaylightDetector = copy(location = loc)
+}
+
 // TODO still needs 'hinge' val
 case class Door(
   location: BlockLocation,
@@ -143,6 +202,22 @@ case class Door(
   override def withFacing(facing: BlockFace): Door = copy(facing = facing)
   override def withSection(section: BlockBisection): Door = copy(section = section)
   override def withOpen(open: Boolean): Door = copy(open = open)
+}
+
+case class DriedKelp(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): DriedKelp = copy(location = loc)
+}
+
+case class EnchantingTable(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): EnchantingTable = copy(location = loc)
+}
+
+case class EndRod(
+  location: BlockLocation,
+  facing: BlockFace,
+) extends DirectionalBlock {
+  override def withLocation(loc: BlockLocation): EndRod = copy(location = loc)
+  override def withFacing(facing: BlockFace): EndRod = copy(facing = facing)
 }
 
 case class Fence(
@@ -214,6 +289,18 @@ case class Leaves(
   override def withMaterial(mat: WoodMaterial): Leaves = copy(material = mat)
 }
 
+case class Lectern(
+  location: BlockLocation,
+  facing: BlockFace,
+  powered: Boolean,
+  book: Boolean
+) extends DirectionalBlock with PowerableBlock {
+  override def withLocation(loc: BlockLocation): Lectern = copy(location = loc)
+  override def withFacing(facing: BlockFace): Lectern = copy(facing = facing)
+  override def withPowered(powered: Boolean): Lectern = copy(powered = powered)
+  def withBook(book: Boolean): Lectern = copy(book = book)
+}
+
 case class Lever(
   location: BlockLocation,
   facing: BlockFace,
@@ -226,6 +313,34 @@ case class Lever(
   override def withAttachedTo(attachedTo: Block): Lever = copy(attachedTo = attachedTo)
   override def withInverted(inverted: Boolean): Lever = copy(inverted = inverted)
   override def withPowered(powered: Boolean): Lever = copy(powered = powered)
+}
+
+case class LilyPad(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): LilyPad = copy(location = loc)
+}
+
+case class Loom(
+  location: BlockLocation,
+  facing: BlockFace
+) extends DirectionalBlock {
+  override def withLocation(loc: BlockLocation): Loom = copy(location = loc)
+  override def withFacing(facing: BlockFace): Loom = copy(facing = facing)
+}
+
+case class Magma(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Magma = copy(location = loc)
+}
+
+case class Melon(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Melon = copy(location = loc)
+}
+
+case class MelonStem(
+  location: BlockLocation,
+  attachedTo: Option[Block]
+) extends AttachableBlock {
+  override def withLocation(loc: BlockLocation): MelonStem = copy(location = loc)
+  override def withAttachedTo(attachedTo: Option[Block]): MelonStem = copy(attachedTo = attachedTo)
 }
 
 case class Mineral(
@@ -331,10 +446,10 @@ case class SeaLantern(location: BlockLocation) extends Block {
 
 case class ShulkerBox(
   location: BlockLocation,
-  color: BlockColor
-) extends ColoredBlock {
+  color: Option[BlockColor]
+) extends ColorableBlock {
   override def withLocation(loc: BlockLocation): ShulkerBox = copy(location = loc)
-  override def withColor(color: BlockColor): ShulkerBox = copy(color = color)
+  override def withColor(color: Option[BlockColor]): ShulkerBox = copy(color = color)
 }
 
 case class Sign(
@@ -353,8 +468,43 @@ case class Slab(
   override def withSection(section: BlockBisection): Slab = copy(section = section)
 }
 
+case class Slime(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Slime = copy(location = loc)
+}
+
 case class SmithingTable(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): SmithingTable = copy(location = loc)
+}
+
+case class Smoker(
+  location: BlockLocation,
+  facing: BlockFace,
+  lit: Boolean
+) extends DirectionalBlock with LightableBlock {
+  override def withLocation(loc: BlockLocation): Smoker = copy(location = loc)
+  override def withFacing(facing: BlockFace): Smoker = copy(facing = facing)
+  override def withLit(lit: Boolean): Smoker = copy(lit = lit)
+}
+
+case class Snow(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Snow = copy(location = loc)
+}
+
+// TODO add size of layer
+case class SnowLayer(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): SnowLayer = copy(location = loc)
+}
+
+case class Spawner(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Spawner = copy(location = loc)
+}
+
+case class Sponge(
+  location: BlockLocation,
+  wet: Boolean
+) extends Block {
+  override def withLocation(loc: BlockLocation): Sponge = copy(location = loc)
+  def withWet(wet: Boolean): Sponge = copy(wet = wet)
 }
 
 case class StainedGlass(

@@ -3,6 +3,8 @@ package gg.warcraft.monolith.spigot.world
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
 import gg.warcraft.monolith.api.world.{BlockLocation, Location}
+import org.bukkit.block.{Block => SpigotBlock}
+import org.bukkit.{Location => SpigotLocation}
 
 class SpigotLocationMapper @Inject()(
   private val worldMapper: SpigotWorldMapper

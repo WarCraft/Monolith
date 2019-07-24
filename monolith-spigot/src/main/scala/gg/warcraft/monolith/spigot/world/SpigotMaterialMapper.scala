@@ -198,6 +198,9 @@ class SpigotMaterialMapper {
          Material.YELLOW_STAINED_GLASS_PANE | Material.YELLOW_TERRACOTTA | Material.YELLOW_WALL_BANNER | Material.YELLOW_WOOL =>
       BlockColor.YELLOW
 
+    // NULL
+    case Material.SHULKER_BOX | Material.TERRACOTTA => null
+
     case _ => throw new IllegalArgumentException(s"Failed to map color for material: $material")
   }
 }
