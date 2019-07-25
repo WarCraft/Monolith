@@ -2,39 +2,32 @@ package gg.warcraft.monolith.spigot.world
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.spigot.world.block.SpigotBlockFaceMapper
 import org.bukkit.block.data.Bisected.{Half => SpigotBisection}
 import org.bukkit.block.data._
-import org.bukkit.block.data.`type`.{Jukebox => SpigotJukebox, Lectern => SpigotLectern, TNT => SpigotTNT}
+import org.bukkit.block.data.`type`.{BubbleColumn => SpigotBubbleColumn, CommandBlock => SpigotCommandBlock, Jukebox => SpigotJukebox, Lectern => SpigotLectern, Stairs => SpigotStairs, TNT => SpigotTNT}
 import org.bukkit.block.{Block => SpigotBlock, BlockFace => SpigotBlockFace}
 import org.bukkit.{Axis, Material}
 
 class SpigotBlockMapper @Inject()(
-  private val worldMapper: SpigotWorldMapper,
   private val locationMapper: SpigotLocationMapper,
   private val materialMapper: SpigotMaterialMapper,
-  private val blockFaceMapper: SpigotBlockFaceMapper,
-  private val directionMapper: SpigotDirectionMapper
 ) {
-
-  def map(block: Block): SpigotBlock = locationMapper.map(block.location).getBlock
 
   def map(block: SpigotBlock): Block = {
     val location = locationMapper.map(block.getLocation).toBlockLocation
 
     lazy val color = { materialMapper.mapColor(block.getType) }
     lazy val facing = { mapFace(block.getState.asInstanceOf[Directional].getFacing) }
+    lazy val flooded = { block.getState.asInstanceOf[Waterlogged].isWaterlogged }
     lazy val lit = { block.getState.asInstanceOf[Lightable].isLit }
     lazy val material = { materialMapper.map(block.getType) }
     lazy val open = { block.getState.asInstanceOf[Openable].isOpen }
     lazy val orientation = { mapOrientation(block.getState.asInstanceOf[Orientable].getAxis) }
-    lazy val potted = { block.getType.name.startsWith("POTTED_") }
     lazy val powered = { block.getState.asInstanceOf[Powerable].isPowered }
     lazy val section = { mapBisection(block.getState.asInstanceOf[Bisected].getHalf) }
     lazy val snowy = { block.getState.asInstanceOf[Snowable].isSnowy }
     lazy val state = { materialMapper.mapState(block.getType) }
     lazy val stripped = { block.getType.name.startsWith("STRIPPED_") }
-    lazy val wet = { block.getState.asInstanceOf[Waterlogged].isWaterlogged }
 
     block.getType match {
       case Material.AIR => Air(location, material.asInstanceOf[AirMaterial])
@@ -77,15 +70,15 @@ class SpigotBlockMapper @Inject()(
         Bed(location, color, facing, section)
 
       case Material.BEDROCK => Bedrock(location)
-      case Material.BEETROOTS => null
+      case Material.BEETROOTS => Beetroots(location, state.asInstanceOf[BeetrootState])
       case Material.BELL => Bell(location, facing)
       case Material.BLAST_FURNACE => BlastFurnace(location, facing, lit)
       case Material.BONE_BLOCK => Bone(location, orientation)
       case Material.BOOKSHELF => Bookshelf(location)
       case Material.BREWING_STAND => BrewingStand(location)
-      case Material.BROWN_MUSHROOM => null
-      case Material.BROWN_MUSHROOM_BLOCK => null
-      case Material.BUBBLE_COLUMN => null
+      case Material.BUBBLE_COLUMN =>
+        val drag = block.getState.asInstanceOf[SpigotBubbleColumn].isDrag
+        BubbleColumn(location, drag)
 
       // BUTTON
       case Material.STONE_BUTTON |
@@ -109,16 +102,18 @@ class SpigotBlockMapper @Inject()(
       case Material.CARTOGRAPHY_TABLE => CartographyTable(location)
       case Material.CARVED_PUMPKIN => null
       case Material.CAULDRON => null
-      case Material.CHAIN_COMMAND_BLOCK => null
       case Material.CHEST => null
-      case Material.CHISELED_QUARTZ_BLOCK => null
-      case Material.CHISELED_STONE_BRICKS => null
       case Material.CHORUS_FLOWER => null
       case Material.CHORUS_PLANT => null
       case Material.CLAY => Clay(location)
       case Material.COBWEB => Cobweb(location)
       case Material.COCOA => Cocoa(location, state.asInstanceOf[CocoaState], facing) // TODO this wont work, state is not incl in mat
-      case Material.COMMAND_BLOCK => CommandBlock(location)
+
+      // COMMAND_BLOCK
+      case Material.COMMAND_BLOCK | Material.CHAIN_COMMAND_BLOCK | Material.REPEATING_COMMAND_BLOCK =>
+        val conditional = block.getState.asInstanceOf[SpigotCommandBlock].isConditional
+        CommandBlock(location, material.asInstanceOf[CommandBlockMaterial], facing, conditional)
+
       case Material.COMPARATOR => null
       case Material.COMPOSTER => null
 
@@ -138,7 +133,7 @@ class SpigotBlockMapper @Inject()(
            Material.YELLOW_CONCRETE_POWDER =>
         ConcretePowder(location, color)
 
-      case Material.CONDUIT => Conduit(location, wet)
+      case Material.CONDUIT => Conduit(location, flooded)
 
       // CORAL
       case Material.BRAIN_CORAL | Material.BUBBLE_CORAL | Material.FIRE_CORAL |
@@ -174,12 +169,13 @@ class SpigotBlockMapper @Inject()(
 
       case Material.CRAFTING_TABLE => CraftingTable(location)
       case Material.DAYLIGHT_DETECTOR => DaylightDetector(location)
-      case Material.DEAD_BUSH => null
+      case Material.DEAD_BUSH => DeadBush(location)
       case Material.DIRT => Dirt(location) // TODO case Material.COARSE_DIRT => null
       case Material.DISPENSER => Dispenser(location, facing, powered)
 
       // DOOR
-      case Material.ACACIA_DOOR | Material.BIRCH_DOOR | Material.DARK_OAK_DOOR |
+      case Material.IRON_DOOR |
+           Material.ACACIA_DOOR | Material.BIRCH_DOOR | Material.DARK_OAK_DOOR |
            Material.JUNGLE_DOOR | Material.OAK_DOOR | Material.SPRUCE_DOOR =>
         null
 
@@ -205,27 +201,37 @@ class SpigotBlockMapper @Inject()(
            Material.JUNGLE_FENCE_GATE | Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
         null
 
-      case Material.FERN => null
+      // FERN
+      case Material.FERN => Fern(location, BlockBisection.BOTTOM, tall = false)
+      case Material.LARGE_FERN => Fern(location, section, tall = true)
+
       case Material.FIRE => Fire(location)
       case Material.FLETCHING_TABLE => FletchingTable(location)
 
       // FLOWER
-      case Material.ALLIUM | Material.POTTED_ALLIUM |
-           Material.AZURE_BLUET | Material.POTTED_AZURE_BLUET |
-           Material.BLUE_ORCHID | Material.POTTED_BLUE_ORCHID |
-           Material.CORNFLOWER | Material.POTTED_CORNFLOWER |
-           Material.DANDELION | Material.POTTED_DANDELION |
-           Material.LILY_OF_THE_VALLEY | Material.POTTED_LILY_OF_THE_VALLEY |
-           Material.ORANGE_TULIP | Material.POTTED_ORANGE_TULIP |
-           Material.OXEYE_DAISY | Material.POTTED_OXEYE_DAISY |
-           Material.PINK_TULIP | Material.POTTED_PINK_TULIP |
-           Material.POPPY | Material.POTTED_POPPY |
-           Material.RED_TULIP | Material.POTTED_RED_TULIP |
-           Material.WHITE_TULIP | Material.POTTED_WHITE_TULIP |
-           Material.WITHER_ROSE | Material.POTTED_WITHER_ROSE =>
-        Flower(location, material.asInstanceOf[FlowerMaterial], potted)
+      case Material.ALLIUM | Material.AZURE_BLUET | Material.BLUE_ORCHID | Material.CORNFLOWER |
+           Material.DANDELION | Material.LILY_OF_THE_VALLEY | Material.ORANGE_TULIP |
+           Material.OXEYE_DAISY | Material.PINK_TULIP | Material.POPPY | Material.RED_TULIP |
+           Material.WHITE_TULIP | Material.WITHER_ROSE =>
+        Flower(location, material.asInstanceOf[FlowerMaterial], BlockBisection.BOTTOM, tall = false)
+      case Material.LILAC | Material.PEONY | Material.ROSE_BUSH | Material.SUNFLOWER =>
+        Flower(location, material.asInstanceOf[FlowerMaterial], section, tall = true)
 
+      // FLOWER_POT
       case Material.FLOWER_POT => FlowerPot(location)
+      case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
+           Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
+           Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY | Material.POTTED_PINK_TULIP |
+           Material.POTTED_POPPY | Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
+           Material.POTTED_WITHER_ROSE |
+
+           Material.POTTED_BAMBOO | Material.POTTED_BROWN_MUSHROOM | Material.POTTED_CACTUS |
+           Material.POTTED_DEAD_BUSH | Material.POTTED_FERN | Material.POTTED_RED_MUSHROOM |
+
+           Material.POTTED_ACACIA_SAPLING | Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
+           Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
+        FlowerPot(location, material.asInstanceOf[FlowerPotMaterial]) // TODO let pottable materials extend FlowerPotMaterial
+
       case Material.FROSTED_ICE => Frost(location)
       case Material.FURNACE => Furnace(location, facing, lit)
 
@@ -246,7 +252,11 @@ class SpigotBlockMapper @Inject()(
         GlassPane(location, Option(color)) // TODO add orientation
 
       case Material.GLOWSTONE => Glowstone(location)
-      case Material.GRASS => null
+
+      // GRASS
+      case Material.GRASS => Grass(location, BlockBisection.BOTTOM, tall = false)
+      case Material.TALL_GRASS => Grass(location, section, tall = true)
+
       case Material.GRASS_BLOCK => null
       case Material.GRASS_PATH => null
       case Material.GRAVEL => Gravel(location)
@@ -265,7 +275,6 @@ class SpigotBlockMapper @Inject()(
       case Material.INFESTED_STONE => null
       case Material.INFESTED_STONE_BRICKS => null
       case Material.IRON_BARS => null
-      case Material.IRON_DOOR => null
       case Material.JACK_O_LANTERN => null
       case Material.JIGSAW => Jigsaw(location, facing)
       case Material.JUKEBOX =>
@@ -275,7 +284,6 @@ class SpigotBlockMapper @Inject()(
       case Material.KELP_PLANT => null
       case Material.LADDER => null
       case Material.LANTERN => null
-      case Material.LARGE_FERN => null
       case Material.LAVA => null
 
       // LEAVES
@@ -287,7 +295,6 @@ class SpigotBlockMapper @Inject()(
         val book = block.getState.asInstanceOf[SpigotLectern].hasBook
         Lectern(location, facing, powered, book)
       case Material.LEVER => null
-      case Material.LILAC => null
       case Material.LILY_PAD => LilyPad(location)
 
       // LOG
@@ -319,12 +326,18 @@ class SpigotBlockMapper @Inject()(
         MobHead(location, material.asInstanceOf[MobHeadMaterial]) // TODO map WALL MobHeads / attachedTo
 
       case Material.MOVING_PISTON => null
-      case Material.MUSHROOM_STEM => null
+
+      // MUSHROOM
+      case Material.BROWN_MUSHROOM | Material.RED_MUSHROOM =>
+        Mushroom(location, material.asInstanceOf[MushroomMaterial])
+      case Material.BROWN_MUSHROOM_BLOCK | Material.RED_MUSHROOM_BLOCK | Material.MUSHROOM_STEM =>
+        MushroomBlock(location, material.asInstanceOf[MushroomBlockMaterial])
+
       case Material.MYCELIUM => Mycelium(location, snowy)
       case Material.NETHERRACK => Netherrack(location)
       case Material.NETHER_PORTAL => null
-      case Material.NETHER_WART => null
-      case Material.NETHER_WART_BLOCK => null
+      case Material.NETHER_WART => NetherWarts(location, state.asInstanceOf[NetherWartState])
+      case Material.NETHER_WART_BLOCK => NetherWartBlock(location)
       case Material.NOTE_BLOCK => null
       case Material.OBSERVER => Observer(location, facing, powered)
       case Material.OBSIDIAN => Obsidian(location)
@@ -333,8 +346,6 @@ class SpigotBlockMapper @Inject()(
       case Material.COAL_ORE | Material.DIAMOND_ORE | Material.EMERALD_ORE | Material.GOLD_ORE |
            Material.IRON_ORE | Material.LAPIS_ORE | Material.NETHER_QUARTZ_ORE | Material.REDSTONE_ORE =>
         Ore(location, material.asInstanceOf[OreMaterial])
-
-      case Material.PEONY => null
 
       // PILLAR
       case Material.PURPUR_PILLAR | Material.QUARTZ_PILLAR =>
@@ -350,13 +361,7 @@ class SpigotBlockMapper @Inject()(
         Planks(location, material.asInstanceOf[WoodMaterial])
 
       case Material.PODZOL => Podzol(location, snowy)
-      case Material.POTATOES => null
-      case Material.POTTED_BAMBOO => null
-      case Material.POTTED_BROWN_MUSHROOM => null
-      case Material.POTTED_CACTUS => null
-      case Material.POTTED_DEAD_BUSH => null
-      case Material.POTTED_FERN => null
-      case Material.POTTED_RED_MUSHROOM => null
+      case Material.POTATOES => Potatoes(location, state.asInstanceOf[PotatoState])
 
       // PRESSURE_PLATE
       case Material.STONE_PRESSURE_PLATE |
@@ -378,14 +383,10 @@ class SpigotBlockMapper @Inject()(
       case Material.REDSTONE_TORCH => null
       case Material.REDSTONE_WALL_TORCH => null
       case Material.REDSTONE_WIRE => null
-      case Material.RED_MUSHROOM => null
-      case Material.RED_MUSHROOM_BLOCK => null
       case Material.REPEATER => null
-      case Material.REPEATING_COMMAND_BLOCK => null
-      case Material.ROSE_BUSH => null
 
       // SAND
-      case Material.RED_SAND | Material.SAND | Material.SOUL_SAND =>
+      case Material.SAND | Material.RED_SAND | Material.SOUL_SAND =>
         Sand(location, material.asInstanceOf[SandMaterial])
 
       // SANDSTONE
@@ -396,16 +397,16 @@ class SpigotBlockMapper @Inject()(
         Sandstone(location, material.asInstanceOf[SandstoneMaterial], state.asInstanceOf[SandstoneState])
 
       // SAPLING
-      case Material.ACACIA_SAPLING | Material.POTTED_ACACIA_SAPLING |
-           Material.BIRCH_SAPLING | Material.POTTED_BIRCH_SAPLING |
-           Material.DARK_OAK_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
-           Material.JUNGLE_SAPLING | Material.POTTED_JUNGLE_SAPLING |
-           Material.OAK_SAPLING | Material.POTTED_OAK_SAPLING |
-           Material.SPRUCE_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
-        Sapling(location, potted)
+      case Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
+           Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
+        Sapling(location, material.asInstanceOf[SaplingMaterial])
 
       case Material.SCAFFOLDING => Scaffold(location)
-      case Material.SEAGRASS => null
+
+      // SEAGRASS
+      case Material.SEAGRASS => Seagrass(location, BlockBisection.BOTTOM, tall = false)
+      case Material.TALL_SEAGRASS => Seagrass(location, section, tall = true)
+
       case Material.SEA_LANTERN => SeaLantern(location)
       case Material.SEA_PICKLE => null
 
@@ -421,8 +422,6 @@ class SpigotBlockMapper @Inject()(
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
            Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
         null
-
-      // WALL_SIGN
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN | Material.DARK_OAK_WALL_SIGN |
            Material.JUNGLE_WALL_SIGN | Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
         null
@@ -480,12 +479,13 @@ class SpigotBlockMapper @Inject()(
 
            Material.ACACIA_STAIRS | Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
            Material.JUNGLE_STAIRS | Material.OAK_STAIRS | Material.SPRUCE_STAIRS =>
-        Stairs(location, material.asInstanceOf[StairsMaterial], null, false) // TODO map attachedTo and inverted
+        val inverted = block.getState.asInstanceOf[SpigotStairs].
+          Stairs(location, material.asInstanceOf[StairsMaterial], null, false) // TODO map attachedTo and inverted
 
       // STONE
       case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
 
-           Material.STONE | Material.SMOOTH_STONE |
+           Material.STONE | Material.SMOOTH_STONE | Material.CHISELED_STONE_BRICKS |
            Material.STONE_BRICKS | Material.MOSSY_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
            Material.COBBLESTONE | Material.MOSSY_COBBLESTONE |
 
@@ -495,17 +495,14 @@ class SpigotBlockMapper @Inject()(
            Material.END_STONE | Material.END_STONE_BRICKS |
            Material.PRISMARINE | Material.PRISMARINE_BRICKS | Material.DARK_PRISMARINE |
            Material.PURPUR_BLOCK |
-           Material.QUARTZ | Material.SMOOTH_QUARTZ =>
+           Material.QUARTZ | Material.SMOOTH_QUARTZ | Material.CHISELED_QUARTZ_BLOCK =>
         Stone(location, material.asInstanceOf[StoneMaterial])
 
       case Material.STONECUTTER => StoneCutter(location, facing)
-      case Material.STRUCTURE_BLOCK => null
-      case Material.STRUCTURE_VOID => null
-      case Material.SUGAR_CANE => null
-      case Material.SUNFLOWER => null
-      case Material.SWEET_BERRY_BUSH => null
-      case Material.TALL_GRASS => null
-      case Material.TALL_SEAGRASS => null
+      case Material.STRUCTURE_BLOCK => StructureBlock(location, state.asInstanceOf[StructureBlockState])
+      case Material.STRUCTURE_VOID => StructureVoid(location)
+      case Material.SUGAR_CANE => SugarCane(location, state.asInstanceOf[SugarCaneState])
+      case Material.SWEET_BERRY_BUSH => SweetBerryBush(location, state.asInstanceOf[SweetBerryState])
 
       // TERRACOTTA
       case Material.TERRACOTTA |
@@ -578,11 +575,6 @@ class SpigotBlockMapper @Inject()(
     case SpigotBisection.TOP => BlockBisection.TOP
   }
 
-  def mapBisection(section: BlockBisection): SpigotBisection = section match {
-    case BlockBisection.BOTTOM => SpigotBisection.BOTTOM
-    case BlockBisection.TOP => SpigotBisection.TOP
-  }
-
   def mapFace(face: SpigotBlockFace): BlockFace = face match {
     case SpigotBlockFace.NORTH => BlockFace.NORTH
     case SpigotBlockFace.EAST => BlockFace.EAST
@@ -593,24 +585,9 @@ class SpigotBlockMapper @Inject()(
     case _ => throw new IllegalArgumentException(s"Failed to map block face for block: $face")
   }
 
-  def mapFace(face: BlockFace): SpigotBlockFace = face match {
-    case BlockFace.NORTH => SpigotBlockFace.NORTH
-    case BlockFace.EAST => SpigotBlockFace.EAST
-    case BlockFace.SOUTH => SpigotBlockFace.SOUTH
-    case BlockFace.WEST => SpigotBlockFace.WEST
-    case BlockFace.UP => SpigotBlockFace.UP
-    case BlockFace.DOWN => SpigotBlockFace.DOWN
-  }
-
   def mapOrientation(orientation: Axis): BlockOrientation = orientation match {
     case Axis.X => BlockOrientation.X_AXIS
     case Axis.Y => BlockOrientation.Y_AXIS
     case Axis.Z => BlockOrientation.Z_AXIS
-  }
-
-  def mapOrientation(orientation: BlockOrientation): Axis = orientation match {
-    case BlockOrientation.X_AXIS => Axis.X
-    case BlockOrientation.Y_AXIS => Axis.Y
-    case BlockOrientation.Z_AXIS => Axis.Z
   }
 }

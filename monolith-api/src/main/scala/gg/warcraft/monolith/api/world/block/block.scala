@@ -39,6 +39,11 @@ trait DirectionalBlock extends Block {
   def withFacing(facing: BlockFace): DirectionalBlock
 }
 
+trait FloodableBlock extends Block {
+  val flooded: Boolean
+  def withFlooded(flooded: Boolean): FloodableBlock
+}
+
 trait InvertableBlock extends Block {
   val inverted: Boolean
   def withInverted(inverted: Boolean): InvertableBlock
@@ -62,11 +67,6 @@ trait OpenableBlock extends Block {
 trait OrientableBlock extends Block {
   val orientation: BlockOrientation
   def withOrientation(orientation: BlockOrientation): OrientableBlock
-}
-
-trait PottableBlock extends Block {
-  val potted: Boolean
-  def withPotted(potted: Boolean): PottableBlock
 }
 
 trait PowerableBlock extends Block {

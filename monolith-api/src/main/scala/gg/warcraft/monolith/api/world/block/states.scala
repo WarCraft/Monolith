@@ -16,6 +16,17 @@ object AnvilState extends Enum[AnvilState] {
   case object DAMAGED extends AnvilState
 }
 
+sealed trait BeetrootState extends EnumEntry with BlockState
+
+object BeetrootState extends Enum[BeetrootState] {
+  val values: IndexedSeq[BeetrootState] = findValues
+
+  case object AGE_0 extends BeetrootState
+  case object AGE_1 extends BeetrootState
+  case object AGE_2 extends BeetrootState
+  case object AGE_3 extends BeetrootState
+}
+
 sealed trait CactusState extends EnumEntry with BlockState
 
 object CactusState extends Enum[CactusState] {
@@ -63,6 +74,32 @@ object CocoaState extends Enum[CocoaState] {
   case object AGE_2 extends CocoaState
 }
 
+sealed trait NetherWartState extends EnumEntry with BlockState
+
+object NetherWartState extends Enum[NetherWartState] {
+  val values: IndexedSeq[NetherWartState] = findValues
+
+  case object AGE_0 extends NetherWartState
+  case object AGE_1 extends NetherWartState
+  case object AGE_2 extends NetherWartState
+  case object AGE_3 extends NetherWartState
+}
+
+sealed trait PotatoState extends EnumEntry with BlockState
+
+object PotatoState extends Enum[PotatoState] {
+  val values: IndexedSeq[PotatoState] = findValues
+
+  case object AGE_0 extends PotatoState
+  case object AGE_1 extends PotatoState
+  case object AGE_2 extends PotatoState
+  case object AGE_3 extends PotatoState
+  case object AGE_4 extends PotatoState
+  case object AGE_5 extends PotatoState
+  case object AGE_6 extends PotatoState
+  case object AGE_7 extends PotatoState
+}
+
 sealed trait RailsState extends EnumEntry with BlockState
 
 object RailsState extends Enum[RailsState] {
@@ -90,6 +127,51 @@ object SandstoneState extends Enum[SandstoneState] {
   case object CHISELED extends SandstoneState
   case object CUT extends SandstoneState
   case object SMOOTH extends SandstoneState
+}
+
+sealed trait StructureBlockState extends EnumEntry with BlockState
+
+object StructureBlockState extends Enum[StructureBlockState] {
+  val values: IndexedSeq[StructureBlockState] = findValues
+
+  case object CORNER extends StructureBlockState
+  case object DATA extends StructureBlockState
+  case object LOAD extends StructureBlockState
+  case object SAVE extends StructureBlockState
+}
+
+sealed trait SugarCaneState extends EnumEntry with BlockState
+
+object SugarCaneState extends Enum[SugarCaneState] {
+  val values: IndexedSeq[SugarCaneState] = findValues
+
+  case object AGE_0 extends SugarCaneState
+  case object AGE_1 extends SugarCaneState
+  case object AGE_2 extends SugarCaneState
+  case object AGE_3 extends SugarCaneState
+  case object AGE_4 extends SugarCaneState
+  case object AGE_5 extends SugarCaneState
+  case object AGE_6 extends SugarCaneState
+  case object AGE_7 extends SugarCaneState
+  case object AGE_8 extends SugarCaneState
+  case object AGE_9 extends SugarCaneState
+  case object AGE_10 extends SugarCaneState
+  case object AGE_11 extends SugarCaneState
+  case object AGE_12 extends SugarCaneState
+  case object AGE_13 extends SugarCaneState
+  case object AGE_14 extends SugarCaneState
+  case object AGE_15 extends SugarCaneState
+}
+
+sealed trait SweetBerryState extends EnumEntry with BlockState
+
+object SweetBerryState extends Enum[SweetBerryState] {
+  val values: IndexedSeq[SweetBerryState] = findValues
+
+  case object AGE_0 extends SweetBerryState
+  case object AGE_1 extends SweetBerryState
+  case object AGE_2 extends SweetBerryState
+  case object AGE_3 extends SweetBerryState
 }
 
 sealed trait WeightedPressurePlateState extends EnumEntry with BlockState

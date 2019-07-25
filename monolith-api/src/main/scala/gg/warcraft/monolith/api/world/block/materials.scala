@@ -20,6 +20,8 @@ trait PillarMaterial extends BlockMaterial
 
 trait PressurePlateMaterial extends BlockMaterial
 
+trait SaplingMaterial extends BlockMaterial
+
 trait SlabMaterial extends BlockMaterial
 
 trait StairsMaterial extends BlockMaterial
@@ -38,6 +40,14 @@ object AirMaterial extends Enum[AirMaterial] {
   case object VOID extends AirMaterial
 }
 
+sealed trait BambooMaterial extends EnumEntry with SaplingMaterial
+
+object BambooMaterial extends Enum[BambooMaterial] {
+  val values: IndexedSeq[BambooMaterial] = findValues
+
+  case object BAMBOO extends BambooMaterial
+}
+
 sealed trait BrickMaterial extends EnumEntry
   with FenceMaterial with SlabMaterial with StairsMaterial with WallMaterial
 
@@ -47,6 +57,16 @@ object BrickMaterial extends Enum[BrickMaterial] {
   case object BRICK extends BrickMaterial
   case object NETHER_BRICK extends BrickMaterial
   case object RED_NETHER_BRICK extends BrickMaterial
+}
+
+sealed trait CommandBlockMaterial extends EnumEntry with BlockMaterial
+
+object CommandBlockMaterial extends Enum[CommandBlockMaterial] {
+  val values: IndexedSeq[CommandBlockMaterial] = findValues
+
+  case object NORMAL extends CommandBlockMaterial
+  case object CHAIN extends CommandBlockMaterial
+  case object REPEATING extends CommandBlockMaterial
 }
 
 sealed trait CoralMaterial extends EnumEntry with BlockMaterial
@@ -117,6 +137,25 @@ object MobHeadMaterial extends Enum[MobHeadMaterial] {
   case object SKELETON extends MobHeadMaterial
   case object WITHER_SKELETON extends MobHeadMaterial
   case object ZOMBIE extends MobHeadMaterial
+}
+
+sealed trait MushroomMaterial extends EnumEntry with BlockMaterial
+
+object MushroomMaterial extends Enum[MushroomMaterial] {
+  val values: IndexedSeq[MushroomMaterial] = findValues
+
+  case object BROWN extends MushroomMaterial
+  case object RED extends MushroomMaterial
+}
+
+sealed trait MushroomBlockMaterial extends EnumEntry with BlockMaterial
+
+object MushroomBlockMaterial extends Enum[MushroomBlockMaterial] {
+  val values: IndexedSeq[MushroomBlockMaterial] = findValues
+
+  case object BROWN extends MushroomBlockMaterial
+  case object RED extends MushroomBlockMaterial
+  case object STEM extends MushroomBlockMaterial
 }
 
 sealed trait PrismarineMaterial extends EnumEntry
@@ -236,7 +275,7 @@ object WeightedPressurePlateMaterial extends Enum[WeightedPressurePlateMaterial]
 }
 
 sealed trait WoodMaterial extends EnumEntry
-  with ButtonMaterial with DoorMaterial with FenceMaterial
+  with ButtonMaterial with DoorMaterial with FenceMaterial with SaplingMaterial
   with SlabMaterial with StairsMaterial with TrapdoorMaterial
 
 object WoodMaterial extends Enum[WoodMaterial] {

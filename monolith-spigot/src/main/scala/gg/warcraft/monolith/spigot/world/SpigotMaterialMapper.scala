@@ -12,6 +12,11 @@ class SpigotMaterialMapper {
     case Material.CAVE_AIR => AirMaterial.CAVE
     case Material.VOID_AIR => AirMaterial.VOID
 
+    // COMMAND_BLOCK
+    case Material.COMMAND_BLOCK => CommandBlockMaterial.NORMAL
+    case Material.CHAIN_COMMAND_BLOCK => CommandBlockMaterial.CHAIN
+    case Material.REPEATING_COMMAND_BLOCK => CommandBlockMaterial.REPEATING
+
     // FLOWER
     case Material.ALLIUM => FlowerMaterial.ALLIUM
     case Material.AZURE_BLUET => FlowerMaterial.AZURE_BLUET
