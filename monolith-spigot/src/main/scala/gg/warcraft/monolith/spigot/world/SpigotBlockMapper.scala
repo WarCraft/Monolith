@@ -11,6 +11,7 @@ import org.bukkit.{Axis, Material}
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
   private val materialMapper: SpigotMaterialMapper,
+  private val blockStateMapper: SpigotBlockStateMapper
 ) {
 
   def map(block: SpigotBlock): Block = {
@@ -26,8 +27,7 @@ class SpigotBlockMapper @Inject()(
     lazy val powered = { block.getState.asInstanceOf[Powerable].isPowered }
     lazy val section = { mapBisection(block.getState.asInstanceOf[Bisected].getHalf) }
     lazy val snowy = { block.getState.asInstanceOf[Snowable].isSnowy }
-    lazy val state = { materialMapper.mapState(block.getType) }
-    lazy val stripped = { block.getType.name.startsWith("STRIPPED_") }
+    lazy val state = { blockStateMapper.map(block) }
 
     block.getType match {
       case Material.AIR => Air(location, material.asInstanceOf[AirMaterial])
@@ -37,7 +37,6 @@ class SpigotBlockMapper @Inject()(
         Anvil(location, state.asInstanceOf[AnvilState], facing)
 
       case Material.BAMBOO => null
-      case Material.BAMBOO_SAPLING => null
 
       // BANNER
       case Material.BLACK_BANNER | Material.BLACK_WALL_BANNER |
@@ -95,7 +94,6 @@ class SpigotBlockMapper @Inject()(
            Material.GRAY_CARPET | Material.GREEN_CARPET | Material.LIGHT_BLUE_CARPET | Material.LIGHT_GRAY_CARPET |
            Material.LIME_CARPET | Material.MAGENTA_CARPET | Material.ORANGE_CARPET | Material.PINK_CARPET |
            Material.PURPLE_CARPET | Material.RED_CARPET | Material.WHITE_CARPET | Material.YELLOW_CARPET =>
-        val color = materialMapper.mapColor(block.getType)
         Carpet(location, color)
 
       case Material.CARROTS => null
@@ -298,13 +296,12 @@ class SpigotBlockMapper @Inject()(
       case Material.LILY_PAD => LilyPad(location)
 
       // LOG
-      case Material.ACACIA_LOG | Material.STRIPPED_ACACIA_LOG |
-           Material.BIRCH_LOG | Material.STRIPPED_BIRCH_LOG |
-           Material.DARK_OAK_LOG | Material.STRIPPED_DARK_OAK_LOG |
-           Material.JUNGLE_LOG | Material.STRIPPED_JUNGLE_LOG |
-           Material.OAK_LOG | Material.STRIPPED_OAK_LOG |
-           Material.SPRUCE_LOG | Material.STRIPPED_SPRUCE_LOG =>
-        Log(location, orientation, stripped)
+      case Material.ACACIA_LOG | Material.BIRCH_LOG | Material.DARK_OAK_LOG |
+           Material.JUNGLE_LOG | Material.OAK_LOG | Material.SPRUCE_LOG =>
+        Log(location, orientation, stripped = false)
+      case Material.STRIPPED_ACACIA_LOG | Material.STRIPPED_BIRCH_LOG | Material.STRIPPED_DARK_OAK_LOG |
+           Material.STRIPPED_JUNGLE_LOG | Material.STRIPPED_OAK_LOG | Material.STRIPPED_SPRUCE_LOG =>
+        Log(location, orientation, stripped = true)
 
       case Material.LOOM => Loom(location, facing)
       case Material.MAGMA_BLOCK => Magma(location)
@@ -397,9 +394,10 @@ class SpigotBlockMapper @Inject()(
         Sandstone(location, material.asInstanceOf[SandstoneMaterial], state.asInstanceOf[SandstoneState])
 
       // SAPLING
-      case Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
+      case Material.BAMBOO_SAPLING |
+           Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
            Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
-        Sapling(location, material.asInstanceOf[SaplingMaterial])
+        Sapling(location, material.asInstanceOf[SaplingMaterial], state.asInstanceOf[SaplingState])
 
       case Material.SCAFFOLDING => Scaffold(location)
 
@@ -479,8 +477,8 @@ class SpigotBlockMapper @Inject()(
 
            Material.ACACIA_STAIRS | Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
            Material.JUNGLE_STAIRS | Material.OAK_STAIRS | Material.SPRUCE_STAIRS =>
-        val inverted = block.getState.asInstanceOf[SpigotStairs].
-          Stairs(location, material.asInstanceOf[StairsMaterial], null, false) // TODO map attachedTo and inverted
+        val shape = mapStairsShape(block.getState.asInstanceOf[SpigotStairs].getShape)
+        Stairs(location, material.asInstanceOf[StairsMaterial], shape, facing, section, flooded)
 
       // STONE
       case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
@@ -520,7 +518,10 @@ class SpigotBlockMapper @Inject()(
       case Material.TNT =>
         val unstable = block.getState.asInstanceOf[SpigotTNT].isUnstable
         TNT(location, unstable)
-      case Material.TORCH => null
+
+      // TORCH
+      case Material.TORCH => Torch(location, BlockFace.UP, wall = false)
+      case Material.WALL_TORCH => Torch(location, facing, wall = true)
 
       // TRAPDOOR
       case Material.IRON_TRAPDOOR |
@@ -546,18 +547,16 @@ class SpigotBlockMapper @Inject()(
            Material.ANDESITE_WALL | Material.DIORITE_WALL | Material.GRANITE_WALL =>
         Wall(location, material.asInstanceOf[WallMaterial])
 
-      case Material.WALL_TORCH => null
       case Material.WATER => null
-      case Material.WHEAT => null
+      case Material.WHEAT => Wheat(location, state.asInstanceOf[WheatState])
 
       // WOOD
-      case Material.ACACIA_WOOD | Material.STRIPPED_ACACIA_WOOD |
-           Material.BIRCH_WOOD | Material.STRIPPED_BIRCH_WOOD |
-           Material.DARK_OAK_WOOD | Material.STRIPPED_DARK_OAK_WOOD |
-           Material.JUNGLE_WOOD | Material.STRIPPED_JUNGLE_WOOD |
-           Material.OAK_WOOD | Material.STRIPPED_OAK_WOOD |
-           Material.SPRUCE_WOOD | Material.STRIPPED_SPRUCE_WOOD =>
-        Wood(location, material.asInstanceOf[WoodMaterial], stripped)
+      case Material.ACACIA_WOOD | Material.BIRCH_WOOD | Material.DARK_OAK_WOOD |
+           Material.JUNGLE_WOOD | Material.OAK_WOOD | Material.SPRUCE_WOOD =>
+        Wood(location, material.asInstanceOf[WoodMaterial], stripped = false)
+      case Material.STRIPPED_ACACIA_WOOD | Material.STRIPPED_BIRCH_WOOD | Material.STRIPPED_DARK_OAK_WOOD |
+           Material.STRIPPED_JUNGLE_WOOD | Material.STRIPPED_OAK_WOOD | Material.STRIPPED_SPRUCE_WOOD =>
+        Wood(location, material.asInstanceOf[WoodMaterial], stripped = true)
 
       // WOOL
       case Material.BLACK_WOOL | Material.BLUE_WOOL | Material.BROWN_WOOL | Material.CYAN_WOOL |
@@ -589,5 +588,13 @@ class SpigotBlockMapper @Inject()(
     case Axis.X => BlockOrientation.X_AXIS
     case Axis.Y => BlockOrientation.Y_AXIS
     case Axis.Z => BlockOrientation.Z_AXIS
+  }
+
+  def mapStairsShape(shape: SpigotStairs.Shape): StairsState = shape match {
+    case SpigotStairs.Shape.STRAIGHT => StairsState.STRAIGHT
+    case SpigotStairs.Shape.INNER_LEFT => StairsState.INNER_LEFT
+    case SpigotStairs.Shape.INNER_RIGHT => StairsState.INNER_RIGHT
+    case SpigotStairs.Shape.OUTER_LEFT => StairsState.OUTER_LEFT
+    case SpigotStairs.Shape.OUTER_RIGHT => StairsState.OUTER_RIGHT
   }
 }

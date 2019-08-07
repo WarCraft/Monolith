@@ -98,22 +98,6 @@ class SpigotMaterialMapper {
       WoodMaterial.SPRUCE
   }
 
-  def mapState(material: Material): BlockState = material match {
-
-    // ANVIL
-    case Material.ANVIL => AnvilState.PRISTINE
-    case Material.CHIPPED_ANVIL => AnvilState.CHIPPED
-    case Material.DAMAGED_ANVIL => AnvilState.DAMAGED
-
-    // SANDSTONE
-    case Material.SANDSTONE | Material.RED_SANDSTONE => SandstoneState.NORMAL
-    case Material.CHISELED_SANDSTONE | Material.CHISELED_RED_SANDSTONE => SandstoneState.CHISELED
-    case Material.CUT_SANDSTONE | Material.CUT_RED_SANDSTONE => SandstoneState.CUT
-    case Material.SMOOTH_SANDSTONE | Material.SMOOTH_RED_SANDSTONE => SandstoneState.SMOOTH
-
-    case _ => throw new IllegalArgumentException(s"Failed to map state for material: $material")
-  }
-
   def mapColor(material: Material): BlockColor = material match {
 
     // BLACK

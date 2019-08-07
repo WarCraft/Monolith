@@ -751,10 +751,12 @@ case class Sandstone(
 // TODO add growth stage state
 case class Sapling(
   location: BlockLocation,
-  material: SaplingMaterial
-) extends MaterialBlock[SaplingMaterial] {
+  material: SaplingMaterial,
+  state: SaplingState
+) extends MaterialBlock[SaplingMaterial] with StatefulBlock[SaplingState] {
   override def withLocation(loc: BlockLocation): Sapling = copy(location = loc)
   override def withMaterial(material: SaplingMaterial): Sapling = copy(material = material)
+  override def withState(state: SaplingState): Sapling = copy(state = state)
 }
 
 case class Scaffold(location: BlockLocation) extends Block {
@@ -840,13 +842,18 @@ case class Sponge(
 case class Stairs(
   location: BlockLocation,
   material: StairsMaterial,
-  attachedTo: Block,
-  inverted: Boolean
-) extends MaterialBlock[StairsMaterial] with AttachedBlock with InvertableBlock {
+  state: StairsState,
+  facing: BlockFace,
+  section: BlockBisection,
+  flooded: Boolean
+) extends MaterialBlock[StairsMaterial] with StatefulBlock[StairsState]
+  with DirectionalBlock with BisectedBlock with FloodableBlock {
   override def withLocation(loc: BlockLocation): Stairs = copy(location = loc)
   override def withMaterial(mat: StairsMaterial): Stairs = copy(material = mat)
-  override def withAttachedTo(attachedTo: Block): Stairs = copy(attachedTo = attachedTo)
-  override def withInverted(inverted: Boolean): Stairs = copy(inverted = inverted)
+  override def withState(state: StairsState): Stairs = copy(state = state)
+  override def withFacing(facing: BlockFace): Stairs = copy(facing = facing)
+  override def withSection(section: BlockBisection): Stairs = copy(section = section)
+  override def withFlooded(flooded: Boolean): Stairs = copy(flooded = flooded)
 }
 
 case class Stone(
@@ -910,6 +917,16 @@ case class TNT(
   def withUnstable(unstable: Boolean): TNT = copy(unstable = unstable)
 }
 
+case class Torch(
+  location: BlockLocation,
+  facing: BlockFace,
+  wall: Boolean
+) extends DirectionalBlock {
+  override def withLocation(loc: BlockLocation): Torch = copy(location = loc)
+  override def withFacing(facing: BlockFace): Torch = copy(facing = facing)
+  def withWall(wall: Boolean): Torch = copy(wall = wall)
+}
+
 case class Trapdoor(
   location: BlockLocation,
   material: TrapdoorMaterial,
@@ -948,6 +965,14 @@ case class WeightedPressurePlate(
   override def withLocation(loc: BlockLocation): WeightedPressurePlate = copy(location = loc)
   override def withMaterial(material: WeightedPressurePlateMaterial): WeightedPressurePlate = copy(material = material)
   override def withState(state: WeightedPressurePlateState): WeightedPressurePlate = copy(state = state)
+}
+
+case class Wheat(
+  location: BlockLocation,
+  state: WheatState
+) extends StatefulBlock[WheatState] {
+  override def withLocation(loc: BlockLocation): Wheat = copy(location = loc)
+  override def withState(state: WheatState): Wheat = copy(state = state)
 }
 
 case class Wood(
