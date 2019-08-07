@@ -30,6 +30,7 @@ trait TrapdoorMaterial extends BlockMaterial
 
 trait WallMaterial extends BlockMaterial
 
+// AIR
 sealed trait AirMaterial extends EnumEntry with BlockMaterial
 
 object AirMaterial extends Enum[AirMaterial] {
@@ -40,6 +41,7 @@ object AirMaterial extends Enum[AirMaterial] {
   case object VOID extends AirMaterial
 }
 
+// BAMBOO
 sealed trait BambooMaterial extends EnumEntry with SaplingMaterial
 
 object BambooMaterial extends Enum[BambooMaterial] {
@@ -48,6 +50,7 @@ object BambooMaterial extends Enum[BambooMaterial] {
   case object BAMBOO extends BambooMaterial
 }
 
+// BRICK
 sealed trait BrickMaterial extends EnumEntry
   with FenceMaterial with SlabMaterial with StairsMaterial with WallMaterial
 
@@ -59,6 +62,7 @@ object BrickMaterial extends Enum[BrickMaterial] {
   case object RED_NETHER_BRICK extends BrickMaterial
 }
 
+// COMMAND_BLOCK
 sealed trait CommandBlockMaterial extends EnumEntry with BlockMaterial
 
 object CommandBlockMaterial extends Enum[CommandBlockMaterial] {
@@ -69,6 +73,7 @@ object CommandBlockMaterial extends Enum[CommandBlockMaterial] {
   case object REPEATING extends CommandBlockMaterial
 }
 
+// CORAL
 sealed trait CoralMaterial extends EnumEntry with BlockMaterial
 
 object CoralMaterial extends Enum[CoralMaterial] {
@@ -87,6 +92,7 @@ object CoralMaterial extends Enum[CoralMaterial] {
   case object DEAD_TUBE extends CoralMaterial
 }
 
+// FLOWER
 sealed trait FlowerMaterial extends EnumEntry with BlockMaterial
 
 object FlowerMaterial extends Enum[FlowerMaterial] {
@@ -107,6 +113,7 @@ object FlowerMaterial extends Enum[FlowerMaterial] {
   case object WITHER_ROSE extends FlowerMaterial
 }
 
+// ICE
 sealed trait IceMaterial extends EnumEntry with BlockMaterial
 
 object IceMaterial extends Enum[IceMaterial] {
@@ -117,6 +124,7 @@ object IceMaterial extends Enum[IceMaterial] {
   case object BLUE extends IceMaterial
 }
 
+// IRON
 sealed trait IronMaterial extends EnumEntry
   with DoorMaterial with TrapdoorMaterial
 
@@ -126,6 +134,7 @@ object IronMaterial extends Enum[IronMaterial] {
   case object IRON extends IronMaterial
 }
 
+// MOB_HEAD
 sealed trait MobHeadMaterial extends EnumEntry with BlockMaterial
 
 object MobHeadMaterial extends Enum[MobHeadMaterial] {
@@ -139,6 +148,7 @@ object MobHeadMaterial extends Enum[MobHeadMaterial] {
   case object ZOMBIE extends MobHeadMaterial
 }
 
+// MUSHROOM
 sealed trait MushroomMaterial extends EnumEntry with BlockMaterial
 
 object MushroomMaterial extends Enum[MushroomMaterial] {
@@ -148,6 +158,7 @@ object MushroomMaterial extends Enum[MushroomMaterial] {
   case object RED extends MushroomMaterial
 }
 
+// MUSHROOM_BLOCK
 sealed trait MushroomBlockMaterial extends EnumEntry with BlockMaterial
 
 object MushroomBlockMaterial extends Enum[MushroomBlockMaterial] {
@@ -158,6 +169,7 @@ object MushroomBlockMaterial extends Enum[MushroomBlockMaterial] {
   case object STEM extends MushroomBlockMaterial
 }
 
+// PRISMARINE
 sealed trait PrismarineMaterial extends EnumEntry
   with SlabMaterial with StairsMaterial
 
@@ -169,6 +181,7 @@ object PrismarineMaterial extends Enum[PrismarineMaterial] {
   case object PRISMARINE_BRICK extends PrismarineMaterial
 }
 
+// PURPUR
 sealed trait PurpurMaterial extends EnumEntry
   with PillarMaterial with SlabMaterial with StairsMaterial
 
@@ -178,6 +191,7 @@ object PurpurMaterial extends Enum[PurpurMaterial] {
   case object PURPUR extends PurpurMaterial
 }
 
+// QUARTZ
 sealed trait QuartzMaterial extends EnumEntry
   with PillarMaterial with SlabMaterial with StairsMaterial
 
@@ -189,6 +203,7 @@ object QuartzMaterial extends Enum[QuartzMaterial] {
   case object SMOOTH_QUARTZ extends QuartzMaterial
 }
 
+// RAILS
 sealed trait RailsMaterial extends EnumEntry with BlockMaterial
 
 object RailsMaterial extends Enum[RailsMaterial] {
@@ -200,6 +215,7 @@ object RailsMaterial extends Enum[RailsMaterial] {
   case object POWERED extends RailsMaterial
 }
 
+// RESOURCE
 sealed trait ResourceMaterial extends EnumEntry
   with MineralMaterial with OreMaterial
 
@@ -216,6 +232,7 @@ object ResourceMaterial extends Enum[ResourceMaterial] {
   case object REDSTONE extends ResourceMaterial
 }
 
+// SAND
 sealed trait SandMaterial extends EnumEntry with BlockMaterial
 
 object SandMaterial extends Enum[SandMaterial] {
@@ -226,6 +243,7 @@ object SandMaterial extends Enum[SandMaterial] {
   case object SOUL_SAND extends SandMaterial
 }
 
+// SANDSTONE
 sealed trait SandstoneMaterial extends EnumEntry
   with SlabMaterial with StairsMaterial with WallMaterial
 
@@ -236,6 +254,7 @@ object SandstoneMaterial extends Enum[SandstoneMaterial] {
   case object RED_SANDSTONE extends SandstoneMaterial
 }
 
+// STONE
 sealed trait StoneMaterial extends EnumEntry
   with ButtonMaterial with PressurePlateMaterial with SlabMaterial
   with StairsMaterial with WallMaterial
@@ -265,6 +284,7 @@ object StoneMaterial extends Enum[StoneMaterial] {
   case object END_STONE_BRICK extends StoneMaterial
 }
 
+// WEIGHTED_PRESSURE_PLATE
 sealed trait WeightedPressurePlateMaterial extends EnumEntry with BlockMaterial
 
 object WeightedPressurePlateMaterial extends Enum[WeightedPressurePlateMaterial] {
@@ -274,6 +294,7 @@ object WeightedPressurePlateMaterial extends Enum[WeightedPressurePlateMaterial]
   case object HEAVY extends WeightedPressurePlateMaterial
 }
 
+// WOOD
 sealed trait WoodMaterial extends EnumEntry
   with ButtonMaterial with DoorMaterial with FenceMaterial with SaplingMaterial
   with SlabMaterial with StairsMaterial with TrapdoorMaterial

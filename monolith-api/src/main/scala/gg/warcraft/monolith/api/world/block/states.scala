@@ -6,6 +6,7 @@ import scala.collection.immutable.IndexedSeq
 
 trait BlockState
 
+// ANVIL
 sealed trait AnvilState extends EnumEntry with BlockState
 
 object AnvilState extends Enum[AnvilState] {
@@ -16,6 +17,7 @@ object AnvilState extends Enum[AnvilState] {
   case object DAMAGED extends AnvilState
 }
 
+// BEETROOT
 sealed trait BeetrootState extends EnumEntry with BlockState
 
 object BeetrootState extends Enum[BeetrootState] {
@@ -27,6 +29,7 @@ object BeetrootState extends Enum[BeetrootState] {
   case object AGE_3 extends BeetrootState
 }
 
+// CACTUS
 sealed trait CactusState extends EnumEntry with BlockState
 
 object CactusState extends Enum[CactusState] {
@@ -50,6 +53,7 @@ object CactusState extends Enum[CactusState] {
   case object AGE_15 extends CactusState
 }
 
+// CAKE
 sealed trait CakeState extends EnumEntry with BlockState
 
 object CakeState extends Enum[CakeState] {
@@ -64,6 +68,7 @@ object CakeState extends Enum[CakeState] {
   case object EATEN_6 extends CakeState
 }
 
+// COCOA
 sealed trait CocoaState extends EnumEntry with BlockState
 
 object CocoaState extends Enum[CocoaState] {
@@ -74,6 +79,7 @@ object CocoaState extends Enum[CocoaState] {
   case object AGE_2 extends CocoaState
 }
 
+// NETHER_WART
 sealed trait NetherWartState extends EnumEntry with BlockState
 
 object NetherWartState extends Enum[NetherWartState] {
@@ -85,6 +91,7 @@ object NetherWartState extends Enum[NetherWartState] {
   case object AGE_3 extends NetherWartState
 }
 
+// POTATO
 sealed trait PotatoState extends EnumEntry with BlockState
 
 object PotatoState extends Enum[PotatoState] {
@@ -100,6 +107,7 @@ object PotatoState extends Enum[PotatoState] {
   case object AGE_7 extends PotatoState
 }
 
+// RAILS
 sealed trait RailsState extends EnumEntry with BlockState
 
 object RailsState extends Enum[RailsState] {
@@ -118,6 +126,7 @@ object RailsState extends Enum[RailsState] {
   case object ASCENDING_WEST extends RailsState
 }
 
+// SANDSTONE
 sealed trait SandstoneState extends EnumEntry with BlockState
 
 object SandstoneState extends Enum[SandstoneState] {
@@ -129,6 +138,7 @@ object SandstoneState extends Enum[SandstoneState] {
   case object SMOOTH extends SandstoneState
 }
 
+// SAPLING
 sealed trait SaplingState extends EnumEntry with BlockState
 
 object SaplingState extends Enum[SaplingState] {
@@ -138,6 +148,7 @@ object SaplingState extends Enum[SaplingState] {
   case object AGE_1 extends SaplingState
 }
 
+// STAIRS
 sealed trait StairsState extends EnumEntry with BlockState
 
 object StairsState extends Enum[StairsState] {
@@ -150,6 +161,7 @@ object StairsState extends Enum[StairsState] {
   case object OUTER_RIGHT extends StairsState
 }
 
+// STRUCTURE_BLOCK
 sealed trait StructureBlockState extends EnumEntry with BlockState
 
 object StructureBlockState extends Enum[StructureBlockState] {
@@ -161,6 +173,7 @@ object StructureBlockState extends Enum[StructureBlockState] {
   case object SAVE extends StructureBlockState
 }
 
+// SUGAR_CANE
 sealed trait SugarCaneState extends EnumEntry with BlockState
 
 object SugarCaneState extends Enum[SugarCaneState] {
@@ -184,6 +197,7 @@ object SugarCaneState extends Enum[SugarCaneState] {
   case object AGE_15 extends SugarCaneState
 }
 
+// SWEET_BERRY
 sealed trait SweetBerryState extends EnumEntry with BlockState
 
 object SweetBerryState extends Enum[SweetBerryState] {
@@ -195,6 +209,7 @@ object SweetBerryState extends Enum[SweetBerryState] {
   case object AGE_3 extends SweetBerryState
 }
 
+// WEIGHTED_PRESSURE_PLATE
 sealed trait WeightedPressurePlateState extends EnumEntry with BlockState
 
 object WeightedPressurePlateState extends Enum[WeightedPressurePlateState] {
@@ -218,6 +233,7 @@ object WeightedPressurePlateState extends Enum[WeightedPressurePlateState] {
   case object LEVEL_16 extends WeightedPressurePlateState
 }
 
+// WHEAT
 sealed trait WheatState extends EnumEntry with BlockState
 
 object WheatState extends Enum[WheatState] {
