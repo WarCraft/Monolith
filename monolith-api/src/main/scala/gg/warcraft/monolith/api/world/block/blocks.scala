@@ -132,11 +132,11 @@ case class BubbleColumn(
 case class Button(
   location: BlockLocation,
   material: ButtonMaterial,
-  attached: Block
+  attached: BlockAttachment
 ) extends MaterialBlock[ButtonMaterial] with AttachedBlock {
   override def withLocation(loc: BlockLocation): Button = copy(location = loc)
   override def withMaterial(mat: ButtonMaterial): Button = copy(material = mat)
-  override def withAttachedTo(attachedTo: Block): Button = copy(attached = attachedTo)
+  override def withAttached(attached: BlockAttachment): Button = copy(attached = attached)
 }
 
 case class Cactus(
@@ -630,13 +630,13 @@ case class Lectern(
 case class Lever(
   location: BlockLocation,
   facing: BlockFace,
-  attached: Block,
+  attached: BlockAttachment,
   inverted: Boolean,
   powered: Boolean
 ) extends DirectionalBlock with AttachedBlock with InvertableBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Lever = copy(location = loc)
   override def withFacing(facing: BlockFace): Lever = copy(facing = facing)
-  override def withAttachedTo(attachedTo: Block): Lever = copy(attached = attachedTo)
+  override def withAttached(attached: BlockAttachment): Lever = copy(attached = attached)
   override def withInverted(inverted: Boolean): Lever = copy(inverted = inverted)
   override def withPowered(powered: Boolean): Lever = copy(powered = powered)
 }
@@ -673,10 +673,10 @@ case class Melon(location: BlockLocation) extends Block {
 
 case class MelonStem(
   location: BlockLocation,
-  attached: Option[Block]
+  attached: Option[BlockAttachment]
 ) extends AttachableBlock {
   override def withLocation(loc: BlockLocation): MelonStem = copy(location = loc)
-  override def withAttachedTo(attachedTo: Option[Block]): MelonStem = copy(attached = attachedTo)
+  override def withAttached(attached: Option[BlockAttachment]): MelonStem = copy(attached = attached)
 }
 
 case class Mineral(
