@@ -12,6 +12,8 @@ trait DoorMaterial extends BlockMaterial
 
 trait FenceMaterial extends BlockMaterial
 
+trait FlowerPotMaterial extends BlockMaterial
+
 trait MineralMaterial extends BlockMaterial
 
 trait OreMaterial extends BlockMaterial
@@ -20,7 +22,7 @@ trait PillarMaterial extends BlockMaterial
 
 trait PressurePlateMaterial extends BlockMaterial
 
-trait SaplingMaterial extends BlockMaterial
+trait SaplingMaterial extends FlowerPotMaterial
 
 trait SlabMaterial extends BlockMaterial
 
@@ -48,6 +50,17 @@ object BambooMaterial extends Enum[BambooMaterial] {
   val values: IndexedSeq[BambooMaterial] = findValues
 
   case object BAMBOO extends BambooMaterial
+}
+
+// BAMBOO
+sealed trait BambooLeavesMaterial extends EnumEntry with BlockMaterial
+
+object BambooLeavesMaterial extends Enum[BambooLeavesMaterial] {
+  val values: IndexedSeq[BambooLeavesMaterial] = findValues
+
+  case object NONE extends BambooLeavesMaterial
+  case object SMALL extends BambooLeavesMaterial
+  case object LARGE extends BambooLeavesMaterial
 }
 
 // BRICK
@@ -93,7 +106,7 @@ object CoralMaterial extends Enum[CoralMaterial] {
 }
 
 // FLOWER
-sealed trait FlowerMaterial extends EnumEntry with BlockMaterial
+sealed trait FlowerMaterial extends EnumEntry with FlowerPotMaterial
 
 object FlowerMaterial extends Enum[FlowerMaterial] {
   val values: IndexedSeq[FlowerMaterial] = findValues

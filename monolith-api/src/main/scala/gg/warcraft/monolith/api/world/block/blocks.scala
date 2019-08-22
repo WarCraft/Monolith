@@ -21,6 +21,18 @@ case class Anvil(
   override def withFacing(facing: BlockFace): Anvil = copy(facing = facing)
 }
 
+case class Bamboo(
+  location: BlockLocation,
+  material: BambooLeavesMaterial,
+  state: BambooState,
+  thick: Boolean
+) extends MaterialBlock[BambooLeavesMaterial] with StatefulBlock[BambooState] {
+  override def withLocation(loc: BlockLocation): Bamboo = copy(location = loc)
+  override def withMaterial(material: BambooLeavesMaterial): Bamboo = copy(material = material)
+  override def withState(state: BambooState): Bamboo = copy(state = state)
+  def withThick(thick: Boolean): Bamboo = copy(thick = thick)
+}
+
 case class Barrel(
   location: BlockLocation,
   facing: BlockFace,
@@ -120,11 +132,11 @@ case class BubbleColumn(
 case class Button(
   location: BlockLocation,
   material: ButtonMaterial,
-  attachedTo: Block
+  attached: Block
 ) extends MaterialBlock[ButtonMaterial] with AttachedBlock {
   override def withLocation(loc: BlockLocation): Button = copy(location = loc)
   override def withMaterial(mat: ButtonMaterial): Button = copy(material = mat)
-  override def withAttachedTo(attachedTo: Block): Button = copy(attachedTo = attachedTo)
+  override def withAttachedTo(attachedTo: Block): Button = copy(attached = attachedTo)
 }
 
 case class Cactus(
@@ -143,6 +155,20 @@ case class Cake(
   override def withState(state: CakeState): Cake = copy(state = state)
 }
 
+case class Campfire(
+  location: BlockLocation,
+  facing: BlockFace,
+  flooded: Boolean,
+  lit: Boolean,
+  signal: Boolean
+) extends DirectionalBlock with FloodableBlock with LightableBlock {
+  override def withLocation(loc: BlockLocation): Campfire = copy(location = loc)
+  override def withFacing(facing: BlockFace): Campfire = copy(facing = facing)
+  override def withFlooded(flooded: Boolean): Campfire = copy(flooded = flooded)
+  override def withLit(lit: Boolean): Campfire = copy(lit = lit)
+  def withSignal(signal: Boolean): Campfire = copy(signal = signal)
+}
+
 case class Carpet(
   location: BlockLocation,
   color: BlockColor
@@ -151,8 +177,24 @@ case class Carpet(
   override def withColor(color: BlockColor): Carpet = copy(color = color)
 }
 
+case class Carrots(
+  location: BlockLocation,
+  state: CarrotState
+) extends StatefulBlock[CarrotState] {
+  override def withLocation(loc: BlockLocation): Carrots = copy(location = loc)
+  override def withState(state: CarrotState): Carrots = copy(state = state)
+}
+
 case class CartographyTable(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): CartographyTable = copy(location = loc)
+}
+
+case class Cauldron(
+  location: BlockLocation,
+  state: CauldronState
+) extends StatefulBlock[CauldronState] {
+  override def withLocation(loc: BlockLocation): Cauldron = copy(location = loc)
+  override def withState(state: CauldronState): Cauldron = copy(state = state)
 }
 
 case class Chest(
@@ -161,6 +203,14 @@ case class Chest(
 ) extends DirectionalBlock {
   override def withLocation(loc: BlockLocation): Chest = copy(location = loc)
   override def withFacing(facing: BlockFace): Chest = copy(facing = facing)
+}
+
+case class ChorusFlower(
+  location: BlockLocation,
+  state: ChorusFlowerState
+) extends StatefulBlock[ChorusFlowerState] {
+  override def withLocation(loc: BlockLocation): ChorusFlower = copy(location = loc)
+  override def withState(state: ChorusFlowerState): ChorusFlower = copy(state = state)
 }
 
 case class Clay(location: BlockLocation) extends Block {
@@ -193,6 +243,26 @@ case class CommandBlock(
   def withConditional(conditional: Boolean): CommandBlock = copy(conditional = conditional)
 }
 
+case class Comparator(
+  location: BlockLocation,
+  state: ComparatorState,
+  facing: BlockFace,
+  powered: Boolean
+) extends StatefulBlock[ComparatorState] with DirectionalBlock with PowerableBlock {
+  override def withLocation(loc: BlockLocation): Comparator = copy(location = loc)
+  override def withState(state: ComparatorState): Comparator = copy(state = state)
+  override def withFacing(facing: BlockFace): Comparator = copy(facing = facing)
+  override def withPowered(powered: Boolean): Comparator = copy(powered = powered)
+}
+
+case class Composter(
+  location: BlockLocation,
+  state: ComposterState
+) extends StatefulBlock[ComposterState] {
+  override def withLocation(loc: BlockLocation): Composter = copy(location = loc)
+  override def withState(state: ComposterState): Composter = copy(state = state)
+}
+
 case class Concrete(
   location: BlockLocation,
   color: BlockColor
@@ -219,11 +289,13 @@ case class Conduit(
 
 case class Coral(
   location: BlockLocation,
-  material: CoralMaterial
-) extends MaterialBlock[CoralMaterial] {
+  material: CoralMaterial,
+  flooded: Boolean
+) extends MaterialBlock[CoralMaterial] with FloodableBlock {
   override val isSolid: Boolean = false
   override def withLocation(loc: BlockLocation): Coral = copy(location = loc)
   override def withMaterial(mat: CoralMaterial): Coral = copy(material = mat)
+  override def withFlooded(flooded: Boolean): Coral = copy(flooded = flooded)
 }
 
 case class CoralBlock(
@@ -236,20 +308,15 @@ case class CoralBlock(
 
 case class CoralFan(
   location: BlockLocation,
-  material: CoralMaterial
-) extends MaterialBlock[CoralMaterial] {
+  material: CoralMaterial,
+  facing: Option[BlockFace],
+  flooded: Boolean
+) extends MaterialBlock[CoralMaterial] with DirectableBlock with FloodableBlock {
   override val isSolid: Boolean = false
   override def withLocation(loc: BlockLocation): CoralFan = copy(location = loc)
   override def withMaterial(mat: CoralMaterial): CoralFan = copy(material = mat)
-}
-
-case class CoralWallFan(
-  location: BlockLocation,
-  material: CoralMaterial
-) extends MaterialBlock[CoralMaterial] {
-  override val isSolid: Boolean = false
-  override def withLocation(loc: BlockLocation): CoralWallFan = copy(location = loc)
-  override def withMaterial(mat: CoralMaterial): CoralWallFan = copy(material = mat)
+  override def withFacing(facing: Option[BlockFace]): CoralFan = copy(facing = facing)
+  override def withFlooded(flooded: Boolean): CoralFan = copy(flooded = flooded)
 }
 
 case class CraftingTable(location: BlockLocation) extends Block {
@@ -265,8 +332,12 @@ case class DeadBush(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): DeadBush = copy(location = loc)
 }
 
-case class Dirt(location: BlockLocation) extends Block {
+case class Dirt(
+  location: BlockLocation,
+  coarse: Boolean
+) extends Block {
   override def withLocation(loc: BlockLocation): Dirt = copy(location = loc)
+  def withCoarse(coarse: Boolean): Dirt = copy(coarse = coarse)
 }
 
 case class Dispenser(
@@ -294,6 +365,10 @@ case class Door(
   override def withOpen(open: Boolean): Door = copy(open = open)
 }
 
+case class DragonEgg(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): DragonEgg = copy(location = loc)
+}
+
 case class DriedKelp(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): DriedKelp = copy(location = loc)
 }
@@ -312,9 +387,27 @@ case class EnchantingTable(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): EnchantingTable = copy(location = loc)
 }
 
-case class EndRod(
+case class EndGateway(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): EndGateway = copy(location = loc)
+}
+
+case class EndPortal(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): EndPortal = copy(location = loc)
+}
+
+case class EndPortalFrame(
   location: BlockLocation,
   facing: BlockFace,
+  eye: Boolean
+) extends DirectionalBlock {
+  override def withLocation(loc: BlockLocation): EndPortalFrame = copy(location = loc)
+  override def withFacing(facing: BlockFace): EndPortalFrame = copy(facing = facing)
+  def withEye(eye: Boolean): EndPortalFrame = copy(eye = eye)
+}
+
+case class EndRod(
+  location: BlockLocation,
+  facing: BlockFace
 ) extends DirectionalBlock {
   override def withLocation(loc: BlockLocation): EndRod = copy(location = loc)
   override def withFacing(facing: BlockFace): EndRod = copy(facing = facing)
@@ -367,8 +460,12 @@ case class Flower(
   def withTall(tall: Boolean): Flower = copy(tall = tall)
 }
 
-case class FlowerPot(location: BlockLocation) extends Block {
+case class FlowerPot(
+  location: BlockLocation,
+  material: FlowerPotMaterial
+) extends MaterialBlock[FlowerPotMaterial] {
   override def withLocation(loc: BlockLocation): FlowerPot = copy(location = loc)
+  override def withMaterial(mat: FlowerPotMaterial): FlowerPot = copy(material = mat)
 }
 
 // TODO frost level
@@ -392,12 +489,14 @@ case class Gate(
   location: BlockLocation,
   material: WoodMaterial,
   facing: BlockFace,
-  open: Boolean
-) extends MaterialBlock[WoodMaterial] with DirectionalBlock with OpenableBlock {
+  open: Boolean,
+  powered: Boolean
+) extends MaterialBlock[WoodMaterial] with DirectionalBlock with OpenableBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Gate = copy(location = loc)
   override def withMaterial(mat: WoodMaterial): Gate = copy(material = mat)
   override def withFacing(facing: BlockFace): Gate = copy(facing = facing)
   override def withOpen(open: Boolean): Gate = copy(open = open)
+  override def withPowered(pow: Boolean): Gate = copy(powered = pow)
 }
 
 case class Glass(
@@ -443,6 +542,16 @@ case class Gravel(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): Gravel = copy(location = loc)
 }
 
+case class Grindstone(
+  location: BlockLocation,
+  facing: BlockFace,
+  attached: BlockAttachment
+) extends DirectionalBlock with AttachedBlock {
+  override def withLocation(loc: BlockLocation): Grindstone = copy(location = loc)
+  override def withFacing(facing: BlockFace): Grindstone = copy(facing = facing)
+  override def withAttached(attached: BlockAttachment): Grindstone = copy(attached = attached)
+}
+
 case class HardenedClay(
   location: BlockLocation,
   color: BlockColor
@@ -457,6 +566,14 @@ case class HayBale(
 ) extends OrientableBlock {
   override def withLocation(loc: BlockLocation): HayBale = copy(location = loc)
   override def withOrientation(orientation: BlockOrientation): HayBale = copy(orientation = orientation)
+}
+
+case class Hopper(
+  location: BlockLocation,
+  facing: BlockFace
+) extends DirectionalBlock {
+  override def withLocation(loc: BlockLocation): Hopper = copy(location = loc)
+  override def withFacing(facing: BlockFace): Hopper = copy(facing = facing)
 }
 
 case class Ice(
@@ -513,13 +630,13 @@ case class Lectern(
 case class Lever(
   location: BlockLocation,
   facing: BlockFace,
-  attachedTo: Block,
+  attached: Block,
   inverted: Boolean,
   powered: Boolean
 ) extends DirectionalBlock with AttachedBlock with InvertableBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Lever = copy(location = loc)
   override def withFacing(facing: BlockFace): Lever = copy(facing = facing)
-  override def withAttachedTo(attachedTo: Block): Lever = copy(attachedTo = attachedTo)
+  override def withAttachedTo(attachedTo: Block): Lever = copy(attached = attachedTo)
   override def withInverted(inverted: Boolean): Lever = copy(inverted = inverted)
   override def withPowered(powered: Boolean): Lever = copy(powered = powered)
 }
@@ -556,10 +673,10 @@ case class Melon(location: BlockLocation) extends Block {
 
 case class MelonStem(
   location: BlockLocation,
-  attachedTo: Option[Block]
+  attached: Option[Block]
 ) extends AttachableBlock {
   override def withLocation(loc: BlockLocation): MelonStem = copy(location = loc)
-  override def withAttachedTo(attachedTo: Option[Block]): MelonStem = copy(attachedTo = attachedTo)
+  override def withAttachedTo(attachedTo: Option[Block]): MelonStem = copy(attached = attachedTo)
 }
 
 case class Mineral(
@@ -706,6 +823,26 @@ case class Prismarine(
   override def withMaterial(mat: PrismarineMaterial): Prismarine = copy(material = mat)
 }
 
+case class Pumpkin(
+  location: BlockLocation,
+  facing: Option[BlockFace],
+  carved: Boolean
+) extends DirectableBlock {
+  override def withLocation(loc: BlockLocation): Pumpkin = copy(location = loc)
+  override def withFacing(facing: Option[BlockFace]): Pumpkin = copy(facing = facing)
+  def withCarved(carved: Boolean): Pumpkin = copy(carved = carved)
+}
+
+case class PumpkinStem(
+  location: BlockLocation,
+  state: PumpkinStemState,
+  facing: Option[BlockFace]
+) extends StatefulBlock[PumpkinStemState] with DirectableBlock {
+  override def withLocation(loc: BlockLocation): PumpkinStem = copy(location = loc)
+  override def withState(state: PumpkinStemState): PumpkinStem = copy(state = state)
+  override def withFacing(facing: Option[BlockFace]): PumpkinStem = copy(facing = facing)
+}
+
 case class Purpur(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): Purpur = copy(location = loc)
 }
@@ -776,6 +913,16 @@ case class SeaLantern(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): SeaLantern = copy(location = loc)
 }
 
+case class SeaPickle(
+  location: BlockLocation,
+  state: SeaPickleState,
+  flooded: Boolean
+) extends StatefulBlock[SeaPickleState] with FloodableBlock {
+  override def withLocation(loc: BlockLocation): SeaPickle = copy(location = loc)
+  override def withState(state: SeaPickleState): SeaPickle = copy(state = state)
+  override def withFlooded(flooded: Boolean): SeaPickle = copy(flooded = flooded)
+}
+
 case class ShulkerBox(
   location: BlockLocation,
   color: Option[BlockColor]
@@ -785,9 +932,15 @@ case class ShulkerBox(
 }
 
 case class Sign(
-  location: BlockLocation
-) extends Block {
+  location: BlockLocation,
+  facing: Option[BlockFace],
+  rotation: Option[BlockRotation],
+  flooded: Boolean
+) extends DirectableBlock with RotatableBlock with FloodableBlock {
   override def withLocation(loc: BlockLocation): Sign = copy(location = loc)
+  override def withFacing(facing: Option[BlockFace]): Sign = copy(facing = facing)
+  override def withRotation(rotation: Option[BlockRotation]): Sign = copy(rotation = rotation)
+  override def withFlooded(flooded: Boolean): Sign = copy(flooded = flooded)
 }
 
 case class Slab(

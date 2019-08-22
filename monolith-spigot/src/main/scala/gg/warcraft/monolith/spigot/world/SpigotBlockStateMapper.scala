@@ -3,12 +3,12 @@ package gg.warcraft.monolith.spigot.world
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
 import org.bukkit.Material
+import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.Ageable
-import org.bukkit.block.data.`type`.{Cake => SpigotCake, Sapling => SpigotSapling, StructureBlock => SpigotStructureBlock}
-import org.bukkit.block.{Block => SpigotBlock}
+import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Sapling => SpigotSapling, StructureBlock => SpigotStructureBlock }
 
 class SpigotBlockStateMapper @Inject()(
-  private val locationMapper: SpigotLocationMapper,
+  private val locationMapper: SpigotLocationMapper
 ) {
 
   def map(block: SpigotBlock): BlockState = {
@@ -22,12 +22,16 @@ class SpigotBlockStateMapper @Inject()(
       case Material.CHIPPED_ANVIL => AnvilState.CHIPPED
       case Material.DAMAGED_ANVIL => AnvilState.DAMAGED
 
+      case Material.BAMBOO => BambooState.values(age)
       case Material.BEETROOTS => BeetrootState.values(age)
       case Material.CACTUS => CactusState.values(age)
       case Material.CAKE =>
         val bites = state.asInstanceOf[SpigotCake].getBites
         CakeState.values(bites)
       case Material.COCOA => CocoaState.values(age)
+      case Material.COMPARATOR =>
+        val mode = state.asInstanceOf[SpigotComparator].getMode
+        mapComparatorMode(mode)
       case Material.NETHER_WART => NetherWartState.values(age)
       case Material.POTATOES => PotatoState.values(age)
 
@@ -61,6 +65,11 @@ class SpigotBlockStateMapper @Inject()(
 
       case _ => throw new IllegalArgumentException(s"Failed to map state for material: ${ block.getType }")
     }
+  }
+
+  def mapComparatorMode(mode: SpigotComparator.Mode): ComparatorState = mode match {
+    case SpigotComparator.Mode.COMPARE => ComparatorState.COMPARE
+    case SpigotComparator.Mode.SUBTRACT => ComparatorState.SUBTRACT
   }
 
   def mapStructureBlockMode(mode: SpigotStructureBlock.Mode): StructureBlockState = mode match {

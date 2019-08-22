@@ -10,13 +10,13 @@ trait Block {
 }
 
 trait AttachableBlock extends Block {
-  val attachedTo: Option[Block]
-  def withAttachedTo(attachedTo: Option[Block]): AttachableBlock
+  val attached: Option[BlockAttachment]
+  def withAttached(attached: Option[BlockAttachment]): AttachableBlock
 }
 
 trait AttachedBlock extends Block {
-  val attachedTo: Block
-  def withAttachedTo(attachedTo: Block): AttachedBlock
+  val attached: BlockAttachment
+  def withAttached(attached: BlockAttachment): AttachedBlock
 }
 
 trait BisectedBlock extends Block {
@@ -32,6 +32,11 @@ trait ColorableBlock extends Block {
 trait ColoredBlock extends Block {
   val color: BlockColor
   def withColor(color: BlockColor): ColoredBlock
+}
+
+trait DirectableBlock extends Block {
+  val facing: Option[BlockFace]
+  def withFacing(facing: Option[BlockFace]): DirectableBlock
 }
 
 trait DirectionalBlock extends Block {
@@ -72,6 +77,16 @@ trait OrientableBlock extends Block {
 trait PowerableBlock extends Block {
   val powered: Boolean
   def withPowered(powered: Boolean): PowerableBlock
+}
+
+trait RotatableBlock extends Block {
+  val rotation: Option[BlockRotation]
+  def withRotation(rotation: Option[BlockRotation]): RotatableBlock
+}
+
+trait RotatedBlock extends Block {
+  val rotation: BlockRotation
+  def withRotation(rotation: BlockRotation): RotatedBlock
 }
 
 trait SnowableBlock extends Block {

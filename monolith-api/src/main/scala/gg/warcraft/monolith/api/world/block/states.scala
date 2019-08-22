@@ -17,6 +17,16 @@ object AnvilState extends Enum[AnvilState] {
   case object DAMAGED extends AnvilState
 }
 
+// BAMBOO
+sealed trait BambooState extends EnumEntry with BlockState
+
+object BambooState extends Enum[BambooState] {
+  val values: IndexedSeq[BambooState] = findValues
+
+  case object AGE_0 extends BambooState
+  case object AGE_1 extends BambooState
+}
+
 // BEETROOT
 sealed trait BeetrootState extends EnumEntry with BlockState
 
@@ -68,6 +78,48 @@ object CakeState extends Enum[CakeState] {
   case object EATEN_6 extends CakeState
 }
 
+// CARROT
+sealed trait CarrotState extends EnumEntry with BlockState
+
+object CarrotState extends Enum[CarrotState] {
+  val values: IndexedSeq[CarrotState] = findValues
+
+  case object AGE_0 extends CarrotState
+  case object AGE_1 extends CarrotState
+  case object AGE_2 extends CarrotState
+  case object AGE_3 extends CarrotState
+  case object AGE_4 extends CarrotState
+  case object AGE_5 extends CarrotState
+  case object AGE_6 extends CarrotState
+  case object AGE_7 extends CarrotState
+}
+
+// CAULDRON
+sealed trait CauldronState extends EnumEntry with BlockState
+
+object CauldronState extends Enum[CauldronState] {
+  val values: IndexedSeq[CauldronState] = findValues
+
+  case object LEVEL_0 extends CauldronState
+  case object LEVEL_1 extends CauldronState
+  case object LEVEL_2 extends CauldronState
+  case object LEVEL_3 extends CauldronState
+}
+
+// CHORUS_FLOWER
+sealed trait ChorusFlowerState extends EnumEntry with BlockState
+
+object ChorusFlowerState extends Enum[ChorusFlowerState] {
+  val values: IndexedSeq[ChorusFlowerState] = findValues
+
+  case object AGE_0 extends ChorusFlowerState
+  case object AGE_1 extends ChorusFlowerState
+  case object AGE_2 extends ChorusFlowerState
+  case object AGE_3 extends ChorusFlowerState
+  case object AGE_4 extends ChorusFlowerState
+  case object AGE_5 extends ChorusFlowerState
+}
+
 // COCOA
 sealed trait CocoaState extends EnumEntry with BlockState
 
@@ -77,6 +129,33 @@ object CocoaState extends Enum[CocoaState] {
   case object AGE_0 extends CocoaState
   case object AGE_1 extends CocoaState
   case object AGE_2 extends CocoaState
+}
+
+// COMPARATOR
+sealed trait ComparatorState extends EnumEntry with BlockState
+
+object ComparatorState extends Enum[ComparatorState] {
+  val values: IndexedSeq[ComparatorState] = findValues
+
+  case object COMPARE extends ComparatorState
+  case object SUBTRACT extends ComparatorState
+}
+
+// COMPOSTER
+sealed trait ComposterState extends EnumEntry with BlockState
+
+object ComposterState extends Enum[ComposterState] {
+  val values: IndexedSeq[ComposterState] = findValues
+
+  case object LEVEL_0 extends ComposterState
+  case object LEVEL_1 extends ComposterState
+  case object LEVEL_2 extends ComposterState
+  case object LEVEL_3 extends ComposterState
+  case object LEVEL_4 extends ComposterState
+  case object LEVEL_5 extends ComposterState
+  case object LEVEL_6 extends ComposterState
+  case object LEVEL_7 extends ComposterState
+  case object LEVEL_8 extends ComposterState
 }
 
 // NETHER_WART
@@ -105,6 +184,22 @@ object PotatoState extends Enum[PotatoState] {
   case object AGE_5 extends PotatoState
   case object AGE_6 extends PotatoState
   case object AGE_7 extends PotatoState
+}
+
+// PUMPKIN_STEM
+sealed trait PumpkinStemState extends EnumEntry with BlockState
+
+object PumpkinStemState extends Enum[PumpkinStemState] {
+  val values: IndexedSeq[PumpkinStemState] = findValues
+
+  case object AGE_0 extends PumpkinStemState
+  case object AGE_1 extends PumpkinStemState
+  case object AGE_2 extends PumpkinStemState
+  case object AGE_3 extends PumpkinStemState
+  case object AGE_4 extends PumpkinStemState
+  case object AGE_5 extends PumpkinStemState
+  case object AGE_6 extends PumpkinStemState
+  case object AGE_7 extends PumpkinStemState
 }
 
 // RAILS
@@ -146,6 +241,18 @@ object SaplingState extends Enum[SaplingState] {
 
   case object AGE_0 extends SaplingState
   case object AGE_1 extends SaplingState
+}
+
+// SEA_PICKLE
+sealed trait SeaPickleState extends EnumEntry with BlockState
+
+object SeaPickleState extends Enum[SeaPickleState] {
+  val values: IndexedSeq[SeaPickleState] = findValues
+
+  case object COUNT_1 extends SeaPickleState
+  case object COUNT_2 extends SeaPickleState
+  case object COUNT_3 extends SeaPickleState
+  case object COUNT_4 extends SeaPickleState
 }
 
 // STAIRS
