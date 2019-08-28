@@ -14,6 +14,8 @@ trait FenceMaterial extends BlockMaterial
 
 trait FlowerPotMaterial extends BlockMaterial
 
+trait InfestedMaterial extends BlockMaterial
+
 trait MineralMaterial extends BlockMaterial
 
 trait OreMaterial extends BlockMaterial
@@ -73,6 +75,17 @@ object BrickMaterial extends Enum[BrickMaterial] {
   case object BRICK extends BrickMaterial
   case object NETHER_BRICK extends BrickMaterial
   case object RED_NETHER_BRICK extends BrickMaterial
+}
+
+// CHEST
+sealed trait ChestMaterial extends EnumEntry with BlockMaterial
+
+object ChestMaterial extends Enum[ChestMaterial] {
+  val values: IndexedSeq[ChestMaterial] = findValues
+
+  case object NORMAL extends ChestMaterial
+  case object ENDER extends ChestMaterial
+  case object TRAPPED extends ChestMaterial
 }
 
 // COMMAND_BLOCK
@@ -293,8 +306,8 @@ object SandstoneMaterial extends Enum[SandstoneMaterial] {
 
 // STONE
 sealed trait StoneMaterial extends EnumEntry
-  with ButtonMaterial with PressurePlateMaterial with SlabMaterial
-  with StairsMaterial with WallMaterial
+  with ButtonMaterial with InfestedMaterial with PressurePlateMaterial
+  with SlabMaterial with StairsMaterial with WallMaterial
 
 object StoneMaterial extends Enum[StoneMaterial] {
   val values: IndexedSeq[StoneMaterial] = findValues

@@ -8,7 +8,7 @@ import org.bukkit.{ Axis, Material }
 import org.bukkit.block.{ Block => SpigotBlock, BlockFace => SpigotBlockFace }
 import org.bukkit.block.data._
 import org.bukkit.block.data.Bisected.{ Half => SpigotBisection }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, EndPortalFrame => SpigotEndPortalFrame, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, EndPortalFrame => SpigotEndPortalFrame, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
@@ -48,23 +48,18 @@ class SpigotBlockMapper @Inject()(
         Bamboo(location, leaves, state.asInstanceOf[BambooState], thick)
 
       // BANNER
-      case Material.BLACK_BANNER | Material.BLACK_WALL_BANNER |
-           Material.BLUE_BANNER | Material.BLUE_WALL_BANNER |
-           Material.BROWN_BANNER | Material.BROWN_WALL_BANNER |
-           Material.CYAN_BANNER | Material.CYAN_WALL_BANNER |
-           Material.GRAY_BANNER | Material.GRAY_WALL_BANNER |
-           Material.GREEN_BANNER | Material.GREEN_WALL_BANNER |
-           Material.LIGHT_BLUE_BANNER | Material.LIGHT_BLUE_WALL_BANNER |
-           Material.LIGHT_GRAY_BANNER | Material.LIGHT_GRAY_WALL_BANNER |
-           Material.LIME_BANNER | Material.LIME_WALL_BANNER |
-           Material.MAGENTA_BANNER | Material.MAGENTA_WALL_BANNER |
-           Material.ORANGE_BANNER | Material.ORANGE_WALL_BANNER |
-           Material.PINK_BANNER | Material.PINK_WALL_BANNER |
-           Material.PURPLE_BANNER | Material.PURPLE_WALL_BANNER |
-           Material.RED_BANNER | Material.RED_WALL_BANNER |
-           Material.WHITE_BANNER | Material.WHITE_WALL_BANNER |
-           Material.YELLOW_BANNER | Material.YELLOW_WALL_BANNER =>
-        null
+      case Material.BLACK_BANNER | Material.BLUE_BANNER | Material.BROWN_BANNER | Material.CYAN_BANNER |
+           Material.GRAY_BANNER | Material.GREEN_BANNER | Material.LIGHT_BLUE_BANNER | Material.LIGHT_GRAY_BANNER |
+           Material.LIME_BANNER | Material.MAGENTA_BANNER | Material.ORANGE_BANNER | Material.PINK_BANNER |
+           Material.PURPLE_BANNER | Material.RED_BANNER | Material.WHITE_BANNER | Material.YELLOW_BANNER =>
+        Banner(location, color, Option(rotation), Option.empty)
+      case Material.BLACK_WALL_BANNER | Material.BLUE_WALL_BANNER | Material.BROWN_WALL_BANNER |
+           Material.CYAN_WALL_BANNER | Material.GRAY_WALL_BANNER | Material.GREEN_WALL_BANNER |
+           Material.LIGHT_BLUE_WALL_BANNER | Material.LIGHT_GRAY_WALL_BANNER | Material.LIME_WALL_BANNER |
+           Material.MAGENTA_WALL_BANNER | Material.ORANGE_WALL_BANNER | Material.PINK_WALL_BANNER |
+           Material.PURPLE_WALL_BANNER | Material.RED_WALL_BANNER | Material.WHITE_WALL_BANNER |
+           Material.YELLOW_WALL_BANNER =>
+        Banner(location, color, Option.empty, Option(facing))
 
       case Material.BARREL => Barrel(location, facing, open)
       case Material.BARRIER => Barrier(location)
@@ -75,7 +70,8 @@ class SpigotBlockMapper @Inject()(
            Material.GRAY_BED | Material.GREEN_BED | Material.LIGHT_BLUE_BED | Material.LIGHT_GRAY_BED |
            Material.LIME_BED | Material.MAGENTA_BED | Material.ORANGE_BED | Material.PINK_BED |
            Material.PURPLE_BED | Material.RED_BED | Material.WHITE_BED | Material.YELLOW_BED =>
-        Bed(location, color, facing, section)
+        val occupied = block.getState.asInstanceOf[SpigotBed].isOccupied
+        Bed(location, color, facing, section, occupied)
 
       case Material.BEDROCK => Bedrock(location)
       case Material.BEETROOTS => Beetroots(location, state.asInstanceOf[BeetrootState])
@@ -92,7 +88,7 @@ class SpigotBlockMapper @Inject()(
       case Material.STONE_BUTTON |
            Material.ACACIA_BUTTON | Material.BIRCH_BUTTON | Material.DARK_OAK_BUTTON |
            Material.JUNGLE_BUTTON | Material.OAK_BUTTON | Material.SPRUCE_BUTTON =>
-        Button(location, material.asInstanceOf[ButtonMaterial], null) // TODO attachedTo
+        Button(location, material.asInstanceOf[ButtonMaterial], facing, attached, powered)
 
       case Material.CACTUS => Cactus(location, state.asInstanceOf[CactusState])
       case Material.CAKE => Cake(location, state.asInstanceOf[CakeState])
@@ -110,7 +106,11 @@ class SpigotBlockMapper @Inject()(
       case Material.CARROTS => Carrots(location, state.asInstanceOf[CarrotState])
       case Material.CARTOGRAPHY_TABLE => CartographyTable(location)
       case Material.CAULDRON => Cauldron(location, state.asInstanceOf[CauldronState])
-      case Material.CHEST => null
+
+      // CHEST
+      case Material.CHEST | Material.ENDER_CHEST | Material.TRAPPED_CHEST =>
+        Chest(location, material.asInstanceOf[ChestMaterial], facing)
+
       case Material.CHORUS_FLOWER => ChorusFlower(location, state.asInstanceOf[ChorusFlowerState])
       case Material.CHORUS_PLANT => ChorusPlant(location, extensions)
       case Material.CLAY => Clay(location)
@@ -171,7 +171,7 @@ class SpigotBlockMapper @Inject()(
            Material.FIRE_CORAL_WALL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN |
            Material.HORN_CORAL_WALL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN |
            Material.TUBE_CORAL_WALL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
-        CoralFan(location, material.asInstanceOf[CoralMaterial], Option.apply(facing), flooded)
+        CoralFan(location, material.asInstanceOf[CoralMaterial], Option(facing), flooded)
 
       case Material.CRAFTING_TABLE => CraftingTable(location)
       case Material.DAYLIGHT_DETECTOR => DaylightDetector(location)
@@ -193,7 +193,6 @@ class SpigotBlockMapper @Inject()(
       case Material.DRIED_KELP_BLOCK => DriedKelp(location)
       case Material.DROPPER => Dropper(location, facing, powered)
       case Material.ENCHANTING_TABLE => EnchantingTable(location)
-      case Material.ENDER_CHEST => null
       case Material.END_GATEWAY => EndGateway(location)
       case Material.END_PORTAL => EndPortal(location)
       case Material.END_PORTAL_FRAME =>
@@ -280,12 +279,12 @@ class SpigotBlockMapper @Inject()(
       case Material.ICE | Material.PACKED_ICE | Material.BLUE_ICE =>
         Ice(location, material.asInstanceOf[IceMaterial])
 
-      case Material.INFESTED_CHISELED_STONE_BRICKS => null
-      case Material.INFESTED_COBBLESTONE => null
-      case Material.INFESTED_CRACKED_STONE_BRICKS => null
-      case Material.INFESTED_MOSSY_STONE_BRICKS => null
-      case Material.INFESTED_STONE => null
-      case Material.INFESTED_STONE_BRICKS => null
+      // INFESTED_BLOCK
+      case Material.INFESTED_STONE | Material.INFESTED_COBBLESTONE |
+           Material.INFESTED_STONE_BRICKS | Material.INFESTED_CRACKED_STONE_BRICKS |
+           Material.INFESTED_CHISELED_STONE_BRICKS | Material.INFESTED_MOSSY_STONE_BRICKS =>
+        InfestedBlock(location, material.asInstanceOf[InfestedMaterial])
+
       case Material.IRON_BARS => IronBars(location, extensions, flooded)
       case Material.JIGSAW => Jigsaw(location, facing)
       case Material.JUKEBOX =>
@@ -323,7 +322,7 @@ class SpigotBlockMapper @Inject()(
 
       // MELON_STEM
       case Material.MELON_STEM => MelonStem(location, state.asInstanceOf[MelonStemState], Option.empty)
-      case Material.ATTACHED_MELON_STEM => MelonStem(location, state.asInstanceOf[MelonStemState], Option.apply(facing))
+      case Material.ATTACHED_MELON_STEM => MelonStem(location, state.asInstanceOf[MelonStemState], Option(facing))
 
       // MINERAL
       case Material.COAL_BLOCK | Material.DIAMOND_BLOCK | Material.EMERALD_BLOCK | Material.GOLD_BLOCK |
@@ -338,8 +337,6 @@ class SpigotBlockMapper @Inject()(
            Material.WITHER_SKELETON_SKULL | Material.WITHER_SKELETON_WALL_SKULL |
            Material.ZOMBIE_HEAD | Material.ZOMBIE_WALL_HEAD =>
         MobHead(location, material.asInstanceOf[MobHeadMaterial]) // TODO map WALL MobHeads / attachedTo
-
-      case Material.MOVING_PISTON => null
 
       // MUSHROOM
       case Material.BROWN_MUSHROOM | Material.RED_MUSHROOM =>
@@ -366,9 +363,15 @@ class SpigotBlockMapper @Inject()(
       case Material.PURPUR_PILLAR | Material.QUARTZ_PILLAR =>
         Pillar(location, material.asInstanceOf[PillarMaterial])
 
-      case Material.PISTON => null
-      case Material.STICKY_PISTON => null
-      case Material.PISTON_HEAD => null
+      // PISTON
+      case Material.PISTON =>
+        val extended = block.getState.asInstanceOf[SpigotPiston].isExtended
+        Piston(location, facing, sticky = false, extended)
+      case Material.STICKY_PISTON =>
+        val extended = block.getState.asInstanceOf[SpigotPiston].isExtended
+        Piston(location, facing, sticky = true, extended)
+      // Technical Block: Material.MOVING_PISTON => null
+      // Technical Block: Material.PISTON_HEAD => null
 
       // PLANKS
       case Material.ACACIA_PLANKS | Material.BIRCH_PLANKS | Material.DARK_OAK_PLANKS |
@@ -389,21 +392,24 @@ class SpigotBlockMapper @Inject()(
 
       // PUMPKIN
       case Material.PUMPKIN => new Pumpkin(location, Option.empty, lit = false, carved = false)
-      case Material.CARVED_PUMPKIN => Pumpkin(location, Option.apply(facing), lit = false, carved = true)
-      case Material.JACK_O_LANTERN => Pumpkin(location, Option.apply(facing), lit = true, carved = true)
+      case Material.CARVED_PUMPKIN => Pumpkin(location, Option(facing), lit = false, carved = true)
+      case Material.JACK_O_LANTERN => Pumpkin(location, Option(facing), lit = true, carved = true)
 
       // PUMPKIN_STEM
       case Material.PUMPKIN_STEM => PumpkinStem(location, state.asInstanceOf[PumpkinStemState], Option.empty)
-      case Material.ATTACHED_PUMPKIN_STEM => PumpkinStem(location, state.asInstanceOf[PumpkinStemState], Option.apply(facing))
+      case Material.ATTACHED_PUMPKIN_STEM => PumpkinStem(location, state.asInstanceOf[PumpkinStemState], Option(facing))
 
       // RAILS
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
         Rails(location, material.asInstanceOf[RailsMaterial], state.asInstanceOf[RailsState], powered)
 
       case Material.REDSTONE_LAMP => RedstoneLamp(location, lit)
-      case Material.REDSTONE_TORCH => null
-      case Material.REDSTONE_WALL_TORCH => null
-      case Material.REDSTONE_WIRE => null
+
+      // REDSTONE_TORCH
+      case Material.REDSTONE_TORCH => RedstoneTorch(location, Option.empty, lit)
+      case Material.REDSTONE_WALL_TORCH => RedstoneTorch(location, Option(facing), lit)
+
+      case Material.REDSTONE_WIRE => RedstoneWire(location, state.asInstanceOf[RedstoneWireState])
       case Material.REPEATER =>
         val locked = block.getState.asInstanceOf[SpigotRepeater].isLocked
         Repeater(location, state.asInstanceOf[RepeaterState], facing, powered, locked)
@@ -445,10 +451,10 @@ class SpigotBlockMapper @Inject()(
       // SIGN
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
            Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
-        Sign(location, Option.apply(facing), Option.empty, flooded)
+        Sign(location, Option(facing), Option.empty, flooded)
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN | Material.DARK_OAK_WALL_SIGN |
            Material.JUNGLE_WALL_SIGN | Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
-        Sign(location, Option.empty, Option.apply(rotation), flooded) // TODO store additional sign data
+        Sign(location, Option.empty, Option(rotation), flooded) // TODO store additional sign data
 
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB | Material.RED_NETHER_BRICK_SLAB |
@@ -555,11 +561,12 @@ class SpigotBlockMapper @Inject()(
            Material.JUNGLE_TRAPDOOR | Material.OAK_TRAPDOOR | Material.SPRUCE_TRAPDOOR =>
         Trapdoor(location, material.asInstanceOf[TrapdoorMaterial], facing, inverted, open)
 
-      case Material.TRAPPED_CHEST => null
       case Material.TRIPWIRE => null
       case Material.TRIPWIRE_HOOK => null
-      case Material.TURTLE_EGG => null
-      case Material.VINE => null
+      case Material.TURTLE_EGG =>
+        val count = block.getState.asInstanceOf[SpigotTurtleEgg].getEggs
+        TurtleEgg(location, state.asInstanceOf[TurtleEggState], count)
+      case Material.VINE => Vine(location, extensions)
 
       // WALL
       case Material.BRICK_WALL | Material.NETHER_BRICK_WALL | Material.RED_NETHER_BRICK_WALL |

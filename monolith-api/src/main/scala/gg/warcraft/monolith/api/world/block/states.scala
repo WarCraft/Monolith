@@ -304,6 +304,30 @@ object RailsState extends Enum[RailsState] {
   case object ASCENDING_WEST extends RailsState
 }
 
+// REDSTONE_WIRE
+sealed trait RedstoneWireState extends EnumEntry with BlockState
+
+object RedstoneWireState extends Enum[RedstoneWireState] {
+  val values: IndexedSeq[RedstoneWireState] = findValues
+
+  case object DELAY_0 extends RedstoneWireState
+  case object DELAY_1 extends RedstoneWireState
+  case object DELAY_2 extends RedstoneWireState
+  case object DELAY_3 extends RedstoneWireState
+  case object DELAY_4 extends RedstoneWireState
+  case object DELAY_5 extends RedstoneWireState
+  case object DELAY_6 extends RedstoneWireState
+  case object DELAY_7 extends RedstoneWireState
+  case object DELAY_8 extends RedstoneWireState
+  case object DELAY_9 extends RedstoneWireState
+  case object DELAY_10 extends RedstoneWireState
+  case object DELAY_11 extends RedstoneWireState
+  case object DELAY_12 extends RedstoneWireState
+  case object DELAY_13 extends RedstoneWireState
+  case object DELAY_14 extends RedstoneWireState
+  case object DELAY_15 extends RedstoneWireState
+}
+
 // REPEATER
 sealed trait RepeaterState extends EnumEntry with BlockState
 
@@ -409,6 +433,17 @@ object SweetBerryState extends Enum[SweetBerryState] {
   case object AGE_1 extends SweetBerryState
   case object AGE_2 extends SweetBerryState
   case object AGE_3 extends SweetBerryState
+}
+
+// TURTLE_EGG
+sealed trait TurtleEggState extends EnumEntry with BlockState
+
+object TurtleEggState extends Enum[TurtleEggState] {
+  val values: IndexedSeq[TurtleEggState] = findValues
+
+  case object AGE_0 extends TurtleEggState
+  case object AGE_1 extends TurtleEggState
+  case object AGE_2 extends TurtleEggState
 }
 
 // WEIGHTED_PRESSURE_PLATE

@@ -33,6 +33,18 @@ case class Bamboo(
   def withThick(thick: Boolean): Bamboo = copy(thick = thick)
 }
 
+case class Banner(
+  location: BlockLocation,
+  color: BlockColor,
+  rotation: Option[BlockRotation],
+  facing: Option[BlockFace]
+) extends ColoredBlock with RotatableBlock with DirectableBlock {
+  override def withLocation(loc: BlockLocation): Banner = copy(location = loc)
+  override def withColor(color: BlockColor): Banner = copy(color = color)
+  override def withRotation(rotation: Option[BlockRotation]): Banner = copy(rotation = rotation)
+  override def withFacing(facing: Option[BlockFace]): Banner = copy(facing = facing)
+}
+
 case class Barrel(
   location: BlockLocation,
   facing: BlockFace,
@@ -51,17 +63,18 @@ case class Beacon(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): Beacon = copy(location = loc)
 }
 
-// TODO add occupied flag
 case class Bed(
   location: BlockLocation,
   color: BlockColor,
   facing: BlockFace,
-  section: BlockBisection
+  section: BlockBisection,
+  occupied: Boolean
 ) extends ColoredBlock with DirectionalBlock with BisectedBlock {
   override def withLocation(loc: BlockLocation): Bed = copy(location = loc)
   override def withColor(color: BlockColor): Bed = copy(color = color)
   override def withFacing(facing: BlockFace): Bed = copy(facing = facing)
   override def withSection(section: BlockBisection): Bed = copy(section = section)
+  def withOccupied(occupied: Boolean): Bed = copy(occupied = occupied)
 }
 
 case class Bedrock(location: BlockLocation) extends Block {
@@ -132,11 +145,15 @@ case class BubbleColumn(
 case class Button(
   location: BlockLocation,
   material: ButtonMaterial,
-  attached: BlockAttachment
-) extends MaterialBlock[ButtonMaterial] with AttachedBlock {
+  facing: BlockFace,
+  attached: BlockAttachment,
+  powered: Boolean
+) extends MaterialBlock[ButtonMaterial] with DirectionalBlock with AttachedBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Button = copy(location = loc)
   override def withMaterial(mat: ButtonMaterial): Button = copy(material = mat)
+  override def withFacing(facing: BlockFace): Button = copy(facing = facing)
   override def withAttached(attached: BlockAttachment): Button = copy(attached = attached)
+  override def withPowered(powered: Boolean): Button = copy(powered = powered)
 }
 
 case class Cactus(
@@ -199,9 +216,11 @@ case class Cauldron(
 
 case class Chest(
   location: BlockLocation,
+  material: ChestMaterial,
   facing: BlockFace
-) extends DirectionalBlock {
+) extends MaterialBlock[ChestMaterial] with DirectionalBlock {
   override def withLocation(loc: BlockLocation): Chest = copy(location = loc)
+  override def withMaterial(material: ChestMaterial): Chest = copy(material = material)
   override def withFacing(facing: BlockFace): Chest = copy(facing = facing)
 }
 
@@ -592,6 +611,14 @@ case class Ice(
   override def withMaterial(mat: IceMaterial): Ice = copy(material = mat)
 }
 
+case class InfestedBlock(
+  location: BlockLocation,
+  material: InfestedMaterial
+) extends MaterialBlock[InfestedMaterial] {
+  override def withLocation(loc: BlockLocation): InfestedBlock = copy(location = loc)
+  override def withMaterial(mat: InfestedMaterial): InfestedBlock = copy(material = mat)
+}
+
 case class IronBars(
   location: BlockLocation,
   extensions: Set[BlockFace],
@@ -846,13 +873,13 @@ case class Pillar(
 case class Piston(
   location: BlockLocation,
   facing: BlockFace,
-  powered: Boolean,
-  sticky: Boolean
-) extends DirectionalBlock with PowerableBlock with StickyBlock {
+  sticky: Boolean,
+  extended: Boolean
+) extends DirectionalBlock with StickyBlock {
   override def withLocation(loc: BlockLocation): Piston = copy(location = loc)
   override def withFacing(facing: BlockFace): Piston = copy(facing = facing)
-  override def withPowered(powered: Boolean): Piston = copy(powered = powered)
   override def withSticky(sticky: Boolean): Piston = copy(sticky = sticky)
+  def withExtended(extended: Boolean): Piston = copy(extended = extended)
 }
 
 case class Podzol(
@@ -941,6 +968,25 @@ case class RedstoneLamp(
 ) extends LightableBlock {
   override def withLocation(loc: BlockLocation): RedstoneLamp = copy(location = loc)
   override def withLit(lit: Boolean): RedstoneLamp = copy(lit = lit)
+}
+
+case class RedstoneTorch(
+  location: BlockLocation,
+  facing: Option[BlockFace],
+  lit: Boolean
+) extends DirectableBlock with LightableBlock {
+  override def withLocation(loc: BlockLocation): RedstoneTorch = copy(location = loc)
+  override def withFacing(facing: Option[BlockFace]): RedstoneTorch = copy(facing = facing)
+  override def withLit(lit: Boolean): RedstoneTorch = copy(lit = lit)
+}
+
+// TODO add NESW connections
+case class RedstoneWire(
+  location: BlockLocation,
+  state: RedstoneWireState
+) extends StatefulBlock[RedstoneWireState] {
+  override def withLocation(loc: BlockLocation): RedstoneWire = copy(location = loc)
+  override def withState(state: RedstoneWireState): RedstoneWire = copy(state = state)
 }
 
 case class Repeater(
@@ -1182,6 +1228,24 @@ case class Trapdoor(
   override def withFacing(facing: BlockFace): Trapdoor = copy(facing = facing)
   override def withInverted(inverted: Boolean): Trapdoor = copy(inverted = inverted)
   override def withOpen(open: Boolean): Trapdoor = copy(open = open)
+}
+
+case class TurtleEgg(
+  location: BlockLocation,
+  state: TurtleEggState,
+  count: Int
+) extends StatefulBlock[TurtleEggState] {
+  override def withLocation(loc: BlockLocation): TurtleEgg = copy(location = loc)
+  override def withState(state: TurtleEggState): TurtleEgg = copy(state = state)
+  def withCount(count: Int): TurtleEgg = copy(count = count)
+}
+
+case class Vine(
+  location: BlockLocation,
+  extensions: Set[BlockFace]
+) extends ExtendableBlock {
+  override def withLocation(loc: BlockLocation): Vine = copy(location = loc)
+  override def withExtensions(extensions: Set[BlockFace]): Vine = copy(extensions = extensions)
 }
 
 // TODO add direction vals
