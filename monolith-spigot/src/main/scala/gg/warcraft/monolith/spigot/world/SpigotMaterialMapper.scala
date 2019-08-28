@@ -12,6 +12,9 @@ class SpigotMaterialMapper {
     case Material.CAVE_AIR => AirMaterial.CAVE
     case Material.VOID_AIR => AirMaterial.VOID
 
+    // BUTTON
+    case Material.STONE_BUTTON => StoneMaterial.STONE
+
     // CHEST
     case Material.CHEST => ChestMaterial.NORMAL
     case Material.ENDER_CHEST => ChestMaterial.ENDER
@@ -21,6 +24,44 @@ class SpigotMaterialMapper {
     case Material.COMMAND_BLOCK => CommandBlockMaterial.NORMAL
     case Material.CHAIN_COMMAND_BLOCK => CommandBlockMaterial.CHAIN
     case Material.REPEATING_COMMAND_BLOCK => CommandBlockMaterial.REPEATING
+
+    // CORAL
+    case Material.BRAIN_CORAL | Material.BRAIN_CORAL_BLOCK |
+         Material.BRAIN_CORAL_FAN | Material.BRAIN_CORAL_WALL_FAN =>
+      CoralMaterial.BRAIN
+    case Material.BUBBLE_CORAL | Material.BUBBLE_CORAL_BLOCK |
+         Material.BUBBLE_CORAL_FAN | Material.BUBBLE_CORAL_WALL_FAN =>
+      CoralMaterial.BUBBLE
+    case Material.FIRE_CORAL | Material.FIRE_CORAL_BLOCK |
+         Material.FIRE_CORAL_FAN | Material.FIRE_CORAL_WALL_FAN =>
+      CoralMaterial.FIRE
+    case Material.HORN_CORAL | Material.HORN_CORAL_BLOCK |
+         Material.HORN_CORAL_FAN | Material.HORN_CORAL_WALL_FAN =>
+      CoralMaterial.HORN
+    case Material.TUBE_CORAL | Material.TUBE_CORAL_BLOCK |
+         Material.TUBE_CORAL_FAN | Material.TUBE_CORAL_WALL_FAN =>
+      CoralMaterial.TUBE
+    case Material.DEAD_BRAIN_CORAL | Material.DEAD_BRAIN_CORAL_BLOCK |
+         Material.DEAD_BRAIN_CORAL_FAN | Material.DEAD_BRAIN_CORAL_WALL_FAN =>
+      CoralMaterial.DEAD_BRAIN
+    case Material.DEAD_BUBBLE_CORAL | Material.DEAD_BUBBLE_CORAL_BLOCK |
+         Material.DEAD_BUBBLE_CORAL_FAN | Material.DEAD_BUBBLE_CORAL_WALL_FAN =>
+      CoralMaterial.DEAD_BUBBLE
+    case Material.DEAD_FIRE_CORAL | Material.DEAD_FIRE_CORAL_BLOCK |
+         Material.DEAD_FIRE_CORAL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN =>
+      CoralMaterial.DEAD_FIRE
+    case Material.DEAD_HORN_CORAL | Material.DEAD_HORN_CORAL_BLOCK |
+         Material.DEAD_HORN_CORAL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN =>
+      CoralMaterial.DEAD_HORN
+    case Material.DEAD_TUBE_CORAL | Material.DEAD_TUBE_CORAL_BLOCK |
+         Material.DEAD_TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
+      CoralMaterial.DEAD_TUBE
+
+    // DOOR
+    case Material.IRON_DOOR => IronMaterial.IRON
+
+    // FENCE
+    case Material.NETHER_BRICK_FENCE => BrickMaterial.NETHER_BRICK
 
     // FLOWER
     case Material.ALLIUM => FlowerMaterial.ALLIUM
@@ -37,6 +78,32 @@ class SpigotMaterialMapper {
     case Material.WHITE_TULIP => FlowerMaterial.WHITE_TULIP
     case Material.WITHER_ROSE => FlowerMaterial.WITHER_ROSE
 
+    // FLOWER_POT TODO
+
+    // ICE
+    case Material.ICE => IceMaterial.NORMAL
+    case Material.BLUE_ICE => IceMaterial.BLUE
+    case Material.PACKED_ICE => IceMaterial.PACKED
+
+    // INFESTED_BLOCK
+    case Material.INFESTED_STONE => StoneMaterial.STONE
+    case Material.INFESTED_COBBLESTONE => StoneMaterial.COBBLESTONE
+    case Material.INFESTED_STONE_BRICKS => StoneMaterial.STONE_BRICK
+    case Material.INFESTED_CRACKED_STONE_BRICKS => StoneMaterial.CRACKED_STONE_BRICK
+    case Material.INFESTED_CHISELED_STONE_BRICKS => StoneMaterial.CHISELED_STONE_BRICK
+    case Material.INFESTED_MOSSY_STONE_BRICKS => StoneMaterial.MOSSY_STONE_BRICK
+
+    // LEAVES
+    case Material.ACACIA_LEAVES => WoodMaterial.ACACIA
+    case Material.BIRCH_LEAVES => WoodMaterial.BIRCH
+    case Material.DARK_OAK_LEAVES => WoodMaterial.DARK_OAK
+    case Material.JUNGLE_LEAVES => WoodMaterial.JUNGLE
+    case Material.OAK_LEAVES => WoodMaterial.OAK
+    case Material.SPRUCE_LEAVES => WoodMaterial.SPRUCE
+
+    // MINERAL
+    case Material.QUARTZ_BLOCK => QuartzMaterial.QUARTZ
+
     // MOB_HEAD
     case Material.CREEPER_HEAD | Material.CREEPER_WALL_HEAD => MobHeadMaterial.CREEPER
     case Material.DRAGON_HEAD | Material.DRAGON_WALL_HEAD => MobHeadMaterial.DRAGON
@@ -45,19 +112,51 @@ class SpigotMaterialMapper {
     case Material.WITHER_SKELETON_SKULL | Material.WITHER_SKELETON_WALL_SKULL => MobHeadMaterial.WITHER_SKELETON
     case Material.ZOMBIE_HEAD | Material.ZOMBIE_WALL_HEAD => MobHeadMaterial.ZOMBIE
 
+    // MUSHROOM
+    case Material.BROWN_MUSHROOM => MushroomMaterial.BROWN
+    case Material.BROWN_MUSHROOM_BLOCK => MushroomBlockMaterial.BROWN
+    case Material.RED_MUSHROOM => MushroomMaterial.RED
+    case Material.RED_MUSHROOM_BLOCK => MushroomBlockMaterial.RED
+    case Material.MUSHROOM_STEM => MushroomBlockMaterial.STEM
+
+    // NOTE_BLOCK TODO we cant read this one from the block material
+
     // PILLAR
     case Material.PURPUR_PILLAR => PurpurMaterial.PURPUR
     case Material.QUARTZ_PILLAR => QuartzMaterial.QUARTZ
 
+    // PRESSURE_PLATE
+    case Material.HEAVY_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateMaterial.HEAVY
+    case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateMaterial.LIGHT
+
+    // RAILS
+    case Material.RAIL => RailsMaterial.NORMAL
+    case Material.ACTIVATOR_RAIL => RailsMaterial.ACTIVATOR
+    case Material.DETECTOR_RAIL => RailsMaterial.DETECTOR
+    case Material.POWERED_RAIL => RailsMaterial.POWERED
+
     // RESOURCE
-    case Material.COAL_ORE => ResourceMaterial.COAL
-    case Material.DIAMOND_ORE => ResourceMaterial.DIAMOND
-    case Material.EMERALD_ORE => ResourceMaterial.EMERALD
-    case Material.GOLD_ORE => ResourceMaterial.GOLD
-    case Material.IRON_ORE => ResourceMaterial.IRON
-    case Material.LAPIS_ORE => ResourceMaterial.LAPIS_LAZULI
+    case Material.COAL_ORE | Material.COAL_BLOCK => ResourceMaterial.COAL
+    case Material.DIAMOND_ORE | Material.DIAMOND_BLOCK => ResourceMaterial.DIAMOND
+    case Material.EMERALD_ORE | Material.EMERALD_BLOCK => ResourceMaterial.EMERALD
+    case Material.GOLD_ORE | Material.GOLD_BLOCK => ResourceMaterial.GOLD
+    case Material.IRON_ORE | Material.IRON_BLOCK => ResourceMaterial.IRON
+    case Material.LAPIS_ORE | Material.LAPIS_BLOCK => ResourceMaterial.LAPIS_LAZULI
     case Material.NETHER_QUARTZ_ORE => ResourceMaterial.NETHER_QUARTZ
-    case Material.REDSTONE_ORE => ResourceMaterial.REDSTONE
+    case Material.REDSTONE_ORE | Material.REDSTONE_BLOCK => ResourceMaterial.REDSTONE
+
+    // SAND
+    case Material.SAND => SandMaterial.SAND
+    case Material.RED_SAND => SandMaterial.RED_SAND
+    case Material.SOUL_SAND => SandMaterial.SOUL_SAND
+
+    // SANDSTONE
+    case Material.SANDSTONE | Material.CHISELED_SANDSTONE | Material.CUT_SANDSTONE | Material.SMOOTH_SANDSTONE =>
+      SandstoneMaterial.SANDSTONE
+    case Material.RED_SANDSTONE | Material.CHISELED_RED_SANDSTONE | Material.CUT_RED_SANDSTONE | Material.SMOOTH_RED_SANDSTONE =>
+      SandstoneMaterial.RED_SANDSTONE
+
+    // STONE (slabs, stairs, wall et all)
 
     // WOOD
     case Material.ACACIA_BUTTON | Material.ACACIA_DOOR | Material.ACACIA_FENCE | Material.ACACIA_FENCE_GATE |

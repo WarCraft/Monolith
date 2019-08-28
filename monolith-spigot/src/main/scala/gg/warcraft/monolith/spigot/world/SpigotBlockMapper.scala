@@ -211,11 +211,6 @@ class SpigotBlockMapper @Inject()(
            Material.JUNGLE_FENCE | Material.OAK_FENCE | Material.SPRUCE_FENCE =>
         Fence(location, material.asInstanceOf[FenceMaterial], extensions, flooded)
 
-      // FENCE_GATE TODO add whether attached to wall or not
-      case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE | Material.DARK_OAK_FENCE_GATE |
-           Material.JUNGLE_FENCE_GATE | Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
-        Gate(location, material.asInstanceOf[WoodMaterial], facing, open, powered, wall = false)
-
       // FERN
       case Material.FERN => Fern(location, BlockBisection.BOTTOM, tall = false)
       case Material.LARGE_FERN => Fern(location, section, tall = true)
@@ -250,6 +245,11 @@ class SpigotBlockMapper @Inject()(
       case Material.FROSTED_ICE => Frost(location)
       case Material.FURNACE => Furnace(location, facing, lit)
 
+      // GATE TODO add whether attached to wall or not
+      case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE | Material.DARK_OAK_FENCE_GATE |
+           Material.JUNGLE_FENCE_GATE | Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
+        Gate(location, material.asInstanceOf[WoodMaterial], facing, open, powered, wall = false)
+
       // GLASS
       case Material.GLASS |
            Material.BLACK_STAINED_GLASS | Material.BLUE_STAINED_GLASS | Material.BROWN_STAINED_GLASS | Material.CYAN_STAINED_GLASS |
@@ -282,7 +282,7 @@ class SpigotBlockMapper @Inject()(
         Hopper(location, facing, !enabled)
 
       // ICE
-      case Material.ICE | Material.PACKED_ICE | Material.BLUE_ICE =>
+      case Material.ICE | Material.BLUE_ICE | Material.PACKED_ICE =>
         Ice(location, material.asInstanceOf[IceMaterial])
 
       // INFESTED_BLOCK
