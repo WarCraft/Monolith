@@ -1,14 +1,14 @@
 package gg.warcraft.monolith.spigot.world
 
-import java.util.stream.Collectors
-
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
 import org.bukkit.{ Axis, Material }
-import org.bukkit.block.{ Block => SpigotBlock, BlockFace => SpigotBlockFace }
+import org.bukkit.block.{ Block => SpigotBlock, BlockFace => SpigotBlockFace, BlockState => SpigotBlockState }
 import org.bukkit.block.data._
 import org.bukkit.block.data.Bisected.{ Half => SpigotBisection }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, EndPortalFrame => SpigotEndPortalFrame, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
+
+import scala.collection.mutable
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
@@ -19,7 +19,7 @@ class SpigotBlockMapper @Inject()(
   def map(block: SpigotBlock): Block = {
     val location = locationMapper.map(block.getLocation).toBlockLocation
 
-    lazy val attached = { block.getState.asInstanceOf[Attachable].isAttached }
+    lazy val attached = { mapAttached(block.getState) }
     lazy val color = { materialMapper.mapColor(block.getType) }
     lazy val extensions = { mapExtensions(block.getState.asInstanceOf[MultipleFacing]) }
     lazy val facing = { mapFace(block.getState.asInstanceOf[Directional].getFacing) }
@@ -187,7 +187,8 @@ class SpigotBlockMapper @Inject()(
       case Material.IRON_DOOR |
            Material.ACACIA_DOOR | Material.BIRCH_DOOR | Material.DARK_OAK_DOOR |
            Material.JUNGLE_DOOR | Material.OAK_DOOR | Material.SPRUCE_DOOR =>
-        null
+        val hinge = mapHinge(block.getState.asInstanceOf[SpigotDoor].getHinge)
+        Door(location, material.asInstanceOf[DoorMaterial], facing, hinge, section, open, powered)
 
       case Material.DRAGON_EGG => DragonEgg(location)
       case Material.DRIED_KELP_BLOCK => DriedKelp(location)
@@ -205,12 +206,12 @@ class SpigotBlockMapper @Inject()(
       case Material.NETHER_BRICK_FENCE |
            Material.ACACIA_FENCE | Material.BIRCH_FENCE | Material.DARK_OAK_FENCE |
            Material.JUNGLE_FENCE | Material.OAK_FENCE | Material.SPRUCE_FENCE =>
-        Fence(location, material.asInstanceOf[FenceMaterial], flooded) // TODO add enabled extensions; ExtendableBlock?
+        Fence(location, material.asInstanceOf[FenceMaterial], extensions, flooded)
 
-      // FENCE_GATE
+      // FENCE_GATE TODO add whether attached to wall or not
       case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE | Material.DARK_OAK_FENCE_GATE |
            Material.JUNGLE_FENCE_GATE | Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
-        Gate(location, material.asInstanceOf[WoodMaterial], facing, open, powered) // TODO add whether attached to wall or not
+        Gate(location, material.asInstanceOf[WoodMaterial], facing, open, powered, wall = false)
 
       // FERN
       case Material.FERN => Fern(location, BlockBisection.BOTTOM, tall = false)
@@ -228,8 +229,8 @@ class SpigotBlockMapper @Inject()(
       case Material.LILAC | Material.PEONY | Material.ROSE_BUSH | Material.SUNFLOWER =>
         Flower(location, material.asInstanceOf[FlowerMaterial], section, tall = true)
 
-      // FLOWER_POT
-      case Material.FLOWER_POT => FlowerPot(location)
+      // FLOWER_POT TODO add empty flower pot option, or maybe move into State rather than Material?
+      case Material.FLOWER_POT => FlowerPot(location, null)
       case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
            Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
            Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY | Material.POTTED_PINK_TULIP |
@@ -241,7 +242,7 @@ class SpigotBlockMapper @Inject()(
 
            Material.POTTED_ACACIA_SAPLING | Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
            Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
-        FlowerPot(location, material.asInstanceOf[FlowerPotMaterial]) // TODO add empty flower pot option, or maybe move into State rather than Material?
+        FlowerPot(location, material.asInstanceOf[FlowerPotMaterial])
 
       case Material.FROSTED_ICE => Frost(location)
       case Material.FURNACE => Furnace(location, facing, lit)
@@ -260,7 +261,7 @@ class SpigotBlockMapper @Inject()(
            Material.GRAY_STAINED_GLASS_PANE | Material.GREEN_STAINED_GLASS_PANE | Material.LIGHT_BLUE_STAINED_GLASS_PANE | Material.LIGHT_GRAY_STAINED_GLASS_PANE |
            Material.LIME_STAINED_GLASS_PANE | Material.MAGENTA_STAINED_GLASS_PANE | Material.ORANGE_STAINED_GLASS_PANE | Material.PINK_STAINED_GLASS_PANE |
            Material.PURPLE_STAINED_GLASS_PANE | Material.RED_STAINED_GLASS_PANE | Material.WHITE_STAINED_GLASS_PANE | Material.YELLOW_STAINED_GLASS_PANE =>
-        GlassPane(location, Option(color)) // TODO add orientation
+        GlassPane(location, Option(color), extensions, flooded)
 
       case Material.GLOWSTONE => Glowstone(location)
 
@@ -273,7 +274,9 @@ class SpigotBlockMapper @Inject()(
       case Material.GRAVEL => Gravel(location)
       case Material.GRINDSTONE => Grindstone(location, facing, attached)
       case Material.HAY_BLOCK => HayBale(location, orientation)
-      case Material.HOPPER => Hopper(location, facing) // TODO add enabled
+      case Material.HOPPER =>
+        val enabled = block.getState.asInstanceOf[SpigotHopper].isEnabled
+        Hopper(location, facing, !enabled)
 
       // ICE
       case Material.ICE | Material.PACKED_ICE | Material.BLUE_ICE =>
@@ -330,13 +333,20 @@ class SpigotBlockMapper @Inject()(
         Mineral(location, material.asInstanceOf[MineralMaterial])
 
       // MOB_HEAD
-      case Material.CREEPER_HEAD | Material.CREEPER_WALL_HEAD |
-           Material.DRAGON_HEAD | Material.DRAGON_WALL_HEAD |
-           Material.PLAYER_HEAD | Material.PLAYER_WALL_HEAD |
-           Material.SKELETON_SKULL | Material.SKELETON_WALL_SKULL |
-           Material.WITHER_SKELETON_SKULL | Material.WITHER_SKELETON_WALL_SKULL |
-           Material.ZOMBIE_HEAD | Material.ZOMBIE_WALL_HEAD =>
-        MobHead(location, material.asInstanceOf[MobHeadMaterial]) // TODO map WALL MobHeads / attachedTo
+      case Material.CREEPER_HEAD |
+           Material.DRAGON_HEAD |
+           Material.PLAYER_HEAD |
+           Material.SKELETON_SKULL |
+           Material.WITHER_SKELETON_SKULL |
+           Material.ZOMBIE_HEAD =>
+        MobHead(location, material.asInstanceOf[MobHeadMaterial], Option.empty, Option(rotation))
+      case Material.CREEPER_WALL_HEAD |
+           Material.DRAGON_WALL_HEAD |
+           Material.PLAYER_WALL_HEAD |
+           Material.SKELETON_WALL_SKULL |
+           Material.WITHER_SKELETON_WALL_SKULL |
+           Material.ZOMBIE_WALL_HEAD =>
+        MobHead(location, material.asInstanceOf[MobHeadMaterial], Option(facing), Option.empty)
 
       // MUSHROOM
       case Material.BROWN_MUSHROOM | Material.RED_MUSHROOM =>
@@ -385,13 +395,13 @@ class SpigotBlockMapper @Inject()(
       case Material.STONE_PRESSURE_PLATE |
            Material.ACACIA_PRESSURE_PLATE | Material.BIRCH_PRESSURE_PLATE | Material.DARK_OAK_PRESSURE_PLATE |
            Material.JUNGLE_PRESSURE_PLATE | Material.OAK_PRESSURE_PLATE | Material.SPRUCE_PRESSURE_PLATE =>
-        PressurePlate(location, material.asInstanceOf[PressurePlateMaterial], active)
+        PressurePlate(location, material.asInstanceOf[PressurePlateMaterial], powered)
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
         WeightedPressurePlate(location, material.asInstanceOf[WeightedPressurePlateMaterial],
           state.asInstanceOf[WeightedPressurePlateState])
 
       // PUMPKIN
-      case Material.PUMPKIN => new Pumpkin(location, Option.empty, lit = false, carved = false)
+      case Material.PUMPKIN => Pumpkin(location, Option.empty, lit = false, carved = false)
       case Material.CARVED_PUMPKIN => Pumpkin(location, Option(facing), lit = false, carved = true)
       case Material.JACK_O_LANTERN => Pumpkin(location, Option(facing), lit = true, carved = true)
 
@@ -448,13 +458,13 @@ class SpigotBlockMapper @Inject()(
            Material.PURPLE_SHULKER_BOX | Material.RED_SHULKER_BOX | Material.WHITE_SHULKER_BOX | Material.YELLOW_SHULKER_BOX =>
         ShulkerBox(location, Option(color))
 
-      // SIGN
+      // SIGN TODO store additional sign data
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
            Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
         Sign(location, Option(facing), Option.empty, flooded)
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN | Material.DARK_OAK_WALL_SIGN |
            Material.JUNGLE_WALL_SIGN | Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
-        Sign(location, Option.empty, Option(rotation), flooded) // TODO store additional sign data
+        Sign(location, Option.empty, Option(rotation), flooded)
 
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB | Material.RED_NETHER_BRICK_SLAB |
@@ -559,7 +569,8 @@ class SpigotBlockMapper @Inject()(
       case Material.IRON_TRAPDOOR |
            Material.ACACIA_TRAPDOOR | Material.BIRCH_TRAPDOOR | Material.DARK_OAK_TRAPDOOR |
            Material.JUNGLE_TRAPDOOR | Material.OAK_TRAPDOOR | Material.SPRUCE_TRAPDOOR =>
-        Trapdoor(location, material.asInstanceOf[TrapdoorMaterial], facing, inverted, open)
+        val trapdoorMaterial = material.asInstanceOf[TrapdoorMaterial]
+        Trapdoor(location, trapdoorMaterial, facing, section, powered, flooded, open)
 
       case Material.TRIPWIRE => null
       case Material.TRIPWIRE_HOOK => null
@@ -602,6 +613,12 @@ class SpigotBlockMapper @Inject()(
     }
   }
 
+  def mapAttached(state: SpigotBlockState): BlockAttachment = {
+    state.getClass.getClasses.foreach(clazz => print(clazz.getSimpleName))
+    // TODO implement properly when actual attachment data is found
+    BlockAttachment.FLOOR
+  }
+
   def mapBambooLeaves(leaves: SpigotBamboo.Leaves): BambooLeavesMaterial = leaves match {
     case SpigotBamboo.Leaves.NONE => BambooLeavesMaterial.NONE
     case SpigotBamboo.Leaves.SMALL => BambooLeavesMaterial.SMALL
@@ -614,7 +631,14 @@ class SpigotBlockMapper @Inject()(
   }
 
   def mapExtensions(facing: MultipleFacing): Set[BlockFace] = {
-    facing.getFaces.stream().map(mapFace).collect(Collectors.toSet)
+    val extensions = mutable.Set[BlockFace]()
+    facing.getFaces.forEach(face => extensions.add(mapFace(face)))
+    extensions.asInstanceOf[Set[BlockFace]]
+  }
+
+  def mapHinge(hinge: SpigotDoor.Hinge): BlockHinge = hinge match {
+    case SpigotDoor.Hinge.LEFT => BlockHinge.LEFT
+    case SpigotDoor.Hinge.RIGHT => BlockHinge.RIGHT
   }
 
   def mapFace(face: SpigotBlockFace): BlockFace = face match {

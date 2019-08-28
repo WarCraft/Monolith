@@ -54,9 +54,9 @@ trait FloodableBlock extends Block {
   def withFlooded(flooded: Boolean): FloodableBlock
 }
 
-trait InvertableBlock extends Block {
-  val inverted: Boolean
-  def withInverted(inverted: Boolean): InvertableBlock
+trait HingedBlock extends Block {
+  val hinge: BlockHinge
+  def withHinge(hinge: BlockHinge): HingedBlock
 }
 
 trait LightableBlock extends Block {

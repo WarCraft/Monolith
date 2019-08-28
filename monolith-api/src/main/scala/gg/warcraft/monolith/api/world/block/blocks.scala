@@ -377,19 +377,23 @@ case class Dispenser(
   override def withPowered(powered: Boolean): Dispenser = copy(powered = powered)
 }
 
-// TODO still needs 'hinge' val
 case class Door(
   location: BlockLocation,
   material: DoorMaterial,
   facing: BlockFace,
+  hinge: BlockHinge,
   section: BlockBisection,
-  open: Boolean
-) extends MaterialBlock[DoorMaterial] with DirectionalBlock with BisectedBlock with OpenableBlock {
+  open: Boolean,
+  powered: Boolean
+) extends MaterialBlock[DoorMaterial] with DirectionalBlock with HingedBlock with BisectedBlock
+  with OpenableBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Door = copy(location = loc)
   override def withMaterial(mat: DoorMaterial): Door = copy(material = mat)
   override def withFacing(facing: BlockFace): Door = copy(facing = facing)
+  override def withHinge(hinge: BlockHinge): Door = copy(hinge = hinge)
   override def withSection(section: BlockBisection): Door = copy(section = section)
   override def withOpen(open: Boolean): Door = copy(open = open)
+  override def withPowered(powered: Boolean): Door = copy(powered = powered)
 }
 
 case class DragonEgg(location: BlockLocation) extends Block {
@@ -448,10 +452,12 @@ case class Farmland(location: BlockLocation) extends Block {
 case class Fence(
   location: BlockLocation,
   material: FenceMaterial,
+  extensions: Set[BlockFace],
   flooded: Boolean
-) extends MaterialBlock[FenceMaterial] with FloodableBlock {
+) extends MaterialBlock[FenceMaterial] with ExtendableBlock with FloodableBlock {
   override def withLocation(loc: BlockLocation): Fence = copy(location = loc)
   override def withMaterial(mat: FenceMaterial): Fence = copy(material = mat)
+  override def withExtensions(extensions: Set[BlockFace]): Fence = copy(extensions = extensions)
   override def withFlooded(flooded: Boolean): Fence = copy(flooded = flooded)
 }
 
@@ -517,13 +523,15 @@ case class Gate(
   material: WoodMaterial,
   facing: BlockFace,
   open: Boolean,
-  powered: Boolean
+  powered: Boolean,
+  wall: Boolean
 ) extends MaterialBlock[WoodMaterial] with DirectionalBlock with OpenableBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Gate = copy(location = loc)
   override def withMaterial(mat: WoodMaterial): Gate = copy(material = mat)
   override def withFacing(facing: BlockFace): Gate = copy(facing = facing)
   override def withOpen(open: Boolean): Gate = copy(open = open)
   override def withPowered(pow: Boolean): Gate = copy(powered = pow)
+  def withWall(wall: Boolean): Gate = copy(wall = wall)
 }
 
 case class Glass(
@@ -536,10 +544,14 @@ case class Glass(
 
 case class GlassPane(
   location: BlockLocation,
-  color: Option[BlockColor]
-) extends ColorableBlock {
+  color: Option[BlockColor],
+  extensions: Set[BlockFace],
+  flooded: Boolean
+) extends ColorableBlock with ExtendableBlock with FloodableBlock {
   override def withLocation(loc: BlockLocation): GlassPane = copy(location = loc)
   override def withColor(color: Option[BlockColor]): GlassPane = copy(color = color)
+  override def withExtensions(extensions: Set[BlockFace]): GlassPane = copy(extensions = extensions)
+  override def withFlooded(flooded: Boolean): GlassPane = copy(flooded = flooded)
 }
 
 case class GlazedTerracotta(
@@ -597,10 +609,12 @@ case class HayBale(
 
 case class Hopper(
   location: BlockLocation,
-  facing: BlockFace
-) extends DirectionalBlock {
+  facing: BlockFace,
+  powered: Boolean
+) extends DirectionalBlock with PowerableBlock {
   override def withLocation(loc: BlockLocation): Hopper = copy(location = loc)
   override def withFacing(facing: BlockFace): Hopper = copy(facing = facing)
+  override def withPowered(powered: Boolean): Hopper = copy(powered = powered)
 }
 
 case class Ice(
@@ -760,13 +774,16 @@ case class Mineral(
   override def withMaterial(mat: MineralMaterial): Mineral = copy(material = mat)
 }
 
-// TODO map WALL MobHeads / attachedTo
 case class MobHead(
   location: BlockLocation,
-  material: MobHeadMaterial
-) extends MaterialBlock[MobHeadMaterial] {
+  material: MobHeadMaterial,
+  facing: Option[BlockFace],
+  rotation: Option[BlockRotation]
+) extends MaterialBlock[MobHeadMaterial] with DirectableBlock with RotatableBlock {
   override def withLocation(loc: BlockLocation): MobHead = copy(location = loc)
   override def withMaterial(mat: MobHeadMaterial): MobHead = copy(material = mat)
+  override def withFacing(facing: Option[BlockFace]): MobHead = copy(facing = facing)
+  override def withRotation(rotation: Option[BlockRotation]): MobHead = copy(rotation = rotation)
 }
 
 case class Mushroom(
@@ -902,10 +919,11 @@ case class Potatoes(
 case class PressurePlate(
   location: BlockLocation,
   material: PressurePlateMaterial,
-  active: Boolean
-) extends MaterialBlock[PressurePlateMaterial] with ActivatableBlock {
+  powered: Boolean
+) extends MaterialBlock[PressurePlateMaterial] with PowerableBlock {
   override def withLocation(loc: BlockLocation): PressurePlate = copy(location = loc)
   override def withMaterial(material: PressurePlateMaterial): PressurePlate = copy(material = material)
+  override def withPowered(powered: Boolean): PressurePlate = copy(powered = powered)
 }
 
 case class Prismarine(
@@ -1220,13 +1238,18 @@ case class Trapdoor(
   location: BlockLocation,
   material: TrapdoorMaterial,
   facing: BlockFace,
-  inverted: Boolean,
+  section: BlockBisection,
+  powered: Boolean,
+  flooded: Boolean,
   open: Boolean
-) extends MaterialBlock[TrapdoorMaterial] with DirectionalBlock with InvertableBlock with OpenableBlock {
+) extends MaterialBlock[TrapdoorMaterial] with DirectionalBlock with BisectedBlock
+  with PowerableBlock with FloodableBlock with OpenableBlock {
   override def withLocation(loc: BlockLocation): Trapdoor = copy(location = loc)
   override def withMaterial(mat: TrapdoorMaterial): Trapdoor = copy(material = mat)
   override def withFacing(facing: BlockFace): Trapdoor = copy(facing = facing)
-  override def withInverted(inverted: Boolean): Trapdoor = copy(inverted = inverted)
+  override def withSection(section: BlockBisection): Trapdoor = copy(section = section)
+  override def withPowered(powered: Boolean): Trapdoor = copy(powered = powered)
+  override def withFlooded(flooded: Boolean): Trapdoor = copy(flooded = flooded)
   override def withOpen(open: Boolean): Trapdoor = copy(open = open)
 }
 
