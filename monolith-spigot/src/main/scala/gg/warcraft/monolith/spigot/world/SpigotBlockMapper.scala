@@ -6,7 +6,10 @@ import org.bukkit.{ Axis, Material }
 import org.bukkit.block.{ Block => SpigotBlock, BlockFace => SpigotBlockFace, BlockState => SpigotBlockState }
 import org.bukkit.block.data._
 import org.bukkit.block.data.Bisected.{ Half => SpigotBisection }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn,
+  Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame,
+  Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Piston => SpigotPiston,
+  Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
 
 import scala.collection.mutable
 
