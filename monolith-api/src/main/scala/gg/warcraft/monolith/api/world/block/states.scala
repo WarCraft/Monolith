@@ -158,6 +158,56 @@ object ComposterState extends Enum[ComposterState] {
   case object LEVEL_8 extends ComposterState
 }
 
+// Kelp
+sealed trait KelpState extends EnumEntry with BlockState
+
+object KelpState extends Enum[KelpState] {
+  val values: IndexedSeq[KelpState] = findValues
+
+  case object AGE_0 extends KelpState
+  case object AGE_1 extends KelpState
+  case object AGE_2 extends KelpState
+  case object AGE_3 extends KelpState
+  case object AGE_4 extends KelpState
+  case object AGE_5 extends KelpState
+  case object AGE_6 extends KelpState
+  case object AGE_7 extends KelpState
+  case object AGE_8 extends KelpState
+  case object AGE_9 extends KelpState
+  case object AGE_10 extends KelpState
+  case object AGE_11 extends KelpState
+  case object AGE_12 extends KelpState
+  case object AGE_13 extends KelpState
+  case object AGE_14 extends KelpState
+  case object AGE_15 extends KelpState
+  case object AGE_16 extends KelpState
+  case object AGE_17 extends KelpState
+  case object AGE_18 extends KelpState
+  case object AGE_19 extends KelpState
+  case object AGE_20 extends KelpState
+  case object AGE_21 extends KelpState
+  case object AGE_22 extends KelpState
+  case object AGE_23 extends KelpState
+  case object AGE_24 extends KelpState
+  case object AGE_25 extends KelpState
+}
+
+// MELON_STEM
+sealed trait MelonStemState extends EnumEntry with BlockState
+
+object MelonStemState extends Enum[MelonStemState] {
+  val values: IndexedSeq[MelonStemState] = findValues
+
+  case object AGE_0 extends MelonStemState
+  case object AGE_1 extends MelonStemState
+  case object AGE_2 extends MelonStemState
+  case object AGE_3 extends MelonStemState
+  case object AGE_4 extends MelonStemState
+  case object AGE_5 extends MelonStemState
+  case object AGE_6 extends MelonStemState
+  case object AGE_7 extends MelonStemState
+}
+
 // NETHER_WART
 sealed trait NetherWartState extends EnumEntry with BlockState
 
@@ -168,6 +218,39 @@ object NetherWartState extends Enum[NetherWartState] {
   case object AGE_1 extends NetherWartState
   case object AGE_2 extends NetherWartState
   case object AGE_3 extends NetherWartState
+}
+
+// NOTE_BLOCK
+sealed trait NoteBlockState extends EnumEntry with BlockState
+
+object NoteBlockState extends Enum[NoteBlockState] {
+  val values: IndexedSeq[NoteBlockState] = findValues
+
+  case object NOTE_0 extends NoteBlockState
+  case object NOTE_1 extends NoteBlockState
+  case object NOTE_2 extends NoteBlockState
+  case object NOTE_3 extends NoteBlockState
+  case object NOTE_4 extends NoteBlockState
+  case object NOTE_5 extends NoteBlockState
+  case object NOTE_6 extends NoteBlockState
+  case object NOTE_7 extends NoteBlockState
+  case object NOTE_8 extends NoteBlockState
+  case object NOTE_9 extends NoteBlockState
+  case object NOTE_10 extends NoteBlockState
+  case object NOTE_11 extends NoteBlockState
+  case object NOTE_12 extends NoteBlockState
+  case object NOTE_13 extends NoteBlockState
+  case object NOTE_14 extends NoteBlockState
+  case object NOTE_15 extends NoteBlockState
+  case object NOTE_16 extends NoteBlockState
+  case object NOTE_17 extends NoteBlockState
+  case object NOTE_18 extends NoteBlockState
+  case object NOTE_19 extends NoteBlockState
+  case object NOTE_20 extends NoteBlockState
+  case object NOTE_21 extends NoteBlockState
+  case object NOTE_22 extends NoteBlockState
+  case object NOTE_23 extends NoteBlockState
+  case object NOTE_24 extends NoteBlockState
 }
 
 // POTATO
@@ -219,6 +302,18 @@ object RailsState extends Enum[RailsState] {
   case object ASCENDING_EAST extends RailsState
   case object ASCENDING_SOUTH extends RailsState
   case object ASCENDING_WEST extends RailsState
+}
+
+// REPEATER
+sealed trait RepeaterState extends EnumEntry with BlockState
+
+object RepeaterState extends Enum[RepeaterState] {
+  val values: IndexedSeq[RepeaterState] = findValues
+
+  case object DELAY_1 extends RepeaterState
+  case object DELAY_2 extends RepeaterState
+  case object DELAY_3 extends RepeaterState
+  case object DELAY_4 extends RepeaterState
 }
 
 // SANDSTONE

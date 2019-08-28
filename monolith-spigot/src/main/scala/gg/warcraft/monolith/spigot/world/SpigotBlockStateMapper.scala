@@ -12,6 +12,7 @@ class SpigotBlockStateMapper @Inject()(
 ) {
 
   def map(block: SpigotBlock): BlockState = {
+    // TODO Kelp, MelonStem, NoteBlock, PumpkinStem
     val state = block.getState
 
     lazy val age = { block.getState.asInstanceOf[Ageable].getAge }
@@ -42,6 +43,8 @@ class SpigotBlockStateMapper @Inject()(
       // RAILS
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
         null
+
+      case Material.REPEATER => null
 
       // SANDSTONE
       case Material.SANDSTONE | Material.RED_SANDSTONE => SandstoneState.NORMAL

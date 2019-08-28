@@ -182,6 +182,30 @@ object MushroomBlockMaterial extends Enum[MushroomBlockMaterial] {
   case object STEM extends MushroomBlockMaterial
 }
 
+// NOTE_BLOCK
+sealed trait NoteBlockMaterial extends EnumEntry with FlowerPotMaterial
+
+object NoteBlockMaterial extends Enum[NoteBlockMaterial] {
+  val values: IndexedSeq[NoteBlockMaterial] = findValues
+
+  case object BANJO extends NoteBlockMaterial
+  case object BASEDRUM extends NoteBlockMaterial
+  case object BASS extends NoteBlockMaterial
+  case object BELL extends NoteBlockMaterial
+  case object BIT extends NoteBlockMaterial
+  case object CHIME extends NoteBlockMaterial
+  case object COW_BELL extends NoteBlockMaterial
+  case object DIDGERIDOO extends NoteBlockMaterial
+  case object FLUTE extends NoteBlockMaterial
+  case object GUITAR extends NoteBlockMaterial
+  case object HARP extends NoteBlockMaterial
+  case object HAT extends NoteBlockMaterial
+  case object IRON_XYLOPHONE extends NoteBlockMaterial
+  case object PLING extends NoteBlockMaterial
+  case object SNARE extends NoteBlockMaterial
+  case object XYLOPHONE extends NoteBlockMaterial
+}
+
 // PRISMARINE
 sealed trait PrismarineMaterial extends EnumEntry
   with SlabMaterial with StairsMaterial

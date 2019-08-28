@@ -44,6 +44,11 @@ trait DirectionalBlock extends Block {
   def withFacing(facing: BlockFace): DirectionalBlock
 }
 
+trait ExtendableBlock extends Block {
+  val extensions: Set[BlockFace]
+  def withExtensions(extensions: Set[BlockFace]): ExtendableBlock
+}
+
 trait FloodableBlock extends Block {
   val flooded: Boolean
   def withFlooded(flooded: Boolean): FloodableBlock
