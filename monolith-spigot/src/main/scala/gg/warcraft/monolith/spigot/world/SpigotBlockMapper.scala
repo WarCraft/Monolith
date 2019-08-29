@@ -2,14 +2,11 @@ package gg.warcraft.monolith.spigot.world
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
-import org.bukkit.{ Axis, Material }
+import org.bukkit.{ Axis, Instrument, Material }
 import org.bukkit.block.{ Block => SpigotBlock, BlockFace => SpigotBlockFace, BlockState => SpigotBlockState }
 import org.bukkit.block.data._
 import org.bukkit.block.data.Bisected.{ Half => SpigotBisection }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn,
-  Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame,
-  Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, Piston => SpigotPiston,
-  Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
 
 import scala.collection.mutable
 
@@ -362,8 +359,9 @@ class SpigotBlockMapper @Inject()(
       case Material.NETHER_PORTAL => NetherPortal(location, orientation)
       case Material.NETHER_WART => NetherWarts(location, state.asInstanceOf[NetherWartState])
       case Material.NETHER_WART_BLOCK => NetherWartBlock(location)
-      case Material.NOTE_BLOCK => NoteBlock(
-        location, material.asInstanceOf[NoteBlockMaterial], state.asInstanceOf[NoteBlockState], powered)
+      case Material.NOTE_BLOCK =>
+        val instrument = mapInstrument(block.getState.asInstanceOf[SpigotNoteBlock].getInstrument)
+        NoteBlock(location, instrument, state.asInstanceOf[NoteBlockState], powered)
       case Material.OBSERVER => Observer(location, facing, powered)
       case Material.OBSIDIAN => Obsidian(location)
 
@@ -652,6 +650,25 @@ class SpigotBlockMapper @Inject()(
     case SpigotBlockFace.UP => BlockFace.UP
     case SpigotBlockFace.DOWN => BlockFace.DOWN
     case _ => throw new IllegalArgumentException(s"Failed to map block face of $face")
+  }
+
+  def mapInstrument(instrument: Instrument): NoteBlockMaterial = instrument match {
+    case Instrument.BANJO => NoteBlockMaterial.BANJO
+    case Instrument.BASS_DRUM => NoteBlockMaterial.BASEDRUM
+    case Instrument.BASS_GUITAR => NoteBlockMaterial.BASS
+    case Instrument.BELL => NoteBlockMaterial.BELL
+    case Instrument.BIT => NoteBlockMaterial.BIT
+    case Instrument.CHIME => NoteBlockMaterial.CHIME
+    case Instrument.COW_BELL => NoteBlockMaterial.COW_BELL
+    case Instrument.DIDGERIDOO => NoteBlockMaterial.DIDGERIDOO
+    case Instrument.FLUTE => NoteBlockMaterial.FLUTE
+    case Instrument.GUITAR => NoteBlockMaterial.GUITAR
+    case Instrument.IRON_XYLOPHONE => NoteBlockMaterial.IRON_XYLOPHONE
+    case Instrument.PIANO => NoteBlockMaterial.HAT
+    case Instrument.PLING => NoteBlockMaterial.PLING
+    case Instrument.SNARE_DRUM => NoteBlockMaterial.SNARE
+    case Instrument.STICKS => NoteBlockMaterial.HARP
+    case Instrument.XYLOPHONE => NoteBlockMaterial.XYLOPHONE
   }
 
   def mapOrientation(orientation: Axis): BlockOrientation = orientation match {

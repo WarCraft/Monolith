@@ -119,8 +119,6 @@ class SpigotMaterialMapper {
     case Material.RED_MUSHROOM_BLOCK => MushroomBlockMaterial.RED
     case Material.MUSHROOM_STEM => MushroomBlockMaterial.STEM
 
-    // NOTE_BLOCK TODO we cant read this one from the block material
-
     // PILLAR
     case Material.PURPUR_PILLAR => PurpurMaterial.PURPUR
     case Material.QUARTZ_PILLAR => QuartzMaterial.QUARTZ
