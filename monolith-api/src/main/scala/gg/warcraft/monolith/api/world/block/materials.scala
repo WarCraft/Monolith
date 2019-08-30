@@ -54,7 +54,7 @@ object BambooMaterial extends Enum[BambooMaterial] {
   case object BAMBOO extends BambooMaterial
 }
 
-// BAMBOO
+// BAMBOO_LEAVES
 sealed trait BambooLeavesMaterial extends EnumEntry with BlockMaterial
 
 object BambooLeavesMaterial extends Enum[BambooLeavesMaterial] {

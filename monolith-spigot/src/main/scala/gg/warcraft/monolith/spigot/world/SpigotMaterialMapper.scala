@@ -12,8 +12,19 @@ class SpigotMaterialMapper {
     case Material.CAVE_AIR => AirMaterial.CAVE
     case Material.VOID_AIR => AirMaterial.VOID
 
-    // BUTTON
-    case Material.STONE_BUTTON => StoneMaterial.STONE
+    // BAMBOO
+    case Material.BAMBOO | Material.BAMBOO_SAPLING =>
+      BambooMaterial.BAMBOO
+
+    // BRICK
+    case Material.BRICKS | Material.BRICK_SLAB | Material.BRICK_STAIRS | Material.BRICK_WALL =>
+      BrickMaterial.BRICK
+    case Material.NETHER_BRICKS | Material.NETHER_BRICK_FENCE | Material.NETHER_BRICK_SLAB |
+         Material.NETHER_BRICK_STAIRS | Material.NETHER_BRICK_WALL =>
+      BrickMaterial.NETHER_BRICK
+    case Material.RED_NETHER_BRICKS | Material.RED_NETHER_BRICK_SLAB |
+         Material.RED_NETHER_BRICK_STAIRS | Material.RED_NETHER_BRICK_WALL =>
+      BrickMaterial.RED_NETHER_BRICK
 
     // CHEST
     case Material.CHEST => ChestMaterial.NORMAL
@@ -57,12 +68,6 @@ class SpigotMaterialMapper {
          Material.DEAD_TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
       CoralMaterial.DEAD_TUBE
 
-    // DOOR
-    case Material.IRON_DOOR => IronMaterial.IRON
-
-    // FENCE
-    case Material.NETHER_BRICK_FENCE => BrickMaterial.NETHER_BRICK
-
     // FLOWER
     case Material.ALLIUM => FlowerMaterial.ALLIUM
     case Material.AZURE_BLUET => FlowerMaterial.AZURE_BLUET
@@ -85,6 +90,9 @@ class SpigotMaterialMapper {
     case Material.BLUE_ICE => IceMaterial.BLUE
     case Material.PACKED_ICE => IceMaterial.PACKED
 
+    // IRON
+    case Material.IRON_DOOR => IronMaterial.IRON
+
     // INFESTED_BLOCK
     case Material.INFESTED_STONE => StoneMaterial.STONE
     case Material.INFESTED_COBBLESTONE => StoneMaterial.COBBLESTONE
@@ -92,17 +100,6 @@ class SpigotMaterialMapper {
     case Material.INFESTED_CRACKED_STONE_BRICKS => StoneMaterial.CRACKED_STONE_BRICK
     case Material.INFESTED_CHISELED_STONE_BRICKS => StoneMaterial.CHISELED_STONE_BRICK
     case Material.INFESTED_MOSSY_STONE_BRICKS => StoneMaterial.MOSSY_STONE_BRICK
-
-    // LEAVES
-    case Material.ACACIA_LEAVES => WoodMaterial.ACACIA
-    case Material.BIRCH_LEAVES => WoodMaterial.BIRCH
-    case Material.DARK_OAK_LEAVES => WoodMaterial.DARK_OAK
-    case Material.JUNGLE_LEAVES => WoodMaterial.JUNGLE
-    case Material.OAK_LEAVES => WoodMaterial.OAK
-    case Material.SPRUCE_LEAVES => WoodMaterial.SPRUCE
-
-    // MINERAL
-    case Material.QUARTZ_BLOCK => QuartzMaterial.QUARTZ
 
     // MOB_HEAD
     case Material.CREEPER_HEAD | Material.CREEPER_WALL_HEAD => MobHeadMaterial.CREEPER
@@ -114,18 +111,37 @@ class SpigotMaterialMapper {
 
     // MUSHROOM
     case Material.BROWN_MUSHROOM => MushroomMaterial.BROWN
-    case Material.BROWN_MUSHROOM_BLOCK => MushroomBlockMaterial.BROWN
     case Material.RED_MUSHROOM => MushroomMaterial.RED
+
+    // MUSHROOM_BLOCK
+    case Material.BROWN_MUSHROOM_BLOCK => MushroomBlockMaterial.BROWN
     case Material.RED_MUSHROOM_BLOCK => MushroomBlockMaterial.RED
     case Material.MUSHROOM_STEM => MushroomBlockMaterial.STEM
 
-    // PILLAR
-    case Material.PURPUR_PILLAR => PurpurMaterial.PURPUR
-    case Material.QUARTZ_PILLAR => QuartzMaterial.QUARTZ
+    // PRISMARINE
+    case Material.PRISMARINE |
+         Material.PRISMARINE_SLAB | Material.PRISMARINE_STAIRS | Material.PRISMARINE_WALL =>
+      PrismarineMaterial.PRISMARINE
+    case Material.DARK_PRISMARINE |
+         Material.PRISMARINE_BRICK_SLAB | Material.PRISMARINE_BRICK_STAIRS =>
+      PrismarineMaterial.DARK_PRISMARINE
+    case Material.PRISMARINE_BRICKS |
+         Material.PRISMARINE_BRICK_SLAB | Material.PRISMARINE_BRICK_STAIRS =>
+      PrismarineMaterial.PRISMARINE_BRICK
 
-    // PRESSURE_PLATE
-    case Material.HEAVY_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateMaterial.HEAVY
-    case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateMaterial.LIGHT
+    // PURPUR
+    case Material.PURPUR_BLOCK |
+         Material.PURPUR_PILLAR | Material.PURPUR_SLAB | Material.PURPUR_STAIRS =>
+      PurpurMaterial.PURPUR
+
+    // QUARTZ
+    case Material.QUARTZ_BLOCK |
+         Material.QUARTZ_PILLAR | Material.QUARTZ_SLAB | Material.QUARTZ_STAIRS =>
+      QuartzMaterial.QUARTZ
+    case Material.CHISELED_QUARTZ_BLOCK => QuartzMaterial.CHISELED_QUARTZ
+    case Material.SMOOTH_QUARTZ |
+         Material.SMOOTH_QUARTZ_SLAB | Material.SMOOTH_QUARTZ_STAIRS =>
+      QuartzMaterial.SMOOTH_QUARTZ
 
     // RAILS
     case Material.RAIL => RailsMaterial.NORMAL
@@ -149,12 +165,52 @@ class SpigotMaterialMapper {
     case Material.SOUL_SAND => SandMaterial.SOUL_SAND
 
     // SANDSTONE
-    case Material.SANDSTONE | Material.CHISELED_SANDSTONE | Material.CUT_SANDSTONE | Material.SMOOTH_SANDSTONE =>
+    case Material.SANDSTONE |
+         Material.SANDSTONE_SLAB | Material.SANDSTONE_STAIRS | Material.SANDSTONE_WALL |
+         Material.CHISELED_SANDSTONE | Material.CUT_SANDSTONE | Material.SMOOTH_SANDSTONE |
+         Material.SMOOTH_SANDSTONE_SLAB | Material.SMOOTH_SANDSTONE_STAIRS | Material.CUT_SANDSTONE_SLAB =>
       SandstoneMaterial.SANDSTONE
-    case Material.RED_SANDSTONE | Material.CHISELED_RED_SANDSTONE | Material.CUT_RED_SANDSTONE | Material.SMOOTH_RED_SANDSTONE =>
+
+    case Material.RED_SANDSTONE |
+         Material.RED_SANDSTONE_SLAB | Material.RED_SANDSTONE_STAIRS | Material.RED_SANDSTONE_WALL |
+         Material.CHISELED_RED_SANDSTONE | Material.CUT_RED_SANDSTONE | Material.SMOOTH_RED_SANDSTONE |
+         Material.SMOOTH_RED_SANDSTONE_SLAB | Material.SMOOTH_RED_SANDSTONE_STAIRS | Material.CUT_RED_SANDSTONE_SLAB =>
       SandstoneMaterial.RED_SANDSTONE
 
-    // STONE (slabs, stairs, wall et all)
+    // STONE
+    case Material.STONE | Material.STONE_SLAB | Material.STONE_BUTTON =>
+      StoneMaterial.STONE
+
+    case Material.STONE_BRICKS |
+         Material.STONE_BRICK_SLAB | Material.STONE_BRICK_STAIRS | Material.STONE_BRICK_WALL =>
+      StoneMaterial.STONE_BRICK
+
+    case Material.CHISELED_STONE_BRICKS => StoneMaterial.CHISELED_STONE_BRICK
+
+    case Material.COBBLESTONE |
+         Material.COBBLESTONE_SLAB | Material.COBBLESTONE_STAIRS | Material.COBBLESTONE_WALL =>
+      StoneMaterial.COBBLESTONE
+
+    case Material.MOSSY_COBBLESTONE |
+         Material.MOSSY_COBBLESTONE_SLAB | Material.MOSSY_COBBLESTONE_STAIRS | Material.MOSSY_COBBLESTONE_WALL =>
+      StoneMaterial.MOSSY_COBBLESTONE
+
+    case Material.MOSSY_STONE_BRICK_SLAB |
+         Material.MOSSY_STONE_BRICK_STAIRS | Material.MOSSY_STONE_BRICK_WALL | Material.MOSSY_STONE_BRICKS =>
+      StoneMaterial.MOSSY_STONE_BRICK
+
+    case Material.CRACKED_STONE_BRICKS => StoneMaterial.CRACKED_STONE_BRICK
+
+    case Material.END_STONE | Material.END_STONE_BRICKS |
+         Material.END_STONE_BRICK_SLAB | Material.END_STONE_BRICK_STAIRS | Material.END_STONE_BRICK_WALL =>
+      StoneMaterial.END_STONE
+
+    case Material.SMOOTH_STONE | Material.SMOOTH_STONE_SLAB =>
+      StoneMaterial.SMOOTH_STONE
+
+    // WEIGHTED_PRESSURE_PLATE
+    case Material.HEAVY_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateMaterial.HEAVY
+    case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateMaterial.LIGHT
 
     // WOOD
     case Material.ACACIA_BUTTON | Material.ACACIA_DOOR | Material.ACACIA_FENCE | Material.ACACIA_FENCE_GATE |
