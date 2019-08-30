@@ -192,6 +192,22 @@ object KelpState extends Enum[KelpState] {
   case object AGE_25 extends KelpState
 }
 
+// LAVA
+sealed trait LavaState extends EnumEntry with BlockState
+
+object LavaState extends Enum[LavaState] {
+  val values: IndexedSeq[LavaState] = findValues
+
+  case object LEVEL_1 extends LavaState
+  case object LEVEL_2 extends LavaState
+  case object LEVEL_3 extends LavaState
+  case object LEVEL_4 extends LavaState
+  case object LEVEL_5 extends LavaState
+  case object LEVEL_6 extends LavaState
+  case object LEVEL_7 extends LavaState
+  case object LEVEL_8 extends LavaState
+}
+
 // MELON_STEM
 sealed trait MelonStemState extends EnumEntry with BlockState
 
@@ -444,6 +460,22 @@ object TurtleEggState extends Enum[TurtleEggState] {
   case object AGE_0 extends TurtleEggState
   case object AGE_1 extends TurtleEggState
   case object AGE_2 extends TurtleEggState
+}
+
+// WATER
+sealed trait WaterState extends EnumEntry with BlockState
+
+object WaterState extends Enum[WaterState] {
+  val values: IndexedSeq[WaterState] = findValues
+
+  case object LEVEL_1 extends WaterState
+  case object LEVEL_2 extends WaterState
+  case object LEVEL_3 extends WaterState
+  case object LEVEL_4 extends WaterState
+  case object LEVEL_5 extends WaterState
+  case object LEVEL_6 extends WaterState
+  case object LEVEL_7 extends WaterState
+  case object LEVEL_8 extends WaterState
 }
 
 // WEIGHTED_PRESSURE_PLATE

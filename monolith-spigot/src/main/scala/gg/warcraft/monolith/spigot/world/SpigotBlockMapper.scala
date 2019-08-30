@@ -269,8 +269,8 @@ class SpigotBlockMapper @Inject()(
       case Material.GRASS => Grass(location, BlockBisection.BOTTOM, tall = false)
       case Material.TALL_GRASS => Grass(location, section, tall = true)
 
-      case Material.GRASS_BLOCK => null
-      case Material.GRASS_PATH => null
+      case Material.GRASS_BLOCK => GrassBlock(location, snowy)
+      case Material.GRASS_PATH => GrassPath(location)
       case Material.GRAVEL => Gravel(location)
       case Material.GRINDSTONE => Grindstone(location, facing, attached)
       case Material.HAY_BLOCK => HayBale(location, orientation)
@@ -298,7 +298,7 @@ class SpigotBlockMapper @Inject()(
       case Material.LANTERN =>
         val hanging = block.getState.asInstanceOf[SpigotLantern].isHanging
         Lantern(location, hanging)
-      case Material.LAVA => null
+      case Material.LAVA => Lava(location, state.asInstanceOf[LavaState])
 
       // LEAVES
       case Material.ACACIA_LEAVES | Material.BIRCH_LEAVES | Material.DARK_OAK_LEAVES |
@@ -308,7 +308,7 @@ class SpigotBlockMapper @Inject()(
       case Material.LECTERN =>
         val book = block.getState.asInstanceOf[SpigotLectern].hasBook
         Lectern(location, facing, powered, book)
-      case Material.LEVER => null
+      case Material.LEVER => Lever(location, facing, attached, powered)
       case Material.LILY_PAD => LilyPad(location)
 
       // LOG
@@ -381,8 +381,8 @@ class SpigotBlockMapper @Inject()(
       case Material.STICKY_PISTON =>
         val extended = block.getState.asInstanceOf[SpigotPiston].isExtended
         Piston(location, facing, sticky = true, extended)
-      // Technical Block: Material.MOVING_PISTON => null
-      // Technical Block: Material.PISTON_HEAD => null
+      // Technical Block: Material.MOVING_PISTON
+      // Technical Block: Material.PISTON_HEAD
 
       // PLANKS
       case Material.ACACIA_PLANKS | Material.BIRCH_PLANKS | Material.DARK_OAK_PLANKS |
@@ -573,8 +573,8 @@ class SpigotBlockMapper @Inject()(
         val trapdoorMaterial = material.asInstanceOf[TrapdoorMaterial]
         Trapdoor(location, trapdoorMaterial, facing, section, powered, flooded, open)
 
-      case Material.TRIPWIRE => null
-      case Material.TRIPWIRE_HOOK => null
+      case Material.TRIPWIRE => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
+      case Material.TRIPWIRE_HOOK => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
       case Material.TURTLE_EGG =>
         val count = block.getState.asInstanceOf[SpigotTurtleEgg].getEggs
         TurtleEgg(location, state.asInstanceOf[TurtleEggState], count)
@@ -590,9 +590,9 @@ class SpigotBlockMapper @Inject()(
            Material.STONE_BRICK_WALL | Material.MOSSY_STONE_BRICK_WALL | Material.END_STONE_BRICK_WALL |
            Material.COBBLESTONE_WALL | Material.MOSSY_COBBLESTONE_WALL |
            Material.ANDESITE_WALL | Material.DIORITE_WALL | Material.GRANITE_WALL =>
-        Wall(location, material.asInstanceOf[WallMaterial])
+        Wall(location, material.asInstanceOf[WallMaterial], extensions)
 
-      case Material.WATER => null
+      case Material.WATER => Water(location, state.asInstanceOf[WaterState])
       case Material.WHEAT => Wheat(location, state.asInstanceOf[WheatState])
 
       // WOOD
