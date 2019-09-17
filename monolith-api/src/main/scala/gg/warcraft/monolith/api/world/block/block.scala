@@ -89,11 +89,6 @@ trait RotatableBlock extends Block {
   def withRotation(rotation: Option[BlockRotation]): RotatableBlock
 }
 
-trait RotatedBlock extends Block {
-  val rotation: BlockRotation
-  def withRotation(rotation: BlockRotation): RotatedBlock
-}
-
 trait SnowableBlock extends Block {
   val snowy: Boolean
   def withSnowy(snowy: Boolean): SnowableBlock

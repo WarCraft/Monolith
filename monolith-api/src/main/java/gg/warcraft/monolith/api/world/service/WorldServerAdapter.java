@@ -22,12 +22,6 @@ import java.util.UUID;
 public interface WorldServerAdapter {
 
     /**
-     * @param type The type of world.
-     * @return The world of this type.
-     */
-    World getWorld(World type);
-
-    /**
      * @param world The world.
      * @param x     The X coordinate.
      * @param y     The Y coordinate.
@@ -49,17 +43,17 @@ public interface WorldServerAdapter {
      */
     void setBlock(Block block);
 
-    /**
-     * @param block The block to update. Can not be null.
-     * @param type  The new type. Can not be null.
-     */
-    void setBlockType(Block block, BlockType type);
-
-    /**
-     * @param sign  The sign to update. Can not be null.
-     * @param lines The new lines. Can not be null.
-     */
-    void setSignLines(Sign sign, String[] lines);
+//    /**
+//     * @param block The block to update. Can not be null.
+//     * @param type  The new type. Can not be null.
+//     */
+//    void setBlockType(Block block, BlockType type);
+//
+//    /**
+//     * @param sign  The sign to update. Can not be null.
+//     * @param lines The new lines. Can not be null.
+//     */
+//    void setSignLines(Sign sign, String[] lines);
 
     /**
      * @param items    The items to drop. Can not be null, but can be empty. Items can not be null.

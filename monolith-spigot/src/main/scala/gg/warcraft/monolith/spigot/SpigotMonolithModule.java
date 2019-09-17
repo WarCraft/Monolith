@@ -40,7 +40,7 @@ import gg.warcraft.monolith.spigot.world.Overworld;
 import gg.warcraft.monolith.spigot.world.TheEnd;
 import gg.warcraft.monolith.spigot.world.TheNether;
 import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupCommandService;
-import gg.warcraft.monolith.spigot.world.service.SpigotWorldAdapter;
+import gg.warcraft.monolith.spigot.world.SpigotWorldService;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
@@ -152,7 +152,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         bind(BlockBackupCommandService.class).to(SpigotBlockBackupCommandService.class);
         expose(BlockBackupCommandService.class);
 
-        bind(WorldServerAdapter.class).to(SpigotWorldAdapter.class);
+        bind(WorldServerAdapter.class).to(SpigotWorldService.class);
         expose(WorldServerAdapter.class);
     }
 

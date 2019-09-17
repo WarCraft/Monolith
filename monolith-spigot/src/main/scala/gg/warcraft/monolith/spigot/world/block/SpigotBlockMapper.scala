@@ -591,20 +591,23 @@ class SpigotBlockMapper @Inject()(
   }
 
   def map(block: Block): SpigotBlockData = {
-    lazy val bisection = bisectionMapper.map(block.asInstanceOf[BisectedBlock].section)
-    // lazy val extensions = mapExtensions(block.getState.asInstanceOf[MultipleFacing])
     lazy val flooded = block.asInstanceOf[FloodableBlock].flooded
     lazy val lit = block.asInstanceOf[LightableBlock].lit
     lazy val open = block.asInstanceOf[OpenableBlock].open
-    lazy val orientation = orientationMapper.map(block.asInstanceOf[OrientableBlock].orientation)
     lazy val powered = block.asInstanceOf[PowerableBlock].powered
-    lazy val rotation = rotationMapper.map(block.asInstanceOf[RotatableBlock].rotation.orNull)
     lazy val snowy = block.asInstanceOf[SnowableBlock].snowy
 
     lazy val attached = block match {
       case attached: AttachedBlock =>
       case attachable: AttachableBlock =>
     }
+
+    lazy val bisection = {
+      val bisection = block.asInstanceOf[BisectedBlock].section
+      bisectionMapper.map(bisection)
+    }
+
+    // lazy val extensions = TODO mapExtensions(block.getState.asInstanceOf[MultipleFacing])
 
     lazy val facing = block match {
       case directional: DirectionalBlock => faceMapper.map(directional.facing)
@@ -618,22 +621,31 @@ class SpigotBlockMapper @Inject()(
       // case stateful: StatefulBlock[_] => stateMapper.map(stateful)
     }
 
+    lazy val orientation = {
+      val orientation = block.asInstanceOf[OrientableBlock].orientation
+      orientationMapper.map(orientation)
+    }
+
+    lazy val rotation = {
+      val rotation = block.asInstanceOf[RotatableBlock].rotation.orNull
+      rotationMapper.map(rotation)
+    }
+
     val data: SpigotBlockData = Spigot.createBlockData(material)
-    data match { case bisected: Bisected => bisected.setHalf(bisection) }
-    data match { case directional: Directional => directional.setFacing(facing) }
-    data match { case lightable: Lightable => lightable.setLit(lit) }
-    data match { case openable: Openable => openable.setOpen(open) }
-    data match { case orientable: Orientable => orientable.setAxis(orientation) }
-    data match { case powerable: Powerable => powerable.setPowered(powered) }
-    data match { case rotatable: Rotatable => rotatable.setRotation(rotation) }
-    data match { case snowable: Snowable => snowable.setSnowy(snowy) }
-    data match { case waterlogged: Waterlogged => waterlogged.setWaterlogged(flooded) }
+    data match { case it: Bisected => it.setHalf(bisection) }
+    data match { case it: Directional => it.setFacing(facing) }
+    data match { case it: Lightable => it.setLit(lit) }
+    data match { case it: Openable => it.setOpen(open) }
+    data match { case it: Orientable => it.setAxis(orientation) }
+    data match { case it: Powerable => it.setPowered(powered) }
+    data match { case it: Rotatable => it.setRotation(rotation) }
+    data match { case it: Snowable => it.setSnowy(snowy) }
+    data match { case it: Waterlogged => it.setWaterlogged(flooded) }
 
     block match {
-      case _: Air =>
-      case _: Anvil =>
-      case _: Bamboo =>
-      case _: GrassBlock =>
+      case it: Bamboo =>
+      case it: Bed =>
+      case it: BubbleColumn =>
     }
 
     data
@@ -669,7 +681,7 @@ class SpigotBlockMapper @Inject()(
     case Instrument.XYLOPHONE => NoteBlockMaterial.XYLOPHONE
   }
 
-  def mapStairsShape(shape: SpigotStairs.Shape): StairsState = shape match {
+  def mapStairsShape(shape: SpigotStairs.Shape): StairsState = shape match { // TODO is this gonna clash with stairs that already have a chipped state?
     case SpigotStairs.Shape.STRAIGHT => StairsState.STRAIGHT
     case SpigotStairs.Shape.INNER_LEFT => StairsState.INNER_LEFT
     case SpigotStairs.Shape.INNER_RIGHT => StairsState.INNER_RIGHT

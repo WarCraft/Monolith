@@ -1142,7 +1142,7 @@ case class Snow(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): Snow = copy(location = loc)
 }
 
-// TODO add size of layer
+// TODO add size of layer, rename this Snow and Snow -> SnowBlock?
 case class SnowLayer(location: BlockLocation) extends Block {
   override def withLocation(loc: BlockLocation): SnowLayer = copy(location = loc)
 }
