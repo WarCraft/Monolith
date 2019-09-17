@@ -10,41 +10,35 @@ class SpigotLocationMapper @Inject()(
   private val worldMapper: SpigotWorldMapper
 ) {
 
-  def map(location: BlockLocation): SpigotLocation = {
-    val world = worldMapper.map(location.world)
-    val Vector3i(x, y, z) = location.translation
+  def map(loc: BlockLocation): SpigotLocation = {
+    val world = worldMapper.map(loc.world)
+    val Vector3i(x, y, z) = loc.translation
     new SpigotLocation(world, x, y, z)
   }
 
-  def map(location: Location): SpigotLocation = {
-    val world = worldMapper.map(location.world)
-    val Vector3f(x, y, z) = location.translation
+  def map(loc: Location): SpigotLocation = {
+    val world = worldMapper.map(loc.world)
+    val Vector3f(x, y, z) = loc.translation
     new SpigotLocation(world, x, y, z)
   }
 
-  def map(location: Location, pitchYaw: (Float, Float)): SpigotLocation = {
-    val world = worldMapper.map(location.world)
-    val Vector3f(x, y, z) = location.translation
-    val pitch = pitchYaw._1
-    val yaw = pitchYaw._2
+  def map(loc: Location, pitchYaw: (Float, Float)): SpigotLocation = {
+    val world = worldMapper.map(loc.world)
+    val Vector3f(x, y, z) = loc.translation
+    val (pitch, yaw) = pitchYaw
     new SpigotLocation(world, x, y, z, yaw, pitch)
   }
 
   def map(block: SpigotBlock): BlockLocation = {
     val world = worldMapper.map(block.getLocation.getWorld)
-    val x = block.getX
-    val y = block.getY
-    val z = block.getZ
-    BlockLocation(world, Vector3i(x, y, z))
+    val translation = Vector3i(block.getX, block.getY, block.getZ)
+    BlockLocation(world, translation)
   }
 
-  def map(location: SpigotLocation): Location = {
-    val world = worldMapper.map(location.getWorld)
-    val x = location.getX.toFloat
-    val y = location.getY.toFloat
-    val z = location.getZ.toFloat
-    val pitch = location.getPitch
-    val yaw = location.getYaw
-    Location(world, Vector3f(x, y, z), Vector3f(pitch, yaw))
+  def map(loc: SpigotLocation): Location = {
+    val world = worldMapper.map(loc.getWorld)
+    val translation = Vector3f(loc.getX.toFloat, loc.getY.toFloat, loc.getZ.toFloat)
+    val rotation = new Vector3f(loc.getPitch, loc.getYaw)
+    Location(world, translation, rotation)
   }
 }
