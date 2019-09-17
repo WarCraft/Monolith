@@ -12,25 +12,19 @@ class SpigotLocationMapper @Inject()(
 
   def map(location: BlockLocation): SpigotLocation = {
     val world = worldMapper.map(location.world)
-    val x = location.x
-    val y = location.y
-    val z = location.z
+    val Vector3i(x, y, z) = location.translation
     new SpigotLocation(world, x, y, z)
   }
 
   def map(location: Location): SpigotLocation = {
     val world = worldMapper.map(location.world)
-    val x = location.x
-    val y = location.y
-    val z = location.z
+    val Vector3f(x, y, z) = location.translation
     new SpigotLocation(world, x, y, z)
   }
 
   def map(location: Location, pitchYaw: (Float, Float)): SpigotLocation = {
     val world = worldMapper.map(location.world)
-    val x = location.x
-    val y = location.y
-    val z = location.z
+    val Vector3f(x, y, z) = location.translation
     val pitch = pitchYaw._1
     val yaw = pitchYaw._2
     new SpigotLocation(world, x, y, z, yaw, pitch)
@@ -51,7 +45,6 @@ class SpigotLocationMapper @Inject()(
     val z = location.getZ.toFloat
     val pitch = location.getPitch
     val yaw = location.getYaw
-    location.getPitch
     Location(world, Vector3f(x, y, z), Vector3f(pitch, yaw))
   }
 }

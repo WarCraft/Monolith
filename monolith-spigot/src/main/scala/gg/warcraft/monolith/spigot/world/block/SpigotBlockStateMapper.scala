@@ -1,7 +1,8 @@
-package gg.warcraft.monolith.spigot.world
+package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.Ageable
@@ -12,13 +13,11 @@ class SpigotBlockStateMapper @Inject()(
 ) {
 
   def map(block: SpigotBlock): BlockState = {
-    // TODO Kelp, MelonStem, NoteBlock, PumpkinStem, TurtleEgg
     val state = block.getState
 
     lazy val age = { block.getState.asInstanceOf[Ageable].getAge }
 
     block.getType match {
-      // ANVIL
       case Material.ANVIL => AnvilState.PRISTINE
       case Material.CHIPPED_ANVIL => AnvilState.CHIPPED
       case Material.DAMAGED_ANVIL => AnvilState.DAMAGED
@@ -26,44 +25,65 @@ class SpigotBlockStateMapper @Inject()(
       case Material.BAMBOO => BambooState.values(age)
       case Material.BEETROOTS => BeetrootState.values(age)
       case Material.CACTUS => CactusState.values(age)
+
       case Material.CAKE =>
         val bites = state.asInstanceOf[SpigotCake].getBites
         CakeState.values(bites)
+
+      case Material.CHORUS_FLOWER => ChorusFlowerState.values(age)
       case Material.COCOA => CocoaState.values(age)
+
       case Material.COMPARATOR =>
         val mode = state.asInstanceOf[SpigotComparator].getMode
         mapComparatorMode(mode)
+
+      case Material.COMPOSTER => ComposterState.values()
+      case Material.KELP_PLANT => KelpState.values(age)
+      case Material.LAVA => LavaState.values()
+
+      case Material.MELON_STEM | Material.ATTACHED_MELON_STEM => MelonStemState.values(age)
+
       case Material.NETHER_WART => NetherWartState.values(age)
+
+      case Material.NOTE_BLOCK =>
+        NoteBlockState.values()
+
       case Material.POTATOES => PotatoState.values(age)
 
-      // PRESSURE_PLATE
-      case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
-        null
+      case Material.PUMPKIN_STEM | Material.ATTACHED_PUMPKIN_STEM => PumpkinStemState.values(age)
 
-      // RAILS
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
-        null
+        RailsState.values()
 
-      case Material.REPEATER => null
+      case Material.REDSTONE_WIRE => RedstoneWireState.values()
+      case Material.REPEATER => RepeaterState.values()
 
-      // SANDSTONE
+      // TODO add slab stairs wall etc
       case Material.SANDSTONE | Material.RED_SANDSTONE => SandstoneState.NORMAL
       case Material.CHISELED_SANDSTONE | Material.CHISELED_RED_SANDSTONE => SandstoneState.CHISELED
       case Material.CUT_SANDSTONE | Material.CUT_RED_SANDSTONE => SandstoneState.CUT
       case Material.SMOOTH_SANDSTONE | Material.SMOOTH_RED_SANDSTONE => SandstoneState.SMOOTH
 
-      // SAPLING
       case Material.BAMBOO_SAPLING |
            Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
            Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
         val stage = state.asInstanceOf[SpigotSapling].getStage
         SaplingState.values(stage)
 
+      case Material.SEA_PICKLE => SeaPickleState.values()
+
       case Material.STRUCTURE_BLOCK =>
         val mode = state.asInstanceOf[SpigotStructureBlock].getMode
         mapStructureBlockMode(mode)
+
       case Material.SUGAR_CANE => SugarCaneState.values(age)
       case Material.SWEET_BERRY_BUSH => SweetBerryState.values(age)
+      case Material.TURTLE_EGG => TurtleEggState.values()
+      case Material.WATER => WaterState.values()
+
+      case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
+        WeightedPressurePlateState.values()
+
       case Material.WHEAT => WheatState.values(age)
 
       case _ => throw new IllegalArgumentException(s"Failed to map state for material: ${ block.getType }")
@@ -81,24 +101,4 @@ class SpigotBlockStateMapper @Inject()(
     case SpigotStructureBlock.Mode.LOAD => StructureBlockState.LOAD
     case SpigotStructureBlock.Mode.SAVE => StructureBlockState.SAVE
   }
-
-  //  def mapBisection(section: BlockBisection): SpigotBisection = section match {
-  //    case BlockBisection.BOTTOM => SpigotBisection.BOTTOM
-  //    case BlockBisection.TOP => SpigotBisection.TOP
-  //  }
-  //
-  //  def mapFace(face: BlockFace): SpigotBlockFace = face match {
-  //    case BlockFace.NORTH => SpigotBlockFace.NORTH
-  //    case BlockFace.EAST => SpigotBlockFace.EAST
-  //    case BlockFace.SOUTH => SpigotBlockFace.SOUTH
-  //    case BlockFace.WEST => SpigotBlockFace.WEST
-  //    case BlockFace.UP => SpigotBlockFace.UP
-  //    case BlockFace.DOWN => SpigotBlockFace.DOWN
-  //  }
-  //
-  //  def mapOrientation(orientation: BlockOrientation): Axis = orientation match {
-  //    case BlockOrientation.X_AXIS => Axis.X
-  //    case BlockOrientation.Y_AXIS => Axis.Y
-  //    case BlockOrientation.Z_AXIS => Axis.Z
-  //  }
 }
