@@ -1,6 +1,9 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum WoodMaterial {
+import gg.warcraft.monolith.api.world.block.*;
+
+public enum WoodMaterial implements ButtonMaterial, DoorMaterial, FenceMaterial,
+        SaplingMaterial, SlabMaterial, StairsMaterial, TrapdoorMaterial {
     ACACIA,
     BIRCH,
     DARK_OAK,

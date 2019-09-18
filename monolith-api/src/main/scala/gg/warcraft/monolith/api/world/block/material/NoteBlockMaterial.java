@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum NoteBlockMaterial {
+import gg.warcraft.monolith.api.world.block.BlockMaterial;
+
+public enum NoteBlockMaterial implements BlockMaterial {
     BANJO,
     BASEDRUM,
     BASS,

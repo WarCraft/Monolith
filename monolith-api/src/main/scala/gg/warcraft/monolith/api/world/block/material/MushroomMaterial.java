@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum MushroomMaterial {
+import gg.warcraft.monolith.api.world.block.BlockMaterial;
+
+public enum MushroomMaterial implements BlockMaterial {
     BROWN,
     RED,
 }

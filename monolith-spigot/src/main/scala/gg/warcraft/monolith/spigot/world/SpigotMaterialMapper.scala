@@ -1,6 +1,7 @@
 package gg.warcraft.monolith.spigot.world
 
 import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.api.world.block.material._
 import org.bukkit.Material
 
 class SpigotMaterialMapper {

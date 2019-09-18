@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum MobHeadMaterial {
+import gg.warcraft.monolith.api.world.block.BlockMaterial;
+
+public enum MobHeadMaterial implements BlockMaterial {
     CREEPER,
     DRAGON,
     PLAYER,

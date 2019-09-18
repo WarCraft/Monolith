@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum CoralMaterial {
+import gg.warcraft.monolith.api.world.block.BlockMaterial;
+
+public enum CoralMaterial implements BlockMaterial {
     BRAIN,
     BUBBLE,
     FIRE,

@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum WeightedPressurePlateMaterial {
+import gg.warcraft.monolith.api.world.block.BlockMaterial;
+
+public enum WeightedPressurePlateMaterial implements BlockMaterial {
     LIGHT,
     HEAVY,
 }

@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum IceMaterial {
+import gg.warcraft.monolith.api.world.block.BlockMaterial;
+
+public enum IceMaterial implements BlockMaterial {
     NORMAL,
     PACKED,
     BLUE,

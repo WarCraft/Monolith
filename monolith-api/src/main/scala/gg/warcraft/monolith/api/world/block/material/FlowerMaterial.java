@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.material;
 
-public enum FlowerMaterial {
+import gg.warcraft.monolith.api.world.block.FlowerPotMaterial;
+
+public enum FlowerMaterial implements FlowerPotMaterial {
     ALLIUM,
     AZURE_BLUET,
     BLUE_ORCHID,
