@@ -3,15 +3,16 @@ package gg.warcraft.monolith.api.world.block
 import gg.warcraft.monolith.api.world.BlockLocation
 
 trait Block {
+  val kind: BlockType
   val location: BlockLocation
+
   val liquid: Boolean = false
   val solid: Boolean = true
-  def withLocation(loc: BlockLocation): Block
-}
 
-trait AttachableBlock extends Block {
-  val attached: Option[BlockAttachment]
-  def withAttached(attached: Option[BlockAttachment]): AttachableBlock
+  /* Java interop */
+
+  val `type`: BlockType = kind
+  def withLocation(loc: BlockLocation): Block
 }
 
 trait AttachedBlock extends Block {
@@ -19,14 +20,14 @@ trait AttachedBlock extends Block {
   def withAttached(attached: BlockAttachment): AttachedBlock
 }
 
+trait AttachableBlock extends Block {
+  val attached: Option[BlockAttachment]
+  def withAttached(attached: Option[BlockAttachment]): AttachableBlock
+}
+
 trait BisectedBlock extends Block {
   val section: BlockBisection
   def withSection(section: BlockBisection): BisectedBlock
-}
-
-trait ColorableBlock extends Block {
-  val color: Option[BlockColor]
-  def withColor(color: Option[BlockColor]): ColorableBlock
 }
 
 trait ColoredBlock extends Block {
@@ -34,14 +35,19 @@ trait ColoredBlock extends Block {
   def withColor(color: BlockColor): ColoredBlock
 }
 
-trait DirectableBlock extends Block {
-  val facing: Option[BlockFace]
-  def withFacing(facing: Option[BlockFace]): DirectableBlock
+trait ColorableBlock extends Block {
+  val color: Option[BlockColor]
+  def withColor(color: Option[BlockColor]): ColorableBlock
 }
 
 trait DirectionalBlock extends Block {
   val facing: BlockFace
   def withFacing(facing: BlockFace): DirectionalBlock
+}
+
+trait DirectableBlock extends Block {
+  val facing: Option[BlockFace]
+  def withFacing(facing: Option[BlockFace]): DirectableBlock
 }
 
 trait ExtendableBlock extends Block {
@@ -74,9 +80,9 @@ trait OpenableBlock extends Block {
   def withOpen(open: Boolean): OpenableBlock
 }
 
-trait OrientableBlock extends Block {
+trait OrientedBlock extends Block {
   val orientation: BlockOrientation
-  def withOrientation(orientation: BlockOrientation): OrientableBlock
+  def withOrientation(orientation: BlockOrientation): OrientedBlock
 }
 
 trait PowerableBlock extends Block {

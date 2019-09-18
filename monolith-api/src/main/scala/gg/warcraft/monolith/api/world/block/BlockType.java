@@ -13,7 +13,7 @@ public enum BlockType {
     BEETROOTS,
     BELL,
     BLAST_FURNACE,
-    BONE,
+    BONE_BLOCK,
     BOOKSHELF,
     BREWING_STAND,
     BRICK,
