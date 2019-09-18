@@ -111,12 +111,12 @@ case class BlastFurnace(
   override def withLit(lit: Boolean): BlastFurnace = copy(lit = lit)
 }
 
-case class Bone(
+case class BoneBlock(
   location: BlockLocation,
   orientation: BlockOrientation
 ) extends OrientableBlock {
-  override def withLocation(loc: BlockLocation): Bone = copy(location = loc)
-  override def withOrientation(orientation: BlockOrientation): Bone = copy(orientation = orientation)
+  override def withLocation(loc: BlockLocation): BoneBlock = copy(location = loc)
+  override def withOrientation(orientation: BlockOrientation): BoneBlock = copy(orientation = orientation)
 }
 
 case class Bookshelf(location: BlockLocation) extends Block {
@@ -1122,8 +1122,8 @@ case class Slab(
   override def withSection(section: BlockBisection): Slab = copy(section = section)
 }
 
-case class Slime(location: BlockLocation) extends Block {
-  override def withLocation(loc: BlockLocation): Slime = copy(location = loc)
+case class SlimeBlock(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): SlimeBlock = copy(location = loc)
 }
 
 case class SmithingTable(location: BlockLocation) extends Block {
@@ -1140,13 +1140,13 @@ case class Smoker(
   override def withLit(lit: Boolean): Smoker = copy(lit = lit)
 }
 
-case class Snow(location: BlockLocation) extends Block {
-  override def withLocation(loc: BlockLocation): Snow = copy(location = loc)
+case class SnowBlock(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): SnowBlock = copy(location = loc)
 }
 
-// TODO add size of layer, rename this Snow and Snow -> SnowBlock?
-case class SnowLayer(location: BlockLocation) extends Block {
-  override def withLocation(loc: BlockLocation): SnowLayer = copy(location = loc)
+// TODO add size of layer
+case class Snow(location: BlockLocation) extends Block {
+  override def withLocation(loc: BlockLocation): Snow = copy(location = loc)
 }
 
 case class Spawner(location: BlockLocation) extends Block {
@@ -1200,10 +1200,6 @@ case class StructureBlock(
 ) extends StatefulBlock[StructureBlockState] {
   override def withLocation(loc: BlockLocation): StructureBlock = copy(location = loc)
   override def withState(state: StructureBlockState): StructureBlock = copy(state = state)
-}
-
-case class StructureVoid(location: BlockLocation) extends Block {
-  override def withLocation(loc: BlockLocation): StructureVoid = copy(location = loc)
 }
 
 case class SugarCane(
