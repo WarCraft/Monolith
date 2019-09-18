@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block
 
 import gg.warcraft.monolith.api.world.BlockLocation
+import gg.warcraft.monolith.api.world.block.material._
+import gg.warcraft.monolith.api.world.block.state._
 
 case class Air(
   location: BlockLocation,

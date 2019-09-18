@@ -2,11 +2,13 @@ package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotMaterialMapper }
-import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
-import org.bukkit.block.{ Block => SpigotBlock }
-import org.bukkit.block.data.{ BlockData => SpigotBlockData, _ }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
+import gg.warcraft.monolith.api.world.block.material._
+import gg.warcraft.monolith.api.world.block.state._
+import gg.warcraft.monolith.spigot.world.{SpigotLocationMapper, SpigotMaterialMapper}
+import org.bukkit.{Instrument, Material, Bukkit => Spigot}
+import org.bukkit.block.{Block => SpigotBlock}
+import org.bukkit.block.data.{BlockData => SpigotBlockData, _}
+import org.bukkit.block.data.`type`.{Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg}
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
