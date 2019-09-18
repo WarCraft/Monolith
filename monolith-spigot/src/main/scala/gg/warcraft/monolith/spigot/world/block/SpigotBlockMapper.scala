@@ -5,10 +5,10 @@ import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.spigot.world.{SpigotLocationMapper, SpigotMaterialMapper}
-import org.bukkit.{Instrument, Material, Bukkit => Spigot}
-import org.bukkit.block.{Block => SpigotBlock}
-import org.bukkit.block.data.{BlockData => SpigotBlockData, _}
 import org.bukkit.block.data.`type`.{Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg}
+import org.bukkit.block.data.{BlockData => SpigotBlockData, _}
+import org.bukkit.block.{Block => SpigotBlock}
+import org.bukkit.{Instrument, Material, Bukkit => Spigot}
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
@@ -43,16 +43,109 @@ class SpigotBlockMapper @Inject()(
 
     block.getType match {
       case Material.AIR => Air(location, material.asInstanceOf[AirMaterial])
+      case Material.BARREL => Barrel(location, facing, open)
+      case Material.BARRIER => Barrier(location)
+      case Material.BEACON => Beacon(location)
+      case Material.BEDROCK => Bedrock(location)
+      case Material.BEETROOTS => Beetroots(location, state.asInstanceOf[BeetrootState])
+      case Material.BELL => Bell(location, facing)
+      case Material.BLAST_FURNACE => BlastFurnace(location, facing, lit)
+      case Material.BONE_BLOCK => Bone(location, orientation)
+      case Material.BOOKSHELF => Bookshelf(location)
+      case Material.BREWING_STAND => BrewingStand(location)
+      case Material.CACTUS => Cactus(location, state.asInstanceOf[CactusState])
+      case Material.CAKE => Cake(location, state.asInstanceOf[CakeState])
+      case Material.CARROTS => Carrots(location, state.asInstanceOf[CarrotState])
+      case Material.CARTOGRAPHY_TABLE => CartographyTable(location)
+      case Material.CAULDRON => Cauldron(location, state.asInstanceOf[CauldronState])
+      case Material.CHORUS_FLOWER => ChorusFlower(location, state.asInstanceOf[ChorusFlowerState])
+      case Material.CHORUS_PLANT => ChorusPlant(location, extensions)
+      case Material.CLAY => Clay(location)
+      case Material.COBWEB => Cobweb(location)
+      case Material.COCOA => Cocoa(location, state.asInstanceOf[CocoaState], facing)
+      case Material.COMPARATOR => Comparator(location, state.asInstanceOf[ComparatorState], facing, powered)
+      case Material.COMPOSTER => Composter(location, state.asInstanceOf[ComposterState])
+      case Material.CONDUIT => Conduit(location, flooded)
+      case Material.CRAFTING_TABLE => CraftingTable(location)
+      case Material.DAYLIGHT_DETECTOR => DaylightDetector(location)
+      case Material.DEAD_BUSH => DeadBush(location)
+      case Material.DISPENSER => Dispenser(location, facing, powered)
+      case Material.DRAGON_EGG => DragonEgg(location)
+      case Material.DRIED_KELP_BLOCK => DriedKelp(location)
+      case Material.DROPPER => Dropper(location, facing, powered)
+      case Material.ENCHANTING_TABLE => EnchantingTable(location)
+      case Material.END_GATEWAY => EndGateway(location)
+      case Material.END_PORTAL => EndPortal(location)
+      case Material.END_ROD => EndRod(location, facing)
+      case Material.FARMLAND => Farmland(location)
+      case Material.FERN => Fern(location, BlockBisection.BOTTOM, tall = false)
+      case Material.LARGE_FERN => Fern(location, bisection, tall = true)
+      case Material.FIRE => Fire(location)
+      case Material.FLETCHING_TABLE => FletchingTable(location)
+      case Material.FROSTED_ICE => Frost(location)
+      case Material.FURNACE => Furnace(location, facing, lit)
+      case Material.GLOWSTONE => Glowstone(location)
+      case Material.GRASS_BLOCK => GrassBlock(location, snowy)
+      case Material.GRASS_PATH => GrassPath(location)
+      case Material.GRAVEL => Gravel(location)
+      case Material.GRINDSTONE => Grindstone(location, facing, attached)
+      case Material.HAY_BLOCK => HayBale(location, orientation)
+      case Material.IRON_BARS => IronBars(location, extensions, flooded)
+      case Material.JIGSAW => Jigsaw(location, facing)
+      case Material.KELP_PLANT => Kelp(location, state.asInstanceOf[KelpState])
+      case Material.LADDER => Ladder(location, facing, flooded)
+      case Material.LAVA => Lava(location, state.asInstanceOf[LavaState])
+      case Material.LEVER => Lever(location, facing, attached, powered)
+      case Material.LILY_PAD => LilyPad(location)
+      case Material.LOOM => Loom(location, facing)
+      case Material.MAGMA_BLOCK => Magma(location)
+      case Material.MELON => Melon(location)
+      case Material.MYCELIUM => Mycelium(location, snowy)
+      case Material.NETHERRACK => Netherrack(location)
+      case Material.NETHER_PORTAL => NetherPortal(location, orientation)
+      case Material.NETHER_WART => NetherWarts(location, state.asInstanceOf[NetherWartState])
+      case Material.NETHER_WART_BLOCK => NetherWartBlock(location)
+      case Material.OBSERVER => Observer(location, facing, powered)
+      case Material.OBSIDIAN => Obsidian(location)
+      case Material.PODZOL => Podzol(location, snowy)
+      case Material.POTATOES => Potatoes(location, state.asInstanceOf[PotatoState])
+      case Material.PUMPKIN => Pumpkin(location, Option.empty, lit = false, carved = false)
+      case Material.CARVED_PUMPKIN => Pumpkin(location, Option(facing), lit = false, carved = true)
+      case Material.JACK_O_LANTERN => Pumpkin(location, Option(facing), lit = true, carved = true)
+      case Material.REDSTONE_LAMP => RedstoneLamp(location, lit)
+      case Material.REDSTONE_TORCH => RedstoneTorch(location, Option.empty, lit)
+      case Material.REDSTONE_WALL_TORCH => RedstoneTorch(location, Option(facing), lit)
+      case Material.REDSTONE_WIRE => RedstoneWire(location, state.asInstanceOf[RedstoneWireState])
+      case Material.SCAFFOLDING => Scaffold(location)
+      case Material.SEA_LANTERN => SeaLantern(location)
+      case Material.SEA_PICKLE => SeaPickle(location, state.asInstanceOf[SeaPickleState], flooded)
+      case Material.SLIME_BLOCK => Slime(location)
+      case Material.SMITHING_TABLE => SmithingTable(location)
+      case Material.SMOKER => Smoker(location, facing, lit)
+      case Material.SNOW => SnowLayer(location)
+      case Material.SNOW_BLOCK => Snow(location)
+      case Material.SPAWNER => Spawner(location)
+      case Material.STONECUTTER => StoneCutter(location, facing)
+      case Material.STRUCTURE_BLOCK => StructureBlock(location, state.asInstanceOf[StructureBlockState])
+      case Material.STRUCTURE_VOID => StructureVoid(location)
+      case Material.SUGAR_CANE => SugarCane(location, state.asInstanceOf[SugarCaneState])
+      case Material.SWEET_BERRY_BUSH => SweetBerryBush(location, state.asInstanceOf[SweetBerryState])
+      case Material.VINE => Vine(location, extensions)
+      case Material.WATER => Water(location, state.asInstanceOf[WaterState])
+      case Material.WHEAT => Wheat(location, state.asInstanceOf[WheatState])
 
+      // ANVIL
       case Material.ANVIL | Material.CHIPPED_ANVIL | Material.DAMAGED_ANVIL =>
         Anvil(location, state.asInstanceOf[AnvilState], facing)
 
+      // BAMBOO
       case Material.BAMBOO =>
         val bamboo = block.getState.asInstanceOf[SpigotBamboo]
         val leaves = mapBambooLeaves(bamboo.getLeaves)
         val thick = bamboo.getAge == 1
         Bamboo(location, leaves, state.asInstanceOf[BambooState], thick)
 
+      // BANNER
       case Material.BLACK_BANNER | Material.BLUE_BANNER | Material.BROWN_BANNER | Material.CYAN_BANNER |
            Material.GRAY_BANNER | Material.GREEN_BANNER | Material.LIGHT_BLUE_BANNER | Material.LIGHT_GRAY_BANNER |
            Material.LIME_BANNER | Material.MAGENTA_BANNER | Material.ORANGE_BANNER | Material.PINK_BANNER |
@@ -67,10 +160,7 @@ class SpigotBlockMapper @Inject()(
            Material.YELLOW_WALL_BANNER =>
         Banner(location, color, Option.empty, Option(facing))
 
-      case Material.BARREL => Barrel(location, facing, open)
-      case Material.BARRIER => Barrier(location)
-      case Material.BEACON => Beacon(location)
-
+      // BED
       case Material.BLACK_BED | Material.BLUE_BED | Material.BROWN_BED | Material.CYAN_BED |
            Material.GRAY_BED | Material.GREEN_BED | Material.LIGHT_BLUE_BED | Material.LIGHT_GRAY_BED |
            Material.LIME_BED | Material.MAGENTA_BED | Material.ORANGE_BED | Material.PINK_BED |
@@ -78,56 +168,39 @@ class SpigotBlockMapper @Inject()(
         val occupied = block.getState.asInstanceOf[SpigotBed].isOccupied
         Bed(location, color, facing, bisection, occupied)
 
-      case Material.BEDROCK => Bedrock(location)
-      case Material.BEETROOTS => Beetroots(location, state.asInstanceOf[BeetrootState])
-      case Material.BELL => Bell(location, facing)
-      case Material.BLAST_FURNACE => BlastFurnace(location, facing, lit)
-      case Material.BONE_BLOCK => Bone(location, orientation)
-      case Material.BOOKSHELF => Bookshelf(location)
-      case Material.BREWING_STAND => BrewingStand(location)
-
+      // BUBBLE_COLUMN
       case Material.BUBBLE_COLUMN =>
         val drag = block.getState.asInstanceOf[SpigotBubbleColumn].isDrag
         BubbleColumn(location, drag)
 
+      // BUTTON
       case Material.STONE_BUTTON |
            Material.ACACIA_BUTTON | Material.BIRCH_BUTTON | Material.DARK_OAK_BUTTON |
            Material.JUNGLE_BUTTON | Material.OAK_BUTTON | Material.SPRUCE_BUTTON =>
         Button(location, material.asInstanceOf[ButtonMaterial], facing, attached, powered)
 
-      case Material.CACTUS => Cactus(location, state.asInstanceOf[CactusState])
-      case Material.CAKE => Cake(location, state.asInstanceOf[CakeState])
-
+      // CAMPFIRE
       case Material.CAMPFIRE =>
         val signal = block.getState.asInstanceOf[SpigotCampfire].isSignalFire
         Campfire(location, facing, flooded, lit, signal)
 
+      // CARPET
       case Material.BLACK_CARPET | Material.BLUE_CARPET | Material.BROWN_CARPET | Material.CYAN_CARPET |
            Material.GRAY_CARPET | Material.GREEN_CARPET | Material.LIGHT_BLUE_CARPET | Material.LIGHT_GRAY_CARPET |
            Material.LIME_CARPET | Material.MAGENTA_CARPET | Material.ORANGE_CARPET | Material.PINK_CARPET |
            Material.PURPLE_CARPET | Material.RED_CARPET | Material.WHITE_CARPET | Material.YELLOW_CARPET =>
         Carpet(location, color)
 
-      case Material.CARROTS => Carrots(location, state.asInstanceOf[CarrotState])
-      case Material.CARTOGRAPHY_TABLE => CartographyTable(location)
-      case Material.CAULDRON => Cauldron(location, state.asInstanceOf[CauldronState])
-
+      // CHEST
       case Material.CHEST | Material.ENDER_CHEST | Material.TRAPPED_CHEST =>
         Chest(location, material.asInstanceOf[ChestMaterial], facing)
 
-      case Material.CHORUS_FLOWER => ChorusFlower(location, state.asInstanceOf[ChorusFlowerState])
-      case Material.CHORUS_PLANT => ChorusPlant(location, extensions)
-      case Material.CLAY => Clay(location)
-      case Material.COBWEB => Cobweb(location)
-      case Material.COCOA => Cocoa(location, state.asInstanceOf[CocoaState], facing)
-
+      // COMMAND_BLOCK
       case Material.COMMAND_BLOCK | Material.CHAIN_COMMAND_BLOCK | Material.REPEATING_COMMAND_BLOCK =>
         val conditional = block.getState.asInstanceOf[SpigotCommandBlock].isConditional
         CommandBlock(location, material.asInstanceOf[CommandBlockMaterial], facing, conditional)
 
-      case Material.COMPARATOR => Comparator(location, state.asInstanceOf[ComparatorState], facing, powered)
-      case Material.COMPOSTER => Composter(location, state.asInstanceOf[ComposterState])
-
+      // CONCRETE
       case Material.BLACK_CONCRETE | Material.BLUE_CONCRETE | Material.BROWN_CONCRETE | Material.CYAN_CONCRETE |
            Material.GRAY_CONCRETE | Material.GREEN_CONCRETE | Material.LIGHT_BLUE_CONCRETE | Material.LIGHT_GRAY_CONCRETE |
            Material.LIME_CONCRETE | Material.MAGENTA_CONCRETE | Material.ORANGE_CONCRETE | Material.PINK_CONCRETE |
@@ -142,8 +215,7 @@ class SpigotBlockMapper @Inject()(
            Material.YELLOW_CONCRETE_POWDER =>
         ConcretePowder(location, color)
 
-      case Material.CONDUIT => Conduit(location, flooded)
-
+      // CORAL
       case Material.BRAIN_CORAL | Material.DEAD_BRAIN_CORAL |
            Material.BUBBLE_CORAL | Material.DEAD_BUBBLE_CORAL |
            Material.FIRE_CORAL | Material.DEAD_FIRE_CORAL |
@@ -172,45 +244,29 @@ class SpigotBlockMapper @Inject()(
            Material.TUBE_CORAL_WALL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
         CoralFan(location, material.asInstanceOf[CoralMaterial], Option(facing), flooded)
 
-      case Material.CRAFTING_TABLE => CraftingTable(location)
-      case Material.DAYLIGHT_DETECTOR => DaylightDetector(location)
-      case Material.DEAD_BUSH => DeadBush(location)
-
+      // DIRT
       case Material.DIRT => Dirt(location, coarse = false)
       case Material.COARSE_DIRT => Dirt(location, coarse = true)
 
-      case Material.DISPENSER => Dispenser(location, facing, powered)
-
+      // DOOR
       case Material.IRON_DOOR |
            Material.ACACIA_DOOR | Material.BIRCH_DOOR | Material.DARK_OAK_DOOR |
            Material.JUNGLE_DOOR | Material.OAK_DOOR | Material.SPRUCE_DOOR =>
         val hinge = mapDoorHinge(block.getState.asInstanceOf[SpigotDoor].getHinge)
         Door(location, material.asInstanceOf[DoorMaterial], facing, hinge, bisection, open, powered)
 
-      case Material.DRAGON_EGG => DragonEgg(location)
-      case Material.DRIED_KELP_BLOCK => DriedKelp(location)
-      case Material.DROPPER => Dropper(location, facing, powered)
-      case Material.ENCHANTING_TABLE => EnchantingTable(location)
-      case Material.END_GATEWAY => EndGateway(location)
-      case Material.END_PORTAL => EndPortal(location)
-
+      // END_PORTAL_FRAME
       case Material.END_PORTAL_FRAME =>
         val eye = block.getState.asInstanceOf[SpigotEndPortalFrame].hasEye
         EndPortalFrame(location, facing, eye)
 
-      case Material.END_ROD => EndRod(location, facing)
-      case Material.FARMLAND => Farmland(location)
-
+      // FENCE
       case Material.NETHER_BRICK_FENCE |
            Material.ACACIA_FENCE | Material.BIRCH_FENCE | Material.DARK_OAK_FENCE |
            Material.JUNGLE_FENCE | Material.OAK_FENCE | Material.SPRUCE_FENCE =>
         Fence(location, material.asInstanceOf[FenceMaterial], extensions, flooded)
 
-      case Material.FERN => Fern(location, BlockBisection.BOTTOM, tall = false)
-      case Material.LARGE_FERN => Fern(location, bisection, tall = true)
-      case Material.FIRE => Fire(location)
-      case Material.FLETCHING_TABLE => FletchingTable(location)
-
+      // FLOWER
       case Material.ALLIUM | Material.AZURE_BLUET | Material.BLUE_ORCHID | Material.CORNFLOWER |
            Material.DANDELION | Material.LILY_OF_THE_VALLEY | Material.ORANGE_TULIP |
            Material.OXEYE_DAISY | Material.PINK_TULIP | Material.POPPY | Material.RED_TULIP |
@@ -222,6 +278,7 @@ class SpigotBlockMapper @Inject()(
 
       // FLOWER_POT TODO add empty flower pot option, or maybe move into State rather than Material?
       case Material.FLOWER_POT => FlowerPot(location, null)
+
       case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
            Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
            Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY | Material.POTTED_PINK_TULIP |
@@ -235,14 +292,12 @@ class SpigotBlockMapper @Inject()(
            Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
         FlowerPot(location, material.asInstanceOf[FlowerPotMaterial])
 
-      case Material.FROSTED_ICE => Frost(location)
-      case Material.FURNACE => Furnace(location, facing, lit)
-
-      // TODO add whether attached to wall or not
+      // FENCE_GATE TODO add whether attached to wall or not
       case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE | Material.DARK_OAK_FENCE_GATE |
            Material.JUNGLE_FENCE_GATE | Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
         Gate(location, material.asInstanceOf[WoodMaterial], facing, open, powered, wall = false)
 
+      // GLASS
       case Material.GLASS |
            Material.BLACK_STAINED_GLASS | Material.BLUE_STAINED_GLASS | Material.BROWN_STAINED_GLASS | Material.CYAN_STAINED_GLASS |
            Material.GRAY_STAINED_GLASS | Material.GREEN_STAINED_GLASS | Material.LIGHT_BLUE_STAINED_GLASS | Material.LIGHT_GRAY_STAINED_GLASS |
@@ -257,56 +312,46 @@ class SpigotBlockMapper @Inject()(
            Material.PURPLE_STAINED_GLASS_PANE | Material.RED_STAINED_GLASS_PANE | Material.WHITE_STAINED_GLASS_PANE | Material.YELLOW_STAINED_GLASS_PANE =>
         GlassPane(location, Option(color), extensions, flooded)
 
-      case Material.GLOWSTONE => Glowstone(location)
-
+      // GRASS
       case Material.GRASS => Grass(location, BlockBisection.BOTTOM, tall = false)
       case Material.TALL_GRASS => Grass(location, bisection, tall = true)
 
-      case Material.GRASS_BLOCK => GrassBlock(location, snowy)
-      case Material.GRASS_PATH => GrassPath(location)
-      case Material.GRAVEL => Gravel(location)
-      case Material.GRINDSTONE => Grindstone(location, facing, attached)
-      case Material.HAY_BLOCK => HayBale(location, orientation)
-
+      // HOPPER
       case Material.HOPPER =>
         val enabled = block.getState.asInstanceOf[SpigotHopper].isEnabled
         Hopper(location, facing, !enabled)
 
+      // ICE
       case Material.ICE | Material.BLUE_ICE | Material.PACKED_ICE =>
         Ice(location, material.asInstanceOf[IceMaterial])
 
+      // INFESTED_STONE
       case Material.INFESTED_STONE | Material.INFESTED_COBBLESTONE |
            Material.INFESTED_STONE_BRICKS | Material.INFESTED_CRACKED_STONE_BRICKS |
            Material.INFESTED_CHISELED_STONE_BRICKS | Material.INFESTED_MOSSY_STONE_BRICKS =>
         InfestedBlock(location, material.asInstanceOf[InfestedMaterial])
 
-      case Material.IRON_BARS => IronBars(location, extensions, flooded)
-      case Material.JIGSAW => Jigsaw(location, facing)
-
+      // JUKEBOX
       case Material.JUKEBOX =>
         val record = block.getState.asInstanceOf[SpigotJukebox].hasRecord
         Jukebox(location, record)
 
-      case Material.KELP_PLANT => Kelp(location, state.asInstanceOf[KelpState])
-      case Material.LADDER => Ladder(location, facing, flooded)
-
+      // LANTERN
       case Material.LANTERN =>
         val hanging = block.getState.asInstanceOf[SpigotLantern].isHanging
         Lantern(location, hanging)
 
-      case Material.LAVA => Lava(location, state.asInstanceOf[LavaState])
-
+      // LEAVES
       case Material.ACACIA_LEAVES | Material.BIRCH_LEAVES | Material.DARK_OAK_LEAVES |
            Material.JUNGLE_LEAVES | Material.OAK_LEAVES | Material.SPRUCE_LEAVES =>
         Leaves(location, material.asInstanceOf[WoodMaterial])
 
+      // LECTERN
       case Material.LECTERN =>
         val book = block.getState.asInstanceOf[SpigotLectern].hasBook
         Lectern(location, facing, powered, book)
 
-      case Material.LEVER => Lever(location, facing, attached, powered)
-      case Material.LILY_PAD => LilyPad(location)
-
+      // LOG
       case Material.ACACIA_LOG | Material.BIRCH_LOG | Material.DARK_OAK_LOG |
            Material.JUNGLE_LOG | Material.OAK_LOG | Material.SPRUCE_LOG =>
         Log(location, orientation, stripped = false)
@@ -315,17 +360,16 @@ class SpigotBlockMapper @Inject()(
            Material.STRIPPED_JUNGLE_LOG | Material.STRIPPED_OAK_LOG | Material.STRIPPED_SPRUCE_LOG =>
         Log(location, orientation, stripped = true)
 
-      case Material.LOOM => Loom(location, facing)
-      case Material.MAGMA_BLOCK => Magma(location)
-      case Material.MELON => Melon(location)
-
+      // MELON_STEM
       case Material.MELON_STEM => MelonStem(location, state.asInstanceOf[MelonStemState], Option.empty)
       case Material.ATTACHED_MELON_STEM => MelonStem(location, state.asInstanceOf[MelonStemState], Option(facing))
 
+      // MINERAL
       case Material.COAL_BLOCK | Material.DIAMOND_BLOCK | Material.EMERALD_BLOCK | Material.GOLD_BLOCK |
            Material.IRON_BLOCK | Material.LAPIS_BLOCK | Material.QUARTZ_BLOCK | Material.REDSTONE_BLOCK =>
         Mineral(location, material.asInstanceOf[MineralMaterial])
 
+      // MOB_HEAD
       case Material.CREEPER_HEAD |
            Material.DRAGON_HEAD |
            Material.PLAYER_HEAD |
@@ -342,32 +386,28 @@ class SpigotBlockMapper @Inject()(
            Material.ZOMBIE_WALL_HEAD =>
         MobHead(location, material.asInstanceOf[MobHeadMaterial], Option(facing), Option.empty)
 
+      // MUSHROOM
       case Material.BROWN_MUSHROOM | Material.RED_MUSHROOM =>
         Mushroom(location, material.asInstanceOf[MushroomMaterial])
 
       case Material.BROWN_MUSHROOM_BLOCK | Material.RED_MUSHROOM_BLOCK | Material.MUSHROOM_STEM =>
         MushroomBlock(location, material.asInstanceOf[MushroomBlockMaterial])
 
-      case Material.MYCELIUM => Mycelium(location, snowy)
-      case Material.NETHERRACK => Netherrack(location)
-      case Material.NETHER_PORTAL => NetherPortal(location, orientation)
-      case Material.NETHER_WART => NetherWarts(location, state.asInstanceOf[NetherWartState])
-      case Material.NETHER_WART_BLOCK => NetherWartBlock(location)
-
+      // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
         val instrument = mapInstrument(block.getState.asInstanceOf[SpigotNoteBlock].getInstrument)
         NoteBlock(location, instrument, state.asInstanceOf[NoteBlockState], powered)
 
-      case Material.OBSERVER => Observer(location, facing, powered)
-      case Material.OBSIDIAN => Obsidian(location)
-
+      // ORE
       case Material.COAL_ORE | Material.DIAMOND_ORE | Material.EMERALD_ORE | Material.GOLD_ORE |
            Material.IRON_ORE | Material.LAPIS_ORE | Material.NETHER_QUARTZ_ORE | Material.REDSTONE_ORE =>
         Ore(location, material.asInstanceOf[OreMaterial])
 
+      // PILLAR
       case Material.PURPUR_PILLAR | Material.QUARTZ_PILLAR =>
         Pillar(location, material.asInstanceOf[PillarMaterial])
 
+      // PISTON
       case Material.PISTON =>
         val extended = block.getState.asInstanceOf[SpigotPiston].isExtended
         Piston(location, facing, sticky = false, extended)
@@ -377,15 +417,15 @@ class SpigotBlockMapper @Inject()(
         Piston(location, facing, sticky = true, extended)
 
       // Technical Block: Material.MOVING_PISTON
+
       // Technical Block: Material.PISTON_HEAD
 
+      // PLANKS
       case Material.ACACIA_PLANKS | Material.BIRCH_PLANKS | Material.DARK_OAK_PLANKS |
            Material.JUNGLE_PLANKS | Material.OAK_PLANKS | Material.SPRUCE_PLANKS =>
         Planks(location, material.asInstanceOf[WoodMaterial])
 
-      case Material.PODZOL => Podzol(location, snowy)
-      case Material.POTATOES => Potatoes(location, state.asInstanceOf[PotatoState])
-
+      // PRESSURE_PLATE
       case Material.STONE_PRESSURE_PLATE |
            Material.ACACIA_PRESSURE_PLATE | Material.BIRCH_PRESSURE_PLATE | Material.DARK_OAK_PRESSURE_PLATE |
            Material.JUNGLE_PRESSURE_PLATE | Material.OAK_PRESSURE_PLATE | Material.SPRUCE_PRESSURE_PLATE =>
@@ -395,47 +435,41 @@ class SpigotBlockMapper @Inject()(
         WeightedPressurePlate(location, material.asInstanceOf[WeightedPressurePlateMaterial],
           state.asInstanceOf[WeightedPressurePlateState])
 
-      case Material.PUMPKIN => Pumpkin(location, Option.empty, lit = false, carved = false)
-      case Material.CARVED_PUMPKIN => Pumpkin(location, Option(facing), lit = false, carved = true)
-      case Material.JACK_O_LANTERN => Pumpkin(location, Option(facing), lit = true, carved = true)
-
+      // PUMPKIN_STEM
       case Material.PUMPKIN_STEM => PumpkinStem(location, state.asInstanceOf[PumpkinStemState], Option.empty)
       case Material.ATTACHED_PUMPKIN_STEM => PumpkinStem(location, state.asInstanceOf[PumpkinStemState], Option(facing))
 
+      // RAIL
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
         Rails(location, material.asInstanceOf[RailsMaterial], state.asInstanceOf[RailsState], powered)
 
-      case Material.REDSTONE_LAMP => RedstoneLamp(location, lit)
-      case Material.REDSTONE_TORCH => RedstoneTorch(location, Option.empty, lit)
-      case Material.REDSTONE_WALL_TORCH => RedstoneTorch(location, Option(facing), lit)
-      case Material.REDSTONE_WIRE => RedstoneWire(location, state.asInstanceOf[RedstoneWireState])
-
+      // REPEATER
       case Material.REPEATER =>
         val locked = block.getState.asInstanceOf[SpigotRepeater].isLocked
         Repeater(location, state.asInstanceOf[RepeaterState], facing, powered, locked)
 
+      // SAND
       case Material.SAND | Material.RED_SAND | Material.SOUL_SAND =>
         Sand(location, material.asInstanceOf[SandMaterial])
 
+      // SANDSTONE
       case Material.SANDSTONE | Material.RED_SANDSTONE |
            Material.CHISELED_SANDSTONE | Material.CHISELED_RED_SANDSTONE |
            Material.CUT_SANDSTONE | Material.CUT_RED_SANDSTONE |
            Material.SMOOTH_SANDSTONE | Material.SMOOTH_RED_SANDSTONE =>
         Sandstone(location, material.asInstanceOf[SandstoneMaterial], state.asInstanceOf[SandstoneState])
 
+      // SAPLING
       case Material.BAMBOO_SAPLING |
            Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
            Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
         Sapling(location, material.asInstanceOf[SaplingMaterial], state.asInstanceOf[SaplingState])
 
-      case Material.SCAFFOLDING => Scaffold(location)
-
+      // SEAGRASS
       case Material.SEAGRASS => Seagrass(location, BlockBisection.BOTTOM, tall = false)
       case Material.TALL_SEAGRASS => Seagrass(location, bisection, tall = true)
 
-      case Material.SEA_LANTERN => SeaLantern(location)
-      case Material.SEA_PICKLE => SeaPickle(location, state.asInstanceOf[SeaPickleState], flooded)
-
+      // SHULKER_BOX
       case Material.SHULKER_BOX |
            Material.BLACK_SHULKER_BOX | Material.BLUE_SHULKER_BOX | Material.BROWN_SHULKER_BOX | Material.CYAN_SHULKER_BOX |
            Material.GRAY_SHULKER_BOX | Material.GREEN_SHULKER_BOX | Material.LIGHT_BLUE_SHULKER_BOX | Material.LIGHT_GRAY_SHULKER_BOX |
@@ -443,7 +477,7 @@ class SpigotBlockMapper @Inject()(
            Material.PURPLE_SHULKER_BOX | Material.RED_SHULKER_BOX | Material.WHITE_SHULKER_BOX | Material.YELLOW_SHULKER_BOX =>
         ShulkerBox(location, Option(color))
 
-      // TODO store additional sign data
+      // SIGN TODO store additional sign data
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
            Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
         Sign(location, Option(facing), Option.empty, flooded)
@@ -452,6 +486,7 @@ class SpigotBlockMapper @Inject()(
            Material.JUNGLE_WALL_SIGN | Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
         Sign(location, Option.empty, Option(rotation), flooded)
 
+      // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB | Material.RED_NETHER_BRICK_SLAB |
 
            Material.SANDSTONE_SLAB | Material.CUT_SANDSTONE_SLAB | Material.SMOOTH_SANDSTONE_SLAB |
@@ -473,16 +508,11 @@ class SpigotBlockMapper @Inject()(
            Material.JUNGLE_SLAB | Material.OAK_SLAB | Material.SPRUCE_SLAB | Material.PETRIFIED_OAK_SLAB =>
         Slab(location, material.asInstanceOf[SlabMaterial], bisection)
 
-      case Material.SLIME_BLOCK => Slime(location)
-      case Material.SMITHING_TABLE => SmithingTable(location)
-      case Material.SMOKER => Smoker(location, facing, lit)
-      case Material.SNOW => SnowLayer(location)
-      case Material.SNOW_BLOCK => Snow(location)
-      case Material.SPAWNER => Spawner(location)
-
+      // SPONGE
       case Material.SPONGE => Sponge(location, wet = false)
       case Material.WET_SPONGE => Sponge(location, wet = true)
 
+      // STAIRS
       case Material.BRICK_STAIRS | Material.NETHER_BRICK_STAIRS | Material.RED_NETHER_BRICK_STAIRS |
 
            Material.SANDSTONE_STAIRS | Material.SMOOTH_SANDSTONE_STAIRS |
@@ -505,6 +535,7 @@ class SpigotBlockMapper @Inject()(
         val shape = mapStairsShape(block.getState.asInstanceOf[SpigotStairs].getShape)
         Stairs(location, material.asInstanceOf[StairsMaterial], shape, facing, bisection, flooded)
 
+      // STONE
       case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
 
            Material.STONE | Material.SMOOTH_STONE | Material.CHISELED_STONE_BRICKS |
@@ -520,46 +551,46 @@ class SpigotBlockMapper @Inject()(
            Material.QUARTZ | Material.SMOOTH_QUARTZ | Material.CHISELED_QUARTZ_BLOCK =>
         Stone(location, material.asInstanceOf[StoneMaterial])
 
-      case Material.STONECUTTER => StoneCutter(location, facing)
-      case Material.STRUCTURE_BLOCK => StructureBlock(location, state.asInstanceOf[StructureBlockState])
-      case Material.STRUCTURE_VOID => StructureVoid(location)
-      case Material.SUGAR_CANE => SugarCane(location, state.asInstanceOf[SugarCaneState])
-      case Material.SWEET_BERRY_BUSH => SweetBerryBush(location, state.asInstanceOf[SweetBerryState])
-
+      // TERRACOTTA
       case Material.TERRACOTTA |
            Material.BLACK_TERRACOTTA | Material.BLUE_TERRACOTTA | Material.BROWN_TERRACOTTA | Material.CYAN_TERRACOTTA |
            Material.GRAY_TERRACOTTA | Material.GREEN_TERRACOTTA | Material.LIGHT_BLUE_TERRACOTTA | Material.LIGHT_GRAY_TERRACOTTA |
            Material.LIME_TERRACOTTA | Material.MAGENTA_TERRACOTTA | Material.ORANGE_TERRACOTTA | Material.PINK_TERRACOTTA |
            Material.PURPLE_TERRACOTTA | Material.RED_TERRACOTTA | Material.WHITE_TERRACOTTA | Material.YELLOW_TERRACOTTA =>
         Terracotta(location, Option(color))
+
       case Material.BLACK_GLAZED_TERRACOTTA | Material.BLUE_GLAZED_TERRACOTTA | Material.BROWN_GLAZED_TERRACOTTA | Material.CYAN_GLAZED_TERRACOTTA |
            Material.GRAY_GLAZED_TERRACOTTA | Material.GREEN_GLAZED_TERRACOTTA | Material.LIGHT_BLUE_GLAZED_TERRACOTTA | Material.LIGHT_GRAY_GLAZED_TERRACOTTA |
            Material.LIME_GLAZED_TERRACOTTA | Material.MAGENTA_GLAZED_TERRACOTTA | Material.ORANGE_GLAZED_TERRACOTTA | Material.PINK_GLAZED_TERRACOTTA |
            Material.PURPLE_GLAZED_TERRACOTTA | Material.RED_GLAZED_TERRACOTTA | Material.WHITE_GLAZED_TERRACOTTA | Material.YELLOW_GLAZED_TERRACOTTA =>
         GlazedTerracotta(location, color)
 
+      // TNT
       case Material.TNT =>
         val unstable = block.getState.asInstanceOf[SpigotTNT].isUnstable
         TNT(location, unstable)
 
+      // TORCH
       case Material.TORCH => Torch(location, BlockFace.UP, wall = false)
       case Material.WALL_TORCH => Torch(location, facing, wall = true)
 
+      // TRAPDOOR
       case Material.IRON_TRAPDOOR |
            Material.ACACIA_TRAPDOOR | Material.BIRCH_TRAPDOOR | Material.DARK_OAK_TRAPDOOR |
            Material.JUNGLE_TRAPDOOR | Material.OAK_TRAPDOOR | Material.SPRUCE_TRAPDOOR =>
         val trapdoorMaterial = material.asInstanceOf[TrapdoorMaterial]
         Trapdoor(location, trapdoorMaterial, facing, bisection, powered, flooded, open)
 
-      case Material.TRIPWIRE => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
-      case Material.TRIPWIRE_HOOK => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
+      // TRIPWIRE
+      case Material.TRIPWIRE => throw new IllegalArgumentException(s"Failed to map block with type: ${block.getType}")
+      case Material.TRIPWIRE_HOOK => throw new IllegalArgumentException(s"Failed to map block with type: ${block.getType}")
 
+      // TURTLE_EGG
       case Material.TURTLE_EGG =>
         val count = block.getState.asInstanceOf[SpigotTurtleEgg].getEggs
         TurtleEgg(location, state.asInstanceOf[TurtleEggState], count)
 
-      case Material.VINE => Vine(location, extensions)
-
+      // WALL
       case Material.BRICK_WALL | Material.NETHER_BRICK_WALL | Material.RED_NETHER_BRICK_WALL |
 
            Material.PRISMARINE_WALL |
@@ -571,9 +602,7 @@ class SpigotBlockMapper @Inject()(
            Material.ANDESITE_WALL | Material.DIORITE_WALL | Material.GRANITE_WALL =>
         Wall(location, material.asInstanceOf[WallMaterial], extensions)
 
-      case Material.WATER => Water(location, state.asInstanceOf[WaterState])
-      case Material.WHEAT => Wheat(location, state.asInstanceOf[WheatState])
-
+      // WOOD
       case Material.ACACIA_WOOD | Material.BIRCH_WOOD | Material.DARK_OAK_WOOD |
            Material.JUNGLE_WOOD | Material.OAK_WOOD | Material.SPRUCE_WOOD =>
         Wood(location, material.asInstanceOf[WoodMaterial], stripped = false)
@@ -582,13 +611,14 @@ class SpigotBlockMapper @Inject()(
            Material.STRIPPED_JUNGLE_WOOD | Material.STRIPPED_OAK_WOOD | Material.STRIPPED_SPRUCE_WOOD =>
         Wood(location, material.asInstanceOf[WoodMaterial], stripped = true)
 
+      // WOOL
       case Material.BLACK_WOOL | Material.BLUE_WOOL | Material.BROWN_WOOL | Material.CYAN_WOOL |
            Material.GRAY_WOOL | Material.GREEN_WOOL | Material.LIGHT_BLUE_WOOL | Material.LIGHT_GRAY_WOOL |
            Material.LIME_WOOL | Material.MAGENTA_WOOL | Material.ORANGE_WOOL | Material.PINK_WOOL |
            Material.PURPLE_WOOL | Material.RED_WOOL | Material.WHITE_WOOL | Material.YELLOW_WOOL =>
         Wool(location, color)
 
-      case _ => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
+      case _ => throw new IllegalArgumentException(s"Failed to map block with type: ${block.getType}")
     }
   }
 
@@ -634,15 +664,33 @@ class SpigotBlockMapper @Inject()(
     }
 
     val data: SpigotBlockData = Spigot.createBlockData(material)
-    data match { case it: Bisected => it.setHalf(bisection) }
-    data match { case it: Directional => it.setFacing(facing) }
-    data match { case it: Lightable => it.setLit(lit) }
-    data match { case it: Openable => it.setOpen(open) }
-    data match { case it: Orientable => it.setAxis(orientation) }
-    data match { case it: Powerable => it.setPowered(powered) }
-    data match { case it: Rotatable => it.setRotation(rotation) }
-    data match { case it: Snowable => it.setSnowy(snowy) }
-    data match { case it: Waterlogged => it.setWaterlogged(flooded) }
+    data match {
+      case it: Bisected => it.setHalf(bisection)
+    }
+    data match {
+      case it: Directional => it.setFacing(facing)
+    }
+    data match {
+      case it: Lightable => it.setLit(lit)
+    }
+    data match {
+      case it: Openable => it.setOpen(open)
+    }
+    data match {
+      case it: Orientable => it.setAxis(orientation)
+    }
+    data match {
+      case it: Powerable => it.setPowered(powered)
+    }
+    data match {
+      case it: Rotatable => it.setRotation(rotation)
+    }
+    data match {
+      case it: Snowable => it.setSnowy(snowy)
+    }
+    data match {
+      case it: Waterlogged => it.setWaterlogged(flooded)
+    }
 
     block match {
       case it: Bamboo =>
