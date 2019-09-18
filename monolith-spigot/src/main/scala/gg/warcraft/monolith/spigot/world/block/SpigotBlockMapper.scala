@@ -4,11 +4,11 @@ import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state._
-import gg.warcraft.monolith.spigot.world.{SpigotLocationMapper, SpigotMaterialMapper}
-import org.bukkit.block.data.`type`.{Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg}
-import org.bukkit.block.data.{BlockData => SpigotBlockData, _}
-import org.bukkit.block.{Block => SpigotBlock}
-import org.bukkit.{Instrument, Material, Bukkit => Spigot}
+import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotMaterialMapper }
+import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
+import org.bukkit.block.{ Block => SpigotBlock }
+import org.bukkit.block.data.{ BlockData => SpigotBlockData, _ }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
@@ -582,8 +582,8 @@ class SpigotBlockMapper @Inject()(
         Trapdoor(location, trapdoorMaterial, facing, bisection, powered, flooded, open)
 
       // TRIPWIRE
-      case Material.TRIPWIRE => throw new IllegalArgumentException(s"Failed to map block with type: ${block.getType}")
-      case Material.TRIPWIRE_HOOK => throw new IllegalArgumentException(s"Failed to map block with type: ${block.getType}")
+      case Material.TRIPWIRE => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
+      case Material.TRIPWIRE_HOOK => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
 
       // TURTLE_EGG
       case Material.TURTLE_EGG =>
@@ -618,7 +618,7 @@ class SpigotBlockMapper @Inject()(
            Material.PURPLE_WOOL | Material.RED_WOOL | Material.WHITE_WOOL | Material.YELLOW_WOOL =>
         Wool(location, color)
 
-      case _ => throw new IllegalArgumentException(s"Failed to map block with type: ${block.getType}")
+      case _ => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
     }
   }
 
@@ -664,33 +664,15 @@ class SpigotBlockMapper @Inject()(
     }
 
     val data: SpigotBlockData = Spigot.createBlockData(material)
-    data match {
-      case it: Bisected => it.setHalf(bisection)
-    }
-    data match {
-      case it: Directional => it.setFacing(facing)
-    }
-    data match {
-      case it: Lightable => it.setLit(lit)
-    }
-    data match {
-      case it: Openable => it.setOpen(open)
-    }
-    data match {
-      case it: Orientable => it.setAxis(orientation)
-    }
-    data match {
-      case it: Powerable => it.setPowered(powered)
-    }
-    data match {
-      case it: Rotatable => it.setRotation(rotation)
-    }
-    data match {
-      case it: Snowable => it.setSnowy(snowy)
-    }
-    data match {
-      case it: Waterlogged => it.setWaterlogged(flooded)
-    }
+    data match { case it: Bisected => it.setHalf(bisection) }
+    data match { case it: Directional => it.setFacing(facing) }
+    data match { case it: Lightable => it.setLit(lit) }
+    data match { case it: Openable => it.setOpen(open) }
+    data match { case it: Orientable => it.setAxis(orientation) }
+    data match { case it: Powerable => it.setPowered(powered) }
+    data match { case it: Rotatable => it.setRotation(rotation) }
+    data match { case it: Snowable => it.setSnowy(snowy) }
+    data match { case it: Waterlogged => it.setWaterlogged(flooded) }
 
     block match {
       case it: Bamboo =>

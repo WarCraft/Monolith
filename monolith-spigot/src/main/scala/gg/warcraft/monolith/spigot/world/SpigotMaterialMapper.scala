@@ -20,9 +20,11 @@ class SpigotMaterialMapper {
     // BRICK
     case Material.BRICKS | Material.BRICK_SLAB | Material.BRICK_STAIRS | Material.BRICK_WALL =>
       BrickMaterial.BRICK
+
     case Material.NETHER_BRICKS | Material.NETHER_BRICK_FENCE | Material.NETHER_BRICK_SLAB |
          Material.NETHER_BRICK_STAIRS | Material.NETHER_BRICK_WALL =>
       BrickMaterial.NETHER_BRICK
+
     case Material.RED_NETHER_BRICKS | Material.RED_NETHER_BRICK_SLAB |
          Material.RED_NETHER_BRICK_STAIRS | Material.RED_NETHER_BRICK_WALL =>
       BrickMaterial.RED_NETHER_BRICK
@@ -41,30 +43,39 @@ class SpigotMaterialMapper {
     case Material.BRAIN_CORAL | Material.BRAIN_CORAL_BLOCK |
          Material.BRAIN_CORAL_FAN | Material.BRAIN_CORAL_WALL_FAN =>
       CoralMaterial.BRAIN
+
     case Material.BUBBLE_CORAL | Material.BUBBLE_CORAL_BLOCK |
          Material.BUBBLE_CORAL_FAN | Material.BUBBLE_CORAL_WALL_FAN =>
       CoralMaterial.BUBBLE
+
     case Material.FIRE_CORAL | Material.FIRE_CORAL_BLOCK |
          Material.FIRE_CORAL_FAN | Material.FIRE_CORAL_WALL_FAN =>
       CoralMaterial.FIRE
+
     case Material.HORN_CORAL | Material.HORN_CORAL_BLOCK |
          Material.HORN_CORAL_FAN | Material.HORN_CORAL_WALL_FAN =>
       CoralMaterial.HORN
+
     case Material.TUBE_CORAL | Material.TUBE_CORAL_BLOCK |
          Material.TUBE_CORAL_FAN | Material.TUBE_CORAL_WALL_FAN =>
       CoralMaterial.TUBE
+
     case Material.DEAD_BRAIN_CORAL | Material.DEAD_BRAIN_CORAL_BLOCK |
          Material.DEAD_BRAIN_CORAL_FAN | Material.DEAD_BRAIN_CORAL_WALL_FAN =>
       CoralMaterial.DEAD_BRAIN
+
     case Material.DEAD_BUBBLE_CORAL | Material.DEAD_BUBBLE_CORAL_BLOCK |
          Material.DEAD_BUBBLE_CORAL_FAN | Material.DEAD_BUBBLE_CORAL_WALL_FAN =>
       CoralMaterial.DEAD_BUBBLE
+
     case Material.DEAD_FIRE_CORAL | Material.DEAD_FIRE_CORAL_BLOCK |
          Material.DEAD_FIRE_CORAL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN =>
       CoralMaterial.DEAD_FIRE
+
     case Material.DEAD_HORN_CORAL | Material.DEAD_HORN_CORAL_BLOCK |
          Material.DEAD_HORN_CORAL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN =>
       CoralMaterial.DEAD_HORN
+
     case Material.DEAD_TUBE_CORAL | Material.DEAD_TUBE_CORAL_BLOCK |
          Material.DEAD_TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
       CoralMaterial.DEAD_TUBE
@@ -139,7 +150,9 @@ class SpigotMaterialMapper {
     case Material.QUARTZ_BLOCK |
          Material.QUARTZ_PILLAR | Material.QUARTZ_SLAB | Material.QUARTZ_STAIRS =>
       QuartzMaterial.QUARTZ
+
     case Material.CHISELED_QUARTZ_BLOCK => QuartzMaterial.CHISELED_QUARTZ
+
     case Material.SMOOTH_QUARTZ |
          Material.SMOOTH_QUARTZ_SLAB | Material.SMOOTH_QUARTZ_STAIRS =>
       QuartzMaterial.SMOOTH_QUARTZ
@@ -264,7 +277,6 @@ class SpigotMaterialMapper {
       case AirMaterial.CAVE => Material.CAVE_AIR
       case AirMaterial.VOID => Material.VOID_AIR
     }
-
 
   }
 }
