@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum CakeState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum CakeState implements BlockState {
     EATEN_0,
     EATEN_1,
     EATEN_2,

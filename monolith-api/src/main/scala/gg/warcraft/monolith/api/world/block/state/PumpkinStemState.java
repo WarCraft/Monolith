@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum PumpkinStemState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum PumpkinStemState implements BlockState {
     AGE_0,
     AGE_1,
     AGE_2,

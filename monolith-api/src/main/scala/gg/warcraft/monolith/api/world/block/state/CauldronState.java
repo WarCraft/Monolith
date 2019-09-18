@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum CauldronState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum CauldronState implements BlockState {
     LEVEL_0,
     LEVEL_1,
     LEVEL_2,

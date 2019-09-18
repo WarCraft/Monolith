@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum SandstoneState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum SandstoneState implements BlockState {
     NORMAL,
     CHISELED,
     CUT,

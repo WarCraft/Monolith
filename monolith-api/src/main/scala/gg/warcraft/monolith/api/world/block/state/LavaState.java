@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum LavaState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum LavaState implements BlockState {
     LEVEL_1,
     LEVEL_2,
     LEVEL_3,

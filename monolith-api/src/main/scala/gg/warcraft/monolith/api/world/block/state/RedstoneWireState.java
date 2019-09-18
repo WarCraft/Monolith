@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum RedstoneWireState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum RedstoneWireState implements BlockState {
     DELAY_0,
     DELAY_1,
     DELAY_2,

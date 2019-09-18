@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum CactusState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum CactusState implements BlockState {
     AGE_0,
     AGE_1,
     AGE_2,

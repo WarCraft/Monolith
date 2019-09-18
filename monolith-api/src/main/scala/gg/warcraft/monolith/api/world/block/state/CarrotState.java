@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-public enum CarrotState {
+import gg.warcraft.monolith.api.world.block.BlockState;
+
+public enum CarrotState implements BlockState {
     AGE_0,
     AGE_1,
     AGE_2,
