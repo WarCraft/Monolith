@@ -1,17 +1,13 @@
 package gg.warcraft.monolith.spigot.world.block
 
-import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.state._
-import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
 import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, NoteBlock => SpigotNoteBlock, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, Stairs => SpigotStairs, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
 
-class SpigotBlockStateMapper @Inject()(
-  private val locationMapper: SpigotLocationMapper
-) {
+class SpigotBlockStateMapper {
 
   def map(block: SpigotBlock): BlockState = {
     val state = block.getState.getBlockData
