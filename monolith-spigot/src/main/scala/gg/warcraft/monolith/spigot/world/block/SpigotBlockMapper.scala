@@ -28,7 +28,7 @@ class SpigotBlockMapper @Inject()(
     val location = locationMapper.map(block.getLocation).toBlockLocation
     val spigotState = block.getState.getBlockData
 
-    lazy val attached = attachmentMapper.map(block.getState)
+    lazy val attached = attachmentMapper.map(block.getState.asInstanceOf[Attachable])
     lazy val bisection = bisectionMapper.map(block.getState.asInstanceOf[Bisected].getHalf)
     lazy val color = colorMapper.map(block.getType)
     lazy val extensions = extensionMapper.map(block.getState.asInstanceOf[MultipleFacing].getFaces)
