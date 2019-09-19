@@ -7,7 +7,7 @@ import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
-import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, Stairs => SpigotStairs, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
 
 class SpigotBlockStateMapper @Inject()(
   private val locationMapper: SpigotLocationMapper
@@ -74,7 +74,7 @@ class SpigotBlockStateMapper @Inject()(
         val delay = state.asInstanceOf[SpigotRepeater].getDelay
         RepeaterState.valueOf(s"DELAY_$delay")
 
-      // SANDSTONE TODO add slab stairs wall etc
+      // SANDSTONE TODO add slab stairs wall etc, stairs need their own case due to shape also going on the state
       case Material.SANDSTONE | Material.RED_SANDSTONE =>
         SandstoneState.NORMAL
 
@@ -138,6 +138,15 @@ class SpigotBlockStateMapper @Inject()(
     case SpigotRail.Shape.ASCENDING_EAST => RailsState.ASCENDING_EAST
     case SpigotRail.Shape.ASCENDING_SOUTH => RailsState.ASCENDING_SOUTH
     case SpigotRail.Shape.ASCENDING_WEST => RailsState.ASCENDING_WEST
+  }
+
+  // TODO is this gonna clash with stairs that already have a chipped state?
+  def mapStairsShape(shape: SpigotStairs.Shape): StairsState = shape match {
+    case SpigotStairs.Shape.STRAIGHT => StairsState.STRAIGHT
+    case SpigotStairs.Shape.INNER_LEFT => StairsState.INNER_LEFT
+    case SpigotStairs.Shape.INNER_RIGHT => StairsState.INNER_RIGHT
+    case SpigotStairs.Shape.OUTER_LEFT => StairsState.OUTER_LEFT
+    case SpigotStairs.Shape.OUTER_RIGHT => StairsState.OUTER_RIGHT
   }
 
   def mapStructureBlockMode(mode: SpigotStructureBlock.Mode): StructureBlockState = mode match {

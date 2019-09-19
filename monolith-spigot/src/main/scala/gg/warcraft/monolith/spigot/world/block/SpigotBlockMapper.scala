@@ -9,7 +9,7 @@ import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotMaterialM
 import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ BlockData => SpigotBlockData, _ }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, TNT => SpigotTNT }
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
@@ -145,7 +145,7 @@ class SpigotBlockMapper @Inject()(
         val bamboo = spigotState.asInstanceOf[SpigotBamboo]
         val leaves = mapBambooLeaves(bamboo.getLeaves)
         val thick = bamboo.getAge == 1
-        Bamboo(location, leaves, state.asInstanceOf[BambooState], thick)
+        Bamboo(location, leaves, state.asInstanceOf[BambooState], thick) // TODO is the state and age the same?
 
       // BANNER
       case Material.BLACK_BANNER | Material.BLUE_BANNER | Material.BROWN_BANNER | Material.CYAN_BANNER |
@@ -397,8 +397,8 @@ class SpigotBlockMapper @Inject()(
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        val instrument = mapInstrument(spigotState.asInstanceOf[SpigotNoteBlock].getInstrument)
-        NoteBlock(location, instrument, state.asInstanceOf[NoteBlockState], powered)
+        val instrument = spigotState.asInstanceOf[SpigotNoteBlock].getInstrument
+        NoteBlock(location, mapInstrument(instrument), state.asInstanceOf[NoteBlockState], powered)
 
       // ORE
       case Material.COAL_ORE | Material.DIAMOND_ORE | Material.EMERALD_ORE | Material.GOLD_ORE |
@@ -534,8 +534,7 @@ class SpigotBlockMapper @Inject()(
 
            Material.ACACIA_STAIRS | Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
            Material.JUNGLE_STAIRS | Material.OAK_STAIRS | Material.SPRUCE_STAIRS =>
-        val shape = mapStairsShape(spigotState.asInstanceOf[SpigotStairs].getShape)
-        Stairs(location, material.asInstanceOf[StairsMaterial], shape, facing, bisection, flooded)
+        Stairs(location, material.asInstanceOf[StairsMaterial], state.asInstanceOf[StairsState], facing, bisection, flooded)
 
       // STONE
       case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
@@ -708,13 +707,5 @@ class SpigotBlockMapper @Inject()(
     case Instrument.SNARE_DRUM => NoteBlockMaterial.SNARE
     case Instrument.STICKS => NoteBlockMaterial.HARP
     case Instrument.XYLOPHONE => NoteBlockMaterial.XYLOPHONE
-  }
-
-  def mapStairsShape(shape: SpigotStairs.Shape): StairsState = shape match { // TODO is this gonna clash with stairs that already have a chipped state?
-    case SpigotStairs.Shape.STRAIGHT => StairsState.STRAIGHT
-    case SpigotStairs.Shape.INNER_LEFT => StairsState.INNER_LEFT
-    case SpigotStairs.Shape.INNER_RIGHT => StairsState.INNER_RIGHT
-    case SpigotStairs.Shape.OUTER_LEFT => StairsState.OUTER_LEFT
-    case SpigotStairs.Shape.OUTER_RIGHT => StairsState.OUTER_RIGHT
   }
 }
