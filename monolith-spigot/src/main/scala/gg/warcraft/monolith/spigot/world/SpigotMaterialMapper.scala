@@ -1,6 +1,7 @@
 package gg.warcraft.monolith.spigot.world
 
-import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.api.world.block.{ BlockMaterial, MaterialBlock }
+import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
 import org.bukkit.Material
 
@@ -271,12 +272,12 @@ class SpigotMaterialMapper {
   }
 
   def map(block: MaterialBlock[_]): Material = block match {
+
     // AIR
     case air: Air => air.material match {
       case AirMaterial.NORMAL => Material.AIR
       case AirMaterial.CAVE => Material.CAVE_AIR
       case AirMaterial.VOID => Material.VOID_AIR
     }
-
   }
 }
