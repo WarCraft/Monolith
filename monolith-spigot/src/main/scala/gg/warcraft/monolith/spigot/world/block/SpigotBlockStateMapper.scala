@@ -14,11 +14,11 @@ class SpigotBlockStateMapper @Inject()(
 ) {
 
   def map(block: SpigotBlock): BlockState = {
-    val state = block.getState
+    val state = block.getState.getBlockData
 
-    lazy val age = s"AGE_${ block.getState.asInstanceOf[Ageable].getAge }"
-    lazy val level = s"LEVEL_${ block.getState.asInstanceOf[Levelled].getLevel }"
-    lazy val power = s"POWER_${ block.getState.asInstanceOf[AnaloguePowerable].getPower }"
+    lazy val age = s"AGE_${ state.asInstanceOf[Ageable].getAge }"
+    lazy val level = s"LEVEL_${ state.asInstanceOf[Levelled].getLevel }"
+    lazy val power = s"POWER_${ state.asInstanceOf[AnaloguePowerable].getPower }"
 
     block.getType match {
       case Material.BAMBOO => BambooState.valueOf(age)
@@ -71,7 +71,7 @@ class SpigotBlockStateMapper @Inject()(
 
       // REPEATER
       case Material.REPEATER =>
-        val delay = state.getBlockData.asInstanceOf[SpigotRepeater].getDelay
+        val delay = state.asInstanceOf[SpigotRepeater].getDelay
         RepeaterState.valueOf(s"DELAY_$delay")
 
       // SANDSTONE TODO add slab stairs wall etc
@@ -96,7 +96,7 @@ class SpigotBlockStateMapper @Inject()(
 
       // SEA_PICKLE
       case Material.SEA_PICKLE =>
-        val pickles = state.getBlockData.asInstanceOf[SpigotSeaPickle].getPickles
+        val pickles = state.asInstanceOf[SpigotSeaPickle].getPickles
         SeaPickleState.valueOf(s"COUNT_$pickles")
 
       // STRUCTURE_BLOCK

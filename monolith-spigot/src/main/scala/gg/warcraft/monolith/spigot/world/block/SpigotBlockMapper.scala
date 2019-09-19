@@ -26,6 +26,7 @@ class SpigotBlockMapper @Inject()(
 
   def map(block: SpigotBlock): Block = {
     val location = locationMapper.map(block.getLocation).toBlockLocation
+    val spigotState = block.getState.getBlockData
 
     lazy val attached = attachmentMapper.map(block.getState)
     lazy val bisection = bisectionMapper.map(block.getState.asInstanceOf[Bisected].getHalf)
@@ -140,7 +141,7 @@ class SpigotBlockMapper @Inject()(
 
       // BAMBOO
       case Material.BAMBOO =>
-        val bamboo = block.getState.asInstanceOf[SpigotBamboo]
+        val bamboo = spigotState.asInstanceOf[SpigotBamboo]
         val leaves = mapBambooLeaves(bamboo.getLeaves)
         val thick = bamboo.getAge == 1
         Bamboo(location, leaves, state.asInstanceOf[BambooState], thick)
@@ -165,12 +166,12 @@ class SpigotBlockMapper @Inject()(
            Material.GRAY_BED | Material.GREEN_BED | Material.LIGHT_BLUE_BED | Material.LIGHT_GRAY_BED |
            Material.LIME_BED | Material.MAGENTA_BED | Material.ORANGE_BED | Material.PINK_BED |
            Material.PURPLE_BED | Material.RED_BED | Material.WHITE_BED | Material.YELLOW_BED =>
-        val occupied = block.getState.asInstanceOf[SpigotBed].isOccupied
+        val occupied = spigotState.asInstanceOf[SpigotBed].isOccupied
         Bed(location, color, facing, bisection, occupied)
 
       // BUBBLE_COLUMN
       case Material.BUBBLE_COLUMN =>
-        val drag = block.getState.asInstanceOf[SpigotBubbleColumn].isDrag
+        val drag = spigotState.asInstanceOf[SpigotBubbleColumn].isDrag
         BubbleColumn(location, drag)
 
       // BUTTON
@@ -181,7 +182,7 @@ class SpigotBlockMapper @Inject()(
 
       // CAMPFIRE
       case Material.CAMPFIRE =>
-        val signal = block.getState.asInstanceOf[SpigotCampfire].isSignalFire
+        val signal = spigotState.asInstanceOf[SpigotCampfire].isSignalFire
         Campfire(location, facing, flooded, lit, signal)
 
       // CARPET
@@ -197,7 +198,7 @@ class SpigotBlockMapper @Inject()(
 
       // COMMAND_BLOCK
       case Material.COMMAND_BLOCK | Material.CHAIN_COMMAND_BLOCK | Material.REPEATING_COMMAND_BLOCK =>
-        val conditional = block.getState.asInstanceOf[SpigotCommandBlock].isConditional
+        val conditional = spigotState.asInstanceOf[SpigotCommandBlock].isConditional
         CommandBlock(location, material.asInstanceOf[CommandBlockMaterial], facing, conditional)
 
       // CONCRETE
@@ -252,12 +253,12 @@ class SpigotBlockMapper @Inject()(
       case Material.IRON_DOOR |
            Material.ACACIA_DOOR | Material.BIRCH_DOOR | Material.DARK_OAK_DOOR |
            Material.JUNGLE_DOOR | Material.OAK_DOOR | Material.SPRUCE_DOOR =>
-        val hinge = mapDoorHinge(block.getState.asInstanceOf[SpigotDoor].getHinge)
+        val hinge = mapDoorHinge(spigotState.asInstanceOf[SpigotDoor].getHinge)
         Door(location, material.asInstanceOf[DoorMaterial], facing, hinge, bisection, open, powered)
 
       // END_PORTAL_FRAME
       case Material.END_PORTAL_FRAME =>
-        val eye = block.getState.asInstanceOf[SpigotEndPortalFrame].hasEye
+        val eye = spigotState.asInstanceOf[SpigotEndPortalFrame].hasEye
         EndPortalFrame(location, facing, eye)
 
       // FENCE
@@ -318,7 +319,7 @@ class SpigotBlockMapper @Inject()(
 
       // HOPPER
       case Material.HOPPER =>
-        val enabled = block.getState.asInstanceOf[SpigotHopper].isEnabled
+        val enabled = spigotState.asInstanceOf[SpigotHopper].isEnabled
         Hopper(location, facing, !enabled)
 
       // ICE
@@ -333,12 +334,12 @@ class SpigotBlockMapper @Inject()(
 
       // JUKEBOX
       case Material.JUKEBOX =>
-        val record = block.getState.asInstanceOf[SpigotJukebox].hasRecord
+        val record = spigotState.asInstanceOf[SpigotJukebox].hasRecord
         Jukebox(location, record)
 
       // LANTERN
       case Material.LANTERN =>
-        val hanging = block.getState.asInstanceOf[SpigotLantern].isHanging
+        val hanging = spigotState.asInstanceOf[SpigotLantern].isHanging
         Lantern(location, hanging)
 
       // LEAVES
@@ -348,7 +349,7 @@ class SpigotBlockMapper @Inject()(
 
       // LECTERN
       case Material.LECTERN =>
-        val book = block.getState.asInstanceOf[SpigotLectern].hasBook
+        val book = spigotState.asInstanceOf[SpigotLectern].hasBook
         Lectern(location, facing, powered, book)
 
       // LOG
@@ -395,7 +396,7 @@ class SpigotBlockMapper @Inject()(
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        val instrument = mapInstrument(block.getState.asInstanceOf[SpigotNoteBlock].getInstrument)
+        val instrument = mapInstrument(spigotState.asInstanceOf[SpigotNoteBlock].getInstrument)
         NoteBlock(location, instrument, state.asInstanceOf[NoteBlockState], powered)
 
       // ORE
@@ -409,11 +410,11 @@ class SpigotBlockMapper @Inject()(
 
       // PISTON
       case Material.PISTON =>
-        val extended = block.getState.asInstanceOf[SpigotPiston].isExtended
+        val extended = spigotState.asInstanceOf[SpigotPiston].isExtended
         Piston(location, facing, sticky = false, extended)
 
       case Material.STICKY_PISTON =>
-        val extended = block.getState.asInstanceOf[SpigotPiston].isExtended
+        val extended = spigotState.asInstanceOf[SpigotPiston].isExtended
         Piston(location, facing, sticky = true, extended)
 
       // Technical Block: Material.MOVING_PISTON
@@ -445,7 +446,7 @@ class SpigotBlockMapper @Inject()(
 
       // REPEATER
       case Material.REPEATER =>
-        val locked = block.getState.asInstanceOf[SpigotRepeater].isLocked
+        val locked = spigotState.asInstanceOf[SpigotRepeater].isLocked
         Repeater(location, state.asInstanceOf[RepeaterState], facing, powered, locked)
 
       // SAND
@@ -532,7 +533,7 @@ class SpigotBlockMapper @Inject()(
 
            Material.ACACIA_STAIRS | Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
            Material.JUNGLE_STAIRS | Material.OAK_STAIRS | Material.SPRUCE_STAIRS =>
-        val shape = mapStairsShape(block.getState.asInstanceOf[SpigotStairs].getShape)
+        val shape = mapStairsShape(spigotState.asInstanceOf[SpigotStairs].getShape)
         Stairs(location, material.asInstanceOf[StairsMaterial], shape, facing, bisection, flooded)
 
       // STONE
@@ -567,7 +568,7 @@ class SpigotBlockMapper @Inject()(
 
       // TNT
       case Material.TNT =>
-        val unstable = block.getState.asInstanceOf[SpigotTNT].isUnstable
+        val unstable = spigotState.asInstanceOf[SpigotTNT].isUnstable
         TNT(location, unstable)
 
       // TORCH
@@ -587,7 +588,7 @@ class SpigotBlockMapper @Inject()(
 
       // TURTLE_EGG
       case Material.TURTLE_EGG =>
-        val count = block.getState.asInstanceOf[SpigotTurtleEgg].getEggs
+        val count = spigotState.asInstanceOf[SpigotTurtleEgg].getEggs
         TurtleEgg(location, state.asInstanceOf[TurtleEggState], count)
 
       // WALL
