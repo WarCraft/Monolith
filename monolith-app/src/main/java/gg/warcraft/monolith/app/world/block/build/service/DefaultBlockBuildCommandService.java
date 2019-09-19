@@ -15,17 +15,12 @@ import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
 import gg.warcraft.monolith.api.world.block.build.BlockBuild;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
+import gg.warcraft.monolith.api.world.block.type.Sign;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.world.block.build.SimpleBlockBuild;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -66,7 +61,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
 
     Set<Block> searchGlassFoundation(Sign sign) {
         Block attachedTo = sign.getAttachedTo();
-        if (attachedTo.getType() != BlockType.GLASS) {
+        if (attachedTo.type() != BlockType.GLASS) {
             return new HashSet<>();
         }
 
@@ -84,7 +79,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
             searchedBlocks.addAll(currentBlocks);
 
             newGlassBlocks = currentBlocks.stream()
-                    .filter(block -> block.getType() == BlockType.GLASS)
+                    .filter(block -> block.type() == BlockType.GLASS)
                     .filter(block -> !glassBlocks.contains(block))
                     .collect(Collectors.toSet());
             if (newGlassBlocks.isEmpty()) {
@@ -102,15 +97,15 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         }
 
         World world = buildRepositoryBoundingBox.getWorld();
-        int minX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().x(), Integer::min);
-        int maxX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().x(), Integer::max);
-        int minZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().z(), Integer::min);
-        int maxZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().z(), Integer::max);
+        int minX = findMinMaxCoordinate(glassBlocks, block -> block.location().x(), Integer::min);
+        int maxX = findMinMaxCoordinate(glassBlocks, block -> block.location().x(), Integer::max);
+        int minZ = findMinMaxCoordinate(glassBlocks, block -> block.location().z(), Integer::min);
+        int maxZ = findMinMaxCoordinate(glassBlocks, block -> block.location().z(), Integer::max);
 
-        int minY = sign.getLocation().y() + 1;
+        int minY = sign.location().y() + 1;
         int maxY = findMinMaxCoordinate(glassBlocks, block -> {
-            Block highestBlock = worldQueryService.getHighestBlockAt(block.getLocation());
-            return highestBlock.getLocation().y();
+            Block highestBlock = worldQueryService.getHighestBlockAt(block.location());
+            return highestBlock.location().y();
         }, Integer::max);
 
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
@@ -140,7 +135,8 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
 
         List<Sign> extraSigns = new ArrayList<>();
         Block nextSign = blockUtils.getRelative(sign, BlockFace.EAST);
-        while (nextSign.getType() == BlockType.WALL_MOUNTED_SIGN) {
+        while (nextSign.type() == BlockType.SIGN &&
+                ((Sign) nextSign).facing().isDefined()) {
             extraSigns.add((Sign) nextSign);
             nextSign = blockUtils.getRelative(nextSign, BlockFace.EAST);
         }
@@ -174,8 +170,9 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     public void initializeBuilds() {
         Stream<Block> floor = buildRepositoryBoundingBox.sliceY(buildRepositoryBoundingBox.getLowerBoundary());
         List<BlockBuild> builds = floor
-                .filter(block -> block.getType() == BlockType.WALL_MOUNTED_SIGN)
+                .filter(block -> block.type() == BlockType.SIGN)
                 .map(block -> (Sign) block)
+                .filter(sign -> sign.facing().isDefined())
                 .map(this::initializeBuild)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

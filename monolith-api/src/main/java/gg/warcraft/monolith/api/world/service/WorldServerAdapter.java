@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.world.SoundCategory;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
-import gg.warcraft.monolith.api.world.block.Sign;
+import gg.warcraft.monolith.api.world.block.type.Sign;
 
 import java.util.List;
 import java.util.UUID;

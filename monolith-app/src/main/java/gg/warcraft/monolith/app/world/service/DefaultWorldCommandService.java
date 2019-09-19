@@ -7,8 +7,7 @@ import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.Sound;
 import gg.warcraft.monolith.api.world.SoundCategory;
 import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockType;
-import gg.warcraft.monolith.api.world.block.Sign;
+import gg.warcraft.monolith.api.world.block.type.Sign;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 
@@ -26,11 +25,6 @@ public class DefaultWorldCommandService implements WorldCommandService {
     @Override
     public void setBlock(Block block) {
         worldServerAdapter.setBlock(block);
-    }
-
-    @Override
-    public void setBlockType(Block block, BlockType type) {
-        worldServerAdapter.setBlockType(block, type);
     }
 
     @Override

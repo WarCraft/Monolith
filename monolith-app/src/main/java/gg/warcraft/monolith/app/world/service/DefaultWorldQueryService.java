@@ -18,11 +18,6 @@ public class DefaultWorldQueryService implements WorldQueryService {
     }
 
     @Override
-    public World getWorld(World type) {
-        return serverAdapter.getWorld(type);
-    }
-
-    @Override
     public Block getBlockAt(World world, int x, int y, int z) {
         return serverAdapter.getBlockAt(world, x, y, z);
     }

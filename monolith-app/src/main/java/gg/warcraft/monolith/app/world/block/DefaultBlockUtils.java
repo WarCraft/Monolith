@@ -5,32 +5,17 @@ import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockFace;
-import gg.warcraft.monolith.api.world.block.BlockFace.DOWN;
-import gg.warcraft.monolith.api.world.block.BlockFace.EAST;
-import gg.warcraft.monolith.api.world.block.BlockFace.NORTH;
-import gg.warcraft.monolith.api.world.block.BlockFace.SOUTH;
-import gg.warcraft.monolith.api.world.block.BlockFace.UP;
-import gg.warcraft.monolith.api.world.block.BlockFace.WEST;
-import gg.warcraft.monolith.api.world.block.BlockIntersection;
-import gg.warcraft.monolith.api.world.block.BlockIterator;
-import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
-import gg.warcraft.monolith.api.world.block.BlockType;
-import gg.warcraft.monolith.api.world.block.BlockUtils;
+import gg.warcraft.monolith.api.world.block.*;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
-import org.joml.AABBf;
-import org.joml.Intersectionf;
-import org.joml.Spheref;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import org.joml.*;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class DefaultBlockUtils implements BlockUtils {
@@ -229,11 +214,11 @@ public class DefaultBlockUtils implements BlockUtils {
     }
 
     @Override
-    public BlockIntersection intersectBlock(Location origin, Location target, Set<BlockType> ignore) {
+    public BlockIntersection intersectBlock(Location origin, Location target, Predicate<Block> ignore) {
         BlockIterator blockIterator = blockIteratorFactory.createBlockIterator(origin, target);
         while (blockIterator.hasNext()) {
             Block currentBlock = blockIterator.next();
-            if (!ignore.contains(currentBlock.type())) {
+            if (!ignore.test(currentBlock)) {
                 Location intersection = blockIterator.calculateIntersection();
                 return new SimpleBlockIntersection(currentBlock, null, intersection);
             }

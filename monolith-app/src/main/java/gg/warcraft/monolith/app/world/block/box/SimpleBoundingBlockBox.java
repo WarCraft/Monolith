@@ -37,7 +37,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                                   @Assisted World world, @Assisted("minimum") Vector3i minimumCorner,
                                   @Assisted("maximum") Vector3i maximumCorner) {
         this.worldQueryService = worldQueryService;
-        this.world = worldQueryService.getWorld(world);
+        this.world = world;
         this.minimumCorner = new BlockLocation(world, minimumCorner);
         this.maximumCorner = new BlockLocation(world, maximumCorner);
         this.minX = Math.min(minimumCorner.x(), maximumCorner.x());

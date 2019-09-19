@@ -187,8 +187,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
 
     private Block findBlockUnderFeet(Entity entity) {
         Block current = worldQueryService.getBlockAt(entity.getLocation());
-        while (!current.type().isSolid()
-                && current.location().y() >= 0) {
+        while (!current.solid() && current.location().y() >= 0) {
             current = blockUtils.getRelative(current, BlockFace.DOWN);
         }
         return current;

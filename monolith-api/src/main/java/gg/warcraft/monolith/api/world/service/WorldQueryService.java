@@ -15,12 +15,6 @@ import gg.warcraft.monolith.api.world.block.Block;
 public interface WorldQueryService {
 
     /**
-     * @param type The type of world.
-     * @return The world of this type.
-     */
-    World getWorld(World type);
-
-    /**
      * @param world The world.
      * @param x     The X coordinate.
      * @param y     The Y coordinate.
