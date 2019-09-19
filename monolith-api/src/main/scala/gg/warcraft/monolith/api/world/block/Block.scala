@@ -18,7 +18,7 @@ trait Block {
 trait AttachedBlock extends Block {
   val attached: BlockAttachment
   def withAttached(attached: BlockAttachment): AttachedBlock
-}
+} // TODO is Attachable.isAttached always true?
 
 trait AttachableBlock extends Block {
   val attached: Option[BlockAttachment]
@@ -43,7 +43,7 @@ trait ColorableBlock extends Block {
 trait DirectionalBlock extends Block {
   val facing: BlockFace
   def withFacing(facing: BlockFace): DirectionalBlock
-}
+} // TODO name DirectedBlock to be more in line with DirectableBlock?
 
 trait DirectableBlock extends Block {
   val facing: Option[BlockFace]

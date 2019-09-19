@@ -626,8 +626,8 @@ class SpigotBlockMapper @Inject()(
     lazy val snowy = block.asInstanceOf[SnowableBlock].snowy
 
     lazy val attached = block match {
-      case attached: AttachedBlock =>
-      case attachable: AttachableBlock =>
+      case attached: AttachedBlock => attachmentMapper.map(Option(attached.attached))
+      case attachable: AttachableBlock => attachmentMapper.map(attachable.attached)
     }
 
     lazy val bisection = {
@@ -660,6 +660,7 @@ class SpigotBlockMapper @Inject()(
     }
 
     val data: SpigotBlockData = Spigot.createBlockData(material)
+    data match { case it: Attachable => it.setAttached(attached) }
     data match { case it: Bisected => it.setHalf(bisection) }
     data match { case it: Directional => it.setFacing(facing) }
     data match { case it: Lightable => it.setLit(lit) }
