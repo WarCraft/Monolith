@@ -292,7 +292,7 @@ class SpigotBlockMapper @Inject()(
            Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
         FlowerPot(location, material.asInstanceOf[FlowerPotMaterial])
 
-      // FENCE_GATE TODO add whether attached to wall or not
+      // GATE TODO add whether attached to wall or not
       case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE | Material.DARK_OAK_FENCE_GATE |
            Material.JUNGLE_FENCE_GATE | Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
         Gate(location, material.asInstanceOf[WoodMaterial], facing, open, powered, wall = false)
