@@ -40,6 +40,11 @@ trait ColorableBlock extends Block {
   def withColor(color: Option[BlockColor]): ColorableBlock
 }
 
+trait DataBlock extends Block {
+  val data: BlockData
+  def withData(data: BlockData): DataBlock
+}
+
 trait DirectionalBlock extends Block {
   val facing: BlockFace
   def withFacing(facing: BlockFace): DirectionalBlock
