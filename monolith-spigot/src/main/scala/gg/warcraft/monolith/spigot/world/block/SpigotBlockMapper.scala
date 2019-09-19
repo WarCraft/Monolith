@@ -278,8 +278,8 @@ class SpigotBlockMapper @Inject()(
       case Material.LILAC | Material.PEONY | Material.ROSE_BUSH | Material.SUNFLOWER =>
         Flower(location, material.asInstanceOf[FlowerMaterial], bisection, tall = true)
 
-      // FLOWER_POT TODO add empty flower pot option, or maybe move into State rather than Material?
-      case Material.FLOWER_POT => FlowerPot(location, null)
+      // FLOWER_POT
+      case Material.FLOWER_POT => FlowerPot(location, null, state.asInstanceOf[FlowerPotState])
 
       case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
            Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
@@ -292,7 +292,7 @@ class SpigotBlockMapper @Inject()(
 
            Material.POTTED_ACACIA_SAPLING | Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
            Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
-        FlowerPot(location, material.asInstanceOf[FlowerPotMaterial])
+        FlowerPot(location, material.asInstanceOf[FlowerPotMaterial], state.asInstanceOf[FlowerPotState])
 
       // GATE TODO add whether attached to wall or not
       case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE | Material.DARK_OAK_FENCE_GATE |

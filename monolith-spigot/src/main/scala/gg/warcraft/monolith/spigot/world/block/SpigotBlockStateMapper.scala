@@ -48,6 +48,22 @@ class SpigotBlockStateMapper {
         val mode = state.asInstanceOf[SpigotComparator].getMode
         mapComparatorMode(mode)
 
+      // FLOWER_POT
+      case Material.FLOWER_POT => FlowerPotState.EMPTY
+
+      case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
+           Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
+           Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY | Material.POTTED_PINK_TULIP |
+           Material.POTTED_POPPY | Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
+           Material.POTTED_WITHER_ROSE |
+
+           Material.POTTED_BAMBOO | Material.POTTED_BROWN_MUSHROOM | Material.POTTED_CACTUS |
+           Material.POTTED_DEAD_BUSH | Material.POTTED_FERN | Material.POTTED_RED_MUSHROOM |
+
+           Material.POTTED_ACACIA_SAPLING | Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
+           Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
+        FlowerPotState.POTTED
+
       // MELON_STEM
       case Material.MELON_STEM | Material.ATTACHED_MELON_STEM =>
         MelonStemState.valueOf(age)

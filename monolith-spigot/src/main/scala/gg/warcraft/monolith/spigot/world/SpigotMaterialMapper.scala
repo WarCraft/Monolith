@@ -96,7 +96,19 @@ class SpigotMaterialMapper {
     case Material.WHITE_TULIP => FlowerMaterial.WHITE_TULIP
     case Material.WITHER_ROSE => FlowerMaterial.WITHER_ROSE
 
-    // FLOWER_POT TODO
+    // FLOWER_POT
+    case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
+         Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
+         Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY | Material.POTTED_PINK_TULIP |
+         Material.POTTED_POPPY | Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
+         Material.POTTED_WITHER_ROSE |
+
+         Material.POTTED_BAMBOO | Material.POTTED_BROWN_MUSHROOM | Material.POTTED_CACTUS |
+         Material.POTTED_DEAD_BUSH | Material.POTTED_FERN | Material.POTTED_RED_MUSHROOM |
+
+         Material.POTTED_ACACIA_SAPLING | Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
+         Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
+      null // TODO
 
     // ICE
     case Material.ICE => IceMaterial.NORMAL
