@@ -619,6 +619,7 @@ class SpigotBlockMapper @Inject()(
   }
 
   def map(block: Block): SpigotBlockData = {
+    lazy val extensions = extensionMapper.map(block.asInstanceOf[ExtendableBlock].extensions)
     lazy val flooded = block.asInstanceOf[FloodableBlock].flooded
     lazy val lit = block.asInstanceOf[LightableBlock].lit
     lazy val open = block.asInstanceOf[OpenableBlock].open
@@ -626,8 +627,8 @@ class SpigotBlockMapper @Inject()(
     lazy val snowy = block.asInstanceOf[SnowableBlock].snowy
 
     lazy val attached = block match {
-      case attached: AttachedBlock => attachmentMapper.map(Option(attached.attached))
-      case attachable: AttachableBlock => attachmentMapper.map(attachable.attached)
+      case it: AttachedBlock => attachmentMapper.map(Option(it.attached))
+      case it: AttachableBlock => attachmentMapper.map(it.attached)
     }
 
     lazy val bisection = {
@@ -635,18 +636,16 @@ class SpigotBlockMapper @Inject()(
       bisectionMapper.map(bisection)
     }
 
-    // lazy val extensions = TODO mapExtensions(block.getState.asInstanceOf[MultipleFacing])
-
     lazy val facing = block match {
-      case directional: DirectionalBlock => faceMapper.map(directional.facing)
-      case directable: DirectableBlock => faceMapper.map(directable.facing.get)
+      case it: DirectionalBlock => faceMapper.map(it.facing)
+      case it: DirectableBlock => faceMapper.map(it.facing.get)
     }
 
     lazy val material = block match {
-      case colored: ColoredBlock => colorMapper.map(colored)
-      case colorable: ColorableBlock => colorMapper.map(colorable)
-      case material: MaterialBlock[_] => materialMapper.map(material)
-      // case stateful: StatefulBlock[_] => stateMapper.map(stateful)
+      case it: ColoredBlock => colorMapper.map(it)
+      case it: ColorableBlock => colorMapper.map(it)
+      case it: MaterialBlock[_] => materialMapper.map(it)
+      // case it: StatefulBlock[_] => stateMapper.map(it)
     }
 
     lazy val orientation = {
@@ -660,6 +659,7 @@ class SpigotBlockMapper @Inject()(
     }
 
     val data: SpigotBlockData = Spigot.createBlockData(material)
+
     data match { case it: Attachable => it.setAttached(attached) }
     data match { case it: Bisected => it.setHalf(bisection) }
     data match { case it: Directional => it.setFacing(facing) }
@@ -671,10 +671,10 @@ class SpigotBlockMapper @Inject()(
     data match { case it: Snowable => it.setSnowy(snowy) }
     data match { case it: Waterlogged => it.setWaterlogged(flooded) }
 
-    block match {
-      case it: Bamboo =>
-      case it: Bed =>
-      case it: BubbleColumn =>
+    data match {
+      case it: MultipleFacing =>
+        it.getAllowedFaces.forEach(face => it.setFace(face, false)) // TODO check if this is necessary on fresh BlockData objects
+        extensions.forEach(face => it.setFace(face, true))
     }
 
     data
@@ -686,9 +686,20 @@ class SpigotBlockMapper @Inject()(
     case SpigotBamboo.Leaves.LARGE => BambooLeavesMaterial.LARGE
   }
 
+  def mapBambooLeaves(leaves: BambooLeavesMaterial): SpigotBamboo.Leaves = leaves match {
+    case BambooLeavesMaterial.NONE => SpigotBamboo.Leaves.NONE
+    case BambooLeavesMaterial.SMALL => SpigotBamboo.Leaves.SMALL
+    case BambooLeavesMaterial.LARGE => SpigotBamboo.Leaves.LARGE
+  }
+
   def mapDoorHinge(hinge: SpigotDoor.Hinge): BlockHinge = hinge match {
     case SpigotDoor.Hinge.LEFT => BlockHinge.LEFT
     case SpigotDoor.Hinge.RIGHT => BlockHinge.RIGHT
+  }
+
+  def mapDoorHinge(hinge: BlockHinge): SpigotDoor.Hinge = hinge match {
+    case BlockHinge.LEFT => SpigotDoor.Hinge.LEFT
+    case BlockHinge.RIGHT => SpigotDoor.Hinge.RIGHT
   }
 
   def mapInstrument(instrument: Instrument): NoteBlockMaterial = instrument match {
