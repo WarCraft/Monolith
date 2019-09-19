@@ -17,7 +17,7 @@ class Vector3fSpec extends fixture.FunSpec {
     finally {}
   }
 
-  describe("Location") {
+  describe("Vector3f") {
 
     describe(".lengthSquared") {
 

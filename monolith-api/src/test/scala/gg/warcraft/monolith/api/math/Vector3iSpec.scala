@@ -11,7 +11,7 @@ class Vector3iSpec extends fixture.FunSpec {
     finally {}
   }
 
-  describe("BlockLocation") {
+  describe("Vector3i") {
 
     describe("::add(Int, Int, Int)") {
 
