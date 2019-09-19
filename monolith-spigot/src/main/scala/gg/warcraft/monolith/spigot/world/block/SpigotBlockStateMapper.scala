@@ -7,7 +7,7 @@ import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
-import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, StructureBlock => SpigotStructureBlock }
+import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
 
 class SpigotBlockStateMapper @Inject()(
   private val locationMapper: SpigotLocationMapper
@@ -104,8 +104,14 @@ class SpigotBlockStateMapper @Inject()(
         val mode = state.asInstanceOf[SpigotStructureBlock].getMode
         mapStructureBlockMode(mode)
 
-      // TURTLE_EGG TODO has both eggs and hatch state values, make 2 state enums TurtleEggCount and TurtleEggHatched?
-      case Material.TURTLE_EGG => TurtleEggState.values()
+      // TURTLE_EGG
+      case Material.TURTLE_EGG =>
+        val hatch = state.asInstanceOf[SpigotTurtleEgg].getHatch
+        val eggs = state.asInstanceOf[SpigotTurtleEgg].getEggs
+        TurtleEggState(
+          TurtleEggAge.valueOf(s"AGE_$hatch"),
+          TurtleEggCount.valueOf(s"COUNT_$eggs"),
+        )
 
       // WEIGHTED_PRESSURE_PLATE
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>

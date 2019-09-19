@@ -9,7 +9,7 @@ import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotMaterialM
 import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ BlockData => SpigotBlockData, _ }
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, Stairs => SpigotStairs, TNT => SpigotTNT }
 
 class SpigotBlockMapper @Inject()(
   private val locationMapper: SpigotLocationMapper,
@@ -131,6 +131,7 @@ class SpigotBlockMapper @Inject()(
       case Material.STRUCTURE_BLOCK => StructureBlock(location, state.asInstanceOf[StructureBlockState])
       case Material.SUGAR_CANE => SugarCane(location, state.asInstanceOf[SugarCaneState])
       case Material.SWEET_BERRY_BUSH => SweetBerryBush(location, state.asInstanceOf[SweetBerryState])
+      case Material.TURTLE_EGG => TurtleEgg(location, state.asInstanceOf[TurtleEggState])
       case Material.VINE => Vine(location, extensions)
       case Material.WATER => Water(location, state.asInstanceOf[WaterState])
       case Material.WHEAT => Wheat(location, state.asInstanceOf[WheatState])
@@ -585,11 +586,6 @@ class SpigotBlockMapper @Inject()(
       // TRIPWIRE
       case Material.TRIPWIRE => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
       case Material.TRIPWIRE_HOOK => throw new IllegalArgumentException(s"Failed to map block with type: ${ block.getType }")
-
-      // TURTLE_EGG
-      case Material.TURTLE_EGG =>
-        val count = spigotState.asInstanceOf[SpigotTurtleEgg].getEggs
-        TurtleEgg(location, state.asInstanceOf[TurtleEggState], count)
 
       // WALL
       case Material.BRICK_WALL | Material.NETHER_BRICK_WALL | Material.RED_NETHER_BRICK_WALL |
