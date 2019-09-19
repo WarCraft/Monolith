@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world
 
-import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
+import gg.warcraft.monolith.api.math.{ Vector3f, Vector3i }
 
 case class Location(
   world: World,

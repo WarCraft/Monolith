@@ -28,12 +28,7 @@ import gg.warcraft.monolith.app.entity.player.hiding.handler.PlayerHidingHandler
 import gg.warcraft.monolith.app.entity.status.handler.StatusEffectHandler;
 import gg.warcraft.monolith.app.world.portal.handler.PortalEntryTaskHandler;
 import gg.warcraft.monolith.spigot.entity.handler.EntityRemovalHandler;
-import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotInventoryEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotItemEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotPlayerEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotProjectileEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotWorldEventMapper;
+import gg.warcraft.monolith.spigot.event.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;

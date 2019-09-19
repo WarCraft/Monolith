@@ -37,10 +37,10 @@ import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
 import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.menu.service.SpigotMenuAdapter;
 import gg.warcraft.monolith.spigot.world.Overworld;
+import gg.warcraft.monolith.spigot.world.SpigotWorldService;
 import gg.warcraft.monolith.spigot.world.TheEnd;
 import gg.warcraft.monolith.spigot.world.TheNether;
 import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupCommandService;
-import gg.warcraft.monolith.spigot.world.SpigotWorldService;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 

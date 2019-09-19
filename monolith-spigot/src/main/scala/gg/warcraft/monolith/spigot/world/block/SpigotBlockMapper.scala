@@ -2,9 +2,9 @@ package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state._
-import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotMaterialMapper }
 import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
 import org.bukkit.block.{ Block => SpigotBlock }

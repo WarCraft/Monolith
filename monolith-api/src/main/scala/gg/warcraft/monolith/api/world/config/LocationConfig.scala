@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.config
 
-import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
+import com.fasterxml.jackson.annotation.{ JsonCreator, JsonProperty }
 import gg.warcraft.monolith.api.math.config.Vector3fConfig
-import gg.warcraft.monolith.api.world.{Location, World}
+import gg.warcraft.monolith.api.world.{ Location, World }
 
 @JsonCreator
 case class LocationConfig(
