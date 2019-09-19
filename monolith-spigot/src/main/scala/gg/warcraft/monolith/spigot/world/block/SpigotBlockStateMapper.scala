@@ -6,8 +6,8 @@ import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
-import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled }
-import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Sapling => SpigotSapling, StructureBlock => SpigotStructureBlock }
+import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
+import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, StructureBlock => SpigotStructureBlock }
 
 class SpigotBlockStateMapper @Inject()(
   private val locationMapper: SpigotLocationMapper
@@ -31,8 +31,7 @@ class SpigotBlockStateMapper @Inject()(
       case Material.LAVA => LavaState.valueOf(level)
       case Material.NETHER_WART => NetherWartState.valueOf(age)
       case Material.POTATOES => PotatoState.valueOf(age)
-      case Material.REDSTONE_WIRE => RedstoneWireState.values()
-      case Material.REPEATER => RepeaterState.values()
+      case Material.REDSTONE_WIRE => RedstoneWireState.valueOf(power)
       case Material.SEA_PICKLE => SeaPickleState.values()
       case Material.SUGAR_CANE => SugarCaneState.valueOf(age)
       case Material.SWEET_BERRY_BUSH => SweetBerryState.valueOf(age)
@@ -69,7 +68,13 @@ class SpigotBlockStateMapper @Inject()(
 
       // RAIL
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
-        RailsState.values()
+        val shape = state.asInstanceOf[SpigotRail].getShape
+        mapRailShape(shape)
+
+      // REPEATER
+      case Material.REPEATER =>
+        val delay = state.getBlockData.asInstanceOf[SpigotRepeater].getDelay
+        RepeaterState.valueOf(s"DELAY_${ delay }")
 
       // SANDSTONE TODO add slab stairs wall etc
       case Material.SANDSTONE | Material.RED_SANDSTONE =>
@@ -88,8 +93,8 @@ class SpigotBlockStateMapper @Inject()(
       case Material.BAMBOO_SAPLING |
            Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
            Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
-        val stage = s"AGE_${ state.asInstanceOf[SpigotSapling].getStage }"
-        SaplingState.valueOf(stage)
+        val stage = state.asInstanceOf[SpigotSapling].getStage
+        SaplingState.valueOf(s"AGE_${ stage }")
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
@@ -107,6 +112,20 @@ class SpigotBlockStateMapper @Inject()(
   def mapComparatorMode(mode: SpigotComparator.Mode): ComparatorState = mode match {
     case SpigotComparator.Mode.COMPARE => ComparatorState.COMPARE
     case SpigotComparator.Mode.SUBTRACT => ComparatorState.SUBTRACT
+  }
+
+  def mapRailShape(shape: SpigotRail.Shape): RailsState = shape match {
+    case SpigotRail.Shape.NORTH_EAST => RailsState.NORTH_EAST
+    case SpigotRail.Shape.NORTH_SOUTH => RailsState.NORTH_SOUTH
+    case SpigotRail.Shape.NORTH_WEST => RailsState.NORTH_WEST
+    case SpigotRail.Shape.EAST_WEST => RailsState.EAST_WEST
+    case SpigotRail.Shape.SOUTH_EAST => RailsState.SOUTH_EAST
+    case SpigotRail.Shape.SOUTH_WEST => RailsState.SOUTH_WEST
+
+    case SpigotRail.Shape.ASCENDING_NORTH => RailsState.ASCENDING_NORTH
+    case SpigotRail.Shape.ASCENDING_EAST => RailsState.ASCENDING_EAST
+    case SpigotRail.Shape.ASCENDING_SOUTH => RailsState.ASCENDING_SOUTH
+    case SpigotRail.Shape.ASCENDING_WEST => RailsState.ASCENDING_WEST
   }
 
   def mapStructureBlockMode(mode: SpigotStructureBlock.Mode): StructureBlockState = mode match {
