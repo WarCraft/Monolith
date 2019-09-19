@@ -7,7 +7,7 @@ import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
-import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, StructureBlock => SpigotStructureBlock }
+import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, StructureBlock => SpigotStructureBlock }
 
 class SpigotBlockStateMapper @Inject()(
   private val locationMapper: SpigotLocationMapper
@@ -32,10 +32,8 @@ class SpigotBlockStateMapper @Inject()(
       case Material.NETHER_WART => NetherWartState.valueOf(age)
       case Material.POTATOES => PotatoState.valueOf(age)
       case Material.REDSTONE_WIRE => RedstoneWireState.valueOf(power)
-      case Material.SEA_PICKLE => SeaPickleState.values()
       case Material.SUGAR_CANE => SugarCaneState.valueOf(age)
       case Material.SWEET_BERRY_BUSH => SweetBerryState.valueOf(age)
-      case Material.TURTLE_EGG => TurtleEggState.values()
       case Material.WATER => WaterState.valueOf(level)
       case Material.WHEAT => WheatState.valueOf(age)
 
@@ -74,7 +72,7 @@ class SpigotBlockStateMapper @Inject()(
       // REPEATER
       case Material.REPEATER =>
         val delay = state.getBlockData.asInstanceOf[SpigotRepeater].getDelay
-        RepeaterState.valueOf(s"DELAY_${ delay }")
+        RepeaterState.valueOf(s"DELAY_$delay")
 
       // SANDSTONE TODO add slab stairs wall etc
       case Material.SANDSTONE | Material.RED_SANDSTONE =>
@@ -94,12 +92,20 @@ class SpigotBlockStateMapper @Inject()(
            Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
            Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
         val stage = state.asInstanceOf[SpigotSapling].getStage
-        SaplingState.valueOf(s"AGE_${ stage }")
+        SaplingState.valueOf(s"AGE_$stage")
+
+      // SEA_PICKLE
+      case Material.SEA_PICKLE =>
+        val pickles = state.getBlockData.asInstanceOf[SpigotSeaPickle].getPickles
+        SeaPickleState.valueOf(s"COUNT_$pickles")
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
         val mode = state.asInstanceOf[SpigotStructureBlock].getMode
         mapStructureBlockMode(mode)
+
+      // TURTLE_EGG TODO has both eggs and hatch state values, make 2 state enums TurtleEggCount and TurtleEggHatched?
+      case Material.TURTLE_EGG => TurtleEggState.values()
 
       // WEIGHTED_PRESSURE_PLATE
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
