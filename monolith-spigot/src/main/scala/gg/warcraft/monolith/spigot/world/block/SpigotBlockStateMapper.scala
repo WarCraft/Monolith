@@ -7,7 +7,7 @@ import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
 import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
-import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, Stairs => SpigotStairs, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, NoteBlock => SpigotNoteBlock, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, Stairs => SpigotStairs, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
 
 class SpigotBlockStateMapper @Inject()(
   private val locationMapper: SpigotLocationMapper
@@ -58,7 +58,8 @@ class SpigotBlockStateMapper @Inject()(
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        NoteBlockState.values()
+        val note = state.asInstanceOf[SpigotNoteBlock].getNote
+        NoteBlockState.valueOf(s"NOTE_$note")
 
       // PUMPKIN_STEM
       case Material.PUMPKIN_STEM | Material.ATTACHED_PUMPKIN_STEM =>
