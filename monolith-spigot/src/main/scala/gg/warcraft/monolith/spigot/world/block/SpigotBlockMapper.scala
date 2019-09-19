@@ -31,7 +31,7 @@ class SpigotBlockMapper @Inject()(
     lazy val attached = attachmentMapper.map(block.getState)
     lazy val bisection = bisectionMapper.map(block.getState.asInstanceOf[Bisected].getHalf)
     lazy val color = colorMapper.map(block.getType)
-    lazy val extensions = extensionMapper.map(block.getState.asInstanceOf[MultipleFacing])
+    lazy val extensions = extensionMapper.map(block.getState.asInstanceOf[MultipleFacing].getFaces)
     lazy val facing = faceMapper.map(block.getState.asInstanceOf[Directional].getFacing)
     lazy val flooded = block.getState.asInstanceOf[Waterlogged].isWaterlogged
     lazy val lit = block.getState.asInstanceOf[Lightable].isLit
