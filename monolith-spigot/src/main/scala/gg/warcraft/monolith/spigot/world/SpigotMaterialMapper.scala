@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.spigot.world
 
-import gg.warcraft.monolith.api.world.block.{ BlockMaterial, MaterialBlock }
+import gg.warcraft.monolith.api.world.block.{ Block, BlockMaterial, MaterialBlock }
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
 import org.bukkit.Material
@@ -283,7 +283,7 @@ class SpigotMaterialMapper {
       WoodMaterial.SPRUCE
   }
 
-  def map(block: MaterialBlock[_]): Material = block match {
+  def map(block: Block): Material = block match {
 
     // AIR
     case air: Air => air.material match {
@@ -291,5 +291,12 @@ class SpigotMaterialMapper {
       case AirMaterial.CAVE => Material.CAVE_AIR
       case AirMaterial.VOID => Material.VOID_AIR
     }
+
+    // TODO map all 150 Monolith blocks to their Material
   }
 }
+
+// TODO implement StatefulBlock twice on TurtleEgg to remove nesting of state obj?
+// TODO rename all state enums that dont need it to make sense, so keep AnvilState
+// TODO but rename WeightedPressurePlateState to WeightedPressurePlatePower
+// TODO and TurtleEggCount plus TurtleEggAge
