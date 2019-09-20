@@ -16,7 +16,6 @@ import gg.warcraft.monolith.api.world.block.build.BlockBuild;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
 import gg.warcraft.monolith.api.world.block.type.Sign;
-import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.world.block.build.SimpleBlockBuild;
 
@@ -29,7 +28,6 @@ import java.util.stream.Stream;
 
 public class DefaultBlockBuildCommandService implements BlockBuildCommandService {
     private final WorldQueryService worldQueryService;
-    private final WorldCommandService worldCommandService;
     private final BlockBuildRepository buildRepository;
     private final BlockUtils blockUtils;
     private final Logger logger;
@@ -37,14 +35,13 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     private final BoundingBlockBox buildRepositoryBoundingBox;
 
     @Inject
-    public DefaultBlockBuildCommandService(WorldQueryService worldQueryService, WorldCommandService worldCommandService,
+    public DefaultBlockBuildCommandService(WorldQueryService worldQueryService,
                                            BlockBuildRepository buildRepository,
                                            BlockUtils blockUtils, BoundingBlockBoxFactory blockBoxFactory,
                                            @PluginLogger Logger logger, @Named("BuildRepositoryWorld") World world,
                                            @Named("BuildRepositoryMinimumCorner") Vector3i minimumCorner,
                                            @Named("BuildRepositoryMaximumCorner") Vector3i maximumCorner) {
         this.worldQueryService = worldQueryService;
-        this.worldCommandService = worldCommandService;
         this.buildRepository = buildRepository;
         this.blockUtils = blockUtils;
         this.logger = logger;
@@ -60,7 +57,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     }
 
     Set<Block> searchGlassFoundation(Sign sign) {
-        Block attachedTo = sign.getAttachedTo();
+        Block attachedTo = sign.getAttachedTo(); // TODO impl convenience method on AttachedBlock that returns BlockLocation?
         if (attachedTo.type() != BlockType.GLASS) {
             return new HashSet<>();
         }
@@ -114,17 +111,17 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     }
 
     BlockBuild initializeBuild(Sign sign) {
-        String[] lines = sign.getLines();
-        if (lines[0].isEmpty()) {
+        String firstLine = sign.lines().head();
+        if (firstLine.isEmpty()) {
             // sign is extra data for other build
             return null;
         }
 
-        Preconditions.checkArgument(lines[0].contains(":"), "Encountered build sign with illegal type and model. " +
+        Preconditions.checkArgument(firstLine.contains(":"), "Encountered build sign with illegal type and model. " +
                 "All bottom level wall mounted signs in the build repository need to have the build type and model " +
                 "specified on the first sign line as type:model.");
 
-        String[] typeAndModel = lines[0].split(":");
+        String[] typeAndModel = firstLine.split(":");
         String type = typeAndModel[0];
         String model = typeAndModel[1];
 
@@ -142,13 +139,13 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         }
 
         String[] extraLines = extraSigns.stream()
-                .map(Sign::getLines)
+                .map(Sign::lines)
                 .flatMap(Stream::of)
-                .toArray(String[]::new);
+                .toArray(String[]::new); // TODO FIX
 
-        String[] allLines = Stream.of(lines, extraLines)
+        String[] allLines = Stream.of(sign.lines(), extraLines)
                 .flatMap(Stream::of)
-                .toArray(String[]::new);
+                .toArray(String[]::new); // TODO FIX
 
         return new SimpleBlockBuild(type, model, allLines, boundingBox);
     }
