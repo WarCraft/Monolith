@@ -4,8 +4,8 @@ import gg.warcraft.monolith.api.world.block.BlockMaterial;
 
 public enum NoteBlockMaterial implements BlockMaterial {
     BANJO,
-    BASEDRUM,
-    BASS,
+    BASS_DRUM,
+    BASS_GUITAR,
     BELL,
     BIT,
     CHIME,
@@ -17,6 +17,6 @@ public enum NoteBlockMaterial implements BlockMaterial {
     HAT,
     IRON_XYLOPHONE,
     PLING,
-    SNARE,
+    SNARE_DRUM,
     XYLOPHONE,
 }
