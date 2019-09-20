@@ -1,20 +1,21 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.state._
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
-import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, Rail => SpigotRail }
+import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, BlockData => SpigotBlockData, Rail => SpigotRail }
 import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, NoteBlock => SpigotNoteBlock, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, Stairs => SpigotStairs, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
 
 class SpigotBlockStateMapper {
 
   def map(block: SpigotBlock): BlockState = {
-    val state = block.getState.getBlockData
+    val data = block.getState.getBlockData
 
-    lazy val age = s"AGE_${ state.asInstanceOf[Ageable].getAge }"
-    lazy val level = s"LEVEL_${ state.asInstanceOf[Levelled].getLevel }"
-    lazy val power = s"POWER_${ state.asInstanceOf[AnaloguePowerable].getPower }"
+    lazy val age = s"AGE_${ data.asInstanceOf[Ageable].getAge }"
+    lazy val level = s"LEVEL_${ data.asInstanceOf[Levelled].getLevel }"
+    lazy val power = s"POWER_${ data.asInstanceOf[AnaloguePowerable].getPower }"
 
     block.getType match {
       case Material.BAMBOO => BambooState.valueOf(age)
@@ -40,12 +41,12 @@ class SpigotBlockStateMapper {
 
       // CAKE
       case Material.CAKE =>
-        val bites = state.asInstanceOf[SpigotCake].getBites
+        val bites = data.asInstanceOf[SpigotCake].getBites
         CakeState.valueOf(s"EATEN_$bites")
 
       // COMPARATOR
       case Material.COMPARATOR =>
-        val mode = state.asInstanceOf[SpigotComparator].getMode
+        val mode = data.asInstanceOf[SpigotComparator].getMode
         mapComparatorMode(mode)
 
       // FLOWER_POT
@@ -70,7 +71,7 @@ class SpigotBlockStateMapper {
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        val note = state.asInstanceOf[SpigotNoteBlock].getNote
+        val note = data.asInstanceOf[SpigotNoteBlock].getNote
         NoteBlockState.valueOf(s"NOTE_$note")
 
       // PUMPKIN_STEM
@@ -79,12 +80,12 @@ class SpigotBlockStateMapper {
 
       // RAIL
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
-        val shape = state.asInstanceOf[SpigotRail].getShape
+        val shape = data.asInstanceOf[SpigotRail].getShape
         mapRailShape(shape)
 
       // REPEATER
       case Material.REPEATER =>
-        val delay = state.asInstanceOf[SpigotRepeater].getDelay
+        val delay = data.asInstanceOf[SpigotRepeater].getDelay
         RepeaterState.valueOf(s"DELAY_$delay")
 
       // SANDSTONE TODO add slab stairs wall etc, stairs need their own case due to shape also going on the state
@@ -104,23 +105,23 @@ class SpigotBlockStateMapper {
       case Material.BAMBOO_SAPLING |
            Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
            Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
-        val stage = state.asInstanceOf[SpigotSapling].getStage
+        val stage = data.asInstanceOf[SpigotSapling].getStage
         SaplingState.valueOf(s"AGE_$stage")
 
       // SEA_PICKLE
       case Material.SEA_PICKLE =>
-        val pickles = state.asInstanceOf[SpigotSeaPickle].getPickles
+        val pickles = data.asInstanceOf[SpigotSeaPickle].getPickles
         SeaPickleState.valueOf(s"COUNT_$pickles")
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
-        val mode = state.asInstanceOf[SpigotStructureBlock].getMode
+        val mode = data.asInstanceOf[SpigotStructureBlock].getMode
         mapStructureBlockMode(mode)
 
       // TURTLE_EGG
       case Material.TURTLE_EGG =>
-        val hatch = state.asInstanceOf[SpigotTurtleEgg].getHatch
-        val eggs = state.asInstanceOf[SpigotTurtleEgg].getEggs
+        val hatch = data.asInstanceOf[SpigotTurtleEgg].getHatch
+        val eggs = data.asInstanceOf[SpigotTurtleEgg].getEggs
         TurtleEggState(
           TurtleEggAge.valueOf(s"AGE_$hatch"),
           TurtleEggCount.valueOf(s"COUNT_$eggs"),
@@ -131,6 +132,47 @@ class SpigotBlockStateMapper {
         WeightedPressurePlateState.valueOf(power)
 
       case _ => throw new IllegalArgumentException(s"Failed to map state for material: ${ block.getType }")
+    }
+  }
+
+  def map(block: StatefulBlock[_], data: SpigotBlockData): Unit = {
+    lazy val ageable = data.asInstanceOf[Ageable]
+    lazy val levelled = data.asInstanceOf[Levelled]
+    lazy val powerable = data.asInstanceOf[AnaloguePowerable]
+
+    block match {
+
+      // AGEABLE
+      case it: Bamboo => ageable.setAge(it.state.toInt)
+      case it: Beetroots => ageable.setAge(it.state.toInt)
+      case it: Cactus => ageable.setAge(it.state.toInt)
+      case it: Carrots => ageable.setAge(it.state.toInt)
+      case it: ChorusFlower => ageable.setAge(it.state.toInt)
+      case it: Cocoa => ageable.setAge(it.state.toInt)
+      case it: Kelp => ageable.setAge(it.state.toInt)
+      case it: MelonStem => ageable.setAge(it.state.toInt)
+      case it: NetherWarts => ageable.setAge(it.state.toInt)
+      case it: Potatoes => ageable.setAge(it.state.toInt)
+      case it: PumpkinStem => ageable.setAge(it.state.toInt)
+      case it: Sapling => ageable.setAge(it.state.toInt)
+      case it: SugarCane => ageable.setAge(it.state.toInt)
+      case it: SweetBerryBush => ageable.setAge(it.state.toInt)
+      case it: Wheat => ageable.setAge(it.state.toInt)
+
+      // LEVELLED
+      case it: Cauldron => levelled.setLevel(it.state.toInt)
+      case it: Lava => levelled.setLevel(it.state.toInt)
+      case it: Water => levelled.setLevel(it.state.toInt)
+
+      // POWERABLE
+      case it: RedstoneWire => powerable.setPower(it.state.toInt)
+      case it: WeightedPressurePlate => powerable.setPower(it.state.toInt)
+
+      // TODO continue for other StatefulBlocks
+      case it: TurtleEgg =>
+        val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
+        turtleEggData.setHatch(it.state.age.toInt)
+        turtleEggData.setEggs(it.state.count.toInt)
     }
   }
 
