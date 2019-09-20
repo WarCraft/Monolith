@@ -18,5 +18,9 @@ public enum CactusState implements BlockState {
     AGE_12,
     AGE_13,
     AGE_14,
-    AGE_15,
+    AGE_15;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

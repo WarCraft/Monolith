@@ -8,5 +8,9 @@ public enum ChorusFlowerState implements BlockState {
     AGE_2,
     AGE_3,
     AGE_4,
-    AGE_5,
+    AGE_5;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

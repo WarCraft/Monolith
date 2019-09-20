@@ -28,5 +28,9 @@ public enum KelpState implements BlockState {
     AGE_22,
     AGE_23,
     AGE_24,
-    AGE_25,
+    AGE_25;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

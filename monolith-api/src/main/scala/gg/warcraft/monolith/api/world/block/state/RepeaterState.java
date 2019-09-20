@@ -6,5 +6,9 @@ public enum RepeaterState implements BlockState {
     DELAY_1,
     DELAY_2,
     DELAY_3,
-    DELAY_4,
+    DELAY_4;
+
+    public int toInt() {
+        return ordinal() + 1;
+    }
 }

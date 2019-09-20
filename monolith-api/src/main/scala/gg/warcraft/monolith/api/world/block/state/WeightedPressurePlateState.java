@@ -18,5 +18,9 @@ public enum WeightedPressurePlateState implements BlockState {
     POWER_12,
     POWER_13,
     POWER_14,
-    POWER_15,
+    POWER_15;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

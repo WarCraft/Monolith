@@ -11,5 +11,9 @@ public enum ComposterState implements BlockState {
     LEVEL_5,
     LEVEL_6,
     LEVEL_7,
-    LEVEL_8,
+    LEVEL_8;
+
+    public int toInt() {
+        return ordinal();
+    }
 }
