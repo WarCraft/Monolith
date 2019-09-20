@@ -293,6 +293,8 @@ class SpigotMaterialMapper {
     }
 
     // TODO map all 150 Monolith blocks to their Material
+
+    // TODO call colorMapper as necessary
   }
 }
 

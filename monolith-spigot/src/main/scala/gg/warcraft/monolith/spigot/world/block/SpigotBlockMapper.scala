@@ -619,18 +619,11 @@ class SpigotBlockMapper @Inject()(
   }
 
   def map(block: Block): SpigotBlockData = {
+    // Create new block data object
+    val material = materialMapper.map(block)
+    val data: SpigotBlockData = Spigot.createBlockData(material)
 
-    /* TODO
-      BlockMapper calls MaterialMapper(Block) to get ultimate Material of block
-
-      BlockMapper creates a new BlockData with this material
-      BlockMapper sets all sorts of data values on the BlockData
-      BlockMapper returns the BlockData which the WorldService can force update on the block
-
-
-     */
-
-
+    // Lazily compute generic block data
     lazy val extensions = extensionMapper.map(block.asInstanceOf[ExtendableBlock].extensions)
     lazy val flooded = block.asInstanceOf[FloodableBlock].flooded
     lazy val lit = block.asInstanceOf[LightableBlock].lit
@@ -653,12 +646,6 @@ class SpigotBlockMapper @Inject()(
       case it: DirectableBlock => faceMapper.map(it.facing.get)
     }
 
-    lazy val material = block match {
-      case it: ColoredBlock => colorMapper.map(it)
-      case it: ColorableBlock => colorMapper.map(it)
-      case it: Block => materialMapper.map(it)
-    }
-
     lazy val orientation = {
       val orientation = block.asInstanceOf[OrientedBlock].orientation
       orientationMapper.map(orientation)
@@ -669,8 +656,7 @@ class SpigotBlockMapper @Inject()(
       rotationMapper.map(rotation)
     }
 
-    val data: SpigotBlockData = Spigot.createBlockData(material)
-
+    // Set generic block data
     data match { case it: Attachable => it.setAttached(attached) }
     data match { case it: Bisected => it.setHalf(bisection) }
     data match { case it: Directional => it.setFacing(facing) }
@@ -688,8 +674,10 @@ class SpigotBlockMapper @Inject()(
         extensions.forEach(face => it.setFace(face, true))
     }
 
-    // TODO map BlockState data onto BlockData via BlockStateMapper?
+    // Set specific block data
+    block match { case it: StatefulBlock[_] => stateMapper.map(it, data) }
 
+    // Return block data object
     data
   }
 
