@@ -5,5 +5,9 @@ import gg.warcraft.monolith.api.world.block.BlockState;
 public enum CocoaState implements BlockState {
     AGE_0,
     AGE_1,
-    AGE_2,
+    AGE_2;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

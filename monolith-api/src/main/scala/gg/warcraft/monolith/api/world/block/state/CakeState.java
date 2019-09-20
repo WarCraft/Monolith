@@ -9,5 +9,9 @@ public enum CakeState implements BlockState {
     EATEN_3,
     EATEN_4,
     EATEN_5,
-    EATEN_6,
+    EATEN_6;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

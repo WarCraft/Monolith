@@ -27,5 +27,9 @@ public enum NoteBlockState implements BlockState {
     NOTE_21,
     NOTE_22,
     NOTE_23,
-    NOTE_24,
+    NOTE_24;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

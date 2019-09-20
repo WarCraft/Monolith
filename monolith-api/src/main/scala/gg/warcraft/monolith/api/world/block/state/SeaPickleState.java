@@ -6,5 +6,9 @@ public enum SeaPickleState implements BlockState {
     COUNT_1,
     COUNT_2,
     COUNT_3,
-    COUNT_4,
+    COUNT_4;
+
+    public int toInt() {
+        return ordinal() + 1;
+    }
 }

@@ -10,5 +10,9 @@ public enum PotatoState implements BlockState {
     AGE_4,
     AGE_5,
     AGE_6,
-    AGE_7,
+    AGE_7;
+
+    public int toInt() {
+        return ordinal();
+    }
 }

@@ -6,5 +6,9 @@ public enum NetherWartState implements BlockState {
     AGE_0,
     AGE_1,
     AGE_2,
-    AGE_3,
+    AGE_3;
+
+    public int toInt() {
+        return ordinal();
+    }
 }
