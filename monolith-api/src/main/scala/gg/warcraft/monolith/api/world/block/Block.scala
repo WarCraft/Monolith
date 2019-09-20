@@ -15,8 +15,13 @@ trait Block {
   def withLocation(loc: BlockLocation): Block
 }
 
-trait AttachedBlock extends Block {
+trait AttachedBlock extends Block { // TODO can this extend DirectedBlock?
   val attached: BlockAttachment
+
+  lazy val attachedTo : BlockLocation = {
+    // TODO use facing to calc attached location
+  }
+
   def withAttached(attached: BlockAttachment): AttachedBlock
 } // TODO is Attachable.isAttached always true?
 
@@ -38,11 +43,6 @@ trait ColoredBlock extends Block {
 trait ColorableBlock extends Block {
   val color: Option[BlockColor]
   def withColor(color: Option[BlockColor]): ColorableBlock
-}
-
-trait DataBlock extends Block {
-  val data: BlockData
-  def withData(data: BlockData): DataBlock
 }
 
 trait DirectionalBlock extends Block {
