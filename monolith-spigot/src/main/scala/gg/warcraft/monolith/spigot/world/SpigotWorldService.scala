@@ -32,10 +32,18 @@ class SpigotWorldService @Inject()(
 
   override def setBlock(block: Block): Unit = {
     val location = locationMapper.map(block.location)
-    val blockState = location.getBlock.getState
+    val spigotBlock = location.getBlock
+    val blockState = spigotBlock.getState
+
+    // Update block data
     val newBlockData = blockMapper.map(block)
     blockState.setBlockData(newBlockData)
     blockState.update(/* force */ true, /* physics */ false)
+
+    // Update block state
+    val newBlockState = spigotBlock.getState
+    blockMapper.map(block, newBlockState)
+    newBlockState.update(/* force */ true, /* physics */ false)
   }
 
   override def dropItemsAt(items: util.List[Item], location: Location): util.List[UUID] = ???

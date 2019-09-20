@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotMaterialMapper }
 import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
-import org.bukkit.block.{ Block => SpigotBlock }
+import org.bukkit.block.{ Block => SpigotBlock, BlockState => SpigotBlockState, Sign => SpigotSign }
 import org.bukkit.block.data.{ BlockData => SpigotBlockData, _ }
 import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, TNT => SpigotTNT }
 
@@ -619,6 +619,18 @@ class SpigotBlockMapper @Inject()(
   }
 
   def map(block: Block): SpigotBlockData = {
+
+    /* TODO
+      BlockMapper calls MaterialMapper(Block) to get ultimate Material of block
+
+      BlockMapper creates a new BlockData with this material
+      BlockMapper sets all sorts of data values on the BlockData
+      BlockMapper returns the BlockData which the WorldService can force update on the block
+
+
+     */
+
+
     lazy val extensions = extensionMapper.map(block.asInstanceOf[ExtendableBlock].extensions)
     lazy val flooded = block.asInstanceOf[FloodableBlock].flooded
     lazy val lit = block.asInstanceOf[LightableBlock].lit
@@ -644,8 +656,7 @@ class SpigotBlockMapper @Inject()(
     lazy val material = block match {
       case it: ColoredBlock => colorMapper.map(it)
       case it: ColorableBlock => colorMapper.map(it)
-      case it: MaterialBlock[_] => materialMapper.map(it)
-      // case it: StatefulBlock[_] => stateMapper.map(it)
+      case it: Block => materialMapper.map(it)
     }
 
     lazy val orientation = {
@@ -677,7 +688,15 @@ class SpigotBlockMapper @Inject()(
         extensions.forEach(face => it.setFace(face, true))
     }
 
+    // TODO map BlockState data onto BlockData via BlockStateMapper?
+
     data
+  }
+
+  def map(block: Block, spigotState: SpigotBlockState): Unit = block match {
+    case sign: Sign => spigotState match { // TODO map isEditable
+      case state: SpigotSign => sign.lines.foreachindex((line, i) => state.setLine(i, line))
+    }
   }
 
   def mapBambooLeaves(leaves: SpigotBamboo.Leaves): BambooLeavesMaterial = leaves match {
