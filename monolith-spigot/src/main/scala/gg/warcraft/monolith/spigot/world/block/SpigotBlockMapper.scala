@@ -479,14 +479,16 @@ class SpigotBlockMapper @Inject()(
            Material.PURPLE_SHULKER_BOX | Material.RED_SHULKER_BOX | Material.WHITE_SHULKER_BOX | Material.YELLOW_SHULKER_BOX =>
         ShulkerBox(location, Option(color))
 
-      // SIGN TODO store additional sign data
+      // SIGN
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
            Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
-        Sign(location, Option(facing), Option.empty, flooded)
+        val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList // TODO keep as array? seem to be immutable
+        Sign(lines, location, Option(facing), Option.empty, flooded)
 
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN | Material.DARK_OAK_WALL_SIGN |
            Material.JUNGLE_WALL_SIGN | Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
-        Sign(location, Option.empty, Option(rotation), flooded)
+        val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList
+        Sign(lines, location, Option.empty, Option(rotation), flooded)
 
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB | Material.RED_NETHER_BRICK_SLAB |
