@@ -333,102 +333,65 @@ class SpigotMaterialMapper @Inject()(
     case _: EndPortalFrame => Material.END_PORTAL_FRAME
     case _: EndRod => Material.END_ROD
     case _: Farmland => Material.FARMLAND
-    case _: Fern => null
     case _: Fire => Material.FIRE
     case _: FletchingTable => Material.FLETCHING_TABLE
-    case _: Flower => null
-    case _: FlowerPot => null
-    case _: Frost => null
     case _: Furnace => Material.FURNACE
-    case _: Gate => null
     case _: Glowstone => Material.GLOWSTONE
-    case _: Grass => null
     case _: GrassBlock => Material.GRASS_BLOCK
     case _: GrassPath => Material.GRASS_PATH
     case _: Gravel => Material.GRAVEL
     case _: Grindstone => Material.GRINDSTONE
-    case _: HardenedClay => null
     case _: HayBale => Material.HAY_BLOCK
     case _: Hopper => Material.HOPPER
-    case _: Ice => null
-    case _: InfestedBlock => null
     case _: IronBars => Material.IRON_BARS
     case _: Jigsaw => Material.JIGSAW
     case _: Jukebox => Material.JUKEBOX
-    case _: Kelp => null
     case _: Ladder => Material.LADDER
     case _: Lantern => Material.LANTERN
     case _: Lava => Material.LAVA
-    case _: Leaves => null
     case _: Lectern => Material.LECTERN
     case _: Lever => Material.LEVER
     case _: LilyPad => Material.LILY_PAD
-    case _: Log => null
     case _: Loom => Material.LOOM
     case _: Magma => Material.MAGMA_BLOCK
     case _: Melon => Material.MELON
     case _: MelonStem => Material.MELON_STEM
-    case _: Mineral => null
-    case _: MobHead => null
-    case _: Mushroom => null
-    case _: MushroomBlock => null
     case _: Mycelium => Material.MYCELIUM
     case _: NetherPortal => Material.NETHER_PORTAL
     case _: Netherrack => Material.NETHERRACK
     case _: NetherWartBlock => Material.NETHER_WART_BLOCK
-    case _: NetherWarts => null
     case _: NoteBlock => Material.NOTE_BLOCK
     case _: Observer => Material.OBSERVER
     case _: Obsidian => Material.OBSIDIAN
-    case _: Ore => null
-    case _: Pillar => null
-    case _: Piston => null
-    case _: Planks => null
     case _: Podzol => Material.PODZOL
     case _: Potatoes => Material.POTATOES
-    case _: PressurePlate => null
     case _: Prismarine => Material.PRISMARINE
     case _: Pumpkin => Material.PUMPKIN
     case _: PumpkinStem => Material.PUMPKIN_STEM
     case _: Purpur => Material.PURPUR_BLOCK
     case _: Quartz => Material.QUARTZ_BLOCK
-    case _: Rails => null
     case _: RedstoneLamp => Material.REDSTONE_LAMP
-    case _: RedstoneTorch => null
     case _: RedstoneWire => Material.REDSTONE_WIRE
     case _: Repeater => Material.REPEATER
-    case _: Sand => null
-    case _: Sandstone => null
-    case _: Sapling => null
     case _: Scaffold => Material.SCAFFOLDING
-    case _: Seagrass => null
     case _: SeaLantern => Material.SEA_LANTERN
     case _: SeaPickle => Material.SEA_PICKLE
-    case _: Sign => null
-    case _: Slab => null
     case _: SlimeBlock => Material.SLIME_BLOCK
     case _: SmithingTable => Material.SMITHING_TABLE
     case _: Smoker => Material.SMOKER
     case _: Snow => Material.SNOW
     case _: SnowBlock => Material.SNOW_BLOCK
     case _: Spawner => Material.SPAWNER
-    case _: Sponge => null
-    case _: Stairs => null
-    case _: Stone => null
     case _: StoneCutter => Material.STONECUTTER
     case _: StructureBlock => Material.STRUCTURE_BLOCK
     case _: SugarCane => Material.SUGAR_CANE
     case _: SweetBerryBush => Material.SWEET_BERRY_BUSH
     case _: TNT => Material.TNT
     case _: Torch => Material.TORCH
-    case _: Trapdoor => null
     case _: TurtleEgg => Material.TURTLE_EGG
     case _: Vine => Material.VINE
-    case _: Wall => null
     case _: Water => Material.WATER
-    case _: WeightedPressurePlate => null
     case _: Wheat => Material.WHEAT
-    case _: Wood => null
 
     case it: Air => it.material match {
       case AirMaterial.NORMAL => Material.AIR
@@ -452,21 +415,323 @@ class SpigotMaterialMapper @Inject()(
       case WoodMaterial.SPRUCE => Material.SPRUCE_BUTTON
     }
 
-    case it: Chest => null
+    case it: Chest => it.material match {
+      case ChestMaterial.NORMAL => Material.CHEST
+      case ChestMaterial.ENDER => Material.ENDER_CHEST
+      case ChestMaterial.TRAPPED => Material.TRAPPED_CHEST
+    }
 
-    case it: Coral => null
+    case it: Coral => it.material match {
+      case CoralMaterial.BRAIN => Material.BRAIN_CORAL
+      case CoralMaterial.BUBBLE => Material.BUBBLE_CORAL
+      case CoralMaterial.FIRE => Material.FIRE_CORAL
+      case CoralMaterial.HORN => Material.HORN_CORAL
+      case CoralMaterial.TUBE => Material.TUBE_CORAL
+      case CoralMaterial.DEAD_BRAIN => Material.DEAD_BRAIN_CORAL
+      case CoralMaterial.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL
+      case CoralMaterial.DEAD_FIRE => Material.DEAD_FIRE_CORAL
+      case CoralMaterial.DEAD_HORN => Material.DEAD_HORN_CORAL
+      case CoralMaterial.DEAD_TUBE => Material.DEAD_TUBE_CORAL
+    }
 
-    case it: CoralBlock => null
+    case it: CoralBlock => it.material match {
+      case CoralMaterial.BRAIN => Material.BRAIN_CORAL_BLOCK
+      case CoralMaterial.BUBBLE => Material.BUBBLE_CORAL_BLOCK
+      case CoralMaterial.FIRE => Material.FIRE_CORAL_BLOCK
+      case CoralMaterial.HORN => Material.HORN_CORAL_BLOCK
+      case CoralMaterial.TUBE => Material.TUBE_CORAL_BLOCK
+      case CoralMaterial.DEAD_BRAIN => Material.DEAD_BRAIN_CORAL_BLOCK
+      case CoralMaterial.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_BLOCK
+      case CoralMaterial.DEAD_FIRE => Material.DEAD_FIRE_CORAL_BLOCK
+      case CoralMaterial.DEAD_HORN => Material.DEAD_HORN_CORAL_BLOCK
+      case CoralMaterial.DEAD_TUBE => Material.DEAD_TUBE_CORAL_BLOCK
+    }
 
-    case it: CoralFan => null
+    case it: CoralFan =>
+      if (it.facing.isEmpty) {
+        it.material match {
+          case CoralMaterial.BRAIN => Material.BRAIN_CORAL_FAN
+          case CoralMaterial.BUBBLE => Material.BUBBLE_CORAL_FAN
+          case CoralMaterial.FIRE => Material.FIRE_CORAL_FAN
+          case CoralMaterial.HORN => Material.HORN_CORAL_FAN
+          case CoralMaterial.TUBE => Material.TUBE_CORAL_FAN
+          case CoralMaterial.DEAD_BRAIN => Material.DEAD_BRAIN_CORAL_FAN
+          case CoralMaterial.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_FAN
+          case CoralMaterial.DEAD_FIRE => Material.DEAD_FIRE_CORAL_FAN
+          case CoralMaterial.DEAD_HORN => Material.DEAD_HORN_CORAL_FAN
+          case CoralMaterial.DEAD_TUBE => Material.DEAD_TUBE_CORAL_FAN
+        }
+      } else {
+        it.material match {
+          case CoralMaterial.BRAIN => Material.BRAIN_CORAL_WALL_FAN
+          case CoralMaterial.BUBBLE => Material.BUBBLE_CORAL_WALL_FAN
+          case CoralMaterial.FIRE => Material.FIRE_CORAL_WALL_FAN
+          case CoralMaterial.HORN => Material.HORN_CORAL_WALL_FAN
+          case CoralMaterial.TUBE => Material.TUBE_CORAL_WALL_FAN
+          case CoralMaterial.DEAD_BRAIN => Material.DEAD_BRAIN_CORAL_WALL_FAN
+          case CoralMaterial.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL
+          case CoralMaterial.DEAD_FIRE => Material.DEAD_FIRE_CORAL_WALL_FAN
+          case CoralMaterial.DEAD_HORN => Material.DEAD_HORN_CORAL_WALL_FAN
+          case CoralMaterial.DEAD_TUBE => Material.DEAD_TUBE_CORAL_WALL_FAN
+        }
+      }
 
-    case it: Door => null
+    case it: Door => it.material match {
+      case _: IronMaterial => Material.IRON_DOOR
+      case WoodMaterial.ACACIA => Material.ACACIA_DOOR
+      case WoodMaterial.BIRCH => Material.BIRCH_DOOR
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_DOOR
+      case WoodMaterial.JUNGLE => Material.ACACIA_DOOR
+      case WoodMaterial.OAK => Material.ACACIA_DOOR
+      case WoodMaterial.SPRUCE => Material.ACACIA_DOOR
+    }
 
-    case it: Fence => null
+    case it: Fence => it.material match {
+      case _: BrickMaterial => Material.NETHER_BRICK_FENCE
+      case WoodMaterial.ACACIA => Material.ACACIA_FENCE
+      case WoodMaterial.BIRCH => Material.BIRCH_FENCE
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_FENCE
+      case WoodMaterial.JUNGLE => Material.ACACIA_FENCE
+      case WoodMaterial.OAK => Material.ACACIA_FENCE
+      case WoodMaterial.SPRUCE => Material.ACACIA_FENCE
+    }
+
+    case it: Fern => if (it.tall) Material.LARGE_FERN else Material.FERN
+
+    case it: Flower => null
+
+    case it: FlowerPot => null
+
+    case it: Frost => null
+
+    case it: Gate => it.material match {
+      case WoodMaterial.ACACIA => Material.ACACIA_FENCE_GATE
+      case WoodMaterial.BIRCH => Material.BIRCH_FENCE_GATE
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_FENCE_GATE
+      case WoodMaterial.JUNGLE => Material.ACACIA_FENCE_GATE
+      case WoodMaterial.OAK => Material.ACACIA_FENCE_GATE
+      case WoodMaterial.SPRUCE => Material.ACACIA_FENCE_GATE
+    }
+
+    case it: Grass => if (it.tall) Material.TALL_GRASS else Material.GRASS
+
+    case it: Ice => it.material match {
+      case IceMaterial.NORMAL => Material.ICE
+      case IceMaterial.PACKED => Material.PACKED_ICE
+      case IceMaterial.BLUE => Material.BLUE_ICE
+    }
+
+    case it: InfestedBlock => it.material match {
+
+    }
+
+    case it: Kelp => null
+
+    case it: Leaves => it.material match {
+      case WoodMaterial.ACACIA => Material.ACACIA_LEAVES
+      case WoodMaterial.BIRCH => Material.BIRCH_LEAVES
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_LEAVES
+      case WoodMaterial.JUNGLE => Material.JUNGLE_LEAVES
+      case WoodMaterial.OAK => Material.OAK_LEAVES
+      case WoodMaterial.SPRUCE => Material.SPRUCE_LEAVES
+    }
+
+    case it: Log =>
+      if (it.stripped) {
+        it.material match {
+          case WoodMaterial.ACACIA => Material.STRIPPED_ACACIA_LOG
+          case WoodMaterial.BIRCH => Material.STRIPPED_BIRCH_LOG
+          case WoodMaterial.DARK_OAK => Material.STRIPPED_DARK_OAK_LOG
+          case WoodMaterial.JUNGLE => Material.STRIPPED_JUNGLE_LOG
+          case WoodMaterial.OAK => Material.STRIPPED_OAK_LOG
+          case WoodMaterial.SPRUCE => Material.STRIPPED_SPRUCE_LOG
+        }
+      } else {
+        it.material match {
+          case WoodMaterial.ACACIA => Material.ACACIA_LOG
+          case WoodMaterial.BIRCH => Material.BIRCH_LOG
+          case WoodMaterial.DARK_OAK => Material.DARK_OAK_LOG
+          case WoodMaterial.JUNGLE => Material.JUNGLE_LOG
+          case WoodMaterial.OAK => Material.OAK_LOG
+          case WoodMaterial.SPRUCE => Material.SPRUCE_LOG
+        }
+      }
+
+    case it: Mineral => it.material match { // TODO rename Mineral to OreBlock?
+      case ResourceMaterial.COAL => Material.COAL_BLOCK
+      case ResourceMaterial.DIAMOND => Material.DIAMOND_BLOCK
+      case ResourceMaterial.EMERALD => Material.EMERALD_BLOCK
+      case ResourceMaterial.GOLD => Material.GOLD_BLOCK
+      case ResourceMaterial.IRON => Material.IRON_BLOCK
+      case ResourceMaterial.LAPIS_LAZULI => Material.LAPIS_BLOCK
+      case ResourceMaterial.NETHER_QUARTZ => Material.QUARTZ_BLOCK
+    }
+
+    case it: MobHead =>
+      if (it.facing.isEmpty) {
+        it.material match {
+          case MobHeadMaterial.CREEPER => Material.CREEPER_HEAD
+          case MobHeadMaterial.DRAGON => Material.DRAGON_HEAD
+          case MobHeadMaterial.PLAYER => Material.PLAYER_HEAD
+          case MobHeadMaterial.SKELETON => Material.SKELETON_SKULL
+          case MobHeadMaterial.WITHER_SKELETON => Material.WITHER_SKELETON_SKULL
+          case MobHeadMaterial.ZOMBIE => Material.ZOMBIE_HEAD
+        }
+      } else {
+        it.material match {
+          case MobHeadMaterial.CREEPER => Material.CREEPER_WALL_HEAD
+          case MobHeadMaterial.DRAGON => Material.DRAGON_WALL_HEAD
+          case MobHeadMaterial.PLAYER => Material.PLAYER_WALL_HEAD
+          case MobHeadMaterial.SKELETON => Material.SKELETON_WALL_SKULL
+          case MobHeadMaterial.WITHER_SKELETON => Material.WITHER_SKELETON_WALL_SKULL
+          case MobHeadMaterial.ZOMBIE => Material.ZOMBIE_WALL_HEAD
+        }
+      }
+
+    case it: Mushroom => it.material match {
+      case MushroomMaterial.BROWN => Material.BROWN_MUSHROOM
+      case MushroomMaterial.RED => Material.RED_MUSHROOM
+    }
+
+    case it: MushroomBlock => it.material match {
+      case MushroomBlockMaterial.BROWN => Material.BROWN_MUSHROOM_BLOCK
+      case MushroomBlockMaterial.RED => Material.RED_MUSHROOM_BLOCK
+      case MushroomBlockMaterial.STEM => Material.MUSHROOM_STEM
+    }
+
+    case it: NetherWarts => null
+
+    case it: Ore => it.material match {
+      case ResourceMaterial.COAL => Material.COAL_ORE
+      case ResourceMaterial.DIAMOND => Material.DIAMOND_ORE
+      case ResourceMaterial.EMERALD => Material.EMERALD_ORE
+      case ResourceMaterial.GOLD => Material.GOLD_ORE
+      case ResourceMaterial.IRON => Material.IRON_ORE
+      case ResourceMaterial.LAPIS_LAZULI => Material.LAPIS_ORE
+      case ResourceMaterial.NETHER_QUARTZ => Material.NETHER_QUARTZ_ORE
+    }
+
+    case it: Pillar => null
+
+    case it: Piston => null
+
+    case it: Planks => it.material match {
+      case WoodMaterial.ACACIA => Material.ACACIA_PLANKS
+      case WoodMaterial.BIRCH => Material.BIRCH_PLANKS
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_PLANKS
+      case WoodMaterial.JUNGLE => Material.JUNGLE_PLANKS
+      case WoodMaterial.OAK => Material.OAK_PLANKS
+      case WoodMaterial.SPRUCE => Material.SPRUCE_PLANKS
+    }
+
+    case it: PressurePlate => it.material match {
+      case _: StoneMaterial => Material.STONE_PRESSURE_PLATE
+      case WoodMaterial.ACACIA => Material.ACACIA_PRESSURE_PLATE
+      case WoodMaterial.BIRCH => Material.BIRCH_PRESSURE_PLATE
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_PRESSURE_PLATE
+      case WoodMaterial.JUNGLE => Material.JUNGLE_PRESSURE_PLATE
+      case WoodMaterial.OAK => Material.OAK_PRESSURE_PLATE
+      case WoodMaterial.SPRUCE => Material.SPRUCE_PRESSURE_PLATE
+    }
+
+    case it: Rails => it.material match {
+      case RailsMaterial.NORMAL => Material.RAIL
+      case RailsMaterial.ACTIVATOR => Material.ACTIVATOR_RAIL
+      case RailsMaterial.DETECTOR => Material.DETECTOR_RAIL
+      case RailsMaterial.POWERED => Material.POWERED_RAIL
+    }
+
+    case it: RedstoneTorch =>
+      if (it.facing.isEmpty) Material.REDSTONE_TORCH else Material.REDSTONE_WALL_TORCH
+
+    case it: Sand => it.material match {
+      case SandMaterial.SAND => Material.SAND
+      case SandMaterial.RED_SAND => Material.RED_SAND
+      case SandMaterial.SOUL_SAND => Material.SOUL_SAND
+    }
+
+    case it: Sandstone => it.material match {
+      case SandstoneMaterial.SANDSTONE => Material.SANDSTONE
+      case SandstoneMaterial.RED_SANDSTONE => Material.RED_SANDSTONE
+    }
+
+    case it: Sapling => it.material match {
+      case _: BambooMaterial => Material.BAMBOO_SAPLING
+      case WoodMaterial.ACACIA => Material.ACACIA_SAPLING
+      case WoodMaterial.BIRCH => Material.BIRCH_SAPLING
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_SAPLING
+      case WoodMaterial.JUNGLE => Material.JUNGLE_SAPLING
+      case WoodMaterial.OAK => Material.OAK_SAPLING
+      case WoodMaterial.SPRUCE => Material.SPRUCE_SAPLING
+    }
+
+    case it: Seagrass => if (it.tall) Material.TALL_SEAGRASS else Material.SEAGRASS
+
+    case it: Sign =>
+      if (it.facing.isEmpty) {
+        it.material match {
+          case WoodMaterial.ACACIA => Material.ACACIA_SIGN
+          case WoodMaterial.BIRCH => Material.BIRCH_SIGN
+          case WoodMaterial.DARK_OAK => Material.DARK_OAK_SIGN
+          case WoodMaterial.JUNGLE => Material.JUNGLE_SIGN
+          case WoodMaterial.OAK => Material.OAK_SIGN
+          case WoodMaterial.SPRUCE => Material.SPRUCE_SIGN
+        }
+      } else {
+        it.material match {
+          case WoodMaterial.ACACIA => Material.ACACIA_WALL_SIGN
+          case WoodMaterial.BIRCH => Material.BIRCH_WALL_SIGN
+          case WoodMaterial.DARK_OAK => Material.DARK_OAK_WALL_SIGN
+          case WoodMaterial.JUNGLE => Material.JUNGLE_WALL_SIGN
+          case WoodMaterial.OAK => Material.OAK_WALL_SIGN
+          case WoodMaterial.SPRUCE => Material.SPRUCE_WALL_SIGN
+        }
+      }
+
+    case it: Slab => null
+
+    case it: Sponge => if (it.wet) Material.WET_SPONGE else Material.SPONGE
+
+    case it: Stairs => null
+
+    case it: Stone => null
+
+    case it: Trapdoor => it.material match {
+      case _: IronMaterial => Material.IRON_TRAPDOOR
+      case WoodMaterial.ACACIA => Material.ACACIA_TRAPDOOR
+      case WoodMaterial.BIRCH => Material.BIRCH_TRAPDOOR
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_TRAPDOOR
+      case WoodMaterial.JUNGLE => Material.JUNGLE_TRAPDOOR
+      case WoodMaterial.OAK => Material.OAK_TRAPDOOR
+      case WoodMaterial.SPRUCE => Material.SPRUCE_TRAPDOOR
+    }
+
+    case it: Wall => null
+
+    case it: WeightedPressurePlate => it.material match {
+      case WeightedPressurePlateMaterial.LIGHT => Material.LIGHT_WEIGHTED_PRESSURE_PLATE
+      case WeightedPressurePlateMaterial.HEAVY => Material.HEAVY_WEIGHTED_PRESSURE_PLATE
+    }
+
+    case it: Wood =>
+      if (it.stripped) {
+        it.material match {
+          case WoodMaterial.ACACIA => Material.STRIPPED_ACACIA_WOOD
+          case WoodMaterial.BIRCH => Material.STRIPPED_BIRCH_WOOD
+          case WoodMaterial.DARK_OAK => Material.STRIPPED_DARK_OAK_WOOD
+          case WoodMaterial.JUNGLE => Material.STRIPPED_JUNGLE_WOOD
+          case WoodMaterial.OAK => Material.STRIPPED_DARK_OAK_WOOD
+          case WoodMaterial.SPRUCE => Material.STRIPPED_SPRUCE_WOOD
+        }
+      } else {
+        it.material match {
+          case WoodMaterial.ACACIA => Material.ACACIA_WOOD
+          case WoodMaterial.BIRCH => Material.BIRCH_WOOD
+          case WoodMaterial.DARK_OAK => Material.DARK_OAK_WOOD
+          case WoodMaterial.JUNGLE => Material.JUNGLE_WOOD
+          case WoodMaterial.OAK => Material.DARK_OAK_WOOD
+          case WoodMaterial.SPRUCE => Material.SPRUCE_WOOD
+        }
+      }
   }
 }
-
-// TODO implement StatefulBlock twice on TurtleEgg to remove nesting of state obj?
-// TODO rename all state enums that dont need it to make sense, so keep AnvilState
-// TODO but rename WeightedPressurePlateState to WeightedPressurePlatePower
-// TODO and TurtleEggCount plus TurtleEggAge

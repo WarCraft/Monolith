@@ -356,11 +356,11 @@ class SpigotBlockMapper @Inject()(
       // LOG
       case Material.ACACIA_LOG | Material.BIRCH_LOG | Material.DARK_OAK_LOG |
            Material.JUNGLE_LOG | Material.OAK_LOG | Material.SPRUCE_LOG =>
-        Log(location, orientation, stripped = false)
+        Log(location, material.asInstanceOf[WoodMaterial], orientation, stripped = false)
 
       case Material.STRIPPED_ACACIA_LOG | Material.STRIPPED_BIRCH_LOG | Material.STRIPPED_DARK_OAK_LOG |
            Material.STRIPPED_JUNGLE_LOG | Material.STRIPPED_OAK_LOG | Material.STRIPPED_SPRUCE_LOG =>
-        Log(location, orientation, stripped = true)
+        Log(location, material.asInstanceOf[WoodMaterial], orientation, stripped = true)
 
       // MELON_STEM
       case Material.MELON_STEM => MelonStem(location, state.asInstanceOf[MelonStemState], Option.empty)
@@ -483,12 +483,12 @@ class SpigotBlockMapper @Inject()(
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
            Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
         val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList // TODO keep as array? seem to be immutable
-        Sign(lines, location, Option(facing), Option.empty, flooded)
+        Sign(lines, location, material.asInstanceOf[WoodMaterial], Option(facing), Option.empty, flooded)
 
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN | Material.DARK_OAK_WALL_SIGN |
            Material.JUNGLE_WALL_SIGN | Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
         val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList
-        Sign(lines, location, Option.empty, Option(rotation), flooded)
+        Sign(lines, location, material.asInstanceOf[WoodMaterial], Option.empty, Option(rotation), flooded)
 
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB | Material.RED_NETHER_BRICK_SLAB |
