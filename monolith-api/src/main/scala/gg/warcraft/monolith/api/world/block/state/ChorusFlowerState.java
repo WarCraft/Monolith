@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.BlockState;
+import gg.warcraft.monolith.api.world.block.IntegerBlockState;
 
-public enum ChorusFlowerState implements BlockState {
+public enum ChorusFlowerState implements IntegerBlockState {
     AGE_0,
     AGE_1,
     AGE_2,
@@ -10,6 +10,7 @@ public enum ChorusFlowerState implements BlockState {
     AGE_4,
     AGE_5;
 
+    @Override
     public int toInt() {
         return ordinal();
     }

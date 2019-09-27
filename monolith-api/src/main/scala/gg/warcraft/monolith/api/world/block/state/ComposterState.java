@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.BlockState;
+import gg.warcraft.monolith.api.world.block.IntegerBlockState;
 
-public enum ComposterState implements BlockState {
+public enum ComposterState implements IntegerBlockState {
     LEVEL_0,
     LEVEL_1,
     LEVEL_2,
@@ -13,6 +13,7 @@ public enum ComposterState implements BlockState {
     LEVEL_7,
     LEVEL_8;
 
+    @Override
     public int toInt() {
         return ordinal();
     }

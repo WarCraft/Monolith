@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.BlockState;
+import gg.warcraft.monolith.api.world.block.IntegerBlockState;
 
-public enum NoteBlockState implements BlockState {
+public enum NoteBlockState implements IntegerBlockState {
     NOTE_0,
     NOTE_1,
     NOTE_2,
@@ -29,6 +29,7 @@ public enum NoteBlockState implements BlockState {
     NOTE_23,
     NOTE_24;
 
+    @Override
     public int toInt() {
         return ordinal();
     }

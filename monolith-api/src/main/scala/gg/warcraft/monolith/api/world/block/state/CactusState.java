@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.BlockState;
+import gg.warcraft.monolith.api.world.block.IntegerBlockState;
 
-public enum CactusState implements BlockState {
+public enum CactusState implements IntegerBlockState {
     AGE_0,
     AGE_1,
     AGE_2,
@@ -20,6 +20,7 @@ public enum CactusState implements BlockState {
     AGE_14,
     AGE_15;
 
+    @Override
     public int toInt() {
         return ordinal();
     }

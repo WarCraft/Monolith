@@ -136,38 +136,14 @@ class SpigotBlockStateMapper {
   }
 
   def map(block: StatefulBlock[_], data: SpigotBlockData): Unit = {
-    lazy val ageable = data.asInstanceOf[Ageable]
-    lazy val levelled = data.asInstanceOf[Levelled]
-    lazy val powerable = data.asInstanceOf[AnaloguePowerable]
+    block.state match {
+      case state: IntegerBlockState =>
+        data match { case it: Ageable => it.setAge(state.toInt) }
+        data match { case it: Levelled => it.setLevel(state.toInt) }
+        data match { case it: AnaloguePowerable => it.setPower(state.toInt) }
+    }
 
     block match {
-
-      // AGEABLE
-      case it: Bamboo => ageable.setAge(it.state.toInt)
-      case it: Beetroots => ageable.setAge(it.state.toInt)
-      case it: Cactus => ageable.setAge(it.state.toInt)
-      case it: Carrots => ageable.setAge(it.state.toInt)
-      case it: ChorusFlower => ageable.setAge(it.state.toInt)
-      case it: Cocoa => ageable.setAge(it.state.toInt)
-      case it: Kelp => ageable.setAge(it.state.toInt)
-      case it: MelonStem => ageable.setAge(it.state.toInt)
-      case it: NetherWarts => ageable.setAge(it.state.toInt)
-      case it: Potatoes => ageable.setAge(it.state.toInt)
-      case it: PumpkinStem => ageable.setAge(it.state.toInt)
-      case it: Sapling => ageable.setAge(it.state.toInt)
-      case it: SugarCane => ageable.setAge(it.state.toInt)
-      case it: SweetBerryBush => ageable.setAge(it.state.toInt)
-      case it: Wheat => ageable.setAge(it.state.toInt)
-
-      // LEVELLED
-      case it: Cauldron => levelled.setLevel(it.state.toInt)
-      case it: Lava => levelled.setLevel(it.state.toInt)
-      case it: Water => levelled.setLevel(it.state.toInt)
-
-      // POWERABLE
-      case it: RedstoneWire => powerable.setPower(it.state.toInt)
-      case it: WeightedPressurePlate => powerable.setPower(it.state.toInt)
-
       // TODO continue for other StatefulBlocks
       case it: TurtleEgg =>
         val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]

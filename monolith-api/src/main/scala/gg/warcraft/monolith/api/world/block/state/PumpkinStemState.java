@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.BlockState;
+import gg.warcraft.monolith.api.world.block.IntegerBlockState;
 
-public enum PumpkinStemState implements BlockState {
+public enum PumpkinStemState implements IntegerBlockState {
     AGE_0,
     AGE_1,
     AGE_2,
@@ -12,6 +12,7 @@ public enum PumpkinStemState implements BlockState {
     AGE_6,
     AGE_7;
 
+    @Override
     public int toInt() {
         return ordinal();
     }
