@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum WheatState implements IntegerBlockState {
+public enum WheatState implements NumericalBlockState {
     AGE_0,
     AGE_1,
     AGE_2,

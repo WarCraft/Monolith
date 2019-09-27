@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum CakeState implements IntegerBlockState {
+public enum CakeState implements NumericalBlockState {
     EATEN_0,
     EATEN_1,
     EATEN_2,

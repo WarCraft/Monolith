@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum SaplingState implements IntegerBlockState {
+public enum SaplingState implements NumericalBlockState {
     AGE_0,
     AGE_1;
 

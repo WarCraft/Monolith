@@ -137,7 +137,7 @@ class SpigotBlockStateMapper {
 
   def map(block: StatefulBlock[_], data: SpigotBlockData): Unit = {
     block.state match {
-      case state: IntegerBlockState =>
+      case state: NumericalBlockState =>
         data match { case it: Ageable => it.setAge(state.toInt) }
         data match { case it: Levelled => it.setLevel(state.toInt) }
         data match { case it: AnaloguePowerable => it.setPower(state.toInt) }

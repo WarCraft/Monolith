@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum LavaState implements IntegerBlockState {
+public enum LavaState implements NumericalBlockState {
     LEVEL_1,
     LEVEL_2,
     LEVEL_3,

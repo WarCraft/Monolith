@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum SeaPickleState implements IntegerBlockState {
+public enum SeaPickleState implements NumericalBlockState {
     COUNT_1,
     COUNT_2,
     COUNT_3,

@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum ComposterState implements IntegerBlockState {
+public enum ComposterState implements NumericalBlockState {
     LEVEL_0,
     LEVEL_1,
     LEVEL_2,

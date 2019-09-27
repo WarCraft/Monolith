@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.IntegerBlockState;
+import gg.warcraft.monolith.api.world.block.NumericalBlockState;
 
-public enum WeightedPressurePlateState implements IntegerBlockState {
+public enum WeightedPressurePlateState implements NumericalBlockState {
     POWER_0,
     POWER_1,
     POWER_2,
