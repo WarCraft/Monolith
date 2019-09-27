@@ -22,7 +22,7 @@ class SpigotBlockRotationMapper {
     case SpigotBlockFace.WEST_NORTH_WEST => BlockRotation.WEST_NORTH_WEST
     case SpigotBlockFace.NORTH_WEST => BlockRotation.NORTH_WEST
     case SpigotBlockFace.NORTH_NORTH_WEST => BlockRotation.NORTH_NORTH_WEST
-    case _ => null
+    case _ => null // TODO def doesn't return optional, throw instead?
   }
 
   def map(rotation: BlockRotation): SpigotBlockFace = rotation match {
