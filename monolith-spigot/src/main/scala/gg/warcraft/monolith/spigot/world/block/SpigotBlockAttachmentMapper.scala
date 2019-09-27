@@ -8,16 +8,16 @@ class SpigotBlockAttachmentMapper {
 
   def map(attachable: Attachable): Option[BlockAttachment] = {
     if (!attachable.isAttached) {
-      return Option.empty
+      return None
     }
 
     attachable.asInstanceOf[Directional].getFacing match {
-      case BlockFace.NORTH => Option(BlockAttachment.WALL)
-      case BlockFace.EAST => Option(BlockAttachment.WALL)
-      case BlockFace.SOUTH => Option(BlockAttachment.WALL)
-      case BlockFace.WEST => Option(BlockAttachment.WALL)
-      case BlockFace.UP => Option(BlockAttachment.FLOOR)
-      case BlockFace.DOWN => Option(BlockAttachment.CEILING)
+      case BlockFace.NORTH => Some(BlockAttachment.WALL)
+      case BlockFace.EAST => Some(BlockAttachment.WALL)
+      case BlockFace.SOUTH => Some(BlockAttachment.WALL)
+      case BlockFace.WEST => Some(BlockAttachment.WALL)
+      case BlockFace.UP => Some(BlockAttachment.FLOOR)
+      case BlockFace.DOWN => Some(BlockAttachment.CEILING)
     }
   }
 

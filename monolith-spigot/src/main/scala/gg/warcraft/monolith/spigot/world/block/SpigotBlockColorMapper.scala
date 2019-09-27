@@ -109,7 +109,7 @@ class SpigotBlockColorMapper {
   }
 
   def map(block: ColoredBlock): Material = block match {
-    case Banner(_, _, Option.empty, _) => block.color match {
+    case Banner(_, _, None, _) => block.color match {
       case BlockColor.BLACK => Material.BLACK_WALL_BANNER
       case BlockColor.BLUE => Material.BLUE_WALL_BANNER
       case BlockColor.BROWN => Material.BROWN_WALL_BANNER
@@ -128,7 +128,7 @@ class SpigotBlockColorMapper {
       case BlockColor.YELLOW => Material.YELLOW_WALL_BANNER
     }
 
-    case Banner(_, _, _, Option.empty) => block.color match {
+    case Banner(_, _, _, None) => block.color match {
       case BlockColor.BLACK => Material.BLACK_BANNER
       case BlockColor.BLUE => Material.BLUE_BANNER
       case BlockColor.BROWN => Material.BROWN_BANNER
@@ -265,7 +265,7 @@ class SpigotBlockColorMapper {
   }
 
   def map(block: ColorableBlock): Material = {
-    case Glass(_, Option.empty) => Material.GLASS
+    case Glass(_, None) => Material.GLASS
     case Glass(_, _) => block.color.get match {
       case BlockColor.BLACK => Material.BLACK_STAINED_GLASS
       case BlockColor.BLUE => Material.BLUE_STAINED_GLASS
@@ -285,7 +285,7 @@ class SpigotBlockColorMapper {
       case BlockColor.YELLOW => Material.YELLOW_STAINED_GLASS
     }
 
-    case GlassPane(_, Option.empty) => Material.GLASS_PANE
+    case GlassPane(_, None) => Material.GLASS_PANE
     case GlassPane(_, _) => block.color.get match {
       case BlockColor.BLACK => Material.BLACK_STAINED_GLASS_PANE
       case BlockColor.BLUE => Material.BLUE_STAINED_GLASS_PANE
@@ -305,7 +305,7 @@ class SpigotBlockColorMapper {
       case BlockColor.YELLOW => Material.YELLOW_STAINED_GLASS_PANE
     }
 
-    case ShulkerBox(_, Option.empty) => Material.SHULKER_BOX
+    case ShulkerBox(_, None) => Material.SHULKER_BOX
     case ShulkerBox(_, _) => block.color.get match {
       case BlockColor.BLACK => Material.BLACK_SHULKER_BOX
       case BlockColor.BLUE => Material.BLUE_SHULKER_BOX
@@ -325,7 +325,7 @@ class SpigotBlockColorMapper {
       case BlockColor.YELLOW => Material.YELLOW_SHULKER_BOX
     }
 
-    case Terracotta(_, Option.empty) => Material.TERRACOTTA
+    case Terracotta(_, None) => Material.TERRACOTTA
     case Terracotta(_, _) => block.color.get match {
       case BlockColor.BLACK => Material.BLACK_TERRACOTTA
       case BlockColor.BLUE => Material.BLUE_TERRACOTTA
