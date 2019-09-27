@@ -28,11 +28,6 @@ public class DefaultWorldCommandService implements WorldCommandService {
     }
 
     @Override
-    public void setSignLines(Sign sign, String[] lines) {
-        worldServerAdapter.setSignLines(sign, lines);
-    }
-
-    @Override
     public List<UUID> dropItemsAt(List<Item> items, Location location) {
         return worldServerAdapter.dropItemsAt(items, location);
     }

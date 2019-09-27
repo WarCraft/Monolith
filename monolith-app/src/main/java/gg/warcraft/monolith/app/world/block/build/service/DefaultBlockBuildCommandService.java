@@ -57,7 +57,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     }
 
     Set<Block> searchGlassFoundation(Sign sign) {
-        Block attachedTo = sign.getAttachedTo(); // TODO impl convenience method on AttachedBlock that returns BlockLocation?
+        Block attachedTo = sign.attachedTo(); // TODO impl convenience method on AttachedBlock that returns BlockLocation?
         if (attachedTo.type() != BlockType.GLASS) {
             return new HashSet<>();
         }

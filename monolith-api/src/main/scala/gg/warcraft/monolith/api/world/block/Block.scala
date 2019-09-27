@@ -16,16 +16,16 @@ trait Block {
 }
 
 trait AttachedBlock extends Block { // TODO can this extend DirectedBlock?
-  val attached: BlockAttachment
+  val attached: BlockAttachment // TODO rename attachment?
 
   lazy val attachedTo : BlockLocation = {
-    // TODO use facing to calc attached location
+    null // TODO use facing to calc attached location
   }
 
   def withAttached(attached: BlockAttachment): AttachedBlock
 } // TODO is Attachable.isAttached always true?
 
-trait AttachableBlock extends Block {
+trait AttachableBlock extends Block { // TODO if isAttached is not always true let Sign extend this
   val attached: Option[BlockAttachment]
   def withAttached(attached: Option[BlockAttachment]): AttachableBlock
 }

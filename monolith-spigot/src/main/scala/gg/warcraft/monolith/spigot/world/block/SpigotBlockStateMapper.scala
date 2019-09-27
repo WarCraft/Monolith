@@ -144,11 +144,12 @@ class SpigotBlockStateMapper {
     }
 
     block match {
-      // TODO continue for other StatefulBlocks
       case it: TurtleEgg =>
         val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
         turtleEggData.setHatch(it.state.age.toInt)
         turtleEggData.setEggs(it.state.count.toInt)
+
+      // TODO continue for other StatefulBlocks
     }
   }
 
