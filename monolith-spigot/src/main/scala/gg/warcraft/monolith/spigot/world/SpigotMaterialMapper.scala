@@ -564,12 +564,12 @@ class SpigotMaterialMapper @Inject()(
     }
 
     case it: InfestedBlock => it.material match {
-      case material: StoneMaterial => Material.INFESTED_CHISELED_STONE_BRICKS
-      case material: StoneMaterial => Material.INFESTED_COBBLESTONE
-      case material: StoneMaterial => Material.INFESTED_CRACKED_STONE_BRICKS
-      case material: StoneMaterial => Material.INFESTED_MOSSY_STONE_BRICKS
-      case material: StoneMaterial => Material.INFESTED_STONE
-      case material: StoneMaterial => Material.INFESTED_STONE_BRICKS
+      case StoneMaterial.STONE => Material.INFESTED_STONE
+      case StoneMaterial.STONE_BRICK => Material.INFESTED_STONE_BRICKS
+      case StoneMaterial.CHISELED_STONE_BRICK => Material.INFESTED_CHISELED_STONE_BRICKS
+      case StoneMaterial.CRACKED_STONE_BRICK => Material.INFESTED_CRACKED_STONE_BRICKS
+      case StoneMaterial.MOSSY_STONE_BRICK => Material.INFESTED_MOSSY_STONE_BRICKS
+      case StoneMaterial.COBBLESTONE => Material.INFESTED_COBBLESTONE
     }
 
     case it: Kelp =>
@@ -736,7 +736,47 @@ class SpigotMaterialMapper @Inject()(
         }
       }
 
-    case it: Slab => null
+    case it: Slab => it.material match {
+      case BrickMaterial.BRICK => Material.BRICK_SLAB
+      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_SLAB
+      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
+
+      case PrismarineMaterial.PRISMARINE => Material.PRISMARINE_SLAB
+      case PrismarineMaterial.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_SLAB
+      case PrismarineMaterial.DARK_PRISMARINE => Material.DARK_PRISMARINE_SLAB
+
+      case _: PurpurMaterial => Material.PURPUR_SLAB
+
+      case QuartzMaterial.SMOOTH_QUARTZ => Material.SMOOTH_QUARTZ_SLAB
+      case _: QuartzMaterial => Material.QUARTZ_SLAB
+
+      case SandstoneMaterial.SANDSTONE => // TODO move state into shape val and let state be SMOOTH etc?
+      // TODO or make SMOOTH_SANDSTONE a material like POLISHED_GRANITE
+      case SandstoneMaterial.RED_SANDSTONE =>
+
+      case StoneMaterial.STONE => Material.STONE_SLAB
+      case StoneMaterial.STONE_BRICK |
+           StoneMaterial.CHISELED_STONE_BRICK |
+           StoneMaterial.CRACKED_STONE_BRICK => Material.STONE_BRICK_SLAB
+      case StoneMaterial.MOSSY_STONE_BRICK => Material.MOSSY_STONE_BRICK_SLAB
+      case StoneMaterial.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_SLAB
+      case StoneMaterial.ANDESITE => Material.ANDESITE_SLAB
+      case StoneMaterial.POLISHED_ANDESITE => Material.POLISHED_ANDESITE_SLAB
+      case StoneMaterial.DIORITE => Material.DIORITE_SLAB
+      case StoneMaterial.POLISHED_DIORITE => Material.POLISHED_DIORITE_SLAB
+      case StoneMaterial.GRANITE => Material.GRANITE_SLAB
+      case StoneMaterial.POLISHED_GRANITE => Material.POLISHED_GRANITE_SLAB
+      case StoneMaterial.END_STONE |
+           StoneMaterial.END_STONE_BRICK => Material.END_STONE_BRICK_SLAB
+      case _: StoneMaterial => Material.COBBLESTONE_SLAB
+
+      case WoodMaterial.ACACIA => Material.ACACIA_SLAB
+      case WoodMaterial.BIRCH => Material.BIRCH_SLAB
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_SLAB
+      case WoodMaterial.JUNGLE => Material.JUNGLE_SLAB
+      case WoodMaterial.OAK => Material.OAK_SLAB
+      case WoodMaterial.SPRUCE => Material.SPRUCE_SLAB
+    }
 
     case it: Sponge => if (it.wet) Material.WET_SPONGE else Material.SPONGE
 
@@ -749,14 +789,30 @@ class SpigotMaterialMapper @Inject()(
       case PrismarineMaterial.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_STAIRS
       case PrismarineMaterial.DARK_PRISMARINE => Material.DARK_PRISMARINE_STAIRS
 
-      case material: PurpurMaterial => Material.PURPUR_STAIRS
+      case _: PurpurMaterial => Material.PURPUR_STAIRS
 
-      case material: QuartzMaterial => Material.QUARTZ_STAIRS
+      case QuartzMaterial.SMOOTH_QUARTZ => Material.SMOOTH_QUARTZ_STAIRS
+      case _: QuartzMaterial => Material.QUARTZ_STAIRS
 
-      case SandstoneMaterial.SANDSTONE => // TODO move state into shape val and let state be SMOOTH etc
+      case SandstoneMaterial.SANDSTONE => // TODO move state into shape val and let state be SMOOTH etc?
+      // TODO or make SMOOTH_SANDSTONE a material like POLISHED_GRANITE
       case SandstoneMaterial.RED_SANDSTONE =>
 
-      case material: StoneMaterial =>
+      case StoneMaterial.STONE => Material.STONE_STAIRS
+      case StoneMaterial.STONE_BRICK |
+           StoneMaterial.CHISELED_STONE_BRICK |
+           StoneMaterial.CRACKED_STONE_BRICK => Material.STONE_BRICK_STAIRS
+      case StoneMaterial.MOSSY_STONE_BRICK => Material.MOSSY_STONE_BRICK_STAIRS
+      case StoneMaterial.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_STAIRS
+      case StoneMaterial.ANDESITE => Material.ANDESITE_STAIRS
+      case StoneMaterial.POLISHED_ANDESITE => Material.POLISHED_ANDESITE_STAIRS
+      case StoneMaterial.DIORITE => Material.DIORITE_STAIRS
+      case StoneMaterial.POLISHED_DIORITE => Material.POLISHED_DIORITE_STAIRS
+      case StoneMaterial.GRANITE => Material.GRANITE_STAIRS
+      case StoneMaterial.POLISHED_GRANITE => Material.POLISHED_GRANITE_STAIRS
+      case StoneMaterial.END_STONE |
+           StoneMaterial.END_STONE_BRICK => Material.END_STONE_BRICK_STAIRS
+      case _: StoneMaterial => Material.COBBLESTONE_STAIRS
 
       case WoodMaterial.ACACIA => Material.ACACIA_STAIRS
       case WoodMaterial.BIRCH => Material.BIRCH_STAIRS
