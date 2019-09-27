@@ -360,6 +360,7 @@ class SpigotMaterialMapper @Inject()(
     case _: Mycelium => Material.MYCELIUM
     case _: NetherPortal => Material.NETHER_PORTAL
     case _: Netherrack => Material.NETHERRACK
+    case _: NetherWarts => Material.NETHER_WART
     case _: NetherWartBlock => Material.NETHER_WART_BLOCK
     case _: NoteBlock => Material.NOTE_BLOCK
     case _: Observer => Material.OBSERVER
@@ -563,10 +564,15 @@ class SpigotMaterialMapper @Inject()(
     }
 
     case it: InfestedBlock => it.material match {
-
+      case material: StoneMaterial => Material.INFESTED_CHISELED_STONE_BRICKS
+      case material: StoneMaterial => Material.INFESTED_COBBLESTONE
+      case material: StoneMaterial => Material.INFESTED_CRACKED_STONE_BRICKS
+      case material: StoneMaterial => Material.INFESTED_MOSSY_STONE_BRICKS
+      case material: StoneMaterial => Material.INFESTED_STONE
+      case material: StoneMaterial => Material.INFESTED_STONE_BRICKS
     }
 
-    case it: Kelp => null
+    case it: Kelp =>
 
     case it: Leaves => it.material match {
       case WoodMaterial.ACACIA => Material.ACACIA_LEAVES
@@ -639,8 +645,6 @@ class SpigotMaterialMapper @Inject()(
       case MushroomBlockMaterial.RED => Material.RED_MUSHROOM_BLOCK
       case MushroomBlockMaterial.STEM => Material.MUSHROOM_STEM
     }
-
-    case it: NetherWarts =>
 
     case it: Ore => it.material match {
       case ResourceMaterial.COAL => Material.COAL_ORE
@@ -736,7 +740,31 @@ class SpigotMaterialMapper @Inject()(
 
     case it: Sponge => if (it.wet) Material.WET_SPONGE else Material.SPONGE
 
-    case it: Stairs => null
+    case it: Stairs => it.material match {
+      case BrickMaterial.BRICK => Material.BRICK_STAIRS
+      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_STAIRS
+      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
+
+      case PrismarineMaterial.PRISMARINE => Material.PRISMARINE_STAIRS
+      case PrismarineMaterial.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_STAIRS
+      case PrismarineMaterial.DARK_PRISMARINE => Material.DARK_PRISMARINE_STAIRS
+
+      case material: PurpurMaterial => Material.PURPUR_STAIRS
+
+      case material: QuartzMaterial => Material.QUARTZ_STAIRS
+
+      case SandstoneMaterial.SANDSTONE => // TODO move state into shape val and let state be SMOOTH etc
+      case SandstoneMaterial.RED_SANDSTONE =>
+
+      case material: StoneMaterial =>
+
+      case WoodMaterial.ACACIA => Material.ACACIA_STAIRS
+      case WoodMaterial.BIRCH => Material.BIRCH_STAIRS
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_STAIRS
+      case WoodMaterial.JUNGLE => Material.JUNGLE_STAIRS
+      case WoodMaterial.OAK => Material.OAK_STAIRS
+      case WoodMaterial.SPRUCE => Material.SPRUCE_STAIRS
+    }
 
     case it: Stone => null
 
