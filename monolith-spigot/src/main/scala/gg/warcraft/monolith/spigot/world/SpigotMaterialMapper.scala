@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot.world
 import gg.warcraft.monolith.api.world.block.{ Block, BlockMaterial, ColoredBlock }
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
-import gg.warcraft.monolith.api.world.block.state.AnvilState
+import gg.warcraft.monolith.api.world.block.state.{ AnvilState, FlowerPotState }
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockColorMapper
 import javax.inject.Inject
 import org.bukkit.Material
@@ -335,6 +335,7 @@ class SpigotMaterialMapper @Inject()(
     case _: Farmland => Material.FARMLAND
     case _: Fire => Material.FIRE
     case _: FletchingTable => Material.FLETCHING_TABLE
+    case _: Frost => Material.FROSTED_ICE // TODO should this be another version of IceMaterial?
     case _: Furnace => Material.FURNACE
     case _: Glowstone => Material.GLOWSTONE
     case _: GrassBlock => Material.GRASS_BLOCK
@@ -498,11 +499,51 @@ class SpigotMaterialMapper @Inject()(
 
     case it: Fern => if (it.tall) Material.LARGE_FERN else Material.FERN
 
-    case it: Flower => null
+    case it: Flower => it.material match {
+      case FlowerMaterial.ALLIUM => Material.ALLIUM
+      case FlowerMaterial.AZURE_BLUET => Material.AZURE_BLUET
+      case FlowerMaterial.BLUE_ORCHID => Material.BLUE_ORCHID
+      case FlowerMaterial.CORNFLOWER => Material.CORNFLOWER
+      case FlowerMaterial.DANDELION => Material.DANDELION
+      case FlowerMaterial.LILY_OF_THE_VALLEY => Material.LILY_OF_THE_VALLEY
+      case FlowerMaterial.ORANGE_TULIP => Material.ORANGE_TULIP
+      case FlowerMaterial.OXEYE_DAISY => Material.OXEYE_DAISY
+      case FlowerMaterial.PINK_TULIP => Material.PINK_TULIP
+      case FlowerMaterial.POPPY => Material.POPPY
+      case FlowerMaterial.RED_TULIP => Material.RED_TULIP
+      case FlowerMaterial.WHITE_TULIP => Material.WHITE_TULIP
+      case FlowerMaterial.WITHER_ROSE => Material.WITHER_ROSE
+    }
 
-    case it: FlowerPot => null
+    case it: FlowerPot => it.state match { // TODO fern, dead bush and cactus are missing
+      case FlowerPotState.EMPTY => Material.FLOWER_POT
+      case FlowerPotState.POTTED => it.material match {
+        case FlowerMaterial.ALLIUM => Material.POTTED_ALLIUM
+        case FlowerMaterial.AZURE_BLUET => Material.POTTED_AZURE_BLUET
+        case FlowerMaterial.BLUE_ORCHID => Material.POTTED_BLUE_ORCHID
+        case FlowerMaterial.CORNFLOWER => Material.POTTED_CORNFLOWER
+        case FlowerMaterial.DANDELION => Material.POTTED_DANDELION
+        case FlowerMaterial.LILY_OF_THE_VALLEY => Material.POTTED_LILY_OF_THE_VALLEY
+        case FlowerMaterial.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
+        case FlowerMaterial.OXEYE_DAISY => Material.POTTED_OXEYE_DAISY
+        case FlowerMaterial.PINK_TULIP => Material.POTTED_PINK_TULIP
+        case FlowerMaterial.POPPY => Material.POTTED_POPPY
+        case FlowerMaterial.RED_TULIP => Material.POTTED_RED_TULIP
+        case FlowerMaterial.WHITE_TULIP => Material.POTTED_WHITE_TULIP
+        case FlowerMaterial.WITHER_ROSE => Material.POTTED_WITHER_ROSE
 
-    case it: Frost => null
+        case MushroomMaterial.BROWN => Material.POTTED_BROWN_MUSHROOM
+        case MushroomMaterial.RED => Material.POTTED_RED_MUSHROOM
+
+        case BambooMaterial.BAMBOO => Material.POTTED_BAMBOO
+        case WoodMaterial.ACACIA => Material.POTTED_ACACIA_SAPLING
+        case WoodMaterial.BIRCH => Material.POTTED_BIRCH_SAPLING
+        case WoodMaterial.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
+        case WoodMaterial.JUNGLE => Material.POTTED_JUNGLE_SAPLING
+        case WoodMaterial.OAK => Material.POTTED_OAK_SAPLING
+        case WoodMaterial.SPRUCE => Material.POTTED_SPRUCE_SAPLING
+      }
+    }
 
     case it: Gate => it.material match {
       case WoodMaterial.ACACIA => Material.ACACIA_FENCE_GATE
@@ -599,7 +640,7 @@ class SpigotMaterialMapper @Inject()(
       case MushroomBlockMaterial.STEM => Material.MUSHROOM_STEM
     }
 
-    case it: NetherWarts => null
+    case it: NetherWarts =>
 
     case it: Ore => it.material match {
       case ResourceMaterial.COAL => Material.COAL_ORE
@@ -611,9 +652,12 @@ class SpigotMaterialMapper @Inject()(
       case ResourceMaterial.NETHER_QUARTZ => Material.NETHER_QUARTZ_ORE
     }
 
-    case it: Pillar => null
+    case it: Pillar => it.material match {
+      case _: PurpurMaterial => Material.PURPUR_PILLAR
+      case _: QuartzMaterial => Material.QUARTZ_PILLAR
+    }
 
-    case it: Piston => null
+    case it: Piston => if (it.sticky) Material.STICKY_PISTON else Material.PISTON
 
     case it: Planks => it.material match {
       case WoodMaterial.ACACIA => Material.ACACIA_PLANKS
@@ -706,7 +750,31 @@ class SpigotMaterialMapper @Inject()(
       case WoodMaterial.SPRUCE => Material.SPRUCE_TRAPDOOR
     }
 
-    case it: Wall => null
+    case it: Wall => it.material match {
+      case BrickMaterial.BRICK => Material.BRICK_WALL
+      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_WALL
+      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_WALL
+
+      case _: PrismarineMaterial => Material.PRISMARINE_WALL
+
+      case SandstoneMaterial.SANDSTONE => Material.SANDSTONE_WALL
+      case SandstoneMaterial.RED_SANDSTONE => Material.RED_SANDSTONE_WALL
+
+      case StoneMaterial.STONE_BRICK |
+           StoneMaterial.CHISELED_STONE_BRICK |
+           StoneMaterial.CRACKED_STONE_BRICK => Material.STONE_BRICK_WALL
+      case StoneMaterial.MOSSY_STONE_BRICK => Material.MOSSY_STONE_BRICK_WALL
+      case StoneMaterial.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_WALL
+      case StoneMaterial.ANDESITE |
+           StoneMaterial.POLISHED_ANDESITE => Material.ANDESITE_WALL
+      case StoneMaterial.DIORITE |
+           StoneMaterial.POLISHED_DIORITE => Material.DIORITE_WALL
+      case StoneMaterial.GRANITE |
+           StoneMaterial.POLISHED_GRANITE => Material.GRANITE_WALL
+      case StoneMaterial.END_STONE |
+           StoneMaterial.END_STONE_BRICK => Material.END_STONE_BRICK_WALL
+      case _: StoneMaterial => Material.COBBLESTONE_WALL
+    }
 
     case it: WeightedPressurePlate => it.material match {
       case WeightedPressurePlateMaterial.LIGHT => Material.LIGHT_WEIGHTED_PRESSURE_PLATE
