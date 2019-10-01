@@ -4,65 +4,84 @@ import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.state._
 import org.bukkit.Material
-import org.bukkit.block.{ Block => SpigotBlock }
-import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled, BlockData => SpigotBlockData, Rail => SpigotRail }
-import org.bukkit.block.data.`type`.{ Cake => SpigotCake, Comparator => SpigotComparator, NoteBlock => SpigotNoteBlock, Repeater => SpigotRepeater, Sapling => SpigotSapling, SeaPickle => SpigotSeaPickle, Stairs => SpigotStairs, StructureBlock => SpigotStructureBlock, TurtleEgg => SpigotTurtleEgg }
+import org.bukkit.block.{Block => SpigotBlock}
+import org.bukkit.block.data.{
+  Ageable,
+  AnaloguePowerable,
+  Levelled,
+  BlockData => SpigotBlockData,
+  Rail => SpigotRail
+}
+import org.bukkit.block.data.`type`.{
+  Cake => SpigotCake,
+  Comparator => SpigotComparator,
+  NoteBlock => SpigotNoteBlock,
+  Repeater => SpigotRepeater,
+  Sapling => SpigotSapling,
+  SeaPickle => SpigotSeaPickle,
+  Stairs => SpigotStairs,
+  StructureBlock => SpigotStructureBlock,
+  TurtleEgg => SpigotTurtleEgg
+}
 
 class SpigotBlockStateMapper {
 
   def map(block: SpigotBlock): BlockState = {
     val data = block.getState.getBlockData
+    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
 
-    lazy val age = s"AGE_${ data.asInstanceOf[Ageable].getAge }"
-    lazy val level = s"LEVEL_${ data.asInstanceOf[Levelled].getLevel }"
-    lazy val power = s"POWER_${ data.asInstanceOf[AnaloguePowerable].getPower }"
+    lazy val age = s"AGE_${dataAs[Ageable].getAge}"
+    lazy val level = s"LEVEL_${dataAs[Levelled].getLevel}"
+    lazy val power = s"POWER_${dataAs[AnaloguePowerable].getPower}"
 
     block.getType match {
-      case Material.BAMBOO => BambooState.valueOf(age)
-      case Material.BEETROOTS => BeetrootState.valueOf(age)
-      case Material.CACTUS => CactusState.valueOf(age)
-      case Material.CHORUS_FLOWER => ChorusFlowerState.valueOf(age)
-      case Material.COCOA => CocoaState.valueOf(age)
-      case Material.COMPOSTER => ComposterState.valueOf(level)
-      case Material.KELP_PLANT => KelpState.valueOf(age)
-      case Material.LAVA => LavaState.valueOf(level)
-      case Material.NETHER_WART => NetherWartState.valueOf(age)
-      case Material.POTATOES => PotatoState.valueOf(age)
-      case Material.REDSTONE_WIRE => RedstoneWireState.valueOf(power)
-      case Material.SUGAR_CANE => SugarCaneState.valueOf(age)
+      case Material.BAMBOO           => BambooState.valueOf(age)
+      case Material.BEETROOTS        => BeetrootState.valueOf(age)
+      case Material.CACTUS           => CactusState.valueOf(age)
+      case Material.CHORUS_FLOWER    => ChorusFlowerState.valueOf(age)
+      case Material.COCOA            => CocoaState.valueOf(age)
+      case Material.COMPOSTER        => ComposterState.valueOf(level)
+      case Material.KELP_PLANT       => KelpState.valueOf(age)
+      case Material.LAVA             => LavaState.valueOf(level)
+      case Material.NETHER_WART      => NetherWartState.valueOf(age)
+      case Material.POTATOES         => PotatoState.valueOf(age)
+      case Material.REDSTONE_WIRE    => RedstoneWireState.valueOf(power)
+      case Material.SUGAR_CANE       => SugarCaneState.valueOf(age)
       case Material.SWEET_BERRY_BUSH => SweetBerryState.valueOf(age)
-      case Material.WATER => WaterState.valueOf(level)
-      case Material.WHEAT => WheatState.valueOf(age)
+      case Material.WATER            => WaterState.valueOf(level)
+      case Material.WHEAT            => WheatState.valueOf(age)
 
       // ANVIL
-      case Material.ANVIL => AnvilState.PRISTINE
+      case Material.ANVIL         => AnvilState.PRISTINE
       case Material.CHIPPED_ANVIL => AnvilState.CHIPPED
       case Material.DAMAGED_ANVIL => AnvilState.DAMAGED
 
       // CAKE
       case Material.CAKE =>
-        val bites = data.asInstanceOf[SpigotCake].getBites
+        val bites = dataAs[SpigotCake].getBites
         CakeState.valueOf(s"EATEN_$bites")
 
       // COMPARATOR
       case Material.COMPARATOR =>
-        val mode = data.asInstanceOf[SpigotComparator].getMode
+        val mode = dataAs[SpigotComparator].getMode
         mapComparatorMode(mode)
 
       // FLOWER_POT
       case Material.FLOWER_POT => FlowerPotState.EMPTY
 
-      case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET | Material.POTTED_BLUE_ORCHID |
-           Material.POTTED_CORNFLOWER | Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
-           Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY | Material.POTTED_PINK_TULIP |
-           Material.POTTED_POPPY | Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
-           Material.POTTED_WITHER_ROSE |
-
-           Material.POTTED_BAMBOO | Material.POTTED_BROWN_MUSHROOM | Material.POTTED_CACTUS |
-           Material.POTTED_DEAD_BUSH | Material.POTTED_FERN | Material.POTTED_RED_MUSHROOM |
-
-           Material.POTTED_ACACIA_SAPLING | Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
-           Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING | Material.POTTED_SPRUCE_SAPLING =>
+      case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET |
+          Material.POTTED_BLUE_ORCHID | Material.POTTED_CORNFLOWER |
+          Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
+          Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY |
+          Material.POTTED_PINK_TULIP | Material.POTTED_POPPY |
+          Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
+          Material.POTTED_WITHER_ROSE | Material.POTTED_BAMBOO |
+          Material.POTTED_BROWN_MUSHROOM | Material.POTTED_CACTUS |
+          Material.POTTED_DEAD_BUSH | Material.POTTED_FERN |
+          Material.POTTED_RED_MUSHROOM | Material.POTTED_ACACIA_SAPLING |
+          Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
+          Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING |
+          Material.POTTED_SPRUCE_SAPLING =>
         FlowerPotState.POTTED
 
       // MELON_STEM
@@ -71,7 +90,7 @@ class SpigotBlockStateMapper {
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        val note = data.asInstanceOf[SpigotNoteBlock].getNote
+        val note = dataAs[SpigotNoteBlock].getNote
         NoteBlockState.valueOf(s"NOTE_$note")
 
       // PUMPKIN_STEM
@@ -79,13 +98,14 @@ class SpigotBlockStateMapper {
         PumpkinStemState.valueOf(age)
 
       // RAIL
-      case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL | Material.POWERED_RAIL =>
-        val shape = data.asInstanceOf[SpigotRail].getShape
+      case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL |
+          Material.POWERED_RAIL =>
+        val shape = dataAs[SpigotRail].getShape
         mapRailShape(shape)
 
       // REPEATER
       case Material.REPEATER =>
-        val delay = data.asInstanceOf[SpigotRepeater].getDelay
+        val delay = dataAs[SpigotRepeater].getDelay
         RepeaterState.valueOf(s"DELAY_$delay")
 
       // SANDSTONE TODO add slab stairs wall etc, stairs need their own case due to shape also going on the state
@@ -102,50 +122,54 @@ class SpigotBlockStateMapper {
         SandstoneState.SMOOTH
 
       // SAPLING
-      case Material.BAMBOO_SAPLING |
-           Material.ACACIA_SAPLING | Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
-           Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
-        val stage = data.asInstanceOf[SpigotSapling].getStage
+      case Material.BAMBOO_SAPLING | Material.ACACIA_SAPLING |
+          Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
+          Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
+          Material.SPRUCE_SAPLING =>
+        val stage = dataAs[SpigotSapling].getStage
         SaplingState.valueOf(s"AGE_$stage")
 
       // SEA_PICKLE
       case Material.SEA_PICKLE =>
-        val pickles = data.asInstanceOf[SpigotSeaPickle].getPickles
+        val pickles = dataAs[SpigotSeaPickle].getPickles
         SeaPickleState.valueOf(s"COUNT_$pickles")
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
-        val mode = data.asInstanceOf[SpigotStructureBlock].getMode
+        val mode = dataAs[SpigotStructureBlock].getMode
         mapStructureBlockMode(mode)
 
       // TURTLE_EGG
       case Material.TURTLE_EGG =>
-        val hatch = data.asInstanceOf[SpigotTurtleEgg].getHatch
-        val eggs = data.asInstanceOf[SpigotTurtleEgg].getEggs
+        val hatch = dataAs[SpigotTurtleEgg].getHatch
+        val eggs = dataAs[SpigotTurtleEgg].getEggs
         TurtleEggState(
           TurtleEggAge.valueOf(s"AGE_$hatch"),
-          TurtleEggCount.valueOf(s"COUNT_$eggs"),
+          TurtleEggCount.valueOf(s"COUNT_$eggs")
         )
 
       // WEIGHTED_PRESSURE_PLATE
-      case Material.LIGHT_WEIGHTED_PRESSURE_PLATE | Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
+      case Material.LIGHT_WEIGHTED_PRESSURE_PLATE |
+          Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
         WeightedPressurePlateState.valueOf(power)
 
-      case _ => throw new IllegalArgumentException(s"Failed to map state for material: ${ block.getType }")
+      case _ => throw new IllegalArgumentException(s"${block.getType}")
     }
   }
 
   def map(block: StatefulBlock[_], data: SpigotBlockData): Unit = {
+    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+
     block.state match {
       case state: NumericalBlockState =>
-        data match { case it: Ageable => it.setAge(state.toInt) }
-        data match { case it: Levelled => it.setLevel(state.toInt) }
+        data match { case it: Ageable           => it.setAge(state.toInt) }
+        data match { case it: Levelled          => it.setLevel(state.toInt) }
         data match { case it: AnaloguePowerable => it.setPower(state.toInt) }
     }
 
     block match {
       case it: TurtleEgg =>
-        val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
+        val turtleEggData = dataAs[SpigotTurtleEgg]
         turtleEggData.setHatch(it.state.age.toInt)
         turtleEggData.setEggs(it.state.count.toInt)
 
@@ -153,38 +177,41 @@ class SpigotBlockStateMapper {
     }
   }
 
-  def mapComparatorMode(mode: SpigotComparator.Mode): ComparatorState = mode match {
-    case SpigotComparator.Mode.COMPARE => ComparatorState.COMPARE
-    case SpigotComparator.Mode.SUBTRACT => ComparatorState.SUBTRACT
-  }
+  def mapComparatorMode(mode: SpigotComparator.Mode): ComparatorState =
+    mode match {
+      case SpigotComparator.Mode.COMPARE  => ComparatorState.COMPARE
+      case SpigotComparator.Mode.SUBTRACT => ComparatorState.SUBTRACT
+    }
 
   def mapRailShape(shape: SpigotRail.Shape): RailsState = shape match {
-    case SpigotRail.Shape.NORTH_EAST => RailsState.NORTH_EAST
+    case SpigotRail.Shape.NORTH_EAST  => RailsState.NORTH_EAST
     case SpigotRail.Shape.NORTH_SOUTH => RailsState.NORTH_SOUTH
-    case SpigotRail.Shape.NORTH_WEST => RailsState.NORTH_WEST
-    case SpigotRail.Shape.EAST_WEST => RailsState.EAST_WEST
-    case SpigotRail.Shape.SOUTH_EAST => RailsState.SOUTH_EAST
-    case SpigotRail.Shape.SOUTH_WEST => RailsState.SOUTH_WEST
+    case SpigotRail.Shape.NORTH_WEST  => RailsState.NORTH_WEST
+    case SpigotRail.Shape.EAST_WEST   => RailsState.EAST_WEST
+    case SpigotRail.Shape.SOUTH_EAST  => RailsState.SOUTH_EAST
+    case SpigotRail.Shape.SOUTH_WEST  => RailsState.SOUTH_WEST
 
     case SpigotRail.Shape.ASCENDING_NORTH => RailsState.ASCENDING_NORTH
-    case SpigotRail.Shape.ASCENDING_EAST => RailsState.ASCENDING_EAST
+    case SpigotRail.Shape.ASCENDING_EAST  => RailsState.ASCENDING_EAST
     case SpigotRail.Shape.ASCENDING_SOUTH => RailsState.ASCENDING_SOUTH
-    case SpigotRail.Shape.ASCENDING_WEST => RailsState.ASCENDING_WEST
+    case SpigotRail.Shape.ASCENDING_WEST  => RailsState.ASCENDING_WEST
   }
 
   // TODO is this gonna clash with stairs that already have a chipped state?
   def mapStairsShape(shape: SpigotStairs.Shape): StairsState = shape match {
-    case SpigotStairs.Shape.STRAIGHT => StairsState.STRAIGHT
-    case SpigotStairs.Shape.INNER_LEFT => StairsState.INNER_LEFT
+    case SpigotStairs.Shape.STRAIGHT    => StairsState.STRAIGHT
+    case SpigotStairs.Shape.INNER_LEFT  => StairsState.INNER_LEFT
     case SpigotStairs.Shape.INNER_RIGHT => StairsState.INNER_RIGHT
-    case SpigotStairs.Shape.OUTER_LEFT => StairsState.OUTER_LEFT
+    case SpigotStairs.Shape.OUTER_LEFT  => StairsState.OUTER_LEFT
     case SpigotStairs.Shape.OUTER_RIGHT => StairsState.OUTER_RIGHT
   }
 
-  def mapStructureBlockMode(mode: SpigotStructureBlock.Mode): StructureBlockState = mode match {
+  def mapStructureBlockMode(
+      mode: SpigotStructureBlock.Mode
+  ): StructureBlockState = mode match {
     case SpigotStructureBlock.Mode.CORNER => StructureBlockState.CORNER
-    case SpigotStructureBlock.Mode.DATA => StructureBlockState.DATA
-    case SpigotStructureBlock.Mode.LOAD => StructureBlockState.LOAD
-    case SpigotStructureBlock.Mode.SAVE => StructureBlockState.SAVE
+    case SpigotStructureBlock.Mode.DATA   => StructureBlockState.DATA
+    case SpigotStructureBlock.Mode.LOAD   => StructureBlockState.LOAD
+    case SpigotStructureBlock.Mode.SAVE   => StructureBlockState.SAVE
   }
 }
