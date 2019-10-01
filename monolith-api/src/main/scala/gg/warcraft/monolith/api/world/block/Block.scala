@@ -15,19 +15,9 @@ trait Block {
   def withLocation(loc: BlockLocation): Block
 }
 
-trait AttachedBlock extends Block { // TODO can this extend DirectedBlock?
-  val attached: BlockAttachment // TODO rename attachment?
-
-  lazy val attachedTo : BlockLocation = {
-    null // TODO use facing to calc attached location
-  }
-
-  def withAttached(attached: BlockAttachment): AttachedBlock
-} // TODO is Attachable.isAttached always true?
-
-trait AttachableBlock extends Block { // TODO if isAttached is not always true let Sign extend this
-  val attached: Option[BlockAttachment]
-  def withAttached(attached: Option[BlockAttachment]): AttachableBlock
+trait AttachedBlock extends Block {
+  val attachment: BlockAttachment
+  def withAttached(attachment: BlockAttachment): AttachedBlock
 }
 
 trait BisectedBlock extends Block {
