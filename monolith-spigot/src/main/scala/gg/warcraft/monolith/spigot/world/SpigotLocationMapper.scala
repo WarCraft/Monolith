@@ -1,13 +1,13 @@
 package gg.warcraft.monolith.spigot.world
 
 import com.google.inject.Inject
-import gg.warcraft.monolith.api.math.{ Vector3f, Vector3i }
-import gg.warcraft.monolith.api.world.{ BlockLocation, Location }
-import org.bukkit.{ Location => SpigotLocation }
-import org.bukkit.block.{ Block => SpigotBlock }
+import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
+import gg.warcraft.monolith.api.world.{BlockLocation, Location}
+import org.bukkit.{Location => SpigotLocation}
+import org.bukkit.block.{Block => SpigotBlock}
 
 class SpigotLocationMapper @Inject()(
-  private val worldMapper: SpigotWorldMapper
+    private val worldMapper: SpigotWorldMapper
 ) {
 
   def map(loc: BlockLocation): SpigotLocation = {
@@ -37,8 +37,8 @@ class SpigotLocationMapper @Inject()(
 
   def map(loc: SpigotLocation): Location = {
     val world = worldMapper.map(loc.getWorld)
-    val translation = Vector3f(loc.getX.toFloat, loc.getY.toFloat, loc.getZ.toFloat)
-    val rotation = new Vector3f(loc.getPitch, loc.getYaw)
+    val translation = Vector3f(loc.getX, loc.getY, loc.getZ)
+    val rotation = Vector3f(loc.getPitch, loc.getYaw)
     Location(world, translation, rotation)
   }
 }
