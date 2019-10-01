@@ -22,20 +22,16 @@ case class Location(
   def add(x: Float, y: Float, z: Float): Location =
     copy(translation = translation.add(x, y, z))
 
-  def add(vec: Vector3f): Location =
-    add(vec.x, vec.y, vec.z)
+  def add(vec: Vector3f): Location = add(vec.x, vec.y, vec.z)
 
-  def add(loc: Location): Location =
-    add(loc.x, loc.y, loc.z)
+  def add(loc: Location): Location = add(loc.x, loc.y, loc.z)
 
   def subtract(x: Float, y: Float, z: Float): Location =
     copy(translation = translation.subtract(x, y, z))
 
-  def subtract(vec: Vector3f): Location =
-    subtract(vec.x, vec.y, vec.z)
+  def subtract(vec: Vector3f): Location = subtract(vec.x, vec.y, vec.z)
 
-  def subtract(loc: Location): Location =
-    subtract(loc.x, loc.y, loc.z)
+  def subtract(loc: Location): Location = subtract(loc.x, loc.y, loc.z)
 
   def distanceTo(target: Location): Float =
     translation.distanceTo(target.translation)
@@ -51,23 +47,16 @@ case class Location(
   def this(world: World, translation: Vector3f) =
     this(world, translation, Vector3f.ZERO_PITCH_YAW)
 
-  def withWorld(world: World): Location =
-    copy(world = world)
+  def withWorld(world: World): Location = copy(world = world)
 
   def withTranslation(translation: Vector3f): Location =
     copy(translation = translation)
 
-  def withRotation(rotation: Vector3f): Location =
-    copy(rotation = rotation)
+  def withRotation(rotation: Vector3f): Location = copy(rotation = rotation)
 
-  def withX(x: Float): Location =
-    copy(translation = translation.withX(x))
-
-  def withY(y: Float): Location =
-    copy(translation = translation.withY(y))
-
-  def withZ(z: Float): Location =
-    copy(translation = translation.withZ(z))
+  def withX(x: Float): Location = copy(translation = translation.withX(x))
+  def withY(y: Float): Location = copy(translation = translation.withY(y))
+  def withZ(z: Float): Location = copy(translation = translation.withZ(z))
 
   def withPitch(pitch: Float): Location =
     copy(rotation = Vector3f.apply(pitch, yaw))

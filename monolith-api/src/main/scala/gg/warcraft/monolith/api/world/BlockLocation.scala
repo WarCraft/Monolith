@@ -16,38 +16,28 @@ case class BlockLocation(
   def add(x: Int, y: Int, z: Int): BlockLocation =
     copy(translation = translation.add(x, y, z))
 
-  def add(vec: Vector3i): BlockLocation =
-    add(vec.x, vec.y, vec.z)
+  def add(vec: Vector3i): BlockLocation = add(vec.x, vec.y, vec.z)
 
-  def add(loc: BlockLocation): BlockLocation =
-    add(loc.x, loc.y, loc.z)
+  def add(loc: BlockLocation): BlockLocation = add(loc.x, loc.y, loc.z)
 
   def subtract(x: Int, y: Int, z: Int): BlockLocation =
     copy(translation = translation.subtract(x, y, z))
 
-  def subtract(vec: Vector3i): BlockLocation =
-    subtract(vec.x, vec.y, vec.z)
+  def subtract(vec: Vector3i): BlockLocation = subtract(vec.x, vec.y, vec.z)
 
   def subtract(loc: BlockLocation): BlockLocation =
     subtract(loc.x, loc.y, loc.z)
 
-  def toLocation: Location =
-    Location(world, translation.toVector3f)
+  def toLocation: Location = Location(world, translation.toVector3f)
 
   /* Java interop */
 
-  def withWorld(world: World): BlockLocation =
-    copy(world = world)
+  def withWorld(world: World): BlockLocation = copy(world = world)
 
   def withTranslation(translation: Vector3i): BlockLocation =
     copy(translation = translation)
 
-  def withX(x: Int): BlockLocation =
-    copy(translation = translation.withX(x))
-
-  def withY(y: Int): BlockLocation =
-    copy(translation = translation.withY(y))
-
-  def withZ(z: Int): BlockLocation =
-    copy(translation = translation.withZ(z))
+  def withX(x: Int): BlockLocation = copy(translation = translation.withX(x))
+  def withY(y: Int): BlockLocation = copy(translation = translation.withY(y))
+  def withZ(z: Int): BlockLocation = copy(translation = translation.withZ(z))
 }

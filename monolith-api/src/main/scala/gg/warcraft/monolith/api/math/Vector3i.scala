@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.api.math
 
 case class Vector3i(
-  x: Int = 0,
-  y: Int = 0,
-  z: Int = 0
+    x: Int = 0,
+    y: Int = 0,
+    z: Int = 0
 ) {
 
   def add(x: Int, y: Int, z: Int): Vector3i =
@@ -17,10 +17,10 @@ case class Vector3i(
   def subtract(vec: Vector3i): Vector3i = subtract(vec.x, vec.y, vec.z)
 
   def multiply(scalar: Int): Vector3i =
-    copy(x = this.x * scalar, y = this.y * scalar, z = this.z * scalar)
+    copy(x = x * scalar, y = y * scalar, z = z * scalar)
 
   def multiply(vec: Vector3i): Vector3i =
-    copy(x = this.x * vec.x, y = this.y * vec.y, z = this.z * vec.z)
+    copy(x = x * vec.x, y = y * vec.y, z = z * vec.z)
 
   def toVector3f: Vector3f = Vector3f(x.toFloat, y.toFloat, z.toFloat)
 

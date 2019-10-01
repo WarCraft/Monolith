@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.api.math
 
 case class Vector3f(
-  x: Float = 0,
-  y: Float = 0,
-  z: Float = 0
+    x: Float = 0,
+    y: Float = 0,
+    z: Float = 0
 ) {
   lazy val lengthSquared: Float = x * x + y * y + z * z
   lazy val length: Float = Math.sqrt(lengthSquared).toFloat
@@ -15,15 +15,15 @@ case class Vector3f(
   def add(vec: Vector3f): Vector3f = add(vec.x, vec.y, vec.z)
 
   def subtract(x: Float, y: Float, z: Float): Vector3f =
-    copy(x = this.x - x, y = this.y - y, z = this.z - z)
+    copy(x = x - x, y = y - y, z = z - z)
 
   def subtract(vec: Vector3f): Vector3f = subtract(vec.x, vec.y, vec.z)
 
   def multiply(scalar: Float): Vector3f =
-    copy(x = this.x * scalar, y = this.y * scalar, z = this.z * scalar)
+    copy(x = x * scalar, y = y * scalar, z = z * scalar)
 
   def multiply(vec: Vector3f): Vector3f =
-    copy(x = this.x * vec.x, y = this.y * vec.y, z = this.z * vec.z)
+    copy(x = x * vec.x, y = y * vec.y, z = z * vec.z)
 
   def distanceTo(target: Vector3f): Float = target.subtract(this).length
 
@@ -41,11 +41,15 @@ case class Vector3f(
     (pitch.toFloat, yaw.toFloat)
   }
 
-  def toVector3i: Vector3i = Vector3i(x.toInt, y.toInt, z.toInt)
+  def toVector3i: Vector3i =
+    Vector3i(x.toInt, y.toInt, z.toInt)
 
   /* Java interop */
 
   def this() = this(0, 0, 0)
+
+  def this(x: Double, y: Double, z: Double) =
+    this(x.toFloat, y.toFloat, z.toFloat)
 
   def withX(x: Float): Vector3f = copy(x = x)
   def withY(y: Float): Vector3f = copy(y = y)
@@ -55,11 +59,14 @@ case class Vector3f(
 object Vector3f {
   val ZERO_PITCH_YAW = Vector3f(0, 0, 1)
 
+  def apply(x: Double, y: Double, z: Double): Vector3f =
+    Vector3f(x.toFloat, y.toFloat, z.toFloat)
+
   def apply(pitch: Float, yaw: Float): Vector3f = {
     if (pitch < -90f) {
-      throw new IllegalArgumentException(s"pitch must be >= -90, but was $pitch")
+      throw new IllegalArgumentException(s"pitch $pitch must be >= -90")
     } else if (pitch > 90f) {
-      throw new IllegalArgumentException(s"pitch must be <= 90, but was $pitch")
+      throw new IllegalArgumentException(s"pitch $pitch must be <= 90")
     }
 
     var clampedYaw = yaw
