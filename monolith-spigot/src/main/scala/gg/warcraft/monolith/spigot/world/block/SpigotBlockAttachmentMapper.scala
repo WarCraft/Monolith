@@ -1,25 +1,19 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block.BlockAttachment
-import org.bukkit.block.BlockFace
-import org.bukkit.block.data.{ Attachable, Directional }
+import org.bukkit.block.data.`type`.Switch
 
 class SpigotBlockAttachmentMapper {
 
-  def map(attachable: Attachable): Option[BlockAttachment] = {
-    if (!attachable.isAttached) {
-      return None
-    }
-
-    attachable.asInstanceOf[Directional].getFacing match {
-      case BlockFace.NORTH => Some(BlockAttachment.WALL)
-      case BlockFace.EAST => Some(BlockAttachment.WALL)
-      case BlockFace.SOUTH => Some(BlockAttachment.WALL)
-      case BlockFace.WEST => Some(BlockAttachment.WALL)
-      case BlockFace.UP => Some(BlockAttachment.FLOOR)
-      case BlockFace.DOWN => Some(BlockAttachment.CEILING)
-    }
+  def map(switch: Switch): BlockAttachment = switch.getFace match {
+    case Switch.Face.CEILING => BlockAttachment.CEILING
+    case Switch.Face.FLOOR   => BlockAttachment.FLOOR
+    case Switch.Face.WALL    => BlockAttachment.WALL
   }
 
-  def map(attachment: Option[BlockAttachment]): Boolean = attachment.isDefined
+  def map(attachment: BlockAttachment): Switch.Face = attachment match {
+    case BlockAttachment.CEILING => Switch.Face.CEILING
+    case BlockAttachment.FLOOR   => Switch.Face.FLOOR
+    case BlockAttachment.WALL    => Switch.Face.WALL
+  }
 }

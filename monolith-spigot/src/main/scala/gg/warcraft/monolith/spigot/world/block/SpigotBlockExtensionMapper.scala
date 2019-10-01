@@ -1,14 +1,14 @@
 package gg.warcraft.monolith.spigot.world.block
 
-import java.util.{ HashSet => JavaHashSet, Set => JavaSet }
+import java.util.{HashSet => JavaHashSet, Set => JavaSet}
 
 import gg.warcraft.monolith.api.world.block.BlockFace
-import org.bukkit.block.{ BlockFace => SpigotBlockFace }
+import org.bukkit.block.{BlockFace => SpigotBlockFace}
 
 import scala.collection.mutable
 
 class SpigotBlockExtensionMapper(
-  private val blockFaceMapper: SpigotBlockFaceMapper
+    private val blockFaceMapper: SpigotBlockFaceMapper
 ) {
 
   def map(facing: JavaSet[SpigotBlockFace]): Set[BlockFace] = {
