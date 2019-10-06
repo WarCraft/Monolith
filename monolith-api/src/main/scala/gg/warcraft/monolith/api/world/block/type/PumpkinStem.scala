@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.world.block.state.PumpkinStemState
 case class PumpkinStem(
   location: BlockLocation,
   state: PumpkinStemState,
-  facing: Option[BlockFace]
+  direction: Option[BlockFace]
 ) extends StatefulBlock[PumpkinStemState] with DirectableBlock {
   override val kind = BlockType.PUMPKIN_STEM
 
@@ -15,5 +15,5 @@ case class PumpkinStem(
 
   override def withLocation(loc: BlockLocation): PumpkinStem = copy(location = loc)
   override def withState(state: PumpkinStemState): PumpkinStem = copy(state = state)
-  override def withFacing(facing: Option[BlockFace]): PumpkinStem = copy(facing = facing)
+  override def withDirection(facing: Option[BlockFace]): PumpkinStem = copy(direction = facing)
 }

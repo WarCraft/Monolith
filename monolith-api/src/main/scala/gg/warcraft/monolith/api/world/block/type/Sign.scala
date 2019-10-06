@@ -8,7 +8,7 @@ case class Sign(
   lines: List[String],
   location: BlockLocation,
   material: WoodMaterial,
-  facing: Option[BlockFace],
+  direction: Option[BlockFace],
   rotation: Option[BlockRotation],
   flooded: Boolean
 ) extends MaterialBlock[WoodMaterial] with DirectableBlock with RotatableBlock with FloodableBlock {
@@ -20,7 +20,7 @@ case class Sign(
 
   override def withLocation(loc: BlockLocation): Sign = copy(location = loc)
   override def withMaterial(material: WoodMaterial): Sign = copy(material = material)
-  override def withFacing(facing: Option[BlockFace]): Sign = copy(facing = facing)
+  override def withDirection(facing: Option[BlockFace]): Sign = copy(direction = facing)
   override def withRotation(rotation: Option[BlockRotation]): Sign = copy(rotation = rotation)
   override def withFlooded(flooded: Boolean): Sign = copy(flooded = flooded)
 }

@@ -1,14 +1,14 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectionalBlock, StickyBlock }
+import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, StickyBlock }
 
 case class Piston(
   location: BlockLocation,
-  facing: BlockFace,
+  direction: BlockFace,
   sticky: Boolean,
   extended: Boolean
-) extends DirectionalBlock with StickyBlock {
+) extends DirectedBlock with StickyBlock {
   override val kind = BlockType.PISTON
 
   /* Java interop */
@@ -16,6 +16,6 @@ case class Piston(
   def withExtended(extended: Boolean): Piston = copy(extended = extended)
 
   override def withLocation(loc: BlockLocation): Piston = copy(location = loc)
-  override def withFacing(facing: BlockFace): Piston = copy(facing = facing)
+  override def withDirection(facing: BlockFace): Piston = copy(direction = facing)
   override def withSticky(sticky: Boolean): Piston = copy(sticky = sticky)
 }

@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectableBl
 
 case class Pumpkin(
   location: BlockLocation,
-  facing: Option[BlockFace],
+  direction: Option[BlockFace],
   lit: Boolean,
   carved: Boolean
 ) extends DirectableBlock with LightableBlock {
@@ -16,6 +16,6 @@ case class Pumpkin(
   def withCarved(carved: Boolean): Pumpkin = copy(carved = carved)
 
   override def withLocation(loc: BlockLocation): Pumpkin = copy(location = loc)
-  override def withFacing(facing: Option[BlockFace]): Pumpkin = copy(facing = facing)
+  override def withDirection(facing: Option[BlockFace]): Pumpkin = copy(direction = facing)
   override def withLit(lit: Boolean): Pumpkin = copy(lit = lit)
 }

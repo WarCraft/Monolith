@@ -509,7 +509,7 @@ class SpigotBlockMaterialMapper @Inject()(
       }
 
     case it: CoralFan =>
-      if (it.facing.isEmpty) {
+      if (it.direction.isEmpty) {
         it.material match {
           case CoralMaterial.BRAIN       => Material.BRAIN_CORAL_FAN
           case CoralMaterial.BUBBLE      => Material.BUBBLE_CORAL_FAN
@@ -687,7 +687,7 @@ class SpigotBlockMaterialMapper @Inject()(
       }
 
     case it: MobHead =>
-      if (it.facing.isEmpty) {
+      if (it.direction.isEmpty) {
         it.material match {
           case MobHeadMaterial.CREEPER         => Material.CREEPER_HEAD
           case MobHeadMaterial.DRAGON          => Material.DRAGON_HEAD
@@ -771,7 +771,7 @@ class SpigotBlockMaterialMapper @Inject()(
       }
 
     case it: RedstoneTorch =>
-      if (it.facing.isEmpty) Material.REDSTONE_TORCH
+      if (it.direction.isEmpty) Material.REDSTONE_TORCH
       else Material.REDSTONE_WALL_TORCH
 
     case it: Sand =>
@@ -802,7 +802,7 @@ class SpigotBlockMaterialMapper @Inject()(
       if (it.tall) Material.TALL_SEAGRASS else Material.SEAGRASS
 
     case it: Sign =>
-      if (it.facing.isEmpty) {
+      if (it.direction.isEmpty) {
         it.material match {
           case WoodMaterial.ACACIA   => Material.ACACIA_SIGN
           case WoodMaterial.BIRCH    => Material.BIRCH_SIGN

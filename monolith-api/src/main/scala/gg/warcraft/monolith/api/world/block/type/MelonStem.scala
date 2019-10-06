@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.world.block.state.MelonStemState
 case class MelonStem(
   location: BlockLocation,
   state: MelonStemState,
-  facing: Option[BlockFace]
+  direction: Option[BlockFace]
 ) extends StatefulBlock[MelonStemState] with DirectableBlock {
   override val kind = BlockType.MELON_STEM
 
@@ -15,5 +15,5 @@ case class MelonStem(
 
   override def withLocation(loc: BlockLocation): MelonStem = copy(location = loc)
   override def withState(state: MelonStemState): MelonStem = copy(state = state)
-  override def withFacing(facing: Option[BlockFace]): MelonStem = copy(facing = facing)
+  override def withDirection(facing: Option[BlockFace]): MelonStem = copy(direction = facing)
 }

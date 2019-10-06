@@ -35,14 +35,14 @@ trait ColorableBlock extends Block {
   def withColor(color: Option[BlockColor]): ColorableBlock
 }
 
-trait DirectionalBlock extends Block {
-  val facing: BlockFace
-  def withFacing(facing: BlockFace): DirectionalBlock
-} // TODO name DirectedBlock to be more in line with DirectableBlock?
+trait DirectedBlock extends Block {
+  val direction: BlockFace
+  def withDirection(facing: BlockFace): DirectedBlock
+}
 
 trait DirectableBlock extends Block {
-  val facing: Option[BlockFace]
-  def withFacing(facing: Option[BlockFace]): DirectableBlock
+  val direction: Option[BlockFace]
+  def withDirection(facing: Option[BlockFace]): DirectableBlock
 }
 
 trait ExtendableBlock extends Block {

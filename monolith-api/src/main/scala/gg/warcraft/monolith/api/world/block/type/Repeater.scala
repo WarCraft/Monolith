@@ -7,10 +7,10 @@ import gg.warcraft.monolith.api.world.block._
 case class Repeater(
   location: BlockLocation,
   state: RepeaterState,
-  facing: BlockFace,
+  direction: BlockFace,
   powered: Boolean,
   locked: Boolean
-) extends StatefulBlock[RepeaterState] with DirectionalBlock with PowerableBlock {
+) extends StatefulBlock[RepeaterState] with DirectedBlock with PowerableBlock {
   override val kind = BlockType.REPEATER
 
   /* Java interop */
@@ -19,6 +19,6 @@ case class Repeater(
 
   override def withLocation(loc: BlockLocation): Repeater = copy(location = loc)
   override def withState(state: RepeaterState): Repeater = copy(state = state)
-  override def withFacing(facing: BlockFace): Repeater = copy(facing = facing)
+  override def withDirection(facing: BlockFace): Repeater = copy(direction = facing)
   override def withPowered(powered: Boolean): Repeater = copy(powered = powered)
 }

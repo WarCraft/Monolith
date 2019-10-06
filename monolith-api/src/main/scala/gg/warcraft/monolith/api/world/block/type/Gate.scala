@@ -7,11 +7,11 @@ import gg.warcraft.monolith.api.world.block.material.WoodMaterial
 case class Gate(
   location: BlockLocation,
   material: WoodMaterial,
-  facing: BlockFace,
+  direction: BlockFace,
   open: Boolean,
   powered: Boolean,
   wall: Boolean
-) extends MaterialBlock[WoodMaterial] with DirectionalBlock with OpenableBlock with PowerableBlock {
+) extends MaterialBlock[WoodMaterial] with DirectedBlock with OpenableBlock with PowerableBlock {
   override val kind = BlockType.GATE
 
   /* Java interop */
@@ -20,7 +20,7 @@ case class Gate(
 
   override def withLocation(loc: BlockLocation): Gate = copy(location = loc)
   override def withMaterial(mat: WoodMaterial): Gate = copy(material = mat)
-  override def withFacing(facing: BlockFace): Gate = copy(facing = facing)
+  override def withDirection(facing: BlockFace): Gate = copy(direction = facing)
   override def withOpen(open: Boolean): Gate = copy(open = open)
   override def withPowered(pow: Boolean): Gate = copy(powered = pow)
 }

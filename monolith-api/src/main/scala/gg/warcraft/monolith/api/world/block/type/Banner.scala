@@ -7,7 +7,7 @@ case class Banner(
   location: BlockLocation,
   color: BlockColor,
   rotation: Option[BlockRotation],
-  facing: Option[BlockFace]
+  direction: Option[BlockFace]
 ) extends ColoredBlock with RotatableBlock with DirectableBlock {
   override val kind = BlockType.BANNER
 
@@ -16,5 +16,5 @@ case class Banner(
   override def withLocation(loc: BlockLocation): Banner = copy(location = loc)
   override def withColor(color: BlockColor): Banner = copy(color = color)
   override def withRotation(rotation: Option[BlockRotation]): Banner = copy(rotation = rotation)
-  override def withFacing(facing: Option[BlockFace]): Banner = copy(facing = facing)
+  override def withDirection(facing: Option[BlockFace]): Banner = copy(direction = facing)
 }

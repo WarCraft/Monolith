@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectableBl
 
 case class RedstoneTorch(
   location: BlockLocation,
-  facing: Option[BlockFace],
+  direction: Option[BlockFace],
   lit: Boolean
 ) extends DirectableBlock with LightableBlock {
   override val kind = BlockType.REDSTONE_TORCH
@@ -13,6 +13,6 @@ case class RedstoneTorch(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): RedstoneTorch = copy(location = loc)
-  override def withFacing(facing: Option[BlockFace]): RedstoneTorch = copy(facing = facing)
+  override def withDirection(facing: Option[BlockFace]): RedstoneTorch = copy(direction = facing)
   override def withLit(lit: Boolean): RedstoneTorch = copy(lit = lit)
 }

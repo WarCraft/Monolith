@@ -133,7 +133,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         List<Sign> extraSigns = new ArrayList<>();
         Block nextSign = blockUtils.getRelative(sign, BlockFace.EAST);
         while (nextSign.type() == BlockType.SIGN &&
-                ((Sign) nextSign).facing().isDefined()) {
+                ((Sign) nextSign).direction().isDefined()) {
             extraSigns.add((Sign) nextSign);
             nextSign = blockUtils.getRelative(nextSign, BlockFace.EAST);
         }
@@ -169,7 +169,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         List<BlockBuild> builds = floor
                 .filter(block -> block.type() == BlockType.SIGN)
                 .map(block -> (Sign) block)
-                .filter(sign -> sign.facing().isDefined())
+                .filter(sign -> sign.direction().isDefined())
                 .map(this::initializeBuild)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

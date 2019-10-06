@@ -112,8 +112,8 @@ public class SpigotWorldAdapter implements WorldServerAdapter {
         spigotBlockState.setRawData(typeData);
 
         org.bukkit.material.MaterialData spigotMaterialData = null;
-        Direction facingDirection = block instanceof DirectionalBlock
-                ? ((DirectionalBlock) block).getFacing()
+        Direction facingDirection = block instanceof DirectedBlock
+                ? ((DirectedBlock) block).getFacing()
                 : null;
         BlockFace spigotFacingDirection = directionMapper.map(facingDirection);
         switch (block.getType()) {
