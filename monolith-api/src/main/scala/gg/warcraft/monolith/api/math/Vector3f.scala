@@ -15,7 +15,7 @@ case class Vector3f(
   def add(vec: Vector3f): Vector3f = add(vec.x, vec.y, vec.z)
 
   def subtract(x: Float, y: Float, z: Float): Vector3f =
-    copy(x = x - x, y = y - y, z = z - z)
+    copy(x = this.x - x, y = this.y - y, z = this.z - z)
 
   def subtract(vec: Vector3f): Vector3f = subtract(vec.x, vec.y, vec.z)
 
