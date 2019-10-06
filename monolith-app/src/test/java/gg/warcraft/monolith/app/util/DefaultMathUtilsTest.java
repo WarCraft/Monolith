@@ -21,12 +21,12 @@ public class DefaultMathUtilsTest {
         for (int i = 0; i < 10; i += 1) {
             Vector3f vector = defaultMathUtils.randomVector();
 
-            Assert.assertTrue(vector.getX() >= -1);
-            Assert.assertTrue(vector.getX() <= 1);
-            Assert.assertTrue(vector.getY() >= -1);
-            Assert.assertTrue(vector.getY() <= 1);
-            Assert.assertTrue(vector.getZ() >= -1);
-            Assert.assertTrue(vector.getZ() <= 1);
+            Assert.assertTrue(vector.x() >= -1);
+            Assert.assertTrue(vector.x() <= 1);
+            Assert.assertTrue(vector.y() >= -1);
+            Assert.assertTrue(vector.y() <= 1);
+            Assert.assertTrue(vector.z() >= -1);
+            Assert.assertTrue(vector.z() <= 1);
         }
     }
 
@@ -35,7 +35,7 @@ public class DefaultMathUtilsTest {
         for (int i = 0; i < 10; i += 1) {
             Vector3f vector = defaultMathUtils.randomCircleVector();
 
-            Assert.assertEquals(0, vector.getY(), FLOAT_ERROR_MARGIN);
+            Assert.assertEquals(0, vector.y(), FLOAT_ERROR_MARGIN);
             Assert.assertEquals(1, vector.length(), FLOAT_ERROR_MARGIN);
         }
     }

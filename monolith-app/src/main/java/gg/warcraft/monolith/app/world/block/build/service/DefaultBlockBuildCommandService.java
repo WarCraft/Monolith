@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
@@ -57,7 +58,26 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     }
 
     Set<Block> searchGlassFoundation(Sign sign) {
-        Block attachedTo = sign.attachedTo(); // TODO impl convenience method on AttachedBlock that returns BlockLocation?
+        Block attachedTo;
+        switch (sign.direction().get()) {
+            case NORTH:
+                BlockLocation attachedLocation = sign.location().add(0, 0, 1);
+                attachedTo = worldQueryService.getBlockAt(attachedLocation);
+                break;
+            case EAST:
+                BlockLocation attachedLocation2 = sign.location().add(-1, 0, 0);
+                attachedTo = worldQueryService.getBlockAt(attachedLocation2);
+                break;
+            case WEST:
+                BlockLocation attachedLocation4 = sign.location().add(1, 0, 0);
+                attachedTo = worldQueryService.getBlockAt(attachedLocation4);
+                break;
+            case SOUTH:
+            default:
+                BlockLocation attachedLocation3 = sign.location().add(0, 0, -1);
+                attachedTo = worldQueryService.getBlockAt(attachedLocation3);
+                break;
+        }
         if (attachedTo.type() != BlockType.GLASS) {
             return new HashSet<>();
         }

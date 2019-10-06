@@ -46,36 +46,36 @@ public class SimpleBoundingBlockBoxReaderTest {
         when(mockBoundingBlockBox.getUpperBoundary()).thenReturn(0);
 
         mockBlock11 = mock(Block.class);
-        when(mockBlock11.getType()).thenReturn(BlockType.AIR);
+        when(mockBlock11.type()).thenReturn(BlockType.AIR);
         BlockLocation mockBlock11Location = mock(BlockLocation.class);
-        when(mockBlock11Location.getX()).thenReturn(1);
-        when(mockBlock11Location.getY()).thenReturn(0);
-        when(mockBlock11Location.getZ()).thenReturn(1);
-        when(mockBlock11.getLocation()).thenReturn(mockBlock11Location);
+        when(mockBlock11Location.x()).thenReturn(1);
+        when(mockBlock11Location.y()).thenReturn(0);
+        when(mockBlock11Location.z()).thenReturn(1);
+        when(mockBlock11.location()).thenReturn(mockBlock11Location);
 
         mockBlock13 = mock(Block.class);
-        when(mockBlock13.getType()).thenReturn(BlockType.DIRT);
+        when(mockBlock13.type()).thenReturn(BlockType.DIRT);
         BlockLocation mockBlock13Location = mock(BlockLocation.class);
-        when(mockBlock13Location.getX()).thenReturn(1);
-        when(mockBlock13Location.getY()).thenReturn(0);
-        when(mockBlock13Location.getZ()).thenReturn(3);
-        when(mockBlock13.getLocation()).thenReturn(mockBlock13Location);
+        when(mockBlock13Location.x()).thenReturn(1);
+        when(mockBlock13Location.y()).thenReturn(0);
+        when(mockBlock13Location.z()).thenReturn(3);
+        when(mockBlock13.location()).thenReturn(mockBlock13Location);
 
         mockBlock31 = mock(Block.class);
-        when(mockBlock31.getType()).thenReturn(BlockType.STILL_LAVA);
+        when(mockBlock31.type()).thenReturn(BlockType.LAVA);
         BlockLocation mockBlock31Location = mock(BlockLocation.class);
-        when(mockBlock31Location.getX()).thenReturn(3);
-        when(mockBlock31Location.getY()).thenReturn(0);
-        when(mockBlock31Location.getZ()).thenReturn(1);
-        when(mockBlock31.getLocation()).thenReturn(mockBlock31Location);
+        when(mockBlock31Location.x()).thenReturn(3);
+        when(mockBlock31Location.y()).thenReturn(0);
+        when(mockBlock31Location.z()).thenReturn(1);
+        when(mockBlock31.location()).thenReturn(mockBlock31Location);
 
         mockBlock33 = mock(Block.class);
-        when(mockBlock33.getType()).thenReturn(BlockType.VINES);
+        when(mockBlock33.type()).thenReturn(BlockType.VINE);
         BlockLocation mockBlock33Location = mock(BlockLocation.class);
-        when(mockBlock33Location.getX()).thenReturn(3);
-        when(mockBlock33Location.getY()).thenReturn(0);
-        when(mockBlock33Location.getZ()).thenReturn(3);
-        when(mockBlock33.getLocation()).thenReturn(mockBlock33Location);
+        when(mockBlock33Location.x()).thenReturn(3);
+        when(mockBlock33Location.y()).thenReturn(0);
+        when(mockBlock33Location.z()).thenReturn(3);
+        when(mockBlock33.location()).thenReturn(mockBlock33Location);
 
         Block mockBlock12 = mock(Block.class);
         Block mockBlock21 = mock(Block.class);
@@ -158,9 +158,9 @@ public class SimpleBoundingBlockBoxReaderTest {
         Block westFrontLeftBlock = westSimpleBoundingBlockBoxReader.getBlockAt(0, 0, 2);
 
         // Then
-        Assert.assertEquals(mockBlock11.getType(), northFrontLeftBlock.getType());
-        Assert.assertEquals(mockBlock31.getType(), eastFrontLeftBlock.getType());
-        Assert.assertEquals(mockBlock33.getType(), southFrontLeftBlock.getType());
-        Assert.assertEquals(mockBlock13.getType(), westFrontLeftBlock.getType());
+        Assert.assertEquals(mockBlock11.type(), northFrontLeftBlock.type());
+        Assert.assertEquals(mockBlock31.type(), eastFrontLeftBlock.type());
+        Assert.assertEquals(mockBlock33.type(), southFrontLeftBlock.type());
+        Assert.assertEquals(mockBlock13.type(), westFrontLeftBlock.type());
     }
 }
