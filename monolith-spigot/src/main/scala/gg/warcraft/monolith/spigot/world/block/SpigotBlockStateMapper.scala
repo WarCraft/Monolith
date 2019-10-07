@@ -108,7 +108,7 @@ class SpigotBlockStateMapper {
         val delay = dataAs[SpigotRepeater].getDelay
         RepeaterState.valueOf(s"DELAY_$delay")
 
-      // SANDSTONE TODO add slab stairs wall etc, stairs need their own case due to shape also going on the state
+      // SANDSTONE TODO add slab stairs wall etc
       case Material.SANDSTONE | Material.RED_SANDSTONE =>
         SandstoneState.NORMAL
 
