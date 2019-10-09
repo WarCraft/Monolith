@@ -1,18 +1,18 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
-import gg.warcraft.monolith.api.world.block.material.MushroomMaterial
+import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
+import gg.warcraft.monolith.api.world.block.variant.MushroomVariant
 
 case class Mushroom(
   location: BlockLocation,
-  material: MushroomMaterial
-) extends MaterialBlock[MushroomMaterial] {
+  variant: MushroomVariant
+) extends VariedBlock[MushroomVariant] {
   override val kind = BlockType.MUSHROOM
   override val solid: Boolean = false
 
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Mushroom = copy(location = loc)
-  override def withMaterial(mat: MushroomMaterial): Mushroom = copy(material = mat)
+  override def withVariant(variant: MushroomVariant): Mushroom = copy(variant = variant)
 }

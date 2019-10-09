@@ -4,13 +4,13 @@ import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
-import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
+import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{ Bukkit => Spigot, Material }
+import org.bukkit.{Material, Bukkit => Spigot}
 import org.bukkit.block.data._
-import org.bukkit.block.data.`type`.Door.{ Hinge => SpigotDoorHinge }
+import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
 import org.bukkit.block.data.`type`.Switch
 
 class SpigotBlockMapper @Inject()(
@@ -473,11 +473,11 @@ class SpigotBlockMapper @Inject()(
 
       // MUSHROOM
       case Material.BROWN_MUSHROOM | Material.RED_MUSHROOM =>
-        Mushroom(loc, materialAs[MushroomMaterial])
+        Mushroom(loc, variantAs[MushroomVariant])
 
       case Material.BROWN_MUSHROOM_BLOCK | Material.RED_MUSHROOM_BLOCK |
           Material.MUSHROOM_STEM =>
-        MushroomBlock(loc, materialAs[MushroomBlockMaterial])
+        MushroomBlock(loc, variantAs[MushroomBlockVariant])
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
@@ -574,7 +574,7 @@ class SpigotBlockMapper @Inject()(
           Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
           Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
           Material.SPRUCE_SAPLING =>
-        Sapling(loc, materialAs[SaplingMaterial], stateAs[SaplingState])
+        Sapling(loc, variantAs[SaplingVariant], stateAs[SaplingState])
 
       // SEA_PICKLE
       case Material.SEA_PICKLE =>
@@ -614,22 +614,26 @@ class SpigotBlockMapper @Inject()(
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB |
           Material.RED_NETHER_BRICK_SLAB | Material.SANDSTONE_SLAB |
-          Material.CUT_SANDSTONE_SLAB | Material.SMOOTH_SANDSTONE_SLAB |
-          Material.RED_SANDSTONE_SLAB | Material.CUT_RED_SANDSTONE_SLAB |
-          Material.SMOOTH_RED_SANDSTONE_SLAB | Material.STONE_SLAB |
-          Material.SMOOTH_STONE_SLAB | Material.STONE_BRICK_SLAB |
-          Material.MOSSY_STONE_BRICK_SLAB | Material.COBBLESTONE_SLAB |
-          Material.MOSSY_COBBLESTONE_SLAB | Material.ANDESITE_SLAB |
-          Material.DIORITE_SLAB | Material.GRANITE_SLAB |
-          Material.POLISHED_ANDESITE_SLAB | Material.POLISHED_DIORITE_SLAB |
-          Material.POLISHED_GRANITE_SLAB | Material.END_STONE_BRICK_SLAB |
+          Material.RED_SANDSTONE_SLAB | Material.STONE_SLAB |
+          Material.STONE_BRICK_SLAB | Material.COBBLESTONE_SLAB |
+          Material.ANDESITE_SLAB | Material.DIORITE_SLAB |
+          Material.GRANITE_SLAB | Material.END_STONE_BRICK_SLAB |
           Material.PRISMARINE_SLAB | Material.PRISMARINE_BRICK_SLAB |
           Material.DARK_PRISMARINE_SLAB | Material.PURPUR_SLAB |
-          Material.QUARTZ_SLAB | Material.SMOOTH_QUARTZ_SLAB |
-          Material.ACACIA_SLAB | Material.BIRCH_SLAB | Material.DARK_OAK_SLAB |
-          Material.JUNGLE_SLAB | Material.OAK_SLAB | Material.SPRUCE_SLAB |
-          Material.PETRIFIED_OAK_SLAB =>
-        Slab(loc, materialAs[SlabMaterial], bisection)
+          Material.QUARTZ_SLAB | Material.ACACIA_SLAB | Material.BIRCH_SLAB |
+          Material.DARK_OAK_SLAB | Material.JUNGLE_SLAB | Material.OAK_SLAB |
+          Material.SPRUCE_SLAB | Material.PETRIFIED_OAK_SLAB =>
+        Slab(loc, materialAs[SlabMaterial], None, bisection)
+
+      case Material.CUT_SANDSTONE_SLAB | Material.SMOOTH_SANDSTONE_SLAB |
+          Material.CUT_RED_SANDSTONE_SLAB | Material.SMOOTH_RED_SANDSTONE_SLAB |
+          Material.SMOOTH_STONE_SLAB | Material.MOSSY_STONE_BRICK_SLAB |
+          Material.MOSSY_COBBLESTONE_SLAB | Material.POLISHED_ANDESITE_SLAB |
+          Material.POLISHED_DIORITE_SLAB | Material.POLISHED_GRANITE_SLAB |
+          Material.SMOOTH_QUARTZ_SLAB =>
+        val _material = materialAs[SlabMaterial]
+        val _variant = variantAs[SlabVariant]
+        Slab(loc, _material, Some(_variant), bisection)
 
       // SPONGE
       case Material.SPONGE     => Sponge(loc, wet = false)
@@ -638,20 +642,26 @@ class SpigotBlockMapper @Inject()(
       // STAIRS
       case Material.BRICK_STAIRS | Material.NETHER_BRICK_STAIRS |
           Material.RED_NETHER_BRICK_STAIRS | Material.SANDSTONE_STAIRS |
-          Material.SMOOTH_SANDSTONE_STAIRS | Material.RED_SANDSTONE_STAIRS |
-          Material.SMOOTH_RED_SANDSTONE_STAIRS | Material.STONE_STAIRS |
-          Material.STONE_BRICK_STAIRS | Material.MOSSY_STONE_BRICK_STAIRS |
-          Material.COBBLESTONE_STAIRS | Material.MOSSY_COBBLESTONE_STAIRS |
+          Material.RED_SANDSTONE_STAIRS | Material.STONE_STAIRS |
+          Material.STONE_BRICK_STAIRS | Material.COBBLESTONE_STAIRS |
           Material.ANDESITE_STAIRS | Material.DIORITE_STAIRS |
-          Material.GRANITE_STAIRS | Material.POLISHED_ANDESITE_STAIRS |
-          Material.POLISHED_DIORITE_STAIRS | Material.POLISHED_GRANITE_STAIRS |
-          Material.END_STONE_BRICK_STAIRS | Material.PRISMARINE_STAIRS |
-          Material.PRISMARINE_BRICK_STAIRS | Material.DARK_PRISMARINE_STAIRS |
-          Material.PURPUR_STAIRS | Material.QUARTZ_STAIRS |
-          Material.SMOOTH_QUARTZ_STAIRS | Material.ACACIA_STAIRS |
+          Material.GRANITE_STAIRS | Material.END_STONE_BRICK_STAIRS |
+          Material.PRISMARINE_STAIRS | Material.PRISMARINE_BRICK_STAIRS |
+          Material.DARK_PRISMARINE_STAIRS | Material.PURPUR_STAIRS |
+          Material.QUARTZ_STAIRS | Material.ACACIA_STAIRS |
           Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
           Material.JUNGLE_STAIRS | Material.OAK_STAIRS |
           Material.SPRUCE_STAIRS =>
+        val _material = materialAs[StairsMaterial]
+        val _shape = shapeAs[StairsShape]
+        Stairs(loc, _material, None, _shape, dir, bisection, flooded)
+
+      case Material.SMOOTH_SANDSTONE_STAIRS |
+          Material.SMOOTH_RED_SANDSTONE_STAIRS |
+          Material.MOSSY_STONE_BRICK_STAIRS |
+          Material.MOSSY_COBBLESTONE_STAIRS |
+          Material.POLISHED_ANDESITE_STAIRS | Material.POLISHED_DIORITE_STAIRS |
+          Material.POLISHED_GRANITE_STAIRS | Material.SMOOTH_QUARTZ_STAIRS =>
         val _material = materialAs[StairsMaterial]
         val _variant = Some(variantAs[StairsVariant])
         val _shape = shapeAs[StairsShape]
@@ -659,18 +669,20 @@ class SpigotBlockMapper @Inject()(
 
       // STONE
       case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
-          Material.STONE | Material.SMOOTH_STONE |
-          Material.CHISELED_STONE_BRICKS | Material.STONE_BRICKS |
-          Material.MOSSY_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
-          Material.COBBLESTONE | Material.MOSSY_COBBLESTONE |
+          Material.STONE | Material.STONE_BRICKS | Material.COBBLESTONE |
           Material.ANDESITE | Material.DIORITE | Material.GRANITE |
-          Material.POLISHED_ANDESITE | Material.POLISHED_DIORITE |
-          Material.POLISHED_GRANITE | Material.END_STONE |
-          Material.END_STONE_BRICKS | Material.PRISMARINE |
+          Material.END_STONE | Material.END_STONE_BRICKS | Material.PRISMARINE |
           Material.PRISMARINE_BRICKS | Material.DARK_PRISMARINE |
-          Material.PURPUR_BLOCK | Material.QUARTZ | Material.SMOOTH_QUARTZ |
-          Material.CHISELED_QUARTZ_BLOCK => // TODO this needs to be broken up
-        Stone(loc, materialAs[StoneMaterial], variantAs[StoneVariant])
+          Material.PURPUR_BLOCK | Material.QUARTZ =>
+        Stone(loc, materialAs[StoneMaterial], None)
+        // TODO these arent all stone! Brick should get its own class, andesite is a Stonite etc
+
+      case Material.SMOOTH_STONE | Material.CHISELED_STONE_BRICKS |
+          Material.MOSSY_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
+          Material.MOSSY_COBBLESTONE | Material.POLISHED_ANDESITE |
+          Material.POLISHED_DIORITE | Material.POLISHED_GRANITE |
+          Material.SMOOTH_QUARTZ | Material.CHISELED_QUARTZ_BLOCK =>
+        Stone(loc, materialAs[StoneMaterial], Some(variantAs[StoneVariant]))
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
@@ -735,11 +747,15 @@ class SpigotBlockMapper @Inject()(
       case Material.BRICK_WALL | Material.NETHER_BRICK_WALL |
           Material.RED_NETHER_BRICK_WALL | Material.PRISMARINE_WALL |
           Material.SANDSTONE_WALL | Material.RED_SANDSTONE_WALL |
-          Material.STONE_BRICK_WALL | Material.MOSSY_STONE_BRICK_WALL |
-          Material.END_STONE_BRICK_WALL | Material.COBBLESTONE_WALL |
-          Material.MOSSY_COBBLESTONE_WALL | Material.ANDESITE_WALL |
+          Material.STONE_BRICK_WALL | Material.END_STONE_BRICK_WALL |
+          Material.COBBLESTONE_WALL | Material.ANDESITE_WALL |
           Material.DIORITE_WALL | Material.GRANITE_WALL =>
-        Wall(loc, materialAs[WallMaterial], extensions)
+        Wall(loc, materialAs[WallMaterial], None, extensions)
+
+      case Material.MOSSY_STONE_BRICK_WALL | Material.MOSSY_COBBLESTONE_WALL =>
+        val _material = materialAs[WallMaterial]
+        val _variant = variantAs[WallVariant]
+        Wall(loc, _material, Some(_variant), extensions)
 
       // WOOD
       case Material.ACACIA_WOOD | Material.BIRCH_WOOD | Material.DARK_OAK_WOOD |
@@ -760,10 +776,7 @@ class SpigotBlockMapper @Inject()(
           Material.WHITE_WOOL | Material.YELLOW_WOOL =>
         Wool(loc, color)
 
-      case _ =>
-        throw new IllegalArgumentException(
-          s"Failed to map block with type: ${block.getType}"
-        )
+      case _ => throw new IllegalArgumentException(s"${block.getType}")
     }
   }
 
