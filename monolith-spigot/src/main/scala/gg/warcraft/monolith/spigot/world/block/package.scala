@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.spigot.world
 
-import org.bukkit.{Bukkit, Material}
-import org.bukkit.block.{Block, BlockState, Sign}
-import org.bukkit.block.data.BlockData
+import org.bukkit.{ Bukkit, Material }
+import org.bukkit.block.{ Block, BlockState, Sign }
+import org.bukkit.block.data.{ BlockData, Rail }
 import org.bukkit.block.data.`type`._
 
 package object block {
@@ -29,10 +29,12 @@ package object block {
   type SpigotLectern = Lectern
   type SpigotNoteBlock = NoteBlock
   type SpigotPiston = Piston
+  type SpigotRails = Rail
   type SpigotRepeater = Repeater
   type SpigotSapling = Sapling
   type SpigotSeaPickle = SeaPickle
   type SpigotSign = Sign
+  type SpigotStairs = Stairs
   type SpigotStructureBlock = StructureBlock
   type SpigotTNT = TNT
   type SpigotTurtleEgg = TurtleEgg
@@ -42,6 +44,8 @@ package object block {
     data.asInstanceOf[T]
 
   implicit class MaterialExtensions(val material: Material) {
-    def is(s: String): Boolean = material.name().startsWith(s)
+    def is(s: String): Boolean = material.name().contains(s)
+    def $is(s: String): Boolean = material.name().startsWith(s)
+    def is$(s: String): Boolean = material.name().endsWith(s)
   }
 }
