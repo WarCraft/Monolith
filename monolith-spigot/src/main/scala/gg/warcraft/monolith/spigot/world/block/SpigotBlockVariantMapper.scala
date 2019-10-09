@@ -316,37 +316,6 @@ class SpigotBlockVariantMapper {
       case Some(_) => Material.DEAD_TUBE_CORAL_WALL_FAN
     }
 
-    case FlowerPot(_, None) => Material.FLOWER_POT
-    case FlowerPot(_, Some(variant)) => variant match {
-      case FlowerVariant.ALLIUM => Material.POTTED_ALLIUM
-      case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
-      case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
-      case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
-      case FlowerVariant.DANDELION    => Material.POTTED_DANDELION
-      case FlowerVariant.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
-      case FlowerVariant.OXEYE_DAISY  => Material.POTTED_OXEYE_DAISY
-      case FlowerVariant.PINK_TULIP   => Material.POTTED_PINK_TULIP
-      case FlowerVariant.POPPY        => Material.POTTED_POPPY
-      case FlowerVariant.RED_TULIP    => Material.POTTED_RED_TULIP
-      case FlowerVariant.WHITE_TULIP  => Material.POTTED_WHITE_TULIP
-      case FlowerVariant.WITHER_ROSE  => Material.POTTED_WITHER_ROSE
-      case FlowerVariant.LILY_OF_THE_VALLEY =>
-        Material.POTTED_LILY_OF_THE_VALLEY
-
-        // TODO cactus deadbush fern
-
-      case MushroomVariant.BROWN => Material.POTTED_BROWN_MUSHROOM
-      case MushroomVariant.RED   => Material.POTTED_RED_MUSHROOM
-
-      case SaplingVariant.BAMBOO   => Material.POTTED_BAMBOO
-      case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
-      case SaplingVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
-      case SaplingVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
-      case SaplingVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
-      case SaplingVariant.OAK      => Material.POTTED_OAK_SAPLING
-      case SaplingVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
-    }
-
     // MOB_HEAD
     case MobHead(_, MobHeadVariant.CREEPER, dir, _) => dir match {
       case None    => Material.CREEPER_HEAD
@@ -473,8 +442,40 @@ class SpigotBlockVariantMapper {
     implicit val data: SpigotBlockData = data
 
     block match {
-      // TODO case FlowerPot
-      case _ => null
+
+        // TODO map remaining blocks
+
+      // FLOWER_POT
+      case FlowerPot(_, None) => Material.FLOWER_POT
+      case FlowerPot(_, Some(variant)) => variant match {
+        case FlowerVariant.ALLIUM => Material.POTTED_ALLIUM
+        case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
+        case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
+        case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
+        case FlowerVariant.DANDELION    => Material.POTTED_DANDELION
+        case FlowerVariant.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
+        case FlowerVariant.OXEYE_DAISY  => Material.POTTED_OXEYE_DAISY
+        case FlowerVariant.PINK_TULIP   => Material.POTTED_PINK_TULIP
+        case FlowerVariant.POPPY        => Material.POTTED_POPPY
+        case FlowerVariant.RED_TULIP    => Material.POTTED_RED_TULIP
+        case FlowerVariant.WHITE_TULIP  => Material.POTTED_WHITE_TULIP
+        case FlowerVariant.WITHER_ROSE  => Material.POTTED_WITHER_ROSE
+        case FlowerVariant.LILY_OF_THE_VALLEY =>
+          Material.POTTED_LILY_OF_THE_VALLEY
+
+        // TODO cactus deadbush fern
+
+        case MushroomVariant.BROWN => Material.POTTED_BROWN_MUSHROOM
+        case MushroomVariant.RED   => Material.POTTED_RED_MUSHROOM
+
+        case SaplingVariant.BAMBOO   => Material.POTTED_BAMBOO
+        case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
+        case SaplingVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
+        case SaplingVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
+        case SaplingVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
+        case SaplingVariant.OAK      => Material.POTTED_OAK_SAPLING
+        case SaplingVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
+      }
     }
   }
 
