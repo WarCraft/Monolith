@@ -152,6 +152,7 @@ class SpigotBlockMapper @Inject()(
       case Material.OBSIDIAN            => Obsidian(loc)
       case Material.PODZOL              => Podzol(loc, snowy)
       case Material.POTATOES            => Potatoes(loc, stateAs[PotatoState])
+      case Material.PURPUR_BLOCK        => Purpur(loc)
       case Material.REDSTONE_LAMP       => RedstoneLamp(loc, lit)
       case Material.REDSTONE_TORCH      => RedstoneTorch(loc, None, lit)
       case Material.REDSTONE_WALL_TORCH => RedstoneTorch(loc, Some(dir), lit)
@@ -211,6 +212,11 @@ class SpigotBlockMapper @Inject()(
         val occupied = dataAs[SpigotBed].isOccupied
         Bed(loc, color, dir, bisection, occupied)
 
+      // BRICK
+      case Material.BRICK | Material.NETHER_BRICK |
+          Material.RED_NETHER_BRICKS =>
+        Brick(loc, materialAs[BrickMaterial])
+
       // BUBBLE_COLUMN
       case Material.BUBBLE_COLUMN =>
         val drag = dataAs[SpigotBubbleColumn].isDrag
@@ -237,6 +243,10 @@ class SpigotBlockMapper @Inject()(
           Material.PINK_CARPET | Material.PURPLE_CARPET | Material.RED_CARPET |
           Material.WHITE_CARPET | Material.YELLOW_CARPET =>
         Carpet(loc, color)
+
+      // COBBLESTONE
+      case Material.COBBLESTONE | Material.MOSSY_COBBLESTONE =>
+        Cobblestone(loc, variantAs[CobblestoneVariant])
 
       // CHEST
       case Material.CHEST | Material.ENDER_CHEST | Material.TRAPPED_CHEST =>
@@ -323,6 +333,10 @@ class SpigotBlockMapper @Inject()(
       case Material.END_PORTAL_FRAME =>
         val eye = dataAs[SpigotEndPortalFrame].hasEye
         EndPortalFrame(loc, dir, eye)
+
+      // END_STONE
+      case Material.END_STONE | Material.END_STONE_BRICKS =>
+        EndStone(loc, materialAs[EndStoneMaterial])
 
       // FENCE
       case Material.NETHER_BRICK_FENCE | Material.ACACIA_FENCE |
@@ -526,6 +540,11 @@ class SpigotBlockMapper @Inject()(
         val _state = stateAs[WeightedPressurePlateState]
         WeightedPressurePlate(loc, _variant, _state)
 
+      // PRISMARINE
+      case Material.PRISMARINE | Material.PRISMARINE_BRICKS |
+          Material.DARK_PRISMARINE =>
+        Prismarine(loc, materialAs[PrismarineMaterial])
+
       // PUMPKIN
       case Material.PUMPKIN => Pumpkin(loc, None, lit = false, carved = false)
 
@@ -541,6 +560,11 @@ class SpigotBlockMapper @Inject()(
 
       case Material.ATTACHED_PUMPKIN_STEM =>
         PumpkinStem(loc, stateAs[PumpkinStemState], Some(dir))
+
+      // QUARTZ
+      case Material.QUARTZ_BLOCK | Material.CHISELED_QUARTZ_BLOCK |
+          Material.SMOOTH_QUARTZ =>
+        Quartz(loc, variantAs[QuartzVariant])
 
       // RAIL
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL |
@@ -668,21 +692,16 @@ class SpigotBlockMapper @Inject()(
         Stairs(loc, _material, _variant, _shape, dir, bisection, flooded)
 
       // STONE
-      case Material.BRICK | Material.NETHER_BRICK | Material.RED_NETHER_BRICKS |
-          Material.STONE | Material.STONE_BRICKS | Material.COBBLESTONE |
-          Material.ANDESITE | Material.DIORITE | Material.GRANITE |
-          Material.END_STONE | Material.END_STONE_BRICKS | Material.PRISMARINE |
-          Material.PRISMARINE_BRICKS | Material.DARK_PRISMARINE |
-          Material.PURPUR_BLOCK | Material.QUARTZ =>
-        Stone(loc, materialAs[StoneMaterial], None)
-        // TODO these arent all stone! Brick should get its own class, andesite is a Stonite etc
+      case Material.STONE | Material.SMOOTH_STONE | Material.STONE_BRICKS |
+          Material.CHISELED_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
+          Material.MOSSY_STONE_BRICKS =>
+        Stone(loc, materialAs[StoneMaterial], variantAs[StoneVariant])
 
-      case Material.SMOOTH_STONE | Material.CHISELED_STONE_BRICKS |
-          Material.MOSSY_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
-          Material.MOSSY_COBBLESTONE | Material.POLISHED_ANDESITE |
-          Material.POLISHED_DIORITE | Material.POLISHED_GRANITE |
-          Material.SMOOTH_QUARTZ | Material.CHISELED_QUARTZ_BLOCK =>
-        Stone(loc, materialAs[StoneMaterial], Some(variantAs[StoneVariant]))
+      // STONITE
+      case Material.ANDESITE | Material.DIORITE | Material.GRANITE |
+          Material.POLISHED_ANDESITE | Material.POLISHED_DIORITE |
+          Material.POLISHED_GRANITE =>
+        Stonite(loc, materialAs[StoniteMaterial], variantAs[StoniteVariant])
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
