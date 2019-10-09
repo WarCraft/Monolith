@@ -20,7 +20,7 @@ case class Gate(
 
   override def withLocation(loc: BlockLocation): Gate = copy(location = loc)
   override def withMaterial(mat: WoodMaterial): Gate = copy(material = mat)
-  override def withDirection(facing: BlockFace): Gate = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Gate = copy(direction = dir)
   override def withOpen(open: Boolean): Gate = copy(open = open)
   override def withPowered(pow: Boolean): Gate = copy(powered = pow)
 }

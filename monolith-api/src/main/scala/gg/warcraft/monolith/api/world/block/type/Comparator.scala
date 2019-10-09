@@ -16,6 +16,6 @@ case class Comparator(
 
   override def withLocation(loc: BlockLocation): Comparator = copy(location = loc)
   override def withVariant(variant: ComparatorVariant): Comparator = copy(variant = variant)
-  override def withDirection(facing: BlockFace): Comparator = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Comparator = copy(direction = dir)
   override def withPowered(powered: Boolean): Comparator = copy(powered = powered)
 }

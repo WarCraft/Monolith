@@ -15,5 +15,5 @@ case class Anvil(
 
   override def withLocation(loc: BlockLocation): Anvil = copy(location = loc)
   override def withVariant(variant: AnvilVariant): Anvil = copy(variant = variant)
-  override def withDirection(facing: BlockFace): Anvil = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Anvil = copy(direction = dir)
 }

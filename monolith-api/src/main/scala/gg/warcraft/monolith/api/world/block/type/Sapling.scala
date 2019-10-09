@@ -15,6 +15,6 @@ case class Sapling(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Sapling = copy(location = loc)
-  override def withMaterial(material: SaplingMaterial): Sapling = copy(material = material)
+  override def withMaterial(mat: SaplingMaterial): Sapling = copy(material = mat)
   override def withState(state: SaplingState): Sapling = copy(state = state)
 }

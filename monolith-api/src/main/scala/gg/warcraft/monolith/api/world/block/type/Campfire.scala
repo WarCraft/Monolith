@@ -17,7 +17,7 @@ case class Campfire(
   def withSignal(signal: Boolean): Campfire = copy(signal = signal)
 
   override def withLocation(loc: BlockLocation): Campfire = copy(location = loc)
-  override def withDirection(facing: BlockFace): Campfire = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Campfire = copy(direction = dir)
   override def withFlooded(flooded: Boolean): Campfire = copy(flooded = flooded)
   override def withLit(lit: Boolean): Campfire = copy(lit = lit)
 }

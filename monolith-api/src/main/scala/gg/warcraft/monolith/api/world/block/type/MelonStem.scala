@@ -15,5 +15,5 @@ case class MelonStem(
 
   override def withLocation(loc: BlockLocation): MelonStem = copy(location = loc)
   override def withState(state: MelonStemState): MelonStem = copy(state = state)
-  override def withDirection(facing: Option[BlockFace]): MelonStem = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): MelonStem = copy(direction = dir)
 }

@@ -16,6 +16,6 @@ case class Lectern(
   def withBook(book: Boolean): Lectern = copy(book = book)
 
   override def withLocation(loc: BlockLocation): Lectern = copy(location = loc)
-  override def withDirection(facing: BlockFace): Lectern = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Lectern = copy(direction = dir)
   override def withPowered(powered: Boolean): Lectern = copy(powered = powered)
 }

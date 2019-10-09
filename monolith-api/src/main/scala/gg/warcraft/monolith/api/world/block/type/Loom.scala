@@ -12,5 +12,5 @@ case class Loom(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Loom = copy(location = loc)
-  override def withDirection(facing: BlockFace): Loom = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Loom = copy(direction = dir)
 }

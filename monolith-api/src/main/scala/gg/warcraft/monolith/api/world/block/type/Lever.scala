@@ -14,7 +14,7 @@ case class Lever(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Lever = copy(location = loc)
-  override def withDirection(facing: BlockFace): Lever = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Lever = copy(direction = dir)
   override def withAttached(attachment: BlockAttachment): Lever = copy(attachment = attachment)
   override def withPowered(powered: Boolean): Lever = copy(powered = powered)
 }

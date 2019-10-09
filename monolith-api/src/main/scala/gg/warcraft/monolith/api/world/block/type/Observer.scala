@@ -13,6 +13,6 @@ case class Observer(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Observer = copy(location = loc)
-  override def withDirection(facing: BlockFace): Observer = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Observer = copy(direction = dir)
   override def withPowered(powered: Boolean): Observer = copy(powered = powered)
 }

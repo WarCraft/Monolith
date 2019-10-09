@@ -13,5 +13,5 @@ case class Bell(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Bell = copy(location = loc)
-  override def withDirection(facing: BlockFace): Bell = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Bell = copy(direction = dir)
 }

@@ -19,7 +19,7 @@ case class Trapdoor(
 
   override def withLocation(loc: BlockLocation): Trapdoor = copy(location = loc)
   override def withMaterial(mat: TrapdoorMaterial): Trapdoor = copy(material = mat)
-  override def withDirection(facing: BlockFace): Trapdoor = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Trapdoor = copy(direction = dir)
   override def withSection(section: BlockBisection): Trapdoor = copy(section = section)
   override def withPowered(powered: Boolean): Trapdoor = copy(powered = powered)
   override def withFlooded(flooded: Boolean): Trapdoor = copy(flooded = flooded)

@@ -13,6 +13,6 @@ case class Furnace(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Furnace = copy(location = loc)
-  override def withDirection(facing: BlockFace): Furnace = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Furnace = copy(direction = dir)
   override def withLit(lit: Boolean): Furnace = copy(lit = lit)
 }

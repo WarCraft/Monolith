@@ -12,5 +12,5 @@ case class StoneCutter(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): StoneCutter = copy(location = loc)
-  override def withDirection(facing: BlockFace): StoneCutter = copy(direction = facing)
+  override def withDirection(dir: BlockFace): StoneCutter = copy(direction = dir)
 }

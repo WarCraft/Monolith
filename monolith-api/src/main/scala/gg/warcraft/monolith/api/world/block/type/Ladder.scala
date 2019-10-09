@@ -13,6 +13,6 @@ case class Ladder(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Ladder = copy(location = loc)
-  override def withDirection(facing: BlockFace): Ladder = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Ladder = copy(direction = dir)
   override def withFlooded(flooded: Boolean): Ladder = copy(flooded = flooded)
 }

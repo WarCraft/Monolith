@@ -13,6 +13,6 @@ case class Grindstone(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Grindstone = copy(location = loc)
-  override def withDirection(facing: BlockFace): Grindstone = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Grindstone = copy(direction = dir)
   override def withAttached(attachment: BlockAttachment): Grindstone = copy(attachment = attachment)
 }

@@ -13,6 +13,6 @@ case class Dropper(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Dropper = copy(location = loc)
-  override def withDirection(facing: BlockFace): Dropper = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Dropper = copy(direction = dir)
   override def withPowered(powered: Boolean): Dropper = copy(powered = powered)
 }

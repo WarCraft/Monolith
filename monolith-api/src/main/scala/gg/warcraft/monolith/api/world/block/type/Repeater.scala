@@ -19,6 +19,6 @@ case class Repeater(
 
   override def withLocation(loc: BlockLocation): Repeater = copy(location = loc)
   override def withState(state: RepeaterState): Repeater = copy(state = state)
-  override def withDirection(facing: BlockFace): Repeater = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Repeater = copy(direction = dir)
   override def withPowered(powered: Boolean): Repeater = copy(powered = powered)
 }

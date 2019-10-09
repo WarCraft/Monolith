@@ -16,7 +16,7 @@ case class Button(
 
   override def withLocation(loc: BlockLocation): Button = copy(location = loc)
   override def withMaterial(mat: ButtonMaterial): Button = copy(material = mat)
-  override def withDirection(facing: BlockFace): Button = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Button = copy(direction = dir)
   override def withAttached(attachment: BlockAttachment): Button = copy(attachment = attachment)
   override def withPowered(powered: Boolean): Button = copy(powered = powered)
 }

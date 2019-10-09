@@ -13,6 +13,6 @@ case class RedstoneTorch(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): RedstoneTorch = copy(location = loc)
-  override def withDirection(facing: Option[BlockFace]): RedstoneTorch = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): RedstoneTorch = copy(direction = dir)
   override def withLit(lit: Boolean): RedstoneTorch = copy(lit = lit)
 }

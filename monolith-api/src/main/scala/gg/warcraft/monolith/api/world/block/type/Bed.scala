@@ -18,6 +18,6 @@ case class Bed(
 
   override def withLocation(loc: BlockLocation): Bed = copy(location = loc)
   override def withColor(color: BlockColor): Bed = copy(color = color)
-  override def withDirection(facing: BlockFace): Bed = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Bed = copy(direction = dir)
   override def withSection(section: BlockBisection): Bed = copy(section = section)
 }

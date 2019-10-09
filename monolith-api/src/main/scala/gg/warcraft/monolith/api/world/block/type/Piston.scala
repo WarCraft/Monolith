@@ -16,6 +16,6 @@ case class Piston(
   def withExtended(extended: Boolean): Piston = copy(extended = extended)
 
   override def withLocation(loc: BlockLocation): Piston = copy(location = loc)
-  override def withDirection(facing: BlockFace): Piston = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Piston = copy(direction = dir)
   override def withSticky(sticky: Boolean): Piston = copy(sticky = sticky)
 }

@@ -17,6 +17,6 @@ case class Log(
   def withStripped(stripped: Boolean): Log = copy(stripped = stripped)
 
   override def withLocation(loc: BlockLocation): Log = copy(location = loc)
-  override def withMaterial(material: WoodMaterial): Log = copy(material = material)
+  override def withMaterial(mat: WoodMaterial): Log = copy(material = mat)
   override def withOrientation(orientation: BlockOrientation): Log = copy(orientation = orientation)
 }

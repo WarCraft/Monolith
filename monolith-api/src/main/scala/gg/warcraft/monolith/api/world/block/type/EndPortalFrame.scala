@@ -15,5 +15,5 @@ case class EndPortalFrame(
   def withEye(eye: Boolean): EndPortalFrame = copy(eye = eye)
 
   override def withLocation(loc: BlockLocation): EndPortalFrame = copy(location = loc)
-  override def withDirection(facing: BlockFace): EndPortalFrame = copy(direction = facing)
+  override def withDirection(dir: BlockFace): EndPortalFrame = copy(direction = dir)
 }

@@ -2,15 +2,15 @@ package gg.warcraft.monolith.api.world.block.`type`
 
 import gg.warcraft.monolith.api.world.block.state.BambooState
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, StatefulBlock, VariedBlock }
-import gg.warcraft.monolith.api.world.block.variant.{ BambooLeavesVariant, RailsVariant }
+import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock, VariedBlock }
+import gg.warcraft.monolith.api.world.block.variant.BambooVariant
 
 case class Bamboo(
   location: BlockLocation,
-  material: BambooLeavesMaterial,
+  variant: BambooVariant,
   state: BambooState,
-  thick: Boolean
-) extends MaterialBlock[BambooLeavesMaterial] with StatefulBlock[BambooState] {
+  thick: Boolean // TODO this is equal to the state (age)
+) extends VariedBlock[BambooVariant] with StatefulBlock[BambooState] {
   override val kind = BlockType.BAMBOO
 
   /* Java interop */
@@ -18,6 +18,8 @@ case class Bamboo(
   def withThick(thick: Boolean): Bamboo = copy(thick = thick)
 
   override def withLocation(loc: BlockLocation): Bamboo = copy(location = loc)
-  override def withMaterial(material: BambooLeavesMaterial): Bamboo = copy(material = material)
+  override def withVariant(variant: BambooVariant): Bamboo = copy(variant = variant)
   override def withState(state: BambooState): Bamboo = copy(state = state)
 }
+
+// TODO just dont include stage in API?

@@ -13,6 +13,6 @@ case class BlastFurnace(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): BlastFurnace = copy(location = loc)
-  override def withDirection(facing: BlockFace): BlastFurnace = copy(direction = facing)
+  override def withDirection(dir: BlockFace): BlastFurnace = copy(direction = dir)
   override def withLit(lit: Boolean): BlastFurnace = copy(lit = lit)
 }

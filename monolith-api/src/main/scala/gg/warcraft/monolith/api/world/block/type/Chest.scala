@@ -15,5 +15,5 @@ case class Chest(
 
   override def withLocation(loc: BlockLocation): Chest = copy(location = loc)
   override def withVariant(variant: ChestVariant): Chest = copy(variant = variant)
-  override def withDirection(facing: BlockFace): Chest = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Chest = copy(direction = dir)
 }

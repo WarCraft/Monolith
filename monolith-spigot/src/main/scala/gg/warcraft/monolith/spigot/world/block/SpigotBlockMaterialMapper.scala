@@ -3,7 +3,6 @@ package gg.warcraft.monolith.spigot.world.block
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
-import gg.warcraft.monolith.api.world.block.state.{ AnvilState, FlowerPotState, SandstoneState, StoneState }
 import javax.inject.Inject
 import org.bukkit.Material
 
@@ -15,11 +14,6 @@ class SpigotBlockMaterialMapper @Inject()(
     if (!material.isBlock) throw new IllegalArgumentException(s"$material")
 
     material match {
-
-      // AIR
-      case Material.AIR      => AirMaterial.NORMAL
-      case Material.CAVE_AIR => AirMaterial.CAVE
-      case Material.VOID_AIR => AirMaterial.VOID
 
       // BAMBOO
       case Material.BAMBOO | Material.BAMBOO_SAPLING =>
@@ -38,58 +32,6 @@ class SpigotBlockMaterialMapper @Inject()(
       case Material.RED_NETHER_BRICKS | Material.RED_NETHER_BRICK_SLAB |
           Material.RED_NETHER_BRICK_STAIRS | Material.RED_NETHER_BRICK_WALL =>
         BrickMaterial.RED_NETHER_BRICK
-
-      // CHEST
-      case Material.CHEST         => ChestMaterial.NORMAL
-      case Material.ENDER_CHEST   => ChestMaterial.ENDER
-      case Material.TRAPPED_CHEST => ChestMaterial.TRAPPED
-
-      // COMMAND_BLOCK
-      case Material.COMMAND_BLOCK           => CommandBlockMaterial.NORMAL
-      case Material.CHAIN_COMMAND_BLOCK     => CommandBlockMaterial.CHAIN
-      case Material.REPEATING_COMMAND_BLOCK => CommandBlockMaterial.REPEATING
-
-      // CORAL
-      case Material.BRAIN_CORAL | Material.BRAIN_CORAL_BLOCK |
-          Material.BRAIN_CORAL_FAN | Material.BRAIN_CORAL_WALL_FAN =>
-        CoralMaterial.BRAIN
-
-      case Material.BUBBLE_CORAL | Material.BUBBLE_CORAL_BLOCK |
-          Material.BUBBLE_CORAL_FAN | Material.BUBBLE_CORAL_WALL_FAN =>
-        CoralMaterial.BUBBLE
-
-      case Material.FIRE_CORAL | Material.FIRE_CORAL_BLOCK |
-          Material.FIRE_CORAL_FAN | Material.FIRE_CORAL_WALL_FAN =>
-        CoralMaterial.FIRE
-
-      case Material.HORN_CORAL | Material.HORN_CORAL_BLOCK |
-          Material.HORN_CORAL_FAN | Material.HORN_CORAL_WALL_FAN =>
-        CoralMaterial.HORN
-
-      case Material.TUBE_CORAL | Material.TUBE_CORAL_BLOCK |
-          Material.TUBE_CORAL_FAN | Material.TUBE_CORAL_WALL_FAN =>
-        CoralMaterial.TUBE
-
-      case Material.DEAD_BRAIN_CORAL | Material.DEAD_BRAIN_CORAL_BLOCK |
-          Material.DEAD_BRAIN_CORAL_FAN | Material.DEAD_BRAIN_CORAL_WALL_FAN =>
-        CoralMaterial.DEAD_BRAIN
-
-      case Material.DEAD_BUBBLE_CORAL | Material.DEAD_BUBBLE_CORAL_BLOCK |
-          Material.DEAD_BUBBLE_CORAL_FAN |
-          Material.DEAD_BUBBLE_CORAL_WALL_FAN =>
-        CoralMaterial.DEAD_BUBBLE
-
-      case Material.DEAD_FIRE_CORAL | Material.DEAD_FIRE_CORAL_BLOCK |
-          Material.DEAD_FIRE_CORAL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN =>
-        CoralMaterial.DEAD_FIRE
-
-      case Material.DEAD_HORN_CORAL | Material.DEAD_HORN_CORAL_BLOCK |
-          Material.DEAD_HORN_CORAL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN =>
-        CoralMaterial.DEAD_HORN
-
-      case Material.DEAD_TUBE_CORAL | Material.DEAD_TUBE_CORAL_BLOCK |
-          Material.DEAD_TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
-        CoralMaterial.DEAD_TUBE
 
       // END_STONE
       case Material.END_STONE => EndStoneMaterial.END_STONE
@@ -155,21 +97,6 @@ class SpigotBlockMaterialMapper @Inject()(
           Material.INFESTED_CRACKED_STONE_BRICKS |
           Material.INFESTED_MOSSY_STONE_BRICKS =>
         StoneMaterial.STONE_BRICK
-
-      // MOB_HEAD
-      case Material.CREEPER_HEAD | Material.CREEPER_WALL_HEAD =>
-        MobHeadMaterial.CREEPER
-      case Material.DRAGON_HEAD | Material.DRAGON_WALL_HEAD =>
-        MobHeadMaterial.DRAGON
-      case Material.PLAYER_HEAD | Material.PLAYER_WALL_HEAD =>
-        MobHeadMaterial.PLAYER
-      case Material.SKELETON_SKULL | Material.SKELETON_WALL_SKULL =>
-        MobHeadMaterial.SKELETON
-      case Material.WITHER_SKELETON_SKULL |
-          Material.WITHER_SKELETON_WALL_SKULL =>
-        MobHeadMaterial.WITHER_SKELETON
-      case Material.ZOMBIE_HEAD | Material.ZOMBIE_WALL_HEAD =>
-        MobHeadMaterial.ZOMBIE
 
       // MUSHROOM
       case Material.BROWN_MUSHROOM => MushroomMaterial.BROWN

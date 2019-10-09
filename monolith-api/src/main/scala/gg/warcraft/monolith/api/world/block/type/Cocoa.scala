@@ -15,5 +15,5 @@ case class Cocoa(
 
   override def withLocation(loc: BlockLocation): Cocoa = copy(location = loc)
   override def withState(state: CocoaState): Cocoa = copy(state = state)
-  override def withDirection(facing: BlockFace): Cocoa = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Cocoa = copy(direction = dir)
 }

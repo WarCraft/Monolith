@@ -16,6 +16,6 @@ case class Pumpkin(
   def withCarved(carved: Boolean): Pumpkin = copy(carved = carved)
 
   override def withLocation(loc: BlockLocation): Pumpkin = copy(location = loc)
-  override def withDirection(facing: Option[BlockFace]): Pumpkin = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): Pumpkin = copy(direction = dir)
   override def withLit(lit: Boolean): Pumpkin = copy(lit = lit)
 }

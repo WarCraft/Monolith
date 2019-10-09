@@ -15,5 +15,5 @@ case class PumpkinStem(
 
   override def withLocation(loc: BlockLocation): PumpkinStem = copy(location = loc)
   override def withState(state: PumpkinStemState): PumpkinStem = copy(state = state)
-  override def withDirection(facing: Option[BlockFace]): PumpkinStem = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): PumpkinStem = copy(direction = dir)
 }

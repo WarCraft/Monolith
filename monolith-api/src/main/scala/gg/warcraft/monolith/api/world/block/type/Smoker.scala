@@ -13,6 +13,6 @@ case class Smoker(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Smoker = copy(location = loc)
-  override def withDirection(facing: BlockFace): Smoker = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Smoker = copy(direction = dir)
   override def withLit(lit: Boolean): Smoker = copy(lit = lit)
 }

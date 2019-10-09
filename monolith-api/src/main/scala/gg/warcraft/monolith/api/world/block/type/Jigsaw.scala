@@ -12,5 +12,5 @@ case class Jigsaw(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Jigsaw = copy(location = loc)
-  override def withDirection(facing: BlockFace): Jigsaw = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Jigsaw = copy(direction = dir)
 }

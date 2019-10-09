@@ -13,6 +13,6 @@ case class Dispenser(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Dispenser = copy(location = loc)
-  override def withDirection(facing: BlockFace): Dispenser = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Dispenser = copy(direction = dir)
   override def withPowered(powered: Boolean): Dispenser = copy(powered = powered)
 }

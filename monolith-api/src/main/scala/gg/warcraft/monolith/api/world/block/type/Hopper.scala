@@ -13,6 +13,6 @@ case class Hopper(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Hopper = copy(location = loc)
-  override def withDirection(facing: BlockFace): Hopper = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Hopper = copy(direction = dir)
   override def withPowered(powered: Boolean): Hopper = copy(powered = powered)
 }

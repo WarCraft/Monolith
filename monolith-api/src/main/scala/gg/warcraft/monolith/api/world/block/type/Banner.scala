@@ -16,5 +16,5 @@ case class Banner(
   override def withLocation(loc: BlockLocation): Banner = copy(location = loc)
   override def withColor(color: BlockColor): Banner = copy(color = color)
   override def withRotation(rotation: Option[BlockRotation]): Banner = copy(rotation = rotation)
-  override def withDirection(facing: Option[BlockFace]): Banner = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): Banner = copy(direction = dir)
 }

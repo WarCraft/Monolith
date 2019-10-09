@@ -13,6 +13,6 @@ case class Barrel(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Barrel = copy(location = loc)
-  override def withDirection(facing: BlockFace): Barrel = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Barrel = copy(direction = dir)
   override def withOpen(open: Boolean): Barrel = copy(open = open)
 }

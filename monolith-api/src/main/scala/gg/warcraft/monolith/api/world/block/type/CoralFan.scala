@@ -17,6 +17,6 @@ case class CoralFan(
 
   override def withLocation(loc: BlockLocation): CoralFan = copy(location = loc)
   override def withMaterial(mat: CoralMaterial): CoralFan = copy(material = mat)
-  override def withDirection(facing: Option[BlockFace]): CoralFan = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): CoralFan = copy(direction = dir)
   override def withFlooded(flooded: Boolean): CoralFan = copy(flooded = flooded)
 }

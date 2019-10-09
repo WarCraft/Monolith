@@ -16,6 +16,6 @@ case class MobHead(
 
   override def withLocation(loc: BlockLocation): MobHead = copy(location = loc)
   override def withVariant(variant: MobHeadVariant): MobHead = copy(variant = variant)
-  override def withDirection(facing: Option[BlockFace]): MobHead = copy(direction = facing)
+  override def withDirection(dir: Option[BlockFace]): MobHead = copy(direction = dir)
   override def withRotation(rotation: Option[BlockRotation]): MobHead = copy(rotation = rotation)
 }

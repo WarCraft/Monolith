@@ -18,5 +18,5 @@ case class CommandBlock(
 
   override def withLocation(loc: BlockLocation): CommandBlock = copy(location = loc)
   override def withVariant(variant: CommandBlockVariant): CommandBlock = copy(variant = variant)
-  override def withDirection(facing: BlockFace): CommandBlock = copy(direction = facing)
+  override def withDirection(dir: BlockFace): CommandBlock = copy(direction = dir)
 }

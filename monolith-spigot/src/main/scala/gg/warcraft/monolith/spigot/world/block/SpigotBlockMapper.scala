@@ -5,32 +5,12 @@ import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state._
+import gg.warcraft.monolith.api.world.block.variant.AirVariant
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Instrument, Material, Bukkit => Spigot}
-import org.bukkit.block.{
-  Block => SpigotBlock,
-  BlockState => SpigotBlockState,
-  Sign => SpigotSign
-}
-import org.bukkit.block.data.{BlockData => SpigotBlockData, _}
-import org.bukkit.block.data.`type`.{
-  Switch,
-  Bamboo => SpigotBamboo,
-  Bed => SpigotBed,
-  BubbleColumn => SpigotBubbleColumn,
-  Campfire => SpigotCampfire,
-  CommandBlock => SpigotCommandBlock,
-  Door => SpigotDoor,
-  EndPortalFrame => SpigotEndPortalFrame,
-  Hopper => SpigotHopper,
-  Jukebox => SpigotJukebox,
-  Lantern => SpigotLantern,
-  Lectern => SpigotLectern,
-  NoteBlock => SpigotNoteBlock,
-  Piston => SpigotPiston,
-  Repeater => SpigotRepeater,
-  TNT => SpigotTNT
-}
+import org.bukkit.{ Instrument, Material, Bukkit => Spigot }
+import org.bukkit.block.{ Block => SpigotBlock, BlockState => SpigotBlockState, Sign => SpigotSign }
+import org.bukkit.block.data.{ BlockData => SpigotBlockData, _ }
+import org.bukkit.block.data.`type`.{ Switch, Bamboo => SpigotBamboo, Bed => SpigotBed, BubbleColumn => SpigotBubbleColumn, Campfire => SpigotCampfire, CommandBlock => SpigotCommandBlock, Door => SpigotDoor, EndPortalFrame => SpigotEndPortalFrame, Hopper => SpigotHopper, Jukebox => SpigotJukebox, Lantern => SpigotLantern, Lectern => SpigotLectern, NoteBlock => SpigotNoteBlock, Piston => SpigotPiston, Repeater => SpigotRepeater, TNT => SpigotTNT }
 
 class SpigotBlockMapper @Inject()(
     private val locationMapper: SpigotLocationMapper,
@@ -42,7 +22,9 @@ class SpigotBlockMapper @Inject()(
     private val faceMapper: SpigotBlockFaceMapper,
     private val orientationMapper: SpigotBlockOrientationMapper,
     private val rotationMapper: SpigotBlockRotationMapper,
-    private val stateMapper: SpigotBlockStateMapper
+    private val shapeMapper: SpigotBlockShapeMapper,
+    private val stateMapper: SpigotBlockStateMapper,
+    private val variantMapper: SpigotBlockVariantMapper
 ) {
 
   def map(block: SpigotBlock): Block = {
@@ -57,8 +39,10 @@ class SpigotBlockMapper @Inject()(
     lazy val material = materialMapper.map(block.getType)
     lazy val open = spigotState.asInstanceOf[Openable].isOpen
     lazy val powered = spigotState.asInstanceOf[Powerable].isPowered
+    lazy val shape = shapeMapper.map(block)
     lazy val snowy = spigotState.asInstanceOf[Snowable].isSnowy
     lazy val state = stateMapper.map(block)
+    lazy val variant = variantMapper.map(block)
 
     lazy val attached = {
       // TODO properly map Grindstone
@@ -97,10 +81,12 @@ class SpigotBlockMapper @Inject()(
 
     // Map block
     def materialAs[T <: BlockMaterial]: T = material.asInstanceOf[T]
+    def variantAs[T <: BlockVariant]: T = variant.asInstanceOf[T]
     def stateAs[T <: BlockState]: T = state.asInstanceOf[T]
+    def shapeAs[T <: BlockShape]: T = shape.asInstanceOf[T]
     def dataAs[T <: SpigotBlockData]: T = spigotData.asInstanceOf[T]
     block.getType match {
-      case Material.AIR               => Air(loc, materialAs[AirMaterial])
+      case Material.AIR               => Air(loc, variantAs[AirVariant])
       case Material.BARREL            => Barrel(loc, direction, open)
       case Material.BARRIER           => Barrier(loc)
       case Material.BEACON            => Beacon(loc)

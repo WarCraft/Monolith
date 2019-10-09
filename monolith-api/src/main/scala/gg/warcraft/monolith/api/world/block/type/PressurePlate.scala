@@ -13,6 +13,6 @@ case class PressurePlate(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): PressurePlate = copy(location = loc)
-  override def withMaterial(material: PressurePlateMaterial): PressurePlate = copy(material = material)
+  override def withMaterial(mat: PressurePlateMaterial): PressurePlate = copy(material = mat)
   override def withPowered(powered: Boolean): PressurePlate = copy(powered = powered)
 }

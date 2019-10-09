@@ -19,8 +19,8 @@ case class Sign(
   def withLines(lines: List[String]): Sign = copy(lines = lines.slice(0, 4))
 
   override def withLocation(loc: BlockLocation): Sign = copy(location = loc)
-  override def withMaterial(material: WoodMaterial): Sign = copy(material = material)
-  override def withDirection(facing: Option[BlockFace]): Sign = copy(direction = facing)
+  override def withMaterial(mat: WoodMaterial): Sign = copy(material = mat)
+  override def withDirection(dir: Option[BlockFace]): Sign = copy(direction = dir)
   override def withRotation(rotation: Option[BlockRotation]): Sign = copy(rotation = rotation)
   override def withFlooded(flooded: Boolean): Sign = copy(flooded = flooded)
 }

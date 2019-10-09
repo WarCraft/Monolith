@@ -15,5 +15,5 @@ case class Torch(
   def withWall(wall: Boolean): Torch = copy(wall = wall)
 
   override def withLocation(loc: BlockLocation): Torch = copy(location = loc)
-  override def withDirection(facing: BlockFace): Torch = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Torch = copy(direction = dir)
 }

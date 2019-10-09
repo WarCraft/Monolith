@@ -19,7 +19,7 @@ case class Door(
 
   override def withLocation(loc: BlockLocation): Door = copy(location = loc)
   override def withMaterial(mat: DoorMaterial): Door = copy(material = mat)
-  override def withDirection(facing: BlockFace): Door = copy(direction = facing)
+  override def withDirection(dir: BlockFace): Door = copy(direction = dir)
   override def withHinge(hinge: BlockHinge): Door = copy(hinge = hinge)
   override def withSection(section: BlockBisection): Door = copy(section = section)
   override def withOpen(open: Boolean): Door = copy(open = open)

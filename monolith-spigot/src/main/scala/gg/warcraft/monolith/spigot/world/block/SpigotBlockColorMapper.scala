@@ -148,9 +148,7 @@ class SpigotBlockColorMapper {
       null
 
     case _ =>
-      throw new IllegalArgumentException(
-        s"Failed to map color for material: $material"
-      )
+      throw new IllegalArgumentException(s"$material")
   }
 
   def map(block: ColoredBlock): Material = block match {

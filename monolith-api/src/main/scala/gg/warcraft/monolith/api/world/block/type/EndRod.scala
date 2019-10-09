@@ -12,5 +12,5 @@ case class EndRod(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): EndRod = copy(location = loc)
-  override def withDirection(facing: BlockFace): EndRod = copy(direction = facing)
+  override def withDirection(dir: BlockFace): EndRod = copy(direction = dir)
 }

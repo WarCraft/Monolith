@@ -14,5 +14,5 @@ case class Mushroom(
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Mushroom = copy(location = loc)
-  override def withMaterial(material: MushroomMaterial): Mushroom = copy(material = material)
+  override def withMaterial(mat: MushroomMaterial): Mushroom = copy(material = mat)
 }
