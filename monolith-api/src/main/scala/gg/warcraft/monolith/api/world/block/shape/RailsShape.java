@@ -1,8 +1,6 @@
-package gg.warcraft.monolith.api.world.block.state;
+package gg.warcraft.monolith.api.world.block.shape;
 
-import gg.warcraft.monolith.api.world.block.BlockState;
-
-public enum RailsState implements BlockState {
+public enum RailsShape {
     NORTH_EAST,
     NORTH_SOUTH,
     NORTH_WEST,

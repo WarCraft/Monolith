@@ -194,6 +194,7 @@ class SpigotBlockMapper @Inject()(
         val leaves = mapBambooLeaves(bamboo.getLeaves)
         val thick = bamboo.getAge == 1
         Bamboo(loc, leaves, stateAs[BambooState], thick) // TODO is the state and age the same?
+        // TODO no not the same but state is incorrectly assigned with age, should be assigned with stage
 
       // BANNER
       case Material.BLACK_BANNER | Material.BLUE_BANNER |
@@ -372,12 +373,24 @@ class SpigotBlockMapper @Inject()(
           Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY |
           Material.POTTED_PINK_TULIP | Material.POTTED_POPPY |
           Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
-          Material.POTTED_WITHER_ROSE | Material.POTTED_BAMBOO |
-          Material.POTTED_BROWN_MUSHROOM | Material.POTTED_CACTUS |
-          Material.POTTED_DEAD_BUSH | Material.POTTED_FERN |
-          Material.POTTED_RED_MUSHROOM | Material.POTTED_ACACIA_SAPLING |
-          Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
-          Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING |
+          Material.POTTED_WITHER_ROSE |
+
+           Material.POTTED_BAMBOO |
+
+          Material.POTTED_BROWN_MUSHROOM |
+          Material.POTTED_RED_MUSHROOM |
+
+           Material.POTTED_CACTUS |
+
+          Material.POTTED_DEAD_BUSH |
+
+           Material.POTTED_FERN |
+
+           Material.POTTED_ACACIA_SAPLING |
+          Material.POTTED_BIRCH_SAPLING |
+           Material.POTTED_DARK_OAK_SAPLING |
+          Material.POTTED_JUNGLE_SAPLING |
+           Material.POTTED_OAK_SAPLING |
           Material.POTTED_SPRUCE_SAPLING =>
         FlowerPot(loc, materialAs[FlowerPotMaterial], stateAs[FlowerPotState])
 

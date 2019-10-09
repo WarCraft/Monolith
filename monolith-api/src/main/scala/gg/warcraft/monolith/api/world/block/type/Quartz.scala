@@ -1,17 +1,17 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
-import gg.warcraft.monolith.api.world.block.material.QuartzMaterial
+import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
+import gg.warcraft.monolith.api.world.block.variant.QuartzVariant
 
 case class Quartz(
   location: BlockLocation,
-  material: QuartzMaterial
-) extends MaterialBlock[QuartzMaterial] {
+  variant: QuartzVariant
+) extends VariedBlock[QuartzVariant] {
   override val kind = BlockType.QUARTZ
 
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Quartz = copy(location = loc)
-  override def withMaterial(mat: QuartzMaterial): Quartz = copy(material = mat)
+  override def withVariant(variant: QuartzVariant): Quartz = copy(variant = variant)
 }

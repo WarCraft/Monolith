@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.NumericalBlockState;
+import gg.warcraft.monolith.api.world.block.BlockState;
 
-public enum RepeaterState implements NumericalBlockState {
+public enum RepeaterState implements BlockState {
     DELAY_1,
     DELAY_2,
     DELAY_3,

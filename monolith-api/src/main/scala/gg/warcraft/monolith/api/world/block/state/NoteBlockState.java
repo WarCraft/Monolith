@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.NumericalBlockState;
+import gg.warcraft.monolith.api.world.block.BlockState;
 
-public enum NoteBlockState implements NumericalBlockState {
+public enum NoteBlockState implements BlockState {
     NOTE_0,
     NOTE_1,
     NOTE_2,

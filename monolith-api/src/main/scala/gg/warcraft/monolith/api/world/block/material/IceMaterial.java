@@ -5,5 +5,5 @@ import gg.warcraft.monolith.api.world.block.BlockMaterial;
 public enum IceMaterial implements BlockMaterial {
     NORMAL,
     PACKED,
-    BLUE,
+    BLUE, // TODO move to Variant?
 }

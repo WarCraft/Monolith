@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.block.state;
 
-import gg.warcraft.monolith.api.world.block.NumericalBlockState;
+import gg.warcraft.monolith.api.world.block.BlockState;
 
-public enum KelpState implements NumericalBlockState {
+public enum KelpState implements BlockState {
     AGE_0,
     AGE_1,
     AGE_2,

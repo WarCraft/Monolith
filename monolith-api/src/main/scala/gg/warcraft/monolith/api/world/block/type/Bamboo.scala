@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
-import gg.warcraft.monolith.api.world.block.material.BambooLeavesMaterial
 import gg.warcraft.monolith.api.world.block.state.BambooState
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, StatefulBlock }
+import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, StatefulBlock, VariedBlock }
+import gg.warcraft.monolith.api.world.block.variant.{ BambooLeavesVariant, RailsVariant }
 
 case class Bamboo(
   location: BlockLocation,

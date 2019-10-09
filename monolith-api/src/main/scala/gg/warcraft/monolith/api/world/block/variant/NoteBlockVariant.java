@@ -1,8 +1,8 @@
-package gg.warcraft.monolith.api.world.block.material;
+package gg.warcraft.monolith.api.world.block.variant;
 
-import gg.warcraft.monolith.api.world.block.BlockMaterial;
+import gg.warcraft.monolith.api.world.block.BlockVariant;
 
-public enum NoteBlockMaterial implements BlockMaterial {
+public enum NoteBlockVariant implements BlockVariant {
     BANJO,
     BASS_DRUM,
     BASS_GUITAR,

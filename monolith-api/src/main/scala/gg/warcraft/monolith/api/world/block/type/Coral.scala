@@ -1,20 +1,20 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
-import gg.warcraft.monolith.api.world.block.material.CoralMaterial
+import gg.warcraft.monolith.api.world.block.variant.CoralVariant
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, FloodableBlock, MaterialBlock }
+import gg.warcraft.monolith.api.world.block.{ BlockType, FloodableBlock, VariedBlock }
 
 case class Coral(
   location: BlockLocation,
-  material: CoralMaterial,
+  variant: CoralVariant,
   flooded: Boolean
-) extends MaterialBlock[CoralMaterial] with FloodableBlock {
+) extends VariedBlock[CoralVariant] with FloodableBlock {
   override val kind = BlockType.CORAL
   override val solid: Boolean = false
 
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Coral = copy(location = loc)
-  override def withMaterial(mat: CoralMaterial): Coral = copy(material = mat)
+  override def withVariant(variant: CoralVariant): Coral = copy(variant = variant)
   override def withFlooded(flooded: Boolean): Coral = copy(flooded = flooded)
 }

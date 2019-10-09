@@ -65,7 +65,7 @@ trait LightableBlock extends Block {
   def withLit(lit: Boolean): LightableBlock
 }
 
-trait MaterialBlock[T] extends Block {
+trait MaterialBlock[T <: BlockMaterial] extends Block {
   val material: T
   def withMaterial(material: T): MaterialBlock[T]
 }
@@ -90,12 +90,17 @@ trait RotatableBlock extends Block {
   def withRotation(rotation: Option[BlockRotation]): RotatableBlock
 }
 
+trait ShapedBlock[T <: BlockShape] extends Block {
+  val shape: T
+  def withShape(shape: T): ShapedBlock[T]
+}
+
 trait SnowableBlock extends Block {
   val snowy: Boolean
   def withSnowy(snowy: Boolean): SnowableBlock
 }
 
-trait StatefulBlock[T] extends Block {
+trait StatefulBlock[T <: BlockState] extends Block {
   val state: T
   def withState(state: T): StatefulBlock[T]
 }
@@ -103,4 +108,14 @@ trait StatefulBlock[T] extends Block {
 trait StickyBlock extends Block {
   val sticky: Boolean
   def withSticky(sticky: Boolean): StickyBlock
+}
+
+trait VariedBlock[T <: BlockVariant] extends Block {
+  val variant: T
+  def withVariant(variant: T): VariedBlock[T]
+}
+
+trait VariableBlock[T <: BlockVariant] extends Block {
+  val variant: Option[T]
+  def withVariant(variant: Option[T]): VariableBlock[T]
 }

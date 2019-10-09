@@ -14,6 +14,6 @@ public enum FlowerMaterial implements FlowerPotMaterial {
     PINK_TULIP,
     POPPY,
     RED_TULIP,
-    WHITE_TULIP,
+    WHITE_TULIP, // TODO move to Variant and add VariableBlock which gives FlowerPot the Optional Variant?
     WITHER_ROSE,
 }

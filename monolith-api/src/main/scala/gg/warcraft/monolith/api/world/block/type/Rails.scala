@@ -1,22 +1,22 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
-import gg.warcraft.monolith.api.world.block.material.RailsMaterial
-import gg.warcraft.monolith.api.world.block.state.RailsState
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, PowerableBlock, StatefulBlock }
+import gg.warcraft.monolith.api.world.block.{ BlockType, PowerableBlock, ShapedBlock, VariedBlock }
+import gg.warcraft.monolith.api.world.block.shape.RailsShape
+import gg.warcraft.monolith.api.world.block.variant.RailsVariant
 
 case class Rails(
   location: BlockLocation,
-  material: RailsMaterial,
-  state: RailsState,
+  variant: RailsVariant,
+  shape: RailsShape,
   powered: Boolean
-) extends MaterialBlock[RailsMaterial] with StatefulBlock[RailsState] with PowerableBlock {
+) extends VariedBlock[RailsVariant] with ShapedBlock[RailsShape] with PowerableBlock {
   override val kind = BlockType.RAILS
 
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Rails = copy(location = loc)
-  override def withMaterial(mat: RailsMaterial): Rails = copy(material = mat)
-  override def withState(state: RailsState): Rails = copy(state = state)
+  override def withVariant(variant: RailsVariant): Rails = copy(variant = variant)
+  override def withShape(shape: RailsShape): Rails = copy(shape = shape)
   override def withPowered(powered: Boolean): Rails = copy(powered = powered)
 }
