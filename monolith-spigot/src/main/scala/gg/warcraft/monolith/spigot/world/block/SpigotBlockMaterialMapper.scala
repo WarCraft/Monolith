@@ -16,8 +16,8 @@ class SpigotBlockMaterialMapper @Inject()(
   private val cache =
     new util.EnumMap[Material, BlockMaterial](classOf[Material])
 
-  def map(block: SpigotBlock): BlockMaterial =
-    cache.computeIfAbsent(block.getType, compute)
+  def map(material: Material): BlockMaterial =
+    cache.computeIfAbsent(material, compute)
 
   private def compute(material: Material): BlockMaterial = material match {
     case it if !it.isBlock => throw new IllegalArgumentException(s"$material")
