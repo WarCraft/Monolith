@@ -4,4 +4,8 @@ trait BlockVariant
 
 trait FlowerPotVariant extends BlockVariant
 
+trait SlabVariant extends BlockVariant
+
 trait StairsVariant extends BlockVariant
+
+trait WallVariant extends BlockVariant

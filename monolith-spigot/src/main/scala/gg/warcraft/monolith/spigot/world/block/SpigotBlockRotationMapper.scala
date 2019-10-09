@@ -22,7 +22,8 @@ class SpigotBlockRotationMapper {
     case SpigotBlockFace.WEST_NORTH_WEST  => BlockRotation.WEST_NORTH_WEST
     case SpigotBlockFace.NORTH_WEST       => BlockRotation.NORTH_WEST
     case SpigotBlockFace.NORTH_NORTH_WEST => BlockRotation.NORTH_NORTH_WEST
-    case _                                => null // TODO def doesn't return optional, throw instead?
+
+    case _ => throw new IllegalArgumentException(s"$rotation")
   }
 
   def map(rotation: BlockRotation): SpigotBlockFace = rotation match {
@@ -42,6 +43,7 @@ class SpigotBlockRotationMapper {
     case BlockRotation.WEST_NORTH_WEST  => SpigotBlockFace.WEST_NORTH_WEST
     case BlockRotation.NORTH_WEST       => SpigotBlockFace.NORTH_WEST
     case BlockRotation.NORTH_NORTH_WEST => SpigotBlockFace.NORTH_NORTH_WEST
-    case _                              => null
+
+    case _ => throw new IllegalArgumentException(s"$rotation")
   }
 }

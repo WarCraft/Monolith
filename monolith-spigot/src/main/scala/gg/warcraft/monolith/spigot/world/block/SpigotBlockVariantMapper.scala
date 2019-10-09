@@ -4,13 +4,13 @@ import java.util
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
-import gg.warcraft.monolith.api.world.block.material.{ SandstoneMaterial, StoneMaterial, StoniteMaterial }
+import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial, PrismarineMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
-import org.bukkit.{Instrument => SpigotInstrument}
-import org.bukkit.block.data.`type`.Bamboo.{Leaves => SpigotBambooLeaves}
-import org.bukkit.block.data.`type`.Comparator.{ Mode => SpigotComparatorMode}
-import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureBlockMode}
+import org.bukkit.{ Instrument => SpigotInstrument }
+import org.bukkit.block.data.`type`.Bamboo.{ Leaves => SpigotBambooLeaves }
+import org.bukkit.block.data.`type`.Comparator.{ Mode => SpigotComparatorMode }
+import org.bukkit.block.data.`type`.StructureBlock.{ Mode => SpigotStructureBlockMode }
 
 class SpigotBlockVariantMapper {
 
@@ -407,6 +407,188 @@ class SpigotBlockVariantMapper {
       Material.HEAVY_WEIGHTED_PRESSURE_PLATE
   }
 
+  def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
+
+    // TODO map remaining blocks
+
+    // FLOWER_POT
+    case FlowerPot(_, None) => Material.FLOWER_POT
+    case FlowerPot(_, Some(variant)) => variant match {
+      case FlowerVariant.ALLIUM => Material.POTTED_ALLIUM
+      case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
+      case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
+      case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
+      case FlowerVariant.DANDELION    => Material.POTTED_DANDELION
+      case FlowerVariant.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
+      case FlowerVariant.OXEYE_DAISY  => Material.POTTED_OXEYE_DAISY
+      case FlowerVariant.PINK_TULIP   => Material.POTTED_PINK_TULIP
+      case FlowerVariant.POPPY        => Material.POTTED_POPPY
+      case FlowerVariant.RED_TULIP    => Material.POTTED_RED_TULIP
+      case FlowerVariant.WHITE_TULIP  => Material.POTTED_WHITE_TULIP
+      case FlowerVariant.WITHER_ROSE  => Material.POTTED_WITHER_ROSE
+      case FlowerVariant.LILY_OF_THE_VALLEY =>
+        Material.POTTED_LILY_OF_THE_VALLEY
+
+      // TODO cactus deadbush fern
+
+      case MushroomVariant.BROWN => Material.POTTED_BROWN_MUSHROOM
+      case MushroomVariant.RED   => Material.POTTED_RED_MUSHROOM
+
+      case SaplingVariant.BAMBOO   => Material.POTTED_BAMBOO
+      case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
+      case SaplingVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
+      case SaplingVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
+      case SaplingVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
+      case SaplingVariant.OAK      => Material.POTTED_OAK_SAPLING
+      case SaplingVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
+    }
+
+    case Slab(_, material, variant, _) => material match {
+
+      // BRICK
+      case BrickMaterial.BRICK => Material.BRICK_SLAB
+      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_SLAB
+      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
+
+      // COBBLESTONE
+      case _: CobblestoneMaterial => variant match {
+        case Some(CobblestoneVariant.MOSSY) => Material.MOSSY_COBBLESTONE_SLAB
+        case _                              => Material.COBBLESTONE_SLAB
+      }
+
+      // END_STONE
+      case _: EndStoneMaterial => Material.END_STONE_BRICK_SLAB
+
+      // PRISMARINE
+      case PrismarineMaterial.PRISMARINE       => Material.PRISMARINE_SLAB
+      case PrismarineMaterial.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_SLAB
+      case PrismarineMaterial.DARK_PRISMARINE  => Material.DARK_PRISMARINE_SLAB
+
+      // SANDSTONE
+      case SandstoneMaterial.SANDSTONE => variant match {
+        case Some(SandstoneVariant.CUT)    => Material.CUT_SANDSTONE_SLAB
+        case Some(SandstoneVariant.SMOOTH) => Material.SMOOTH_SANDSTONE_SLAB
+        case _                             => Material.SANDSTONE_SLAB
+      }
+
+      case SandstoneMaterial.RED_SANDSTONE => variant match {
+        case Some(SandstoneVariant.CUT)    => Material.CUT_RED_SANDSTONE_SLAB
+        case Some(SandstoneVariant.SMOOTH) => Material.SMOOTH_RED_SANDSTONE_SLAB
+        case _                             => Material.RED_SANDSTONE_SLAB
+      }
+
+      // STONE
+      case StoneMaterial.STONE => variant match {
+        case Some(StoneVariant.SMOOTH) => Material.SMOOTH_STONE_SLAB
+        case None                      => Material.STONE_SLAB
+      }
+
+      case StoneMaterial.STONE_BRICK => variant match {
+        case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_SLAB
+        case None                     => Material.STONE_BRICK_SLAB
+      }
+
+      // STONITE
+      case StoniteMaterial.ANDESITE => variant match {
+        case Some(StoniteVariant.POLISHED) => Material.POLISHED_ANDESITE_SLAB
+        case None                          => Material.ANDESITE_SLAB
+      }
+
+      case StoniteMaterial.DIORITE => variant match {
+        case Some(StoniteVariant.POLISHED) => Material.POLISHED_DIORITE_SLAB
+        case None                          => Material.DIORITE_SLAB
+      }
+
+      case StoniteMaterial.GRANITE => variant match {
+        case Some(StoniteVariant.POLISHED) => Material.POLISHED_GRANITE_SLAB
+        case None                          => Material.GRANITE_SLAB
+      }
+    }
+
+    case Stairs(_, material, variant, _, _, _, _) => material match {
+
+      // BRICK
+      case BrickMaterial.BRICK => Material.BRICK_STAIRS
+      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_STAIRS
+      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
+
+      // COBBLESTONE
+      case _: CobblestoneMaterial => variant match {
+        case Some(CobblestoneVariant.MOSSY) => Material.MOSSY_COBBLESTONE_STAIRS
+        case _                              => Material.COBBLESTONE_STAIRS
+      }
+
+      // END_STONE
+      case _: EndStoneMaterial => Material.END_STONE_BRICK_STAIRS
+
+      // PRISMARINE
+      case PrismarineMaterial.PRISMARINE      => Material.PRISMARINE_STAIRS
+      case PrismarineMaterial.DARK_PRISMARINE => Material.DARK_PRISMARINE_STAIRS
+      case PrismarineMaterial.PRISMARINE_BRICK =>
+        Material.PRISMARINE_BRICK_STAIRS
+
+      // SANDSTONE
+      case SandstoneMaterial.SANDSTONE => variant match {
+        case Some(SandstoneVariant.SMOOTH) => Material.SMOOTH_SANDSTONE_STAIRS
+        case _                             => Material.SANDSTONE_STAIRS
+      }
+
+      case SandstoneMaterial.RED_SANDSTONE => variant match {
+        case Some(SandstoneVariant.SMOOTH) =>
+          Material.SMOOTH_RED_SANDSTONE_STAIRS
+        case _                             => Material.RED_SANDSTONE_STAIRS
+      }
+
+      // STONE
+      case StoneMaterial.STONE => Material.STONE_STAIRS
+
+      case StoneMaterial.STONE_BRICK => variant match {
+        case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_WALL
+        case None                     => Material.STONE_BRICK_STAIRS
+      }
+
+      // STONITE
+      case StoniteMaterial.ANDESITE => Material.ANDESITE_WALL
+      case StoniteMaterial.DIORITE  => Material.DIORITE_WALL
+      case StoniteMaterial.GRANITE  => Material.GRANITE_WALL
+    }
+
+    case Wall(_, material, variant, _) => material match {
+
+      // BRICK
+      case BrickMaterial.BRICK => Material.BRICK_WALL
+      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_WALL
+      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_WALL
+
+      // COBBLESTONE
+      case _: CobblestoneMaterial => variant match {
+        case Some(CobblestoneVariant.MOSSY) => Material.MOSSY_COBBLESTONE_WALL
+        case _                              => Material.COBBLESTONE_WALL
+      }
+
+      // END_STONE
+      case _: EndStoneMaterial => Material.END_STONE_BRICK_WALL
+
+      // PRISMARINE
+      case _:PrismarineMaterial => Material.PRISMARINE_WALL
+
+      // SANDSTONE
+      case SandstoneMaterial.SANDSTONE => Material.SANDSTONE_WALL
+      case SandstoneMaterial.RED_SANDSTONE => Material.RED_SANDSTONE_WALL
+
+      // STONE
+      case _: StoneMaterial => variant match {
+        case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_WALL
+        case None                     => Material.STONE_BRICK_WALL
+      }
+
+      // STONITE
+      case StoniteMaterial.ANDESITE => Material.ANDESITE_WALL
+      case StoniteMaterial.DIORITE  => Material.DIORITE_WALL
+      case StoniteMaterial.GRANITE  => Material.GRANITE_WALL
+    }
+  }
+
   def map(
       block: VariedBlock[_ <: BlockVariant],
       data: SpigotBlockData
@@ -439,42 +621,10 @@ class SpigotBlockVariantMapper {
   ): Unit = {
     implicit val data: SpigotBlockData = data
 
-    block match {
-
-        // TODO map remaining blocks
-
-      // FLOWER_POT
-      case FlowerPot(_, None) => Material.FLOWER_POT
-      case FlowerPot(_, Some(variant)) => variant match {
-        case FlowerVariant.ALLIUM => Material.POTTED_ALLIUM
-        case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
-        case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
-        case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
-        case FlowerVariant.DANDELION    => Material.POTTED_DANDELION
-        case FlowerVariant.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
-        case FlowerVariant.OXEYE_DAISY  => Material.POTTED_OXEYE_DAISY
-        case FlowerVariant.PINK_TULIP   => Material.POTTED_PINK_TULIP
-        case FlowerVariant.POPPY        => Material.POTTED_POPPY
-        case FlowerVariant.RED_TULIP    => Material.POTTED_RED_TULIP
-        case FlowerVariant.WHITE_TULIP  => Material.POTTED_WHITE_TULIP
-        case FlowerVariant.WITHER_ROSE  => Material.POTTED_WITHER_ROSE
-        case FlowerVariant.LILY_OF_THE_VALLEY =>
-          Material.POTTED_LILY_OF_THE_VALLEY
-
-        // TODO cactus deadbush fern
-
-        case MushroomVariant.BROWN => Material.POTTED_BROWN_MUSHROOM
-        case MushroomVariant.RED   => Material.POTTED_RED_MUSHROOM
-
-        case SaplingVariant.BAMBOO   => Material.POTTED_BAMBOO
-        case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
-        case SaplingVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
-        case SaplingVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
-        case SaplingVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
-        case SaplingVariant.OAK      => Material.POTTED_OAK_SAPLING
-        case SaplingVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
-      }
-    }
+//    block match {
+//
+//        // TODO map remaining blocks
+//    }
   }
 
   // BAMBOO
