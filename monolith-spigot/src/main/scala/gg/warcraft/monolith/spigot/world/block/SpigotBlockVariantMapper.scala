@@ -4,7 +4,7 @@ import java.util
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
-import gg.warcraft.monolith.api.world.block.material.{ SandstoneMaterial, StoniteMaterial }
+import gg.warcraft.monolith.api.world.block.material.{ SandstoneMaterial, StoneMaterial, StoniteMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
 import org.bukkit.block.{ Block => SpigotBlock }
@@ -16,12 +16,14 @@ class SpigotBlockVariantMapper {
   private val cache =
     new util.EnumMap[Material, BlockVariant](classOf[Material])
 
+  private def dataAs[T <: SpigotBlockData](implicit data: SpigotBlockData): T =
+    data.asInstanceOf[T]
+
   def map(block: SpigotBlock): BlockVariant =
     cache.computeIfAbsent(block.getType, _ => compute(block))
 
   private def compute(block: SpigotBlock): BlockVariant = {
-    def dataAs[T <: SpigotBlockData]: T =
-      block.getState.getBlockData.asInstanceOf[T]
+    implicit val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
 
@@ -184,9 +186,7 @@ class SpigotBlockVariantMapper {
     }
   }
 
-  def map(
-      block: VariedBlock[_ <: BlockVariant]
-  ): Material = block match {
+  def map(block: VariedBlock[_ <: BlockVariant]): Material = block match {
 
     case Air(_, AirVariant.NORMAL) => Material.AIR
     case Air(_, AirVariant.CAVE)   => Material.CAVE_AIR
@@ -352,7 +352,17 @@ class SpigotBlockVariantMapper {
     }
 
     // STONE
-    case it: Stone => null
+    case Stone(_, StoneMaterial.STONE, variant) => variant match {
+      case StoneVariant.SMOOTH => Material.SMOOTH_STONE
+      case _                   => Material.STONE
+    }
+
+    case Stone(_, StoneMaterial.STONE_BRICK, variant) => variant match {
+      case StoneVariant.CHISELED => Material.CHISELED_STONE_BRICKS
+      case StoneVariant.CRACKED  => Material.CRACKED_STONE_BRICKS
+      case StoneVariant.MOSSY    => Material.MOSSY_STONE_BRICKS
+      case _                     => Material.STONE_BRICKS
+    }
 
     // STONITE
     case Stonite(_, StoniteMaterial.ANDESITE, variant) => variant match {
@@ -381,7 +391,7 @@ class SpigotBlockVariantMapper {
       block: VariedBlock[_ <: BlockVariant],
       data: SpigotBlockData
   ): Unit = {
-    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+    implicit val data: SpigotBlockData = data
 
     block match {
 
@@ -402,7 +412,14 @@ class SpigotBlockVariantMapper {
   def map(
       block: VariableBlock[_ <: BlockVariant],
       data: SpigotBlockData
-  ): Unit = {}
+  ): Unit = {
+    implicit val data: SpigotBlockData = data
+
+    block match {
+      // TODO case FlowerPot
+      case _ => null
+    }
+  }
 
   def map(variant: ComparatorVariant): SpigotComparator.Mode = variant match {
     case ComparatorVariant.COMPARE  => SpigotComparator.Mode.COMPARE
