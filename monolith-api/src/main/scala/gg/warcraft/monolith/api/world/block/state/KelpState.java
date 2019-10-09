@@ -30,6 +30,12 @@ public enum KelpState implements BlockState {
     AGE_24,
     AGE_25;
 
+    private static final KelpState[] finalValues = values();
+
+    public static KelpState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

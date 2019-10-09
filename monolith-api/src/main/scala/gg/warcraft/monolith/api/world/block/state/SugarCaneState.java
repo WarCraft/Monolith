@@ -20,6 +20,12 @@ public enum SugarCaneState implements BlockState {
     AGE_14,
     AGE_15;
 
+    private static final SugarCaneState[] finalValues = values();
+
+    public static SugarCaneState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

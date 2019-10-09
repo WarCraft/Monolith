@@ -12,6 +12,12 @@ public enum MelonStemState implements BlockState {
     AGE_6,
     AGE_7;
 
+    private static final MelonStemState[] finalValues = values();
+
+    public static MelonStemState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

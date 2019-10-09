@@ -12,6 +12,12 @@ public enum WaterState implements BlockState {
     LEVEL_7,
     LEVEL_8;
 
+    private static final WaterState[] finalValues = values();
+
+    public static WaterState valueOf(int data) {
+        return finalValues[data - 1];
+    }
+
     @Override
     public int toInt() {
         return ordinal() + 1;

@@ -12,6 +12,12 @@ public enum LavaState implements BlockState {
     LEVEL_7,
     LEVEL_8;
 
+    private static final LavaState[] finalValues = values();
+
+    public static LavaState valueOf(int data) {
+        return finalValues[data - 1];
+    }
+
     @Override
     public int toInt() {
         return ordinal() + 1;

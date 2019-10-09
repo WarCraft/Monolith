@@ -13,6 +13,12 @@ public enum ComposterState implements BlockState {
     LEVEL_7,
     LEVEL_8;
 
+    private static final ComposterState[] finalValues = values();
+
+    public static ComposterState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

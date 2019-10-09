@@ -20,6 +20,12 @@ public enum FireState implements BlockState {
     AGE_14,
     AGE_15;
 
+    private static final FireState[] finalValues = values();
+
+    public static FireState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

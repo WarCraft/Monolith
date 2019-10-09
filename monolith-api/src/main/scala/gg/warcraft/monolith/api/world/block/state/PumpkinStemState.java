@@ -12,6 +12,12 @@ public enum PumpkinStemState implements BlockState {
     AGE_6,
     AGE_7;
 
+    private static final PumpkinStemState[] finalValues = values();
+
+    public static PumpkinStemState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

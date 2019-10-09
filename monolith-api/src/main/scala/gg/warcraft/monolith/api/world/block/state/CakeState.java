@@ -11,6 +11,12 @@ public enum CakeState implements BlockState {
     EATEN_5,
     EATEN_6;
 
+    private static final CakeState[] finalValues = values();
+
+    public static CakeState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

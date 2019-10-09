@@ -20,6 +20,12 @@ public enum CactusState implements BlockState {
     AGE_14,
     AGE_15;
 
+    private static final CactusState[] finalValues = values();
+
+    public static CactusState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

@@ -20,6 +20,12 @@ public enum RedstoneWireState implements BlockState {
     POWER_14,
     POWER_15;
 
+    private static final RedstoneWireState[] finalValues = values();
+
+    public static RedstoneWireState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

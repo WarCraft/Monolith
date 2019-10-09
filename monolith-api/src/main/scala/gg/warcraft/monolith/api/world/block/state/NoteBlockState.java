@@ -29,6 +29,12 @@ public enum NoteBlockState implements BlockState {
     NOTE_23,
     NOTE_24;
 
+    private static final NoteBlockState[] finalValues = values();
+
+    public static NoteBlockState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

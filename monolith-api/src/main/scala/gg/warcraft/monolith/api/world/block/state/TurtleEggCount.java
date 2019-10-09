@@ -6,6 +6,12 @@ public enum TurtleEggCount {
     COUNT_3,
     COUNT_4;
 
+    private static final TurtleEggCount[] finalValues = values();
+
+    public static TurtleEggCount valueOf(int data) {
+        return finalValues[data - 1];
+    }
+
     public int toInt() {
         return ordinal() + 1;
     }

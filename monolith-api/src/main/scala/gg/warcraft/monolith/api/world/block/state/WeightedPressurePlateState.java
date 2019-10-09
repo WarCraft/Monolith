@@ -20,6 +20,12 @@ public enum WeightedPressurePlateState implements BlockState {
     POWER_14,
     POWER_15;
 
+    private static final WeightedPressurePlateState[] finalValues = values();
+
+    public static WeightedPressurePlateState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

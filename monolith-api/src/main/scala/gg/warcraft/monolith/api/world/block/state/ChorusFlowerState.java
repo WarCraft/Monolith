@@ -10,6 +10,12 @@ public enum ChorusFlowerState implements BlockState {
     AGE_4,
     AGE_5;
 
+    private static final ChorusFlowerState[] finalValues = values();
+
+    public static ChorusFlowerState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

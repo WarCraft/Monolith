@@ -12,6 +12,12 @@ public enum WheatState implements BlockState {
     AGE_6,
     AGE_7;
 
+    private static final WheatState[] finalValues = values();
+
+    public static WheatState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

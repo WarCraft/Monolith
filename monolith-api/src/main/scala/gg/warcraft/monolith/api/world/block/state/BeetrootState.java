@@ -8,6 +8,12 @@ public enum BeetrootState implements BlockState {
     AGE_2,
     AGE_3;
 
+    private static final BeetrootState[] finalValues = values();
+
+    public static BeetrootState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();

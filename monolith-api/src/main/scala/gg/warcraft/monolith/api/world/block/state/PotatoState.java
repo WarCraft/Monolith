@@ -12,6 +12,12 @@ public enum PotatoState implements BlockState {
     AGE_6,
     AGE_7;
 
+    private static final PotatoState[] finalValues = values();
+
+    public static PotatoState valueOf(int data) {
+        return finalValues[data];
+    }
+
     @Override
     public int toInt() {
         return ordinal();
