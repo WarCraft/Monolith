@@ -3,15 +3,13 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.api.world.block.`type`._
+import gg.warcraft.monolith.api.world.block.material.{ SandstoneMaterial, StoniteMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
-import org.bukkit.block.{Block => SpigotBlock}
-import org.bukkit.block.data.{BlockData => SpigotBlockData}
-import org.bukkit.block.data.`type`.{
-  Bamboo => SpigotBamboo,
-  Comparator => SpigotComparator,
-  StructureBlock => SpigotStructureBlock
-}
+import org.bukkit.block.{ Block => SpigotBlock }
+import org.bukkit.block.data.{ BlockData => SpigotBlockData }
+import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Comparator => SpigotComparator, StructureBlock => SpigotStructureBlock }
 
 class SpigotBlockVariantMapper {
 
@@ -33,7 +31,7 @@ class SpigotBlockVariantMapper {
       case Material.VOID_AIR => AirVariant.VOID
 
       // ANVIL
-      case Material.ANVIL         => AnvilVariant.PRISTINE
+      case Material.ANVIL         => AnvilVariant.NORMAL
       case Material.CHIPPED_ANVIL => AnvilVariant.CHIPPED
       case Material.DAMAGED_ANVIL => AnvilVariant.DAMAGED
 
@@ -108,13 +106,13 @@ class SpigotBlockVariantMapper {
       case Material.POTTED_SPRUCE_SAPLING     => null
 
       // IGNEOUS_ROCK
-      case it if it is "ANDESITE" => IgneousRockVariant.NORMAL
-      case it if it is "DIORITE"  => IgneousRockVariant.NORMAL
-      case it if it is "GRANITE"  => IgneousRockVariant.NORMAL
+      case it if it is "ANDESITE" => StoniteVariant.NORMAL
+      case it if it is "DIORITE"  => StoniteVariant.NORMAL
+      case it if it is "GRANITE"  => StoniteVariant.NORMAL
 
-      case it if it is "POLISHED_ANDESITE" => IgneousRockVariant.POLISHED
-      case it if it is "POLISHED_DIORITE"  => IgneousRockVariant.POLISHED
-      case it if it is "POLISHED_GRANITE"  => IgneousRockVariant.POLISHED
+      case it if it is "POLISHED_ANDESITE" => StoniteVariant.POLISHED
+      case it if it is "POLISHED_DIORITE"  => StoniteVariant.POLISHED
+      case it if it is "POLISHED_GRANITE"  => StoniteVariant.POLISHED
 
       // MOB_HEAD
       case it if it is "CREEPER"         => MobHeadVariant.CREEPER
@@ -187,7 +185,234 @@ class SpigotBlockVariantMapper {
   }
 
   def map(
-      block: StatefulBlock[_ <: BlockState],
+      block: VariedBlock[_ <: BlockVariant]
+  ): Material = block match {
+
+    case Air(_, AirVariant.NORMAL) => Material.AIR
+    case Air(_, AirVariant.CAVE)   => Material.CAVE_AIR
+    case Air(_, AirVariant.VOID)   => Material.VOID_AIR
+    // TODO what is the diff between VOID_AIR and STRUCTURE_VOID?
+
+    case Anvil(_, AnvilVariant.NORMAL, _)  => Material.ANVIL
+    case Anvil(_, AnvilVariant.CHIPPED, _) => Material.CHIPPED_ANVIL
+    case Anvil(_, AnvilVariant.DAMAGED, _) => Material.DAMAGED_ANVIL
+
+    case Chest(_, ChestVariant.NORMAL, _)  => Material.CHEST
+    case Chest(_, ChestVariant.ENDER, _)   => Material.ENDER_CHEST
+    case Chest(_, ChestVariant.TRAPPED, _) => Material.TRAPPED_CHEST
+
+    case Cobblestone(_, CobblestoneVariant.NORMAL) => Material.COBBLESTONE
+    case Cobblestone(_, CobblestoneVariant.MOSSY)  => Material.MOSSY_COBBLESTONE
+
+    // COMMAND_BLOCK
+    case CommandBlock(_, CommandBlockVariant.NORMAL, _, _) =>
+      Material.COMMAND_BLOCK
+    case CommandBlock(_, CommandBlockVariant.CHAIN, _, _) =>
+      Material.CHAIN_COMMAND_BLOCK
+    case CommandBlock(_, CommandBlockVariant.REPEATING, _, _) =>
+      Material.REPEATING_COMMAND_BLOCK
+
+    // CORAL
+    case Coral(_, CoralVariant.BRAIN, _)  => Material.BRAIN_CORAL
+    case Coral(_, CoralVariant.BUBBLE, _) => Material.BUBBLE_CORAL
+    case Coral(_, CoralVariant.FIRE, _)   => Material.FIRE_CORAL
+    case Coral(_, CoralVariant.HORN, _)   => Material.HORN_CORAL
+    case Coral(_, CoralVariant.TUBE, _)   => Material.TUBE_CORAL
+
+    case Coral(_, CoralVariant.DEAD_BRAIN, _)  => Material.DEAD_BRAIN_CORAL
+    case Coral(_, CoralVariant.DEAD_BUBBLE, _) => Material.DEAD_BUBBLE_CORAL
+    case Coral(_, CoralVariant.DEAD_FIRE, _)   => Material.DEAD_FIRE_CORAL
+    case Coral(_, CoralVariant.DEAD_HORN, _)   => Material.DEAD_HORN_CORAL
+    case Coral(_, CoralVariant.DEAD_TUBE, _)   => Material.DEAD_TUBE_CORAL
+
+    // CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.BRAIN)  => Material.BRAIN_CORAL
+    case CoralBlock(_, CoralVariant.BUBBLE) => Material.BUBBLE_CORAL
+    case CoralBlock(_, CoralVariant.FIRE)   => Material.FIRE_CORAL
+    case CoralBlock(_, CoralVariant.HORN)   => Material.HORN_CORAL
+    case CoralBlock(_, CoralVariant.TUBE)   => Material.TUBE_CORAL
+
+    case CoralBlock(_, CoralVariant.DEAD_BRAIN)  => Material.DEAD_BRAIN_CORAL
+    case CoralBlock(_, CoralVariant.DEAD_BUBBLE) => Material.DEAD_BUBBLE_CORAL
+    case CoralBlock(_, CoralVariant.DEAD_FIRE)   => Material.DEAD_FIRE_CORAL
+    case CoralBlock(_, CoralVariant.DEAD_HORN)   => Material.DEAD_HORN_CORAL
+    case CoralBlock(_, CoralVariant.DEAD_TUBE)   => Material.DEAD_TUBE_CORAL
+
+    // CORAL_FAN
+    case CoralFan(_, CoralVariant.BRAIN, dir, _) => dir match {
+      case None    => Material.BRAIN_CORAL_FAN
+      case Some(_) => Material.BRAIN_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.BUBBLE, dir, _) => dir match {
+      case None    => Material.BUBBLE_CORAL_FAN
+      case Some(_) => Material.BUBBLE_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.FIRE, dir, _) => dir match {
+      case None    => Material.FIRE_CORAL_FAN
+      case Some(_) => Material.FIRE_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.HORN, dir, _) => dir match {
+      case None    => Material.HORN_CORAL_FAN
+      case Some(_) => Material.HORN_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.TUBE, dir, _) => dir match {
+      case None    => Material.TUBE_CORAL_FAN
+      case Some(_) => Material.TUBE_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.DEAD_BRAIN, dir, _) => dir match {
+      case None    => Material.DEAD_BRAIN_CORAL_FAN
+      case Some(_) => Material.DEAD_BRAIN_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.DEAD_BUBBLE, dir, _) => dir match {
+      case None    => Material.DEAD_BUBBLE_CORAL_FAN
+      case Some(_) => Material.DEAD_BUBBLE_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.DEAD_FIRE, dir, _) => dir match {
+      case None    => Material.DEAD_FIRE_CORAL_FAN
+      case Some(_) => Material.DEAD_FIRE_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.DEAD_HORN, dir, _) => dir match {
+      case None    => Material.DEAD_HORN_CORAL_FAN
+      case Some(_) => Material.DEAD_HORN_CORAL_WALL_FAN
+    }
+
+    case CoralFan(_, CoralVariant.DEAD_TUBE, dir, _) => dir match {
+      case None    => Material.DEAD_TUBE_CORAL_FAN
+      case Some(_) => Material.DEAD_TUBE_CORAL_WALL_FAN
+    }
+
+    case it: FlowerPot => null // TODO
+
+    // MOB_HEAD
+    case MobHead(_, MobHeadVariant.CREEPER, dir, _) => dir match {
+      case None    => Material.CREEPER_HEAD
+      case Some(_) => Material.CREEPER_WALL_HEAD
+    }
+
+    case MobHead(_, MobHeadVariant.DRAGON, dir, _) => dir match {
+      case None    => Material.DRAGON_HEAD
+      case Some(_) => Material.DRAGON_WALL_HEAD
+    }
+
+    case MobHead(_, MobHeadVariant.PLAYER, dir, _) => dir match {
+      case None    => Material.PLAYER_HEAD
+      case Some(_) => Material.PLAYER_WALL_HEAD
+    }
+
+    case MobHead(_, MobHeadVariant.SKELETON, dir, _) => dir match {
+      case None    => Material.SKELETON_SKULL
+      case Some(_) => Material.SKELETON_WALL_SKULL
+    }
+
+    case MobHead(_, MobHeadVariant.WITHER_SKELETON, dir, _) => dir match {
+      case None    => Material.WITHER_SKELETON_SKULL
+      case Some(_) => Material.WITHER_SKELETON_WALL_SKULL
+    }
+
+    case MobHead(_, MobHeadVariant.ZOMBIE, dir, _) => dir match {
+      case None    => Material.ZOMBIE_HEAD
+      case Some(_) => Material.ZOMBIE_WALL_HEAD
+    }
+
+    // NOTE_BLOCK
+    case it: NoteBlock => null
+
+    // QUARTZ
+    case Quartz(_, QuartzVariant.NORMAL) => Material.QUARTZ_BLOCK
+    case Quartz(_, QuartzVariant.CHISELED) => Material.CHISELED_QUARTZ_BLOCK
+    case Quartz(_, QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ
+
+    // RAILS
+    case Rails(_, RailsVariant.NORMAL, _, _)    => Material.RAIL
+    case Rails(_, RailsVariant.ACTIVATOR, _, _) => Material.ACTIVATOR_RAIL
+    case Rails(_, RailsVariant.DETECTOR, _, _)  => Material.DETECTOR_RAIL
+    case Rails(_, RailsVariant.POWERED, _, _)   => Material.POWERED_RAIL
+
+    // SANDSTONE
+    case Sandstone(_, SandstoneMaterial.SANDSTONE, variant) => variant match {
+      case SandstoneVariant.NORMAL   => Material.SANDSTONE
+      case SandstoneVariant.CHISELED => Material.CHISELED_SANDSTONE
+      case SandstoneVariant.CUT      => Material.CUT_SANDSTONE
+      case SandstoneVariant.SMOOTH   => Material.SMOOTH_SANDSTONE
+    }
+
+    case Sandstone(_, SandstoneMaterial.RED_SANDSTONE, v) => v match {
+      case SandstoneVariant.NORMAL   => Material.RED_SANDSTONE
+      case SandstoneVariant.CHISELED => Material.CHISELED_RED_SANDSTONE
+      case SandstoneVariant.CUT      => Material.CUT_RED_SANDSTONE
+      case SandstoneVariant.SMOOTH   => Material.SMOOTH_RED_SANDSTONE
+    }
+
+    // STONE
+    case it: Stone => null
+
+    // STONITE
+    case Stonite(_, StoniteMaterial.ANDESITE, variant) => variant match {
+      case StoniteVariant.NORMAL   => Material.ANDESITE
+      case StoniteVariant.POLISHED => Material.POLISHED_ANDESITE
+    }
+
+    case Stonite(_, StoniteMaterial.DIORITE, variant) => variant match {
+      case StoniteVariant.NORMAL   => Material.DIORITE
+      case StoniteVariant.POLISHED => Material.POLISHED_DIORITE
+    }
+
+    case Stonite(_, StoniteMaterial.GRANITE, variant) => variant match {
+      case StoniteVariant.NORMAL   => Material.GRANITE
+      case StoniteVariant.POLISHED => Material.POLISHED_GRANITE
+    }
+
+    // WEIGHTED_PRESSURE_PLATE
+    case WeightedPressurePlate(_, WeightedPressurePlateVariant.LIGHT, _) =>
+      Material.LIGHT_WEIGHTED_PRESSURE_PLATE
+    case WeightedPressurePlate(_, WeightedPressurePlateVariant.HEAVY, _) =>
+      Material.HEAVY_WEIGHTED_PRESSURE_PLATE
+  }
+
+  def map(
+      block: VariedBlock[_ <: BlockVariant],
+      data: SpigotBlockData
+  ): Unit = {
+    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+
+    block match {
+
+      case it: Bamboo         => null // TODO
+
+      case Comparator(_, variant, _, _) =>
+        val mode = map(variant)
+        dataAs[SpigotComparator].setMode(mode)
+
+      case it: NoteBlock      => null // TODO
+
+      case StructureBlock(_, variant) =>
+        val mode = map(variant)
+        dataAs[SpigotStructureBlock].setMode(mode)
+    }
+  }
+
+  def map(
+      block: VariableBlock[_ <: BlockVariant],
       data: SpigotBlockData
   ): Unit = {}
+
+  def map(variant: ComparatorVariant): SpigotComparator.Mode = variant match {
+    case ComparatorVariant.COMPARE  => SpigotComparator.Mode.COMPARE
+    case ComparatorVariant.SUBTRACT => SpigotComparator.Mode.SUBTRACT
+  }
+
+  def map(v: StructureBlockVariant): SpigotStructureBlock.Mode = v match {
+    case StructureBlockVariant.CORNER => SpigotStructureBlock.Mode.CORNER
+    case StructureBlockVariant.DATA   => SpigotStructureBlock.Mode.DATA
+    case StructureBlockVariant.LOAD   => SpigotStructureBlock.Mode.LOAD
+    case StructureBlockVariant.SAVE   => SpigotStructureBlock.Mode.SAVE
+  }
 }
