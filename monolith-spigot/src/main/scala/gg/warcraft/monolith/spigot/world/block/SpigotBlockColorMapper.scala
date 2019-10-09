@@ -1,5 +1,7 @@
 package gg.warcraft.monolith.spigot.world.block
 
+import java.util
+
 import gg.warcraft.monolith.api.world.block.{
   BlockColor,
   ColorableBlock,
@@ -10,145 +12,35 @@ import org.bukkit.Material
 
 class SpigotBlockColorMapper {
 
-  def map(material: Material): BlockColor = material match {
-    case Material.BLACK_BANNER | Material.BLACK_BED | Material.BLACK_CARPET |
-        Material.BLACK_CONCRETE | Material.BLACK_CONCRETE_POWDER |
-        Material.BLACK_GLAZED_TERRACOTTA | Material.BLACK_SHULKER_BOX |
-        Material.BLACK_STAINED_GLASS | Material.BLACK_STAINED_GLASS_PANE |
-        Material.BLACK_TERRACOTTA | Material.BLACK_WALL_BANNER |
-        Material.BLACK_WOOL =>
-      BlockColor.BLACK
+  private val cache =
+    new util.EnumMap[Material, BlockColor](classOf[Material])
 
-    case Material.BLUE_BANNER | Material.BLUE_BED | Material.BLUE_CARPET |
-        Material.BLUE_CONCRETE | Material.BLUE_CONCRETE_POWDER |
-        Material.BLUE_GLAZED_TERRACOTTA | Material.BLUE_SHULKER_BOX |
-        Material.BLUE_STAINED_GLASS | Material.BLUE_STAINED_GLASS_PANE |
-        Material.BLUE_TERRACOTTA | Material.BLUE_WALL_BANNER |
-        Material.BLUE_WOOL =>
-      BlockColor.BLUE
+  def map(material: Material): BlockColor =
+    cache.computeIfAbsent(material, compute)
 
-    case Material.BROWN_BANNER | Material.BROWN_BED | Material.BROWN_CARPET |
-        Material.BROWN_CONCRETE | Material.BROWN_CONCRETE_POWDER |
-        Material.BROWN_GLAZED_TERRACOTTA | Material.BROWN_SHULKER_BOX |
-        Material.BROWN_STAINED_GLASS | Material.BROWN_STAINED_GLASS_PANE |
-        Material.BROWN_TERRACOTTA | Material.BROWN_WALL_BANNER |
-        Material.BROWN_WOOL =>
-      BlockColor.BROWN
-
-    case Material.CYAN_BANNER | Material.CYAN_BED | Material.CYAN_CARPET |
-        Material.CYAN_CONCRETE | Material.CYAN_CONCRETE_POWDER |
-        Material.CYAN_GLAZED_TERRACOTTA | Material.CYAN_SHULKER_BOX |
-        Material.CYAN_STAINED_GLASS | Material.CYAN_STAINED_GLASS_PANE |
-        Material.CYAN_TERRACOTTA | Material.CYAN_WALL_BANNER |
-        Material.CYAN_WOOL =>
-      BlockColor.CYAN
-
-    case Material.GRAY_BANNER | Material.GRAY_BED | Material.GRAY_CARPET |
-        Material.GRAY_CONCRETE | Material.GRAY_CONCRETE_POWDER |
-        Material.GRAY_GLAZED_TERRACOTTA | Material.GRAY_SHULKER_BOX |
-        Material.GRAY_STAINED_GLASS | Material.GRAY_STAINED_GLASS_PANE |
-        Material.GRAY_TERRACOTTA | Material.GRAY_WALL_BANNER |
-        Material.GRAY_WOOL =>
-      BlockColor.GRAY
-
-    case Material.GREEN_BANNER | Material.GREEN_BED | Material.GREEN_CARPET |
-        Material.GREEN_CONCRETE | Material.GREEN_CONCRETE_POWDER |
-        Material.GREEN_GLAZED_TERRACOTTA | Material.GREEN_SHULKER_BOX |
-        Material.GREEN_STAINED_GLASS | Material.GREEN_STAINED_GLASS_PANE |
-        Material.GREEN_TERRACOTTA | Material.GREEN_WALL_BANNER |
-        Material.GREEN_WOOL =>
-      BlockColor.GREEN
-
-    case Material.LIGHT_BLUE_BANNER | Material.LIGHT_BLUE_BED |
-        Material.LIGHT_BLUE_CARPET | Material.LIGHT_BLUE_CONCRETE |
-        Material.LIGHT_BLUE_CONCRETE_POWDER |
-        Material.LIGHT_BLUE_GLAZED_TERRACOTTA |
-        Material.LIGHT_BLUE_SHULKER_BOX | Material.LIGHT_BLUE_STAINED_GLASS |
-        Material.LIGHT_BLUE_STAINED_GLASS_PANE |
-        Material.LIGHT_BLUE_TERRACOTTA | Material.LIGHT_BLUE_WALL_BANNER |
-        Material.LIGHT_BLUE_WOOL =>
-      BlockColor.LIGHT_BLUE
-
-    case Material.LIGHT_GRAY_BANNER | Material.LIGHT_GRAY_BED |
-        Material.LIGHT_GRAY_CARPET | Material.LIGHT_GRAY_CONCRETE |
-        Material.LIGHT_GRAY_CONCRETE_POWDER |
-        Material.LIGHT_GRAY_GLAZED_TERRACOTTA |
-        Material.LIGHT_GRAY_SHULKER_BOX | Material.LIGHT_GRAY_STAINED_GLASS |
-        Material.LIGHT_GRAY_STAINED_GLASS_PANE |
-        Material.LIGHT_GRAY_TERRACOTTA | Material.LIGHT_GRAY_WALL_BANNER |
-        Material.LIGHT_GRAY_WOOL =>
-      BlockColor.LIGHT_GRAY
-
-    case Material.LIME_BANNER | Material.LIME_BED | Material.LIME_CARPET |
-        Material.LIME_CONCRETE | Material.LIME_CONCRETE_POWDER |
-        Material.LIME_GLAZED_TERRACOTTA | Material.LIME_SHULKER_BOX |
-        Material.LIME_STAINED_GLASS | Material.LIME_STAINED_GLASS_PANE |
-        Material.LIME_TERRACOTTA | Material.LIME_WALL_BANNER |
-        Material.LIME_WOOL =>
-      BlockColor.LIME
-
-    case Material.MAGENTA_BANNER | Material.MAGENTA_BED |
-        Material.MAGENTA_CARPET | Material.MAGENTA_CONCRETE |
-        Material.MAGENTA_CONCRETE_POWDER | Material.MAGENTA_GLAZED_TERRACOTTA |
-        Material.MAGENTA_SHULKER_BOX | Material.MAGENTA_STAINED_GLASS |
-        Material.MAGENTA_STAINED_GLASS_PANE | Material.MAGENTA_TERRACOTTA |
-        Material.MAGENTA_WALL_BANNER | Material.MAGENTA_WOOL =>
-      BlockColor.MAGENTA
-
-    case Material.ORANGE_BANNER | Material.ORANGE_BED | Material.ORANGE_CARPET |
-        Material.ORANGE_CONCRETE | Material.ORANGE_CONCRETE_POWDER |
-        Material.ORANGE_GLAZED_TERRACOTTA | Material.ORANGE_SHULKER_BOX |
-        Material.ORANGE_STAINED_GLASS | Material.ORANGE_STAINED_GLASS_PANE |
-        Material.ORANGE_TERRACOTTA | Material.ORANGE_WALL_BANNER |
-        Material.ORANGE_WOOL =>
-      BlockColor.ORANGE
-
-    case Material.PINK_BANNER | Material.PINK_BED | Material.PINK_CARPET |
-        Material.PINK_CONCRETE | Material.PINK_CONCRETE_POWDER |
-        Material.PINK_GLAZED_TERRACOTTA | Material.PINK_SHULKER_BOX |
-        Material.PINK_STAINED_GLASS | Material.PINK_STAINED_GLASS_PANE |
-        Material.PINK_TERRACOTTA | Material.PINK_WALL_BANNER |
-        Material.PINK_WOOL =>
-      BlockColor.PINK
-
-    case Material.PURPLE_BANNER | Material.PURPLE_BED | Material.PURPLE_CARPET |
-        Material.PURPLE_CONCRETE | Material.PURPLE_CONCRETE_POWDER |
-        Material.PURPLE_GLAZED_TERRACOTTA | Material.PURPLE_SHULKER_BOX |
-        Material.PURPLE_STAINED_GLASS | Material.PURPLE_STAINED_GLASS_PANE |
-        Material.PURPLE_TERRACOTTA | Material.PURPLE_WALL_BANNER |
-        Material.PURPLE_WOOL =>
-      BlockColor.PURPLE
-
-    case Material.RED_BANNER | Material.RED_BED | Material.RED_CARPET |
-        Material.RED_CONCRETE | Material.RED_CONCRETE_POWDER |
-        Material.RED_GLAZED_TERRACOTTA | Material.RED_SHULKER_BOX |
-        Material.RED_STAINED_GLASS | Material.RED_STAINED_GLASS_PANE |
-        Material.RED_TERRACOTTA | Material.RED_WALL_BANNER |
-        Material.RED_WOOL =>
-      BlockColor.RED
-
-    case Material.WHITE_BANNER | Material.WHITE_BED | Material.WHITE_CARPET |
-        Material.WHITE_CONCRETE | Material.WHITE_CONCRETE_POWDER |
-        Material.WHITE_GLAZED_TERRACOTTA | Material.WHITE_SHULKER_BOX |
-        Material.WHITE_STAINED_GLASS | Material.WHITE_STAINED_GLASS_PANE |
-        Material.WHITE_TERRACOTTA | Material.WHITE_WALL_BANNER |
-        Material.WHITE_WOOL =>
-      BlockColor.WHITE
-
-    case Material.YELLOW_BANNER | Material.YELLOW_BED | Material.YELLOW_CARPET |
-        Material.YELLOW_CONCRETE | Material.YELLOW_CONCRETE_POWDER |
-        Material.YELLOW_GLAZED_TERRACOTTA | Material.YELLOW_SHULKER_BOX |
-        Material.YELLOW_STAINED_GLASS | Material.YELLOW_STAINED_GLASS_PANE |
-        Material.YELLOW_TERRACOTTA | Material.YELLOW_WALL_BANNER |
-        Material.YELLOW_WOOL =>
-      BlockColor.YELLOW
+  private def compute(material: Material): BlockColor = material match {
+    case it if it $is "BLACK"      => BlockColor.BLACK
+    case it if it $is "BLUE"       => BlockColor.BLUE
+    case it if it $is "BROWN"      => BlockColor.BROWN
+    case it if it $is "CYAN"       => BlockColor.CYAN
+    case it if it $is "GRAY"       => BlockColor.GRAY
+    case it if it $is "GREEN"      => BlockColor.GREEN
+    case it if it $is "LIGHT_BLUE" => BlockColor.LIGHT_BLUE
+    case it if it $is "LIGHT_GRAY" => BlockColor.LIGHT_GRAY
+    case it if it $is "LIME"       => BlockColor.LIME
+    case it if it $is "MAGENTA"    => BlockColor.MAGENTA
+    case it if it $is "ORANGE"     => BlockColor.ORANGE
+    case it if it $is "PINK"       => BlockColor.PINK
+    case it if it $is "PURPLE"     => BlockColor.PURPLE
+    case it if it $is "RED"        => BlockColor.RED
+    case it if it $is "WHITE"      => BlockColor.WHITE
+    case it if it $is "YELLOW"     => BlockColor.YELLOW
 
     case Material.GLASS | Material.GLASS_PANE | Material.SHULKER_BOX |
         Material.TERRACOTTA =>
       null
 
-    case _ =>
-      throw new IllegalArgumentException(s"$material")
+    case _ => throw new IllegalArgumentException(s"$material")
   }
 
   def map(block: ColoredBlock): Material = block match {
@@ -404,8 +296,6 @@ class SpigotBlockColorMapper {
       }
 
     case _ =>
-      throw new IllegalArgumentException(
-        s"Failed to map block to material: ${block.getClass.getSimpleName}"
-      )
+      throw new IllegalArgumentException(s"${block.getClass.getSimpleName}")
   }
 }
