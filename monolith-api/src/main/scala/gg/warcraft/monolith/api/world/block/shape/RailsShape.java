@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.shape;
 
-public enum RailsShape {
+import gg.warcraft.monolith.api.world.block.BlockShape;
+
+public enum RailsShape implements BlockShape {
     NORTH_EAST,
     NORTH_SOUTH,
     NORTH_WEST,

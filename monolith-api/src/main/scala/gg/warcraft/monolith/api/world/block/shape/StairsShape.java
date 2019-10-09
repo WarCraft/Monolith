@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.world.block.shape;
 
-public enum StairsShape {
+import gg.warcraft.monolith.api.world.block.BlockShape;
+
+public enum StairsShape implements BlockShape {
     STRAIGHT,
     INNER_LEFT,
     INNER_RIGHT,
