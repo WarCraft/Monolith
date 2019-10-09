@@ -17,8 +17,10 @@ package object block {
   type SpigotBamboo = Bamboo
   type SpigotBed = Bed
   type SpigotBubbleColumn = BubbleColumn
+  type SpigotCake = Cake
   type SpigotCampfire = Campfire
   type SpigotCommandBlock = CommandBlock
+  type SpigotComparator = Comparator
   type SpigotDoor = Door
   type SpigotEndPortalFrame = EndPortalFrame
   type SpigotHopper = Hopper
@@ -28,8 +30,12 @@ package object block {
   type SpigotNoteBlock = NoteBlock
   type SpigotPiston = Piston
   type SpigotRepeater = Repeater
+  type SpigotSapling = Sapling
+  type SpigotSeaPickle = SeaPickle
   type SpigotSign = Sign
+  type SpigotStructureBlock = StructureBlock
   type SpigotTNT = TNT
+  type SpigotTurtleEgg = TurtleEgg
 
   // Mapper utility functions
   def dataAs[T <: SpigotBlockData](implicit data: SpigotBlockData): T =

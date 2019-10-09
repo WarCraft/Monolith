@@ -4,21 +4,7 @@ import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.state._
 import org.bukkit.Material
-import org.bukkit.block.{Block => SpigotBlock}
-import org.bukkit.block.data.{
-  Ageable,
-  AnaloguePowerable,
-  Levelled,
-  BlockData => SpigotBlockData
-}
-import org.bukkit.block.data.`type`.{
-  Cake => SpigotCake,
-  NoteBlock => SpigotNoteBlock,
-  Repeater => SpigotRepeater,
-  Sapling => SpigotSapling,
-  SeaPickle => SpigotSeaPickle,
-  TurtleEgg => SpigotTurtleEgg
-}
+import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
 
 class SpigotBlockStateMapper {
 

@@ -344,8 +344,7 @@ class SpigotBlockMapper @Inject()(
         Flower(loc, materialAs[FlowerMaterial], bisection, tall = true)
 
       // FLOWER_POT
-      case Material.FLOWER_POT =>
-        FlowerPot(loc, null, stateAs[FlowerPotState])
+      case Material.FLOWER_POT => FlowerPot(loc, None)
 
       case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET |
           Material.POTTED_BLUE_ORCHID | Material.POTTED_CORNFLOWER |
@@ -360,7 +359,7 @@ class SpigotBlockMapper @Inject()(
           Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
           Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING |
           Material.POTTED_SPRUCE_SAPLING =>
-        FlowerPot(loc, materialAs[FlowerPotMaterial], stateAs[FlowerPotState])
+        FlowerPot(loc, Some(variantAs[FlowerPotVariant]))
 
       // GATE TODO add whether attached to wall or not
       case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE |

@@ -7,7 +7,10 @@ import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material.{ SandstoneMaterial, StoneMaterial, StoniteMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
-import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Comparator => SpigotComparator, StructureBlock => SpigotStructureBlock }
+import org.bukkit.{Instrument => SpigotInstrument}
+import org.bukkit.block.data.`type`.Bamboo.{Leaves => SpigotBambooLeaves}
+import org.bukkit.block.data.`type`.Comparator.{ Mode => SpigotComparatorMode}
+import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureBlockMode}
 
 class SpigotBlockVariantMapper {
 
@@ -21,7 +24,6 @@ class SpigotBlockVariantMapper {
     implicit val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
-      // TODO this method should return null by default so Some(variant) works in block mapper
 
       // AIR
       case Material.AIR      => AirVariant.NORMAL
@@ -34,11 +36,9 @@ class SpigotBlockVariantMapper {
       case Material.DAMAGED_ANVIL => AnvilVariant.DAMAGED
 
       //BAMBOO
-      case Material.BAMBOO => dataAs[SpigotBamboo].getLeaves match {
-        case SpigotBamboo.Leaves.NONE  => BambooVariant.NO_LEAVES
-        case SpigotBamboo.Leaves.SMALL => BambooVariant.SMALL_LEAVES
-        case SpigotBamboo.Leaves.LARGE => BambooVariant.LARGE_LEAVES
-      }
+      case Material.BAMBOO =>
+        val leaves = dataAs[SpigotBamboo].getLeaves
+        map(leaves)
 
       // CHEST
       case Material.CHEST         => ChestVariant.NORMAL
@@ -56,10 +56,8 @@ class SpigotBlockVariantMapper {
 
       // COMPARATOR
       case Material.COMPARATOR =>
-        dataAs[SpigotComparator].getMode match {
-          case SpigotComparator.Mode.COMPARE  => ComparatorVariant.COMPARE
-          case SpigotComparator.Mode.SUBTRACT => ComparatorVariant.SUBTRACT
-        }
+        val mode = dataAs[SpigotComparator].getMode
+        map(mode)
 
       // CORAL
       case it if it is "BRAIN_CORAL"  => CoralVariant.BRAIN
@@ -74,33 +72,50 @@ class SpigotBlockVariantMapper {
       case it if it is "DEAD_HORN_CORAL"   => CoralVariant.DEAD_HORN
       case it if it is "DEAD_TUBE_CORAL"   => CoralVariant.DEAD_TUBE
 
+      // FLOWER
+      case Material.ALLIUM             => FlowerVariant.ALLIUM
+      case Material.AZURE_BLUET        => FlowerVariant.AZURE_BLUET
+      case Material.BLUE_ORCHID        => FlowerVariant.BLUE_ORCHID
+      case Material.CORNFLOWER         => FlowerVariant.CORNFLOWER
+      case Material.DANDELION          => FlowerVariant.DANDELION
+      case Material.LILY_OF_THE_VALLEY => FlowerVariant.LILY_OF_THE_VALLEY
+      case Material.ORANGE_TULIP       => FlowerVariant.ORANGE_TULIP
+      case Material.OXEYE_DAISY        => FlowerVariant.OXEYE_DAISY
+      case Material.PINK_TULIP         => FlowerVariant.PINK_TULIP
+      case Material.POPPY              => FlowerVariant.POPPY
+      case Material.RED_TULIP          => FlowerVariant.RED_TULIP
+      case Material.WHITE_TULIP        => FlowerVariant.WHITE_TULIP
+      case Material.WITHER_ROSE        => FlowerVariant.WITHER_ROSE
+
       // FLOWER_POT
-      case Material.FLOWER_POT                => null
-      case Material.POTTED_ALLIUM             => null
-      case Material.POTTED_AZURE_BLUET        => null
-      case Material.POTTED_BLUE_ORCHID        => null
-      case Material.POTTED_CORNFLOWER         => null
-      case Material.POTTED_DANDELION          => null
-      case Material.POTTED_LILY_OF_THE_VALLEY => null
-      case Material.POTTED_ORANGE_TULIP       => null
-      case Material.POTTED_OXEYE_DAISY        => null
-      case Material.POTTED_PINK_TULIP         => null
-      case Material.POTTED_POPPY              => null
-      case Material.POTTED_RED_TULIP          => null
-      case Material.POTTED_WHITE_TULIP        => null
-      case Material.POTTED_WITHER_ROSE        => null
-      case Material.POTTED_BAMBOO             => null
-      case Material.POTTED_BROWN_MUSHROOM     => null
-      case Material.POTTED_CACTUS             => null
+      case Material.POTTED_ALLIUM             => FlowerVariant.ALLIUM
+      case Material.POTTED_AZURE_BLUET        => FlowerVariant.AZURE_BLUET
+      case Material.POTTED_BLUE_ORCHID        => FlowerVariant.BLUE_ORCHID
+      case Material.POTTED_CORNFLOWER         => FlowerVariant.CORNFLOWER
+      case Material.POTTED_DANDELION          => FlowerVariant.DANDELION
+      case Material.POTTED_ORANGE_TULIP       => FlowerVariant.ORANGE_TULIP
+      case Material.POTTED_OXEYE_DAISY        => FlowerVariant.OXEYE_DAISY
+      case Material.POTTED_PINK_TULIP         => FlowerVariant.PINK_TULIP
+      case Material.POTTED_POPPY              => FlowerVariant.POPPY
+      case Material.POTTED_RED_TULIP          => FlowerVariant.RED_TULIP
+      case Material.POTTED_WHITE_TULIP        => FlowerVariant.WHITE_TULIP
+      case Material.POTTED_WITHER_ROSE        => FlowerVariant.WITHER_ROSE
+      case Material.POTTED_LILY_OF_THE_VALLEY => FlowerVariant.LILY_OF_THE_VALLEY
+
+      case Material.POTTED_CACTUS             => null // TODO
       case Material.POTTED_DEAD_BUSH          => null
       case Material.POTTED_FERN               => null
-      case Material.POTTED_RED_MUSHROOM       => null
-      case Material.POTTED_ACACIA_SAPLING     => null
-      case Material.POTTED_BIRCH_SAPLING      => null
-      case Material.POTTED_DARK_OAK_SAPLING   => null
-      case Material.POTTED_JUNGLE_SAPLING     => null
-      case Material.POTTED_OAK_SAPLING        => null
-      case Material.POTTED_SPRUCE_SAPLING     => null
+
+      case Material.POTTED_BROWN_MUSHROOM     => MushroomVariant.BROWN
+      case Material.POTTED_RED_MUSHROOM       => MushroomVariant.RED
+
+      case Material.POTTED_BAMBOO             => SaplingVariant.BAMBOO
+      case Material.POTTED_ACACIA_SAPLING     => SaplingVariant.ACACIA
+      case Material.POTTED_BIRCH_SAPLING      => SaplingVariant.BIRCH
+      case Material.POTTED_DARK_OAK_SAPLING   => SaplingVariant.DARK_OAK
+      case Material.POTTED_JUNGLE_SAPLING     => SaplingVariant.JUNGLE
+      case Material.POTTED_OAK_SAPLING        => SaplingVariant.OAK
+      case Material.POTTED_SPRUCE_SAPLING     => SaplingVariant.SPRUCE
 
       // IGNEOUS_ROCK
       case it if it is "ANDESITE" => StoniteVariant.NORMAL
@@ -119,7 +134,18 @@ class SpigotBlockVariantMapper {
       case it if it is "WITHER_SKELETON" => MobHeadVariant.WITHER_SKELETON
       case it if it is "ZOMBIE"          => MobHeadVariant.ZOMBIE
 
+      // MUSHROOM
+      case Material.BROWN_MUSHROOM => MushroomVariant.BROWN
+      case Material.RED_MUSHROOM   => MushroomVariant.RED
+
+      // MUSHROOM_BLOCK
+      case Material.BROWN_MUSHROOM_BLOCK => MushroomBlockVariant.BROWN
+      case Material.RED_MUSHROOM_BLOCK   => MushroomBlockVariant.RED
+      case Material.MUSHROOM_STEM        => MushroomBlockVariant.STEM
+
       // NOTE_BLOCK
+      val instrument = dataAs[SpigotNoteBlock].getInstrument
+      map(instrument)
 
       // QUARTZ
       case it if it is "QUARTZ"          => QuartzVariant.NORMAL
@@ -145,6 +171,16 @@ class SpigotBlockVariantMapper {
       case it if it is "SMOOTH_SANDSTONE"     => SandstoneVariant.SMOOTH
       case it if it is "SMOOTH_RED_SANDSTONE" => SandstoneVariant.SMOOTH
 
+      // SAPLING
+      case Material.BAMBOO_SAPLING   => SaplingVariant.BAMBOO
+
+      case Material.ACACIA_SAPLING   => SaplingVariant.ACACIA
+      case Material.BIRCH_SAPLING    => SaplingVariant.BIRCH
+      case Material.DARK_OAK_SAPLING => SaplingVariant.DARK_OAK
+      case Material.JUNGLE_SAPLING   => SaplingVariant.JUNGLE
+      case Material.OAK_SAPLING      => SaplingVariant.OAK
+      case Material.SPRUCE_SAPLING   => SaplingVariant.SPRUCE
+
       // STONE
       case it if it is "STONE_BRICK" => StoneVariant.NORMAL
       case it if it is "STONE"       => StoneVariant.NORMAL
@@ -163,12 +199,8 @@ class SpigotBlockVariantMapper {
 
       // STRUCTURE_BLOCK
       case Material.STRUCTURE_BLOCK =>
-        dataAs[SpigotStructureBlock].getMode match {
-          case SpigotStructureBlock.Mode.CORNER => StructureBlockVariant.CORNER
-          case SpigotStructureBlock.Mode.DATA   => StructureBlockVariant.DATA
-          case SpigotStructureBlock.Mode.LOAD   => StructureBlockVariant.LOAD
-          case SpigotStructureBlock.Mode.SAVE   => StructureBlockVariant.SAVE
-        }
+        val mode = dataAs[SpigotStructureBlock].getMode
+        map(mode)
 
       // WEIGHTED_PRESSURE_PLATE
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE =>
@@ -284,7 +316,36 @@ class SpigotBlockVariantMapper {
       case Some(_) => Material.DEAD_TUBE_CORAL_WALL_FAN
     }
 
-    case it: FlowerPot => null // TODO
+    case FlowerPot(_, None) => Material.FLOWER_POT
+    case FlowerPot(_, Some(variant)) => variant match {
+      case FlowerVariant.ALLIUM => Material.POTTED_ALLIUM
+      case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
+      case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
+      case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
+      case FlowerVariant.DANDELION    => Material.POTTED_DANDELION
+      case FlowerVariant.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
+      case FlowerVariant.OXEYE_DAISY  => Material.POTTED_OXEYE_DAISY
+      case FlowerVariant.PINK_TULIP   => Material.POTTED_PINK_TULIP
+      case FlowerVariant.POPPY        => Material.POTTED_POPPY
+      case FlowerVariant.RED_TULIP    => Material.POTTED_RED_TULIP
+      case FlowerVariant.WHITE_TULIP  => Material.POTTED_WHITE_TULIP
+      case FlowerVariant.WITHER_ROSE  => Material.POTTED_WITHER_ROSE
+      case FlowerVariant.LILY_OF_THE_VALLEY =>
+        Material.POTTED_LILY_OF_THE_VALLEY
+
+        // TODO cactus deadbush fern
+
+      case MushroomVariant.BROWN => Material.POTTED_BROWN_MUSHROOM
+      case MushroomVariant.RED   => Material.POTTED_RED_MUSHROOM
+
+      case SaplingVariant.BAMBOO   => Material.POTTED_BAMBOO
+      case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
+      case SaplingVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
+      case SaplingVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
+      case SaplingVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
+      case SaplingVariant.OAK      => Material.POTTED_OAK_SAPLING
+      case SaplingVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
+    }
 
     // MOB_HEAD
     case MobHead(_, MobHeadVariant.CREEPER, dir, _) => dir match {
@@ -316,9 +377,6 @@ class SpigotBlockVariantMapper {
       case None    => Material.ZOMBIE_HEAD
       case Some(_) => Material.ZOMBIE_WALL_HEAD
     }
-
-    // NOTE_BLOCK
-    case it: NoteBlock => null
 
     // QUARTZ
     case Quartz(_, QuartzVariant.NORMAL) => Material.QUARTZ_BLOCK
@@ -389,14 +447,18 @@ class SpigotBlockVariantMapper {
     implicit val data: SpigotBlockData = data
 
     block match {
-
-      case it: Bamboo         => null // TODO
+      case Bamboo(_, variant, _, _) =>
+        val leaves = map(variant)
+        dataAs[SpigotBamboo].setLeaves(leaves)
 
       case Comparator(_, variant, _, _) =>
         val mode = map(variant)
         dataAs[SpigotComparator].setMode(mode)
 
-      case it: NoteBlock      => null // TODO
+      // NOTE_BLOCK
+      case NoteBlock(_, variant, _, _) =>
+        val instrument = map(variant)
+        dataAs[SpigotNoteBlock].setInstrument(instrument)
 
       case StructureBlock(_, variant) =>
         val mode = map(variant)
@@ -416,57 +478,81 @@ class SpigotBlockVariantMapper {
     }
   }
 
-  def map(variant: ComparatorVariant): SpigotComparator.Mode = variant match {
-    case ComparatorVariant.COMPARE  => SpigotComparator.Mode.COMPARE
-    case ComparatorVariant.SUBTRACT => SpigotComparator.Mode.SUBTRACT
+  // BAMBOO
+  def map(leaves: SpigotBambooLeaves): BambooVariant = leaves match {
+    case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
+    case SpigotBambooLeaves.SMALL => BambooVariant.SMALL_LEAVES
+    case SpigotBambooLeaves.LARGE => BambooVariant.LARGE_LEAVES
   }
 
-  def map(v: StructureBlockVariant): SpigotStructureBlock.Mode = v match {
-    case StructureBlockVariant.CORNER => SpigotStructureBlock.Mode.CORNER
-    case StructureBlockVariant.DATA   => SpigotStructureBlock.Mode.DATA
-    case StructureBlockVariant.LOAD   => SpigotStructureBlock.Mode.LOAD
-    case StructureBlockVariant.SAVE   => SpigotStructureBlock.Mode.SAVE
+  def map(variant: BambooVariant): SpigotBambooLeaves = variant match {
+    case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
+    case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
+    case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+  }
+
+  // COMPARATOR
+  def map(mode: SpigotComparatorMode): ComparatorVariant = mode match {
+    case SpigotComparatorMode.COMPARE  => ComparatorVariant.COMPARE
+    case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
+  }
+
+  def map(variant: ComparatorVariant): SpigotComparatorMode = variant match {
+    case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
+    case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
+  }
+
+  // NOTE_BLOCK
+  def map(instrument: SpigotInstrument): NoteBlockVariant = instrument match {
+      case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
+      case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
+      case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
+      case SpigotInstrument.BELL           => NoteBlockVariant.BELL
+      case SpigotInstrument.BIT            => NoteBlockVariant.BIT
+      case SpigotInstrument.CHIME          => NoteBlockVariant.CHIME
+      case SpigotInstrument.COW_BELL       => NoteBlockVariant.COW_BELL
+      case SpigotInstrument.DIDGERIDOO     => NoteBlockVariant.DIDGERIDOO
+      case SpigotInstrument.FLUTE          => NoteBlockVariant.FLUTE
+      case SpigotInstrument.GUITAR         => NoteBlockVariant.GUITAR
+      case SpigotInstrument.IRON_XYLOPHONE => NoteBlockVariant.IRON_XYLOPHONE
+      case SpigotInstrument.PIANO          => NoteBlockVariant.HAT
+      case SpigotInstrument.PLING          => NoteBlockVariant.PLING
+      case SpigotInstrument.SNARE_DRUM     => NoteBlockVariant.SNARE_DRUM
+      case SpigotInstrument.STICKS         => NoteBlockVariant.HARP
+      case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
+    }
+
+  def map(variant: NoteBlockVariant): SpigotInstrument = variant match {
+      case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
+      case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
+      case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
+      case NoteBlockVariant.BELL           => SpigotInstrument.BELL
+      case NoteBlockVariant.BIT            => SpigotInstrument.BIT
+      case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
+      case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
+      case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
+      case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
+      case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
+      case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
+      case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
+      case NoteBlockVariant.PLING          => SpigotInstrument.PLING
+      case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
+      case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
+      case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
+    }
+
+  // STRUCTURE_BLOCK
+  def map(mode: SpigotStructureBlockMode): StructureBlockVariant = mode match {
+    case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
+    case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
+    case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
+    case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
+  }
+
+  def map(v: StructureBlockVariant): SpigotStructureBlockMode = v match {
+    case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
+    case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
+    case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
+    case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
   }
 }
-
-/*
- def mapInstrument(instrument: Instrument): NoteBlockMaterial =
-    instrument match {
-      case Instrument.BANJO          => NoteBlockMaterial.BANJO
-      case Instrument.BASS_DRUM      => NoteBlockMaterial.BASS_DRUM
-      case Instrument.BASS_GUITAR    => NoteBlockMaterial.BASS_GUITAR
-      case Instrument.BELL           => NoteBlockMaterial.BELL
-      case Instrument.BIT            => NoteBlockMaterial.BIT
-      case Instrument.CHIME          => NoteBlockMaterial.CHIME
-      case Instrument.COW_BELL       => NoteBlockMaterial.COW_BELL
-      case Instrument.DIDGERIDOO     => NoteBlockMaterial.DIDGERIDOO
-      case Instrument.FLUTE          => NoteBlockMaterial.FLUTE
-      case Instrument.GUITAR         => NoteBlockMaterial.GUITAR
-      case Instrument.IRON_XYLOPHONE => NoteBlockMaterial.IRON_XYLOPHONE
-      case Instrument.PIANO          => NoteBlockMaterial.HAT
-      case Instrument.PLING          => NoteBlockMaterial.PLING
-      case Instrument.SNARE_DRUM     => NoteBlockMaterial.SNARE_DRUM
-      case Instrument.STICKS         => NoteBlockMaterial.HARP
-      case Instrument.XYLOPHONE      => NoteBlockMaterial.XYLOPHONE
-    }
-
-  def mapInstrument(instrument: NoteBlockMaterial): Instrument =
-    instrument match {
-      case NoteBlockMaterial.BANJO          => Instrument.BANJO
-      case NoteBlockMaterial.BASS_DRUM      => Instrument.BASS_DRUM
-      case NoteBlockMaterial.BASS_GUITAR    => Instrument.BASS_GUITAR
-      case NoteBlockMaterial.BELL           => Instrument.BELL
-      case NoteBlockMaterial.BIT            => Instrument.BIT
-      case NoteBlockMaterial.CHIME          => Instrument.CHIME
-      case NoteBlockMaterial.COW_BELL       => Instrument.COW_BELL
-      case NoteBlockMaterial.DIDGERIDOO     => Instrument.DIDGERIDOO
-      case NoteBlockMaterial.FLUTE          => Instrument.FLUTE
-      case NoteBlockMaterial.GUITAR         => Instrument.GUITAR
-      case NoteBlockMaterial.IRON_XYLOPHONE => Instrument.IRON_XYLOPHONE
-      case NoteBlockMaterial.HAT            => Instrument.PIANO
-      case NoteBlockMaterial.PLING          => Instrument.PLING
-      case NoteBlockMaterial.SNARE_DRUM     => Instrument.SNARE_DRUM
-      case NoteBlockMaterial.HARP           => Instrument.STICKS
-      case NoteBlockMaterial.XYLOPHONE      => Instrument.XYLOPHONE
-    }
- */
