@@ -23,8 +23,7 @@ import org.bukkit.block.data.`type`.{
 class SpigotBlockStateMapper {
 
   def map(block: SpigotBlock): BlockState = {
-    val data = block.getState.getBlockData
-    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+    implicit val data: SpigotBlockData = block.getState.getBlockData
 
     lazy val age = dataAs[Ageable].getAge
     lazy val level = dataAs[Levelled].getLevel
@@ -88,8 +87,8 @@ class SpigotBlockStateMapper {
         val hatch = dataAs[SpigotTurtleEgg].getHatch
         val eggs = dataAs[SpigotTurtleEgg].getEggs
         TurtleEggState(
-          TurtleEggAge.valueOf(s"AGE_$hatch"),
-          TurtleEggCount.valueOf(s"COUNT_$eggs")
+          TurtleEggAge.valueOf(hatch),
+          TurtleEggCount.valueOf(eggs)
         )
 
       // WEIGHTED_PRESSURE_PLATE
@@ -105,12 +104,13 @@ class SpigotBlockStateMapper {
       block: StatefulBlock[_ <: BlockState],
       data: SpigotBlockData
   ): Unit = {
+    implicit val data: SpigotBlockData = data
+
     val state = block.state.toInt
     data match { case it: Ageable           => it.setAge(state) }
     data match { case it: Levelled          => it.setLevel(state) }
     data match { case it: AnaloguePowerable => it.setPower(state) }
 
-    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
     block match {
       case it: TurtleEgg =>
         val turtleEggData = dataAs[SpigotTurtleEgg]

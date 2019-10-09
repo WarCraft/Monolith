@@ -10,8 +10,7 @@ import org.bukkit.block.data.`type`.{Stairs => SpigotStairs}
 class SpigotBlockShapeMapper {
 
   def map(block: SpigotBlock): BlockShape = {
-    val data = block.getState.getBlockData
-    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+    implicit val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
 
@@ -62,7 +61,7 @@ class SpigotBlockShapeMapper {
   }
 
   def map(block: ShapedBlock[_], data: SpigotBlockData): Unit = {
-    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+    implicit val data: SpigotBlockData = data
 
     block.shape match {
       case it: RailsShape  => dataAs[SpigotRails].setShape(map(it))

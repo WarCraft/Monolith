@@ -7,17 +7,12 @@ import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material.{ SandstoneMaterial, StoneMaterial, StoniteMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
-import org.bukkit.block.{ Block => SpigotBlock }
-import org.bukkit.block.data.{ BlockData => SpigotBlockData }
 import org.bukkit.block.data.`type`.{ Bamboo => SpigotBamboo, Comparator => SpigotComparator, StructureBlock => SpigotStructureBlock }
 
 class SpigotBlockVariantMapper {
 
   private val cache =
     new util.EnumMap[Material, BlockVariant](classOf[Material])
-
-  private def dataAs[T <: SpigotBlockData](implicit data: SpigotBlockData): T =
-    data.asInstanceOf[T]
 
   def map(block: SpigotBlock): BlockVariant =
     cache.computeIfAbsent(block.getType, _ => compute(block))
@@ -26,6 +21,7 @@ class SpigotBlockVariantMapper {
     implicit val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
+      // TODO this method should return null by default so Some(variant) works in block mapper
 
       // AIR
       case Material.AIR      => AirVariant.NORMAL
@@ -38,12 +34,11 @@ class SpigotBlockVariantMapper {
       case Material.DAMAGED_ANVIL => AnvilVariant.DAMAGED
 
       //BAMBOO
-      case Material.BAMBOO =>
-        dataAs[SpigotBamboo].getLeaves match {
-          case SpigotBamboo.Leaves.NONE  => BambooVariant.NO_LEAVES
-          case SpigotBamboo.Leaves.SMALL => BambooVariant.SMALL_LEAVES
-          case SpigotBamboo.Leaves.LARGE => BambooVariant.LARGE_LEAVES
-        }
+      case Material.BAMBOO => dataAs[SpigotBamboo].getLeaves match {
+        case SpigotBamboo.Leaves.NONE  => BambooVariant.NO_LEAVES
+        case SpigotBamboo.Leaves.SMALL => BambooVariant.SMALL_LEAVES
+        case SpigotBamboo.Leaves.LARGE => BambooVariant.LARGE_LEAVES
+      }
 
       // CHEST
       case Material.CHEST         => ChestVariant.NORMAL
@@ -433,3 +428,45 @@ class SpigotBlockVariantMapper {
     case StructureBlockVariant.SAVE   => SpigotStructureBlock.Mode.SAVE
   }
 }
+
+/*
+ def mapInstrument(instrument: Instrument): NoteBlockMaterial =
+    instrument match {
+      case Instrument.BANJO          => NoteBlockMaterial.BANJO
+      case Instrument.BASS_DRUM      => NoteBlockMaterial.BASS_DRUM
+      case Instrument.BASS_GUITAR    => NoteBlockMaterial.BASS_GUITAR
+      case Instrument.BELL           => NoteBlockMaterial.BELL
+      case Instrument.BIT            => NoteBlockMaterial.BIT
+      case Instrument.CHIME          => NoteBlockMaterial.CHIME
+      case Instrument.COW_BELL       => NoteBlockMaterial.COW_BELL
+      case Instrument.DIDGERIDOO     => NoteBlockMaterial.DIDGERIDOO
+      case Instrument.FLUTE          => NoteBlockMaterial.FLUTE
+      case Instrument.GUITAR         => NoteBlockMaterial.GUITAR
+      case Instrument.IRON_XYLOPHONE => NoteBlockMaterial.IRON_XYLOPHONE
+      case Instrument.PIANO          => NoteBlockMaterial.HAT
+      case Instrument.PLING          => NoteBlockMaterial.PLING
+      case Instrument.SNARE_DRUM     => NoteBlockMaterial.SNARE_DRUM
+      case Instrument.STICKS         => NoteBlockMaterial.HARP
+      case Instrument.XYLOPHONE      => NoteBlockMaterial.XYLOPHONE
+    }
+
+  def mapInstrument(instrument: NoteBlockMaterial): Instrument =
+    instrument match {
+      case NoteBlockMaterial.BANJO          => Instrument.BANJO
+      case NoteBlockMaterial.BASS_DRUM      => Instrument.BASS_DRUM
+      case NoteBlockMaterial.BASS_GUITAR    => Instrument.BASS_GUITAR
+      case NoteBlockMaterial.BELL           => Instrument.BELL
+      case NoteBlockMaterial.BIT            => Instrument.BIT
+      case NoteBlockMaterial.CHIME          => Instrument.CHIME
+      case NoteBlockMaterial.COW_BELL       => Instrument.COW_BELL
+      case NoteBlockMaterial.DIDGERIDOO     => Instrument.DIDGERIDOO
+      case NoteBlockMaterial.FLUTE          => Instrument.FLUTE
+      case NoteBlockMaterial.GUITAR         => Instrument.GUITAR
+      case NoteBlockMaterial.IRON_XYLOPHONE => Instrument.IRON_XYLOPHONE
+      case NoteBlockMaterial.HAT            => Instrument.PIANO
+      case NoteBlockMaterial.PLING          => Instrument.PLING
+      case NoteBlockMaterial.SNARE_DRUM     => Instrument.SNARE_DRUM
+      case NoteBlockMaterial.HARP           => Instrument.STICKS
+      case NoteBlockMaterial.XYLOPHONE      => Instrument.XYLOPHONE
+    }
+ */
