@@ -23,8 +23,8 @@ class SpigotBlockMaterialMapper @Inject()(
     case it if !it.isBlock => throw new IllegalArgumentException(s"$material")
 
     // BRICK
-    case it if it $is "BRICK" => BrickMaterial.BRICK
-    case it if it $is "NETHER_BRICK" => BrickMaterial.NETHER_BRICK
+    case it if it $is "BRICK"            => BrickMaterial.BRICK
+    case it if it $is "NETHER_BRICK"     => BrickMaterial.NETHER_BRICK
     case it if it $is "RED_NETHER_BRICK" => BrickMaterial.RED_NETHER_BRICK
 
     // COBBLESTONE
@@ -32,7 +32,7 @@ class SpigotBlockMaterialMapper @Inject()(
 
     // END_STONE
     case it if it $is "END_STONE_BRICK" => EndStoneMaterial.END_STONE_BRICK
-    case it if it $is "END_STONE" => EndStoneMaterial.END_STONE
+    case it if it $is "END_STONE"       => EndStoneMaterial.END_STONE
 
     // ICE
     case Material.ICE        => IceMaterial.NORMAL
@@ -52,9 +52,9 @@ class SpigotBlockMaterialMapper @Inject()(
       StoneMaterial.STONE_BRICK
 
     // PRISMARINE
-    case it if it $is "DARK_PRISMARINE" => PrismarineMaterial.DARK_PRISMARINE
+    case it if it $is "DARK_PRISMARINE"  => PrismarineMaterial.DARK_PRISMARINE
     case it if it $is "PRISMARINE_BRICK" => PrismarineMaterial.PRISMARINE_BRICK
-    case it if it $is "PRISMARINE" => PrismarineMaterial.PRISMARINE
+    case it if it $is "PRISMARINE"       => PrismarineMaterial.PRISMARINE
 
     // PURPUR
     case it if it $is "PURPUR" => PurpurMaterial.PURPUR
@@ -63,14 +63,14 @@ class SpigotBlockMaterialMapper @Inject()(
     case it if it is "QUARTZ" => QuartzMaterial.QUARTZ
 
     // RESOURCE
-    case it if it $is "COAL" => ResourceMaterial.COAL
-    case it if it $is "DIAMOND" => ResourceMaterial.DIAMOND
-    case it if it $is "EMERALD" => ResourceMaterial.EMERALD
-    case it if it $is "GOLD" => ResourceMaterial.GOLD
-    case it if it $is "IRON" => ResourceMaterial.IRON
-    case it if it $is "LAPIS" => ResourceMaterial.LAPIS_LAZULI
+    case it if it $is "COAL"          => ResourceMaterial.COAL
+    case it if it $is "DIAMOND"       => ResourceMaterial.DIAMOND
+    case it if it $is "EMERALD"       => ResourceMaterial.EMERALD
+    case it if it $is "GOLD"          => ResourceMaterial.GOLD
+    case it if it $is "IRON"          => ResourceMaterial.IRON
+    case it if it $is "LAPIS"         => ResourceMaterial.LAPIS_LAZULI
     case it if it $is "NETHER_QUARTZ" => ResourceMaterial.NETHER_QUARTZ
-    case it if it $is "REDSTONE" => ResourceMaterial.REDSTONE
+    case it if it $is "REDSTONE"      => ResourceMaterial.REDSTONE
 
     // SAND
     case Material.SAND      => SandMaterial.SAND
@@ -78,11 +78,11 @@ class SpigotBlockMaterialMapper @Inject()(
 
     // SANDSTONE
     case it if it is "RED_SANDSTONE" => SandstoneMaterial.RED_SANDSTONE
-    case it if it is "SANDSTONE" => SandstoneMaterial.SANDSTONE
+    case it if it is "SANDSTONE"     => SandstoneMaterial.SANDSTONE
 
     // STONE
     case it if it is "STONE_BRICK" => StoneMaterial.STONE_BRICK
-    case it if it is "STONE" => StoneMaterial.STONE
+    case it if it is "STONE"       => StoneMaterial.STONE
 
     // STONITE
     case it if it is "ANDESITE" => StoniteMaterial.ANDESITE
@@ -405,188 +405,7 @@ class SpigotBlockMaterialMapper @Inject()(
           }
         }
 
-      case it: Slab => it.material match {
-
-        // BRICK
-        case BrickMaterial.BRICK        => Material.BRICK_SLAB
-        case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_SLAB
-        case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
-
-        // END_STONE
-        case _: EndStoneMaterial => Material.END_STONE_BRICK_SLAB
-
-        // PRISMARINE
-        case PrismarineMaterial.PRISMARINE => Material.PRISMARINE_SLAB
-
-        case PrismarineMaterial.PRISMARINE_BRICK =>
-          Material.PRISMARINE_BRICK_SLAB
-
-        case PrismarineMaterial.DARK_PRISMARINE =>
-          Material.DARK_PRISMARINE_SLAB
-
-        // PURPUR
-        case _: PurpurMaterial => Material.PURPUR_SLAB
-
-        // QUARTZ
-        case QuartzMaterial.SMOOTH_QUARTZ => Material.SMOOTH_QUARTZ_SLAB
-        case _: QuartzMaterial            => Material.QUARTZ_SLAB
-
-        // SANDSTONE
-        case SandstoneMaterial.SANDSTONE => stateAs[SandstoneState] match {
-          case SandstoneState.CUT    => Material.CUT_SANDSTONE_SLAB
-          case SandstoneState.SMOOTH => Material.SMOOTH_SANDSTONE_SLAB
-          case _: SandstoneState     => Material.SANDSTONE_SLAB
-        }
-
-        case SandstoneMaterial.RED_SANDSTONE => stateAs[SandstoneState] match {
-          case SandstoneState.CUT    => Material.CUT_RED_SANDSTONE_SLAB
-          case SandstoneState.SMOOTH => Material.SMOOTH_RED_SANDSTONE_SLAB
-          case _: SandstoneState     => Material.RED_SANDSTONE_SLAB
-        }
-
-        // STONE
-        case StoneMaterial.STONE => Material.STONE_SLAB
-
-        case StoneMaterial.STONE_BRICK => stateAs[StoneState] match {
-          case StoneState.MOSSY => Material.MOSSY_STONE_BRICK_SLAB
-          case _: StoneState => Material.STONE_BRICK_SLAB
-        }
-
-        case StoneMaterial.COBBLESTONE => stateAs[StoneState] match {
-          case StoneState.MOSSY => Material.MOSSY_COBBLESTONE_SLAB
-          case _: StoneState => Material.COBBLESTONE_SLAB
-        }
-
-        case StoneMaterial.ANDESITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_ANDESITE_SLAB
-          case _: StoneState => Material.ANDESITE_SLAB
-        }
-
-        case StoneMaterial.DIORITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_DIORITE_SLAB
-          case _: StoneState => Material.DIORITE_SLAB
-        }
-
-        case StoneMaterial.GRANITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_GRANITE_SLAB
-          case _: StoneState => Material.GRANITE_SLAB
-        }
-
-        // WOOD
-        case WoodMaterial.ACACIA   => Material.ACACIA_SLAB
-        case WoodMaterial.BIRCH    => Material.BIRCH_SLAB
-        case WoodMaterial.DARK_OAK => Material.DARK_OAK_SLAB
-        case WoodMaterial.JUNGLE   => Material.JUNGLE_SLAB
-        case WoodMaterial.OAK      => Material.OAK_SLAB
-        case WoodMaterial.SPRUCE   => Material.SPRUCE_SLAB
-      }
-
       case it: Sponge => if (it.wet) Material.WET_SPONGE else Material.SPONGE
-
-      case it: Stairs => it.material match {
-
-        // BRICK
-        case BrickMaterial.BRICK        => Material.BRICK_STAIRS
-        case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_STAIRS
-        case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
-
-        // END_STONE
-        case _: EndStoneMaterial => Material.END_STONE_BRICK_STAIRS
-
-        // PRISMARINE
-        case PrismarineMaterial.PRISMARINE => Material.PRISMARINE_STAIRS
-
-        case PrismarineMaterial.PRISMARINE_BRICK =>
-          Material.PRISMARINE_BRICK_STAIRS
-
-        case PrismarineMaterial.DARK_PRISMARINE =>
-          Material.DARK_PRISMARINE_STAIRS
-
-        // PURPUR
-        case _: PurpurMaterial => Material.PURPUR_STAIRS
-
-        // QUARTZ
-        case QuartzMaterial.SMOOTH_QUARTZ => Material.SMOOTH_QUARTZ_STAIRS
-        case _: QuartzMaterial            => Material.QUARTZ_STAIRS
-
-        // SANDSTONE
-        case SandstoneMaterial.SANDSTONE => stateAs[SandstoneState] match {
-          case SandstoneState.SMOOTH => Material.SMOOTH_SANDSTONE_STAIRS
-          case _: SandstoneState     => Material.SANDSTONE_STAIRS
-        }
-
-        case SandstoneMaterial.RED_SANDSTONE => stateAs[SandstoneState] match {
-          case SandstoneState.SMOOTH => Material.SMOOTH_RED_SANDSTONE_STAIRS
-          case _: SandstoneState     => Material.RED_SANDSTONE_STAIRS
-        }
-
-        // STONE
-        case StoneMaterial.STONE => Material.STONE_STAIRS
-
-        case StoneMaterial.STONE_BRICK => stateAs[StoneState] match {
-          case StoneState.MOSSY => Material.MOSSY_STONE_BRICK_STAIRS
-          case _: StoneState => Material.STONE_BRICK_STAIRS
-        }
-
-        case StoneMaterial.COBBLESTONE => stateAs[StoneState] match {
-          case StoneState.MOSSY => Material.MOSSY_COBBLESTONE_STAIRS
-          case _: StoneState => Material.COBBLESTONE_STAIRS
-        }
-
-        case StoneMaterial.ANDESITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_ANDESITE_STAIRS
-          case _: StoneState => Material.ANDESITE_STAIRS
-        }
-
-        case StoneMaterial.DIORITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_DIORITE_STAIRS
-          case _: StoneState => Material.DIORITE_STAIRS
-        }
-
-        case StoneMaterial.GRANITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_GRANITE_STAIRS
-          case _: StoneState => Material.GRANITE_STAIRS
-        }
-
-        // WOOD
-        case WoodMaterial.ACACIA   => Material.ACACIA_STAIRS
-        case WoodMaterial.BIRCH    => Material.BIRCH_STAIRS
-        case WoodMaterial.DARK_OAK => Material.DARK_OAK_STAIRS
-        case WoodMaterial.JUNGLE   => Material.JUNGLE_STAIRS
-        case WoodMaterial.OAK      => Material.OAK_STAIRS
-        case WoodMaterial.SPRUCE   => Material.SPRUCE_STAIRS
-      }
-
-      case it: Stone => it.material match {
-        case StoneMaterial.STONE => Material.STONE
-
-        case StoneMaterial.STONE_BRICK => stateAs[StoneState] match {
-          case StoneState.CHISELED =>Material.CHISELED_STONE_BRICKS
-          case StoneState.CRACKED =>Material.CRACKED_STONE_BRICKS
-          case StoneState.MOSSY =>Material.MOSSY_STONE_BRICKS
-          case _: StoneState => Material.STONE_BRICKS
-        }
-
-        case StoneMaterial.COBBLESTONE => stateAs[StoneState] match {
-          case StoneState.MOSSY => Material.MOSSY_COBBLESTONE
-          case _: StoneState => Material.COBBLESTONE
-        }
-
-        case StoneMaterial.ANDESITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_ANDESITE
-          case _: StoneState => Material.ANDESITE
-        }
-
-        case StoneMaterial.DIORITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_DIORITE
-          case _: StoneState => Material.DIORITE
-        }
-
-        case StoneMaterial.GRANITE => stateAs[StoneState] match {
-          case StoneState.POLISHED => Material.POLISHED_GRANITE
-          case _: StoneState => Material.GRANITE
-        }
-      }
 
       case it: Trapdoor =>
         it.material match {

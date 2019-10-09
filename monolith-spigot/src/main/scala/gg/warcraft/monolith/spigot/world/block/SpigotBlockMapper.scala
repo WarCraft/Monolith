@@ -336,12 +336,12 @@ class SpigotBlockMapper @Inject()(
           Material.LILY_OF_THE_VALLEY | Material.ORANGE_TULIP |
           Material.OXEYE_DAISY | Material.PINK_TULIP | Material.POPPY |
           Material.RED_TULIP | Material.WHITE_TULIP | Material.WITHER_ROSE =>
-        val _material = materialAs[FlowerMaterial]
-        Flower(loc, _material, BlockBisection.BOTTOM, tall = false)
+        val _variant = variantAs[FlowerVariant]
+        Flower(loc, _variant, BlockBisection.BOTTOM, tall = false)
 
       case Material.LILAC | Material.PEONY | Material.ROSE_BUSH |
           Material.SUNFLOWER =>
-        Flower(loc, materialAs[FlowerMaterial], bisection, tall = true)
+        Flower(loc, variantAs[FlowerVariant], bisection, tall = true)
 
       // FLOWER_POT
       case Material.FLOWER_POT => FlowerPot(loc, None)

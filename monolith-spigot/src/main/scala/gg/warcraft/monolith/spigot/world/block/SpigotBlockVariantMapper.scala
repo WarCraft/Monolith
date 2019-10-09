@@ -4,7 +4,7 @@ import java.util
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
-import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial, PrismarineMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial }
+import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial, PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial, WoodMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
 import org.bukkit.{ Instrument => SpigotInstrument }
@@ -464,6 +464,15 @@ class SpigotBlockVariantMapper {
       case PrismarineMaterial.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_SLAB
       case PrismarineMaterial.DARK_PRISMARINE  => Material.DARK_PRISMARINE_SLAB
 
+      // PURPUR
+      case _: PurpurMaterial => Material.PURPUR_SLAB
+
+      // QUARTZ
+      case QuartzMaterial.QUARTZ => variant match {
+        case Some(QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ_SLAB
+        case None                       => Material.QUARTZ_SLAB
+      }
+
       // SANDSTONE
       case SandstoneMaterial.SANDSTONE => variant match {
         case Some(SandstoneVariant.CUT)    => Material.CUT_SANDSTONE_SLAB
@@ -503,6 +512,14 @@ class SpigotBlockVariantMapper {
         case Some(StoniteVariant.POLISHED) => Material.POLISHED_GRANITE_SLAB
         case None                          => Material.GRANITE_SLAB
       }
+
+      // WOOD
+      case WoodMaterial.ACACIA   => Material.ACACIA_SLAB
+      case WoodMaterial.BIRCH    => Material.BIRCH_SLAB
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_SLAB
+      case WoodMaterial.JUNGLE   => Material.JUNGLE_SLAB
+      case WoodMaterial.OAK      => Material.OAK_SLAB
+      case WoodMaterial.SPRUCE   => Material.SPRUCE_SLAB
     }
 
     case Stairs(_, material, variant, _, _, _, _) => material match {
@@ -527,6 +544,15 @@ class SpigotBlockVariantMapper {
       case PrismarineMaterial.PRISMARINE_BRICK =>
         Material.PRISMARINE_BRICK_STAIRS
 
+      // PURPUR
+      case _: PurpurMaterial => Material.PURPUR_STAIRS
+
+      // QUARTZ
+      case QuartzMaterial.QUARTZ => variant match {
+        case Some(QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ_STAIRS
+        case None                       => Material.QUARTZ_STAIRS
+      }
+
       // SANDSTONE
       case SandstoneMaterial.SANDSTONE => variant match {
         case Some(SandstoneVariant.SMOOTH) => Material.SMOOTH_SANDSTONE_STAIRS
@@ -543,14 +569,22 @@ class SpigotBlockVariantMapper {
       case StoneMaterial.STONE => Material.STONE_STAIRS
 
       case StoneMaterial.STONE_BRICK => variant match {
-        case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_WALL
+        case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_STAIRS
         case None                     => Material.STONE_BRICK_STAIRS
       }
 
       // STONITE
-      case StoniteMaterial.ANDESITE => Material.ANDESITE_WALL
-      case StoniteMaterial.DIORITE  => Material.DIORITE_WALL
-      case StoniteMaterial.GRANITE  => Material.GRANITE_WALL
+      case StoniteMaterial.ANDESITE => Material.ANDESITE_STAIRS
+      case StoniteMaterial.DIORITE  => Material.DIORITE_STAIRS
+      case StoniteMaterial.GRANITE  => Material.GRANITE_STAIRS
+
+      // WOOD
+      case WoodMaterial.ACACIA   => Material.ACACIA_STAIRS
+      case WoodMaterial.BIRCH    => Material.BIRCH_STAIRS
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_STAIRS
+      case WoodMaterial.JUNGLE   => Material.JUNGLE_STAIRS
+      case WoodMaterial.OAK      => Material.OAK_STAIRS
+      case WoodMaterial.SPRUCE   => Material.SPRUCE_STAIRS
     }
 
     case Wall(_, material, variant, _) => material match {
