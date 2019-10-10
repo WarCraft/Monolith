@@ -109,7 +109,7 @@ public class SpigotWorldEventMapper implements Listener {
         eventService.publish(blockBreakEvent);
 
         if (alternativeDrops != null && !alternativeDrops.isEmpty()) {
-            BlockLocation blockLocation = block.getLocation();
+            BlockLocation blockLocation = block.location();
             Location dropLocation = new Location(blockLocation.world(),
                     blockLocation.translation().toVector3f().add(0.5f, 0.5f, 0.5f), new Vector3f());
             worldCommandService.dropItemsAt(alternativeDrops, dropLocation);

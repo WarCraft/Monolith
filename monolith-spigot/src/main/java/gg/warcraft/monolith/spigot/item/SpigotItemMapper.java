@@ -99,7 +99,7 @@ public class SpigotItemMapper {
     }
 
     private ItemStack removeArmorValues(ItemStack item) {
-        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+        net.minecraft.server.v1_14_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
         NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         NBTTagList modifiers = new NBTTagList();
 

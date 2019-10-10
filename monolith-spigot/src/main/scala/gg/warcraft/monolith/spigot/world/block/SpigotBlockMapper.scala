@@ -881,7 +881,6 @@ class SpigotBlockMapper @Inject()(
     block match {
       case BubbleColumn(_, drag) => dataAs[SpigotBubbleColumn].setDrag(drag)
       case Hopper(_, _, powered) => dataAs[SpigotHopper].setEnabled(powered)
-      case Lantern(_, hanging)   => dataAs[SpigotLantern].setHanging(hanging)
       case TNT(_, unstable)      => dataAs[SpigotTNT].setUnstable(unstable)
 
       case Bamboo(_, _, _, thick) =>
@@ -896,6 +895,9 @@ class SpigotBlockMapper @Inject()(
 
       case EndPortalFrame(_, _, eye) =>
         dataAs[SpigotEndPortalFrame].setEye(eye)
+
+      case Lantern(_, hanging) =>
+        data.asInstanceOf[SpigotLantern].setHanging(hanging)
 
       case Piston(_, _, _, extended) =>
         dataAs[SpigotPiston].setExtended(extended)

@@ -28,7 +28,8 @@ public class DefaultWorldCommandService implements WorldCommandService {
 
     @Override
     public List<UUID> dropItemsAt(List<Item> items, Location location) {
-        return worldServerAdapter.dropItemsAt(items, location);
+       // return worldServerAdapter.dropItemsAt(items, location);
+        return null; // TODO
     }
 
     @Override
