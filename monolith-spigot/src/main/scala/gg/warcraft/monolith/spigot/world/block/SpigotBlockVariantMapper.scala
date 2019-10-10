@@ -125,15 +125,6 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_OAK_SAPLING        => SaplingVariant.OAK
     case Material.POTTED_SPRUCE_SAPLING     => SaplingVariant.SPRUCE
 
-    // IGNEOUS_ROCK
-    case it if it $is "ANDESITE" => StoniteVariant.NORMAL
-    case it if it $is "DIORITE"  => StoniteVariant.NORMAL
-    case it if it $is "GRANITE"  => StoniteVariant.NORMAL
-
-    case it if it $is "POLISHED_ANDESITE" => StoniteVariant.POLISHED
-    case it if it $is "POLISHED_DIORITE"  => StoniteVariant.POLISHED
-    case it if it $is "POLISHED_GRANITE"  => StoniteVariant.POLISHED
-
     // MOB_HEAD
     case it if it $is "CREEPER"         => MobHeadVariant.CREEPER
     case it if it $is "DRAGON"          => MobHeadVariant.DRAGON
@@ -201,6 +192,15 @@ class SpigotBlockVariantMapper {
     case it if it $is "SMOOTH_STONE_BRICK" => StoneVariant.SMOOTH
     case it if it $is "SMOOTH_STONE"       => StoneVariant.SMOOTH
 
+    // STONITE
+    case it if it $is "ANDESITE" => StoniteVariant.NORMAL
+    case it if it $is "DIORITE"  => StoniteVariant.NORMAL
+    case it if it $is "GRANITE"  => StoniteVariant.NORMAL
+
+    case it if it $is "POLISHED_ANDESITE" => StoniteVariant.POLISHED
+    case it if it $is "POLISHED_DIORITE"  => StoniteVariant.POLISHED
+    case it if it $is "POLISHED_GRANITE"  => StoniteVariant.POLISHED
+
     // WEIGHTED_PRESSURE_PLATE
     case Material.LIGHT_WEIGHTED_PRESSURE_PLATE =>
       WeightedPressurePlateVariant.LIGHT
@@ -236,6 +236,9 @@ class SpigotBlockVariantMapper {
       Material.CHAIN_COMMAND_BLOCK
     case CommandBlock(_, CommandBlockVariant.REPEATING, _, _) =>
       Material.REPEATING_COMMAND_BLOCK
+
+    // COMPARATOR
+    case _: Comparator => Material.COMPARATOR
 
     // CORAL
     case Coral(_, CoralVariant.BRAIN, _)  => Material.BRAIN_CORAL
@@ -314,6 +317,23 @@ class SpigotBlockVariantMapper {
       case Some(_) => Material.DEAD_TUBE_CORAL_WALL_FAN
     }
 
+    // FLOWER
+    case Flower(_, variant, _, _) => variant match {
+      case FlowerVariant.ALLIUM             => Material.ALLIUM
+      case FlowerVariant.AZURE_BLUET        => Material.AZURE_BLUET
+      case FlowerVariant.BLUE_ORCHID        => Material.BLUE_ORCHID
+      case FlowerVariant.CORNFLOWER         => Material.CORNFLOWER
+      case FlowerVariant.DANDELION          => Material.DANDELION
+      case FlowerVariant.LILY_OF_THE_VALLEY => Material.LILY_OF_THE_VALLEY
+      case FlowerVariant.ORANGE_TULIP       => Material.ORANGE_TULIP
+      case FlowerVariant.OXEYE_DAISY        => Material.OXEYE_DAISY
+      case FlowerVariant.PINK_TULIP         => Material.PINK_TULIP
+      case FlowerVariant.POPPY              => Material.POPPY
+      case FlowerVariant.RED_TULIP          => Material.RED_TULIP
+      case FlowerVariant.WHITE_TULIP        => Material.WHITE_TULIP
+      case FlowerVariant.WITHER_ROSE        => Material.WITHER_ROSE
+    }
+
     // MOB_HEAD
     case MobHead(_, MobHeadVariant.CREEPER, dir, _) => dir match {
       case None    => Material.CREEPER_HEAD
@@ -345,6 +365,21 @@ class SpigotBlockVariantMapper {
       case Some(_) => Material.ZOMBIE_WALL_HEAD
     }
 
+    // MUSHROOM
+    case Mushroom(_, variant) => variant match {
+      case MushroomVariant.BROWN => Material.BROWN_MUSHROOM
+      case MushroomVariant.RED   => Material.RED_MUSHROOM
+    }
+
+    // MUSHROOM_BLOCK
+    case MushroomBlock(_, variant) => variant match {
+      case MushroomBlockVariant.BROWN  => Material.BROWN_MUSHROOM_BLOCK
+      case MushroomBlockVariant.RED    => Material.RED_MUSHROOM_BLOCK
+      case MushroomBlockVariant.STEM   => Material.MUSHROOM_STEM
+    }
+
+    // TODO noteblock
+
     // QUARTZ
     case Quartz(_, QuartzVariant.NORMAL) => Material.QUARTZ_BLOCK
     case Quartz(_, QuartzVariant.CHISELED) => Material.CHISELED_QUARTZ_BLOCK
@@ -370,6 +405,8 @@ class SpigotBlockVariantMapper {
       case SandstoneVariant.CUT      => Material.CUT_RED_SANDSTONE
       case SandstoneVariant.SMOOTH   => Material.SMOOTH_RED_SANDSTONE
     }
+
+    // SAPLING
 
     // STONE
     case Stone(_, StoneMaterial.STONE, variant) => variant match {
@@ -400,6 +437,9 @@ class SpigotBlockVariantMapper {
       case StoniteVariant.POLISHED => Material.POLISHED_GRANITE
     }
 
+    // STRUCTURE_BLOCK
+    case _: StructureBlock => Material.STRUCTURE_BLOCK
+
     // WEIGHTED_PRESSURE_PLATE
     case WeightedPressurePlate(_, WeightedPressurePlateVariant.LIGHT, _) =>
       Material.LIGHT_WEIGHTED_PRESSURE_PLATE
@@ -409,12 +449,10 @@ class SpigotBlockVariantMapper {
 
   def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
 
-    // TODO map remaining blocks
-
     // FLOWER_POT
     case FlowerPot(_, None) => Material.FLOWER_POT
     case FlowerPot(_, Some(variant)) => variant match {
-      case FlowerVariant.ALLIUM => Material.POTTED_ALLIUM
+      case FlowerVariant.ALLIUM       => Material.POTTED_ALLIUM
       case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
       case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
       case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
@@ -640,7 +678,6 @@ class SpigotBlockVariantMapper {
         val mode = map(variant)
         dataAs[SpigotComparator].setMode(mode)
 
-      // NOTE_BLOCK
       case NoteBlock(_, variant, _, _) =>
         val instrument = map(variant)
         dataAs[SpigotNoteBlock].setInstrument(instrument)
@@ -649,18 +686,6 @@ class SpigotBlockVariantMapper {
         val mode = map(variant)
         dataAs[SpigotStructureBlock].setMode(mode)
     }
-  }
-
-  def map(
-      block: VariableBlock[_ <: BlockVariant],
-      data: SpigotBlockData
-  ): Unit = {
-    implicit val data: SpigotBlockData = data
-
-//    block match {
-//
-//        // TODO map remaining blocks
-//    }
   }
 
   // BAMBOO
