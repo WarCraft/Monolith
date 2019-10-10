@@ -94,7 +94,6 @@ class SpigotBlockMaterialMapper @Inject()(
     case it: VariedBlock[_] => variantMapper.map(it)
     case it: VariableBlock[_] => variantMapper.map(it)
 
-    case _: Bamboo           => Material.BAMBOO
     case _: Barrel           => Material.BARREL
     case _: Barrier          => Material.BARRIER
     case _: Beacon           => Material.BEACON

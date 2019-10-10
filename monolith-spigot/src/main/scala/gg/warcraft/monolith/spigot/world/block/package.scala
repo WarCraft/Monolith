@@ -7,8 +7,7 @@ import org.bukkit.block.data.`type`._
 
 package object block {
 
-  // Bukkit and Spigot types
-  type Spigot = Bukkit
+  // Block meta types
   type SpigotBlock = Block
   type SpigotBlockData = BlockData
   type SpigotBlockState = BlockState

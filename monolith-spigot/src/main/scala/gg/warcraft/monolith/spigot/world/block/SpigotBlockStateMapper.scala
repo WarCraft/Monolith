@@ -97,9 +97,9 @@ class SpigotBlockStateMapper {
 
   def map(
       block: StatefulBlock[_ <: BlockState],
-      data: SpigotBlockData
+      spigotData: SpigotBlockData
   ): Unit = {
-    implicit val data: SpigotBlockData = data
+    implicit val data: SpigotBlockData = spigotData
 
     val state = block.state.toInt
     data match { case it: Ageable           => it.setAge(state) }

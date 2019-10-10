@@ -12,6 +12,8 @@ class SpigotBlockFaceMapper {
     case SpigotBlockFace.WEST  => BlockFace.WEST
     case SpigotBlockFace.UP    => BlockFace.UP
     case SpigotBlockFace.DOWN  => BlockFace.DOWN
+
+    case _ => throw new IllegalArgumentException(s"$face")
   }
 
   def map(face: BlockFace): SpigotBlockFace = face match {

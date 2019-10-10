@@ -23,8 +23,8 @@ class SpigotBlockShapeMapper {
     }
   }
 
-  def map(block: ShapedBlock[_], data: SpigotBlockData): Unit = {
-    implicit val data: SpigotBlockData = data
+  def map(block: ShapedBlock[_], spigotData: SpigotBlockData): Unit = {
+    implicit val data: SpigotBlockData = spigotData
 
     block.shape match {
       case it: RailsShape =>

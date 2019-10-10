@@ -210,7 +210,7 @@ class SpigotBlockColorMapper {
       )
   }
 
-  def map(block: ColorableBlock): Material = {
+  def map(block: ColorableBlock): Material = block match {
     case Glass(_, None) => Material.GLASS
     case Glass(_, _) =>
       block.color.get match {
@@ -232,8 +232,8 @@ class SpigotBlockColorMapper {
         case BlockColor.YELLOW     => Material.YELLOW_STAINED_GLASS
       }
 
-    case GlassPane(_, None) => Material.GLASS_PANE
-    case GlassPane(_, _) =>
+    case GlassPane(_, None, _, _) => Material.GLASS_PANE
+    case GlassPane(_, _, _, _) =>
       block.color.get match {
         case BlockColor.BLACK      => Material.BLACK_STAINED_GLASS_PANE
         case BlockColor.BLUE       => Material.BLUE_STAINED_GLASS_PANE

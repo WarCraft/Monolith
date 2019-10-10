@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Material, Bukkit => Spigot}
+import org.bukkit.{Material, Bukkit}
 import org.bukkit.block.data._
 import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
 import org.bukkit.block.data.`type`.Switch
@@ -442,7 +442,7 @@ class SpigotBlockMapper @Inject()(
 
       // LANTERN
       case Material.LANTERN =>
-        val hanging = dataAs[SpigotLantern].isHanging
+        val hanging = spigotData.asInstanceOf[SpigotLantern].isHanging
         Lantern(loc, hanging)
 
       // LEAVES
@@ -631,13 +631,13 @@ class SpigotBlockMapper @Inject()(
       // SIGN
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
           Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
-        val lines = dataAs[SpigotSign].getLines.toList // TODO keep as array? seem to be immutable
+        val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList // TODO keep as array? seem to be immutable
         Sign(lines, loc, materialAs[WoodMaterial], Some(dir), None, flooded)
 
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN |
           Material.DARK_OAK_WALL_SIGN | Material.JUNGLE_WALL_SIGN |
           Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
-        val lines = dataAs[SpigotSign].getLines.toList
+        val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList
         val _material = materialAs[WoodMaterial]
         Sign(lines, loc, _material, None, Some(rotation), flooded)
 
@@ -808,7 +808,7 @@ class SpigotBlockMapper @Inject()(
   def map(block: Block): SpigotBlockData = {
     // Create new block data object
     val material = materialMapper.map(block)
-    val data = Spigot.createBlockData(material)
+    val data = Bukkit.createBlockData(material)
 
     // Lazily compute generic block data
     def blockAs[T <: Block]: T = block.asInstanceOf[T]

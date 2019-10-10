@@ -238,6 +238,9 @@ class SpigotBlockVariantMapper {
     case Anvil(_, AnvilVariant.CHIPPED, _) => Material.CHIPPED_ANVIL
     case Anvil(_, AnvilVariant.DAMAGED, _) => Material.DAMAGED_ANVIL
 
+    // BAMBOO
+    case _: Bamboo           => Material.BAMBOO
+
     // CHEST
     case Chest(_, ChestVariant.NORMAL, _)  => Material.CHEST
     case Chest(_, ChestVariant.ENDER, _)   => Material.ENDER_CHEST
@@ -549,7 +552,7 @@ class SpigotBlockVariantMapper {
       // QUARTZ
       case QuartzMaterial.QUARTZ => variant match {
         case Some(QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ_SLAB
-        case None                       => Material.QUARTZ_SLAB
+        case _                          => Material.QUARTZ_SLAB
       }
 
       // SANDSTONE
@@ -568,28 +571,28 @@ class SpigotBlockVariantMapper {
       // STONE
       case StoneMaterial.STONE => variant match {
         case Some(StoneVariant.SMOOTH) => Material.SMOOTH_STONE_SLAB
-        case None                      => Material.STONE_SLAB
+        case _                         => Material.STONE_SLAB
       }
 
       case StoneMaterial.STONE_BRICK => variant match {
         case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_SLAB
-        case None                     => Material.STONE_BRICK_SLAB
+        case _                        => Material.STONE_BRICK_SLAB
       }
 
       // STONITE
       case StoniteMaterial.ANDESITE => variant match {
         case Some(StoniteVariant.POLISHED) => Material.POLISHED_ANDESITE_SLAB
-        case None                          => Material.ANDESITE_SLAB
+        case _                             => Material.ANDESITE_SLAB
       }
 
       case StoniteMaterial.DIORITE => variant match {
         case Some(StoniteVariant.POLISHED) => Material.POLISHED_DIORITE_SLAB
-        case None                          => Material.DIORITE_SLAB
+        case _                             => Material.DIORITE_SLAB
       }
 
       case StoniteMaterial.GRANITE => variant match {
         case Some(StoniteVariant.POLISHED) => Material.POLISHED_GRANITE_SLAB
-        case None                          => Material.GRANITE_SLAB
+        case _                             => Material.GRANITE_SLAB
       }
 
       // WOOD
@@ -629,7 +632,7 @@ class SpigotBlockVariantMapper {
       // QUARTZ
       case QuartzMaterial.QUARTZ => variant match {
         case Some(QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ_STAIRS
-        case None                       => Material.QUARTZ_STAIRS
+        case _                          => Material.QUARTZ_STAIRS
       }
 
       // SANDSTONE
@@ -649,7 +652,7 @@ class SpigotBlockVariantMapper {
 
       case StoneMaterial.STONE_BRICK => variant match {
         case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_STAIRS
-        case None                     => Material.STONE_BRICK_STAIRS
+        case _                        => Material.STONE_BRICK_STAIRS
       }
 
       // STONITE
@@ -692,7 +695,7 @@ class SpigotBlockVariantMapper {
       // STONE
       case _: StoneMaterial => variant match {
         case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_WALL
-        case None                     => Material.STONE_BRICK_WALL
+        case _                        => Material.STONE_BRICK_WALL
       }
 
       // STONITE
@@ -704,9 +707,9 @@ class SpigotBlockVariantMapper {
 
   def map(
       block: VariedBlock[_ <: BlockVariant],
-      data: SpigotBlockData
+      spigotData: SpigotBlockData
   ): Unit = {
-    implicit val data: SpigotBlockData = data
+    implicit val data: SpigotBlockData = spigotData
 
     block match {
       case Bamboo(_, variant, _, _) =>
