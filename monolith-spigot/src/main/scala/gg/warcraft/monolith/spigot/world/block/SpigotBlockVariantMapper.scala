@@ -413,7 +413,8 @@ class SpigotBlockVariantMapper {
       case MushroomBlockVariant.STEM   => Material.MUSHROOM_STEM
     }
 
-    // TODO noteblock
+    // NOTE_BLOCK
+    case _: NoteBlock => Material.NOTE_BLOCK
 
     // QUARTZ
     case Quartz(_, QuartzVariant.NORMAL) => Material.QUARTZ_BLOCK
