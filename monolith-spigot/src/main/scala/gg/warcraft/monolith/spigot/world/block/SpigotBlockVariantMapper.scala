@@ -23,22 +23,22 @@ class SpigotBlockVariantMapper {
     block.getType match {
       case Material.BAMBOO =>
         val leaves = dataAs[SpigotBamboo].getLeaves
-        return map(leaves)
+        map(leaves)
 
       case Material.COMPARATOR =>
         val mode = dataAs[SpigotComparator].getMode
-        return map(mode)
+        map(mode)
 
       case Material.NOTE_BLOCK =>
         val instrument = dataAs[SpigotNoteBlock].getInstrument
-        return map(instrument)
+        map(instrument)
 
       case Material.STRUCTURE_BLOCK =>
         val mode = dataAs[SpigotStructureBlock].getMode
-        return map(mode)
-    }
+        map(mode)
 
-    cache.computeIfAbsent(block.getType, _ => compute(block))
+      case _ => cache.computeIfAbsent(block.getType, _ => compute(block))
+    }
   }
 
   private def compute(block: SpigotBlock): BlockVariant = block.getType match {
