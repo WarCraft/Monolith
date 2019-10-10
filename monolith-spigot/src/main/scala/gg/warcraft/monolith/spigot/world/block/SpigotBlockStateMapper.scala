@@ -17,7 +17,6 @@ class SpigotBlockStateMapper {
     lazy val power = dataAs[AnaloguePowerable].getPower
 
     block.getType match {
-      case Material.BAMBOO           => BambooState.valueOf(age)
       case Material.BEETROOTS        => BeetrootState.valueOf(age)
       case Material.CACTUS           => CactusState.valueOf(age)
       case Material.CARROTS          => CarrotState.valueOf(age)
@@ -36,6 +35,11 @@ class SpigotBlockStateMapper {
       case Material.SWEET_BERRY_BUSH => SweetBerryState.valueOf(age)
       case Material.WATER            => WaterState.valueOf(level)
       case Material.WHEAT            => WheatState.valueOf(age)
+
+      // BAMBOO
+      case Material.BAMBOO =>
+        val stage = dataAs[SpigotBamboo].getStage
+        BambooState.valueOf(stage)
 
       // CAKE
       case Material.CAKE =>
@@ -103,6 +107,10 @@ class SpigotBlockStateMapper {
     data match { case it: AnaloguePowerable => it.setPower(state) }
 
     block match {
+      case it: Bamboo =>
+        val bambooData = dataAs[SpigotBamboo]
+        bambooData.setStage(it.state.toInt)
+
       case it: Cake =>
         val cakeData = dataAs[SpigotCake]
         cakeData.setBites(it.state.toInt)

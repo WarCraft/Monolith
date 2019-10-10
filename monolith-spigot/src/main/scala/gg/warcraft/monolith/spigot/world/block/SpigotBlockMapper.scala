@@ -179,8 +179,6 @@ class SpigotBlockMapper @Inject()(
       case Material.BAMBOO =>
         val thick = dataAs[SpigotBamboo].getAge == 1
         Bamboo(loc, variantAs[BambooVariant], stateAs[BambooState], thick)
-      // TODO is the state and age the same?
-      // TODO no not the same but state is incorrectly assigned with age, should be assigned with stage
 
       // BANNER
       case Material.BLACK_BANNER | Material.BLUE_BANNER |
