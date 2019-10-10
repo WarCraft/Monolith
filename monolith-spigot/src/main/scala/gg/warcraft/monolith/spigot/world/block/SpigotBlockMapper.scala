@@ -869,6 +869,7 @@ class SpigotBlockMapper @Inject()(
 
     // Set specific block data
     block match { case it: StatefulBlock[_] => stateMapper.map(it, data) }
+    block match { case it: VariedBlock[_]   => variantMapper.map(it, data) }
 
     // Return block data object
     data

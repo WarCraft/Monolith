@@ -41,22 +41,9 @@ public interface WorldServerAdapter {
     /**
      * @param block The block to update. Can not be null.
      */
-    void setBlock(Block block);
+    void updateBlock(Block block);
 
-    /**
-     * @param block The block to update. Can not be null.
-     * @param type  The new type. Can not be null.
-     */
-    void setBlockType(Block block, BlockType type);
-
-    /**
-     * @param items    The items to drop. Can not be null, but can be empty. Items can not be null.
-     * @param location The location to drop at. Can not be null.
-     * @return A list of ids of the dropped items. Never null, but can be empty.
-     */
-    List<UUID> dropItemsAt(List<Item> items, Location location);
-
-    void spoofBlock(Block fakeBlock, UUID playerId);
+    void spoofBlock(Block block, UUID playerId);
 
     void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch);
 
