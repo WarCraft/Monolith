@@ -219,7 +219,11 @@ class SpigotBlockMaterialMapper @Inject()(
           case WoodMaterial.SPRUCE   => Material.SPRUCE_BUTTON
         }
 
-      // TODO create Brick and EndStone block
+      case it: Brick => it.material match {
+        case BrickMaterial.BRICK            => Material.BRICKS
+        case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICKS
+        case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICKS
+      }
 
       case it: Door =>
         it.material match {
@@ -231,6 +235,11 @@ class SpigotBlockMaterialMapper @Inject()(
           case WoodMaterial.OAK      => Material.ACACIA_DOOR
           case WoodMaterial.SPRUCE   => Material.ACACIA_DOOR
         }
+
+      case it: EndStone => it.material match {
+        case EndStoneMaterial.END_STONE       => Material.END_STONE
+        case EndStoneMaterial.END_STONE_BRICK => Material.END_STONE_BRICKS
+      }
 
       case it: Fence =>
         it.material match {
@@ -264,19 +273,7 @@ class SpigotBlockMaterialMapper @Inject()(
           case IceMaterial.BLUE   => Material.BLUE_ICE
         }
 
-      case it: InfestedBlock => it.material match {
-        case StoneMaterial.STONE       => Material.INFESTED_STONE
-        case StoneMaterial.COBBLESTONE => Material.INFESTED_COBBLESTONE
-
-        case StoneMaterial.STONE_BRICK => stateAs[StoneState] match {
-          case StoneState.CHISELED => Material.INFESTED_CHISELED_STONE_BRICKS
-          case StoneState.CRACKED => Material.INFESTED_CRACKED_STONE_BRICKS
-          case StoneState.MOSSY => Material.INFESTED_MOSSY_STONE_BRICKS
-          case _: StoneState => Material.INFESTED_STONE_BRICKS
-        }
-      }
-
-      case it: Kelp =>
+      case it: Kelp => null // TODO
 
       case it: Leaves =>
         it.material match {
