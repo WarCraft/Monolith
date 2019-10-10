@@ -418,8 +418,9 @@ class SpigotBlockMapper @Inject()(
         Hopper(loc, dir, !enabled)
 
       // ICE
-      case Material.ICE | Material.BLUE_ICE | Material.PACKED_ICE =>
-        Ice(loc, materialAs[IceMaterial])
+      case Material.ICE | Material.BLUE_ICE | Material.PACKED_ICE |
+           Material.FROSTED_ICE =>
+        Ice(loc, variantAs[IceVariant])
 
       // INFESTED_STONE
       case Material.INFESTED_STONE | Material.INFESTED_COBBLESTONE |
@@ -427,7 +428,9 @@ class SpigotBlockMapper @Inject()(
           Material.INFESTED_CRACKED_STONE_BRICKS |
           Material.INFESTED_CHISELED_STONE_BRICKS |
           Material.INFESTED_MOSSY_STONE_BRICKS =>
-        InfestedBlock(loc, materialAs[InfestedMaterial])
+        val _material = materialAs[InfestedMaterial]
+        val _variant =  variantAs[InfestedVariant]
+        InfestedBlock(loc, _material, _variant)
 
       // JUKEBOX
       case Material.JUKEBOX =>

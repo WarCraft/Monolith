@@ -125,6 +125,12 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_OAK_SAPLING        => SaplingVariant.OAK
     case Material.POTTED_SPRUCE_SAPLING     => SaplingVariant.SPRUCE
 
+    // ICE
+    case Material.ICE         => IceVariant.NORMAL
+    case Material.BLUE_ICE    => IceVariant.BLUE
+    case Material.PACKED_ICE  => IceVariant.PACKED
+    case Material.FROSTED_ICE => IceVariant.FROSTED
+
     // INFESTED_BLOCK
     case Material.INFESTED_COBBLESTONE  => CobblestoneVariant.NORMAL
 
@@ -226,7 +232,7 @@ class SpigotBlockVariantMapper {
     case Air(_, AirVariant.NORMAL) => Material.AIR
     case Air(_, AirVariant.CAVE)   => Material.CAVE_AIR
     case Air(_, AirVariant.VOID)   => Material.VOID_AIR
-    // TODO what $is the diff between VOID_AIR and STRUCTURE_VOID?
+    // TODO what is the diff between VOID_AIR and STRUCTURE_VOID?
 
     case Anvil(_, AnvilVariant.NORMAL, _)  => Material.ANVIL
     case Anvil(_, AnvilVariant.CHIPPED, _) => Material.CHIPPED_ANVIL
@@ -355,6 +361,14 @@ class SpigotBlockVariantMapper {
       case StoneVariant.CRACKED  => Material.INFESTED_CRACKED_STONE_BRICKS
       case StoneVariant.MOSSY    => Material.INFESTED_MOSSY_STONE_BRICKS
       case                     _ => Material.INFESTED_STONE_BRICKS
+    }
+
+    // ICE
+    case Ice(_, variant) => variant match {
+      case IceVariant.NORMAL  => Material.ICE
+      case IceVariant.PACKED  => Material.PACKED_ICE
+      case IceVariant.BLUE    => Material.BLUE_ICE
+      case IceVariant.FROSTED => Material.FROSTED_ICE
     }
 
     // MOB_HEAD

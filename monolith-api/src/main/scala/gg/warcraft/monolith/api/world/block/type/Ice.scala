@@ -1,17 +1,17 @@
 package gg.warcraft.monolith.api.world.block.`type`
 
-import gg.warcraft.monolith.api.world.block.material.IceMaterial
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
+import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
+import gg.warcraft.monolith.api.world.block.variant.IceVariant
 
 case class Ice(
   location: BlockLocation,
-  material: IceMaterial
-) extends MaterialBlock[IceMaterial] {
+  variant: IceVariant
+) extends VariedBlock[IceVariant] {
   override val kind = BlockType.ICE
 
   /* Java interop */
 
   override def withLocation(loc: BlockLocation): Ice = copy(location = loc)
-  override def withMaterial(mat: IceMaterial): Ice = copy(material = mat)
+  override def withVariant(variant: IceVariant): Ice = copy(variant = variant)
 }
