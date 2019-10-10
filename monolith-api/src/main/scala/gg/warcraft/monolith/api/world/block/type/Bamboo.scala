@@ -9,7 +9,7 @@ case class Bamboo(
   location: BlockLocation,
   variant: BambooVariant,
   state: BambooState,
-  thick: Boolean // TODO this is equal to the state (age)
+  thick: Boolean
 ) extends VariedBlock[BambooVariant] with StatefulBlock[BambooState] {
   override val kind = BlockType.BAMBOO
 
@@ -21,5 +21,3 @@ case class Bamboo(
   override def withVariant(variant: BambooVariant): Bamboo = copy(variant = variant)
   override def withState(state: BambooState): Bamboo = copy(state = state)
 }
-
-// TODO just dont include stage in API?
