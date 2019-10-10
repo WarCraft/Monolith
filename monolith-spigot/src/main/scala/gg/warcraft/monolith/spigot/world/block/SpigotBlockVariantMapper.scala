@@ -125,6 +125,16 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_OAK_SAPLING        => SaplingVariant.OAK
     case Material.POTTED_SPRUCE_SAPLING     => SaplingVariant.SPRUCE
 
+    // INFESTED_BLOCK
+    case Material.INFESTED_COBBLESTONE  => CobblestoneVariant.NORMAL
+
+    case Material.INFESTED_STONE | Material.INFESTED_STONE_BRICKS =>
+      StoneVariant.NORMAL
+
+    case Material.INFESTED_CHISELED_STONE_BRICKS => StoneVariant.CHISELED
+    case Material.INFESTED_CRACKED_STONE_BRICKS => StoneVariant.CRACKED
+    case Material.INFESTED_MOSSY_STONE_BRICKS => StoneVariant.MOSSY
+
     // MOB_HEAD
     case it if it $is "CREEPER"         => MobHeadVariant.CREEPER
     case it if it $is "DRAGON"          => MobHeadVariant.DRAGON
@@ -332,6 +342,19 @@ class SpigotBlockVariantMapper {
       case FlowerVariant.RED_TULIP          => Material.RED_TULIP
       case FlowerVariant.WHITE_TULIP        => Material.WHITE_TULIP
       case FlowerVariant.WITHER_ROSE        => Material.WITHER_ROSE
+    }
+
+    // INFESTED_BLOCK
+    case InfestedBlock(_, CobblestoneMaterial.COBBLESTONE, _) =>
+      Material.INFESTED_COBBLESTONE
+
+    case InfestedBlock(_, StoneMaterial.STONE, _) => Material.INFESTED_STONE
+
+    case InfestedBlock(_, StoneMaterial.STONE_BRICK, variant) => variant match {
+      case StoneVariant.CHISELED => Material.INFESTED_CHISELED_STONE_BRICKS
+      case StoneVariant.CRACKED  => Material.INFESTED_CRACKED_STONE_BRICKS
+      case StoneVariant.MOSSY    => Material.INFESTED_MOSSY_STONE_BRICKS
+      case                     _ => Material.INFESTED_STONE_BRICKS
     }
 
     // MOB_HEAD

@@ -39,17 +39,13 @@ class SpigotBlockMaterialMapper @Inject()(
     case Material.BLUE_ICE   => IceMaterial.BLUE
     case Material.PACKED_ICE => IceMaterial.PACKED
 
+    // INFESTED_BLOCK
+    case it if it $is "INFESTED_COBBLESTONE" => CobblestoneMaterial.COBBLESTONE
+    case it if it $is "INFESTED_STONE_BRICK" => StoneMaterial.STONE_BRICK
+    case it if it $is "INFESTED_STONE" => StoneMaterial.STONE
+
     // IRON
     case Material.IRON_DOOR => IronMaterial.IRON
-
-    // INFESTED_BLOCK // TODO map in stateMapper
-    case Material.INFESTED_STONE        => StoneMaterial.STONE
-    case Material.INFESTED_COBBLESTONE  => StoneMaterial.COBBLESTONE
-    case Material.INFESTED_STONE_BRICKS |
-        Material.INFESTED_CHISELED_STONE_BRICKS |
-        Material.INFESTED_CRACKED_STONE_BRICKS |
-        Material.INFESTED_MOSSY_STONE_BRICKS =>
-      StoneMaterial.STONE_BRICK
 
     // PRISMARINE
     case it if it $is "DARK_PRISMARINE"  => PrismarineMaterial.DARK_PRISMARINE
