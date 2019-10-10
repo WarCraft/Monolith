@@ -3,6 +3,7 @@ package gg.warcraft.monolith.spigot.world.block
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.state._
+import org.bukkit.{Note => SpigotNote}
 import org.bukkit.Material
 import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
 
@@ -19,9 +20,12 @@ class SpigotBlockStateMapper {
       case Material.BAMBOO           => BambooState.valueOf(age)
       case Material.BEETROOTS        => BeetrootState.valueOf(age)
       case Material.CACTUS           => CactusState.valueOf(age)
+      case Material.CARROTS          => CarrotState.valueOf(age)
+      case Material.CAULDRON         => CauldronState.valueOf(level)
       case Material.CHORUS_FLOWER    => ChorusFlowerState.valueOf(age)
       case Material.COCOA            => CocoaState.valueOf(age)
       case Material.COMPOSTER        => ComposterState.valueOf(level)
+      case Material.FIRE             => FireState.valueOf(age)
       case Material.KELP_PLANT       => KelpState.valueOf(age)
       case Material.LAVA             => LavaState.valueOf(level)
       case Material.NETHER_WART      => NetherWartState.valueOf(age)
@@ -98,12 +102,31 @@ class SpigotBlockStateMapper {
     data match { case it: AnaloguePowerable => it.setPower(state) }
 
     block match {
+      case it: Cake =>
+        val cakeData = dataAs[SpigotCake]
+        cakeData.setBites(it.state.toInt)
+
+      case it: NoteBlock =>
+        val note = new SpigotNote(it.state.toInt)
+        val noteBlockData = dataAs[SpigotNoteBlock]
+        noteBlockData.setNote(note)
+
+      case it: Repeater =>
+        val repeaterData = dataAs[SpigotRepeater]
+        repeaterData.setDelay(it.state.toInt)
+
+      case it: Sapling =>
+        val saplingData = dataAs[SpigotSapling]
+        saplingData.setStage(it.state.toInt)
+
+      case it: SeaPickle =>
+        val seaPickleData = dataAs[SpigotSeaPickle]
+        seaPickleData.setPickles(it.state.toInt)
+
       case it: TurtleEgg =>
         val turtleEggData = dataAs[SpigotTurtleEgg]
         turtleEggData.setHatch(it.state.age.toInt)
         turtleEggData.setEggs(it.state.count.toInt)
-
-      // TODO continue for other StatefulBlocks
     }
   }
 }
