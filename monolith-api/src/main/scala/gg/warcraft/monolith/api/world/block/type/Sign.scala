@@ -5,18 +5,20 @@ import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material.WoodMaterial
 
 case class Sign(
-  lines: List[String],
   location: BlockLocation,
   material: WoodMaterial,
   direction: Option[BlockFace],
   rotation: Option[BlockRotation],
-  flooded: Boolean
+  flooded: Boolean,
+  lines: List[String],
+  editable: Boolean
 ) extends MaterialBlock[WoodMaterial] with DirectableBlock with RotatableBlock with FloodableBlock {
   override val kind = BlockType.SIGN
 
   /* Java interop */
 
   def withLines(lines: List[String]): Sign = copy(lines = lines.slice(0, 4))
+  def withEditable(editable: Boolean): Sign = copy(editable = editable)
 
   override def withLocation(loc: BlockLocation): Sign = copy(location = loc)
   override def withMaterial(mat: WoodMaterial): Sign = copy(material = mat)

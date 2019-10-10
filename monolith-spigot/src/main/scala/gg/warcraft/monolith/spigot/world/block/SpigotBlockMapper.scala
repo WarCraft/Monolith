@@ -631,15 +631,20 @@ class SpigotBlockMapper @Inject()(
       // SIGN
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
           Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
-        val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList // TODO keep as array? seem to be immutable
-        Sign(lines, loc, materialAs[WoodMaterial], Some(dir), None, flooded)
+        val _material = materialAs[WoodMaterial]
+        val sign = spigotState.asInstanceOf[SpigotSign]
+        val lines = sign.getLines.toList // TODO keep as array? seem to be immutable
+        val editable = sign.isEditable
+        Sign(loc, _material, Some(dir), None, flooded, lines, editable)
 
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN |
           Material.DARK_OAK_WALL_SIGN | Material.JUNGLE_WALL_SIGN |
           Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
-        val lines = spigotState.asInstanceOf[SpigotSign].getLines.toList
         val _material = materialAs[WoodMaterial]
-        Sign(lines, loc, _material, None, Some(rotation), flooded)
+        val sign = spigotState.asInstanceOf[SpigotSign]
+        val lines = sign.getLines.toList
+        val editable = sign.isEditable
+        Sign(loc, _material, None, Some(rotation), flooded, lines, editable)
 
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB |
@@ -868,8 +873,36 @@ class SpigotBlockMapper @Inject()(
     }
 
     // Set specific block data
+    def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
+
     block match { case it: StatefulBlock[_] => stateMapper.map(it, data) }
     block match { case it: VariedBlock[_]   => variantMapper.map(it, data) }
+
+    block match {
+      case BubbleColumn(_, drag) => dataAs[SpigotBubbleColumn].setDrag(drag)
+      case Hopper(_, _, powered) => dataAs[SpigotHopper].setEnabled(powered)
+      case Lantern(_, hanging)   => dataAs[SpigotLantern].setHanging(hanging)
+      case TNT(_, unstable)      => dataAs[SpigotTNT].setUnstable(unstable)
+
+      case Bamboo(_, _, _, thick) =>
+        val age = if (thick) 1 else 0
+        dataAs[SpigotBamboo].setAge(age)
+
+      case Campfire(_, _, _, _, signal) =>
+        dataAs[SpigotCampfire].setSignalFire(signal)
+
+      case CommandBlock(_, _, _, conditional) =>
+        dataAs[SpigotCommandBlock].setConditional(conditional)
+
+      case EndPortalFrame(_, _, eye) =>
+        dataAs[SpigotEndPortalFrame].setEye(eye)
+
+      case Piston(_, _, _, extended) =>
+        dataAs[SpigotPiston].setExtended(extended)
+
+      case Repeater(_, _, _, _, locked) =>
+        dataAs[SpigotRepeater].setLocked(locked)
+    }
 
     // Return block data object
     data
@@ -879,37 +912,10 @@ class SpigotBlockMapper @Inject()(
     def stateAs[T <: SpigotBlockState]: T = spigotState.asInstanceOf[T]
 
     block match {
-      case BubbleColumn(_, drag) => stateAs[SpigotBubbleColumn].setDrag(drag)
-      case Hopper(_, _, powered) => stateAs[SpigotHopper].setEnabled(powered)
-      case Lantern(_, hanging)   => stateAs[SpigotLantern].setHanging(hanging)
-      case TNT(_, unstable)      => stateAs[SpigotTNT].setUnstable(unstable)
-
-      case Bamboo(_, _, _, thick) =>
-        val age = if (thick) 1 else 0
-        stateAs[SpigotBamboo].setAge(age)
-
-      case Campfire(_, _, _, _, signal) =>
-        stateAs[SpigotCampfire].setSignalFire(signal)
-
-      case CommandBlock(_, _, _, conditional) =>
-        stateAs[SpigotCommandBlock].setConditional(conditional)
-
-      case EndPortalFrame(_, _, eye) =>
-        stateAs[SpigotEndPortalFrame].setEye(eye)
-
-      case Piston(_, _, _, extended) =>
-        stateAs[SpigotPiston].setExtended(extended)
-
-      case Repeater(_, _, _, _, locked) =>
-        stateAs[SpigotRepeater].setLocked(locked)
-
-      case sign: Sign =>
-        spigotState match { // TODO map isEditable
-          case state: SpigotSign =>
-            sign.lines.zipWithIndex foreach {
-              case (line, i) => state.setLine(i, line)
-            }
-        }
+      case Sign(_, _, _, _, _, lines, editable) =>
+        val sign = stateAs[SpigotSign]
+        lines.zipWithIndex foreach { case (line, i) => sign.setLine(i, line) }
+        sign.setEditable(editable)
     }
   }
 
