@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Material, Bukkit}
+import org.bukkit.{Bukkit, Material}
 import org.bukkit.block.data._
 import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
 import org.bukkit.block.data.`type`.Switch
@@ -432,7 +432,7 @@ class SpigotBlockMapper @Inject()(
           Material.INFESTED_CHISELED_STONE_BRICKS |
           Material.INFESTED_MOSSY_STONE_BRICKS =>
         val _material = materialAs[InfestedMaterial]
-        val _variant =  variantAs[InfestedVariant]
+        val _variant = variantAs[InfestedVariant]
         InfestedBlock(loc, _material, _variant)
 
       // JUKEBOX
@@ -875,14 +875,42 @@ class SpigotBlockMapper @Inject()(
     data
   }
 
-  def map(block: Block, spigotState: SpigotBlockState): Unit = block match {
-    case sign: Sign =>
-      spigotState match { // TODO map isEditable
-        case state: SpigotSign =>
-          sign.lines.zipWithIndex foreach {
-            case (line, i) => state.setLine(i, line)
-          }
-      }
+  def map(block: Block, spigotState: SpigotBlockState): Unit = {
+    def stateAs[T <: SpigotBlockState]: T = spigotState.asInstanceOf[T]
+
+    block match {
+      case BubbleColumn(_, drag) => stateAs[SpigotBubbleColumn].setDrag(drag)
+      case Hopper(_, _, powered) => stateAs[SpigotHopper].setEnabled(powered)
+      case Lantern(_, hanging)   => stateAs[SpigotLantern].setHanging(hanging)
+      case TNT(_, unstable)      => stateAs[SpigotTNT].setUnstable(unstable)
+
+      case Bamboo(_, _, _, thick) =>
+        val age = if (thick) 1 else 0
+        stateAs[SpigotBamboo].setAge(age)
+
+      case Campfire(_, _, _, _, signal) =>
+        stateAs[SpigotCampfire].setSignalFire(signal)
+
+      case CommandBlock(_, _, _, conditional) =>
+        stateAs[SpigotCommandBlock].setConditional(conditional)
+
+      case EndPortalFrame(_, _, eye) =>
+        stateAs[SpigotEndPortalFrame].setEye(eye)
+
+      case Piston(_, _, _, extended) =>
+        stateAs[SpigotPiston].setExtended(extended)
+
+      case Repeater(_, _, _, _, locked) =>
+        stateAs[SpigotRepeater].setLocked(locked)
+
+      case sign: Sign =>
+        spigotState match { // TODO map isEditable
+          case state: SpigotSign =>
+            sign.lines.zipWithIndex foreach {
+              case (line, i) => state.setLine(i, line)
+            }
+        }
+    }
   }
 
   def mapDoorHinge(hinge: SpigotDoorHinge): BlockHinge = hinge match {

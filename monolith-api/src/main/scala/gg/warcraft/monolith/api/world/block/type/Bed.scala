@@ -3,6 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
+// NOTE occupied is read-only in Spigot
 case class Bed(
   location: BlockLocation,
   color: BlockColor,
@@ -13,8 +14,6 @@ case class Bed(
   override val kind = BlockType.BED
 
   /* Java interop */
-
-  def withOccupied(occupied: Boolean): Bed = copy(occupied = occupied)
 
   override def withLocation(loc: BlockLocation): Bed = copy(location = loc)
   override def withColor(color: BlockColor): Bed = copy(color = color)

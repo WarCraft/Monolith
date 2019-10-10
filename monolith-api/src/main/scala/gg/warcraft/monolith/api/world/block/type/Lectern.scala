@@ -3,6 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, PowerableBlock }
 
+// NOTE book is read-only in Spigot
 case class Lectern(
   location: BlockLocation,
   direction: BlockFace,
@@ -12,8 +13,6 @@ case class Lectern(
   override val kind = BlockType.LECTERN
 
   /* Java interop */
-
-  def withBook(book: Boolean): Lectern = copy(book = book)
 
   override def withLocation(loc: BlockLocation): Lectern = copy(location = loc)
   override def withDirection(dir: BlockFace): Lectern = copy(direction = dir)
