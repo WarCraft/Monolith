@@ -110,12 +110,12 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_WITHER_ROSE        => FlowerVariant.WITHER_ROSE
     case Material.POTTED_LILY_OF_THE_VALLEY => FlowerVariant.LILY_OF_THE_VALLEY
 
-    case Material.POTTED_CACTUS             => null // TODO
-    case Material.POTTED_DEAD_BUSH          => null
-    case Material.POTTED_FERN               => null
-
     case Material.POTTED_BROWN_MUSHROOM     => MushroomVariant.BROWN
     case Material.POTTED_RED_MUSHROOM       => MushroomVariant.RED
+
+    case Material.POTTED_CACTUS             => PlantVariant.CACTUS
+    case Material.POTTED_DEAD_BUSH          => PlantVariant.DEAD_BUSH
+    case Material.POTTED_FERN               => PlantVariant.FERN
 
     case Material.POTTED_BAMBOO             => SaplingVariant.BAMBOO
     case Material.POTTED_ACACIA_SAPLING     => SaplingVariant.ACACIA
@@ -429,10 +429,12 @@ class SpigotBlockVariantMapper {
       case FlowerVariant.LILY_OF_THE_VALLEY =>
         Material.POTTED_LILY_OF_THE_VALLEY
 
-      // TODO cactus deadbush fern
-
       case MushroomVariant.BROWN => Material.POTTED_BROWN_MUSHROOM
       case MushroomVariant.RED   => Material.POTTED_RED_MUSHROOM
+
+      case PlantVariant.CACTUS    => Material.POTTED_CACTUS
+      case PlantVariant.DEAD_BUSH => Material.POTTED_DEAD_BUSH
+      case PlantVariant.FERN      => Material.POTTED_FERN
 
       case SaplingVariant.BAMBOO   => Material.POTTED_BAMBOO
       case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
