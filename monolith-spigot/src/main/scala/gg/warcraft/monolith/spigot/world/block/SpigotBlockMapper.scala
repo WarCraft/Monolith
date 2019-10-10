@@ -125,7 +125,7 @@ class SpigotBlockMapper @Inject()(
       case Material.LARGE_FERN          => Fern(loc, bisection, tall = true)
       case Material.FIRE                => Fire(loc)
       case Material.FLETCHING_TABLE     => FletchingTable(loc)
-      case Material.FROSTED_ICE         => Frost(loc)
+      case Material.FROSTED_ICE         => Frost(loc, stateAs[FrostState])
       case Material.FURNACE             => Furnace(loc, dir, lit)
       case Material.GLOWSTONE           => Glowstone(loc)
       case Material.GRASS_BLOCK         => GrassBlock(loc, snowy)
@@ -418,8 +418,7 @@ class SpigotBlockMapper @Inject()(
         Hopper(loc, dir, !enabled)
 
       // ICE
-      case Material.ICE | Material.BLUE_ICE | Material.PACKED_ICE |
-           Material.FROSTED_ICE =>
+      case Material.ICE | Material.BLUE_ICE | Material.PACKED_ICE =>
         Ice(loc, variantAs[IceVariant])
 
       // INFESTED_STONE

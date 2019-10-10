@@ -26,6 +26,7 @@ class SpigotBlockStateMapper {
       case Material.COCOA            => CocoaState.valueOf(age)
       case Material.COMPOSTER        => ComposterState.valueOf(level)
       case Material.FIRE             => FireState.valueOf(age)
+      case Material.FROSTED_ICE      => FrostState.valueOf(age)
       case Material.KELP_PLANT       => KelpState.valueOf(age)
       case Material.LAVA             => LavaState.valueOf(level)
       case Material.NETHER_WART      => NetherWartState.valueOf(age)

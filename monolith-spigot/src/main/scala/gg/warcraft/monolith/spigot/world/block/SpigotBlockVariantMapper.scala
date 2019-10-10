@@ -129,7 +129,6 @@ class SpigotBlockVariantMapper {
     case Material.ICE         => IceVariant.NORMAL
     case Material.BLUE_ICE    => IceVariant.BLUE
     case Material.PACKED_ICE  => IceVariant.PACKED
-    case Material.FROSTED_ICE => IceVariant.FROSTED
 
     // INFESTED_BLOCK
     case Material.INFESTED_COBBLESTONE  => CobblestoneVariant.NORMAL
@@ -368,7 +367,6 @@ class SpigotBlockVariantMapper {
       case IceVariant.NORMAL  => Material.ICE
       case IceVariant.PACKED  => Material.PACKED_ICE
       case IceVariant.BLUE    => Material.BLUE_ICE
-      case IceVariant.FROSTED => Material.FROSTED_ICE
     }
 
     // MOB_HEAD

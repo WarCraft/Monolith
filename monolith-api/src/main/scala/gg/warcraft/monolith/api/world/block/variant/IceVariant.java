@@ -6,5 +6,4 @@ public enum IceVariant implements BlockVariant {
     NORMAL,
     PACKED,
     BLUE,
-    FROSTED,
 }
