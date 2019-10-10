@@ -87,7 +87,6 @@ class SpigotBlockMapper @Inject()(
     def shapeAs[T <: BlockShape]: T = shape.asInstanceOf[T]
     def dataAs[T <: SpigotBlockData]: T = spigotData.asInstanceOf[T]
     block.getType match {
-      case Material.AIR                 => Air(loc, variantAs[AirVariant])
       case Material.BARREL              => Barrel(loc, dir, open)
       case Material.BARRIER             => Barrier(loc)
       case Material.BEACON              => Beacon(loc)
@@ -170,6 +169,13 @@ class SpigotBlockMapper @Inject()(
       case Material.VINE                => Vine(loc, extensions)
       case Material.WATER               => Water(loc, stateAs[WaterState])
       case Material.WHEAT               => Wheat(loc, stateAs[WheatState])
+
+      // AIR
+      case Material.AIR | Material.CAVE_AIR | Material.STRUCTURE_VOID =>
+        Air(loc, variantAs[AirVariant])
+
+      case Material.VOID_AIR =>
+        throw new IllegalArgumentException("Technical block")
 
       // ANVIL
       case Material.ANVIL | Material.CHIPPED_ANVIL | Material.DAMAGED_ANVIL =>

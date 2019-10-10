@@ -44,9 +44,9 @@ class SpigotBlockVariantMapper {
   private def compute(block: SpigotBlock): BlockVariant = block.getType match {
 
     // AIR
-    case Material.AIR      => AirVariant.NORMAL
-    case Material.CAVE_AIR => AirVariant.CAVE
-    case Material.VOID_AIR => AirVariant.VOID
+    case Material.AIR            => AirVariant.NORMAL
+    case Material.CAVE_AIR       => AirVariant.CAVE
+    case Material.STRUCTURE_VOID => AirVariant.VOID
 
     // ANVIL
     case Material.ANVIL         => AnvilVariant.NORMAL
@@ -228,19 +228,22 @@ class SpigotBlockVariantMapper {
 
   def map(block: VariedBlock[_ <: BlockVariant]): Material = block match {
 
+    // AIR
     case Air(_, AirVariant.NORMAL) => Material.AIR
     case Air(_, AirVariant.CAVE)   => Material.CAVE_AIR
-    case Air(_, AirVariant.VOID)   => Material.VOID_AIR
-    // TODO what is the diff between VOID_AIR and STRUCTURE_VOID?
+    case Air(_, AirVariant.VOID)   => Material.STRUCTURE_VOID
 
+    // ANVIL
     case Anvil(_, AnvilVariant.NORMAL, _)  => Material.ANVIL
     case Anvil(_, AnvilVariant.CHIPPED, _) => Material.CHIPPED_ANVIL
     case Anvil(_, AnvilVariant.DAMAGED, _) => Material.DAMAGED_ANVIL
 
+    // CHEST
     case Chest(_, ChestVariant.NORMAL, _)  => Material.CHEST
     case Chest(_, ChestVariant.ENDER, _)   => Material.ENDER_CHEST
     case Chest(_, ChestVariant.TRAPPED, _) => Material.TRAPPED_CHEST
 
+    // COBBLESTONE
     case Cobblestone(_, CobblestoneVariant.NORMAL) => Material.COBBLESTONE
     case Cobblestone(_, CobblestoneVariant.MOSSY)  => Material.MOSSY_COBBLESTONE
 
