@@ -35,7 +35,7 @@ public class SpigotItemMapper {
             return null;
         }
 
-        ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, skull.getStackSize(), (short) skull.getDamage(),
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD, skull.getStackSize(), (short) skull.getDamage(),
                 (byte) SkullType.PLAYER.ordinal());
         SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
         if (skull.getName() != null) {

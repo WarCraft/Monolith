@@ -258,17 +258,17 @@ public class SpigotWorldEventMapper implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onChunkUnloadEvent(ChunkUnloadEvent event) {
+    public void onChunkUnloadEvent(ChunkUnloadEvent event) { // TODO chunk events can no longer be cancelled
         Chunk chunk = event.getChunk();
-        ChunkPreUnloadEvent preUnloadEvent = new SimpleChunkPreUnloadEvent(chunk.getX(), chunk.getZ(), event.isCancelled());
+        ChunkPreUnloadEvent preUnloadEvent = new SimpleChunkPreUnloadEvent(chunk.getX(), chunk.getZ(), false);
         eventService.publish(preUnloadEvent);
-        if (preUnloadEvent.isExplicitlyAllowed()) {
-            event.setCancelled(false);
-            return;
-        } else if (preUnloadEvent.isCancelled()) {
-            event.setCancelled(true);
-            return;
-        }
+//        if (preUnloadEvent.isExplicitlyAllowed()) {
+//            event.setCancelled(false);
+//            return;
+//        } else if (preUnloadEvent.isCancelled()) {
+//            event.setCancelled(true);
+//            return;
+//        }
 
         boolean cancelled = false;
         for (Entity entity : chunk.getEntities()) {
@@ -281,9 +281,9 @@ public class SpigotWorldEventMapper implements Listener {
                 break;
             }
         }
-        if (cancelled) {
-            event.setCancelled(true);
-        }
+//        if (cancelled) {
+//            event.setCancelled(true);
+//        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
