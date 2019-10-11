@@ -261,6 +261,13 @@ class SpigotBlockVariantMapper {
     // COMPARATOR
     case _: Comparator => Material.COMPARATOR
 
+    // COMMAND_BLOCK
+    case CommandBlock(_, variant, _, _) => variant match {
+      case CommandBlockVariant.NORMAL    => Material.COMMAND_BLOCK
+      case CommandBlockVariant.CHAIN     => Material.CHAIN_COMMAND_BLOCK
+      case CommandBlockVariant.REPEATING => Material.REPEATING_COMMAND_BLOCK
+    }
+
     // CORAL
     case Coral(_, CoralVariant.BRAIN, _)  => Material.BRAIN_CORAL
     case Coral(_, CoralVariant.BUBBLE, _) => Material.BUBBLE_CORAL
@@ -448,7 +455,7 @@ class SpigotBlockVariantMapper {
       case SandstoneVariant.SMOOTH   => Material.SMOOTH_RED_SANDSTONE
     }
 
-    // SAPLING
+    // SAPLING TODO
 
     // STONE
     case Stone(_, StoneMaterial.STONE, variant) => variant match {

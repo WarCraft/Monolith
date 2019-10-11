@@ -118,7 +118,6 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Clay             => Material.CLAY
     case _: Cobweb           => Material.COBWEB
     case _: Cocoa            => Material.COCOA
-    case _: CommandBlock     => Material.COMMAND_BLOCK
     case _: Comparator       => Material.COMPARATOR
     case _: Composter        => Material.COMPOSTER
     case _: Conduit          => Material.CONDUIT
