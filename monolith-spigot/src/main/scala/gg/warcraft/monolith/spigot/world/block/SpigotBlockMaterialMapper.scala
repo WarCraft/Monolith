@@ -5,6 +5,7 @@ import java.util
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.`type`._
 import gg.warcraft.monolith.api.world.block.material._
+import gg.warcraft.monolith.api.world.block.state.KelpState
 import javax.inject.Inject
 import org.bukkit.Material
 
@@ -254,7 +255,9 @@ class SpigotBlockMaterialMapper @Inject()(
 
     case it: Grass => if (it.tall) Material.TALL_GRASS else Material.GRASS
 
-    case it: Kelp => null // TODO
+    case it: Kelp =>
+      if(it.state == KelpState.AGE_25) Material.KELP_PLANT
+      else Material.KELP
 
     case it: Leaves =>
       it.material match {

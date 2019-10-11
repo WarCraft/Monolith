@@ -134,7 +134,6 @@ class SpigotBlockMapper @Inject()(
       case Material.HAY_BLOCK           => HayBale(loc, orientation)
       case Material.IRON_BARS           => IronBars(loc, extensions, flooded)
       case Material.JIGSAW              => Jigsaw(loc, dir)
-      case Material.KELP_PLANT          => Kelp(loc, stateAs[KelpState])
       case Material.LADDER              => Ladder(loc, dir, flooded)
       case Material.LAVA                => Lava(loc, stateAs[LavaState])
       case Material.LEVER               => Lever(loc, dir, attached, powered)
@@ -439,6 +438,10 @@ class SpigotBlockMapper @Inject()(
       case Material.JUKEBOX =>
         val record = dataAs[SpigotJukebox].hasRecord
         Jukebox(loc, record)
+
+      // KELP
+      case Material.KELP       => Kelp(loc, stateAs[KelpState])
+      case Material.KELP_PLANT => Kelp(loc, KelpState.AGE_25)
 
       // LANTERN
       case Material.LANTERN =>
