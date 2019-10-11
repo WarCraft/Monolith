@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.FrostState
 
-case class Frost(
+final case class Frost(
   location: BlockLocation,
   state: FrostState
 ) extends StatefulBlock[FrostState] {

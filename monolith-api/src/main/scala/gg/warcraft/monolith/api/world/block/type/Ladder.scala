@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, FloodableBlock }
 
-case class Ladder(
+final case class Ladder(
   location: BlockLocation,
   direction: BlockFace,
   flooded: Boolean

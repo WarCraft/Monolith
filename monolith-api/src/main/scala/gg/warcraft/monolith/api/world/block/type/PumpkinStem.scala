@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectableBlock, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.PumpkinStemState
 
-case class PumpkinStem(
+final case class PumpkinStem(
   location: BlockLocation,
   state: PumpkinStemState,
   direction: Option[BlockFace]

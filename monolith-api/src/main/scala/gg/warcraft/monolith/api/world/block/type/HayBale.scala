@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockOrientation, BlockType, OrientedBlock }
 
-case class HayBale(
+final case class HayBale(
   location: BlockLocation,
   orientation: BlockOrientation
 ) extends OrientedBlock {

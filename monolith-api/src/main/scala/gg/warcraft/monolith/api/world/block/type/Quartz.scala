@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.QuartzVariant
 
-case class Quartz(
+final case class Quartz(
   location: BlockLocation,
   variant: QuartzVariant
 ) extends VariedBlock[QuartzVariant] {

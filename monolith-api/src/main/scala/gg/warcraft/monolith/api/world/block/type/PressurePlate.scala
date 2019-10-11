@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, PowerableBlock, PressurePlateMaterial }
 
-case class PressurePlate(
+final case class PressurePlate(
   location: BlockLocation,
   material: PressurePlateMaterial,
   powered: Boolean

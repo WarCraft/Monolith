@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock }
 
 // TODO add attachment val (NOTE this one is different for Bells from attachedTo)
-case class Bell(
+final case class Bell(
   location: BlockLocation,
   direction: BlockFace,
 ) extends DirectedBlock {

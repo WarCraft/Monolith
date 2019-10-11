@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant.MobHeadVariant
 
-case class MobHead(
+final case class MobHead(
   location: BlockLocation,
   variant: MobHeadVariant,
   direction: Option[BlockFace],

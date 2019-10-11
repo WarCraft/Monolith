@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, FloodableBlock, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.SeaPickleState
 
-case class SeaPickle(
+final case class SeaPickle(
   location: BlockLocation,
   state: SeaPickleState,
   flooded: Boolean

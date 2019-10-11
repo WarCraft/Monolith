@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.AnvilVariant
 
-case class Anvil(
+final case class Anvil(
   location: BlockLocation,
   variant: AnvilVariant,
   direction: BlockFace

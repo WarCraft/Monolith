@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
 import gg.warcraft.monolith.api.world.block.material.PrismarineMaterial
 import gg.warcraft.monolith.api.world.BlockLocation
 
-case class Prismarine(
+final case class Prismarine(
   location: BlockLocation,
   material: PrismarineMaterial
 ) extends MaterialBlock[PrismarineMaterial] {

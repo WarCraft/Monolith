@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.CakeState
 
-case class Cake(
+final case class Cake(
   location: BlockLocation,
   state: CakeState
 ) extends StatefulBlock[CakeState] {

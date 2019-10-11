@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.shape.StairsShape
 
-case class Stairs(
+final case class Stairs(
     location: BlockLocation,
     material: StairsMaterial,
     variant: Option[StairsVariant],

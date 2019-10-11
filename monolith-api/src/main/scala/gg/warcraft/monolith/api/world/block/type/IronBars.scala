@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, ExtendableBlock, FloodableBlock }
 
-case class IronBars(
+final case class IronBars(
   location: BlockLocation,
   extensions: Set[BlockFace],
   flooded: Boolean

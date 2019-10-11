@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
 // NOTE occupied is read-only in Spigot
-case class Bed(
+final case class Bed(
   location: BlockLocation,
   color: BlockColor,
   direction: BlockFace,

@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, VariedBl
 import gg.warcraft.monolith.api.world.block.material.StoniteMaterial
 import gg.warcraft.monolith.api.world.block.variant.StoniteVariant
 
-case class Stonite(
+final case class Stonite(
   location: BlockLocation,
   material: StoniteMaterial,
   variant: StoniteVariant

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.CactusState
 
-case class Cactus(
+final case class Cactus(
   location: BlockLocation,
   state: CactusState
 ) extends StatefulBlock[CactusState] {

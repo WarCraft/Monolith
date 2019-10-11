@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.MushroomVariant
 
-case class Mushroom(
+final case class Mushroom(
   location: BlockLocation,
   variant: MushroomVariant
 ) extends VariedBlock[MushroomVariant] {

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.IceVariant
 
-case class Ice(
+final case class Ice(
   location: BlockLocation,
   variant: IceVariant
 ) extends VariedBlock[IceVariant] {

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.BeetrootState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class Beetroots(
+final case class Beetroots(
   location: BlockLocation,
   state: BeetrootState
 ) extends StatefulBlock[BeetrootState] {

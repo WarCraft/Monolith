@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectableBlock, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.MelonStemState
 
-case class MelonStem(
+final case class MelonStem(
   location: BlockLocation,
   state: MelonStemState,
   direction: Option[BlockFace]

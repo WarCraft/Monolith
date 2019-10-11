@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectableBlock, LightableBlock }
 
-case class Pumpkin(
+final case class Pumpkin(
   location: BlockLocation,
   direction: Option[BlockFace],
   lit: Boolean,

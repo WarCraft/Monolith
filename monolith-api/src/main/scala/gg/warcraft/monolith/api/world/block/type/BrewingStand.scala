@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 
 // TODO add val which denotes which vials are filled
-case class BrewingStand(location: BlockLocation) extends Block {
+final case class BrewingStand(location: BlockLocation) extends Block {
 
   /* Java interop */
 

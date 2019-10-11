@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.CoralVariant
 
-case class CoralBlock(
+final case class CoralBlock(
   location: BlockLocation,
   variant: CoralVariant
 ) extends VariedBlock[CoralVariant] {

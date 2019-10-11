@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 import gg.warcraft.monolith.api.world.BlockLocation
 
-case class SoulSand(
+final case class SoulSand(
   location: BlockLocation,
 ) extends Block {
 

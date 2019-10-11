@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock, VariedBlock }
 import gg.warcraft.monolith.api.world.block.state.WeightedPressurePlateState
 
-case class WeightedPressurePlate(
+final case class WeightedPressurePlate(
   location: BlockLocation,
   variant: WeightedPressurePlateVariant,
   state: WeightedPressurePlateState

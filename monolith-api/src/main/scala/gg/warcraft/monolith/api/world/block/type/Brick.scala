@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
 import gg.warcraft.monolith.api.world.block.material.BrickMaterial
 
-case class Brick(
+final case class Brick(
   location: BlockLocation,
   material: BrickMaterial
 ) extends MaterialBlock[BrickMaterial] {

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.variant.CommandBlockVariant
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, VariedBlock }
 
-case class CommandBlock(
+final case class CommandBlock(
   location: BlockLocation,
   variant: CommandBlockVariant,
   direction: BlockFace,

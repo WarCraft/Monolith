@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.SugarCaneState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class SugarCane(
+final case class SugarCane(
   location: BlockLocation,
   state: SugarCaneState
 ) extends StatefulBlock[SugarCaneState] {

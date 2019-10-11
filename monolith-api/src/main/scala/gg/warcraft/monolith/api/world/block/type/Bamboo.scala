@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.BambooVariant
 
-case class Bamboo(
+final case class Bamboo(
   location: BlockLocation,
   variant: BambooVariant,
   state: BambooState,

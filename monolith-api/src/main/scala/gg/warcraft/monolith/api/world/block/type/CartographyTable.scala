@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 
-case class CartographyTable(location: BlockLocation) extends Block {
+final case class CartographyTable(location: BlockLocation) extends Block {
 
   /* Java interop */
 

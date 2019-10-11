@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.StructureBlockVariant
 
-case class StructureBlock(
+final case class StructureBlock(
   location: BlockLocation,
   variant: StructureBlockVariant
 ) extends VariedBlock[StructureBlockVariant] {

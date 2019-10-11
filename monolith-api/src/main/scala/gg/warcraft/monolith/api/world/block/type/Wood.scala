@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
 import gg.warcraft.monolith.api.world.block.material.WoodMaterial
 
-case class Wood(
+final case class Wood(
   location: BlockLocation,
   material: WoodMaterial,
   stripped: Boolean

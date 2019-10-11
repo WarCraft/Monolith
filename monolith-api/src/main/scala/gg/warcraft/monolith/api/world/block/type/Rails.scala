@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, PowerableBlock, ShapedB
 import gg.warcraft.monolith.api.world.block.shape.RailsShape
 import gg.warcraft.monolith.api.world.block.variant.RailsVariant
 
-case class Rails(
+final case class Rails(
   location: BlockLocation,
   variant: RailsVariant,
   shape: RailsShape,

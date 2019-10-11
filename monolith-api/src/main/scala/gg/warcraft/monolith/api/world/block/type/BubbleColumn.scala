@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 
-case class BubbleColumn(
+final case class BubbleColumn(
   location: BlockLocation,
   drag: Boolean
 ) extends Block {

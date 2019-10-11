@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, LightableBlock }
 import gg.warcraft.monolith.api.world.BlockLocation
 
-case class Furnace(
+final case class Furnace(
   location: BlockLocation,
   direction: BlockFace,
   lit: Boolean

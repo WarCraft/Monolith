@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.CocoaState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, StatefulBlock }
 
-case class Cocoa(
+final case class Cocoa(
   location: BlockLocation,
   state: CocoaState,
   direction: BlockFace

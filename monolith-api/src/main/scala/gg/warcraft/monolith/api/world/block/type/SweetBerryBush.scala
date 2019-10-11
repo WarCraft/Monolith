@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.SweetBerryState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class SweetBerryBush(
+final case class SweetBerryBush(
   location: BlockLocation,
   state: SweetBerryState
 ) extends StatefulBlock[SweetBerryState] {

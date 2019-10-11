@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockColor, BlockType, ColorableBlock }
 
-case class ShulkerBox(
+final case class ShulkerBox(
   location: BlockLocation,
   color: Option[BlockColor]
 ) extends ColorableBlock {

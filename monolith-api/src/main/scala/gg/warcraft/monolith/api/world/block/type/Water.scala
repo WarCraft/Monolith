@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
 // TODO add falling: Boolean
-case class Water(
+final case class Water(
   location: BlockLocation,
   state: WaterState
 ) extends StatefulBlock[WaterState] {

@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.LavaState
 
 // TODO add falling: Boolean
-case class Lava(
+final case class Lava(
   location: BlockLocation,
   state: LavaState
 ) extends StatefulBlock[LavaState] {

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 import gg.warcraft.monolith.api.world.BlockLocation
 
-case class Gravel(location: BlockLocation) extends Block {
+final case class Gravel(location: BlockLocation) extends Block {
 
   /* Java interop */
 

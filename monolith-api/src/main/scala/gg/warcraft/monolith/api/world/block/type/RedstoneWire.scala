@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.RedstoneWireState
 
 // TODO add NESW connections
-case class RedstoneWire(
+final case class RedstoneWire(
   location: BlockLocation,
   state: RedstoneWireState
 ) extends StatefulBlock[RedstoneWireState] {

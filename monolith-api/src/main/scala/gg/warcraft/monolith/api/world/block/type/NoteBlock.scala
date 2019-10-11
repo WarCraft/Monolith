@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, PowerableBlock, Statefu
 import gg.warcraft.monolith.api.world.block.state.NoteBlockState
 import gg.warcraft.monolith.api.world.block.variant.NoteBlockVariant
 
-case class NoteBlock(
+final case class NoteBlock(
   location: BlockLocation,
   variant: NoteBlockVariant,
   state: NoteBlockState,

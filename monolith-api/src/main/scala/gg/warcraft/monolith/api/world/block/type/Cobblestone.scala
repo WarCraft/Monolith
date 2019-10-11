@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.CobblestoneVariant
 
-case class Cobblestone(
+final case class Cobblestone(
   location: BlockLocation,
   variant: CobblestoneVariant
 ) extends VariedBlock[CobblestoneVariant] {

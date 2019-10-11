@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 
 // TODO add wetness state
-case class Farmland(location: BlockLocation) extends Block {
+final case class Farmland(location: BlockLocation) extends Block {
 
   /* Java interop */
 

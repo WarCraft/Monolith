@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, ExtendableBlock }
 
-case class ChorusPlant(
+final case class ChorusPlant(
   location: BlockLocation,
   extensions: Set[BlockFace]
 ) extends ExtendableBlock {

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 
 // TODO add size of layer
-case class Snow(location: BlockLocation) extends Block {
+final case class Snow(location: BlockLocation) extends Block {
 
   /* Java interop */
 

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, SnowableBlock }
 
-case class Mycelium(
+final case class Mycelium(
   location: BlockLocation,
   snowy: Boolean
 ) extends SnowableBlock {

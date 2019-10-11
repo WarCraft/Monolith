@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
 import gg.warcraft.monolith.api.world.block.material.WoodMaterial
 
-case class Planks(
+final case class Planks(
   location: BlockLocation,
   material: WoodMaterial
 ) extends MaterialBlock[WoodMaterial] {

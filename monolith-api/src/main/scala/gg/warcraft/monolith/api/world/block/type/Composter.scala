@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.ComposterState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class Composter(
+final case class Composter(
   location: BlockLocation,
   state: ComposterState
 ) extends StatefulBlock[ComposterState] {

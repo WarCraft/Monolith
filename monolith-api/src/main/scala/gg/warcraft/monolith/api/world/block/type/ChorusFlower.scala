@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.ChorusFlowerState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class ChorusFlower(
+final case class ChorusFlower(
   location: BlockLocation,
   state: ChorusFlowerState
 ) extends StatefulBlock[ChorusFlowerState] {

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock }
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.material.SandMaterial
 
-case class Sand(
+final case class Sand(
   location: BlockLocation,
   material: SandMaterial
 ) extends MaterialBlock[SandMaterial] {

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.variant.AirVariant
 
-case class Air(
+final case class Air(
   location: BlockLocation,
   variant: AirVariant
 ) extends VariedBlock[AirVariant] {

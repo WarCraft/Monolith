@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.NetherWartState
 
-case class NetherWarts(
+final case class NetherWarts(
   location: BlockLocation,
   state: NetherWartState
 ) extends StatefulBlock[NetherWartState] {

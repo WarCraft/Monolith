@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant.ComparatorVariant
 
-case class Comparator(
+final case class Comparator(
   location: BlockLocation,
   variant: ComparatorVariant,
   direction: BlockFace,

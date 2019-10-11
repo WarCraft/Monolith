@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, PowerableBlock }
 
-case class Observer(
+final case class Observer(
   location: BlockLocation,
   direction: BlockFace,
   powered: Boolean

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.block.{ BlockType, FlowerPotVariant, VariableBlock }
 import gg.warcraft.monolith.api.world.BlockLocation
 
-case class FlowerPot(
+final case class FlowerPot(
   location: BlockLocation,
   variant: Option[FlowerPotVariant],
 ) extends VariableBlock[FlowerPotVariant] {

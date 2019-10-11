@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock }
 
-case class EndPortalFrame(
+final case class EndPortalFrame(
   location: BlockLocation,
   direction: BlockFace,
   eye: Boolean

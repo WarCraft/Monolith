@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.TurtleEggState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class TurtleEgg(
+final case class TurtleEgg(
   location: BlockLocation,
   state: TurtleEggState,
 ) extends StatefulBlock[TurtleEggState] {

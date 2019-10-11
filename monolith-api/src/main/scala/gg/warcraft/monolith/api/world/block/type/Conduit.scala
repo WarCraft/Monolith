@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.block.{ BlockType, FloodableBlock }
 import gg.warcraft.monolith.api.world.BlockLocation
 
-case class Conduit(
+final case class Conduit(
   location: BlockLocation,
   flooded: Boolean
 ) extends FloodableBlock {

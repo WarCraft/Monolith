@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.RepeaterState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
-case class Repeater(
+final case class Repeater(
   location: BlockLocation,
   state: RepeaterState,
   direction: BlockFace,

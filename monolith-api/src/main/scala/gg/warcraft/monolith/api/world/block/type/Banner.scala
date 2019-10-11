@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
-case class Banner(
+final case class Banner(
   location: BlockLocation,
   color: BlockColor,
   rotation: Option[BlockRotation],

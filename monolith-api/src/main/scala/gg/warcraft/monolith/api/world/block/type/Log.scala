@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockOrientation, BlockType, MaterialBlock, OrientedBlock }
 import gg.warcraft.monolith.api.world.block.material.WoodMaterial
 
-case class Log(
+final case class Log(
   location: BlockLocation,
   material: WoodMaterial,
   orientation: BlockOrientation,

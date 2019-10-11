@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, StickyBlock }
 
-case class Piston(
+final case class Piston(
   location: BlockLocation,
   direction: BlockFace,
   sticky: Boolean,

@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.world.block.state.SaplingState
 import gg.warcraft.monolith.api.world.block.variant.SaplingVariant
 
 // TODO add growth stage state
-case class Sapling(
+final case class Sapling(
   location: BlockLocation,
   variant: SaplingVariant,
   state: SaplingState

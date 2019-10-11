@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.MushroomBlockVariant
 
 // TODO multi-orientations
-case class MushroomBlock(
+final case class MushroomBlock(
   location: BlockLocation,
   variant: MushroomBlockVariant
 ) extends VariedBlock[MushroomBlockVariant] {

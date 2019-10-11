@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
-case class GlassPane(
+final case class GlassPane(
   location: BlockLocation,
   color: Option[BlockColor],
   extensions: Set[BlockFace],

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BisectedBlock, BlockBisection, BlockType }
 
-case class Seagrass(
+final case class Seagrass(
   location: BlockLocation,
   section: BlockBisection,
   tall: Boolean

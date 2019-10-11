@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.state.WheatState
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class Wheat(
+final case class Wheat(
   location: BlockLocation,
   state: WheatState
 ) extends StatefulBlock[WheatState] {

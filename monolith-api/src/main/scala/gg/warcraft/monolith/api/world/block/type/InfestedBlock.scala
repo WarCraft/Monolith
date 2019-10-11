@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, InfestedMaterial, InfestedVariant, MaterialBlock, VariedBlock }
 
-case class InfestedBlock(
+final case class InfestedBlock(
   location: BlockLocation,
   material: InfestedMaterial,
   variant: InfestedVariant

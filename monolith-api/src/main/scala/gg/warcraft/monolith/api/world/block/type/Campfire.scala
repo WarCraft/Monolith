@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
-case class Campfire(
+final case class Campfire(
   location: BlockLocation,
   direction: BlockFace,
   flooded: Boolean,

@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.variant.CoralVariant
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, FloodableBlock, VariedBlock }
 
-case class Coral(
+final case class Coral(
   location: BlockLocation,
   variant: CoralVariant,
   flooded: Boolean

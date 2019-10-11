@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material.WoodMaterial
 
-case class Sign(
+final case class Sign(
   location: BlockLocation,
   material: WoodMaterial,
   direction: Option[BlockFace],

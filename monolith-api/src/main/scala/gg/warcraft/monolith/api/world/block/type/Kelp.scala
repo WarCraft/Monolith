@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 import gg.warcraft.monolith.api.world.block.state.KelpState
 
-case class Kelp(
+final case class Kelp(
   location: BlockLocation,
   state: KelpState
 ) extends StatefulBlock[KelpState] {

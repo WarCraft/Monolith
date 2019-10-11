@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockColor, BlockType, ColoredBlock }
 
-case class GlazedTerracotta(
+final case class GlazedTerracotta(
   location: BlockLocation,
   color: BlockColor
 ) extends ColoredBlock {

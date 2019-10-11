@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant.CoralVariant
 
-case class CoralFan(
+final case class CoralFan(
   location: BlockLocation,
   variant: CoralVariant,
   direction: Option[BlockFace],

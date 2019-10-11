@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
-case class Button(
+final case class Button(
   location: BlockLocation,
   material: ButtonMaterial,
   direction: BlockFace,

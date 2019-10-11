@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockFace, BlockType, DirectedBlock, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.ChestVariant
 
-case class Chest(
+final case class Chest(
   location: BlockLocation,
   variant: ChestVariant,
   direction: BlockFace

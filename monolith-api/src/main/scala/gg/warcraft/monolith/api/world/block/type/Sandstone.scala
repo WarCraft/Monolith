@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.world.block.{ BlockType, MaterialBlock, VariedBl
 import gg.warcraft.monolith.api.world.block.material.SandstoneMaterial
 import gg.warcraft.monolith.api.world.block.variant.SandstoneVariant
 
-case class Sandstone(
+final case class Sandstone(
   location: BlockLocation,
   material: SandstoneMaterial,
   variant: SandstoneVariant

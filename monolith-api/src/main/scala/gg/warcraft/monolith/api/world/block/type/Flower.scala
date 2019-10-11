@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BisectedBlock, BlockBisection, BlockType, VariedBlock }
 import gg.warcraft.monolith.api.world.block.variant.FlowerVariant
 
-case class Flower(
+final case class Flower(
   location: BlockLocation,
   variant: FlowerVariant,
   section: BlockBisection,

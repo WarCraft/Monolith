@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.`type`
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block._
 
-case class Fence(
+final case class Fence(
   location: BlockLocation,
   material: FenceMaterial,
   extensions: Set[BlockFace],

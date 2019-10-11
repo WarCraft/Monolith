@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.block.state.CauldronState
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ BlockType, StatefulBlock }
 
-case class Cauldron(
+final case class Cauldron(
   location: BlockLocation,
   state: CauldronState
 ) extends StatefulBlock[CauldronState] {
