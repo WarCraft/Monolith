@@ -8,9 +8,10 @@ case class Smoker(
   direction: BlockFace,
   lit: Boolean
 ) extends DirectedBlock with LightableBlock {
-  override val kind = BlockType.SMOKER
 
   /* Java interop */
+
+  override val `type` = BlockType.SMOKER
 
   override def withLocation(loc: BlockLocation): Smoker = copy(location = loc)
   override def withDirection(dir: BlockFace): Smoker = copy(direction = dir)

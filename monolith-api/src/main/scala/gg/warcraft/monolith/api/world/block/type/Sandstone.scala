@@ -10,9 +10,10 @@ case class Sandstone(
   material: SandstoneMaterial,
   variant: SandstoneVariant
 ) extends MaterialBlock[SandstoneMaterial] with VariedBlock[SandstoneVariant] {
-  override val kind = BlockType.SANDSTONE
 
   /* Java interop */
+
+  override val `type` = BlockType.SANDSTONE
 
   override def withLocation(loc: BlockLocation): Sandstone = copy(location = loc)
   override def withMaterial(mat: SandstoneMaterial): Sandstone = copy(material = mat)

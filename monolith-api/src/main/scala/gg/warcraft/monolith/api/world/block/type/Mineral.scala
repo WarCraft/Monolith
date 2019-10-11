@@ -7,9 +7,10 @@ case class Mineral(
   location: BlockLocation,
   material: MineralMaterial
 ) extends MaterialBlock[MineralMaterial] {
-  override val kind = BlockType.MINERAL
 
   /* Java interop */
+
+  override val `type` = BlockType.MINERAL
 
   override def withLocation(loc: BlockLocation): Mineral = copy(location = loc)
   override def withMaterial(mat: MineralMaterial): Mineral = copy(material = mat)

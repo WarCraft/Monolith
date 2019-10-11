@@ -8,9 +8,10 @@ case class Dropper(
   direction: BlockFace,
   powered: Boolean
 ) extends DirectedBlock with PowerableBlock {
-  override val kind = BlockType.DROPPER
 
   /* Java interop */
+
+  override val `type` = BlockType.DROPPER
 
   override def withLocation(loc: BlockLocation): Dropper = copy(location = loc)
   override def withDirection(dir: BlockFace): Dropper = copy(direction = dir)

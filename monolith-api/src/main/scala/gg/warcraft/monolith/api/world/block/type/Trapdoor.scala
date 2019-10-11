@@ -13,9 +13,10 @@ case class Trapdoor(
   open: Boolean
 ) extends MaterialBlock[TrapdoorMaterial] with DirectedBlock with BisectedBlock
   with PowerableBlock with FloodableBlock with OpenableBlock {
-  override val kind = BlockType.TRAPDOOR
 
   /* Java interop */
+
+  override val `type` = BlockType.TRAPDOOR
 
   override def withLocation(loc: BlockLocation): Trapdoor = copy(location = loc)
   override def withMaterial(mat: TrapdoorMaterial): Trapdoor = copy(material = mat)

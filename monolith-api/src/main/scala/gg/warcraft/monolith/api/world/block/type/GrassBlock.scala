@@ -7,9 +7,10 @@ case class GrassBlock(
   location: BlockLocation,
   snowy: Boolean
 ) extends SnowableBlock {
-  override val kind = BlockType.GRASS_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.GRASS_BLOCK
 
   override def withLocation(loc: BlockLocation): GrassBlock = copy(location = loc)
   override def withSnowy(snowy: Boolean): GrassBlock = copy(snowy = snowy)

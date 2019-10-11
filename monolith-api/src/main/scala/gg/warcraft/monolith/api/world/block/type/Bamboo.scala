@@ -11,9 +11,10 @@ case class Bamboo(
   state: BambooState,
   thick: Boolean
 ) extends VariedBlock[BambooVariant] with StatefulBlock[BambooState] {
-  override val kind = BlockType.BAMBOO
 
   /* Java interop */
+
+  override val `type` = BlockType.BAMBOO
 
   def withThick(thick: Boolean): Bamboo = copy(thick = thick)
 

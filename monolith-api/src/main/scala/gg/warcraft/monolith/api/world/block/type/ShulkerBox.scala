@@ -7,9 +7,10 @@ case class ShulkerBox(
   location: BlockLocation,
   color: Option[BlockColor]
 ) extends ColorableBlock {
-  override val kind = BlockType.SHULKER_BOX
 
   /* Java interop */
+
+  override val `type` = BlockType.SHULKER_BOX
 
   override def withLocation(loc: BlockLocation): ShulkerBox = copy(location = loc)
   override def withColor(color: Option[BlockColor]): ShulkerBox = copy(color = color)

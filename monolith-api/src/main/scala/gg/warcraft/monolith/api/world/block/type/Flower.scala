@@ -10,10 +10,11 @@ case class Flower(
   section: BlockBisection,
   tall: Boolean
 ) extends VariedBlock[FlowerVariant] with BisectedBlock {
-  override val kind = BlockType.FLOWER
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.FLOWER
 
   def withTall(tall: Boolean): Flower = copy(tall = tall)
 

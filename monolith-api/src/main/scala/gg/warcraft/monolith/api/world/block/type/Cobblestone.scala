@@ -8,9 +8,10 @@ case class Cobblestone(
   location: BlockLocation,
   variant: CobblestoneVariant
 ) extends VariedBlock[CobblestoneVariant] {
-  override val kind = BlockType.COBBLESTONE
 
   /* Java interop */
+
+  override val `type` = BlockType.COBBLESTONE
 
   override def withLocation(loc: BlockLocation): Cobblestone = copy(location = loc)
   override def withVariant(variant: CobblestoneVariant): Cobblestone = copy(variant =variant)

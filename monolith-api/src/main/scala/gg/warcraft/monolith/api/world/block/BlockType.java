@@ -80,7 +80,7 @@ public enum BlockType {
     HAY_BALE,
     HOPPER,
     ICE,
-    IGNEOUS_ROCK,
+    STONITE,
     INFESTED_BLOCK,
     IRON_BARS,
     JIGSAW,

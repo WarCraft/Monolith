@@ -7,9 +7,10 @@ case class HayBale(
   location: BlockLocation,
   orientation: BlockOrientation
 ) extends OrientedBlock {
-  override val kind = BlockType.HAY_BALE
 
   /* Java interop */
+
+  override val `type` = BlockType.HAY_BALE
 
   override def withLocation(loc: BlockLocation): HayBale = copy(location = loc)
   override def withOrientation(orientation: BlockOrientation): HayBale = copy(orientation = orientation)

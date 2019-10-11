@@ -11,9 +11,10 @@ case class Repeater(
   powered: Boolean,
   locked: Boolean
 ) extends StatefulBlock[RepeaterState] with DirectedBlock with PowerableBlock {
-  override val kind = BlockType.REPEATER
 
   /* Java interop */
+
+  override val `type` = BlockType.REPEATER
 
   def withLocked(locked: Boolean): Repeater = copy(locked = locked)
 

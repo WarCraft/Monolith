@@ -13,9 +13,10 @@ case class Door(
   powered: Boolean
 ) extends MaterialBlock[DoorMaterial] with DirectedBlock with HingedBlock with BisectedBlock
   with OpenableBlock with PowerableBlock {
-  override val kind = BlockType.DOOR
 
   /* Java interop */
+
+  override val `type` = BlockType.DOOR
 
   override def withLocation(loc: BlockLocation): Door = copy(location = loc)
   override def withMaterial(mat: DoorMaterial): Door = copy(material = mat)

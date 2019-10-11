@@ -11,9 +11,10 @@ case class Sapling(
   variant: SaplingVariant,
   state: SaplingState
 ) extends VariedBlock[SaplingVariant] with StatefulBlock[SaplingState] {
-  override val kind = BlockType.SAPLING
 
   /* Java interop */
+
+  override val `type` = BlockType.SAPLING
 
   override def withLocation(loc: BlockLocation): Sapling = copy(location = loc)
   override def withVariant(mat: SaplingVariant): Sapling = copy(variant = variant)

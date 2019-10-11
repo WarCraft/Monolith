@@ -10,9 +10,10 @@ case class CommandBlock(
   direction: BlockFace,
   conditional: Boolean
 ) extends VariedBlock[CommandBlockVariant] with DirectedBlock {
-  override val kind = BlockType.COMMAND_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.COMMAND_BLOCK
 
   def withConditional(conditional: Boolean): CommandBlock = copy(conditional = conditional)
 

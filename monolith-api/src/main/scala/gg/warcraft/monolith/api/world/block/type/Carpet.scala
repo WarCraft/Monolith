@@ -7,9 +7,10 @@ case class Carpet(
   location: BlockLocation,
   color: BlockColor
 ) extends ColoredBlock {
-  override val kind = BlockType.CARPET
 
   /* Java interop */
+
+  override val `type` = BlockType.CARPET
 
   override def withLocation(loc: BlockLocation): Carpet = copy(location = loc)
   override def withColor(color: BlockColor): Carpet = copy(color = color)

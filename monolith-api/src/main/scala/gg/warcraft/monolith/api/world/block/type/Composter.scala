@@ -8,9 +8,10 @@ case class Composter(
   location: BlockLocation,
   state: ComposterState
 ) extends StatefulBlock[ComposterState] {
-  override val kind = BlockType.COMPOSTER
 
   /* Java interop */
+
+  override val `type` = BlockType.COMPOSTER
 
   override def withLocation(loc: BlockLocation): Composter = copy(location = loc)
   override def withState(state: ComposterState): Composter = copy(state = state)

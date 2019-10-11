@@ -9,10 +9,11 @@ case class Coral(
   variant: CoralVariant,
   flooded: Boolean
 ) extends VariedBlock[CoralVariant] with FloodableBlock {
-  override val kind = BlockType.CORAL
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.CORAL
 
   override def withLocation(loc: BlockLocation): Coral = copy(location = loc)
   override def withVariant(variant: CoralVariant): Coral = copy(variant = variant)

@@ -8,9 +8,10 @@ case class Furnace(
   direction: BlockFace,
   lit: Boolean
 ) extends DirectedBlock with LightableBlock {
-  override val kind = BlockType.FURNACE
 
   /* Java interop */
+
+  override val `type` = BlockType.FURNACE
 
   override def withLocation(loc: BlockLocation): Furnace = copy(location = loc)
   override def withDirection(dir: BlockFace): Furnace = copy(direction = dir)

@@ -8,10 +8,11 @@ case class Air(
   location: BlockLocation,
   variant: AirVariant
 ) extends VariedBlock[AirVariant] {
-  override val kind = BlockType.AIR
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.AIR
 
   override def withLocation(loc: BlockLocation): Air = copy(location = loc)
   override def withVariant(variant: AirVariant): Air = copy(variant = variant)

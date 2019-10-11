@@ -9,9 +9,10 @@ case class Lever(
   attachment: BlockAttachment,
   powered: Boolean
 ) extends DirectedBlock with AttachedBlock with PowerableBlock {
-  override val kind = BlockType.LEVER
 
   /* Java interop */
+
+  override val `type` = BlockType.LEVER
 
   override def withLocation(loc: BlockLocation): Lever = copy(location = loc)
   override def withDirection(dir: BlockFace): Lever = copy(direction = dir)

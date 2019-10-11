@@ -4,9 +4,10 @@ import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.{ Block, BlockType }
 
 case class DaylightDetector(location: BlockLocation) extends Block {
-  override val kind = BlockType.DAYLIGHT_DETECTOR
 
   /* Java interop */
+
+  override val `type` = BlockType.DAYLIGHT_DETECTOR
 
   override def withLocation(loc: BlockLocation): DaylightDetector = copy(location = loc)
 }

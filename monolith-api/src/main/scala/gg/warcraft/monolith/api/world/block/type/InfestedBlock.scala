@@ -8,9 +8,10 @@ case class InfestedBlock(
   material: InfestedMaterial,
   variant: InfestedVariant
 ) extends MaterialBlock[InfestedMaterial] with VariedBlock[InfestedVariant] {
-  override val kind = BlockType.INFESTED_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.INFESTED_BLOCK
 
   override def withLocation(loc: BlockLocation): InfestedBlock = copy(location = loc)
   override def withMaterial(mat: InfestedMaterial): InfestedBlock = copy(material = mat)

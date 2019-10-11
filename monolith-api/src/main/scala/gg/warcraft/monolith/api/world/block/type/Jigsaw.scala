@@ -7,9 +7,10 @@ case class Jigsaw(
   location: BlockLocation,
   direction: BlockFace
 ) extends DirectedBlock {
-  override val kind = BlockType.JIGSAW
 
   /* Java interop */
+
+  override val `type` = BlockType.JIGSAW
 
   override def withLocation(loc: BlockLocation): Jigsaw = copy(location = loc)
   override def withDirection(dir: BlockFace): Jigsaw = copy(direction = dir)

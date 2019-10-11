@@ -10,9 +10,10 @@ case class Stone(
   material: StoneMaterial,
   variant: StoneVariant
 ) extends MaterialBlock[StoneMaterial] with VariedBlock[StoneVariant] {
-  override val kind = BlockType.STONE
 
   /* Java interop */
+
+  override val `type` = BlockType.STONE
 
   override def withLocation(loc: BlockLocation): Stone = copy(location = loc)
   override def withMaterial(mat: StoneMaterial): Stone = copy(material = mat)

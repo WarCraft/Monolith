@@ -18,14 +18,14 @@ case class Stairs(
     with DirectedBlock
     with BisectedBlock
     with FloodableBlock {
-  override val kind = BlockType.STAIRS
 
   /* Java interop */
 
+  override val `type` = BlockType.STAIRS
+
   override def withLocation(loc: BlockLocation): Stairs = copy(location = loc)
   override def withMaterial(mat: StairsMaterial): Stairs = copy(material = mat)
-  override def withVariant(variant: Option[StairsVariant]): Stairs =
-    copy(variant = variant)
+  override def withVariant(variant: Option[StairsVariant]): Stairs = copy(variant = variant)
   override def withShape(shape: StairsShape): Stairs = copy(shape = shape)
   override def withDirection(dir: BlockFace): Stairs = copy(direction = dir)
   override def withSection(half: BlockBisection): Stairs = copy(section = half)

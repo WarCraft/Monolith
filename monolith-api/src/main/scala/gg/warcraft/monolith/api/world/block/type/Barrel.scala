@@ -8,9 +8,10 @@ case class Barrel(
   direction: BlockFace,
   open: Boolean
 ) extends DirectedBlock with OpenableBlock {
-  override val kind = BlockType.BARREL
 
   /* Java interop */
+
+  override val `type` = BlockType.BARREL
 
   override def withLocation(loc: BlockLocation): Barrel = copy(location = loc)
   override def withDirection(dir: BlockFace): Barrel = copy(direction = dir)

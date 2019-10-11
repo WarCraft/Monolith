@@ -8,9 +8,10 @@ case class StructureBlock(
   location: BlockLocation,
   variant: StructureBlockVariant
 ) extends VariedBlock[StructureBlockVariant] {
-  override val kind = BlockType.STRUCTURE_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.STRUCTURE_BLOCK
 
   override def withLocation(loc: BlockLocation): StructureBlock = copy(location = loc)
   override def withVariant(variant: StructureBlockVariant): StructureBlock = copy(variant = variant)

@@ -8,10 +8,11 @@ case class Mushroom(
   location: BlockLocation,
   variant: MushroomVariant
 ) extends VariedBlock[MushroomVariant] {
-  override val kind = BlockType.MUSHROOM
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.MUSHROOM
 
   override def withLocation(loc: BlockLocation): Mushroom = copy(location = loc)
   override def withVariant(variant: MushroomVariant): Mushroom = copy(variant = variant)

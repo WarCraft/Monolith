@@ -8,9 +8,10 @@ case class Ladder(
   direction: BlockFace,
   flooded: Boolean
 ) extends DirectedBlock with FloodableBlock {
-  override val kind = BlockType.LADDER
 
   /* Java interop */
+
+  override val `type` = BlockType.LADDER
 
   override def withLocation(loc: BlockLocation): Ladder = copy(location = loc)
   override def withDirection(dir: BlockFace): Ladder = copy(direction = dir)

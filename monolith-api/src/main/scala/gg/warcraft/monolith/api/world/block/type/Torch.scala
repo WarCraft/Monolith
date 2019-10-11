@@ -8,11 +8,12 @@ case class Torch(
   direction: BlockFace,
   wall: Boolean
 ) extends DirectedBlock {
-  override val kind = BlockType.TORCH
 
   /* Java interop */
 
-  def withWall(wall: Boolean): Torch = copy(wall = wall)
+  override val `type` = BlockType.TORCH
+
+  def withWall(wall: Boolean): Torch = copy(wall = wall) // TODO this is superseded by direction?
 
   override def withLocation(loc: BlockLocation): Torch = copy(location = loc)
   override def withDirection(dir: BlockFace): Torch = copy(direction = dir)

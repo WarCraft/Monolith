@@ -12,9 +12,10 @@ case class Gate(
   powered: Boolean,
   wall: Boolean
 ) extends MaterialBlock[WoodMaterial] with DirectedBlock with OpenableBlock with PowerableBlock {
-  override val kind = BlockType.GATE
 
   /* Java interop */
+
+  override val `type` = BlockType.GATE
 
   def withWall(wall: Boolean): Gate = copy(wall = wall)
 

@@ -8,10 +8,11 @@ case class Beetroots(
   location: BlockLocation,
   state: BeetrootState
 ) extends StatefulBlock[BeetrootState] {
-  override val kind = BlockType.BEETROOTS
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.BEETROOTS
 
   override def withLocation(loc: BlockLocation): Beetroots = copy(location = loc)
   override def withState(state: BeetrootState): Beetroots = copy(state = state)

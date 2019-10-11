@@ -7,9 +7,10 @@ case class Dirt(
   location: BlockLocation,
   coarse: Boolean
 ) extends Block {
-  override val kind = BlockType.DIRT
 
   /* Java interop */
+
+  override val `type` = BlockType.DIRT
 
   def withCoarse(coarse: Boolean): Dirt = copy(coarse = coarse)
 

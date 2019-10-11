@@ -8,10 +8,11 @@ case class NetherWarts(
   location: BlockLocation,
   state: NetherWartState
 ) extends StatefulBlock[NetherWartState] {
-  override val kind = BlockType.NETHER_WARTS
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.NETHER_WARTS
 
   override def withLocation(loc: BlockLocation): NetherWarts = copy(location = loc)
   override def withState(state: NetherWartState): NetherWarts = copy(state = state)

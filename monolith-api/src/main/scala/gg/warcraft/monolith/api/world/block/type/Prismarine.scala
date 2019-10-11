@@ -8,9 +8,10 @@ case class Prismarine(
   location: BlockLocation,
   material: PrismarineMaterial
 ) extends MaterialBlock[PrismarineMaterial] {
-  override val kind = BlockType.PRISMARINE
 
   /* Java interop */
+
+  override val `type` = BlockType.PRISMARINE
 
   override def withLocation(loc: BlockLocation): Prismarine = copy(location = loc)
   override def withMaterial(mat: PrismarineMaterial): Prismarine = copy(material = mat)

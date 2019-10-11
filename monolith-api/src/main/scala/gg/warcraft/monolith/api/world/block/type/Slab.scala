@@ -9,9 +9,10 @@ case class Slab(
   variant: Option[SlabVariant],
   section: BlockBisection
 ) extends MaterialBlock[SlabMaterial] with VariableBlock[SlabVariant] with BisectedBlock {
-  override val kind = BlockType.SLAB
 
   /* Java interop */
+
+  override val `type` = BlockType.SLAB
 
   override def withLocation(loc: BlockLocation): Slab = copy(location = loc)
   override def withMaterial(mat: SlabMaterial): Slab = copy(material = mat)

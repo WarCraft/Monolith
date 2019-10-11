@@ -7,9 +7,10 @@ case class TNT(
   location: BlockLocation,
   unstable: Boolean
 ) extends Block {
-  override val kind = BlockType.TNT
 
   /* Java interop */
+
+  override val `type` = BlockType.TNT
 
   def withUnstable(unstable: Boolean): TNT = copy(unstable = unstable)
 

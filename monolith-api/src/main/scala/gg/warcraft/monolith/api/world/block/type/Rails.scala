@@ -11,9 +11,10 @@ case class Rails(
   shape: RailsShape,
   powered: Boolean
 ) extends VariedBlock[RailsVariant] with ShapedBlock[RailsShape] with PowerableBlock {
-  override val kind = BlockType.RAILS
 
   /* Java interop */
+
+  override val `type` = BlockType.RAILS
 
   override def withLocation(loc: BlockLocation): Rails = copy(location = loc)
   override def withVariant(variant: RailsVariant): Rails = copy(variant = variant)

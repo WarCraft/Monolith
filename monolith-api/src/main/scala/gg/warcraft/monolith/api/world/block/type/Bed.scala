@@ -11,9 +11,10 @@ case class Bed(
   section: BlockBisection,
   occupied: Boolean
 ) extends ColoredBlock with DirectedBlock with BisectedBlock {
-  override val kind = BlockType.BED
 
   /* Java interop */
+
+  override val `type` = BlockType.BED
 
   override def withLocation(loc: BlockLocation): Bed = copy(location = loc)
   override def withColor(color: BlockColor): Bed = copy(color = color)

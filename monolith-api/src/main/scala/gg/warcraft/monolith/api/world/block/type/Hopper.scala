@@ -8,9 +8,10 @@ case class Hopper(
   direction: BlockFace,
   powered: Boolean
 ) extends DirectedBlock with PowerableBlock {
-  override val kind = BlockType.HOPPER
 
   /* Java interop */
+
+  override val `type` = BlockType.HOPPER
 
   override def withLocation(loc: BlockLocation): Hopper = copy(location = loc)
   override def withDirection(dir: BlockFace): Hopper = copy(direction = dir)

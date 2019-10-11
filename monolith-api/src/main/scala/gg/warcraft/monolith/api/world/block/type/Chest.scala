@@ -9,9 +9,10 @@ case class Chest(
   variant: ChestVariant,
   direction: BlockFace
 ) extends VariedBlock[ChestVariant] with DirectedBlock {
-  override val kind = BlockType.CHEST
 
   /* Java interop */
+
+  override val `type` = BlockType.CHEST
 
   override def withLocation(loc: BlockLocation): Chest = copy(location = loc)
   override def withVariant(variant: ChestVariant): Chest = copy(variant = variant)

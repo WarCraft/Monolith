@@ -8,9 +8,10 @@ case class Kelp(
   location: BlockLocation,
   state: KelpState
 ) extends StatefulBlock[KelpState] {
-  override val kind = BlockType.KELP
 
   /* Java interop */
+
+  override val `type` = BlockType.KELP
 
   override def withLocation(loc: BlockLocation): Kelp = copy(location = loc)
   override def withState(state: KelpState): Kelp = copy(state = state)

@@ -7,9 +7,10 @@ case class Lantern(
   location: BlockLocation,
   hanging: Boolean
 ) extends Block {
-  override val kind = BlockType.LANTERN
 
   /* Java interop */
+
+  override val `type` = BlockType.LANTERN
 
   def withHanging(hanging: Boolean): Lantern = copy(hanging = hanging)
 

@@ -7,9 +7,10 @@ case class Terracotta(
   location: BlockLocation,
   color: Option[BlockColor]
 ) extends ColorableBlock {
-  override val kind = BlockType.TERRACOTTA
 
   /* Java interop */
+
+  override val `type` = BlockType.TERRACOTTA
 
   override def withLocation(loc: BlockLocation): Terracotta = copy(location = loc)
   override def withColor(color: Option[BlockColor]): Terracotta = copy(color = color)

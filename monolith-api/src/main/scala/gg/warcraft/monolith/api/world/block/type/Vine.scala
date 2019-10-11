@@ -7,9 +7,10 @@ case class Vine(
   location: BlockLocation,
   extensions: Set[BlockFace]
 ) extends ExtendableBlock {
-  override val kind = BlockType.VINE
 
   /* Java interop */
+
+  override val `type` = BlockType.VINE
 
   override def withLocation(loc: BlockLocation): Vine = copy(location = loc)
   override def withExtensions(extensions: Set[BlockFace]): Vine = copy(extensions = extensions)

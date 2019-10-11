@@ -7,9 +7,10 @@ case class Jukebox(
   location: BlockLocation,
   record: Boolean
 ) extends Block {
-  override val kind = BlockType.JUKEBOX
 
   /* Java interop */
+
+  override val `type` = BlockType.JUKEBOX
 
   def withRecord(record: Boolean): Jukebox = copy(record = record)
 

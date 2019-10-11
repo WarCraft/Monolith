@@ -8,10 +8,11 @@ case class Fern(
   section: BlockBisection,
   tall: Boolean
 ) extends BisectedBlock {
-  override val kind = BlockType.FERN
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.FERN
 
   def withTall(tall: Boolean): Fern = copy(tall = tall)
 

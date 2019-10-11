@@ -9,9 +9,10 @@ case class RedstoneWire(
   location: BlockLocation,
   state: RedstoneWireState
 ) extends StatefulBlock[RedstoneWireState] {
-  override val kind = BlockType.REDSTONE_WIRE
 
   /* Java interop */
+
+  override val `type` = BlockType.REDSTONE_WIRE
 
   override def withLocation(loc: BlockLocation): RedstoneWire = copy(location = loc)
   override def withState(state: RedstoneWireState): RedstoneWire = copy(state = state)

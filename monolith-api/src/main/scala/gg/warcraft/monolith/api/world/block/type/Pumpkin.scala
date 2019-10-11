@@ -9,9 +9,10 @@ case class Pumpkin(
   lit: Boolean,
   carved: Boolean
 ) extends DirectableBlock with LightableBlock {
-  override val kind = BlockType.PUMPKIN
 
   /* Java interop */
+
+  override val `type` = BlockType.PUMPKIN
 
   def withCarved(carved: Boolean): Pumpkin = copy(carved = carved)
 

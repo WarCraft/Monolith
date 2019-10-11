@@ -8,9 +8,10 @@ case class BlastFurnace(
   direction: BlockFace,
   lit: Boolean
 ) extends DirectedBlock with LightableBlock {
-  override val kind = BlockType.BLAST_FURNACE
 
   /* Java interop */
+
+  override val `type` = BlockType.BLAST_FURNACE
 
   override def withLocation(loc: BlockLocation): BlastFurnace = copy(location = loc)
   override def withDirection(dir: BlockFace): BlastFurnace = copy(direction = dir)

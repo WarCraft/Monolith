@@ -8,9 +8,10 @@ case class Carrots(
   location: BlockLocation,
   state: CarrotState
 ) extends StatefulBlock[CarrotState] {
-  override val kind = BlockType.CARROTS
 
   /* Java interop */
+
+  override val `type` = BlockType.CARROTS
 
   override def withLocation(loc: BlockLocation): Carrots = copy(location = loc)
   override def withState(state: CarrotState): Carrots = copy(state = state)

@@ -9,9 +9,10 @@ case class PumpkinStem(
   state: PumpkinStemState,
   direction: Option[BlockFace]
 ) extends StatefulBlock[PumpkinStemState] with DirectableBlock {
-  override val kind = BlockType.PUMPKIN_STEM
 
   /* Java interop */
+
+  override val `type` = BlockType.PUMPKIN_STEM
 
   override def withLocation(loc: BlockLocation): PumpkinStem = copy(location = loc)
   override def withState(state: PumpkinStemState): PumpkinStem = copy(state = state)

@@ -9,10 +9,11 @@ case class Water(
   location: BlockLocation,
   state: WaterState
 ) extends StatefulBlock[WaterState] {
-  override val kind = BlockType.WATER
   override val liquid: Boolean = true
 
   /* Java interop */
+
+  override val `type` = BlockType.WATER
 
   override def withLocation(loc: BlockLocation): Water = copy(location = loc)
   override def withState(state: WaterState): Water = copy(state = state)

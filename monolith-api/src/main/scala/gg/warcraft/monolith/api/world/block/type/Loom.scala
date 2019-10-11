@@ -7,9 +7,10 @@ case class Loom(
   location: BlockLocation,
   direction: BlockFace
 ) extends DirectedBlock {
-  override val kind = BlockType.LOOM
 
   /* Java interop */
+
+  override val `type` = BlockType.LOOM
 
   override def withLocation(loc: BlockLocation): Loom = copy(location = loc)
   override def withDirection(dir: BlockFace): Loom = copy(direction = dir)

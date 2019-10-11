@@ -10,9 +10,10 @@ case class Stonite(
   material: StoniteMaterial,
   variant: StoniteVariant
 ) extends MaterialBlock[StoniteMaterial] with VariedBlock[StoniteVariant] {
-  override val kind = BlockType.IGNEOUS_ROCK
 
   /* Java interop */
+
+  override val `type` = BlockType.STONITE
 
   override def withLocation(loc: BlockLocation): Stonite = copy(location = loc)
   override def withMaterial(mat: StoniteMaterial): Stonite = copy(material = mat)

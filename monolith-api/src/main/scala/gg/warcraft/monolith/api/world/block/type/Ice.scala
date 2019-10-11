@@ -8,9 +8,10 @@ case class Ice(
   location: BlockLocation,
   variant: IceVariant
 ) extends VariedBlock[IceVariant] {
-  override val kind = BlockType.ICE
 
   /* Java interop */
+
+  override val `type` = BlockType.ICE
 
   override def withLocation(loc: BlockLocation): Ice = copy(location = loc)
   override def withVariant(variant: IceVariant): Ice = copy(variant = variant)

@@ -10,9 +10,10 @@ case class Lectern(
   powered: Boolean,
   book: Boolean
 ) extends DirectedBlock with PowerableBlock {
-  override val kind = BlockType.LECTERN
 
   /* Java interop */
+
+  override val `type` = BlockType.LECTERN
 
   override def withLocation(loc: BlockLocation): Lectern = copy(location = loc)
   override def withDirection(dir: BlockFace): Lectern = copy(direction = dir)

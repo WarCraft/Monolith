@@ -8,9 +8,10 @@ case class Dispenser(
   direction: BlockFace,
   powered: Boolean
 ) extends DirectedBlock with PowerableBlock {
-  override val kind = BlockType.DISPENSER
 
   /* Java interop */
+
+  override val `type` = BlockType.DISPENSER
 
   override def withLocation(loc: BlockLocation): Dispenser = copy(location = loc)
   override def withDirection(dir: BlockFace): Dispenser = copy(direction = dir)

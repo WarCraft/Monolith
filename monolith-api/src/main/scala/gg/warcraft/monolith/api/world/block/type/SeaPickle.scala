@@ -9,9 +9,10 @@ case class SeaPickle(
   state: SeaPickleState,
   flooded: Boolean
 ) extends StatefulBlock[SeaPickleState] with FloodableBlock {
-  override val kind = BlockType.SEA_PICKLE
 
   /* Java interop */
+
+  override val `type` = BlockType.SEA_PICKLE
 
   override def withLocation(loc: BlockLocation): SeaPickle = copy(location = loc)
   override def withState(state: SeaPickleState): SeaPickle = copy(state = state)

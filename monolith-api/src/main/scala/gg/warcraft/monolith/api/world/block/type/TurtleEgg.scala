@@ -8,9 +8,10 @@ case class TurtleEgg(
   location: BlockLocation,
   state: TurtleEggState,
 ) extends StatefulBlock[TurtleEggState] {
-  override val kind = BlockType.TURTLE_EGG
 
   /* Java interop */
+
+  override val `type` = BlockType.TURTLE_EGG
 
   override def withLocation(loc: BlockLocation): TurtleEgg = copy(location = loc)
   override def withState(state: TurtleEggState): TurtleEgg = copy(state = state)

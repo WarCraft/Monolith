@@ -9,9 +9,10 @@ case class Cocoa(
   state: CocoaState,
   direction: BlockFace
 ) extends StatefulBlock[CocoaState] with DirectedBlock {
-  override val kind = BlockType.COCOA
 
   /* Java interop */
+
+  override val `type` = BlockType.COCOA
 
   override def withLocation(loc: BlockLocation): Cocoa = copy(location = loc)
   override def withState(state: CocoaState): Cocoa = copy(state = state)

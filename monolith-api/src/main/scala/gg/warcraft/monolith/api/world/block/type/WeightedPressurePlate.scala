@@ -10,9 +10,10 @@ case class WeightedPressurePlate(
   variant: WeightedPressurePlateVariant,
   state: WeightedPressurePlateState
 ) extends VariedBlock[WeightedPressurePlateVariant] with StatefulBlock[WeightedPressurePlateState] {
-  override val kind = BlockType.WEIGHTED_PRESSURE_PLATE
 
   /* Java interop */
+
+  override val `type` = BlockType.WEIGHTED_PRESSURE_PLATE
 
   override def withLocation(loc: BlockLocation): WeightedPressurePlate = copy(location = loc)
   override def withVariant(variant: WeightedPressurePlateVariant): WeightedPressurePlate = copy(variant = variant)

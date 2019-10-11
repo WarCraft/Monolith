@@ -13,9 +13,10 @@ case class Sign(
   lines: List[String],
   editable: Boolean
 ) extends MaterialBlock[WoodMaterial] with DirectableBlock with RotatableBlock with FloodableBlock {
-  override val kind = BlockType.SIGN
 
   /* Java interop */
+
+  override val `type` = BlockType.SIGN
 
   def withLines(lines: List[String]): Sign = copy(lines = lines.slice(0, 4))
   def withEditable(editable: Boolean): Sign = copy(editable = editable)

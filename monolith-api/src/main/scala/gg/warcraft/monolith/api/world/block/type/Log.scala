@@ -10,9 +10,10 @@ case class Log(
   orientation: BlockOrientation,
   stripped: Boolean
 ) extends MaterialBlock[WoodMaterial] with OrientedBlock {
-  override val kind = BlockType.LOG
 
   /* Java interop */
+
+  override val `type` = BlockType.LOG
 
   def withStripped(stripped: Boolean): Log = copy(stripped = stripped)
 

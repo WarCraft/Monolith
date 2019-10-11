@@ -8,9 +8,10 @@ case class Quartz(
   location: BlockLocation,
   variant: QuartzVariant
 ) extends VariedBlock[QuartzVariant] {
-  override val kind = BlockType.QUARTZ
 
   /* Java interop */
+
+  override val `type` = BlockType.QUARTZ
 
   override def withLocation(loc: BlockLocation): Quartz = copy(location = loc)
   override def withVariant(variant: QuartzVariant): Quartz = copy(variant = variant)

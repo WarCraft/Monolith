@@ -9,9 +9,10 @@ case class MelonStem(
   state: MelonStemState,
   direction: Option[BlockFace]
 ) extends StatefulBlock[MelonStemState] with DirectableBlock {
-  override val kind = BlockType.MELON_STEM
 
   /* Java interop */
+
+  override val `type` = BlockType.MELON_STEM
 
   override def withLocation(loc: BlockLocation): MelonStem = copy(location = loc)
   override def withState(state: MelonStemState): MelonStem = copy(state = state)

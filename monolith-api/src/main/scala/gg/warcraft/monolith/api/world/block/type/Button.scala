@@ -10,9 +10,10 @@ case class Button(
   attachment: BlockAttachment,
   powered: Boolean
 ) extends MaterialBlock[ButtonMaterial] with DirectedBlock with AttachedBlock with PowerableBlock {
-  override val kind = BlockType.BUTTON
 
   /* Java interop */
+
+  override val `type` = BlockType.BUTTON
 
   override def withLocation(loc: BlockLocation): Button = copy(location = loc)
   override def withMaterial(mat: ButtonMaterial): Button = copy(material = mat)

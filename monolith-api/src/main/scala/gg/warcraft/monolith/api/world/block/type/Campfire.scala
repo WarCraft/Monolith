@@ -10,9 +10,10 @@ case class Campfire(
   lit: Boolean,
   signal: Boolean
 ) extends DirectedBlock with FloodableBlock with LightableBlock {
-  override val kind = BlockType.CAMPFIRE
 
   /* Java interop */
+
+  override val `type` = BlockType.CAMPFIRE
 
   def withSignal(signal: Boolean): Campfire = copy(signal = signal)
 

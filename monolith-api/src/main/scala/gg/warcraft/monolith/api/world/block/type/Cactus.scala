@@ -8,9 +8,10 @@ case class Cactus(
   location: BlockLocation,
   state: CactusState
 ) extends StatefulBlock[CactusState] {
-  override val kind = BlockType.CACTUS
 
   /* Java interop */
+
+  override val `type` = BlockType.CACTUS
 
   override def withLocation(loc: BlockLocation): Cactus = copy(location = loc)
   override def withState(state: CactusState): Cactus = copy(state = state)

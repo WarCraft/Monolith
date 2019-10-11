@@ -7,9 +7,10 @@ case class BoneBlock(
   location: BlockLocation,
   orientation: BlockOrientation
 ) extends OrientedBlock {
-  override val kind = BlockType.BONE_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.BONE_BLOCK
 
   override def withLocation(loc: BlockLocation): BoneBlock = copy(location = loc)
   override def withOrientation(orientation: BlockOrientation): BoneBlock = copy(orientation = orientation)

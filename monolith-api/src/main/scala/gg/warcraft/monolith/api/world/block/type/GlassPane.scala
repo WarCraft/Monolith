@@ -9,9 +9,10 @@ case class GlassPane(
   extensions: Set[BlockFace],
   flooded: Boolean
 ) extends ColorableBlock with ExtendableBlock with FloodableBlock {
-  override val kind = BlockType.GLASS_PANE
 
   /* Java interop */
+
+  override val `type` = BlockType.GLASS_PANE
 
   override def withLocation(loc: BlockLocation): GlassPane = copy(location = loc)
   override def withColor(color: Option[BlockColor]): GlassPane = copy(color = color)

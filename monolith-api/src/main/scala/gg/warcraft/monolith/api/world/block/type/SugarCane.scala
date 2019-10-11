@@ -8,9 +8,10 @@ case class SugarCane(
   location: BlockLocation,
   state: SugarCaneState
 ) extends StatefulBlock[SugarCaneState] {
-  override val kind = BlockType.SUGAR_CANE
 
   /* Java interop */
+
+  override val `type` = BlockType.SUGAR_CANE
 
   override def withLocation(loc: BlockLocation): SugarCane = copy(state = state)
   override def withState(state: SugarCaneState): SugarCane = copy(state = state)

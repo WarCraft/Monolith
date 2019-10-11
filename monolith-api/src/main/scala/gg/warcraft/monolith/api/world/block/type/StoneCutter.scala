@@ -7,9 +7,10 @@ case class StoneCutter(
   location: BlockLocation,
   direction: BlockFace
 ) extends DirectedBlock {
-  override val kind = BlockType.STONE_CUTTER
 
   /* Java interop */
+
+  override val `type` = BlockType.STONE_CUTTER
 
   override def withLocation(loc: BlockLocation): StoneCutter = copy(location = loc)
   override def withDirection(dir: BlockFace): StoneCutter = copy(direction = dir)

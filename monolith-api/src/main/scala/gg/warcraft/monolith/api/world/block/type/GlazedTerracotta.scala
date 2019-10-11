@@ -7,9 +7,10 @@ case class GlazedTerracotta(
   location: BlockLocation,
   color: BlockColor
 ) extends ColoredBlock {
-  override val kind = BlockType.GLAZED_TERRACOTTA
 
   /* Java interop */
+
+  override val `type` = BlockType.GLAZED_TERRACOTTA
 
   override def withLocation(loc: BlockLocation): GlazedTerracotta = copy(location = loc)
   override def withColor(color: BlockColor): GlazedTerracotta = copy(color = color)

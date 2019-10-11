@@ -8,9 +8,10 @@ case class EndStone(
   location: BlockLocation,
   material: EndStoneMaterial
 ) extends MaterialBlock[EndStoneMaterial] {
-  override val kind = BlockType.STONE
 
   /* Java interop */
+
+  override val `type` = BlockType.END_STONE
 
   override def withLocation(loc: BlockLocation): EndStone = copy(location = loc)
   override def withMaterial(mat: EndStoneMaterial): EndStone = copy(material = mat)

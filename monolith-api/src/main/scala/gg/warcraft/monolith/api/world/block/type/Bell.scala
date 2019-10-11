@@ -8,9 +8,10 @@ case class Bell(
   location: BlockLocation,
   direction: BlockFace,
 ) extends DirectedBlock {
-  override val kind = BlockType.BELL
 
   /* Java interop */
+
+  override val `type` = BlockType.BELL
 
   override def withLocation(loc: BlockLocation): Bell = copy(location = loc)
   override def withDirection(dir: BlockFace): Bell = copy(direction = dir)

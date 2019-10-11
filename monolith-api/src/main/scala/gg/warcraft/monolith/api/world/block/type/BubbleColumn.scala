@@ -7,9 +7,10 @@ case class BubbleColumn(
   location: BlockLocation,
   drag: Boolean
 ) extends Block {
-  override val kind = BlockType.BUBBLE_COLUMN
 
   /* Java interop */
+
+  override val `type` = BlockType.BUBBLE_COLUMN
 
   def withDrag(drag: Boolean): BubbleColumn = copy(drag = drag)
 

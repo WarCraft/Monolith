@@ -9,9 +9,10 @@ case class Wall(
   variant: Option[WallVariant],
   extensions: Set[BlockFace]
 ) extends MaterialBlock[WallMaterial] with VariableBlock[WallVariant] with ExtendableBlock {
-  override val kind = BlockType.WALL
 
   /* Java interop */
+
+  override val `type` = BlockType.WALL
 
   override def withLocation(loc: BlockLocation): Wall = copy(location = loc)
   override def withMaterial(mat: WallMaterial): Wall = copy(material = mat)

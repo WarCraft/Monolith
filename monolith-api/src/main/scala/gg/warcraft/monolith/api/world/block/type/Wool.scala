@@ -7,9 +7,10 @@ case class Wool(
   location: BlockLocation,
   color: BlockColor
 ) extends ColoredBlock {
-  override val kind = BlockType.WOOL
 
   /* Java interop */
+
+  override val `type` = BlockType.WOOL
 
   override def withLocation(loc: BlockLocation): Wool = copy(location = loc)
   override def withColor(color: BlockColor): Wool = copy(color = color)

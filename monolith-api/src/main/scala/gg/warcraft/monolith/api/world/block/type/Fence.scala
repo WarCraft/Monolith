@@ -9,9 +9,10 @@ case class Fence(
   extensions: Set[BlockFace],
   flooded: Boolean
 ) extends MaterialBlock[FenceMaterial] with ExtendableBlock with FloodableBlock {
-  override val kind = BlockType.FENCE
 
   /* Java interop */
+
+  override val `type` = BlockType.FENCE
 
   override def withLocation(loc: BlockLocation): Fence = copy(location = loc)
   override def withMaterial(mat: FenceMaterial): Fence = copy(material = mat)

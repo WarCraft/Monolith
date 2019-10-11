@@ -7,9 +7,10 @@ case class RedstoneLamp(
   location: BlockLocation,
   lit: Boolean
 ) extends LightableBlock {
-  override val kind = BlockType.REDSTONE_LAMP
 
   /* Java interop */
+
+  override val `type` = BlockType.REDSTONE_LAMP
 
   override def withLocation(loc: BlockLocation): RedstoneLamp = copy(location = loc)
   override def withLit(lit: Boolean): RedstoneLamp = copy(lit = lit)

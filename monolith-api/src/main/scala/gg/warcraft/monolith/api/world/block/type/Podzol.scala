@@ -7,9 +7,10 @@ case class Podzol(
   location: BlockLocation,
   snowy: Boolean
 ) extends SnowableBlock {
-  override val kind = BlockType.PODZOL
 
   /* Java interop */
+
+  override val `type` = BlockType.PODZOL
 
   override def withLocation(loc: BlockLocation): Podzol = copy(location = loc)
   override def withSnowy(snowy: Boolean): Podzol = copy(snowy = snowy)

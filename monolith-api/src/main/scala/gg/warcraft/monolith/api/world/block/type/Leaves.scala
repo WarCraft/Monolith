@@ -8,9 +8,10 @@ case class Leaves(
   location: BlockLocation,
   material: WoodMaterial
 ) extends MaterialBlock[WoodMaterial] {
-  override val kind = BlockType.LEAVES
 
   /* Java interop */
+
+  override val `type` = BlockType.LEAVES
 
   override def withLocation(loc: BlockLocation): Leaves = copy(location = loc)
   override def withMaterial(mat: WoodMaterial): Leaves = copy(material = mat)

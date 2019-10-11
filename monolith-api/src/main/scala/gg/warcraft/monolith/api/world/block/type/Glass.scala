@@ -7,9 +7,10 @@ case class Glass(
   location: BlockLocation,
   color: Option[BlockColor]
 ) extends ColorableBlock {
-  override val kind = BlockType.GLASS
 
   /* Java interop */
+
+  override val `type` = BlockType.GLASS
 
   override def withLocation(loc: BlockLocation): Glass = copy(location = loc)
   override def withColor(color: Option[BlockColor]): Glass = copy(color = color)

@@ -8,9 +8,10 @@ case class RedstoneTorch(
   direction: Option[BlockFace],
   lit: Boolean
 ) extends DirectableBlock with LightableBlock {
-  override val kind = BlockType.REDSTONE_TORCH
 
   /* Java interop */
+
+  override val `type` = BlockType.REDSTONE_TORCH
 
   override def withLocation(loc: BlockLocation): RedstoneTorch = copy(location = loc)
   override def withDirection(dir: Option[BlockFace]): RedstoneTorch = copy(direction = dir)

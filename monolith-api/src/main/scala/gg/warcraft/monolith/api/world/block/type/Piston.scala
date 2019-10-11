@@ -9,9 +9,10 @@ case class Piston(
   sticky: Boolean,
   extended: Boolean
 ) extends DirectedBlock with StickyBlock {
-  override val kind = BlockType.PISTON
 
   /* Java interop */
+
+  override val `type` = BlockType.PISTON
 
   def withExtended(extended: Boolean): Piston = copy(extended = extended)
 

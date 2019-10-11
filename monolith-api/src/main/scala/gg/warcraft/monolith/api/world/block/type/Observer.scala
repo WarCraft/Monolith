@@ -8,9 +8,10 @@ case class Observer(
   direction: BlockFace,
   powered: Boolean
 ) extends DirectedBlock with PowerableBlock {
-  override val kind = BlockType.OBSERVER
 
   /* Java interop */
+
+  override val `type` = BlockType.OBSERVER
 
   override def withLocation(loc: BlockLocation): Observer = copy(location = loc)
   override def withDirection(dir: BlockFace): Observer = copy(direction = dir)

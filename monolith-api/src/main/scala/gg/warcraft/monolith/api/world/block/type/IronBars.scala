@@ -8,9 +8,10 @@ case class IronBars(
   extensions: Set[BlockFace],
   flooded: Boolean
 ) extends ExtendableBlock with FloodableBlock {
-  override val kind = BlockType.IRON_BARS
 
   /* Java interop */
+
+  override val `type` = BlockType.IRON_BARS
 
   override def withLocation(loc: BlockLocation): IronBars = copy(location = loc)
   override def withExtensions(ext: Set[BlockFace]): IronBars = copy(extensions = ext)

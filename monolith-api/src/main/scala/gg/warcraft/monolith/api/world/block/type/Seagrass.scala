@@ -8,9 +8,10 @@ case class Seagrass(
   section: BlockBisection,
   tall: Boolean
 ) extends BisectedBlock {
-  override val kind = BlockType.SEAGRASS
 
   /* Java interop */
+
+  override val `type` = BlockType.SEAGRASS
 
   def withTall(tall: Boolean): Seagrass = copy(tall = tall)
 

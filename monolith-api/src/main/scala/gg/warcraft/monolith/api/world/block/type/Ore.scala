@@ -7,9 +7,10 @@ case class Ore(
   location: BlockLocation,
   material: OreMaterial
 ) extends MaterialBlock[OreMaterial] {
-  override val kind = BlockType.ORE
 
   /* Java interop */
+
+  override val `type` = BlockType.ORE
 
   override def withLocation(loc: BlockLocation): Ore = copy(location = loc)
   override def withMaterial(mat: OreMaterial): Ore = copy(material = mat)

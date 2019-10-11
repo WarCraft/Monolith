@@ -7,9 +7,10 @@ case class ChorusPlant(
   location: BlockLocation,
   extensions: Set[BlockFace]
 ) extends ExtendableBlock {
-  override val kind = BlockType.CHORUS_PLANT
 
   /* Java interop */
+
+  override val `type` = BlockType.CHORUS_PLANT
 
   override def withLocation(loc: BlockLocation): ChorusPlant = copy(location = loc)
   override def withExtensions(ext: Set[BlockFace]): ChorusPlant = copy(extensions = ext)

@@ -7,9 +7,10 @@ case class NetherPortal(
   location: BlockLocation,
   orientation: BlockOrientation
 ) extends OrientedBlock {
-  override val kind = BlockType.NETHER_PORTAL
 
   /* Java interop */
+
+  override val `type` = BlockType.NETHER_PORTAL
 
   override def withLocation(loc: BlockLocation): NetherPortal = copy(location = loc)
   override def withOrientation(orientation: BlockOrientation): NetherPortal = copy(orientation = orientation)

@@ -9,9 +9,10 @@ case class Wood(
   material: WoodMaterial,
   stripped: Boolean
 ) extends MaterialBlock[WoodMaterial] {
-  override val kind = BlockType.WOOD
 
   /* Java interop */
+
+  override val `type` = BlockType.WOOD
 
   def withStripped(stripped: Boolean): Wood = copy(stripped = stripped)
 

@@ -10,9 +10,10 @@ case class MobHead(
   direction: Option[BlockFace],
   rotation: Option[BlockRotation]
 ) extends VariedBlock[MobHeadVariant] with DirectableBlock with RotatableBlock {
-  override val kind = BlockType.MOB_HEAD
 
   /* Java interop */
+
+  override val `type` = BlockType.MOB_HEAD
 
   override def withLocation(loc: BlockLocation): MobHead = copy(location = loc)
   override def withVariant(variant: MobHeadVariant): MobHead = copy(variant = variant)

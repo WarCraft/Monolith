@@ -10,9 +10,10 @@ case class Comparator(
   direction: BlockFace,
   powered: Boolean
 ) extends VariedBlock[ComparatorVariant] with DirectedBlock with PowerableBlock {
-  override val kind = BlockType.COMPARATOR
 
   /* Java interop */
+
+  override val `type` = BlockType.COMPARATOR
 
   override def withLocation(loc: BlockLocation): Comparator = copy(location = loc)
   override def withVariant(variant: ComparatorVariant): Comparator = copy(variant = variant)

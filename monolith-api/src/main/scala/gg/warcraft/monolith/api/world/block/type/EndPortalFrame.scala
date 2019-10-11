@@ -8,9 +8,10 @@ case class EndPortalFrame(
   direction: BlockFace,
   eye: Boolean
 ) extends DirectedBlock {
-  override val kind = BlockType.END_PORTAL_FRAME
 
   /* Java interop */
+
+  override val `type` = BlockType.END_PORTAL_FRAME
 
   def withEye(eye: Boolean): EndPortalFrame = copy(eye = eye)
 

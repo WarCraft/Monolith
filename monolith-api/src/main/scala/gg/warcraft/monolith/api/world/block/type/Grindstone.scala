@@ -8,9 +8,10 @@ case class Grindstone(
   direction: BlockFace,
   attachment: BlockAttachment
 ) extends DirectedBlock with AttachedBlock {
-  override val kind = BlockType.GRINDSTONE
 
   /* Java interop */
+
+  override val `type` = BlockType.GRINDSTONE
 
   override def withLocation(loc: BlockLocation): Grindstone = copy(location = loc)
   override def withDirection(dir: BlockFace): Grindstone = copy(direction = dir)

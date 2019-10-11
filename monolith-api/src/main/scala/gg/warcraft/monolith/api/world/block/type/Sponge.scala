@@ -7,9 +7,10 @@ case class Sponge(
   location: BlockLocation,
   wet: Boolean
 ) extends Block {
-  override val kind = BlockType.SPONGE
 
   /* Java interop */
+
+  override val `type` = BlockType.SPONGE
 
   def withWet(wet: Boolean): Sponge = copy(wet = wet)
 

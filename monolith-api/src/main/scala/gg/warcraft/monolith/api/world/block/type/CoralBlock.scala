@@ -8,9 +8,10 @@ case class CoralBlock(
   location: BlockLocation,
   variant: CoralVariant
 ) extends VariedBlock[CoralVariant] {
-  override val kind = BlockType.CORAL_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.CORAL_BLOCK
 
   override def withLocation(loc: BlockLocation): CoralBlock = copy(location = loc)
   override def withVariant(mat: CoralVariant): CoralBlock = copy(variant = variant)

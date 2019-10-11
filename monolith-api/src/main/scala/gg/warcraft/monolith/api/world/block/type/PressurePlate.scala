@@ -8,9 +8,10 @@ case class PressurePlate(
   material: PressurePlateMaterial,
   powered: Boolean
 ) extends MaterialBlock[PressurePlateMaterial] with PowerableBlock {
-  override val kind = BlockType.PRESSURE_PLATE
 
   /* Java interop */
+
+  override val `type` = BlockType.PRESSURE_PLATE
 
   override def withLocation(loc: BlockLocation): PressurePlate = copy(location = loc)
   override def withMaterial(mat: PressurePlateMaterial): PressurePlate = copy(material = mat)

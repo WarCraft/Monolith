@@ -8,10 +8,11 @@ case class Grass(
   section: BlockBisection,
   tall: Boolean
 ) extends BisectedBlock {
-  override val kind = BlockType.GRASS
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.GRASS
 
   def withTall(tall: Boolean): Grass = copy(tall = tall)
 

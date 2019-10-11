@@ -10,10 +10,11 @@ case class CoralFan(
   direction: Option[BlockFace],
   flooded: Boolean
 ) extends VariedBlock[CoralVariant] with DirectableBlock with FloodableBlock {
-  override val kind = BlockType.CORAL_FAN
   override val solid: Boolean = false
 
   /* Java interop */
+
+  override val `type` = BlockType.CORAL_FAN
 
   override def withLocation(loc: BlockLocation): CoralFan = copy(location = loc)
   override def withVariant(variant: CoralVariant): CoralFan = copy(variant = variant)

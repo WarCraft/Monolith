@@ -7,9 +7,10 @@ case class EndRod(
   location: BlockLocation,
   direction: BlockFace
 ) extends DirectedBlock {
-  override val kind = BlockType.END_ROD
 
   /* Java interop */
+
+  override val `type` = BlockType.END_ROD
 
   override def withLocation(loc: BlockLocation): EndRod = copy(location = loc)
   override def withDirection(dir: BlockFace): EndRod = copy(direction = dir)

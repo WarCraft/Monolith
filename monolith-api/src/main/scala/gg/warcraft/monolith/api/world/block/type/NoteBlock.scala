@@ -11,9 +11,10 @@ case class NoteBlock(
   state: NoteBlockState,
   powered: Boolean
 ) extends VariedBlock[NoteBlockVariant] with StatefulBlock[NoteBlockState] with PowerableBlock {
-  override val kind = BlockType.NOTE_BLOCK
 
   /* Java interop */
+
+  override val `type` = BlockType.NOTE_BLOCK
 
   override def withLocation(loc: BlockLocation): NoteBlock = copy(location = loc)
   override def withVariant(variant: NoteBlockVariant): NoteBlock = copy(variant = variant)
