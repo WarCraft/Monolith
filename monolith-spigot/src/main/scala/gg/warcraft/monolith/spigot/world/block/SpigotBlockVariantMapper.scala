@@ -455,7 +455,16 @@ class SpigotBlockVariantMapper {
       case SandstoneVariant.SMOOTH   => Material.SMOOTH_RED_SANDSTONE
     }
 
-    // SAPLING TODO
+    // SAPLING
+    case Sapling(_, variant, _) => variant match {
+      case SaplingVariant.BAMBOO   => Material.BAMBOO_SAPLING
+      case SaplingVariant.ACACIA   => Material.ACACIA_SAPLING
+      case SaplingVariant.BIRCH    => Material.BIRCH_SAPLING
+      case SaplingVariant.DARK_OAK => Material.DARK_OAK_SAPLING
+      case SaplingVariant.JUNGLE   => Material.JUNGLE_SAPLING
+      case SaplingVariant.OAK      => Material.OAK_SAPLING
+      case SaplingVariant.SPRUCE   => Material.SPRUCE_SAPLING
+    }
 
     // STONE
     case Stone(_, StoneMaterial.STONE, variant) => variant match {
