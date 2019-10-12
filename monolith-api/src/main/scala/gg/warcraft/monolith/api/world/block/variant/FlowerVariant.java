@@ -1,8 +1,9 @@
 package gg.warcraft.monolith.api.world.block.variant;
 
 import gg.warcraft.monolith.api.world.block.FlowerPotVariant;
+import gg.warcraft.monolith.api.world.item.ItemVariant;
 
-public enum FlowerVariant implements FlowerPotVariant {
+public enum FlowerVariant implements FlowerPotVariant, ItemVariant {
     ALLIUM,
     AZURE_BLUET,
     BLUE_ORCHID,
@@ -17,3 +18,5 @@ public enum FlowerVariant implements FlowerPotVariant {
     WHITE_TULIP,
     WITHER_ROSE,
 }
+
+// TODO where is LILAC and other large plants?

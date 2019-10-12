@@ -1,27 +1,25 @@
 package gg.warcraft.monolith.api.world.block
 
+import gg.warcraft.monolith.api.world.item.ItemMaterial
+
 trait BlockMaterial
 
-trait ButtonMaterial extends BlockMaterial
+trait ButtonMaterial extends BlockMaterial with ItemMaterial
 
-trait DoorMaterial extends BlockMaterial
+trait DoorMaterial extends BlockMaterial with ItemMaterial
 
-trait FenceMaterial extends BlockMaterial
+trait FenceMaterial extends BlockMaterial with ItemMaterial
 
-trait InfestedMaterial extends BlockMaterial
+trait InfestedMaterial extends BlockMaterial with ItemMaterial
 
-trait MineralMaterial extends BlockMaterial
+trait PillarMaterial extends BlockMaterial with ItemMaterial
 
-trait OreMaterial extends BlockMaterial
+trait PressurePlateMaterial extends BlockMaterial with ItemMaterial
 
-trait PillarMaterial extends BlockMaterial
+trait SlabMaterial extends BlockMaterial with ItemMaterial
 
-trait PressurePlateMaterial extends BlockMaterial
+trait StairsMaterial extends BlockMaterial with ItemMaterial
 
-trait SlabMaterial extends BlockMaterial
+trait TrapdoorMaterial extends BlockMaterial with ItemMaterial
 
-trait StairsMaterial extends BlockMaterial
-
-trait TrapdoorMaterial extends BlockMaterial
-
-trait WallMaterial extends BlockMaterial
+trait WallMaterial extends BlockMaterial with ItemMaterial
