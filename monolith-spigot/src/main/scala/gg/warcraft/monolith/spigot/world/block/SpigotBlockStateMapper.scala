@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.`type`._
+import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.state._
 import org.bukkit.{Note => SpigotNote}
 import org.bukkit.Material

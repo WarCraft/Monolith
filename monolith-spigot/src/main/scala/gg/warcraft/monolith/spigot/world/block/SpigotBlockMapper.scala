@@ -2,7 +2,7 @@ package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.`type`._
+import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._

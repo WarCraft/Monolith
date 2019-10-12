@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.`type`._
+import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial, PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial, WoodMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material

@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.world.block.{
   ColorableBlock,
   ColoredBlock
 }
-import gg.warcraft.monolith.api.world.block.`type`._
+import gg.warcraft.monolith.api.world.block._
 import org.bukkit.Material
 
 class SpigotBlockColorMapper {

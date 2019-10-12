@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.`type`._
+import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state.KelpState
 import javax.inject.Inject
@@ -38,7 +38,7 @@ class SpigotBlockMaterialMapper @Inject()(
     // INFESTED_BLOCK
     case it if it $is "INFESTED_COBBLESTONE" => CobblestoneMaterial.COBBLESTONE
     case it if it $is "INFESTED_STONE_BRICK" => StoneMaterial.STONE_BRICK
-    case it if it $is "INFESTED_STONE" => StoneMaterial.STONE
+    case it if it $is "INFESTED_STONE"       => StoneMaterial.STONE
 
     // IRON
     case Material.IRON_DOOR => IronMaterial.IRON
@@ -55,14 +55,14 @@ class SpigotBlockMaterialMapper @Inject()(
     case it if it is "QUARTZ" => QuartzMaterial.QUARTZ
 
     // RESOURCE
-    case it if it $is "COAL"          => ResourceMaterial.COAL
-    case it if it $is "DIAMOND"       => ResourceMaterial.DIAMOND
-    case it if it $is "EMERALD"       => ResourceMaterial.EMERALD
-    case it if it $is "GOLD"          => ResourceMaterial.GOLD
-    case it if it $is "IRON"          => ResourceMaterial.IRON
-    case it if it $is "LAPIS"         => ResourceMaterial.LAPIS_LAZULI
-    case it if it $is "NETHER_QUARTZ" => ResourceMaterial.NETHER_QUARTZ
-    case it if it $is "REDSTONE"      => ResourceMaterial.REDSTONE
+    case it if it $is "COAL"          => MineralMaterial.COAL
+    case it if it $is "DIAMOND"       => MineralMaterial.DIAMOND
+    case it if it $is "EMERALD"       => MineralMaterial.EMERALD
+    case it if it $is "GOLD"          => MineralMaterial.GOLD
+    case it if it $is "IRON"          => MineralMaterial.IRON
+    case it if it $is "LAPIS"         => MineralMaterial.LAPIS
+    case it if it $is "NETHER_QUARTZ" => MineralMaterial.QUARTZ
+    case it if it $is "REDSTONE"      => MineralMaterial.REDSTONE
 
     // SAND
     case Material.SAND      => SandMaterial.SAND
@@ -291,24 +291,24 @@ class SpigotBlockMaterialMapper @Inject()(
 
     case it: Mineral =>
       it.material match {
-        case ResourceMaterial.COAL          => Material.COAL_BLOCK
-        case ResourceMaterial.DIAMOND       => Material.DIAMOND_BLOCK
-        case ResourceMaterial.EMERALD       => Material.EMERALD_BLOCK
-        case ResourceMaterial.GOLD          => Material.GOLD_BLOCK
-        case ResourceMaterial.IRON          => Material.IRON_BLOCK
-        case ResourceMaterial.LAPIS_LAZULI  => Material.LAPIS_BLOCK
-        case ResourceMaterial.NETHER_QUARTZ => Material.QUARTZ_BLOCK
+        case MineralMaterial.COAL          => Material.COAL_BLOCK
+        case MineralMaterial.DIAMOND       => Material.DIAMOND_BLOCK
+        case MineralMaterial.EMERALD       => Material.EMERALD_BLOCK
+        case MineralMaterial.GOLD          => Material.GOLD_BLOCK
+        case MineralMaterial.IRON          => Material.IRON_BLOCK
+        case MineralMaterial.LAPIS         => Material.LAPIS_BLOCK
+        case MineralMaterial.QUARTZ        => Material.QUARTZ_BLOCK
       }
 
     case it: Ore =>
       it.material match {
-        case ResourceMaterial.COAL          => Material.COAL_ORE
-        case ResourceMaterial.DIAMOND       => Material.DIAMOND_ORE
-        case ResourceMaterial.EMERALD       => Material.EMERALD_ORE
-        case ResourceMaterial.GOLD          => Material.GOLD_ORE
-        case ResourceMaterial.IRON          => Material.IRON_ORE
-        case ResourceMaterial.LAPIS_LAZULI  => Material.LAPIS_ORE
-        case ResourceMaterial.NETHER_QUARTZ => Material.NETHER_QUARTZ_ORE
+        case MineralMaterial.COAL          => Material.COAL_ORE
+        case MineralMaterial.DIAMOND       => Material.DIAMOND_ORE
+        case MineralMaterial.EMERALD       => Material.EMERALD_ORE
+        case MineralMaterial.GOLD          => Material.GOLD_ORE
+        case MineralMaterial.IRON          => Material.IRON_ORE
+        case MineralMaterial.LAPIS         => Material.LAPIS_ORE
+        case MineralMaterial.QUARTZ        => Material.NETHER_QUARTZ_ORE
       }
 
     case it: Pillar =>
