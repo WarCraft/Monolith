@@ -3,7 +3,6 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state.KelpState
 import javax.inject.Inject
@@ -54,16 +53,6 @@ class SpigotBlockMaterialMapper @Inject()(
     // QUARTZ
     case it if it is "QUARTZ" => QuartzMaterial.QUARTZ
 
-    // RESOURCE
-    case it if it $is "COAL"          => MineralMaterial.COAL
-    case it if it $is "DIAMOND"       => MineralMaterial.DIAMOND
-    case it if it $is "EMERALD"       => MineralMaterial.EMERALD
-    case it if it $is "GOLD"          => MineralMaterial.GOLD
-    case it if it $is "IRON"          => MineralMaterial.IRON
-    case it if it $is "LAPIS"         => MineralMaterial.LAPIS
-    case it if it $is "NETHER_QUARTZ" => MineralMaterial.QUARTZ
-    case it if it $is "REDSTONE"      => MineralMaterial.REDSTONE
-
     // SAND
     case Material.SAND      => SandMaterial.SAND
     case Material.RED_SAND  => SandMaterial.RED_SAND
@@ -102,7 +91,7 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Beetroots        => Material.BEETROOTS
     case _: Bell             => Material.BELL
     case _: BlastFurnace     => Material.BLAST_FURNACE
-    case _: BoneBlock        => Material.BONE_BLOCK
+    case _: Bone             => Material.BONE_BLOCK
     case _: Bookshelf        => Material.BOOKSHELF
     case _: BrewingStand     => Material.BREWING_STAND
     case _: Brick            => Material.BRICK
@@ -116,19 +105,25 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: ChorusFlower     => Material.CHORUS_FLOWER
     case _: ChorusPlant      => Material.CHORUS_PLANT
     case _: Clay             => Material.CLAY
+    case _: Coal             => Material.COAL_BLOCK
+    case _: CoalOre          => Material.COAL_ORE
     case _: Cobweb           => Material.COBWEB
-    case _: CocoaPod            => Material.COCOA
+    case _: CocoaPod         => Material.COCOA
     case _: Comparator       => Material.COMPARATOR
     case _: Composter        => Material.COMPOSTER
     case _: Conduit          => Material.CONDUIT
     case _: CraftingTable    => Material.CRAFTING_TABLE
     case _: DaylightDetector => Material.DAYLIGHT_DETECTOR
     case _: DeadBush         => Material.DEAD_BUSH
+    case _: Diamond          => Material.DIAMOND_BLOCK
+    case _: DiamondOre       => Material.DIAMOND_ORE
     case _: Dirt             => Material.DIRT
     case _: Dispenser        => Material.DISPENSER
     case _: DragonEgg        => Material.DRAGON_EGG
     case _: DriedKelp        => Material.DRIED_KELP_BLOCK
     case _: Dropper          => Material.DROPPER
+    case _: Emerald          => Material.EMERALD_BLOCK
+    case _: EmeraldOre       => Material.EMERALD_ORE
     case _: EnchantingTable  => Material.ENCHANTING_TABLE
     case _: EndGateway       => Material.END_GATEWAY
     case _: EndPortal        => Material.END_PORTAL
@@ -139,17 +134,23 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: FletchingTable   => Material.FLETCHING_TABLE
     case _: Furnace          => Material.FURNACE
     case _: Glowstone        => Material.GLOWSTONE
+    case _: Gold             => Material.GOLD_BLOCK
+    case _: GoldOre          => Material.GOLD_ORE
     case _: GrassBlock       => Material.GRASS_BLOCK
     case _: GrassPath        => Material.GRASS_PATH
     case _: Gravel           => Material.GRAVEL
     case _: Grindstone       => Material.GRINDSTONE
     case _: HayBale          => Material.HAY_BLOCK
     case _: Hopper           => Material.HOPPER
+    case _: Iron             => Material.IRON_BLOCK
     case _: IronBars         => Material.IRON_BARS
+    case _: IronOre          => Material.IRON_ORE
     case _: Jigsaw           => Material.JIGSAW
     case _: Jukebox          => Material.JUKEBOX
     case _: Ladder           => Material.LADDER
     case _: Lantern          => Material.LANTERN
+    case _: Lapis            => Material.LAPIS_BLOCK
+    case _: LapisOre         => Material.LAPIS_ORE
     case _: Lava             => Material.LAVA
     case _: Lectern          => Material.LECTERN
     case _: Lever            => Material.LEVER
@@ -173,13 +174,16 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: PumpkinStem      => Material.PUMPKIN_STEM
     case _: Purpur           => Material.PURPUR_BLOCK
     case _: Quartz           => Material.QUARTZ_BLOCK
+    case _: QuartzOre        => Material.NETHER_QUARTZ_ORE
+    case _: Redstone         => Material.REDSTONE_BLOCK
     case _: RedstoneLamp     => Material.REDSTONE_LAMP
+    case _: RedstoneOre      => Material.REDSTONE_ORE
     case _: RedstoneWire     => Material.REDSTONE_WIRE
     case _: Repeater         => Material.REPEATER
     case _: Scaffold         => Material.SCAFFOLDING
     case _: SeaLantern       => Material.SEA_LANTERN
     case _: SeaPickle        => Material.SEA_PICKLE
-    case _: SlimeBlock       => Material.SLIME_BLOCK
+    case _: Slime       => Material.SLIME_BLOCK
     case _: SmithingTable    => Material.SMITHING_TABLE
     case _: Smoker           => Material.SMOKER
     case _: Snow             => Material.SNOW
@@ -287,28 +291,6 @@ class SpigotBlockMaterialMapper @Inject()(
           case WoodMaterial.OAK      => Material.OAK_LOG
           case WoodMaterial.SPRUCE   => Material.SPRUCE_LOG
         }
-      }
-
-    case it: Mineral =>
-      it.material match {
-        case MineralMaterial.COAL          => Material.COAL_BLOCK
-        case MineralMaterial.DIAMOND       => Material.DIAMOND_BLOCK
-        case MineralMaterial.EMERALD       => Material.EMERALD_BLOCK
-        case MineralMaterial.GOLD          => Material.GOLD_BLOCK
-        case MineralMaterial.IRON          => Material.IRON_BLOCK
-        case MineralMaterial.LAPIS         => Material.LAPIS_BLOCK
-        case MineralMaterial.QUARTZ        => Material.QUARTZ_BLOCK
-      }
-
-    case it: Ore =>
-      it.material match {
-        case MineralMaterial.COAL          => Material.COAL_ORE
-        case MineralMaterial.DIAMOND       => Material.DIAMOND_ORE
-        case MineralMaterial.EMERALD       => Material.EMERALD_ORE
-        case MineralMaterial.GOLD          => Material.GOLD_ORE
-        case MineralMaterial.IRON          => Material.IRON_ORE
-        case MineralMaterial.LAPIS         => Material.LAPIS_ORE
-        case MineralMaterial.QUARTZ        => Material.NETHER_QUARTZ_ORE
       }
 
     case it: Pillar =>

@@ -94,7 +94,7 @@ class SpigotBlockMapper @Inject()(
       case Material.BEETROOTS           => Beetroots(loc, stateAs[BeetrootState])
       case Material.BELL                => Bell(loc, dir)
       case Material.BLAST_FURNACE       => BlastFurnace(loc, dir, lit)
-      case Material.BONE_BLOCK          => BoneBlock(loc, orientation)
+      case Material.BONE_BLOCK          => Bone(loc, orientation)
       case Material.BOOKSHELF           => Bookshelf(loc)
       case Material.BREWING_STAND       => BrewingStand(loc)
       case Material.CACTUS              => Cactus(loc, stateAs[CactusState])
@@ -104,6 +104,8 @@ class SpigotBlockMapper @Inject()(
       case Material.CAULDRON            => Cauldron(loc, stateAs[CauldronState])
       case Material.CHORUS_PLANT        => ChorusPlant(loc, extensions)
       case Material.CLAY                => Clay(loc)
+      case Material.COAL_BLOCK          => Coal(loc)
+      case Material.COAL_ORE            => CoalOre(loc)
       case Material.COBWEB              => Cobweb(loc)
       case Material.COCOA               => CocoaPod(loc, stateAs[CocoaState], dir)
       case Material.COMPOSTER           => Composter(loc, stateAs[ComposterState])
@@ -111,10 +113,14 @@ class SpigotBlockMapper @Inject()(
       case Material.CRAFTING_TABLE      => CraftingTable(loc)
       case Material.DAYLIGHT_DETECTOR   => DaylightDetector(loc)
       case Material.DEAD_BUSH           => DeadBush(loc)
+      case Material.DIAMOND_BLOCK       => Diamond(loc)
+      case Material.DIAMOND_ORE         => DiamondOre(loc)
       case Material.DISPENSER           => Dispenser(loc, dir, powered)
       case Material.DRAGON_EGG          => DragonEgg(loc)
       case Material.DRIED_KELP_BLOCK    => DriedKelp(loc)
       case Material.DROPPER             => Dropper(loc, dir, powered)
+      case Material.EMERALD_BLOCK       => Emerald(loc)
+      case Material.EMERALD_ORE         => EmeraldOre(loc)
       case Material.ENCHANTING_TABLE    => EnchantingTable(loc)
       case Material.END_GATEWAY         => EndGateway(loc)
       case Material.END_PORTAL          => EndPortal(loc)
@@ -127,14 +133,20 @@ class SpigotBlockMapper @Inject()(
       case Material.FROSTED_ICE         => Frost(loc, stateAs[FrostState])
       case Material.FURNACE             => Furnace(loc, dir, lit)
       case Material.GLOWSTONE           => Glowstone(loc)
+      case Material.GOLD_BLOCK          => Gold(loc)
+      case Material.GOLD_ORE            => GoldOre(loc)
       case Material.GRASS_BLOCK         => GrassBlock(loc, snowy)
       case Material.GRASS_PATH          => GrassPath(loc)
       case Material.GRAVEL              => Gravel(loc)
       case Material.GRINDSTONE          => Grindstone(loc, dir, attached)
       case Material.HAY_BLOCK           => HayBale(loc, orientation)
+      case Material.IRON_BLOCK          => Iron(loc)
       case Material.IRON_BARS           => IronBars(loc, extensions, flooded)
+      case Material.IRON_ORE            => IronOre(loc)
       case Material.JIGSAW              => Jigsaw(loc, dir)
       case Material.LADDER              => Ladder(loc, dir, flooded)
+      case Material.LAPIS_BLOCK         => Lapis(loc)
+      case Material.LAPIS_ORE           => LapisOre(loc)
       case Material.LAVA                => Lava(loc, stateAs[LavaState])
       case Material.LEVER               => Lever(loc, dir, attached, powered)
       case Material.LILY_PAD            => LilyPad(loc)
@@ -151,12 +163,15 @@ class SpigotBlockMapper @Inject()(
       case Material.PODZOL              => Podzol(loc, snowy)
       case Material.POTATOES            => Potatoes(loc, stateAs[PotatoState])
       case Material.PURPUR_BLOCK        => Purpur(loc)
+      case Material.NETHER_QUARTZ_ORE   => QuartzOre(loc)
+      case Material.REDSTONE_BLOCK      => Redstone(loc)
       case Material.REDSTONE_LAMP       => RedstoneLamp(loc, lit)
+      case Material.REDSTONE_ORE        => RedstoneOre(loc)
       case Material.REDSTONE_TORCH      => RedstoneTorch(loc, None, lit)
       case Material.REDSTONE_WALL_TORCH => RedstoneTorch(loc, Some(dir), lit)
       case Material.SCAFFOLDING         => Scaffold(loc)
       case Material.SEA_LANTERN         => SeaLantern(loc)
-      case Material.SLIME_BLOCK         => SlimeBlock(loc)
+      case Material.SLIME_BLOCK         => Slime(loc)
       case Material.SMITHING_TABLE      => SmithingTable(loc)
       case Material.SMOKER              => Smoker(loc, dir, lit)
       case Material.SNOW                => Snow(loc)
@@ -476,13 +491,6 @@ class SpigotBlockMapper @Inject()(
       case Material.ATTACHED_MELON_STEM =>
         MelonStem(loc, stateAs[MelonStemState], Some(dir))
 
-      // MINERAL
-      case Material.COAL_BLOCK | Material.DIAMOND_BLOCK |
-          Material.EMERALD_BLOCK | Material.GOLD_BLOCK | Material.IRON_BLOCK |
-          Material.LAPIS_BLOCK | Material.QUARTZ_BLOCK |
-          Material.REDSTONE_BLOCK =>
-        Mineral(loc, materialAs[MineralMaterial])
-
       // MOB_HEAD
       case Material.CREEPER_HEAD | Material.DRAGON_HEAD | Material.PLAYER_HEAD |
           Material.SKELETON_SKULL | Material.WITHER_SKELETON_SKULL |
@@ -507,12 +515,6 @@ class SpigotBlockMapper @Inject()(
         val _variant = variantAs[NoteBlockVariant]
         val _state = stateAs[NoteBlockState]
         NoteBlock(loc, _variant, _state, powered)
-
-      // ORE
-      case Material.COAL_ORE | Material.DIAMOND_ORE | Material.EMERALD_ORE |
-          Material.GOLD_ORE | Material.IRON_ORE | Material.LAPIS_ORE |
-          Material.NETHER_QUARTZ_ORE | Material.REDSTONE_ORE =>
-        Ore(loc, materialAs[OreMaterial])
 
       // PILLAR
       case Material.PURPUR_PILLAR | Material.QUARTZ_PILLAR =>
