@@ -117,7 +117,7 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: ChorusPlant      => Material.CHORUS_PLANT
     case _: Clay             => Material.CLAY
     case _: Cobweb           => Material.COBWEB
-    case _: Cocoa            => Material.COCOA
+    case _: CocoaPod            => Material.COCOA
     case _: Comparator       => Material.COMPARATOR
     case _: Composter        => Material.COMPOSTER
     case _: Conduit          => Material.CONDUIT

@@ -9,7 +9,6 @@ import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandSer
 import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupRepository;
 import gg.warcraft.monolith.app.world.block.backup.SimpleBlockBackup;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
-import gg.warcraft.monolith.spigot.world.block.SpigotBlockTypeMapper;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -26,18 +25,15 @@ public class SpigotBlockBackupCommandService implements BlockBackupCommandServic
 
     private final BlockBackupRepository blockBackupRepository;
     private final SpigotLocationMapper locationMapper;
-    private final SpigotBlockTypeMapper blockTypeMapper;
     private final Plugin plugin;
     private final Logger pluginLogger;
 
     @Inject
     public SpigotBlockBackupCommandService(BlockBackupRepository blockBackupRepository,
                                            SpigotLocationMapper locationMapper,
-                                           SpigotBlockTypeMapper blockTypeMapper,
                                            Plugin plugin, @PluginLogger Logger pluginLogger) {
         this.blockBackupRepository = blockBackupRepository;
         this.locationMapper = locationMapper;
-        this.blockTypeMapper = blockTypeMapper;
         this.plugin = plugin;
         this.pluginLogger = pluginLogger;
     }

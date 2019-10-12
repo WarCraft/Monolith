@@ -105,7 +105,7 @@ class SpigotBlockMapper @Inject()(
       case Material.CHORUS_PLANT        => ChorusPlant(loc, extensions)
       case Material.CLAY                => Clay(loc)
       case Material.COBWEB              => Cobweb(loc)
-      case Material.COCOA               => Cocoa(loc, stateAs[CocoaState], dir)
+      case Material.COCOA               => CocoaPod(loc, stateAs[CocoaState], dir)
       case Material.COMPOSTER           => Composter(loc, stateAs[ComposterState])
       case Material.CONDUIT             => Conduit(loc, flooded)
       case Material.CRAFTING_TABLE      => CraftingTable(loc)

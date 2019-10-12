@@ -143,6 +143,8 @@ final case class BubbleColumn(
     drag: Boolean
 ) extends Block {
   override val `type` = BlockType.BUBBLE_COLUMN
+  override val solid: Boolean = false
+  override val liquid: Boolean = true
   def withDrag(drag: Boolean): BubbleColumn =
     copyWith("drag", drag)
 }
@@ -200,6 +202,7 @@ final case class Carrots(
     state: CarrotState
 ) extends StatefulBlock[CarrotState] {
   override val `type` = BlockType.CARROTS
+  override val solid: Boolean = false
 }
 
 final case class CartographyTable(
@@ -257,13 +260,14 @@ final case class Cobweb(
   override val `type` = BlockType.COBWEB
 }
 
-final case class Cocoa(
+final case class CocoaPod(
     location: BlockLocation,
     state: CocoaState,
     direction: BlockFace
 ) extends StatefulBlock[CocoaState]
     with DirectedBlock {
-  override val `type` = BlockType.COCOA
+  override val `type` = BlockType.COCOA_POD
+  override val solid: Boolean = false
 }
 
 final case class CommandBlock(
@@ -689,6 +693,8 @@ final case class Kelp(
     state: KelpState
 ) extends StatefulBlock[KelpState] {
   override val `type` = BlockType.KELP
+  override val solid: Boolean = false
+  override val liquid: Boolean = true
 }
 
 final case class Ladder(
@@ -723,6 +729,7 @@ final case class Leaves(
     material: WoodMaterial
 ) extends MaterialBlock[WoodMaterial] {
   override val `type` = BlockType.LEAVES
+  override val solid: Boolean = false
 }
 
 // NOTE book is read-only in Spigot
@@ -751,6 +758,7 @@ final case class LilyPad(
     location: BlockLocation
 ) extends Block {
   override val `type` = BlockType.LILY_PAD
+  override val solid: Boolean = false
 }
 
 final case class Log(
@@ -994,6 +1002,7 @@ final case class Rails(
     with ShapedBlock[RailsShape]
     with PowerableBlock {
   override val `type` = BlockType.RAILS
+  override val solid: Boolean = false
 }
 
 final case class RedstoneLamp(
@@ -1010,6 +1019,7 @@ final case class RedstoneTorch(
 ) extends DirectableBlock
     with LightableBlock {
   override val `type` = BlockType.REDSTONE_TORCH
+  override val solid: Boolean = false
 }
 
 // TODO add NESW connections
@@ -1018,6 +1028,7 @@ final case class RedstoneWire(
     state: RedstoneWireState
 ) extends StatefulBlock[RedstoneWireState] {
   override val `type` = BlockType.REDSTONE_WIRE
+  override val solid: Boolean = false
 }
 
 final case class Repeater(
@@ -1058,6 +1069,7 @@ final case class Sapling(
 ) extends VariedBlock[SaplingVariant]
     with StatefulBlock[SaplingState] {
   override val `type` = BlockType.SAPLING
+  override val solid: Boolean = false
 }
 
 final case class Scaffold(
@@ -1072,6 +1084,8 @@ final case class Seagrass(
     tall: Boolean
 ) extends BisectedBlock {
   override val `type` = BlockType.SEAGRASS
+  override val solid: Boolean = false
+  override val liquid: Boolean = true
   def withTall(tall: Boolean): Seagrass =
     copyWith("tall", tall)
 }
@@ -1089,6 +1103,7 @@ final case class SeaPickle(
 ) extends StatefulBlock[SeaPickleState]
     with FloodableBlock {
   override val `type` = BlockType.SEA_PICKLE
+  override val solid: Boolean = false
 }
 
 final case class ShulkerBox(
@@ -1154,6 +1169,7 @@ final case class Snow(
     location: BlockLocation
 ) extends Block {
   override val `type` = BlockType.SNOW
+  override val solid: Boolean = false
 }
 
 final case class SnowBlock(
@@ -1237,6 +1253,7 @@ final case class SugarCane(
     state: SugarCaneState
 ) extends StatefulBlock[SugarCaneState] {
   override val `type` = BlockType.SUGAR_CANE
+  override val solid: Boolean = false
 }
 
 final case class SweetBerryBush(
@@ -1269,6 +1286,7 @@ final case class Torch(
     wall: Boolean
 ) extends DirectedBlock {
   override val `type` = BlockType.TORCH
+  override val solid: Boolean = false
   def withWall(wall: Boolean): Torch =
     copyWith("wall", wall) // TODO this is superseded by direction?
 }
@@ -1288,6 +1306,7 @@ final case class Trapdoor(
     with FloodableBlock
     with OpenableBlock {
   override val `type` = BlockType.TRAPDOOR
+  override val solid: Boolean = false
 }
 
 final case class TurtleEgg(
@@ -1295,6 +1314,7 @@ final case class TurtleEgg(
     state: TurtleEggState
 ) extends StatefulBlock[TurtleEggState] {
   override val `type` = BlockType.TURTLE_EGG
+  override val solid: Boolean = false
 }
 
 final case class Vine(
@@ -1302,6 +1322,7 @@ final case class Vine(
     extensions: Set[BlockFace]
 ) extends ExtendableBlock {
   override val `type` = BlockType.VINE
+  override val solid: Boolean = false
 }
 
 final case class Wall(
@@ -1338,6 +1359,7 @@ final case class Wheat(
     state: WheatState
 ) extends StatefulBlock[WheatState] {
   override val `type` = BlockType.WHEAT
+  override val solid: Boolean = false
 }
 
 final case class Wood(
