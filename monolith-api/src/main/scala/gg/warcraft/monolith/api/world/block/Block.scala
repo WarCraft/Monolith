@@ -57,6 +57,7 @@ trait ExtendableBlock extends Block {
 
 trait FloodableBlock extends Block {
   val flooded: Boolean
+  override val liquid: Boolean = flooded
   def withFlooded(flooded: Boolean): this.type =
     copyWith("flooded", flooded)
 }
