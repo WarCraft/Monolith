@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.item
 
-import gg.warcraft.monolith.api.util.JavaInterop
+import gg.warcraft.monolith.api.util.JavaCaseInterop
 
-trait Item extends JavaInterop {
+trait Item extends JavaCaseInterop {
   val `type`: ItemType
 
   val name: String
