@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.item
 
-import gg.warcraft.monolith.api.util.JavaCaseInterop
+import gg.warcraft.monolith.api.core.JavaCaseInterop
 
 trait Item extends JavaCaseInterop {
   val `type`: ItemType
@@ -9,51 +9,67 @@ trait Item extends JavaCaseInterop {
   def withName(name: String): this.type =
     copyWith("name", name)
 
-  val count: Int
-  def withCount(count: Int): this.type =
-    copyWith("count", count)
-
-  val durability: Int
-  def withDurability(durability: Int): this.type =
-    copyWith("durability", durability)
-
   val tooltip: Array[String]
   def withTooltip(tooltip: Array[String]): this.type =
     copyWith("tooltip", tooltip)
 }
 
+// TODO create ItemService/Utils that creates new items with set name and tooltip
+
 trait ColoredItem extends Item {
   val color: ItemColor
-  def withColor(color: ItemColor): ColoredItem =
+  def withColor(color: ItemColor): this.type =
     copyWith("color", color)
 }
 
 trait ColorableItem extends Item {
   val color: Option[ItemColor]
-  def withColor(color: Option[ItemColor]): ColorableItem =
+  def withColor(color: Option[ItemColor]): this.type =
     copyWith("color", color)
 }
 
 trait CookableItem extends Item {
   val cooked: Boolean
-  def withCooked(cooked: Boolean): CookableItem =
+  def withCooked(cooked: Boolean): this.type =
     copyWith("cooked", cooked)
+}
+
+trait DurableItem extends Item {
+  val durability: Int
+  val maxDurability: Int = 1
+  def withDurability(durability: Int): this.type =
+    copyWith("durability", durability)
+
+  require(durability > 0 && durability <= maxDurability, {
+    s"durability is $durability, must be > 0 and <= $maxDurability"
+  })
 }
 
 trait MaterialItem[T <: ItemMaterial] extends Item {
   val material: T
-  def withMaterial(material: T): MaterialItem[T] =
+  def withMaterial(material: T): this.type =
     copyWith("material", material)
+}
+
+trait StackableItem extends Item {
+  val stackSize: Int
+  val maxStackSize: Int = 64
+  def withStackSize(stackSize: Int): this.type =
+    copyWith("stackSize", stackSize)
+
+  require(stackSize > 0 && stackSize <= maxStackSize, {
+    s"stackSize is $stackSize, must be > 0 and <= $maxStackSize"
+  })
 }
 
 trait VariedItem[T <: ItemVariant] extends Item {
   val variant: T
-  def withVariant(variant: T): VariedItem[T] =
+  def withVariant(variant: T): this.type =
     copyWith("variant", variant)
 }
 
 trait VariableItem[T <: ItemVariant] extends Item {
   val variant: Option[T]
-  def withVariant(variant: Option[T]): VariableItem[T] =
+  def withVariant(variant: Option[T]): this.type =
     copyWith("variant", variant)
 }

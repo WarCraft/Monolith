@@ -1,31 +1,41 @@
 package gg.warcraft.monolith.api.world.item
 
-import gg.warcraft.monolith.api.world.item.`type`.SpawnEgg
-import gg.warcraft.monolith.api.world.item.variant.SpawnEggVariant
 import org.scalatest.{fixture, Outcome}
 
 class ItemSpec extends fixture.FunSpec {
-  type FixtureParam = SpawnEgg
+  type FixtureParam = PickAxe
 
   override def withFixture(test: OneArgTest): Outcome = {
-    val fixture = SpawnEgg("Spawn", Array(), 0, 0, SpawnEggVariant.BAT)
+    val fixture = PickAxe("Pick", Array(), 1)
     try test(fixture)
     finally {}
   }
 
-  describe("SpawnEgg") {
+  describe("PickAxe") {
 
     describe("::withName(String)") {
 
       it("creates a copy of itself with the new name") { fixture =>
         // Given
-        val expectedCopy = SpawnEgg("Egg", Array(), 0, 0, SpawnEggVariant.BAT)
+        val expectedCopy = PickAxe("Axe", Array(), 1)
 
         // When
-        val copy = fixture.withName("Egg")
+        val copy = fixture.withName("Axe")
 
         // Then
         assert(copy.name == expectedCopy.name)
+      }
+    }
+  }
+
+  describe("PickAxe") {
+
+    describe("::withDurability(Int)") {
+
+      it("should throw an illegal argument exception") { fixture =>
+        assertThrows[Throwable] {
+          fixture.withDurability(2)
+        }
       }
     }
   }
