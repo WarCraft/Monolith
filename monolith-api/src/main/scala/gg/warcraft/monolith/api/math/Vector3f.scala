@@ -63,11 +63,9 @@ object Vector3f {
     Vector3f(x.toFloat, y.toFloat, z.toFloat)
 
   def apply(pitch: Float, yaw: Float): Vector3f = {
-    if (pitch < -90f) {
-      throw new IllegalArgumentException(s"pitch $pitch must be >= -90")
-    } else if (pitch > 90f) {
-      throw new IllegalArgumentException(s"pitch $pitch must be <= 90")
-    }
+    require(pitch >= -90 && pitch <= 90, {
+      s"pitch is $pitch, must be >= -90 and <= 90"
+    })
 
     var clampedYaw = yaw
     while (clampedYaw < -180f) clampedYaw += 360f

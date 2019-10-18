@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.api.util
+package gg.warcraft.monolith.api.core
 
 trait JavaCaseInterop extends Product {
   protected def copyWith(field: String, value: Any): this.type = {
@@ -11,5 +11,17 @@ trait JavaCaseInterop extends Product {
     getClass.getConstructors.head
       .newInstance(values: _*)
       .asInstanceOf[this.type]
+  }
+
+  protected def copyWithConst(const: String, value: Any): this.type = {
+    val copy = copyWith("", null)
+    getClass.getDeclaredFields
+      .find(it => it.getName.split('.').last == const)
+      .foreach(it => {
+        it.setAccessible(true);
+        it.set(copy, value);
+        it.setAccessible(false);
+      })
+    copy
   }
 }

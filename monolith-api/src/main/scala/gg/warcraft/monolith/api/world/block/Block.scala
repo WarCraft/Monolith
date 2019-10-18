@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block
 
-import gg.warcraft.monolith.api.util.JavaCaseInterop
+import gg.warcraft.monolith.api.core.JavaCaseInterop
 import gg.warcraft.monolith.api.world.BlockLocation
 
 trait Block extends JavaCaseInterop {
