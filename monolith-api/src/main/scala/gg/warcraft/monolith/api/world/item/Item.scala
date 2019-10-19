@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.item
 
-import gg.warcraft.monolith.api.core.JavaCaseInterop
+import gg.warcraft.monolith.api.core.CaseClass
 
-trait Item extends JavaCaseInterop {
+trait Item extends CaseClass {
   val `type`: ItemType
 
   val name: String
@@ -13,8 +13,6 @@ trait Item extends JavaCaseInterop {
   def withTooltip(tooltip: Array[String]): this.type =
     copyWith("tooltip", tooltip)
 }
-
-// TODO create ItemService/Utils that creates new items with set name and tooltip
 
 trait ColoredItem extends Item {
   val color: ItemColor
@@ -36,10 +34,10 @@ trait CookableItem extends Item {
 
 trait DurableItem extends Item {
   val durability: Int
-  val maxDurability: Int = 1
   def withDurability(durability: Int): this.type =
     copyWith("durability", durability)
 
+  def maxDurability: Int
   require(durability > 0 && durability <= maxDurability, {
     s"durability is $durability, must be > 0 and <= $maxDurability"
   })
@@ -53,10 +51,10 @@ trait MaterialItem[T <: ItemMaterial] extends Item {
 
 trait StackableItem extends Item {
   val stackSize: Int
-  val maxStackSize: Int = 64
   def withStackSize(stackSize: Int): this.type =
     copyWith("stackSize", stackSize)
 
+  def maxStackSize: Int
   require(stackSize > 0 && stackSize <= maxStackSize, {
     s"stackSize is $stackSize, must be > 0 and <= $maxStackSize"
   })

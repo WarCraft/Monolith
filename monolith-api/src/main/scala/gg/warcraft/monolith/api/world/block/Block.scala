@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.api.world.block
 
-import gg.warcraft.monolith.api.core.JavaCaseInterop
+import gg.warcraft.monolith.api.core.CaseClass
 import gg.warcraft.monolith.api.world.BlockLocation
 
-trait Block extends JavaCaseInterop {
+trait Block extends CaseClass {
   val `type`: BlockType
   val solid: Boolean = true
   val liquid: Boolean = false
