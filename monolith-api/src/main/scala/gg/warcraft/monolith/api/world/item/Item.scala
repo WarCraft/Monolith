@@ -1,28 +1,25 @@
 package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.core.CaseClass
+import gg.warcraft.monolith.api.world.block.BlockColor
 
 trait Item extends CaseClass {
   val `type`: ItemType
 
-  val name: String
-  def withName(name: String): this.type =
-    copyWith("name", name)
-
-  val tooltip: Array[String]
-  def withTooltip(tooltip: Array[String]): this.type =
-    copyWith("tooltip", tooltip)
+  val data: ItemData
+  def withData(data: ItemData): this.type =
+    copyWith("data", data)
 }
 
 trait ColoredItem extends Item {
-  val color: ItemColor
-  def withColor(color: ItemColor): this.type =
+  val color: BlockColor
+  def withColor(color: BlockColor): this.type =
     copyWith("color", color)
 }
 
 trait ColorableItem extends Item {
-  val color: Option[ItemColor]
-  def withColor(color: Option[ItemColor]): this.type =
+  val color: Option[BlockColor]
+  def withColor(color: Option[BlockColor]): this.type =
     copyWith("color", color)
 }
 
