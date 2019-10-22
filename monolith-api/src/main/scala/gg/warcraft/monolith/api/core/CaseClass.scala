@@ -13,7 +13,9 @@ trait CaseClass extends Product {
       .map(it => if (it._1 == field) value else it._2)
       .map(_.asInstanceOf[Object])
 
-    getClass.getConstructors.head
+    getClass.getConstructors
+      .find(_.getParameterCount == values.length)
+      .get
       .newInstance(values: _*)
       .asInstanceOf[this.type]
   }

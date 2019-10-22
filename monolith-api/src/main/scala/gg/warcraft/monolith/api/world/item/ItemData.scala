@@ -4,7 +4,6 @@ import java.util
 
 import gg.warcraft.monolith.api.core.CaseClass
 import gg.warcraft.monolith.api.world.block.BlockColor
-import gg.warcraft.monolith.api.world.block.variant.AnvilVariant
 
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
@@ -35,23 +34,42 @@ final case class ItemData(
   @varargs def removeFlags(flags: ItemFlag*): ItemData =
     copy(flags = this.flags -- flags)
   @varargs def withFlags(flags: ItemFlag*): ItemData =
-    copy(flags = Set(flags))
+    copy(flags = Set(flags: _*))
 }
 
 object ItemData {
-  def apply(color: BlockColor, name: String) = ItemData(
-    s"${color.capitalized} ${name}"
+  def apply(color: BlockColor, name: String): ItemData = ItemData(
+    s"${color.name.capitalize} ${name}" // TODO capitalize doesnt work, only touches first char and doesnt space _
   )
 
   def apply(color: Option[BlockColor], name: String): ItemData = color match {
-    case Some(it) => ItemData(s"${it} ${name}")
     case None     => ItemData(name)
+    case Some(it) => ItemData(it, name)
   }
 
-  def apply(variant: ItemVariant): ItemData = variant match {
-    case AnvilVariant.NORMAL => ItemData("Anvil")
-    case it: AnvilVariant    => ItemData(s"${it.capitalized} Anvil")
+  def apply(material: ItemMaterial, name: String): ItemData = ItemData(
+    s"${material.toString.capitalize} ${name}"
+  )
 
-    case _ => throw new IllegalArgumentException(s"${variant}")
+  def apply(variant: Boolean, variantName: String, name: String): ItemData = {
+    if (variant) ItemData(s"${variantName} ${name}")
+    else ItemData(name)
+  }
+
+  def apply(variant: ItemVariant, name: String): ItemData = {
+    if (variant.toString == "NORMAL") ItemData(name)
+    else ItemData(s"${variant.toString.capitalize} ${name}")
+  }
+
+  def apply(
+      material: ItemMaterial,
+      variant: Option[ItemVariant],
+      name: String
+  ): ItemData = variant match {
+    case None => ItemData(material, name)
+    case Some(it) =>
+      val variantf = it.toString.capitalize
+      val materialf = material.toString.capitalize
+      ItemData(s"${variantf} ${materialf} ${name}")
   }
 }

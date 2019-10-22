@@ -9,6 +9,10 @@ trait Item extends CaseClass {
   val data: ItemData
   def withData(data: ItemData): this.type =
     copyWith("data", data)
+
+  def withName(name: String): this.type =
+    copyWith("data", data.withName(name))
+  // TODO do we want these ItemData delegate methods?
 }
 
 trait ColoredItem extends Item {
@@ -34,7 +38,7 @@ trait DurableItem extends Item {
   def withDurability(durability: Int): this.type =
     copyWith("durability", durability)
 
-  def maxDurability: Int
+  val maxDurability: Int
   require(durability > 0 && durability <= maxDurability, {
     s"durability is $durability, must be > 0 and <= $maxDurability"
   })
@@ -51,7 +55,7 @@ trait StackableItem extends Item {
   def withStackSize(stackSize: Int): this.type =
     copyWith("stackSize", stackSize)
 
-  def maxStackSize: Int
+  val maxStackSize: Int
   require(stackSize > 0 && stackSize <= maxStackSize, {
     s"stackSize is $stackSize, must be > 0 and <= $maxStackSize"
   })

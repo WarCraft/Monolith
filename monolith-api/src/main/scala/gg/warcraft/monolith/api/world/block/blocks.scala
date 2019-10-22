@@ -73,11 +73,18 @@ final case class Bed(
     color: BlockColor,
     direction: BlockFace,
     section: BlockBisection,
-    occupied: Boolean
+    occupied: Boolean = false
 ) extends ColoredBlock
     with DirectedBlock
     with BisectedBlock {
   override val `type` = BlockType.BED
+
+  def this(
+      location: BlockLocation,
+      color: BlockColor,
+      direction: BlockFace,
+      section: BlockBisection
+  ) = this(location, color, direction, section, occupied = false)
 }
 
 final case class Bedrock(
@@ -561,7 +568,7 @@ final case class Flower(
 final case class FlowerPot(
     location: BlockLocation,
     variant: Option[FlowerPotVariant]
-) extends VariableBlock[FlowerPotVariant] {
+) extends VariableBlock[FlowerPotVariant] { // TODO why is EMPTY not a variant
   override val `type` = BlockType.FLOWER_POT
 }
 
@@ -1214,9 +1221,9 @@ final case class Slab(
     variant: Option[SlabVariant],
     section: BlockBisection
 ) extends MaterialBlock[SlabMaterial]
-    with VariableBlock[SlabVariant]
-    with BisectedBlock {
-  override val `type` = BlockType.SLAB
+    with VariableBlock[SlabVariant] // TODO merge material onto VariableBlock? There shouldn't be variable blocks without one.
+    with BisectedBlock { // TODO a NORMAL variant is a variant of VariedBlock, VariableBlock has a None variant for materials that don't have any.
+  override val `type` = BlockType.SLAB // TODO problem is FlowerPotVariant is a trait not an enum, can't simply add EMPTY
 }
 
 final case class Slime(

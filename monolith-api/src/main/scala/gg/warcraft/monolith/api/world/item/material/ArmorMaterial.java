@@ -2,9 +2,9 @@ package gg.warcraft.monolith.api.world.item.material;
 
 import gg.warcraft.monolith.api.world.item.ItemMaterial;
 
-public enum ToolMaterial implements ItemMaterial {
-    WOOD,
-    STONE,
+public enum ArmorMaterial implements ItemMaterial {
+    LEATHER,
+    CHAINMAIL,
     IRON,
     GOLD,
     DIAMOND,
