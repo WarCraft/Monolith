@@ -147,6 +147,21 @@ final case class Carpet(
     this(color, ItemData(color, "Carpet"))
 }
 
+final case class Coal(data: ItemData) extends Item {
+  val `type` = ItemType.COAL
+  def this() = this(ItemData("Coal"))
+}
+
+final case class CoalBlock(data: ItemData) extends Item {
+  val `type` = ItemType.COAL_BLOCK
+  def this() = this(ItemData("Coal Block"))
+}
+
+final case class CoalOre(data: ItemData) extends Item {
+  val `type` = ItemType.COAL_ORE
+  def this() = this(ItemData("Coal Ore"))
+}
+
 final case class Concrete(
     color: BlockColor,
     data: ItemData
@@ -192,6 +207,21 @@ final case class CoralFan(
     this(variant, ItemData(variant, "Coral Fan"))
 }
 
+final case class Diamond(data: ItemData) extends Item {
+  val `type` = ItemType.DIAMOND
+  def this() = this(ItemData("Diamond"))
+}
+
+final case class DiamondBlock(data: ItemData) extends Item {
+  val `type` = ItemType.DIAMOND_BLOCK
+  def this() = this(ItemData("Diamond Block"))
+}
+
+final case class DiamondOre(data: ItemData) extends Item {
+  val `type` = ItemType.DIAMOND_ORE
+  def this() = this(ItemData("Diamond Ore"))
+}
+
 final case class Diorite(
     variant: StoniteVariant,
     data: ItemData
@@ -208,6 +238,21 @@ final case class Door(
   val `type` = ItemType.DOOR
   def this(material: DoorMaterial) =
     this(material, ItemData(material, "Door"))
+}
+
+final case class Emerald(data: ItemData) extends Item {
+  val `type` = ItemType.EMERALD
+  def this() = this(ItemData("Emerald"))
+}
+
+final case class EmeraldBlock(data: ItemData) extends Item {
+  val `type` = ItemType.EMERALD_BLOCK
+  def this() = this(ItemData("Emerald Block"))
+}
+
+final case class EmeraldOre(data: ItemData) extends Item {
+  val `type` = ItemType.EMERALD_ORE
+  def this() = this(ItemData("Emerald Ore"))
 }
 
 final case class EndCrystal(data: ItemData) extends Item {
@@ -270,6 +315,26 @@ final case class GlazedTerracotta(
     this(color, ItemData(color, "Glazed Terracotta"))
 }
 
+final case class GoldBlock(data: ItemData) extends Item {
+  val `type` = ItemType.GOLD_BLOCK
+  def this() = this(ItemData("Gold Block"))
+}
+
+final case class GoldIngot(data: ItemData) extends Item {
+  val `type` = ItemType.GOLD_INGOT
+  def this() = this(ItemData("Gold Ingot"))
+}
+
+final case class GoldNugget(data: ItemData) extends Item {
+  val `type` = ItemType.GOLD_NUGGET
+  def this() = this(ItemData("Gold Nugget"))
+}
+
+final case class GoldOre(data: ItemData) extends Item {
+  val `type` = ItemType.GOLD_ORE
+  def this() = this(ItemData("Gold Ore"))
+}
+
 final case class Granite(
     variant: StoniteVariant,
     data: ItemData
@@ -277,6 +342,21 @@ final case class Granite(
   val `type` = ItemType.GRANITE
   def this(variant: StoniteVariant) =
     this(variant, ItemData(variant, "Granite"))
+}
+
+final case class Lapis(data: ItemData) extends Item {
+  val `type` = ItemType.LAPIS
+  def this() = this(ItemData("Lapis"))
+}
+
+final case class LapisBlock(data: ItemData) extends Item {
+  val `type` = ItemType.LAPIS_BLOCK
+  def this() = this(ItemData("Lapis Block"))
+}
+
+final case class LapisOre(data: ItemData) extends Item {
+  val `type` = ItemType.LAPIS_ORE
+  def this() = this(ItemData("Lapis Ore"))
 }
 
 final case class Leaves(
@@ -295,6 +375,26 @@ final case class Ice(
   val `type` = ItemType.ICE
   def this(variant: IceVariant) =
     this(variant, ItemData(variant, "Ice"))
+}
+
+final case class IronBlock(data: ItemData) extends Item {
+  val `type` = ItemType.IRON_BLOCK
+  def this() = this(ItemData("Iron Block"))
+}
+
+final case class IronIngot(data: ItemData) extends Item {
+  val `type` = ItemType.IRON_INGOT
+  def this() = this(ItemData("Iron Ingot"))
+}
+
+final case class IronNugget(data: ItemData) extends Item {
+  val `type` = ItemType.IRON_NUGGET
+  def this() = this(ItemData("Iron Nugget"))
+}
+
+final case class IronOre(data: ItemData) extends Item {
+  val `type` = ItemType.IRON_ORE
+  def this() = this(ItemData("Iron Ore"))
 }
 
 final case class Log(
@@ -353,6 +453,25 @@ final case class PressurePlate(
     this(material, ItemData(material, "Pressure Plate"))
 }
 
+final case class Quartz(data: ItemData) extends Item {
+  val `type` = ItemType.QUARTZ
+  def this() = this(ItemData("Quartz")) // TODO Nether Quartz?
+}
+
+final case class QuartzBlock(
+    variant: QuartzVariant,
+    data: ItemData
+) extends VariedItem[QuartzVariant] {
+  val `type` = ItemType.QUARTZ_BLOCK
+  def this(variant: QuartzVariant) =
+    this(variant, ItemData(variant, "Quartz Block"))
+}
+
+final case class QuartzOre(data: ItemData) extends Item {
+  val `type` = ItemType.QUARTZ_ORE
+  def this() = this(ItemData("Quartz Ore"))
+}
+
 final case class Rails(
     variant: RailsVariant,
     data: ItemData
@@ -360,6 +479,21 @@ final case class Rails(
   val `type` = ItemType.RAILS
   def this(variant: RailsVariant) =
     this(variant, ItemData(variant, "Rail"))
+}
+
+final case class Redstone(data: ItemData) extends Item {
+  val `type` = ItemType.REDSTONE
+  def this() = this(ItemData("Redstone"))
+}
+
+final case class RedstoneBlock(data: ItemData) extends Item {
+  val `type` = ItemType.REDSTONE_BLOCK
+  def this() = this(ItemData("Redstone Block"))
+}
+
+final case class RedstoneOre(data: ItemData) extends Item {
+  val `type` = ItemType.REDSTONE_ORE
+  def this() = this(ItemData("Redstone Ore"))
 }
 
 final case class Sapling(
