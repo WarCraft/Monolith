@@ -10,6 +10,7 @@ import scala.collection.JavaConverters._
 
 trait Item extends CaseClass {
   val `type`: ItemType
+  val edible: Boolean = false
 
   val data: ItemData
   private def withData(data: ItemData): this.type =

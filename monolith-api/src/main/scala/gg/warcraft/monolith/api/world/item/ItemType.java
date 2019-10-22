@@ -103,6 +103,18 @@ public enum ItemType {
     POPPED_CHORUS_FRUIT, // inedible
     CHORUS_PLANT,
 
+    BOOK, // enchanted option, quil (writable) option, written (uneditable) option,
+    KNOWLEDGE_BOOK,
+
+    /* cookable item */
+    BEEF,
+    CHICKEN,
+    COD,
+    MUTTON,
+    PORKCHOP,
+    RABBIT,
+    SALMON,
+
     CAKE,
     CARROT,
     CARROT_ON_A_STICK,
@@ -220,36 +232,28 @@ public enum ItemType {
     TURTLE_HELMET,
     VINE,
 
+    COBBLESTONE, // mossy variant
+    SANDSTONE, // RED material, chiseled, cut, smooth variants
+    STONE, // NORMAL / BRICKS materials, CHISELED, CRACKED, MOSSY, SMOOTH variants
+
     GHAST_TEAR,
     ENCHANTING_TABLE,
-
-    PRISMARINE_CRYSTALS,
-    PRISMARINE_SHARD,
 
     BAMBOO,
     CACTUS,
 
-    COBBLESTONE, // mossy variant
-    SANDSTONE, // RED material, chiseled, cut, smooth variants
-    STONE, // NORMAL / BRICKS materials, CHISELED, CRACKED, MOSSY, SMOOTH variants
+    PRISMARINE_CRYSTALS,
+    PRISMARINE_SHARD,
+
     PRISMARINE, // DARK / BRICKS materials
-    END_STONE, // NORMAL / BRICHS materials
+    END_STONE, // NORMAL / BRICKS materials
     BRICK, // NORMAL, NETHER materials
-    BRICKS, // NORMAL, NETHER, RED_NETHER materials
-    PURPUR_BLOCK,
+    BRICK_BLOCK, // NORMAL, NETHER, RED_NETHER materials
+    PURPUR,
     QUARTZ,
     QUARTZ_BLOCK, // chiseled and smooth variant
     PILLAR, // quartz and purpur materials
     SAND, // RED material
-
-    /* cookable item */
-    BEEF,
-    CHICKEN,
-    COD,
-    MUTTON,
-    PORKCHOP,
-    RABBIT,
-    SALMON,
 
     DRAGON_BREATH,
     DRAGON_EGG,
@@ -260,10 +264,6 @@ public enum ItemType {
     GOLDEN_CARROT,
 
     TRIPWIRE_HOOK,
-
-    BOOK, // enchanted option, quil (writable) option, written (uneditable) option,
-    KNOWLEDGE_BOOK,
-
     IRON_BARS,
 
     GOLD_INGOT, GOLD_NUGGET, GOLD_BLOCK, GOLD_ORE,

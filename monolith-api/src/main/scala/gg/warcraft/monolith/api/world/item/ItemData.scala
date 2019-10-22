@@ -25,6 +25,10 @@ object ItemData {
     s"${material.toString.capitalize} ${name}"
   )
 
+  def apply(name: String, material: ItemMaterial): ItemData = ItemData(
+    s"${name} ${material.toString.capitalize}"
+  )
+
   def apply(variant: Boolean, variantName: String, name: String): ItemData = {
     if (variant) ItemData(s"${variantName} ${name}")
     else ItemData(name)
@@ -37,13 +41,20 @@ object ItemData {
 
   def apply(
       material: ItemMaterial,
+      variant: ItemVariant,
+      name: String
+  ): ItemData = {
+    val variantf = variant.toString.capitalize
+    val materialf = material.toString.capitalize
+    ItemData(s"${variantf} ${materialf} ${name}")
+  }
+
+  def apply(
+      material: ItemMaterial,
       variant: Option[ItemVariant],
       name: String
   ): ItemData = variant match {
-    case None => ItemData(material, name)
-    case Some(it) =>
-      val variantf = it.toString.capitalize
-      val materialf = material.toString.capitalize
-      ItemData(s"${variantf} ${materialf} ${name}")
+    case None     => ItemData(material, name)
+    case Some(it) => ItemData(material, it, name)
   }
 }

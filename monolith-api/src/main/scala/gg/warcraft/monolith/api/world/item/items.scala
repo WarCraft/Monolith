@@ -1,7 +1,15 @@
 package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.material.WoodMaterial
+import gg.warcraft.monolith.api.world.block.material.{
+  BrickMaterial,
+  EndStoneMaterial,
+  PrismarineMaterial,
+  SandMaterial,
+  SandstoneMaterial,
+  StoneMaterial,
+  WoodMaterial
+}
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item.variant._
 
@@ -26,6 +34,11 @@ final case class Anvil(
 final case class ArmorStand(data: ItemData) extends Item {
   val `type` = ItemType.ARMOR_STAND
   def this() = this(ItemData("Armor Stand"))
+}
+
+final case class Bamboo(data: ItemData) extends Item {
+  val `type` = ItemType.BAMBOO
+  def this() = this(ItemData("Bamboo"))
 }
 
 final case class Banner(
@@ -115,6 +128,24 @@ final case class BrewingStand(data: ItemData) extends Item {
   def this() = this(ItemData("Brewing Stand"))
 }
 
+final case class Brick(
+    material: BrickMaterial,
+    data: ItemData
+) extends MaterialItem[BrickMaterial] {
+  val `type` = ItemType.BRICK
+  def this(material: BrickMaterial) =
+    this(material, ItemData(material, "Brick"))
+}
+
+final case class BrickBlock(
+    material: BrickMaterial,
+    data: ItemData
+) extends MaterialItem[BrickMaterial] {
+  val `type` = ItemType.BRICK_BLOCK
+  def this(material: BrickMaterial) =
+    this(material, ItemData(material, "Brick Block"))
+}
+
 final case class Bucket(
     variant: BucketVariant,
     data: ItemData
@@ -131,6 +162,11 @@ final case class Button(
   val `type` = ItemType.BUTTON
   def this(material: ButtonMaterial) =
     this(material, ItemData(material, "Button"))
+}
+
+final case class Cactus(data: ItemData) extends Item {
+  val `type` = ItemType.CACTUS
+  def this() = this(ItemData("Cactus"))
 }
 
 final case class Campfire(data: ItemData) extends Item {
@@ -160,6 +196,15 @@ final case class CoalBlock(data: ItemData) extends Item {
 final case class CoalOre(data: ItemData) extends Item {
   val `type` = ItemType.COAL_ORE
   def this() = this(ItemData("Coal Ore"))
+}
+
+final case class Cobblestone(
+    variant: CobblestoneVariant,
+    data: ItemData
+) extends VariedItem[CobblestoneVariant] {
+  val `type` = ItemType.COBBLESTONE
+  def this(variant: CobblestoneVariant) =
+    this(variant, ItemData(variant, "Cobblestone"))
 }
 
 final case class Concrete(
@@ -240,6 +285,16 @@ final case class Door(
     this(material, ItemData(material, "Door"))
 }
 
+final case class DragonBreath(data: ItemData) extends Item {
+  val `type` = ItemType.DRAGON_BREATH
+  def this() = this(ItemData("Dragon Breath"))
+}
+
+final case class DragonEgg(data: ItemData) extends Item {
+  val `type` = ItemType.DRAGON_EGG
+  def this() = this(ItemData("Dragon Egg"))
+}
+
 final case class Emerald(data: ItemData) extends Item {
   val `type` = ItemType.EMERALD
   def this() = this(ItemData("Emerald"))
@@ -255,6 +310,11 @@ final case class EmeraldOre(data: ItemData) extends Item {
   def this() = this(ItemData("Emerald Ore"))
 }
 
+final case class EnchantingTable(data: ItemData) extends Item {
+  val `type` = ItemType.ENCHANTING_TABLE
+  def this() = this(ItemData("Enchanting Table"))
+}
+
 final case class EndCrystal(data: ItemData) extends Item {
   val `type` = ItemType.END_CRYSTAL
   def this() = this(ItemData("End Crystal"))
@@ -268,6 +328,15 @@ final case class EndPortalFrame(data: ItemData) extends Item {
 final case class EndRod(data: ItemData) extends Item {
   val `type` = ItemType.END_ROD
   def this() = this(ItemData("End Rod"))
+}
+
+final case class EndStone(
+    material: EndStoneMaterial,
+    data: ItemData
+) extends MaterialItem[EndStoneMaterial] {
+  val `type` = ItemType.END_STONE // TODO rename EndStoneMaterial.END_STONE > NORMAL?
+  def this(material: EndStoneMaterial) =
+    this(material, ItemData("End Stone", material))
 }
 
 final case class Fence(
@@ -288,6 +357,11 @@ final case class Gate(
     this(material, ItemData(material, "Gate"))
 }
 
+final case class GhastTear(data: ItemData) extends Item {
+  val `type` = ItemType.GHAST_TEAR
+  def this() = this(ItemData("Ghast Tear"))
+}
+
 final case class Glass(
     color: Option[BlockColor],
     data: ItemData
@@ -295,6 +369,11 @@ final case class Glass(
   val `type` = ItemType.GLASS
   def this(color: Option[BlockColor]) =
     this(color, ItemData(color, "Glass"))
+}
+
+final case class GlassBottle(data: ItemData) extends Item {
+  val `type` = ItemType.GLASS_BOTTLE
+  def this() = this(ItemData("Glass Bottle"))
 }
 
 final case class GlassPane(
@@ -333,6 +412,21 @@ final case class GoldNugget(data: ItemData) extends Item {
 final case class GoldOre(data: ItemData) extends Item {
   val `type` = ItemType.GOLD_ORE
   def this() = this(ItemData("Gold Ore"))
+}
+
+final case class GoldenApple(
+    enchanted: Boolean,
+    data: ItemData
+) extends Item {
+  val `type` = ItemType.GOLDEN_APPLE
+  override val edible = true
+  def this() = this(enchanted, ItemData(enchanted, "Enchanted", "Golden Apple"))
+}
+
+final case class GoldenCarrot(data: ItemData) extends Item {
+  val `type` = ItemType.GOLDEN_CARROT
+  override val edible = true
+  def this() = this(ItemData("Golden Carrot"))
 }
 
 final case class Granite(
@@ -375,6 +469,11 @@ final case class Ice(
   val `type` = ItemType.ICE
   def this(variant: IceVariant) =
     this(variant, ItemData(variant, "Ice"))
+}
+
+final case class IronBars(data: ItemData) extends Item {
+  val `type` = ItemType.IRON_BARS
+  def this() = this(ItemData("Iron Bars"))
 }
 
 final case class IronBlock(data: ItemData) extends Item {
@@ -444,6 +543,15 @@ final case class Planks(
     this(material, ItemData(material, "Planks"))
 }
 
+final case class Pillar(
+    material: PillarMaterial,
+    data: ItemData
+) extends MaterialItem[PillarMaterial] {
+  val `type` = ItemType.PILLAR
+  def this(material: PillarMaterial) =
+    this(material, ItemData(material, "Pillar"))
+}
+
 final case class PressurePlate(
     material: PressurePlateMaterial,
     data: ItemData
@@ -451,6 +559,30 @@ final case class PressurePlate(
   val `type` = ItemType.PRESSURE_PLATE
   def this(material: WoodMaterial) =
     this(material, ItemData(material, "Pressure Plate"))
+}
+
+final case class Prismarine(
+    material: PrismarineMaterial,
+    data: ItemData
+) extends MaterialItem[PrismarineMaterial] {
+  val `type` = ItemType.PRISMARINE
+  def this(material: PrismarineMaterial) =
+    this(material, ItemData(material, "Prismarine"))
+}
+
+final case class PrismarineCrystals(data: ItemData) extends Item {
+  val `type` = ItemType.PRISMARINE_CRYSTALS
+  def this() = this(ItemData("Prismarine Crystals"))
+}
+
+final case class PrismarineShard(data: ItemData) extends Item {
+  val `type` = ItemType.PRISMARINE_SHARD
+  def this() = this(ItemData("Prismarine Shard"))
+}
+
+final case class Purpur(data: ItemData) extends Item {
+  val `type` = ItemType.PURPUR
+  def this() = this(ItemData("Purpur"))
 }
 
 final case class Quartz(data: ItemData) extends Item {
@@ -494,6 +626,25 @@ final case class RedstoneBlock(data: ItemData) extends Item {
 final case class RedstoneOre(data: ItemData) extends Item {
   val `type` = ItemType.REDSTONE_ORE
   def this() = this(ItemData("Redstone Ore"))
+}
+
+final case class Sand(
+    material: SandMaterial, // TODO should this be a variant?
+    data: ItemData
+) extends MaterialItem[SandMaterial] {
+  val `type` = ItemType.SAND
+  def this(material: SandMaterial) =
+    this(material, ItemData(material, "Sand"))
+}
+
+final case class Sandstone(
+    material: SandstoneMaterial,
+    variant: SandstoneVariant,
+    data: ItemData
+) extends MaterialItem[SandstoneMaterial]
+    with VariedItem[SandstoneVariant] {
+  def this(material: SandstoneMaterial, variant: SandstoneVariant) =
+    this(material, variant, ItemData(material, variant, "Sandstone"))
 }
 
 final case class Sapling(
@@ -543,6 +694,15 @@ final case class SpawnEgg(
     this(variant, ItemData(variant, "Spawn Egg"))
 }
 
+final case class SpiderEye(
+    fermented: Boolean,
+    data: ItemData
+) extends Item {
+  val `type` = ItemType.SPIDER_EYE
+  def this(fermented: Boolean) =
+    this(fermented, ItemData(fermented, "Fermented", "Spider Eye"))
+}
+
 final case class Sponge(
     wet: Boolean,
     data: ItemData
@@ -561,6 +721,22 @@ final case class Stairs(
   val `type` = ItemType.SLAB
   def this(material: StairsMaterial, variant: Option[StairsVariant]) =
     this(material, variant, ItemData(material, variant, "Slab"))
+}
+
+final case class Stone(
+    material: StoneMaterial,
+    variant: StoneVariant,
+    data: ItemData
+) extends MaterialItem[StoneMaterial]
+    with VariedItem[StoneVariant] {
+  val `type` = ItemType.STONE
+  def this(material: StoneMaterial, variant: StoneVariant) =
+    this(material, variant, ItemData(material, variant, "Stone"))
+}
+
+final case class TripwireHook(data: ItemData) extends Item {
+  val `type` = ItemType.TRIPWIRE_HOOK
+  def this() = this(ItemData("Tripwire Hook"))
 }
 
 final case class Wall(
