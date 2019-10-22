@@ -1,18 +1,47 @@
 package gg.warcraft.monolith.api.world.item
 
+import java.util
+
 import gg.warcraft.monolith.api.core.CaseClass
 import gg.warcraft.monolith.api.world.block.BlockColor
+
+import scala.annotation.varargs
+import scala.collection.JavaConverters._
 
 trait Item extends CaseClass {
   val `type`: ItemType
 
   val data: ItemData
-  def withData(data: ItemData): this.type =
+  private def withData(data: ItemData): this.type =
     copyWith("data", data)
 
+  val name: String = data.name
   def withName(name: String): this.type =
-    copyWith("data", data.withName(name))
-  // TODO do we want these ItemData delegate methods?
+    withData(data.copy(name = name))
+
+  val tooltip: Array[String] = data.tooltip
+  def withTooltip(tooltip: Array[String]): this.type =
+    withData(data.copy(tooltip = tooltip))
+
+  val unbreakable: Boolean = data.unbreakable
+  def withUnbreakable(unbreakable: Boolean): this.type =
+    withData(data.copy(unbreakable = unbreakable))
+
+  val enchantments: util.Map[String, Int] = data.enchantments.asJava
+  @varargs def addEnchantments(enchantments: (String, Int)*): this.type =
+    withData(data.copy(enchantments = data.enchantments ++ enchantments))
+  @varargs def removeEnchantments(enchantments: String*): this.type =
+    withData(data.copy(enchantments = data.enchantments -- enchantments))
+  @varargs def withEnchantments(enchantments: (String, Int)*): this.type =
+    withData(data.copy(enchantments = Map[String, Int](enchantments: _*)))
+
+  val flags: util.Set[ItemFlag] = data.flags.asJava
+  @varargs def addFlags(flags: ItemFlag*): this.type =
+    withData(data.copy(flags = data.flags ++ flags))
+  @varargs def removeFlags(flags: ItemFlag*): this.type =
+    withData(data.copy(flags = data.flags -- flags))
+  @varargs def withFlags(flags: ItemFlag*): this.type =
+    withData(data.copy(flags = Set(flags: _*)))
 }
 
 trait ColoredItem extends Item {

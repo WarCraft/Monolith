@@ -1,12 +1,7 @@
 package gg.warcraft.monolith.api.world.item
 
-import java.util
-
 import gg.warcraft.monolith.api.core.CaseClass
 import gg.warcraft.monolith.api.world.block.BlockColor
-
-import scala.annotation.varargs
-import scala.collection.JavaConverters._
 
 final case class ItemData(
     name: String,
@@ -14,28 +9,7 @@ final case class ItemData(
     unbreakable: Boolean = false,
     enchantments: Map[String, Int] = Map.empty[String, Int],
     flags: Set[ItemFlag] = Set.empty[ItemFlag]
-) extends CaseClass {
-  def withName(name: String): ItemData = copy(name = name)
-  def withTooltip(tooltip: Array[String]): ItemData = copy(tooltip = tooltip)
-  def withUnbreakable(unbreakable: Boolean): ItemData =
-    copy(unbreakable = unbreakable)
-
-  val enchantmentsAsJava: util.Map[String, Int] = enchantments.asJava
-  @varargs def addEnchantments(enchantments: (String, Int)*): ItemData =
-    copy(enchantments = this.enchantments ++ enchantments)
-  @varargs def removeEnchantments(enchantments: String*): ItemData =
-    copy(enchantments = this.enchantments -- enchantments)
-  @varargs def withEnchantments(enchantments: (String, Int)*): ItemData =
-    copy(enchantments = Map[String, Int](enchantments: _*))
-
-  val flagsAsJava: util.Set[ItemFlag] = flags.asJava
-  @varargs def addFlags(flags: ItemFlag*): ItemData =
-    copy(flags = this.flags ++ flags)
-  @varargs def removeFlags(flags: ItemFlag*): ItemData =
-    copy(flags = this.flags -- flags)
-  @varargs def withFlags(flags: ItemFlag*): ItemData =
-    copy(flags = Set(flags: _*))
-}
+) extends CaseClass
 
 object ItemData {
   def apply(color: BlockColor, name: String): ItemData = ItemData(

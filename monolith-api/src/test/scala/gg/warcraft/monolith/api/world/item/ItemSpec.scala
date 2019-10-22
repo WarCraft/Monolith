@@ -25,7 +25,7 @@ class ItemSpec extends fixture.FunSpec {
         val copy = fixture.withName("Super Bed")
 
         // Then
-        assert(copy.data.name == expectedCopy.data.name)
+        assert(copy.name == expectedCopy.name)
       }
     }
   }
