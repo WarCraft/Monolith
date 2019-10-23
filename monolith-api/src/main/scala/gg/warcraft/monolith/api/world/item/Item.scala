@@ -85,7 +85,7 @@ trait StackableItem extends Item {
   def withStackSize(stackSize: Int): this.type =
     copyWith("stackSize", stackSize)
 
-  val maxStackSize: Int
+  val maxStackSize: Int = 64
   require(stackSize > 0 && stackSize <= maxStackSize, {
     s"stackSize is $stackSize, must be > 0 and <= $maxStackSize"
   })

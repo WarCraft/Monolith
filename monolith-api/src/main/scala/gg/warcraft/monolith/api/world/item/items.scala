@@ -1,15 +1,7 @@
 package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.material.{
-  BrickMaterial,
-  EndStoneMaterial,
-  PrismarineMaterial,
-  SandMaterial,
-  SandstoneMaterial,
-  StoneMaterial,
-  WoodMaterial
-}
+import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item.variant._
 
@@ -656,6 +648,21 @@ final case class Sapling(
     this(variant, ItemData(variant, "Sapling"))
 }
 
+final case class Scute(data: ItemData) extends Item {
+  val `type` = ItemType.SCUTE
+  def this() = this(ItemData("Scute"))
+}
+
+final case class SeaLantern(data: ItemData) extends Item {
+  val `type` = ItemType.SEA_LANTERN
+  def this() = this(ItemData("Sea Lantern"))
+}
+
+final case class SeaPickle(data: ItemData) extends Item {
+  val `type` = ItemType.SEA_PICKLE
+  def this() = this(ItemData("Sea Pickle"))
+}
+
 final case class ShulkerBox(
     color: Option[BlockColor],
     data: ItemData
@@ -685,6 +692,36 @@ final case class Slab(
     this(material, variant, ItemData(material, variant, "Slab"))
 }
 
+final case class Slimeball(data: ItemData) extends Item {
+  val `type` = ItemType.SLIMEBALL
+  def this() = this(ItemData("Slimeball"))
+}
+
+final case class SlimeBlock(data: ItemData) extends Item {
+  val `type` = ItemType.SLIME_BLOCK
+  def this() = this(ItemData("Slime Block"))
+}
+
+final case class Snow(data: ItemData) extends Item {
+  val `type` = ItemType.SNOW
+  def this() = this(ItemData("Snow"))
+}
+
+final case class Snowball(data: ItemData) extends Item {
+  val `type` = ItemType.SNOWBALL
+  def this() = this(ItemData("Snowball"))
+}
+
+final case class SnowBlock(data: ItemData) extends Item {
+  val `type` = ItemType.SNOW_BLOCK
+  def this() = this(ItemData("Snow Block"))
+}
+
+final case class SoulSand(data: ItemData) extends Item {
+  val `type` = ItemType.SOUL_SAND
+  def this() = this(ItemData("Soul Sand"))
+}
+
 final case class SpawnEgg(
     variant: SpawnEggVariant,
     data: ItemData
@@ -692,6 +729,11 @@ final case class SpawnEgg(
   val `type` = ItemType.SPAWN_EGG // TODO MonsterEgg?
   def this(variant: SpawnEggVariant) =
     this(variant, ItemData(variant, "Spawn Egg"))
+}
+
+final case class Spawner(data: ItemData) extends Item {
+  val `type` = ItemType.SPAWNER
+  def this() = this(ItemData("Spawner"))
 }
 
 final case class SpiderEye(
@@ -734,20 +776,14 @@ final case class Stone(
     this(material, variant, ItemData(material, variant, "Stone"))
 }
 
-final case class TripwireHook(data: ItemData) extends Item {
-  val `type` = ItemType.TRIPWIRE_HOOK
-  def this() = this(ItemData("Tripwire Hook"))
+final case class Sugar(data: ItemData) extends Item {
+  val `type` = ItemType.SUGAR
+  def this() = this(ItemData("Sugar"))
 }
 
-final case class Wall(
-    material: WallMaterial,
-    variant: Option[WallVariant],
-    data: ItemData
-) extends MaterialItem[WallMaterial]
-    with VariableItem[WallVariant] {
-  val `type` = ItemType.WALL
-  def this(material: WallMaterial, variant: Option[WallVariant]) =
-    this(material, variant, ItemData(material, variant, "Wall"))
+final case class SugarCane(data: ItemData) extends Item {
+  val `type` = ItemType.SUGAR_CANE
+  def this() = this(ItemData("Sugar Cane"))
 }
 
 final case class Terracotta(
@@ -766,6 +802,37 @@ final case class TrapDoor(
   val `type` = ItemType.TRAPDOOR
   def this(material: TrapdoorMaterial) =
     this(material, ItemData(material, "Trap Door"))
+}
+
+final case class TripwireHook(data: ItemData) extends Item {
+  val `type` = ItemType.TRIPWIRE_HOOK
+  def this() = this(ItemData("Tripwire Hook"))
+}
+
+final case class TurtleEgg(data: ItemData) extends Item {
+  val `type` = ItemType.TURTLE_EGG
+  def this() = this(ItemData("Turtle Egg"))
+}
+
+final case class TurtleHelmet(data: ItemData) extends Item {
+  val `type` = ItemType.TURTLE_HELMET
+  def this() = this(ItemData("Turtle Helmet"))
+}
+
+final case class Vine(data: ItemData) extends Item {
+  val `type` = ItemType.VINE
+  def this() = this(ItemData("Vine"))
+}
+
+final case class Wall(
+    material: WallMaterial,
+    variant: Option[WallVariant],
+    data: ItemData
+) extends MaterialItem[WallMaterial]
+    with VariableItem[WallVariant] {
+  val `type` = ItemType.WALL
+  def this(material: WallMaterial, variant: Option[WallVariant]) =
+    this(material, variant, ItemData(material, variant, "Wall"))
 }
 
 final case class WeightedPressurePlate(

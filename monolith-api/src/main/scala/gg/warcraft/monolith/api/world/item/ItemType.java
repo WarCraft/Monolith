@@ -69,10 +69,6 @@ public enum ItemType {
     CORAL,
     CORAL_FAN,
     CORAL_BLOCK,
-    INFESTED_BLOCK,
-
-
-    APPLE,
     ARROW,
     BOW,
     BARREL,
@@ -103,6 +99,7 @@ public enum ItemType {
     POPPED_CHORUS_FRUIT, // inedible
     CHORUS_PLANT,
 
+    INFESTED_BLOCK,
     BOOK, // enchanted option, quil (writable) option, written (uneditable) option,
     KNOWLEDGE_BOOK,
 
@@ -219,8 +216,8 @@ public enum ItemType {
     SCUTE,
     SEA_LANTERN,
     SEA_PICKLE,
-    SLIME_BALL, // TODO what to name CLAY and SLIME? CLAY_BALL SLIME_BALL or leave it?
-    SLIME_BLOCK,
+    SLIMEBALL, // TODO what to name CLAY and SLIME? CLAY_BALL SLIME_BALL or leave it?
+    SLIME_BLOCK, // TODO this is called Slime Block in MC, rename block type to SlimeBlock too?
     SNOW,
     SNOWBALL,
     SNOW_BLOCK,
