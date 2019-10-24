@@ -222,7 +222,8 @@ final case class ChorusFlower (data: ItemData) extends Item {
 
 final case class ChorusFruit (data: ItemData) extends Item {
   val `type` = ItemType.CHORUS_FRUIT
-  def this() = this(ItemData("Chorus Fruit")) // TODO edible
+  override val edible = true
+  def this() = this(ItemData("Chorus Fruit"))
 }
 
 final case class ChorusPlant (data: ItemData) extends Item {
