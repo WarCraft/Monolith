@@ -95,8 +95,8 @@ public enum ItemType {
     BUCKET,
 
     CHORUS_FLOWER,
-    CHORUS_FRUIT,       // edible
-    POPPED_CHORUS_FRUIT, // inedible
+    CHORUS_FRUIT,
+    POPPED_CHORUS_FRUIT,
     CHORUS_PLANT,
 
     INFESTED_BLOCK,
@@ -176,7 +176,7 @@ public enum ItemType {
     LEVER,
     LILY_PAD,
     LOOM,
-    MAGMA_BLOCK, // TODO rename block variant (Magma) to MagmaBlock? Or name all items that are clearly blocks _BLOCK? ObisidianBlock?
+    MAGMA_BLOCK, // TODO rename slime block to SLIME_BLOCK? Item is called Slime Block ingame
     MAGMA_CREAM,
     NETHERRACK,
     NOTE_BLOCK,
