@@ -10,6 +10,7 @@ import scala.collection.JavaConverters._
 
 trait Item extends CaseClass {
   val `type`: ItemType
+  val maxStackSize: Int = 64
   val edible: Boolean = false
 
   val data: ItemData
@@ -78,17 +79,6 @@ trait MaterialItem[T <: ItemMaterial] extends Item {
   val material: T
   def withMaterial(material: T): this.type =
     copyWith("material", material)
-}
-
-trait StackableItem extends Item {
-  val stackSize: Int
-  def withStackSize(stackSize: Int): this.type =
-    copyWith("stackSize", stackSize)
-
-  val maxStackSize: Int = 64
-  require(stackSize > 0 && stackSize <= maxStackSize, {
-    s"stackSize is $stackSize, must be > 0 and <= $maxStackSize"
-  })
 }
 
 trait VariedItem[T <: ItemVariant] extends Item {
