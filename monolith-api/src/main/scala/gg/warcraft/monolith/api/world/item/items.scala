@@ -666,7 +666,7 @@ final case class GoldenApple(
 ) extends Item {
   val `type` = ItemType.GOLDEN_APPLE
   override val edible = true
-  def this() =
+  def this(enchanted: Boolean) =
     this(enchanted, ItemData(enchanted, "Enchanted", "Golden Apple"))
 }
 
@@ -1110,13 +1110,13 @@ final case class Sandstone(
     data: ItemData
 ) extends MaterialItem[SandstoneMaterial]
     with VariedItem[SandstoneVariant] {
+  val `type` = ItemType.SANDSTONE
   def this(material: SandstoneMaterial, variant: SandstoneVariant) =
     this(material, variant, ItemData(material, variant, "Sandstone"))
 }
 
 final case class Sapling(
     variant: SaplingVariant, // TODO would kinda like this to be material again
-
     data: ItemData
 ) extends VariedItem[SaplingVariant] {
   val `type` = ItemType.SAPLING

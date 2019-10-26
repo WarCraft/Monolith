@@ -109,7 +109,6 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: CoalOre          => Material.COAL_ORE
     case _: Cobweb           => Material.COBWEB
     case _: CocoaPod         => Material.COCOA
-    case _: Comparator       => Material.COMPARATOR
     case _: Composter        => Material.COMPOSTER
     case _: Conduit          => Material.CONDUIT
     case _: CraftingTable    => Material.CRAFTING_TABLE

@@ -3,7 +3,6 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial, PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial, WoodMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.Material
@@ -37,11 +36,11 @@ class SpigotBlockVariantMapper {
         val mode = dataAs[SpigotStructureBlock].getMode
         map(mode)
 
-      case _ => cache.computeIfAbsent(block.getType, _ => compute(block))
+      case _ => cache.computeIfAbsent(block.getType, _ => compute(block.getType))
     }
   }
 
-  private def compute(block: SpigotBlock): BlockVariant = block.getType match {
+  private def compute(material: Material): BlockVariant = material match {
 
     // AIR
     case Material.AIR            => AirVariant.NORMAL
@@ -223,7 +222,7 @@ class SpigotBlockVariantMapper {
     case Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
       WeightedPressurePlateVariant.HEAVY
 
-    case _ => throw new IllegalArgumentException(s"${block.getType}")
+    case _ => throw new IllegalArgumentException(s"$material")
   }
 
   def map(block: VariedBlock[_ <: BlockVariant]): Material = block match {
@@ -239,7 +238,7 @@ class SpigotBlockVariantMapper {
     case Anvil(_, AnvilVariant.DAMAGED, _) => Material.DAMAGED_ANVIL
 
     // BAMBOO
-    case _: Bamboo           => Material.BAMBOO
+    case _: Bamboo => Material.BAMBOO
 
     // CHEST
     case Chest(_, ChestVariant.NORMAL, _)  => Material.CHEST
@@ -282,19 +281,29 @@ class SpigotBlockVariantMapper {
     case Coral(_, CoralVariant.DEAD_TUBE, _)   => Material.DEAD_TUBE_CORAL
 
     // CORAL_BLOCK
-    case CoralBlock(_, CoralVariant.BRAIN)  => Material.BRAIN_CORAL
-    case CoralBlock(_, CoralVariant.BUBBLE) => Material.BUBBLE_CORAL
-    case CoralBlock(_, CoralVariant.FIRE)   => Material.FIRE_CORAL
-    case CoralBlock(_, CoralVariant.HORN)   => Material.HORN_CORAL
-    case CoralBlock(_, CoralVariant.TUBE)   => Material.TUBE_CORAL
+    case CoralBlock(_, CoralVariant.BRAIN)  => Material.BRAIN_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.BUBBLE) => Material.BUBBLE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.FIRE)   => Material.FIRE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.HORN)   => Material.HORN_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.TUBE)   => Material.TUBE_CORAL_BLOCK
 
-    case CoralBlock(_, CoralVariant.DEAD_BRAIN)  => Material.DEAD_BRAIN_CORAL
-    case CoralBlock(_, CoralVariant.DEAD_BUBBLE) => Material.DEAD_BUBBLE_CORAL
-    case CoralBlock(_, CoralVariant.DEAD_FIRE)   => Material.DEAD_FIRE_CORAL
-    case CoralBlock(_, CoralVariant.DEAD_HORN)   => Material.DEAD_HORN_CORAL
-    case CoralBlock(_, CoralVariant.DEAD_TUBE)   => Material.DEAD_TUBE_CORAL
+    case CoralBlock(_, CoralVariant.DEAD_BRAIN) =>
+      Material.DEAD_BRAIN_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_BUBBLE) =>
+      Material.DEAD_BUBBLE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_FIRE) =>
+      Material.DEAD_FIRE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_HORN) =>
+      Material.DEAD_HORN_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_TUBE) =>
+      Material.DEAD_TUBE_CORAL_BLOCK
 
     // CORAL_FAN
+    case CoralFan(_, CoralVariant.BRAIN, dir, _) => dir match {
+      case None    => Material.BRAIN_CORAL_FAN
+      case Some(_) => Material.BRAIN_CORAL_WALL_FAN
+    }
+
     case CoralFan(_, CoralVariant.BRAIN, dir, _) => dir match {
       case None    => Material.BRAIN_CORAL_FAN
       case Some(_) => Material.BRAIN_CORAL_WALL_FAN
