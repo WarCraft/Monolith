@@ -23,19 +23,25 @@ final case class Anvil(
     this(variant, ItemData(variant, "Anvil"))
 }
 
+final case class Apple(data: ItemData) extends Item {
+  val `type` = ItemType.APPLE
+  override val edible = true
+  def this() = this(ItemData("Apple"))
+}
+
 final case class ArmorStand(data: ItemData) extends Item {
   val `type` = ItemType.ARMOR_STAND
   override val maxStackSize = 16
   def this() = this(ItemData("Armor Stand"))
 }
 
-final case class Arrow extends Item {
-  // TODO
-}
-
-final case class Axe extends Item {
-  // TODO
-}
+//final case class Arrow extends Item {
+//  // TODO
+//}
+//
+//final case class Axe extends Item {
+//  // TODO
+//}
 
 final case class Bamboo(data: ItemData) extends Item {
   val `type` = ItemType.BAMBOO
@@ -52,10 +58,14 @@ final case class Banner(
     this(color, ItemData(color, "Banner"))
 }
 
-final case class BannerPattern(data: ItemData) extends Item {
+final case class BannerPattern(
+    variant: BannerPatternVariant,
+    data: ItemData
+) extends Item {
   val `type` = ItemType.BANNER_PATTERN
   override val maxStackSize = 1
-  def this() = this(ItemData("Banner Pattern"))
+  def this(variant: BannerPatternVariant) =
+    this(variant, ItemData(variant, "Banner Pattern"))
 }
 
 final case class Barrel(data: ItemData) extends Item {
@@ -87,9 +97,13 @@ final case class Bedrock(data: ItemData) extends Item {
   def this() = this(ItemData("Bedrock"))
 }
 
-final case class Beef extends Item {
-  // TODO cookable
-}
+//final case class Beef extends Item {
+//  // TODO cookable
+//}
+//
+//final case class Beetroot extends Item {
+//  // TODO edible?
+//}
 
 final case class Bell(data: ItemData) extends Item {
   val `type` = ItemType.BELL
@@ -135,22 +149,22 @@ final case class BoneMeal(data: ItemData) extends Item {
   def this() = this(ItemData("Bone Meal"))
 }
 
-final case class BottleOfEnchanting extends Item {
-  // TODO Bottle 'o Enchanting
-}
-
-final case class Book extends Item {
-  // TODO other book variants
-}
+//final case class BottleOfEnchanting extends Item {
+//  // TODO Bottle 'o Enchanting
+//}
+//
+//final case class Book extends Item {
+//  // TODO other book variants
+//}
 
 final case class Bookshelf(data: ItemData) extends Item {
   val `type` = ItemType.BOOKSHELF
   def this() = this(ItemData("Bookshelf"))
 }
 
-final case class Boots extends Item {
-  // TODO
-}
+//final case class Boots extends Item {
+//  // TODO
+//}
 
 final case class Bow(data: ItemData) extends Item {
   val `type` = ItemType.BOW
@@ -261,18 +275,22 @@ final case class Cauldron(data: ItemData) extends Item {
   def this() = this(ItemData("Cauldron"))
 }
 
-final case class Chest(data: ItemData) extends Item {
+final case class Chest(
+    variant: ChestVariant,
+    data: ItemData
+) extends Item {
   val `type` = ItemType.CHEST
-  def this() = this(ItemData("Chest"))
+  def this(variant: ChestVariant) =
+    this(variant, ItemData(variant, "Chest"))
 }
 
-final case class ChestPlate extends Item {
-  // TODO
-}
-
-final case class Chicken extends Item {
-  // TODO cookable
-}
+//final case class ChestPlate extends Item {
+//  // TODO
+//}
+//
+//final case class Chicken extends Item {
+//  // TODO cookable
+//}
 
 final case class ChorusFlower(data: ItemData) extends Item {
   val `type` = ItemType.CHORUS_FLOWER
@@ -287,7 +305,7 @@ final case class ChorusFruit(
   override val edible: Boolean = !popped
   def this(popped: Boolean) =
     this(popped, ItemData(popped, "Popped", "Chorus Fruit"))
-  def withPopped(popped: Boolean): this.type =
+  def withPopped(popped: Boolean): ChorusFruit =
     copyWith("popped", popped)
 }
 
@@ -340,9 +358,14 @@ final case class Cobweb(data: ItemData) extends Item {
   def this() = this(ItemData("Cobweb"))
 }
 
-final case class Cod extends Item {
-  // TODO cookable
+final case class CocoaBeans(data: ItemData) extends Item {
+  val `type` = ItemType.COCOA_BEANS
+  def this() = this(ItemData("Cocoa Beans"))
 }
+
+//final case class Cod extends Item {
+//  // TODO cookable
+//}
 
 final case class CommandBlock(
     variant: CommandBlockVariant,
@@ -598,7 +621,7 @@ final case class EnderPearl(data: ItemData) extends Item {
   def this() = this(ItemData("Ender Pearl"))
 }
 
-final case class FarmLand(data: ItemData) extends Item {
+final case class Farmland(data: ItemData) extends Item {
   val `type` = ItemType.FARMLAND
   def this() = this(ItemData("Farmland"))
 }
@@ -617,17 +640,17 @@ final case class Fence(
     this(material, ItemData(material, "Fence"))
 }
 
-final case class FireCharge extends Item {
-  // TODO
-}
-
-final case class FireworkRocket extends Item {
-  // TODO
-}
-
-final case class FireworkStar extends Item {
-  // TODO
-}
+//final case class FireCharge extends Item {
+//  // TODO
+//}
+//
+//final case class FireworkRocket extends Item {
+//  // TODO
+//}
+//
+//final case class FireworkStar extends Item {
+//  // TODO
+//}
 
 final case class FishingRod(data: ItemData) extends Item {
   val `type` = ItemType.FISHING_ROD
@@ -651,9 +674,9 @@ final case class FlintAndSteel(data: ItemData) extends Item {
   def this() = this(ItemData("Flint and Steel"))
 }
 
-final case class Flower extends Item {
-  // TODO
-}
+//final case class Flower extends Item {
+//  // TODO
+//}
 
 final case class FlowerPot(data: ItemData) extends Item {
   val `type` = ItemType.FLOWER_POT
@@ -757,6 +780,11 @@ final case class GoldenCarrot(data: ItemData) extends Item {
   def this() = this(ItemData("Golden Carrot"))
 }
 
+final case class GoldenMelonSlice(data: ItemData) extends Item {
+  val `type` = ItemType.GOLDEN_MELON_SLICE
+  def this() = this(ItemData("Glistering Melon Slice"))
+}
+
 final case class Granite(
     variant: StoniteVariant,
     data: ItemData
@@ -806,22 +834,22 @@ final case class HeartOfTheSea(data: ItemData) extends Item {
   def this() = this(ItemData("Heart of The Sea"))
 }
 
-final case class Helmet extends Item {
-  // TODO
-}
-
-final case class Hoe extends Item {
-  // TODO
-}
+//final case class Helmet extends Item {
+//  // TODO
+//}
+//
+//final case class Hoe extends Item {
+//  // TODO
+//}
 
 final case class Hopper(data: ItemData) extends Item {
   val `type` = ItemType.HOPPER
   def this() = this(ItemData("Hopper"))
 }
 
-final case class HorseArmor extends Item {
-  // TODO
-}
+//final case class HorseArmor extends Item {
+//  // TODO
+//}
 
 final case class Ice(
     variant: IceVariant,
@@ -834,11 +862,12 @@ final case class Ice(
 
 final case class InfestedBlock(
     material: InfestedMaterial,
+    variant: Option[InfestedVariant],
     data: ItemData
 ) extends MaterialItem[InfestedMaterial] {
   val `type` = ItemType.INFESTED_BLOCK
-  def this(material: InfestedMaterial) =
-    this(material, ItemData(material, "Infested Block")) // TODO fix naming order
+  def this(material: InfestedMaterial, variant: Option[InfestedVariant]) =
+    this(material, variant, ItemData(material, variant, "Infested Block")) // TODO fix naming order
 }
 
 final case class InkSac(data: ItemData) extends Item {
@@ -874,6 +903,11 @@ final case class IronOre(data: ItemData) extends Item {
 final case class ItemFrame(data: ItemData) extends Item {
   val `type` = ItemType.ITEM_FRAME
   def this() = this(ItemData("Item Frame"))
+}
+
+final case class JackOfTheLantern(data: ItemData) extends Item {
+  val `type` = ItemType.JACK_OF_THE_LANTERN
+  def this() = this(ItemData("Jack o'Lantern"))
 }
 
 final case class JigsawBlock(data: ItemData) extends Item {
@@ -940,9 +974,9 @@ final case class Lectern(data: ItemData) extends Item {
   def this() = this(ItemData("Lectern"))
 }
 
-final case class Leggings extends Item {
-  // TODO
-}
+//final case class Leggings extends Item {
+//  // TODO
+//}
 
 final case class Lever(data: ItemData) extends Item {
   val `type` = ItemType.LEVER
@@ -980,9 +1014,17 @@ final case class MagmaCream(data: ItemData) extends Item {
   def this() = this(ItemData("Magma Cream"))
 }
 
-final case class Map extends Item {
-  // TODO filled variant
-}
+//final case class Map extends Item {
+//  // TODO filled variant
+//}
+//
+//final case class Melon extends Item {
+//  // TODO
+//}
+//
+//final case class MelonSlice extends Item {
+//  // TODO edible
+//}
 
 final case class Minecart(
     variant: MinecartVariant,
@@ -993,9 +1035,13 @@ final case class Minecart(
     this(variant, ItemData(variant, "Minecart"))
 }
 
-final case class MobHead(data: ItemData) extends Item {
+final case class MobHead(
+    variant: MobHeadVariant,
+    data: ItemData
+) extends Item {
   val `type` = ItemType.MOB_HEAD
-  def this() = this(ItemData("Mob Head")) // TODO correct naming
+  def this(variant: MobHeadVariant) =
+    this(variant, ItemData(variant, "Mob Head")) // TODO correct naming
 }
 
 final case class Mushroom(
@@ -1025,13 +1071,13 @@ final case class MusicDisc(
     this(variant, ItemData(variant, "Music Disc"))
 }
 
-final case class Mutton extends Item {
-  // TODO cookable
-}
-
-final case class Mycelium extends Item {
-  // TODO
-}
+//final case class Mutton extends Item {
+//  // TODO cookable
+//}
+//
+//final case class Mycelium extends Item {
+//  // TODO
+//}
 
 final case class NameTag(data: ItemData) extends Item {
   val `type` = ItemType.NAME_TAG
@@ -1053,13 +1099,13 @@ final case class NetherStar(data: ItemData) extends Item {
   def this() = this(ItemData("Nether Star"))
 }
 
-final case class NetherWart extends Item {
-  // TODO
-}
-
-final case class NetherWartBlock extends Item {
-  // TODO
-}
+//final case class NetherWart extends Item {
+//  // TODO
+//}
+//
+//final case class NetherWartBlock extends Item {
+//  // TODO
+//}
 
 final case class NoteBlock(data: ItemData) extends Item {
   val `type` = ItemType.NOTE_BLOCK
@@ -1091,9 +1137,9 @@ final case class PhantomMembrane(data: ItemData) extends Item {
   def this() = this(ItemData("Phantom Membrane"))
 }
 
-final case class Pickaxe extends Item {
-  // TODO
-}
+//final case class Pickaxe extends Item {
+//  // TODO
+//}
 
 final case class Pillar(
     material: PillarMaterial,
@@ -1104,8 +1150,15 @@ final case class Pillar(
     this(material, ItemData(material, "Pillar"))
 }
 
-final case class Piston extends Item {
-  // TODO sticky variant
+final case class Piston(
+    sticky: Boolean,
+    data: ItemData
+) extends Item {
+  val `type` = ItemType.PISTON
+  def this(sticky: Boolean) =
+    this(sticky, ItemData(sticky, "Sticky", "Piston"))
+  def withSticky(sticky: Boolean): Piston =
+    copyWith("sticky", sticky)
 }
 
 final case class Planks(
@@ -1117,17 +1170,26 @@ final case class Planks(
     this(material, ItemData(material, "Planks"))
 }
 
-final case class Podzol extends Item {
-  // TODO
+//final case class Podzol extends Item {
+//  // TODO
+//}
+
+final case class PoisonousPotato(data: ItemData) extends Item {
+  val `type` = ItemType.POISONOUS_POTATO
+  def this() = this(ItemData("Poisonous Potato"))
 }
 
-final case class Porkchop extends Item {
-  // TODO cookable
-}
-
-final case class Potion extends Item {
-  // TODO variants
-}
+//final case class Porkchop extends Item {
+//  // TODO cookable
+//}
+//
+//final case class Potato extends Item {
+//  // TODO cookable
+//}
+//
+//final case class Potion extends Item {
+//  // TODO variants
+//}
 
 final case class PressurePlate(
     material: PressurePlateMaterial,
@@ -1159,8 +1221,17 @@ final case class PrismarineShard(data: ItemData) extends Item {
 
 final case class Pufferfish(data: ItemData) extends Item {
   val `type` = ItemType.PUFFERFISH
+  override val edible = true
   def this() = this(ItemData("Pufferfish"))
 }
+
+//final case class Pumpkin extends Item {
+//  // TODO
+//}
+//
+//final case class PumpkinPie extends Item {
+//  // TODO edible
+//}
 
 final case class Purpur(data: ItemData) extends Item {
   val `type` = ItemType.PURPUR
@@ -1186,9 +1257,9 @@ final case class QuartzOre(data: ItemData) extends Item {
   def this() = this(ItemData("Quartz Ore"))
 }
 
-final case class Rabbit extends Item {
-  // TODO cookable
-}
+//final case class Rabbit extends Item {
+//  // TODO cookable
+//}
 
 final case class RabbitFoot(data: ItemData) extends Item {
   val `type` = ItemType.RABBIT_FOOT
@@ -1224,8 +1295,9 @@ final case class RedstoneBlock(data: ItemData) extends Item {
   def this() = this(ItemData("Redstone Block"))
 }
 
-final case class RedstoneLamp extends Item {
-  // TODO
+final case class RedstoneLamp(data: ItemData) extends Item {
+  val `type` = ItemType.REDSTONE_LAMP
+  def this() = this(ItemData("Redstone Lamp"))
 }
 
 final case class RedstoneOre(data: ItemData) extends Item {
@@ -1233,8 +1305,9 @@ final case class RedstoneOre(data: ItemData) extends Item {
   def this() = this(ItemData("Redstone Ore"))
 }
 
-final case class RedstoneTorch extends Item {
-  // TODO
+final case class RedstoneTorch(data: ItemData) extends Item {
+  val `type` = ItemType.REDSTONE_TORCH
+  def this() = this(ItemData("Redstone Torch"))
 }
 
 final case class RottenFlesh(data: ItemData) extends Item {
@@ -1248,9 +1321,9 @@ final case class Saddle(data: ItemData) extends Item {
   def this() = this(ItemData("Saddle"))
 }
 
-final case class Salmon extends Item {
-  // TODO cookable
-}
+//final case class Salmon extends Item {
+//  // TODO cookable
+//}
 
 final case class Sand(
     material: SandMaterial, // TODO should this be a variant?
@@ -1292,9 +1365,9 @@ final case class Scute(data: ItemData) extends Item {
   def this() = this(ItemData("Scute"))
 }
 
-final case class Seagrass extends Item {
-  // TODO
-}
+//final case class Seagrass extends Item {
+//  // TODO
+//}
 
 final case class SeaLantern(data: ItemData) extends Item {
   val `type` = ItemType.SEA_LANTERN
@@ -1318,9 +1391,9 @@ final case class Shield(data: ItemData) extends Item {
   def this() = this(ItemData("Shield"))
 }
 
-final case class Shovel extends Item {
-  // TODO
-}
+//final case class Shovel extends Item {
+//  // TODO
+//}
 
 final case class ShulkerBox(
     color: Option[BlockColor],
@@ -1477,9 +1550,15 @@ final case class SugarCane(data: ItemData) extends Item {
   def this() = this(ItemData("Sugar Cane"))
 }
 
-final case class Sword extends Item {
-  // TODO
+final case class SweetBerries(data: ItemData) extends Item {
+  val `type` = ItemType.SWEET_BERRIES
+  override val edible = true
+  def this() = this(ItemData("Sweet Berries"))
 }
+
+//final case class Sword extends Item {
+//  // TODO
+//}
 
 final case class Terracotta(
     color: Option[BlockColor],
@@ -1528,6 +1607,7 @@ final case class TripwireHook(data: ItemData) extends Item {
 
 final case class TropicalFish(data: ItemData) extends Item {
   val `type` = ItemType.TROPICAL_FISH
+  override val edible = true
   def this() = this(ItemData("Tropical Fish"))
 }
 
@@ -1566,6 +1646,10 @@ final case class WeightedPressurePlate(
   def this(variant: WeightedPressurePlateVariant) =
     this(variant, ItemData(variant, "Weighted Pressure Plate"))
 }
+
+//final case class Wheat extends Item {
+//  // TODO
+//}
 
 final case class Wood(
     material: WoodMaterial,

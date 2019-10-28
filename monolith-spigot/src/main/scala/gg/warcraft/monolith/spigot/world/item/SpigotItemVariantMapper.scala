@@ -18,6 +18,6 @@ class SpigotItemVariantMapper @Inject()(
 
   private def compute(item: SpigotItemStack): ItemVariant = item.getType match {
 
-    case it => blockMapper.map(it) // TODO expose private compute def
+    case _ => null // TODO expose private compute def
   }
 }

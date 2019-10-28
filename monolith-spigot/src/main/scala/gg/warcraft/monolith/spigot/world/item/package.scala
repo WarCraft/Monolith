@@ -7,10 +7,14 @@ package object item {
   type SpigotItemStack = ItemStack
 
   implicit class MaterialExtensions(val material: Material) {
-    def contains(s: String): Boolean = material.name().contains(s)
-    def startsWith(s: String): Boolean = material.name().startsWith(s)
-    def endsWith(s: String): Boolean = material.name().endsWith(s)
-    def is(affix: String, suffix: String): Boolean =
-      material.name().startsWith(affix) && material.name().endsWith(suffix)
+    def head(s: String): Boolean = material.name().startsWith(s)
+    def tail(s: String): Boolean = material.name().endsWith(s)
+  }
+
+  implicit class Regex(context: StringContext) {
+    def r = new util.matching.Regex(
+      context.parts.mkString,
+      context.parts.tail.map(_ => "x"): _*
+    )
   }
 }

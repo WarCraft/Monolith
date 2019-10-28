@@ -2,6 +2,7 @@ package gg.warcraft.monolith.api.world.item;
 
 public enum ItemType {
     // TODO No AIR item?
+    APPLE,
 
     SPAWN_EGG,
     MUSIC_DISC,
@@ -278,7 +279,7 @@ public enum ItemType {
 
     MAP, // FILLED variant
 
-    EXPERIENCE_BOTTLE, // TODO is really called BOTTLE_OF_ENCHANTING
+    BOTTLE_OF_ENCHANTING,
     FIREWORK_ROCKET,
     FIREWORK_STAR,
     FIRE_CHARGE,
@@ -291,25 +292,38 @@ public enum ItemType {
     COOKIE,
 
     /* cookable item */
-    BEEF,
+    BEEF, // TODO cooked: STEAK
     CHICKEN,
     COD,
     MUTTON,
     PORKCHOP,
     RABBIT,
     SALMON,
+    POTATO, // TODO cooked: BAKED
+
+    POISONOUS_POTATO,
 
     TROPICAL_FISH,
     PUFFERFISH,
+
+    SWEET_BERRIES,
+    COCOA_BEANS,
+
+    BEETROOT,
+    MELON,
+    MELON_SLICE,
+    GOLDEN_MELON_SLICE,
+    PUMPKIN, // carved variant
+    PUMPKIN_PIE,
+    WHEAT,
+    JACK_OF_THE_LANTERN,
 }
 
 /* food
 
-POTATO
-BAKED_POTATO
-POISONOUS_POTATO
 
-BEETROOT
+
+MELON_SEEDS
 BEETROOT_SEEDS
 
 MUSHROOM_STEW
@@ -317,24 +331,14 @@ RABBIT_STEW
 SUSPICIOUS_STEW
 BEETROOT_SOUP
 
-
-MELON
-MELON_SEEDS
-MELON_SLICE
-GLISTERING_MELON_SLICE
-
-PUMPKIN
-PUMPKIN_PIE
 PUMPKIN_SEEDS
-CARVED_PUMPKIN
-JACK_O_LANTERN
 
-WHEAT
 WHEAT_SEEDS
 
-COCOA_BEANS
 
-SWEET_BERRIES
+
+
+
 
 FERN
 LARGE_FERN

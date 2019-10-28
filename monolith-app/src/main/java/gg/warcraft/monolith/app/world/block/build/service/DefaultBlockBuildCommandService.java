@@ -16,7 +16,7 @@ import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
 import gg.warcraft.monolith.api.world.block.build.BlockBuild;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
-import gg.warcraft.monolith.api.world.block.type.Sign;
+import gg.warcraft.monolith.api.world.block.Sign;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.world.block.build.SimpleBlockBuild;
 
