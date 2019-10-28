@@ -20,27 +20,49 @@ class SpigotBlockVariantMapper {
     implicit val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
-      case Material.BAMBOO =>
-        val leaves = dataAs[SpigotBamboo].getLeaves
-        map(leaves)
+      case Material.BAMBOO => dataAs[SpigotBamboo].getLeaves match {
+        case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
+        case SpigotBambooLeaves.SMALL => BambooVariant.SMALL_LEAVES
+        case SpigotBambooLeaves.LARGE => BambooVariant.LARGE_LEAVES
+      }
 
-      case Material.COMPARATOR =>
-        val mode = dataAs[SpigotComparator].getMode
-        map(mode)
+      case Material.COMPARATOR => dataAs[SpigotComparator].getMode match {
+        case SpigotComparatorMode.COMPARE  => ComparatorVariant.COMPARE
+        case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
+      }
 
-      case Material.NOTE_BLOCK =>
-        val instrument = dataAs[SpigotNoteBlock].getInstrument
-        map(instrument)
+      case Material.NOTE_BLOCK => dataAs[SpigotNoteBlock].getInstrument  match {
+        case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
+        case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
+        case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
+        case SpigotInstrument.BELL           => NoteBlockVariant.BELL
+        case SpigotInstrument.BIT            => NoteBlockVariant.BIT
+        case SpigotInstrument.CHIME          => NoteBlockVariant.CHIME
+        case SpigotInstrument.COW_BELL       => NoteBlockVariant.COW_BELL
+        case SpigotInstrument.DIDGERIDOO     => NoteBlockVariant.DIDGERIDOO
+        case SpigotInstrument.FLUTE          => NoteBlockVariant.FLUTE
+        case SpigotInstrument.GUITAR         => NoteBlockVariant.GUITAR
+        case SpigotInstrument.IRON_XYLOPHONE => NoteBlockVariant.IRON_XYLOPHONE
+        case SpigotInstrument.PIANO          => NoteBlockVariant.HAT
+        case SpigotInstrument.PLING          => NoteBlockVariant.PLING
+        case SpigotInstrument.SNARE_DRUM     => NoteBlockVariant.SNARE_DRUM
+        case SpigotInstrument.STICKS         => NoteBlockVariant.HARP
+        case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
+      }
 
       case Material.STRUCTURE_BLOCK =>
-        val mode = dataAs[SpigotStructureBlock].getMode
-        map(mode)
+        dataAs[SpigotStructureBlock].getMode match {
+          case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
+          case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
+          case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
+          case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
+        }
 
-      case _ => cache.computeIfAbsent(block.getType, _ => compute(block.getType))
+      case _ => cache.computeIfAbsent(block.getType, _ => map(block.getType))
     }
   }
 
-  private def compute(material: Material): BlockVariant = material match {
+  def map(material: Material): BlockVariant = material match {
 
     // AIR
     case Material.AIR            => AirVariant.NORMAL
@@ -738,98 +760,49 @@ class SpigotBlockVariantMapper {
 
     block match {
       case Bamboo(_, variant, _, _) =>
-        val leaves = map(variant)
+        val leaves = variant match {
+          case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
+          case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
+          case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+        }
         dataAs[SpigotBamboo].setLeaves(leaves)
 
       case Comparator(_, variant, _, _) =>
-        val mode = map(variant)
+        val mode = variant match {
+          case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
+          case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
+        }
         dataAs[SpigotComparator].setMode(mode)
 
       case NoteBlock(_, variant, _, _) =>
-        val instrument = map(variant)
+        val instrument = variant match {
+          case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
+          case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
+          case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
+          case NoteBlockVariant.BELL           => SpigotInstrument.BELL
+          case NoteBlockVariant.BIT            => SpigotInstrument.BIT
+          case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
+          case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
+          case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
+          case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
+          case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
+          case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
+          case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
+          case NoteBlockVariant.PLING          => SpigotInstrument.PLING
+          case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
+          case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
+          case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
+        }
         dataAs[SpigotNoteBlock].setInstrument(instrument)
 
       case StructureBlock(_, variant) =>
-        val mode = map(variant)
+        val mode = variant match {
+          case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
+          case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
+          case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
+          case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
+        }
         dataAs[SpigotStructureBlock].setMode(mode)
     }
-  }
-
-  // BAMBOO
-  def map(leaves: SpigotBambooLeaves): BambooVariant = leaves match {
-    case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
-    case SpigotBambooLeaves.SMALL => BambooVariant.SMALL_LEAVES
-    case SpigotBambooLeaves.LARGE => BambooVariant.LARGE_LEAVES
-  }
-
-  def map(variant: BambooVariant): SpigotBambooLeaves = variant match {
-    case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
-    case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
-    case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
-  }
-
-  // COMPARATOR
-  def map(mode: SpigotComparatorMode): ComparatorVariant = mode match {
-    case SpigotComparatorMode.COMPARE  => ComparatorVariant.COMPARE
-    case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
-  }
-
-  def map(variant: ComparatorVariant): SpigotComparatorMode = variant match {
-    case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
-    case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
-  }
-
-  // NOTE_BLOCK
-  def map(instrument: SpigotInstrument): NoteBlockVariant = instrument match {
-      case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
-      case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
-      case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
-      case SpigotInstrument.BELL           => NoteBlockVariant.BELL
-      case SpigotInstrument.BIT            => NoteBlockVariant.BIT
-      case SpigotInstrument.CHIME          => NoteBlockVariant.CHIME
-      case SpigotInstrument.COW_BELL       => NoteBlockVariant.COW_BELL
-      case SpigotInstrument.DIDGERIDOO     => NoteBlockVariant.DIDGERIDOO
-      case SpigotInstrument.FLUTE          => NoteBlockVariant.FLUTE
-      case SpigotInstrument.GUITAR         => NoteBlockVariant.GUITAR
-      case SpigotInstrument.IRON_XYLOPHONE => NoteBlockVariant.IRON_XYLOPHONE
-      case SpigotInstrument.PIANO          => NoteBlockVariant.HAT
-      case SpigotInstrument.PLING          => NoteBlockVariant.PLING
-      case SpigotInstrument.SNARE_DRUM     => NoteBlockVariant.SNARE_DRUM
-      case SpigotInstrument.STICKS         => NoteBlockVariant.HARP
-      case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
-    }
-
-  def map(variant: NoteBlockVariant): SpigotInstrument = variant match {
-      case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
-      case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
-      case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
-      case NoteBlockVariant.BELL           => SpigotInstrument.BELL
-      case NoteBlockVariant.BIT            => SpigotInstrument.BIT
-      case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
-      case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
-      case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
-      case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
-      case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
-      case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
-      case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
-      case NoteBlockVariant.PLING          => SpigotInstrument.PLING
-      case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
-      case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
-      case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
-    }
-
-  // STRUCTURE_BLOCK
-  def map(mode: SpigotStructureBlockMode): StructureBlockVariant = mode match {
-    case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
-    case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
-    case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
-    case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
-  }
-
-  def map(v: StructureBlockVariant): SpigotStructureBlockMode = v match {
-    case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
-    case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
-    case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
-    case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
   }
 }

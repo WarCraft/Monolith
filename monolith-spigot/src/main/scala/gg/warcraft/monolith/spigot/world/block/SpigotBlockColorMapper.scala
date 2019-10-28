@@ -11,32 +11,30 @@ class SpigotBlockColorMapper {
     new util.EnumMap[Material, BlockColor](classOf[Material])
 
   def map(material: Material): BlockColor =
-    cache.computeIfAbsent(material, compute)
+    cache.computeIfAbsent(material, _ => material match {
+      case it if it $is "BLACK"      => BlockColor.BLACK
+      case it if it $is "BLUE"       => BlockColor.BLUE
+      case it if it $is "BROWN"      => BlockColor.BROWN
+      case it if it $is "CYAN"       => BlockColor.CYAN
+      case it if it $is "GRAY"       => BlockColor.GRAY
+      case it if it $is "GREEN"      => BlockColor.GREEN
+      case it if it $is "LIGHT_BLUE" => BlockColor.LIGHT_BLUE
+      case it if it $is "LIGHT_GRAY" => BlockColor.LIGHT_GRAY
+      case it if it $is "LIME"       => BlockColor.LIME
+      case it if it $is "MAGENTA"    => BlockColor.MAGENTA
+      case it if it $is "ORANGE"     => BlockColor.ORANGE
+      case it if it $is "PINK"       => BlockColor.PINK
+      case it if it $is "PURPLE"     => BlockColor.PURPLE
+      case it if it $is "RED"        => BlockColor.RED
+      case it if it $is "WHITE"      => BlockColor.WHITE
+      case it if it $is "YELLOW"     => BlockColor.YELLOW
 
-  private def compute(material: Material): BlockColor = material match {
-    case it if it $is "BLACK"      => BlockColor.BLACK
-    case it if it $is "BLUE"       => BlockColor.BLUE
-    case it if it $is "BROWN"      => BlockColor.BROWN
-    case it if it $is "CYAN"       => BlockColor.CYAN
-    case it if it $is "GRAY"       => BlockColor.GRAY
-    case it if it $is "GREEN"      => BlockColor.GREEN
-    case it if it $is "LIGHT_BLUE" => BlockColor.LIGHT_BLUE
-    case it if it $is "LIGHT_GRAY" => BlockColor.LIGHT_GRAY
-    case it if it $is "LIME"       => BlockColor.LIME
-    case it if it $is "MAGENTA"    => BlockColor.MAGENTA
-    case it if it $is "ORANGE"     => BlockColor.ORANGE
-    case it if it $is "PINK"       => BlockColor.PINK
-    case it if it $is "PURPLE"     => BlockColor.PURPLE
-    case it if it $is "RED"        => BlockColor.RED
-    case it if it $is "WHITE"      => BlockColor.WHITE
-    case it if it $is "YELLOW"     => BlockColor.YELLOW
+      case Material.GLASS | Material.GLASS_PANE | Material.SHULKER_BOX |
+           Material.TERRACOTTA =>
+        null
 
-    case Material.GLASS | Material.GLASS_PANE | Material.SHULKER_BOX |
-        Material.TERRACOTTA =>
-      null
-
-    case _ => throw new IllegalArgumentException(s"$material")
-  }
+      case _ => throw new IllegalArgumentException(s"$material")
+    })
 
   def map(block: ColoredBlock): Material = block match {
     case Banner(_, color, _, None)  => mapBanner(color)

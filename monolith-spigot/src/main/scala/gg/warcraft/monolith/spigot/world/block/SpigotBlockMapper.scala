@@ -37,7 +37,7 @@ class SpigotBlockMapper @Inject()(
     lazy val color = colorMapper.map(block.getType)
     lazy val flooded = spigotState.asInstanceOf[Waterlogged].isWaterlogged
     lazy val lit = spigotState.asInstanceOf[Lightable].isLit
-    lazy val mat = materialMapper.map(block.getType)
+    lazy val material = materialMapper.map(block.getType)
     lazy val open = spigotState.asInstanceOf[Openable].isOpen
     lazy val powered = spigotState.asInstanceOf[Powerable].isPowered
     lazy val shape = shapeMapper.map(block)
@@ -81,7 +81,7 @@ class SpigotBlockMapper @Inject()(
     }
 
     // Map block
-    def materialAs[T <: BlockMaterial]: T = mat.asInstanceOf[T]
+    def materialAs[T <: BlockMaterial]: T = material.asInstanceOf[T]
     def variantAs[T <: BlockVariant]: T = variant.asInstanceOf[T]
     def stateAs[T <: BlockState]: T = state.asInstanceOf[T]
     def shapeAs[T <: BlockShape]: T = shape.asInstanceOf[T]

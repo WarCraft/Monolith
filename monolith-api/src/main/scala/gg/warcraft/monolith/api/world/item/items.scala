@@ -467,6 +467,15 @@ final case class Dropper(data: ItemData) extends Item {
   def this() = this(ItemData("Dropper"))
 }
 
+final case class Dye(
+    color: BlockColor,
+    data: ItemData
+) extends ColoredItem {
+  val `type` = ItemType.DYE
+  def this(color: BlockColor) =
+    this(color, ItemData(color, "Dye"))
+}
+
 final case class Egg(data: ItemData) extends Item {
   val `type` = ItemType.EGG
   def this() = this(ItemData("Egg"))
@@ -1109,7 +1118,7 @@ final case class Sandstone(
     variant: SandstoneVariant,
     data: ItemData
 ) extends MaterialItem[SandstoneMaterial]
-    with VariedItem[SandstoneVariant] {
+  with VariedItem[SandstoneVariant] {
   val `type` = ItemType.SANDSTONE
   def this(material: SandstoneMaterial, variant: SandstoneVariant) =
     this(material, variant, ItemData(material, variant, "Sandstone"))
@@ -1185,7 +1194,7 @@ final case class Slab(
     variant: Option[SlabVariant],
     data: ItemData
 ) extends MaterialItem[SlabMaterial]
-    with VariableItem[SlabVariant] {
+  with VariableItem[SlabVariant] {
   val `type` = ItemType.SLAB
   def this(material: SlabMaterial, variant: Option[SlabVariant]) =
     this(material, variant, ItemData(material, variant, "Slab"))
@@ -1269,7 +1278,7 @@ final case class Stairs(
     variant: Option[StairsVariant],
     data: ItemData
 ) extends MaterialItem[StairsMaterial]
-    with VariableItem[StairsVariant] {
+  with VariableItem[StairsVariant] {
   val `type` = ItemType.SLAB
   def this(material: StairsMaterial, variant: Option[StairsVariant]) =
     this(material, variant, ItemData(material, variant, "Slab"))
@@ -1285,7 +1294,7 @@ final case class Stone(
     variant: StoneVariant,
     data: ItemData
 ) extends MaterialItem[StoneMaterial]
-    with VariedItem[StoneVariant] {
+  with VariedItem[StoneVariant] {
   val `type` = ItemType.STONE
   def this(material: StoneMaterial, variant: StoneVariant) =
     this(material, variant, ItemData(material, variant, "Stone"))
@@ -1377,7 +1386,7 @@ final case class Wall(
     variant: Option[WallVariant],
     data: ItemData
 ) extends MaterialItem[WallMaterial]
-    with VariableItem[WallVariant] {
+  with VariableItem[WallVariant] {
   val `type` = ItemType.WALL
   def this(material: WallMaterial, variant: Option[WallVariant]) =
     this(material, variant, ItemData(material, variant, "Wall"))
