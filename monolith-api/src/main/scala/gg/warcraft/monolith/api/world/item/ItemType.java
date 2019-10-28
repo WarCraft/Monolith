@@ -103,15 +103,6 @@ public enum ItemType {
     BOOK, // enchanted option, quil (writable) option, written (uneditable) option,
     KNOWLEDGE_BOOK,
 
-    /* cookable item */
-    BEEF,
-    CHICKEN,
-    COD,
-    MUTTON,
-    PORKCHOP,
-    RABBIT,
-    SALMON,
-
     CAKE,
     CARROT,
     CARROT_ON_A_STICK,
@@ -216,7 +207,7 @@ public enum ItemType {
     SCUTE,
     SEA_LANTERN,
     SEA_PICKLE,
-    SLIMEBALL, // TODO what to name CLAY and SLIME? CLAY_BALL SLIME_BALL or leave it?
+    SLIMEBALL,
     SLIME_BLOCK, // TODO this is called Slime Block in MC, rename block type to SlimeBlock too?
     SNOW,
     SNOWBALL,
@@ -245,7 +236,7 @@ public enum ItemType {
     PRISMARINE, // DARK / BRICKS materials
     END_STONE, // NORMAL / BRICKS materials
     BRICK, // NORMAL, NETHER materials
-    BRICK_BLOCK, // NORMAL, NETHER, RED_NETHER materials
+    BRICK_BLOCK, // NORMAL, NETHER, RED_NETHER materials // TODO what to do with Block naming here
     PURPUR,
     QUARTZ,
     QUARTZ_BLOCK, // chiseled and smooth variant
@@ -287,7 +278,7 @@ public enum ItemType {
 
     MAP, // FILLED variant
 
-    EXPERIENCE_BOTTLE,
+    EXPERIENCE_BOTTLE, // TODO is really called BOTTLE_OF_ENCHANTING
     FIREWORK_ROCKET,
     FIREWORK_STAR,
     FIRE_CHARGE,
@@ -296,6 +287,20 @@ public enum ItemType {
 
     MYCELIUM,
     PODZOL,
+
+    COOKIE,
+
+    /* cookable item */
+    BEEF,
+    CHICKEN,
+    COD,
+    MUTTON,
+    PORKCHOP,
+    RABBIT,
+    SALMON,
+
+    TROPICAL_FISH,
+    PUFFERFISH,
 }
 
 /* food
@@ -312,7 +317,6 @@ RABBIT_STEW
 SUSPICIOUS_STEW
 BEETROOT_SOUP
 
-COOKIE
 
 MELON
 MELON_SEEDS
@@ -331,8 +335,6 @@ WHEAT_SEEDS
 COCOA_BEANS
 
 SWEET_BERRIES
-TROPICAL_FISH
-PUFFERFISH
 
 FERN
 LARGE_FERN
