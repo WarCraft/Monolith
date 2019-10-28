@@ -23,12 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpigotItemMapper {
-    private final SpigotItemTypeMapper itemTypeMapper;
-
-    @Inject
-    public SpigotItemMapper(SpigotItemTypeMapper itemTypeMapper) {
-        this.itemTypeMapper = itemTypeMapper;
-    }
 
     public ItemStack mapSkull(Skull skull) {
         if (skull == null) {
@@ -57,7 +51,7 @@ public class SpigotItemMapper {
             return mapSkull((Skull) item);
         }
 
-        MaterialData materialData = itemTypeMapper.map(item.getType());
+        MaterialData materialData = null; // TODO itemTypeMapper.map(item.getType());
         ItemStack itemStack = new ItemStack(materialData.getMaterial(), item.getStackSize(), (short) item.getDamage(),
                 materialData.getData());
 
@@ -85,7 +79,7 @@ public class SpigotItemMapper {
         }
 
         byte data = item.getData() != null ? item.getData().getData() : 0;
-        ItemType type = itemTypeMapper.map(item.getType(), data);
+        ItemType type = null; // TODO itemTypeMapper.map(item.getType(), data);
         if (!item.hasItemMeta()) {
             ItemMeta meta = Bukkit.getItemFactory().getItemMeta(item.getType());
             item.setItemMeta(meta);

@@ -50,7 +50,7 @@ public class SpigotBlockBackupCommandService implements BlockBackupCommandServic
         }
 
         UUID id = UUID.randomUUID();
-        BlockType type = blockTypeMapper.map(block.getType());
+        BlockType type = null; // TODO blockTypeMapper.map(block.getType());
         int data = block.getData();
         BlockBackup blockBackup = new SimpleBlockBackup(id, type, data, location);
 
@@ -76,7 +76,7 @@ public class SpigotBlockBackupCommandService implements BlockBackupCommandServic
         }
 
         BlockState blockState = block.getState();
-        blockState.setTypeId(blockBackup.getType().getId());
+        // TODO blockState.setTypeId(blockBackup.getType().getId());
         blockState.setRawData((byte) blockBackup.getData());
         blockState.update(true, false);
 

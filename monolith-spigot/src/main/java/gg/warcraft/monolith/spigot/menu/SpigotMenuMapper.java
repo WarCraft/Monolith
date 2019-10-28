@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import gg.warcraft.monolith.api.menu.Button;
 import gg.warcraft.monolith.api.menu.Menu;
 import gg.warcraft.monolith.app.menu.SkullButton;
-import gg.warcraft.monolith.spigot.item.SpigotItemTypeMapper;
 import gg.warcraft.monolith.spigot.world.MaterialData;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -20,12 +19,10 @@ import java.util.UUID;
 
 public class SpigotMenuMapper {
     private final Server server;
-    private final SpigotItemTypeMapper itemTypeMapper;
 
     @Inject
-    public SpigotMenuMapper(Server server, SpigotItemTypeMapper itemTypeMapper) {
+    public SpigotMenuMapper(Server server) {
         this.server = server;
-        this.itemTypeMapper = itemTypeMapper;
     }
 
     public Inventory map(Menu menu, UUID viewerId) {
@@ -55,7 +52,7 @@ public class SpigotMenuMapper {
             return mapSkull((SkullButton) button);
         }
 
-        MaterialData iconData = itemTypeMapper.map(button.getIcon());
+        MaterialData iconData = null; // TODO itemTypeMapper.map(button.getIcon());
         ItemStack item = new ItemStack(iconData.getMaterial(), 1, (short) 0, iconData.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(button.getTitle());

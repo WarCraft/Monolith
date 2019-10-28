@@ -326,11 +326,6 @@ class SpigotBlockVariantMapper {
       case Some(_) => Material.BRAIN_CORAL_WALL_FAN
     }
 
-    case CoralFan(_, CoralVariant.BRAIN, dir, _) => dir match {
-      case None    => Material.BRAIN_CORAL_FAN
-      case Some(_) => Material.BRAIN_CORAL_WALL_FAN
-    }
-
     case CoralFan(_, CoralVariant.BUBBLE, dir, _) => dir match {
       case None    => Material.BUBBLE_CORAL_FAN
       case Some(_) => Material.BUBBLE_CORAL_WALL_FAN

@@ -163,7 +163,6 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Netherrack       => Material.NETHERRACK
     case _: NetherWarts      => Material.NETHER_WART
     case _: NetherWartBlock  => Material.NETHER_WART_BLOCK
-    case _: NoteBlock        => Material.NOTE_BLOCK
     case _: Observer         => Material.OBSERVER
     case _: Obsidian         => Material.OBSIDIAN
     case _: Podzol           => Material.PODZOL

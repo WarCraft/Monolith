@@ -56,7 +56,9 @@ public class SpigotInventory implements Inventory {
 
     @Override
     public boolean contains(ItemType type) {
-        return inventory.contains(type.getId(), type.getData());
+        // TODO return inventory.contains(type.getId(), type.getData());
+        System.out.println("WARNING Attempted to read if ItemType is in inventory, always returning false");
+        return false;
     }
 
     @Override
