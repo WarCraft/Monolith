@@ -167,7 +167,7 @@ public class JedisPersistenceService implements PersistenceService {
                 ScanResult<String> scanResult = jedis.scan(cur, scanParams);
 
                 keys.addAll(scanResult.getResult());
-                cur = scanResult.getStringCursor();
+                cur = scanResult.getCursor();
             } while (!cur.equals(ScanParams.SCAN_POINTER_START));
             return keys;
         }

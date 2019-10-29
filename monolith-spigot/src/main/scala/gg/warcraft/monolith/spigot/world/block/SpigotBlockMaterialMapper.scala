@@ -171,7 +171,6 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Pumpkin          => Material.PUMPKIN
     case _: PumpkinStem      => Material.PUMPKIN_STEM
     case _: Purpur           => Material.PURPUR_BLOCK
-    case _: Quartz           => Material.QUARTZ_BLOCK
     case _: QuartzOre        => Material.NETHER_QUARTZ_ORE
     case _: Redstone         => Material.REDSTONE_BLOCK
     case _: RedstoneLamp     => Material.REDSTONE_LAMP
