@@ -5,9 +5,9 @@ import java.util.function.Function;
 
 /**
  * Represents a function that accepts three arguments and produces a result.
- * This is the three-arity specialization of {@link Function}.
+ * This is the three-arity specialization of Function.
  * <p>
- * This is a functional interface whose functional method is {@link #apply(Object, Object, Object)}.
+ * This is a functional interface whose functional method is #apply(Object, Object, Object).
  *
  * @param <T> the type of the first argument to the function
  * @param <U> the type of the second argument to the function
@@ -39,7 +39,6 @@ public interface TriFunction<T, U, V, R> {
      * @param after the function to apply after this function is applied
      * @return a composed function that first applies this function and then
      * applies the {@code after} function
-     * @throws NullPointerException if after is null
      */
     default <W> TriFunction<T, U, V, W> andThen(Function<? super R, ? extends W> after) {
         Objects.requireNonNull(after);

@@ -17,11 +17,12 @@ import java.util.UUID;
 public interface CommandCommandService {
 
     /**
+     * Throws an IllegalArgumentException when any of the parameter constraints are not met or if the name or any
+     * of the aliases is already in use by another command.
+     *
      * @param name    The name of the new command. Can not be null or empty.
      * @param aliases An optional list of aliases. Can not be null, but can be empty. Items can not be null or empty.
      * @param handler The command handler. Can not be null.
-     * @throws IllegalArgumentException Thrown when any of the parameter constraints are not met or if the name or any
-     *                                  of the aliases is already in use by another command.
      */
     void createCommand(String name, List<String> aliases, CommandHandler handler) throws IllegalArgumentException;
 

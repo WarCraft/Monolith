@@ -32,8 +32,6 @@ public interface CommandServerAdapter {
     /**
      * @param name    The name of the new command. Can not be null or empty.
      * @param aliases An optional list of aliases. Can not be null, but can be empty. Items can not be null or empty.
-     * @throws IllegalArgumentException Thrown when any of the parameter constraints are not met and if the name or any
-     *                                  of the aliases is already in use by another command.
      */
     void registerCommand(String name, List<String> aliases) throws IllegalArgumentException;
 }
