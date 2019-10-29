@@ -21,8 +21,9 @@ settings.json
 /bin/
 */bin/
 
-# Gradle
-.gradle/
+# SBT
+/project/project/
+*/project/project/
 
-/build/
-*/build/
+/target/
+*/target/
