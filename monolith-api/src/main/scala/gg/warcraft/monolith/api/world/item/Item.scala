@@ -55,6 +55,10 @@ trait DurableItem extends Item {
   val unbreakable: Boolean
   def withUnbreakable(unbreakable: Boolean): this.type =
     copyWith("unbreakable", unbreakable)
+
+  val hideUnbreakable: Boolean
+  def withHideUnbreakable(hideUnbreakable: Boolean): this.type =
+    copyWith("hideUnbreakable", hideUnbreakable)
 }
 
 trait EnchantableItem extends Item {
