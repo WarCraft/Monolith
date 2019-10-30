@@ -7,4 +7,5 @@ public enum StructureBlockVariant implements BlockVariant {
     DATA,
     LOAD,
     SAVE,
+    VOID,
 }
