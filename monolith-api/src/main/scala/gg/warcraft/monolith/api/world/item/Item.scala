@@ -17,21 +17,17 @@ trait Item extends CaseClass {
   def withTooltip(tooltip: Array[String]): this.type =
     copyWith("tooltip", tooltip)
 
-  val attributes: List[String]
+  val attributes: Set[String]
   @varargs def addAttributes(attributes: String*): this.type =
     copyWith("attributes", this.attributes ++ attributes)
-  //  @varargs def removeAttributes(attributes: String*): this.type =
-  //    copyWith("attributes", this.attributes -- attributes)
+  @varargs def removeAttributes(attributes: String*): this.type =
+    copyWith("attributes", this.attributes -- attributes)
   @varargs def withAttributes(attributes: String*): this.type =
-    copyWith("attributes", List(attributes: _*))
+    copyWith("attributes", Set(attributes: _*))
 
-  //  val flags: util.Set[ItemFlag] TODO these might be able to be integrated into specific item types
-  //  @varargs def addFlags(flags: ItemFlag*): this.type =
-  //    withData(data.copy(flags = data.flags ++ flags))
-  //  @varargs def removeFlags(flags: ItemFlag*): this.type =
-  //    withData(data.copy(flags = data.flags -- flags))
-  //  @varargs def withFlags(flags: ItemFlag*): this.type =
-  //    withData(data.copy(flags = Set(flags: _*)))
+  val hideAttributes: Boolean
+  def withHideAttributes(hideAttributes: Boolean): this.type =
+    copyWith("hideAttributes", hideAttributes)
 }
 
 trait ColoredItem extends Item {
@@ -69,6 +65,10 @@ trait EnchantableItem extends Item {
     copyWith("enchantments", this.enchantments -- enchantments)
   @varargs def withEnchantments(enchantments: (String, Int)*): this.type =
     copyWith("enchantments", Map[String, Int](enchantments: _*))
+
+  val hideEnchantments: Boolean
+  def withHideEnchantments(hideEnchantments: Boolean): this.type =
+    copyWith("hideEnchantments", hideEnchantments)
 }
 
 trait MaterialItem[T <: ItemMaterial] extends Item {

@@ -1045,9 +1045,14 @@ final case class Potato(
   override val edible = true
 }
 
-//final case class Potion extends Item {
-//  // TODO variants
-//}
+final case class Potion(
+    hideEffects: Boolean
+) extends Item {
+  // TODO variants
+
+  def withHideEffects(hideEffects: Boolean): this.type =
+    copyWith("hideEffects", hideEffects)
+}
 
 final case class PressurePlate(
     material: PressurePlateMaterial,
