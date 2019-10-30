@@ -72,7 +72,7 @@ final case class Banner(
 
 final case class BannerPattern(
     variant: BannerPatternVariant,
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean
 ) extends Item {
   val `type` = ItemType.BANNER_PATTERN
@@ -225,7 +225,7 @@ final case class Boots(
 }
 
 final case class Bow(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -296,7 +296,7 @@ final case class Cactus(
 }
 
 final case class Cake(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean
 ) extends Item {
   val `type` = ItemType.CAKE
@@ -326,7 +326,7 @@ final case class Carrot(
 }
 
 final case class CarrotOnAStick(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -570,7 +570,7 @@ final case class CraftingTable(
 }
 
 final case class Crossbow(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -593,7 +593,7 @@ final case class DeadBush(
 }
 
 final case class DebugStick(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean
 ) extends Item {
   val `type` = ItemType.DEBUG_STICK
@@ -705,7 +705,7 @@ final case class Egg(
 }
 
 final case class Elytra(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -827,7 +827,7 @@ final case class FireworkStar extends Item {
 }
 
 final case class FishingRod(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -850,7 +850,7 @@ final case class Flint(
 }
 
 final case class FlintAndSteel(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -1717,7 +1717,7 @@ final case class RottenFlesh(
 }
 
 final case class Saddle(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean
 ) extends Item {
   val `type` = ItemType.SADDLE
@@ -1795,7 +1795,7 @@ final case class SeaPickle(
 }
 
 final case class Shears(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -1804,7 +1804,7 @@ final case class Shears(
 }
 
 final case class Shield(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -2037,7 +2037,7 @@ final case class Torch(
 }
 
 final case class TotemOfUndying(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean
 ) extends Item {
   val `type` = ItemType.TOTEM_OF_UNDYING
@@ -2052,7 +2052,7 @@ final case class TrapDoor(
 }
 
 final case class Trident(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
@@ -2083,7 +2083,7 @@ final case class TurtleEgg(
 }
 
 final case class TurtleHelmet(
-    name: String, tooltip: Array[String], count: Int,
+    name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
     durability: Int, unbreakable: Boolean, hideUnbreakable: Boolean
 ) extends DurableItem {
