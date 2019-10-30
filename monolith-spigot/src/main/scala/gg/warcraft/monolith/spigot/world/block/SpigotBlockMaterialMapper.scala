@@ -20,63 +20,66 @@ class SpigotBlockMaterialMapper @Inject()(
   def map(material: Material): BlockMaterial = cache.computeIfAbsent(material, {
     case _ if !material.isBlock => throw new IllegalArgumentException(s"$material")
 
-    // BRICK
-    case r"BRICK.*"            => BrickMaterial.BRICK
-    case r"NETHER_BRICK.*"     => BrickMaterial.NETHER_BRICK
-    case r"RED_NETHER_BRICK.*" => BrickMaterial.RED_NETHER_BRICK
-
-    // COBBLESTONE
-    case r".*COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
-
-    // END_STONE
-    case r"END_STONE_BRICK.*" => EndStoneMaterial.END_STONE_BRICK
-    case r"END_STONE.*"       => EndStoneMaterial.END_STONE
-
-    // INFESTED_BLOCK
-    case r"INFESTED_COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
-    case r"INFESTED_STONE_BRICK.*" => StoneMaterial.STONE_BRICK
-    case r"INFESTED_STONE.*"       => StoneMaterial.STONE
-
     // IRON
     case Material.IRON_DOOR => IronMaterial.IRON
-
-    // PRISMARINE
-    case r"DARK_PRISMARINE.*"  => PrismarineMaterial.DARK_PRISMARINE
-    case r"PRISMARINE_BRICK.*" => PrismarineMaterial.PRISMARINE_BRICK
-    case r"PRISMARINE.*"       => PrismarineMaterial.PRISMARINE
-
-    // PURPUR
-    case r"PURPUR.*" => PurpurMaterial.PURPUR
-
-    // QUARTZ
-    case r".*QUARTZ.*" => QuartzMaterial.QUARTZ
 
     // SAND
     case Material.SAND     => SandMaterial.SAND
     case Material.RED_SAND => SandMaterial.RED_SAND
 
-    // SANDSTONE
-    case r".*RED_SANDSTONE.*" => SandstoneMaterial.RED_SANDSTONE
-    case r".*SANDSTONE.*"     => SandstoneMaterial.SANDSTONE
+    case _ => material.name match {
 
-    // STONE
-    case r".*STONE_BRICK.*" => StoneMaterial.STONE_BRICK
-    case r".*STONE.*"       => StoneMaterial.STONE
+      // BRICK
+      case r"BRICK.*"            => BrickMaterial.BRICK
+      case r"NETHER_BRICK.*"     => BrickMaterial.NETHER_BRICK
+      case r"RED_NETHER_BRICK.*" => BrickMaterial.RED_NETHER_BRICK
 
-    // STONITE
-    case r".*ANDESITE.*" => StoniteMaterial.ANDESITE
-    case r".*DIORITE.*"  => StoniteMaterial.DIORITE
-    case r".*GRANITE.*"  => StoniteMaterial.GRANITE
+      // COBBLESTONE
+      case r".*COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
 
-    // WOOD
-    case r".*ACACIA.*"   => WoodMaterial.ACACIA
-    case r".*BIRCH.*"    => WoodMaterial.BIRCH
-    case r".*DARK_OAK.*" => WoodMaterial.DARK_OAK
-    case r".*JUNGLE.*"   => WoodMaterial.JUNGLE
-    case r".*OAK.*"      => WoodMaterial.OAK
-    case r".*SPRUCE.*"   => WoodMaterial.SPRUCE
+      // END_STONE
+      case r"END_STONE_BRICK.*" => EndStoneMaterial.END_STONE_BRICK
+      case r"END_STONE.*"       => EndStoneMaterial.END_STONE
 
-    case _ => throw new IllegalArgumentException(s"$material")
+      // INFESTED_BLOCK
+      case r"INFESTED_COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
+      case r"INFESTED_STONE_BRICK.*" => StoneMaterial.STONE_BRICK
+      case r"INFESTED_STONE.*"       => StoneMaterial.STONE
+
+      // PRISMARINE
+      case r"DARK_PRISMARINE.*"  => PrismarineMaterial.DARK_PRISMARINE
+      case r"PRISMARINE_BRICK.*" => PrismarineMaterial.PRISMARINE_BRICK
+      case r"PRISMARINE.*"       => PrismarineMaterial.PRISMARINE
+
+      // PURPUR
+      case r"PURPUR.*" => PurpurMaterial.PURPUR
+
+      // QUARTZ
+      case r".*QUARTZ.*" => QuartzMaterial.QUARTZ
+
+      // SANDSTONE
+      case r".*RED_SANDSTONE.*" => SandstoneMaterial.RED_SANDSTONE
+      case r".*SANDSTONE.*"     => SandstoneMaterial.SANDSTONE
+
+      // STONE
+      case r".*STONE_BRICK.*" => StoneMaterial.STONE_BRICK
+      case r".*STONE.*"       => StoneMaterial.STONE
+
+      // STONITE
+      case r".*ANDESITE.*" => StoniteMaterial.ANDESITE
+      case r".*DIORITE.*"  => StoniteMaterial.DIORITE
+      case r".*GRANITE.*"  => StoniteMaterial.GRANITE
+
+      // WOOD
+      case r".*ACACIA.*"   => WoodMaterial.ACACIA
+      case r".*BIRCH.*"    => WoodMaterial.BIRCH
+      case r".*DARK_OAK.*" => WoodMaterial.DARK_OAK
+      case r".*JUNGLE.*"   => WoodMaterial.JUNGLE
+      case r".*OAK.*"      => WoodMaterial.OAK
+      case r".*SPRUCE.*"   => WoodMaterial.SPRUCE
+
+      case _ => throw new IllegalArgumentException(s"$material")
+    }
   })
 
   def map(block: Block): Material = block match {

@@ -12,28 +12,30 @@ class SpigotBlockColorMapper {
     new util.EnumMap[Material, BlockColor](classOf[Material])
 
   def map(material: Material): BlockColor = cache.computeIfAbsent(material, {
-    case r"BLACK.*"      => BlockColor.BLACK
-    case r"BLUE.*"       => BlockColor.BLUE
-    case r"BROWN.*"      => BlockColor.BROWN
-    case r"CYAN.*"       => BlockColor.CYAN
-    case r"GRAY.*"       => BlockColor.GRAY
-    case r"GREEN.*"      => BlockColor.GREEN
-    case r"LIGHT_BLUE.*" => BlockColor.LIGHT_BLUE
-    case r"LIGHT_GRAY.*" => BlockColor.LIGHT_GRAY
-    case r"LIME.*"       => BlockColor.LIME
-    case r"MAGENTA.*"    => BlockColor.MAGENTA
-    case r"ORANGE.*"     => BlockColor.ORANGE
-    case r"PINK.*"       => BlockColor.PINK
-    case r"PURPLE.*"     => BlockColor.PURPLE
-    case r"RED.*"        => BlockColor.RED
-    case r"WHITE.*"      => BlockColor.WHITE
-    case r"YELLOW.*"     => BlockColor.YELLOW
-
     case Material.GLASS | Material.GLASS_PANE | Material.SHULKER_BOX |
          Material.TERRACOTTA =>
       null
 
-    case _ => throw new IllegalArgumentException(s"$material")
+    case _ => material.name match {
+      case r"BLACK.*"      => BlockColor.BLACK
+      case r"BLUE.*"       => BlockColor.BLUE
+      case r"BROWN.*"      => BlockColor.BROWN
+      case r"CYAN.*"       => BlockColor.CYAN
+      case r"GRAY.*"       => BlockColor.GRAY
+      case r"GREEN.*"      => BlockColor.GREEN
+      case r"LIGHT_BLUE.*" => BlockColor.LIGHT_BLUE
+      case r"LIGHT_GRAY.*" => BlockColor.LIGHT_GRAY
+      case r"LIME.*"       => BlockColor.LIME
+      case r"MAGENTA.*"    => BlockColor.MAGENTA
+      case r"ORANGE.*"     => BlockColor.ORANGE
+      case r"PINK.*"       => BlockColor.PINK
+      case r"PURPLE.*"     => BlockColor.PURPLE
+      case r"RED.*"        => BlockColor.RED
+      case r"WHITE.*"      => BlockColor.WHITE
+      case r"YELLOW.*"     => BlockColor.YELLOW
+
+      case _ => throw new IllegalArgumentException(s"$material")
+    }
   })
 
   def map(block: ColoredBlock): Material = block match {

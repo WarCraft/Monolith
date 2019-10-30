@@ -80,27 +80,10 @@ class SpigotBlockVariantMapper {
     case Material.ENDER_CHEST   => ChestVariant.ENDER
     case Material.TRAPPED_CHEST => ChestVariant.TRAPPED
 
-    // COBBLESTONE
-    case r"COBBLESTONE.*"       => CobblestoneVariant.NORMAL
-    case r"MOSSY_COBBLESTONE.*" => CobblestoneVariant.MOSSY
-
     // COMMAND_BLOCK
     case Material.COMMAND_BLOCK           => CommandBlockVariant.NORMAL
     case Material.CHAIN_COMMAND_BLOCK     => CommandBlockVariant.CHAIN
     case Material.REPEATING_COMMAND_BLOCK => CommandBlockVariant.REPEATING
-
-    // CORAL
-    case r"BRAIN_CORAL.*"  => CoralVariant.BRAIN
-    case r"BUBBLE_CORAL.*" => CoralVariant.BUBBLE
-    case r"FIRE_CORAL.*"   => CoralVariant.FIRE
-    case r"HORN_CORAL.*"   => CoralVariant.HORN
-    case r"TUBE_CORAL.*"   => CoralVariant.TUBE
-
-    case r"DEAD_BRAIN_CORAL.*"  => CoralVariant.DEAD_BRAIN
-    case r"DEAD_BUBBLE_CORAL.*" => CoralVariant.DEAD_BUBBLE
-    case r"DEAD_FIRE_CORAL.*"   => CoralVariant.DEAD_FIRE
-    case r"DEAD_HORN_CORAL.*"   => CoralVariant.DEAD_HORN
-    case r"DEAD_TUBE_CORAL.*"   => CoralVariant.DEAD_TUBE
 
     // FLOWER
     case Material.ALLIUM             => FlowerVariant.ALLIUM
@@ -160,14 +143,6 @@ class SpigotBlockVariantMapper {
     case Material.INFESTED_CRACKED_STONE_BRICKS  => StoneVariant.CRACKED
     case Material.INFESTED_MOSSY_STONE_BRICKS    => StoneVariant.MOSSY
 
-    // MOB_HEAD
-    case r"CREEPER.*"         => MobHeadVariant.CREEPER
-    case r"DRAGON.*"          => MobHeadVariant.DRAGON
-    case r"PLAYER.*"          => MobHeadVariant.PLAYER
-    case r"SKELETON.*"        => MobHeadVariant.SKELETON
-    case r"WITHER_SKELETON.*" => MobHeadVariant.WITHER_SKELETON
-    case r"ZOMBIE.*"          => MobHeadVariant.ZOMBIE
-
     // MUSHROOM
     case Material.BROWN_MUSHROOM => MushroomVariant.BROWN
     case Material.RED_MUSHROOM   => MushroomVariant.RED
@@ -177,29 +152,11 @@ class SpigotBlockVariantMapper {
     case Material.RED_MUSHROOM_BLOCK   => MushroomBlockVariant.RED
     case Material.MUSHROOM_STEM        => MushroomBlockVariant.STEM
 
-    // QUARTZ
-    case r"QUARTZ.*"          => QuartzVariant.NORMAL
-    case r"CHISELED_QUARTZ.*" => QuartzVariant.CHISELED
-    case r"SMOOTH_QUARTZ.*"   => QuartzVariant.SMOOTH
-
     // RAILS
     case Material.RAIL           => RailsVariant.NORMAL
     case Material.ACTIVATOR_RAIL => RailsVariant.ACTIVATOR
     case Material.DETECTOR_RAIL  => RailsVariant.DETECTOR
     case Material.POWERED_RAIL   => RailsVariant.POWERED
-
-    // SANDSTONE
-    case r"SANDSTONE.*"     => SandstoneVariant.NORMAL
-    case r"RED_SANDSTONE.*" => SandstoneVariant.NORMAL
-
-    case r"CHISELED_SANDSTONE.*"     => SandstoneVariant.CHISELED
-    case r"CHISELED_RED_SANDSTONE.*" => SandstoneVariant.CHISELED
-
-    case r"CUT_SANDSTONE.*"     => SandstoneVariant.CUT
-    case r"CUT_RED_SANDSTONE.*" => SandstoneVariant.CUT
-
-    case r"SMOOTH_SANDSTONE.*"     => SandstoneVariant.SMOOTH
-    case r"SMOOTH_RED_SANDSTONE.*" => SandstoneVariant.SMOOTH
 
     // SAPLING
     case Material.BAMBOO_SAPLING => SaplingVariant.BAMBOO
@@ -211,36 +168,82 @@ class SpigotBlockVariantMapper {
     case Material.OAK_SAPLING      => SaplingVariant.OAK
     case Material.SPRUCE_SAPLING   => SaplingVariant.SPRUCE
 
-    // STONE
-    case r"STONE_BRICK.*" => StoneVariant.NORMAL
-    case r"STONE.*"       => StoneVariant.NORMAL
-
-    case r"CHISELED_STONE_BRICK.*" => StoneVariant.CHISELED
-    case r"CHISELED_STONE.*"       => StoneVariant.CHISELED
-
-    case r"CRACKED_STONE_BRICK.*" => StoneVariant.CRACKED
-    case r"CRACKED_STONE.*"       => StoneVariant.CRACKED
-
-    case r"MOSSY_STONE_BRICK.*" => StoneVariant.MOSSY
-    case r"MOSSY_STONE.*"       => StoneVariant.MOSSY
-
-    case r"SMOOTH_STONE_BRICK.*" => StoneVariant.SMOOTH
-    case r"SMOOTH_STONE.*"       => StoneVariant.SMOOTH
-
-    // STONITE
-    case r"ANDESITE.*" => StoniteVariant.NORMAL
-    case r"DIORITE.*"  => StoniteVariant.NORMAL
-    case r"GRANITE.*"  => StoniteVariant.NORMAL
-
-    case r"POLISHED_ANDESITE.*" => StoniteVariant.POLISHED
-    case r"POLISHED_DIORITE.*"  => StoniteVariant.POLISHED
-    case r"POLISHED_GRANITE.*"  => StoniteVariant.POLISHED
-
     // WEIGHTED_PRESSURE_PLATE
     case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateVariant.LIGHT
     case Material.HEAVY_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateVariant.HEAVY
 
-    case _ => throw new IllegalArgumentException(s"$material")
+    case _ => material.name match {
+
+      // COBBLESTONE
+      case r"COBBLESTONE.*"       => CobblestoneVariant.NORMAL
+      case r"MOSSY_COBBLESTONE.*" => CobblestoneVariant.MOSSY
+
+      // CORAL
+      case r"BRAIN_CORAL.*"  => CoralVariant.BRAIN
+      case r"BUBBLE_CORAL.*" => CoralVariant.BUBBLE
+      case r"FIRE_CORAL.*"   => CoralVariant.FIRE
+      case r"HORN_CORAL.*"   => CoralVariant.HORN
+      case r"TUBE_CORAL.*"   => CoralVariant.TUBE
+
+      case r"DEAD_BRAIN_CORAL.*"  => CoralVariant.DEAD_BRAIN
+      case r"DEAD_BUBBLE_CORAL.*" => CoralVariant.DEAD_BUBBLE
+      case r"DEAD_FIRE_CORAL.*"   => CoralVariant.DEAD_FIRE
+      case r"DEAD_HORN_CORAL.*"   => CoralVariant.DEAD_HORN
+      case r"DEAD_TUBE_CORAL.*"   => CoralVariant.DEAD_TUBE
+
+      // MOB_HEAD
+      case r"CREEPER.*"         => MobHeadVariant.CREEPER
+      case r"DRAGON.*"          => MobHeadVariant.DRAGON
+      case r"PLAYER.*"          => MobHeadVariant.PLAYER
+      case r"SKELETON.*"        => MobHeadVariant.SKELETON
+      case r"WITHER_SKELETON.*" => MobHeadVariant.WITHER_SKELETON
+      case r"ZOMBIE.*"          => MobHeadVariant.ZOMBIE
+
+      // QUARTZ
+      case r"QUARTZ.*"          => QuartzVariant.NORMAL
+      case r"CHISELED_QUARTZ.*" => QuartzVariant.CHISELED
+      case r"SMOOTH_QUARTZ.*"   => QuartzVariant.SMOOTH
+
+      // SANDSTONE
+      case r"SANDSTONE.*"     => SandstoneVariant.NORMAL
+      case r"RED_SANDSTONE.*" => SandstoneVariant.NORMAL
+
+      case r"CHISELED_SANDSTONE.*"     => SandstoneVariant.CHISELED
+      case r"CHISELED_RED_SANDSTONE.*" => SandstoneVariant.CHISELED
+
+      case r"CUT_SANDSTONE.*"     => SandstoneVariant.CUT
+      case r"CUT_RED_SANDSTONE.*" => SandstoneVariant.CUT
+
+      case r"SMOOTH_SANDSTONE.*"     => SandstoneVariant.SMOOTH
+      case r"SMOOTH_RED_SANDSTONE.*" => SandstoneVariant.SMOOTH
+
+      // STONE
+      case r"STONE_BRICK.*" => StoneVariant.NORMAL
+      case r"STONE.*"       => StoneVariant.NORMAL
+
+      case r"CHISELED_STONE_BRICK.*" => StoneVariant.CHISELED
+      case r"CHISELED_STONE.*"       => StoneVariant.CHISELED
+
+      case r"CRACKED_STONE_BRICK.*" => StoneVariant.CRACKED
+      case r"CRACKED_STONE.*"       => StoneVariant.CRACKED
+
+      case r"MOSSY_STONE_BRICK.*" => StoneVariant.MOSSY
+      case r"MOSSY_STONE.*"       => StoneVariant.MOSSY
+
+      case r"SMOOTH_STONE_BRICK.*" => StoneVariant.SMOOTH
+      case r"SMOOTH_STONE.*"       => StoneVariant.SMOOTH
+
+      // STONITE
+      case r"ANDESITE.*" => StoniteVariant.NORMAL
+      case r"DIORITE.*"  => StoniteVariant.NORMAL
+      case r"GRANITE.*"  => StoniteVariant.NORMAL
+
+      case r"POLISHED_ANDESITE.*" => StoniteVariant.POLISHED
+      case r"POLISHED_DIORITE.*"  => StoniteVariant.POLISHED
+      case r"POLISHED_GRANITE.*"  => StoniteVariant.POLISHED
+
+      case _ => throw new IllegalArgumentException(s"$material")
+    }
   }
 
   def map(block: VariedBlock[_ <: BlockVariant]): Material = block match {
@@ -769,14 +772,14 @@ class SpigotBlockVariantMapper {
         case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
       })
 
-      case StructureBlock(_, StructureBlockVariant.VOID) => Unit
-      case StructureBlock(_, variant)                    =>
+      case StructureBlock(_, variant) => if (variant != StructureBlockVariant.VOID) {
         dataAs[SpigotStructureBlock].setMode(variant match {
           case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
           case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
           case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
           case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
         })
+      }
     }
   }
 }

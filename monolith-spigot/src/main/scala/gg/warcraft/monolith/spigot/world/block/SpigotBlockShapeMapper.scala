@@ -11,7 +11,7 @@ class SpigotBlockShapeMapper {
   def map(block: SpigotBlock): BlockShape = {
     implicit val data: SpigotBlockData = block.getState.getBlockData
 
-    block.getType match {
+    block.getType.name match {
       case r".*RAIL" =>
         val shape = dataAs[SpigotRails].getShape
         map(shape)
