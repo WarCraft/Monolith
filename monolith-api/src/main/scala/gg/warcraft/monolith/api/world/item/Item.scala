@@ -4,6 +4,7 @@ import gg.warcraft.monolith.api.core.CaseClass
 import gg.warcraft.monolith.api.world.block.BlockColor
 
 import scala.annotation.varargs
+import scala.collection.immutable.Map
 
 trait Item extends CaseClass {
   val `type`: ItemType
