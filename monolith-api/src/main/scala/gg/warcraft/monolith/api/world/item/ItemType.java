@@ -101,8 +101,11 @@ public enum ItemType {
     CHORUS_PLANT,
 
     INFESTED_BLOCK,
-    BOOK, // enchanted option, quil (writable) option, written (uneditable) option,
+    BOOK,
+    BOOK_AND_QUILL,
+    ENCHANTED_BOOK,
     KNOWLEDGE_BOOK,
+    WRITTEN_BOOK,
 
     CAKE,
     CARROT,

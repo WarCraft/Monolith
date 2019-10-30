@@ -195,9 +195,18 @@ final case class BottleOfEnchanting(
   val `type` = ItemType.BOTTLE_OF_ENCHANTING
 }
 
-final case class Book extends Item {
-  // TODO only BOOK is 64 stackable, WRITTEN_BOOK is 16 stack, and ENCHANTED_BOOK, KNOWLEDGE_BOOK and WRITEABLE_BOOK
-  //  all 1
+final case class Book(
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.BOOK
+}
+
+final case class BookAndQuill(
+    name: String, tooltip: Array[String],
+    attributes: Set[String], hideAttributes: Boolean
+) extends Item {
+  val `type` = ItemType.BOOK_AND_QUILL
 }
 
 final case class Bookshelf(
@@ -725,6 +734,13 @@ final case class EmeraldOre(
   val `type` = ItemType.EMERALD_ORE
 }
 
+final case class EnchantedBook(
+    name: String, tooltip: Array[String],
+    attributes: Set[String], hideAttributes: Boolean
+) extends Item {
+  val `type` = ItemType.ENCHANTED_BOOK
+}
+
 final case class EnchantingTable(
     name: String, tooltip: Array[String], count: Int,
     attributes: Set[String], hideAttributes: Boolean
@@ -1167,6 +1183,13 @@ final case class Kelp(
     attributes: Set[String], hideAttributes: Boolean
 ) extends StackableItem {
   val `type` = ItemType.KELP
+}
+
+final case class KnowledgeBook(
+    name: String, tooltip: Array[String],
+    attributes: Set[String], hideAttributes: Boolean
+) extends Item {
+  val `type` = ItemType.KNOWLEDGE_BOOK
 }
 
 final case class Ladder(
@@ -2115,4 +2138,12 @@ final case class Wool(
     attributes: Set[String], hideAttributes: Boolean
 ) extends ColoredItem with StackableItem {
   val `type` = ItemType.WOOL
+}
+
+final case class WrittenBook(
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.WRITTEN_BOOK
+  override val maxCount = 16
 }
