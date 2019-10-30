@@ -3,10 +3,10 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial, PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial, WoodMaterial }
+import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial,
+  PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial, WoodMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
-import org.bukkit.Material
-import org.bukkit.{ Instrument => SpigotInstrument }
+import org.bukkit.{ Material, Instrument => SpigotInstrument }
 import org.bukkit.block.data.`type`.Bamboo.{ Leaves => SpigotBambooLeaves }
 import org.bukkit.block.data.`type`.Comparator.{ Mode => SpigotComparatorMode }
 import org.bukkit.block.data.`type`.StructureBlock.{ Mode => SpigotStructureBlockMode }
@@ -31,7 +31,7 @@ class SpigotBlockVariantMapper {
         case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
       }
 
-      case Material.NOTE_BLOCK => dataAs[SpigotNoteBlock].getInstrument  match {
+      case Material.NOTE_BLOCK => dataAs[SpigotNoteBlock].getInstrument match {
         case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
         case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
         case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
@@ -50,13 +50,12 @@ class SpigotBlockVariantMapper {
         case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
       }
 
-      case Material.STRUCTURE_BLOCK =>
-        dataAs[SpigotStructureBlock].getMode match {
-          case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
-          case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
-          case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
-          case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
-        }
+      case Material.STRUCTURE_BLOCK => dataAs[SpigotStructureBlock].getMode match {
+        case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
+        case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
+        case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
+        case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
+      }
 
       case _ => cache.computeIfAbsent(block.getType, _ => map(block.getType))
     }
@@ -65,9 +64,9 @@ class SpigotBlockVariantMapper {
   def map(material: Material): BlockVariant = material match {
 
     // AIR
-    case Material.AIR            => AirVariant.NORMAL
-    case Material.CAVE_AIR       => AirVariant.CAVE
-    case Material.STRUCTURE_VOID => AirVariant.VOID
+    case Material.AIR      => AirVariant.NORMAL
+    case Material.CAVE_AIR => AirVariant.CAVE
+    case Material.VOID_AIR => AirVariant.VOID
 
     // ANVIL
     case Material.ANVIL         => AnvilVariant.NORMAL
@@ -131,35 +130,33 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_WITHER_ROSE        => FlowerVariant.WITHER_ROSE
     case Material.POTTED_LILY_OF_THE_VALLEY => FlowerVariant.LILY_OF_THE_VALLEY
 
-    case Material.POTTED_BROWN_MUSHROOM     => MushroomVariant.BROWN
-    case Material.POTTED_RED_MUSHROOM       => MushroomVariant.RED
+    case Material.POTTED_BROWN_MUSHROOM => MushroomVariant.BROWN
+    case Material.POTTED_RED_MUSHROOM   => MushroomVariant.RED
 
-    case Material.POTTED_CACTUS             => PlantVariant.CACTUS
-    case Material.POTTED_DEAD_BUSH          => PlantVariant.DEAD_BUSH
-    case Material.POTTED_FERN               => PlantVariant.FERN
+    case Material.POTTED_CACTUS    => PlantVariant.CACTUS
+    case Material.POTTED_DEAD_BUSH => PlantVariant.DEAD_BUSH
+    case Material.POTTED_FERN      => PlantVariant.FERN
 
-    case Material.POTTED_BAMBOO             => SaplingVariant.BAMBOO
-    case Material.POTTED_ACACIA_SAPLING     => SaplingVariant.ACACIA
-    case Material.POTTED_BIRCH_SAPLING      => SaplingVariant.BIRCH
-    case Material.POTTED_DARK_OAK_SAPLING   => SaplingVariant.DARK_OAK
-    case Material.POTTED_JUNGLE_SAPLING     => SaplingVariant.JUNGLE
-    case Material.POTTED_OAK_SAPLING        => SaplingVariant.OAK
-    case Material.POTTED_SPRUCE_SAPLING     => SaplingVariant.SPRUCE
+    case Material.POTTED_BAMBOO           => SaplingVariant.BAMBOO
+    case Material.POTTED_ACACIA_SAPLING   => SaplingVariant.ACACIA
+    case Material.POTTED_BIRCH_SAPLING    => SaplingVariant.BIRCH
+    case Material.POTTED_DARK_OAK_SAPLING => SaplingVariant.DARK_OAK
+    case Material.POTTED_JUNGLE_SAPLING   => SaplingVariant.JUNGLE
+    case Material.POTTED_OAK_SAPLING      => SaplingVariant.OAK
+    case Material.POTTED_SPRUCE_SAPLING   => SaplingVariant.SPRUCE
 
     // ICE
-    case Material.ICE         => IceVariant.NORMAL
-    case Material.BLUE_ICE    => IceVariant.BLUE
-    case Material.PACKED_ICE  => IceVariant.PACKED
+    case Material.ICE        => IceVariant.NORMAL
+    case Material.BLUE_ICE   => IceVariant.BLUE
+    case Material.PACKED_ICE => IceVariant.PACKED
 
     // INFESTED_BLOCK
-    case Material.INFESTED_COBBLESTONE  => CobblestoneVariant.NORMAL
-
-    case Material.INFESTED_STONE | Material.INFESTED_STONE_BRICKS =>
-      StoneVariant.NORMAL
-
+    case Material.INFESTED_COBBLESTONE           => CobblestoneVariant.NORMAL
+    case Material.INFESTED_STONE                 => StoneVariant.NORMAL
+    case Material.INFESTED_STONE_BRICKS          => StoneVariant.NORMAL
     case Material.INFESTED_CHISELED_STONE_BRICKS => StoneVariant.CHISELED
-    case Material.INFESTED_CRACKED_STONE_BRICKS => StoneVariant.CRACKED
-    case Material.INFESTED_MOSSY_STONE_BRICKS => StoneVariant.MOSSY
+    case Material.INFESTED_CRACKED_STONE_BRICKS  => StoneVariant.CRACKED
+    case Material.INFESTED_MOSSY_STONE_BRICKS    => StoneVariant.MOSSY
 
     // MOB_HEAD
     case it if it $is "CREEPER"         => MobHeadVariant.CREEPER
@@ -203,7 +200,7 @@ class SpigotBlockVariantMapper {
     case it if it $is "SMOOTH_RED_SANDSTONE" => SandstoneVariant.SMOOTH
 
     // SAPLING
-    case Material.BAMBOO_SAPLING   => SaplingVariant.BAMBOO
+    case Material.BAMBOO_SAPLING => SaplingVariant.BAMBOO
 
     case Material.ACACIA_SAPLING   => SaplingVariant.ACACIA
     case Material.BIRCH_SAPLING    => SaplingVariant.BIRCH
@@ -238,11 +235,8 @@ class SpigotBlockVariantMapper {
     case it if it $is "POLISHED_GRANITE"  => StoniteVariant.POLISHED
 
     // WEIGHTED_PRESSURE_PLATE
-    case Material.LIGHT_WEIGHTED_PRESSURE_PLATE =>
-      WeightedPressurePlateVariant.LIGHT
-
-    case Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
-      WeightedPressurePlateVariant.HEAVY
+    case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateVariant.LIGHT
+    case Material.HEAVY_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateVariant.HEAVY
 
     case _ => throw new IllegalArgumentException(s"$material")
   }
@@ -272,12 +266,9 @@ class SpigotBlockVariantMapper {
     case Cobblestone(_, CobblestoneVariant.MOSSY)  => Material.MOSSY_COBBLESTONE
 
     // COMMAND_BLOCK
-    case CommandBlock(_, CommandBlockVariant.NORMAL, _, _) =>
-      Material.COMMAND_BLOCK
-    case CommandBlock(_, CommandBlockVariant.CHAIN, _, _) =>
-      Material.CHAIN_COMMAND_BLOCK
-    case CommandBlock(_, CommandBlockVariant.REPEATING, _, _) =>
-      Material.REPEATING_COMMAND_BLOCK
+    case CommandBlock(_, CommandBlockVariant.NORMAL, _, _)    => Material.COMMAND_BLOCK
+    case CommandBlock(_, CommandBlockVariant.CHAIN, _, _)     => Material.CHAIN_COMMAND_BLOCK
+    case CommandBlock(_, CommandBlockVariant.REPEATING, _, _) => Material.REPEATING_COMMAND_BLOCK
 
     // COMPARATOR
     case _: Comparator => Material.COMPARATOR
@@ -309,16 +300,11 @@ class SpigotBlockVariantMapper {
     case CoralBlock(_, CoralVariant.HORN)   => Material.HORN_CORAL_BLOCK
     case CoralBlock(_, CoralVariant.TUBE)   => Material.TUBE_CORAL_BLOCK
 
-    case CoralBlock(_, CoralVariant.DEAD_BRAIN) =>
-      Material.DEAD_BRAIN_CORAL_BLOCK
-    case CoralBlock(_, CoralVariant.DEAD_BUBBLE) =>
-      Material.DEAD_BUBBLE_CORAL_BLOCK
-    case CoralBlock(_, CoralVariant.DEAD_FIRE) =>
-      Material.DEAD_FIRE_CORAL_BLOCK
-    case CoralBlock(_, CoralVariant.DEAD_HORN) =>
-      Material.DEAD_HORN_CORAL_BLOCK
-    case CoralBlock(_, CoralVariant.DEAD_TUBE) =>
-      Material.DEAD_TUBE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_BRAIN)  => Material.DEAD_BRAIN_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_BUBBLE) => Material.DEAD_BUBBLE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_FIRE)   => Material.DEAD_FIRE_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_HORN)   => Material.DEAD_HORN_CORAL_BLOCK
+    case CoralBlock(_, CoralVariant.DEAD_TUBE)   => Material.DEAD_TUBE_CORAL_BLOCK
 
     // CORAL_FAN
     case CoralFan(_, CoralVariant.BRAIN, dir, _) => dir match {
@@ -389,23 +375,20 @@ class SpigotBlockVariantMapper {
     }
 
     // INFESTED_BLOCK
-    case InfestedBlock(_, CobblestoneMaterial.COBBLESTONE, _) =>
-      Material.INFESTED_COBBLESTONE
-
-    case InfestedBlock(_, StoneMaterial.STONE, _) => Material.INFESTED_STONE
-
+    case InfestedBlock(_, CobblestoneMaterial.COBBLESTONE, _) => Material.INFESTED_COBBLESTONE
+    case InfestedBlock(_, StoneMaterial.STONE, _)             => Material.INFESTED_STONE
     case InfestedBlock(_, StoneMaterial.STONE_BRICK, variant) => variant match {
       case StoneVariant.CHISELED => Material.INFESTED_CHISELED_STONE_BRICKS
       case StoneVariant.CRACKED  => Material.INFESTED_CRACKED_STONE_BRICKS
       case StoneVariant.MOSSY    => Material.INFESTED_MOSSY_STONE_BRICKS
-      case                     _ => Material.INFESTED_STONE_BRICKS
+      case _                     => Material.INFESTED_STONE_BRICKS
     }
 
     // ICE
     case Ice(_, variant) => variant match {
-      case IceVariant.NORMAL  => Material.ICE
-      case IceVariant.PACKED  => Material.PACKED_ICE
-      case IceVariant.BLUE    => Material.BLUE_ICE
+      case IceVariant.NORMAL => Material.ICE
+      case IceVariant.PACKED => Material.PACKED_ICE
+      case IceVariant.BLUE   => Material.BLUE_ICE
     }
 
     // MOB_HEAD
@@ -447,18 +430,18 @@ class SpigotBlockVariantMapper {
 
     // MUSHROOM_BLOCK
     case MushroomBlock(_, variant) => variant match {
-      case MushroomBlockVariant.BROWN  => Material.BROWN_MUSHROOM_BLOCK
-      case MushroomBlockVariant.RED    => Material.RED_MUSHROOM_BLOCK
-      case MushroomBlockVariant.STEM   => Material.MUSHROOM_STEM
+      case MushroomBlockVariant.BROWN => Material.BROWN_MUSHROOM_BLOCK
+      case MushroomBlockVariant.RED   => Material.RED_MUSHROOM_BLOCK
+      case MushroomBlockVariant.STEM  => Material.MUSHROOM_STEM
     }
 
     // NOTE_BLOCK
     case _: NoteBlock => Material.NOTE_BLOCK
 
     // QUARTZ
-    case Quartz(_, QuartzVariant.NORMAL) => Material.QUARTZ_BLOCK
+    case Quartz(_, QuartzVariant.NORMAL)   => Material.QUARTZ_BLOCK
     case Quartz(_, QuartzVariant.CHISELED) => Material.CHISELED_QUARTZ_BLOCK
-    case Quartz(_, QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ
+    case Quartz(_, QuartzVariant.SMOOTH)   => Material.SMOOTH_QUARTZ
 
     // RAILS
     case Rails(_, RailsVariant.NORMAL, _, _)    => Material.RAIL
@@ -522,7 +505,8 @@ class SpigotBlockVariantMapper {
     }
 
     // STRUCTURE_BLOCK
-    case _: StructureBlock => Material.STRUCTURE_BLOCK
+    case StructureBlock(_, StructureBlockVariant.VOID) => Material.STRUCTURE_VOID
+    case StructureBlock(_, _)                          => Material.STRUCTURE_BLOCK
 
     // WEIGHTED_PRESSURE_PLATE
     case WeightedPressurePlate(_, WeightedPressurePlateVariant.LIGHT, _) =>
@@ -534,20 +518,20 @@ class SpigotBlockVariantMapper {
   def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
 
     // FLOWER_POT
-    case FlowerPot(_, None) => Material.FLOWER_POT
+    case FlowerPot(_, None)          => Material.FLOWER_POT
     case FlowerPot(_, Some(variant)) => variant match {
-      case FlowerVariant.ALLIUM       => Material.POTTED_ALLIUM
-      case FlowerVariant.AZURE_BLUET  => Material.POTTED_AZURE_BLUET
-      case FlowerVariant.BLUE_ORCHID  => Material.POTTED_BLUE_ORCHID
-      case FlowerVariant.CORNFLOWER   => Material.POTTED_CORNFLOWER
-      case FlowerVariant.DANDELION    => Material.POTTED_DANDELION
-      case FlowerVariant.ORANGE_TULIP => Material.POTTED_ORANGE_TULIP
-      case FlowerVariant.OXEYE_DAISY  => Material.POTTED_OXEYE_DAISY
-      case FlowerVariant.PINK_TULIP   => Material.POTTED_PINK_TULIP
-      case FlowerVariant.POPPY        => Material.POTTED_POPPY
-      case FlowerVariant.RED_TULIP    => Material.POTTED_RED_TULIP
-      case FlowerVariant.WHITE_TULIP  => Material.POTTED_WHITE_TULIP
-      case FlowerVariant.WITHER_ROSE  => Material.POTTED_WITHER_ROSE
+      case FlowerVariant.ALLIUM             => Material.POTTED_ALLIUM
+      case FlowerVariant.AZURE_BLUET        => Material.POTTED_AZURE_BLUET
+      case FlowerVariant.BLUE_ORCHID        => Material.POTTED_BLUE_ORCHID
+      case FlowerVariant.CORNFLOWER         => Material.POTTED_CORNFLOWER
+      case FlowerVariant.DANDELION          => Material.POTTED_DANDELION
+      case FlowerVariant.ORANGE_TULIP       => Material.POTTED_ORANGE_TULIP
+      case FlowerVariant.OXEYE_DAISY        => Material.POTTED_OXEYE_DAISY
+      case FlowerVariant.PINK_TULIP         => Material.POTTED_PINK_TULIP
+      case FlowerVariant.POPPY              => Material.POTTED_POPPY
+      case FlowerVariant.RED_TULIP          => Material.POTTED_RED_TULIP
+      case FlowerVariant.WHITE_TULIP        => Material.POTTED_WHITE_TULIP
+      case FlowerVariant.WITHER_ROSE        => Material.POTTED_WITHER_ROSE
       case FlowerVariant.LILY_OF_THE_VALLEY =>
         Material.POTTED_LILY_OF_THE_VALLEY
 
@@ -570,8 +554,8 @@ class SpigotBlockVariantMapper {
     case Slab(_, material, variant, _) => material match {
 
       // BRICK
-      case BrickMaterial.BRICK => Material.BRICK_SLAB
-      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_SLAB
+      case BrickMaterial.BRICK            => Material.BRICK_SLAB
+      case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICK_SLAB
       case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
 
       // COBBLESTONE
@@ -649,8 +633,8 @@ class SpigotBlockVariantMapper {
     case Stairs(_, material, variant, _, _, _, _) => material match {
 
       // BRICK
-      case BrickMaterial.BRICK => Material.BRICK_STAIRS
-      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_STAIRS
+      case BrickMaterial.BRICK            => Material.BRICK_STAIRS
+      case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICK_STAIRS
       case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
 
       // COBBLESTONE
@@ -663,8 +647,8 @@ class SpigotBlockVariantMapper {
       case _: EndStoneMaterial => Material.END_STONE_BRICK_STAIRS
 
       // PRISMARINE
-      case PrismarineMaterial.PRISMARINE      => Material.PRISMARINE_STAIRS
-      case PrismarineMaterial.DARK_PRISMARINE => Material.DARK_PRISMARINE_STAIRS
+      case PrismarineMaterial.PRISMARINE       => Material.PRISMARINE_STAIRS
+      case PrismarineMaterial.DARK_PRISMARINE  => Material.DARK_PRISMARINE_STAIRS
       case PrismarineMaterial.PRISMARINE_BRICK =>
         Material.PRISMARINE_BRICK_STAIRS
 
@@ -690,8 +674,7 @@ class SpigotBlockVariantMapper {
       }
 
       // STONE
-      case StoneMaterial.STONE => Material.STONE_STAIRS
-
+      case StoneMaterial.STONE       => Material.STONE_STAIRS
       case StoneMaterial.STONE_BRICK => variant match {
         case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_STAIRS
         case _                        => Material.STONE_BRICK_STAIRS
@@ -714,8 +697,8 @@ class SpigotBlockVariantMapper {
     case Wall(_, material, variant, _) => material match {
 
       // BRICK
-      case BrickMaterial.BRICK => Material.BRICK_WALL
-      case BrickMaterial.NETHER_BRICK => Material.NETHER_BRICK_WALL
+      case BrickMaterial.BRICK            => Material.BRICK_WALL
+      case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICK_WALL
       case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_WALL
 
       // COBBLESTONE
@@ -728,10 +711,10 @@ class SpigotBlockVariantMapper {
       case _: EndStoneMaterial => Material.END_STONE_BRICK_WALL
 
       // PRISMARINE
-      case _:PrismarineMaterial => Material.PRISMARINE_WALL
+      case _: PrismarineMaterial => Material.PRISMARINE_WALL
 
       // SANDSTONE
-      case SandstoneMaterial.SANDSTONE => Material.SANDSTONE_WALL
+      case SandstoneMaterial.SANDSTONE     => Material.SANDSTONE_WALL
       case SandstoneMaterial.RED_SANDSTONE => Material.RED_SANDSTONE_WALL
 
       // STONE
@@ -754,50 +737,44 @@ class SpigotBlockVariantMapper {
     implicit val data: SpigotBlockData = spigotData
 
     block match {
-      case Bamboo(_, variant, _, _) =>
-        val leaves = variant match {
-          case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
-          case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
-          case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
-        }
-        dataAs[SpigotBamboo].setLeaves(leaves)
+      case Bamboo(_, variant, _, _) => dataAs[SpigotBamboo].setLeaves(variant match {
+        case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
+        case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
+        case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+      })
 
-      case Comparator(_, variant, _, _) =>
-        val mode = variant match {
-          case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
-          case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
-        }
-        dataAs[SpigotComparator].setMode(mode)
+      case Comparator(_, variant, _, _) => dataAs[SpigotComparator].setMode(variant match {
+        case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
+        case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
+      })
 
-      case NoteBlock(_, variant, _, _) =>
-        val instrument = variant match {
-          case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
-          case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
-          case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
-          case NoteBlockVariant.BELL           => SpigotInstrument.BELL
-          case NoteBlockVariant.BIT            => SpigotInstrument.BIT
-          case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
-          case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
-          case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
-          case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
-          case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
-          case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
-          case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
-          case NoteBlockVariant.PLING          => SpigotInstrument.PLING
-          case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
-          case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
-          case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
-        }
-        dataAs[SpigotNoteBlock].setInstrument(instrument)
+      case NoteBlock(_, variant, _, _) => dataAs[SpigotNoteBlock].setInstrument(variant match {
+        case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
+        case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
+        case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
+        case NoteBlockVariant.BELL           => SpigotInstrument.BELL
+        case NoteBlockVariant.BIT            => SpigotInstrument.BIT
+        case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
+        case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
+        case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
+        case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
+        case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
+        case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
+        case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
+        case NoteBlockVariant.PLING          => SpigotInstrument.PLING
+        case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
+        case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
+        case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
+      })
 
-      case StructureBlock(_, variant) =>
-        val mode = variant match {
+      case StructureBlock(_, StructureBlockVariant.VOID) => Unit
+      case StructureBlock(_, variant)                    =>
+        dataAs[SpigotStructureBlock].setMode(variant match {
           case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
           case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
           case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
           case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
-        }
-        dataAs[SpigotStructureBlock].setMode(mode)
+        })
     }
   }
 }

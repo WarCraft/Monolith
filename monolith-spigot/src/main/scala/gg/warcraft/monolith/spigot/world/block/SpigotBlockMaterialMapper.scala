@@ -187,7 +187,6 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: SnowBlock        => Material.SNOW_BLOCK
     case _: Spawner          => Material.SPAWNER
     case _: StoneCutter      => Material.STONECUTTER
-    case _: StructureBlock   => Material.STRUCTURE_BLOCK
     case _: SugarCane        => Material.SUGAR_CANE
     case _: SweetBerryBush   => Material.SWEET_BERRY_BUSH
     case _: TNT              => Material.TNT
