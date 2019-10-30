@@ -27,11 +27,11 @@ class SpigotItemMapper @Inject()(
   def map(item: SpigotItemStack): Option[Item] = {
     if (item.getType.name.endsWith("AIR")) return None
 
-    val name  = item.getItemMeta.getDisplayName
-    val lore  = Array()[String] // item.getItemMeta.getLore
-    val count = item.getAmount
-    val attr  = Set.empty[String]
-    val hAttr = item.getItemMeta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+    val name                = item.getItemMeta.getDisplayName
+    val lore: Array[String] = Array() // item.getItemMeta.getLore
+    val count               = item.getAmount
+    val attr                = Set.empty[String]
+    val hAttr               = item.getItemMeta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
 
     lazy val dura     = item.getDurability
     lazy val unbreak  = item.getItemMeta.isUnbreakable
