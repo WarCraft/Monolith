@@ -1634,11 +1634,11 @@ final case class PumpkinPie(
   override val edible = true
 }
 
-final case class Purpur(
+final case class PurpurBlock(
     name: String, tooltip: Array[String], count: Int,
     attributes: Set[String], hideAttributes: Boolean
 ) extends StackableItem {
-  val `type` = ItemType.PURPUR
+  val `type` = ItemType.PURPUR_BLOCK
 }
 
 final case class Quartz(
@@ -1822,6 +1822,14 @@ final case class SeaPickle(
   val `type` = ItemType.SEA_PICKLE
 }
 
+final case class Seeds(
+    variant: SeedsVariant,
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends VariedItem[SeedsVariant] with StackableItem {
+  val `type` = ItemType.SEEDS
+}
+
 final case class Shears(
     name: String, tooltip: Array[String],
     attributes: Set[String], hideAttributes: Boolean,
@@ -1981,6 +1989,15 @@ final case class Stairs(
   val `type` = ItemType.SLAB
 }
 
+final case class Stew(
+    variant: StewVariant,
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends VariedItem[StewVariant] with StackableItem {
+  val `type` = ItemType.STEW
+  override val edible = true
+}
+
 final case class Stick(
     name: String, tooltip: Array[String], count: Int,
     attributes: Set[String], hideAttributes: Boolean
@@ -2003,6 +2020,14 @@ final case class Stonecutter(
     attributes: Set[String], hideAttributes: Boolean
 ) extends StackableItem {
   val `type` = ItemType.STONECUTTER
+}
+
+final case class StructureBlock(
+    variant: StructureBlockVariant,
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends VariedItem[StructureBlockVariant] with StackableItem {
+  val `type` = ItemType.STRUCTURE_BLOCK
 }
 
 final case class PieceOfString(

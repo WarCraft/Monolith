@@ -206,7 +206,7 @@ public enum ItemType {
     PUFFERFISH,
     PUMPKIN,
     PUMPKIN_PIE,
-    PURPUR,
+    PURPUR_BLOCK,
     QUARTZ,
     QUARTZ_BLOCK,
     QUARTZ_ORE,
