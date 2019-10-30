@@ -1,18 +1,16 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.state._
-import org.bukkit.{Note => SpigotNote}
-import org.bukkit.Material
-import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
+import org.bukkit.{ Material, Note => SpigotNote }
+import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled }
 
 class SpigotBlockStateMapper {
 
   def map(block: SpigotBlock): BlockState = {
     implicit val data: SpigotBlockData = block.getState.getBlockData
 
-    lazy val age = dataAs[Ageable].getAge
+    lazy val age   = dataAs[Ageable].getAge
     lazy val level = dataAs[Levelled].getLevel
     lazy val power = dataAs[AnaloguePowerable].getPower
 
@@ -66,9 +64,9 @@ class SpigotBlockStateMapper {
 
       // SAPLING
       case Material.BAMBOO_SAPLING | Material.ACACIA_SAPLING |
-          Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
-          Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
-          Material.SPRUCE_SAPLING =>
+           Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
+           Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
+           Material.SPRUCE_SAPLING =>
         val stage = dataAs[SpigotSapling].getStage
         SaplingState.valueOf(stage)
 
@@ -80,7 +78,7 @@ class SpigotBlockStateMapper {
       // TURTLE_EGG
       case Material.TURTLE_EGG =>
         val hatch = dataAs[SpigotTurtleEgg].getHatch
-        val eggs = dataAs[SpigotTurtleEgg].getEggs
+        val eggs  = dataAs[SpigotTurtleEgg].getEggs
         TurtleEggState(
           TurtleEggAge.valueOf(hatch),
           TurtleEggCount.valueOf(eggs)
@@ -88,7 +86,7 @@ class SpigotBlockStateMapper {
 
       // WEIGHTED_PRESSURE_PLATE
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE |
-          Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
+           Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
         WeightedPressurePlateState.valueOf(power)
 
       case _ => throw new IllegalArgumentException(s"${block.getType}")
@@ -102,9 +100,9 @@ class SpigotBlockStateMapper {
     implicit val data: SpigotBlockData = spigotData
 
     val state = block.state.toInt
-    data match { case it: Ageable           => it.setAge(state) }
-    data match { case it: Levelled          => it.setLevel(state) }
-    data match { case it: AnaloguePowerable => it.setPower(state) }
+    data match {case it: Ageable => it.setAge(state)}
+    data match {case it: Levelled => it.setLevel(state)}
+    data match {case it: AnaloguePowerable => it.setPower(state)}
 
     block match {
       case it: Bamboo =>
@@ -116,7 +114,7 @@ class SpigotBlockStateMapper {
         cakeData.setBites(it.state.toInt)
 
       case it: NoteBlock =>
-        val note = new SpigotNote(it.state.toInt)
+        val note          = new SpigotNote(it.state.toInt)
         val noteBlockData = dataAs[SpigotNoteBlock]
         noteBlockData.setNote(note)
 

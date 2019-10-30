@@ -1,9 +1,10 @@
 package gg.warcraft.monolith.spigot.world.block
 
+import gg.warcraft.monolith.api.core.Extensions._
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
-import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}
-import org.bukkit.block.data.`type`.Stairs.{Shape => SpigotStairsShape}
+import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
+import org.bukkit.block.data.Rail.{ Shape => SpigotRailsShape }
+import org.bukkit.block.data.`type`.Stairs.{ Shape => SpigotStairsShape }
 
 class SpigotBlockShapeMapper {
 
@@ -11,7 +12,7 @@ class SpigotBlockShapeMapper {
     implicit val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
-      case it if it is$ "RAIL" =>
+      case r".*RAIL" =>
         val shape = dataAs[SpigotRails].getShape
         map(shape)
 
@@ -34,6 +35,8 @@ class SpigotBlockShapeMapper {
       case it: StairsShape =>
         val shape = map(it)
         dataAs[SpigotStairs].setShape(shape)
+
+      case _ => throw new IllegalArgumentException(s"${block.`type`}")
     }
   }
 

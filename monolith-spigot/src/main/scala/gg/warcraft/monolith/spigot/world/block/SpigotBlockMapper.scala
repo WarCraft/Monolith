@@ -2,15 +2,14 @@ package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
-import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
+import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Bukkit, Material}
+import org.bukkit.{ Bukkit, Material }
 import org.bukkit.block.data._
-import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
+import org.bukkit.block.data.`type`.Door.{ Hinge => SpigotDoorHinge }
 import org.bukkit.block.data.`type`.Switch
 
 class SpigotBlockMapper @Inject()(
@@ -29,21 +28,21 @@ class SpigotBlockMapper @Inject()(
 ) {
 
   def map(block: SpigotBlock): Block = {
-    val loc = locationMapper.map(block.getLocation).toBlockLocation
+    val loc         = locationMapper.map(block.getLocation).toBlockLocation
     val spigotState = block.getState
-    val spigotData = spigotState.getBlockData
+    val spigotData  = spigotState.getBlockData
 
     // Lazily compute generic block data
-    lazy val color = colorMapper.map(block.getType)
-    lazy val flooded = spigotState.asInstanceOf[Waterlogged].isWaterlogged
-    lazy val lit = spigotState.asInstanceOf[Lightable].isLit
+    lazy val color    = colorMapper.map(block.getType)
+    lazy val flooded  = spigotState.asInstanceOf[Waterlogged].isWaterlogged
+    lazy val lit      = spigotState.asInstanceOf[Lightable].isLit
     lazy val material = materialMapper.map(block.getType)
-    lazy val open = spigotState.asInstanceOf[Openable].isOpen
-    lazy val powered = spigotState.asInstanceOf[Powerable].isPowered
-    lazy val shape = shapeMapper.map(block)
-    lazy val snowy = spigotState.asInstanceOf[Snowable].isSnowy
-    lazy val state = stateMapper.map(block)
-    lazy val variant = variantMapper.map(block)
+    lazy val open     = spigotState.asInstanceOf[Openable].isOpen
+    lazy val powered  = spigotState.asInstanceOf[Powerable].isPowered
+    lazy val shape    = shapeMapper.map(block)
+    lazy val snowy    = spigotState.asInstanceOf[Snowable].isSnowy
+    lazy val state    = stateMapper.map(block)
+    lazy val variant  = variantMapper.map(block)
 
     lazy val attached = {
       // TODO properly map Grindstone
@@ -202,37 +201,37 @@ class SpigotBlockMapper @Inject()(
 
       // BANNER
       case Material.BLACK_BANNER | Material.BLUE_BANNER |
-          Material.BROWN_BANNER | Material.CYAN_BANNER | Material.GRAY_BANNER |
-          Material.GREEN_BANNER | Material.LIGHT_BLUE_BANNER |
-          Material.LIGHT_GRAY_BANNER | Material.LIME_BANNER |
-          Material.MAGENTA_BANNER | Material.ORANGE_BANNER |
-          Material.PINK_BANNER | Material.PURPLE_BANNER | Material.RED_BANNER |
-          Material.WHITE_BANNER | Material.YELLOW_BANNER =>
+           Material.BROWN_BANNER | Material.CYAN_BANNER | Material.GRAY_BANNER |
+           Material.GREEN_BANNER | Material.LIGHT_BLUE_BANNER |
+           Material.LIGHT_GRAY_BANNER | Material.LIME_BANNER |
+           Material.MAGENTA_BANNER | Material.ORANGE_BANNER |
+           Material.PINK_BANNER | Material.PURPLE_BANNER | Material.RED_BANNER |
+           Material.WHITE_BANNER | Material.YELLOW_BANNER =>
         Banner(loc, color, Some(rotation), None)
 
       case Material.BLACK_WALL_BANNER | Material.BLUE_WALL_BANNER |
-          Material.BROWN_WALL_BANNER | Material.CYAN_WALL_BANNER |
-          Material.GRAY_WALL_BANNER | Material.GREEN_WALL_BANNER |
-          Material.LIGHT_BLUE_WALL_BANNER | Material.LIGHT_GRAY_WALL_BANNER |
-          Material.LIME_WALL_BANNER | Material.MAGENTA_WALL_BANNER |
-          Material.ORANGE_WALL_BANNER | Material.PINK_WALL_BANNER |
-          Material.PURPLE_WALL_BANNER | Material.RED_WALL_BANNER |
-          Material.WHITE_WALL_BANNER | Material.YELLOW_WALL_BANNER =>
+           Material.BROWN_WALL_BANNER | Material.CYAN_WALL_BANNER |
+           Material.GRAY_WALL_BANNER | Material.GREEN_WALL_BANNER |
+           Material.LIGHT_BLUE_WALL_BANNER | Material.LIGHT_GRAY_WALL_BANNER |
+           Material.LIME_WALL_BANNER | Material.MAGENTA_WALL_BANNER |
+           Material.ORANGE_WALL_BANNER | Material.PINK_WALL_BANNER |
+           Material.PURPLE_WALL_BANNER | Material.RED_WALL_BANNER |
+           Material.WHITE_WALL_BANNER | Material.YELLOW_WALL_BANNER =>
         Banner(loc, color, None, Some(dir))
 
       // BED
       case Material.BLACK_BED | Material.BLUE_BED | Material.BROWN_BED |
-          Material.CYAN_BED | Material.GRAY_BED | Material.GREEN_BED |
-          Material.LIGHT_BLUE_BED | Material.LIGHT_GRAY_BED |
-          Material.LIME_BED | Material.MAGENTA_BED | Material.ORANGE_BED |
-          Material.PINK_BED | Material.PURPLE_BED | Material.RED_BED |
-          Material.WHITE_BED | Material.YELLOW_BED =>
+           Material.CYAN_BED | Material.GRAY_BED | Material.GREEN_BED |
+           Material.LIGHT_BLUE_BED | Material.LIGHT_GRAY_BED |
+           Material.LIME_BED | Material.MAGENTA_BED | Material.ORANGE_BED |
+           Material.PINK_BED | Material.PURPLE_BED | Material.RED_BED |
+           Material.WHITE_BED | Material.YELLOW_BED =>
         val occupied = dataAs[SpigotBed].isOccupied
         Bed(loc, color, dir, bisection, occupied)
 
       // BRICK
       case Material.BRICK | Material.NETHER_BRICK |
-          Material.RED_NETHER_BRICKS =>
+           Material.RED_NETHER_BRICKS =>
         Brick(loc, materialAs[BrickMaterial])
 
       // BUBBLE_COLUMN
@@ -242,9 +241,9 @@ class SpigotBlockMapper @Inject()(
 
       // BUTTON
       case Material.STONE_BUTTON | Material.ACACIA_BUTTON |
-          Material.BIRCH_BUTTON | Material.DARK_OAK_BUTTON |
-          Material.JUNGLE_BUTTON | Material.OAK_BUTTON |
-          Material.SPRUCE_BUTTON =>
+           Material.BIRCH_BUTTON | Material.DARK_OAK_BUTTON |
+           Material.JUNGLE_BUTTON | Material.OAK_BUTTON |
+           Material.SPRUCE_BUTTON =>
         Button(loc, materialAs[ButtonMaterial], dir, attached, powered)
 
       // CAMPFIRE
@@ -254,12 +253,12 @@ class SpigotBlockMapper @Inject()(
 
       // CARPET
       case Material.BLACK_CARPET | Material.BLUE_CARPET |
-          Material.BROWN_CARPET | Material.CYAN_CARPET | Material.GRAY_CARPET |
-          Material.GREEN_CARPET | Material.LIGHT_BLUE_CARPET |
-          Material.LIGHT_GRAY_CARPET | Material.LIME_CARPET |
-          Material.MAGENTA_CARPET | Material.ORANGE_CARPET |
-          Material.PINK_CARPET | Material.PURPLE_CARPET | Material.RED_CARPET |
-          Material.WHITE_CARPET | Material.YELLOW_CARPET =>
+           Material.BROWN_CARPET | Material.CYAN_CARPET | Material.GRAY_CARPET |
+           Material.GREEN_CARPET | Material.LIGHT_BLUE_CARPET |
+           Material.LIGHT_GRAY_CARPET | Material.LIME_CARPET |
+           Material.MAGENTA_CARPET | Material.ORANGE_CARPET |
+           Material.PINK_CARPET | Material.PURPLE_CARPET | Material.RED_CARPET |
+           Material.WHITE_CARPET | Material.YELLOW_CARPET =>
         Carpet(loc, color)
 
       // COBBLESTONE
@@ -276,7 +275,7 @@ class SpigotBlockMapper @Inject()(
 
       // COMMAND_BLOCK
       case Material.COMMAND_BLOCK | Material.CHAIN_COMMAND_BLOCK |
-          Material.REPEATING_COMMAND_BLOCK =>
+           Material.REPEATING_COMMAND_BLOCK =>
         val conditional = dataAs[SpigotCommandBlock].isConditional
         CommandBlock(loc, variantAs[CommandBlockVariant], dir, conditional)
 
@@ -286,53 +285,53 @@ class SpigotBlockMapper @Inject()(
 
       // CONCRETE
       case Material.BLACK_CONCRETE | Material.BLUE_CONCRETE |
-          Material.BROWN_CONCRETE | Material.CYAN_CONCRETE |
-          Material.GRAY_CONCRETE | Material.GREEN_CONCRETE |
-          Material.LIGHT_BLUE_CONCRETE | Material.LIGHT_GRAY_CONCRETE |
-          Material.LIME_CONCRETE | Material.MAGENTA_CONCRETE |
-          Material.ORANGE_CONCRETE | Material.PINK_CONCRETE |
-          Material.PURPLE_CONCRETE | Material.RED_CONCRETE |
-          Material.WHITE_CONCRETE | Material.YELLOW_CONCRETE =>
+           Material.BROWN_CONCRETE | Material.CYAN_CONCRETE |
+           Material.GRAY_CONCRETE | Material.GREEN_CONCRETE |
+           Material.LIGHT_BLUE_CONCRETE | Material.LIGHT_GRAY_CONCRETE |
+           Material.LIME_CONCRETE | Material.MAGENTA_CONCRETE |
+           Material.ORANGE_CONCRETE | Material.PINK_CONCRETE |
+           Material.PURPLE_CONCRETE | Material.RED_CONCRETE |
+           Material.WHITE_CONCRETE | Material.YELLOW_CONCRETE =>
         Concrete(loc, color)
 
       case Material.BLACK_CONCRETE_POWDER | Material.BLUE_CONCRETE_POWDER |
-          Material.BROWN_CONCRETE_POWDER | Material.CYAN_CONCRETE_POWDER |
-          Material.GRAY_CONCRETE_POWDER | Material.GREEN_CONCRETE_POWDER |
-          Material.LIGHT_BLUE_CONCRETE_POWDER |
-          Material.LIGHT_GRAY_CONCRETE_POWDER | Material.LIME_CONCRETE_POWDER |
-          Material.MAGENTA_CONCRETE_POWDER | Material.ORANGE_CONCRETE_POWDER |
-          Material.PINK_CONCRETE_POWDER | Material.PURPLE_CONCRETE_POWDER |
-          Material.RED_CONCRETE_POWDER | Material.WHITE_CONCRETE_POWDER |
-          Material.YELLOW_CONCRETE_POWDER =>
+           Material.BROWN_CONCRETE_POWDER | Material.CYAN_CONCRETE_POWDER |
+           Material.GRAY_CONCRETE_POWDER | Material.GREEN_CONCRETE_POWDER |
+           Material.LIGHT_BLUE_CONCRETE_POWDER |
+           Material.LIGHT_GRAY_CONCRETE_POWDER | Material.LIME_CONCRETE_POWDER |
+           Material.MAGENTA_CONCRETE_POWDER | Material.ORANGE_CONCRETE_POWDER |
+           Material.PINK_CONCRETE_POWDER | Material.PURPLE_CONCRETE_POWDER |
+           Material.RED_CONCRETE_POWDER | Material.WHITE_CONCRETE_POWDER |
+           Material.YELLOW_CONCRETE_POWDER =>
         ConcretePowder(loc, color)
 
       // CORAL
       case Material.BRAIN_CORAL | Material.DEAD_BRAIN_CORAL |
-          Material.BUBBLE_CORAL | Material.DEAD_BUBBLE_CORAL |
-          Material.FIRE_CORAL | Material.DEAD_FIRE_CORAL | Material.HORN_CORAL |
-          Material.DEAD_HORN_CORAL | Material.TUBE_CORAL |
-          Material.DEAD_TUBE_CORAL =>
+           Material.BUBBLE_CORAL | Material.DEAD_BUBBLE_CORAL |
+           Material.FIRE_CORAL | Material.DEAD_FIRE_CORAL | Material.HORN_CORAL |
+           Material.DEAD_HORN_CORAL | Material.TUBE_CORAL |
+           Material.DEAD_TUBE_CORAL =>
         Coral(loc, variantAs[CoralVariant], flooded)
 
       case Material.BRAIN_CORAL_BLOCK | Material.DEAD_BRAIN_CORAL_BLOCK |
-          Material.BUBBLE_CORAL_BLOCK | Material.DEAD_BUBBLE_CORAL_BLOCK |
-          Material.FIRE_CORAL_BLOCK | Material.DEAD_FIRE_CORAL_BLOCK |
-          Material.HORN_CORAL_BLOCK | Material.DEAD_HORN_CORAL_BLOCK |
-          Material.TUBE_CORAL_BLOCK | Material.DEAD_TUBE_CORAL_BLOCK =>
+           Material.BUBBLE_CORAL_BLOCK | Material.DEAD_BUBBLE_CORAL_BLOCK |
+           Material.FIRE_CORAL_BLOCK | Material.DEAD_FIRE_CORAL_BLOCK |
+           Material.HORN_CORAL_BLOCK | Material.DEAD_HORN_CORAL_BLOCK |
+           Material.TUBE_CORAL_BLOCK | Material.DEAD_TUBE_CORAL_BLOCK =>
         CoralBlock(loc, variantAs[CoralVariant])
 
       case Material.BRAIN_CORAL_FAN | Material.DEAD_BRAIN_CORAL_FAN |
-          Material.BUBBLE_CORAL_FAN | Material.DEAD_BUBBLE_CORAL_FAN |
-          Material.FIRE_CORAL_FAN | Material.DEAD_FIRE_CORAL_FAN |
-          Material.HORN_CORAL_FAN | Material.DEAD_HORN_CORAL_FAN |
-          Material.TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_FAN =>
+           Material.BUBBLE_CORAL_FAN | Material.DEAD_BUBBLE_CORAL_FAN |
+           Material.FIRE_CORAL_FAN | Material.DEAD_FIRE_CORAL_FAN |
+           Material.HORN_CORAL_FAN | Material.DEAD_HORN_CORAL_FAN |
+           Material.TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_FAN =>
         CoralFan(loc, variantAs[CoralVariant], None, flooded)
 
       case Material.BRAIN_CORAL_WALL_FAN | Material.DEAD_BRAIN_CORAL_WALL_FAN |
-          Material.BUBBLE_CORAL_WALL_FAN | Material.DEAD_BUBBLE_CORAL_WALL_FAN |
-          Material.FIRE_CORAL_WALL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN |
-          Material.HORN_CORAL_WALL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN |
-          Material.TUBE_CORAL_WALL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
+           Material.BUBBLE_CORAL_WALL_FAN | Material.DEAD_BUBBLE_CORAL_WALL_FAN |
+           Material.FIRE_CORAL_WALL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN |
+           Material.HORN_CORAL_WALL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN |
+           Material.TUBE_CORAL_WALL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
         CoralFan(loc, variantAs[CoralVariant], Some(dir), flooded)
 
       // DIRT
@@ -341,10 +340,10 @@ class SpigotBlockMapper @Inject()(
 
       // DOOR
       case Material.IRON_DOOR | Material.ACACIA_DOOR | Material.BIRCH_DOOR |
-          Material.DARK_OAK_DOOR | Material.JUNGLE_DOOR | Material.OAK_DOOR |
-          Material.SPRUCE_DOOR =>
+           Material.DARK_OAK_DOOR | Material.JUNGLE_DOOR | Material.OAK_DOOR |
+           Material.SPRUCE_DOOR =>
         val _material = materialAs[DoorMaterial]
-        val hinge = mapDoorHinge(dataAs[SpigotDoor].getHinge)
+        val hinge     = mapDoorHinge(dataAs[SpigotDoor].getHinge)
         Door(loc, _material, dir, hinge, bisection, open, powered)
 
       // END_PORTAL_FRAME
@@ -358,72 +357,72 @@ class SpigotBlockMapper @Inject()(
 
       // FENCE
       case Material.NETHER_BRICK_FENCE | Material.ACACIA_FENCE |
-          Material.BIRCH_FENCE | Material.DARK_OAK_FENCE |
-          Material.JUNGLE_FENCE | Material.OAK_FENCE | Material.SPRUCE_FENCE =>
+           Material.BIRCH_FENCE | Material.DARK_OAK_FENCE |
+           Material.JUNGLE_FENCE | Material.OAK_FENCE | Material.SPRUCE_FENCE =>
         Fence(loc, materialAs[FenceMaterial], extensions, flooded)
 
       // FLOWER
       case Material.ALLIUM | Material.AZURE_BLUET | Material.BLUE_ORCHID |
-          Material.CORNFLOWER | Material.DANDELION |
-          Material.LILY_OF_THE_VALLEY | Material.ORANGE_TULIP |
-          Material.OXEYE_DAISY | Material.PINK_TULIP | Material.POPPY |
-          Material.RED_TULIP | Material.WHITE_TULIP | Material.WITHER_ROSE =>
+           Material.CORNFLOWER | Material.DANDELION |
+           Material.LILY_OF_THE_VALLEY | Material.ORANGE_TULIP |
+           Material.OXEYE_DAISY | Material.PINK_TULIP | Material.POPPY |
+           Material.RED_TULIP | Material.WHITE_TULIP | Material.WITHER_ROSE =>
         val _variant = variantAs[FlowerVariant]
         Flower(loc, _variant, BlockBisection.BOTTOM, tall = false)
 
       case Material.LILAC | Material.PEONY | Material.ROSE_BUSH |
-          Material.SUNFLOWER =>
+           Material.SUNFLOWER =>
         Flower(loc, variantAs[FlowerVariant], bisection, tall = true)
 
       // FLOWER_POT
       case Material.FLOWER_POT => FlowerPot(loc, None)
 
       case Material.POTTED_ALLIUM | Material.POTTED_AZURE_BLUET |
-          Material.POTTED_BLUE_ORCHID | Material.POTTED_CORNFLOWER |
-          Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
-          Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY |
-          Material.POTTED_PINK_TULIP | Material.POTTED_POPPY |
-          Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
-          Material.POTTED_WITHER_ROSE | Material.POTTED_BAMBOO |
-          Material.POTTED_BROWN_MUSHROOM | Material.POTTED_RED_MUSHROOM |
-          Material.POTTED_CACTUS | Material.POTTED_DEAD_BUSH |
-          Material.POTTED_FERN | Material.POTTED_ACACIA_SAPLING |
-          Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
-          Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING |
-          Material.POTTED_SPRUCE_SAPLING =>
+           Material.POTTED_BLUE_ORCHID | Material.POTTED_CORNFLOWER |
+           Material.POTTED_DANDELION | Material.POTTED_LILY_OF_THE_VALLEY |
+           Material.POTTED_ORANGE_TULIP | Material.POTTED_OXEYE_DAISY |
+           Material.POTTED_PINK_TULIP | Material.POTTED_POPPY |
+           Material.POTTED_RED_TULIP | Material.POTTED_WHITE_TULIP |
+           Material.POTTED_WITHER_ROSE | Material.POTTED_BAMBOO |
+           Material.POTTED_BROWN_MUSHROOM | Material.POTTED_RED_MUSHROOM |
+           Material.POTTED_CACTUS | Material.POTTED_DEAD_BUSH |
+           Material.POTTED_FERN | Material.POTTED_ACACIA_SAPLING |
+           Material.POTTED_BIRCH_SAPLING | Material.POTTED_DARK_OAK_SAPLING |
+           Material.POTTED_JUNGLE_SAPLING | Material.POTTED_OAK_SAPLING |
+           Material.POTTED_SPRUCE_SAPLING =>
         FlowerPot(loc, Some(variantAs[FlowerPotVariant]))
 
       // GATE TODO add whether attached to wall or not
       case Material.ACACIA_FENCE_GATE | Material.BIRCH_FENCE_GATE |
-          Material.DARK_OAK_FENCE_GATE | Material.JUNGLE_FENCE_GATE |
-          Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
+           Material.DARK_OAK_FENCE_GATE | Material.JUNGLE_FENCE_GATE |
+           Material.OAK_FENCE_GATE | Material.SPRUCE_FENCE_GATE =>
         Gate(loc, materialAs[WoodMaterial], dir, open, powered, wall = false)
 
       // GLASS
       case Material.GLASS | Material.BLACK_STAINED_GLASS |
-          Material.BLUE_STAINED_GLASS | Material.BROWN_STAINED_GLASS |
-          Material.CYAN_STAINED_GLASS | Material.GRAY_STAINED_GLASS |
-          Material.GREEN_STAINED_GLASS | Material.LIGHT_BLUE_STAINED_GLASS |
-          Material.LIGHT_GRAY_STAINED_GLASS | Material.LIME_STAINED_GLASS |
-          Material.MAGENTA_STAINED_GLASS | Material.ORANGE_STAINED_GLASS |
-          Material.PINK_STAINED_GLASS | Material.PURPLE_STAINED_GLASS |
-          Material.RED_STAINED_GLASS | Material.WHITE_STAINED_GLASS |
-          Material.YELLOW_STAINED_GLASS =>
+           Material.BLUE_STAINED_GLASS | Material.BROWN_STAINED_GLASS |
+           Material.CYAN_STAINED_GLASS | Material.GRAY_STAINED_GLASS |
+           Material.GREEN_STAINED_GLASS | Material.LIGHT_BLUE_STAINED_GLASS |
+           Material.LIGHT_GRAY_STAINED_GLASS | Material.LIME_STAINED_GLASS |
+           Material.MAGENTA_STAINED_GLASS | Material.ORANGE_STAINED_GLASS |
+           Material.PINK_STAINED_GLASS | Material.PURPLE_STAINED_GLASS |
+           Material.RED_STAINED_GLASS | Material.WHITE_STAINED_GLASS |
+           Material.YELLOW_STAINED_GLASS =>
         Glass(loc, Some(color))
 
       case Material.GLASS_PANE | Material.BLACK_STAINED_GLASS_PANE |
-          Material.BLUE_STAINED_GLASS_PANE | Material.BROWN_STAINED_GLASS_PANE |
-          Material.CYAN_STAINED_GLASS_PANE | Material.GRAY_STAINED_GLASS_PANE |
-          Material.GREEN_STAINED_GLASS_PANE |
-          Material.LIGHT_BLUE_STAINED_GLASS_PANE |
-          Material.LIGHT_GRAY_STAINED_GLASS_PANE |
-          Material.LIME_STAINED_GLASS_PANE |
-          Material.MAGENTA_STAINED_GLASS_PANE |
-          Material.ORANGE_STAINED_GLASS_PANE |
-          Material.PINK_STAINED_GLASS_PANE |
-          Material.PURPLE_STAINED_GLASS_PANE | Material.RED_STAINED_GLASS_PANE |
-          Material.WHITE_STAINED_GLASS_PANE |
-          Material.YELLOW_STAINED_GLASS_PANE =>
+           Material.BLUE_STAINED_GLASS_PANE | Material.BROWN_STAINED_GLASS_PANE |
+           Material.CYAN_STAINED_GLASS_PANE | Material.GRAY_STAINED_GLASS_PANE |
+           Material.GREEN_STAINED_GLASS_PANE |
+           Material.LIGHT_BLUE_STAINED_GLASS_PANE |
+           Material.LIGHT_GRAY_STAINED_GLASS_PANE |
+           Material.LIME_STAINED_GLASS_PANE |
+           Material.MAGENTA_STAINED_GLASS_PANE |
+           Material.ORANGE_STAINED_GLASS_PANE |
+           Material.PINK_STAINED_GLASS_PANE |
+           Material.PURPLE_STAINED_GLASS_PANE | Material.RED_STAINED_GLASS_PANE |
+           Material.WHITE_STAINED_GLASS_PANE |
+           Material.YELLOW_STAINED_GLASS_PANE =>
         GlassPane(loc, Some(color), extensions, flooded)
 
       // GRASS
@@ -441,12 +440,12 @@ class SpigotBlockMapper @Inject()(
 
       // INFESTED_STONE
       case Material.INFESTED_STONE | Material.INFESTED_COBBLESTONE |
-          Material.INFESTED_STONE_BRICKS |
-          Material.INFESTED_CRACKED_STONE_BRICKS |
-          Material.INFESTED_CHISELED_STONE_BRICKS |
-          Material.INFESTED_MOSSY_STONE_BRICKS =>
+           Material.INFESTED_STONE_BRICKS |
+           Material.INFESTED_CRACKED_STONE_BRICKS |
+           Material.INFESTED_CHISELED_STONE_BRICKS |
+           Material.INFESTED_MOSSY_STONE_BRICKS =>
         val _material = materialAs[InfestedMaterial]
-        val _variant = variantAs[InfestedVariant]
+        val _variant  = variantAs[InfestedVariant]
         InfestedBlock(loc, _material, _variant)
 
       // JUKEBOX
@@ -465,8 +464,8 @@ class SpigotBlockMapper @Inject()(
 
       // LEAVES
       case Material.ACACIA_LEAVES | Material.BIRCH_LEAVES |
-          Material.DARK_OAK_LEAVES | Material.JUNGLE_LEAVES |
-          Material.OAK_LEAVES | Material.SPRUCE_LEAVES =>
+           Material.DARK_OAK_LEAVES | Material.JUNGLE_LEAVES |
+           Material.OAK_LEAVES | Material.SPRUCE_LEAVES =>
         Leaves(loc, materialAs[WoodMaterial])
 
       // LECTERN
@@ -476,12 +475,12 @@ class SpigotBlockMapper @Inject()(
 
       // LOG
       case Material.ACACIA_LOG | Material.BIRCH_LOG | Material.DARK_OAK_LOG |
-          Material.JUNGLE_LOG | Material.OAK_LOG | Material.SPRUCE_LOG =>
+           Material.JUNGLE_LOG | Material.OAK_LOG | Material.SPRUCE_LOG =>
         Log(loc, materialAs[WoodMaterial], orientation, stripped = false)
 
       case Material.STRIPPED_ACACIA_LOG | Material.STRIPPED_BIRCH_LOG |
-          Material.STRIPPED_DARK_OAK_LOG | Material.STRIPPED_JUNGLE_LOG |
-          Material.STRIPPED_OAK_LOG | Material.STRIPPED_SPRUCE_LOG =>
+           Material.STRIPPED_DARK_OAK_LOG | Material.STRIPPED_JUNGLE_LOG |
+           Material.STRIPPED_OAK_LOG | Material.STRIPPED_SPRUCE_LOG =>
         Log(loc, materialAs[WoodMaterial], orientation, stripped = true)
 
       // MELON_STEM
@@ -493,13 +492,13 @@ class SpigotBlockMapper @Inject()(
 
       // MOB_HEAD
       case Material.CREEPER_HEAD | Material.DRAGON_HEAD | Material.PLAYER_HEAD |
-          Material.SKELETON_SKULL | Material.WITHER_SKELETON_SKULL |
-          Material.ZOMBIE_HEAD =>
+           Material.SKELETON_SKULL | Material.WITHER_SKELETON_SKULL |
+           Material.ZOMBIE_HEAD =>
         MobHead(loc, variantAs[MobHeadVariant], None, Some(rotation))
 
       case Material.CREEPER_WALL_HEAD | Material.DRAGON_WALL_HEAD |
-          Material.PLAYER_WALL_HEAD | Material.SKELETON_WALL_SKULL |
-          Material.WITHER_SKELETON_WALL_SKULL | Material.ZOMBIE_WALL_HEAD =>
+           Material.PLAYER_WALL_HEAD | Material.SKELETON_WALL_SKULL |
+           Material.WITHER_SKELETON_WALL_SKULL | Material.ZOMBIE_WALL_HEAD =>
         MobHead(loc, variantAs[MobHeadVariant], Some(dir), None)
 
       // MUSHROOM
@@ -507,13 +506,13 @@ class SpigotBlockMapper @Inject()(
         Mushroom(loc, variantAs[MushroomVariant])
 
       case Material.BROWN_MUSHROOM_BLOCK | Material.RED_MUSHROOM_BLOCK |
-          Material.MUSHROOM_STEM =>
+           Material.MUSHROOM_STEM =>
         MushroomBlock(loc, variantAs[MushroomBlockVariant])
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
         val _variant = variantAs[NoteBlockVariant]
-        val _state = stateAs[NoteBlockState]
+        val _state   = stateAs[NoteBlockState]
         NoteBlock(loc, _variant, _state, powered)
 
       // PILLAR
@@ -534,26 +533,26 @@ class SpigotBlockMapper @Inject()(
 
       // PLANKS
       case Material.ACACIA_PLANKS | Material.BIRCH_PLANKS |
-          Material.DARK_OAK_PLANKS | Material.JUNGLE_PLANKS |
-          Material.OAK_PLANKS | Material.SPRUCE_PLANKS =>
+           Material.DARK_OAK_PLANKS | Material.JUNGLE_PLANKS |
+           Material.OAK_PLANKS | Material.SPRUCE_PLANKS =>
         Planks(loc, materialAs[WoodMaterial])
 
       // PRESSURE_PLATE
       case Material.STONE_PRESSURE_PLATE | Material.ACACIA_PRESSURE_PLATE |
-          Material.BIRCH_PRESSURE_PLATE | Material.DARK_OAK_PRESSURE_PLATE |
-          Material.JUNGLE_PRESSURE_PLATE | Material.OAK_PRESSURE_PLATE |
-          Material.SPRUCE_PRESSURE_PLATE =>
+           Material.BIRCH_PRESSURE_PLATE | Material.DARK_OAK_PRESSURE_PLATE |
+           Material.JUNGLE_PRESSURE_PLATE | Material.OAK_PRESSURE_PLATE |
+           Material.SPRUCE_PRESSURE_PLATE =>
         PressurePlate(loc, materialAs[PressurePlateMaterial], powered)
 
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE |
-          Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
+           Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
         val _variant = variantAs[WeightedPressurePlateVariant]
-        val _state = stateAs[WeightedPressurePlateState]
+        val _state   = stateAs[WeightedPressurePlateState]
         WeightedPressurePlate(loc, _variant, _state)
 
       // PRISMARINE
       case Material.PRISMARINE | Material.PRISMARINE_BRICKS |
-          Material.DARK_PRISMARINE =>
+           Material.DARK_PRISMARINE =>
         Prismarine(loc, materialAs[PrismarineMaterial])
 
       // PUMPKIN
@@ -574,12 +573,12 @@ class SpigotBlockMapper @Inject()(
 
       // QUARTZ
       case Material.QUARTZ_BLOCK | Material.CHISELED_QUARTZ_BLOCK |
-          Material.SMOOTH_QUARTZ =>
+           Material.SMOOTH_QUARTZ =>
         Quartz(loc, variantAs[QuartzVariant])
 
       // RAIL
       case Material.RAIL | Material.ACTIVATOR_RAIL | Material.DETECTOR_RAIL |
-          Material.POWERED_RAIL =>
+           Material.POWERED_RAIL =>
         Rails(loc, variantAs[RailsVariant], shapeAs[RailsShape], powered)
 
       // REDSTONE_WIRE
@@ -597,18 +596,18 @@ class SpigotBlockMapper @Inject()(
 
       // SANDSTONE
       case Material.SANDSTONE | Material.RED_SANDSTONE |
-          Material.CHISELED_SANDSTONE | Material.CHISELED_RED_SANDSTONE |
-          Material.CUT_SANDSTONE | Material.CUT_RED_SANDSTONE |
-          Material.SMOOTH_SANDSTONE | Material.SMOOTH_RED_SANDSTONE =>
+           Material.CHISELED_SANDSTONE | Material.CHISELED_RED_SANDSTONE |
+           Material.CUT_SANDSTONE | Material.CUT_RED_SANDSTONE |
+           Material.SMOOTH_SANDSTONE | Material.SMOOTH_RED_SANDSTONE =>
         val _material = materialAs[SandstoneMaterial]
-        val _variant = variantAs[SandstoneVariant]
+        val _variant  = variantAs[SandstoneVariant]
         Sandstone(loc, _material, _variant)
 
       // SAPLING
       case Material.BAMBOO_SAPLING | Material.ACACIA_SAPLING |
-          Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
-          Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
-          Material.SPRUCE_SAPLING =>
+           Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
+           Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
+           Material.SPRUCE_SAPLING =>
         Sapling(loc, variantAs[SaplingVariant], stateAs[SaplingState])
 
       // SEA_PICKLE
@@ -623,56 +622,56 @@ class SpigotBlockMapper @Inject()(
 
       // SHULKER_BOX
       case Material.SHULKER_BOX | Material.BLACK_SHULKER_BOX |
-          Material.BLUE_SHULKER_BOX | Material.BROWN_SHULKER_BOX |
-          Material.CYAN_SHULKER_BOX | Material.GRAY_SHULKER_BOX |
-          Material.GREEN_SHULKER_BOX | Material.LIGHT_BLUE_SHULKER_BOX |
-          Material.LIGHT_GRAY_SHULKER_BOX | Material.LIME_SHULKER_BOX |
-          Material.MAGENTA_SHULKER_BOX | Material.ORANGE_SHULKER_BOX |
-          Material.PINK_SHULKER_BOX | Material.PURPLE_SHULKER_BOX |
-          Material.RED_SHULKER_BOX | Material.WHITE_SHULKER_BOX |
-          Material.YELLOW_SHULKER_BOX =>
+           Material.BLUE_SHULKER_BOX | Material.BROWN_SHULKER_BOX |
+           Material.CYAN_SHULKER_BOX | Material.GRAY_SHULKER_BOX |
+           Material.GREEN_SHULKER_BOX | Material.LIGHT_BLUE_SHULKER_BOX |
+           Material.LIGHT_GRAY_SHULKER_BOX | Material.LIME_SHULKER_BOX |
+           Material.MAGENTA_SHULKER_BOX | Material.ORANGE_SHULKER_BOX |
+           Material.PINK_SHULKER_BOX | Material.PURPLE_SHULKER_BOX |
+           Material.RED_SHULKER_BOX | Material.WHITE_SHULKER_BOX |
+           Material.YELLOW_SHULKER_BOX =>
         ShulkerBox(loc, Some(color))
 
       // SIGN
       case Material.ACACIA_SIGN | Material.BIRCH_SIGN | Material.DARK_OAK_SIGN |
-          Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
+           Material.JUNGLE_SIGN | Material.OAK_SIGN | Material.SPRUCE_SIGN =>
         val _material = materialAs[WoodMaterial]
-        val sign = spigotState.asInstanceOf[SpigotSign]
-        val lines = sign.getLines.toList // TODO keep as array? seem to be immutable
-        val editable = sign.isEditable
+        val sign      = spigotState.asInstanceOf[SpigotSign]
+        val lines     = sign.getLines.toList // TODO keep as array? seem to be immutable
+        val editable  = sign.isEditable
         Sign(loc, _material, Some(dir), None, flooded, lines, editable)
 
       case Material.ACACIA_WALL_SIGN | Material.BIRCH_WALL_SIGN |
-          Material.DARK_OAK_WALL_SIGN | Material.JUNGLE_WALL_SIGN |
-          Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
+           Material.DARK_OAK_WALL_SIGN | Material.JUNGLE_WALL_SIGN |
+           Material.OAK_WALL_SIGN | Material.SPRUCE_WALL_SIGN =>
         val _material = materialAs[WoodMaterial]
-        val sign = spigotState.asInstanceOf[SpigotSign]
-        val lines = sign.getLines.toList
-        val editable = sign.isEditable
+        val sign      = spigotState.asInstanceOf[SpigotSign]
+        val lines     = sign.getLines.toList
+        val editable  = sign.isEditable
         Sign(loc, _material, None, Some(rotation), flooded, lines, editable)
 
       // SLAB
       case Material.BRICK_SLAB | Material.NETHER_BRICK_SLAB |
-          Material.RED_NETHER_BRICK_SLAB | Material.SANDSTONE_SLAB |
-          Material.RED_SANDSTONE_SLAB | Material.STONE_SLAB |
-          Material.STONE_BRICK_SLAB | Material.COBBLESTONE_SLAB |
-          Material.ANDESITE_SLAB | Material.DIORITE_SLAB |
-          Material.GRANITE_SLAB | Material.END_STONE_BRICK_SLAB |
-          Material.PRISMARINE_SLAB | Material.PRISMARINE_BRICK_SLAB |
-          Material.DARK_PRISMARINE_SLAB | Material.PURPUR_SLAB |
-          Material.QUARTZ_SLAB | Material.ACACIA_SLAB | Material.BIRCH_SLAB |
-          Material.DARK_OAK_SLAB | Material.JUNGLE_SLAB | Material.OAK_SLAB |
-          Material.SPRUCE_SLAB | Material.PETRIFIED_OAK_SLAB =>
+           Material.RED_NETHER_BRICK_SLAB | Material.SANDSTONE_SLAB |
+           Material.RED_SANDSTONE_SLAB | Material.STONE_SLAB |
+           Material.STONE_BRICK_SLAB | Material.COBBLESTONE_SLAB |
+           Material.ANDESITE_SLAB | Material.DIORITE_SLAB |
+           Material.GRANITE_SLAB | Material.END_STONE_BRICK_SLAB |
+           Material.PRISMARINE_SLAB | Material.PRISMARINE_BRICK_SLAB |
+           Material.DARK_PRISMARINE_SLAB | Material.PURPUR_SLAB |
+           Material.QUARTZ_SLAB | Material.ACACIA_SLAB | Material.BIRCH_SLAB |
+           Material.DARK_OAK_SLAB | Material.JUNGLE_SLAB | Material.OAK_SLAB |
+           Material.SPRUCE_SLAB | Material.PETRIFIED_OAK_SLAB =>
         Slab(loc, materialAs[SlabMaterial], None, bisection)
 
       case Material.CUT_SANDSTONE_SLAB | Material.SMOOTH_SANDSTONE_SLAB |
-          Material.CUT_RED_SANDSTONE_SLAB | Material.SMOOTH_RED_SANDSTONE_SLAB |
-          Material.SMOOTH_STONE_SLAB | Material.MOSSY_STONE_BRICK_SLAB |
-          Material.MOSSY_COBBLESTONE_SLAB | Material.POLISHED_ANDESITE_SLAB |
-          Material.POLISHED_DIORITE_SLAB | Material.POLISHED_GRANITE_SLAB |
-          Material.SMOOTH_QUARTZ_SLAB =>
+           Material.CUT_RED_SANDSTONE_SLAB | Material.SMOOTH_RED_SANDSTONE_SLAB |
+           Material.SMOOTH_STONE_SLAB | Material.MOSSY_STONE_BRICK_SLAB |
+           Material.MOSSY_COBBLESTONE_SLAB | Material.POLISHED_ANDESITE_SLAB |
+           Material.POLISHED_DIORITE_SLAB | Material.POLISHED_GRANITE_SLAB |
+           Material.SMOOTH_QUARTZ_SLAB =>
         val _material = materialAs[SlabMaterial]
-        val _variant = variantAs[SlabVariant]
+        val _variant  = variantAs[SlabVariant]
         Slab(loc, _material, Some(_variant), bisection)
 
       // SPONGE
@@ -681,42 +680,42 @@ class SpigotBlockMapper @Inject()(
 
       // STAIRS
       case Material.BRICK_STAIRS | Material.NETHER_BRICK_STAIRS |
-          Material.RED_NETHER_BRICK_STAIRS | Material.SANDSTONE_STAIRS |
-          Material.RED_SANDSTONE_STAIRS | Material.STONE_STAIRS |
-          Material.STONE_BRICK_STAIRS | Material.COBBLESTONE_STAIRS |
-          Material.ANDESITE_STAIRS | Material.DIORITE_STAIRS |
-          Material.GRANITE_STAIRS | Material.END_STONE_BRICK_STAIRS |
-          Material.PRISMARINE_STAIRS | Material.PRISMARINE_BRICK_STAIRS |
-          Material.DARK_PRISMARINE_STAIRS | Material.PURPUR_STAIRS |
-          Material.QUARTZ_STAIRS | Material.ACACIA_STAIRS |
-          Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
-          Material.JUNGLE_STAIRS | Material.OAK_STAIRS |
-          Material.SPRUCE_STAIRS =>
+           Material.RED_NETHER_BRICK_STAIRS | Material.SANDSTONE_STAIRS |
+           Material.RED_SANDSTONE_STAIRS | Material.STONE_STAIRS |
+           Material.STONE_BRICK_STAIRS | Material.COBBLESTONE_STAIRS |
+           Material.ANDESITE_STAIRS | Material.DIORITE_STAIRS |
+           Material.GRANITE_STAIRS | Material.END_STONE_BRICK_STAIRS |
+           Material.PRISMARINE_STAIRS | Material.PRISMARINE_BRICK_STAIRS |
+           Material.DARK_PRISMARINE_STAIRS | Material.PURPUR_STAIRS |
+           Material.QUARTZ_STAIRS | Material.ACACIA_STAIRS |
+           Material.BIRCH_STAIRS | Material.DARK_OAK_STAIRS |
+           Material.JUNGLE_STAIRS | Material.OAK_STAIRS |
+           Material.SPRUCE_STAIRS =>
         val _material = materialAs[StairsMaterial]
-        val _shape = shapeAs[StairsShape]
+        val _shape    = shapeAs[StairsShape]
         Stairs(loc, _material, None, _shape, dir, bisection, flooded)
 
       case Material.SMOOTH_SANDSTONE_STAIRS |
-          Material.SMOOTH_RED_SANDSTONE_STAIRS |
-          Material.MOSSY_STONE_BRICK_STAIRS |
-          Material.MOSSY_COBBLESTONE_STAIRS |
-          Material.POLISHED_ANDESITE_STAIRS | Material.POLISHED_DIORITE_STAIRS |
-          Material.POLISHED_GRANITE_STAIRS | Material.SMOOTH_QUARTZ_STAIRS =>
+           Material.SMOOTH_RED_SANDSTONE_STAIRS |
+           Material.MOSSY_STONE_BRICK_STAIRS |
+           Material.MOSSY_COBBLESTONE_STAIRS |
+           Material.POLISHED_ANDESITE_STAIRS | Material.POLISHED_DIORITE_STAIRS |
+           Material.POLISHED_GRANITE_STAIRS | Material.SMOOTH_QUARTZ_STAIRS =>
         val _material = materialAs[StairsMaterial]
-        val _variant = Some(variantAs[StairsVariant])
-        val _shape = shapeAs[StairsShape]
+        val _variant  = Some(variantAs[StairsVariant])
+        val _shape    = shapeAs[StairsShape]
         Stairs(loc, _material, _variant, _shape, dir, bisection, flooded)
 
       // STONE
       case Material.STONE | Material.SMOOTH_STONE | Material.STONE_BRICKS |
-          Material.CHISELED_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
-          Material.MOSSY_STONE_BRICKS =>
+           Material.CHISELED_STONE_BRICKS | Material.CRACKED_STONE_BRICKS |
+           Material.MOSSY_STONE_BRICKS =>
         Stone(loc, materialAs[StoneMaterial], variantAs[StoneVariant])
 
       // STONITE
       case Material.ANDESITE | Material.DIORITE | Material.GRANITE |
-          Material.POLISHED_ANDESITE | Material.POLISHED_DIORITE |
-          Material.POLISHED_GRANITE =>
+           Material.POLISHED_ANDESITE | Material.POLISHED_DIORITE |
+           Material.POLISHED_GRANITE =>
         Stonite(loc, materialAs[StoniteMaterial], variantAs[StoniteVariant])
 
       // STRUCTURE_BLOCK
@@ -729,26 +728,26 @@ class SpigotBlockMapper @Inject()(
 
       // TERRACOTTA
       case Material.TERRACOTTA | Material.BLACK_TERRACOTTA |
-          Material.BLUE_TERRACOTTA | Material.BROWN_TERRACOTTA |
-          Material.CYAN_TERRACOTTA | Material.GRAY_TERRACOTTA |
-          Material.GREEN_TERRACOTTA | Material.LIGHT_BLUE_TERRACOTTA |
-          Material.LIGHT_GRAY_TERRACOTTA | Material.LIME_TERRACOTTA |
-          Material.MAGENTA_TERRACOTTA | Material.ORANGE_TERRACOTTA |
-          Material.PINK_TERRACOTTA | Material.PURPLE_TERRACOTTA |
-          Material.RED_TERRACOTTA | Material.WHITE_TERRACOTTA |
-          Material.YELLOW_TERRACOTTA =>
+           Material.BLUE_TERRACOTTA | Material.BROWN_TERRACOTTA |
+           Material.CYAN_TERRACOTTA | Material.GRAY_TERRACOTTA |
+           Material.GREEN_TERRACOTTA | Material.LIGHT_BLUE_TERRACOTTA |
+           Material.LIGHT_GRAY_TERRACOTTA | Material.LIME_TERRACOTTA |
+           Material.MAGENTA_TERRACOTTA | Material.ORANGE_TERRACOTTA |
+           Material.PINK_TERRACOTTA | Material.PURPLE_TERRACOTTA |
+           Material.RED_TERRACOTTA | Material.WHITE_TERRACOTTA |
+           Material.YELLOW_TERRACOTTA =>
         Terracotta(loc, Some(color))
 
       case Material.BLACK_GLAZED_TERRACOTTA | Material.BLUE_GLAZED_TERRACOTTA |
-          Material.BROWN_GLAZED_TERRACOTTA | Material.CYAN_GLAZED_TERRACOTTA |
-          Material.GRAY_GLAZED_TERRACOTTA | Material.GREEN_GLAZED_TERRACOTTA |
-          Material.LIGHT_BLUE_GLAZED_TERRACOTTA |
-          Material.LIGHT_GRAY_GLAZED_TERRACOTTA |
-          Material.LIME_GLAZED_TERRACOTTA | Material.MAGENTA_GLAZED_TERRACOTTA |
-          Material.ORANGE_GLAZED_TERRACOTTA | Material.PINK_GLAZED_TERRACOTTA |
-          Material.PURPLE_GLAZED_TERRACOTTA | Material.RED_GLAZED_TERRACOTTA |
-          Material.WHITE_GLAZED_TERRACOTTA |
-          Material.YELLOW_GLAZED_TERRACOTTA =>
+           Material.BROWN_GLAZED_TERRACOTTA | Material.CYAN_GLAZED_TERRACOTTA |
+           Material.GRAY_GLAZED_TERRACOTTA | Material.GREEN_GLAZED_TERRACOTTA |
+           Material.LIGHT_BLUE_GLAZED_TERRACOTTA |
+           Material.LIGHT_GRAY_GLAZED_TERRACOTTA |
+           Material.LIME_GLAZED_TERRACOTTA | Material.MAGENTA_GLAZED_TERRACOTTA |
+           Material.ORANGE_GLAZED_TERRACOTTA | Material.PINK_GLAZED_TERRACOTTA |
+           Material.PURPLE_GLAZED_TERRACOTTA | Material.RED_GLAZED_TERRACOTTA |
+           Material.WHITE_GLAZED_TERRACOTTA |
+           Material.YELLOW_GLAZED_TERRACOTTA =>
         GlazedTerracotta(loc, color)
 
       // TNT
@@ -762,14 +761,14 @@ class SpigotBlockMapper @Inject()(
 
       // TRAPDOOR
       case Material.IRON_TRAPDOOR | Material.ACACIA_TRAPDOOR |
-          Material.BIRCH_TRAPDOOR | Material.DARK_OAK_TRAPDOOR |
-          Material.JUNGLE_TRAPDOOR | Material.OAK_TRAPDOOR |
-          Material.SPRUCE_TRAPDOOR =>
+           Material.BIRCH_TRAPDOOR | Material.DARK_OAK_TRAPDOOR |
+           Material.JUNGLE_TRAPDOOR | Material.OAK_TRAPDOOR |
+           Material.SPRUCE_TRAPDOOR =>
         val _material = materialAs[TrapdoorMaterial]
         Trapdoor(loc, _material, dir, bisection, powered, flooded, open)
 
       // TRIPWIRE
-      case Material.TRIPWIRE =>
+      case Material.TRIPWIRE      =>
         throw new IllegalArgumentException(
           s"Failed to map block with type: ${block.getType}"
         )
@@ -780,35 +779,35 @@ class SpigotBlockMapper @Inject()(
 
       // WALL
       case Material.BRICK_WALL | Material.NETHER_BRICK_WALL |
-          Material.RED_NETHER_BRICK_WALL | Material.PRISMARINE_WALL |
-          Material.SANDSTONE_WALL | Material.RED_SANDSTONE_WALL |
-          Material.STONE_BRICK_WALL | Material.END_STONE_BRICK_WALL |
-          Material.COBBLESTONE_WALL | Material.ANDESITE_WALL |
-          Material.DIORITE_WALL | Material.GRANITE_WALL =>
+           Material.RED_NETHER_BRICK_WALL | Material.PRISMARINE_WALL |
+           Material.SANDSTONE_WALL | Material.RED_SANDSTONE_WALL |
+           Material.STONE_BRICK_WALL | Material.END_STONE_BRICK_WALL |
+           Material.COBBLESTONE_WALL | Material.ANDESITE_WALL |
+           Material.DIORITE_WALL | Material.GRANITE_WALL =>
         Wall(loc, materialAs[WallMaterial], None, extensions)
 
       case Material.MOSSY_STONE_BRICK_WALL | Material.MOSSY_COBBLESTONE_WALL =>
         val _material = materialAs[WallMaterial]
-        val _variant = variantAs[WallVariant]
+        val _variant  = variantAs[WallVariant]
         Wall(loc, _material, Some(_variant), extensions)
 
       // WOOD
       case Material.ACACIA_WOOD | Material.BIRCH_WOOD | Material.DARK_OAK_WOOD |
-          Material.JUNGLE_WOOD | Material.OAK_WOOD | Material.SPRUCE_WOOD =>
+           Material.JUNGLE_WOOD | Material.OAK_WOOD | Material.SPRUCE_WOOD =>
         Wood(loc, materialAs[WoodMaterial], stripped = false)
 
       case Material.STRIPPED_ACACIA_WOOD | Material.STRIPPED_BIRCH_WOOD |
-          Material.STRIPPED_DARK_OAK_WOOD | Material.STRIPPED_JUNGLE_WOOD |
-          Material.STRIPPED_OAK_WOOD | Material.STRIPPED_SPRUCE_WOOD =>
+           Material.STRIPPED_DARK_OAK_WOOD | Material.STRIPPED_JUNGLE_WOOD |
+           Material.STRIPPED_OAK_WOOD | Material.STRIPPED_SPRUCE_WOOD =>
         Wood(loc, materialAs[WoodMaterial], stripped = true)
 
       // WOOL
       case Material.BLACK_WOOL | Material.BLUE_WOOL | Material.BROWN_WOOL |
-          Material.CYAN_WOOL | Material.GRAY_WOOL | Material.GREEN_WOOL |
-          Material.LIGHT_BLUE_WOOL | Material.LIGHT_GRAY_WOOL |
-          Material.LIME_WOOL | Material.MAGENTA_WOOL | Material.ORANGE_WOOL |
-          Material.PINK_WOOL | Material.PURPLE_WOOL | Material.RED_WOOL |
-          Material.WHITE_WOOL | Material.YELLOW_WOOL =>
+           Material.CYAN_WOOL | Material.GRAY_WOOL | Material.GREEN_WOOL |
+           Material.LIGHT_BLUE_WOOL | Material.LIGHT_GRAY_WOOL |
+           Material.LIME_WOOL | Material.MAGENTA_WOOL | Material.ORANGE_WOOL |
+           Material.PINK_WOOL | Material.PURPLE_WOOL | Material.RED_WOOL |
+           Material.WHITE_WOOL | Material.YELLOW_WOOL =>
         Wool(loc, color)
 
       case _ => throw new IllegalArgumentException(s"${block.getType}")
@@ -818,16 +817,16 @@ class SpigotBlockMapper @Inject()(
   def map(block: Block): SpigotBlockData = {
     // Create new block data object
     val material = materialMapper.map(block)
-    val data = Bukkit.createBlockData(material)
+    val data     = Bukkit.createBlockData(material)
 
     // Lazily compute generic block data
     def blockAs[T <: Block]: T = block.asInstanceOf[T]
 
     lazy val flooded = blockAs[FloodableBlock].flooded
-    lazy val lit = blockAs[LightableBlock].lit
-    lazy val open = blockAs[OpenableBlock].open
+    lazy val lit     = blockAs[LightableBlock].lit
+    lazy val open    = blockAs[OpenableBlock].open
     lazy val powered = blockAs[PowerableBlock].powered
-    lazy val snowy = blockAs[SnowableBlock].snowy
+    lazy val snowy   = blockAs[SnowableBlock].snowy
 
     lazy val attached = {
       val attachment = blockAs[AttachedBlock].attachment
@@ -860,28 +859,29 @@ class SpigotBlockMapper @Inject()(
     }
 
     // Set generic block data
-    data match { case it: Bisected    => it.setHalf(bisection) }
-    data match { case it: Directional => it.setFacing(direction) }
-    data match { case it: Lightable   => it.setLit(lit) }
-    data match { case it: Openable    => it.setOpen(open) }
-    data match { case it: Orientable  => it.setAxis(orientation) }
-    data match { case it: Powerable   => it.setPowered(powered) }
-    data match { case it: Rotatable   => it.setRotation(rotation) }
-    data match { case it: Snowable    => it.setSnowy(snowy) }
-    data match { case it: Switch      => it.setFace(attached) }
-    data match { case it: Waterlogged => it.setWaterlogged(flooded) }
+    data match {case it: Bisected => it.setHalf(bisection)}
+    data match {case it: Directional => it.setFacing(direction)}
+    data match {case it: Lightable => it.setLit(lit)}
+    data match {case it: Openable => it.setOpen(open)}
+    data match {case it: Orientable => it.setAxis(orientation)}
+    data match {case it: Powerable => it.setPowered(powered)}
+    data match {case it: Rotatable => it.setRotation(rotation)}
+    data match {case it: Snowable => it.setSnowy(snowy)}
+    data match {case it: Switch => it.setFace(attached)}
+    data match {case it: Waterlogged => it.setWaterlogged(flooded)}
 
     data match {
       case it: MultipleFacing =>
-        it.getAllowedFaces.forEach(face => it.setFace(face, false)) // TODO check if this is necessary on fresh BlockData objects
+        it.getAllowedFaces.forEach(face => it.setFace(face, false)) // TODO check if this is
+        // necessary on fresh BlockData objects
         extensions.forEach(face => it.setFace(face, true))
     }
 
     // Set specific block data
     def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
 
-    block match { case it: StatefulBlock[_] => stateMapper.map(it, data) }
-    block match { case it: VariedBlock[_]   => variantMapper.map(it, data) }
+    block match {case it: StatefulBlock[_] => stateMapper.map(it, data)}
+    block match {case it: VariedBlock[_] => variantMapper.map(it, data)}
 
     block match {
       case BubbleColumn(_, drag) => dataAs[SpigotBubbleColumn].setDrag(drag)

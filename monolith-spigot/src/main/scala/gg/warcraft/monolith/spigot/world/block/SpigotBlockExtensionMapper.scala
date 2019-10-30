@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block.BlockFace
-import org.bukkit.block.{BlockFace => SpigotBlockFace}
+import org.bukkit.block.{ BlockFace => SpigotBlockFace }
 
 import scala.collection.mutable
 

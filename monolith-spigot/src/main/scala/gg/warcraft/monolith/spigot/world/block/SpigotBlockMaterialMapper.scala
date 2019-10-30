@@ -2,6 +2,7 @@ package gg.warcraft.monolith.spigot.world.block
 
 import java.util
 
+import gg.warcraft.monolith.api.core.Extensions._
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.state.KelpState
@@ -16,68 +17,67 @@ class SpigotBlockMaterialMapper @Inject()(
   private val cache =
     new util.EnumMap[Material, BlockMaterial](classOf[Material])
 
-  def map(material: Material): BlockMaterial =
-    cache.computeIfAbsent(material, _ => material match {
-      case it if !it.isBlock => throw new IllegalArgumentException(s"$material")
+  def map(material: Material): BlockMaterial = cache.computeIfAbsent(material, {
+    case _ if !material.isBlock => throw new IllegalArgumentException(s"$material")
 
-      // BRICK
-      case it if it $is "BRICK"            => BrickMaterial.BRICK
-      case it if it $is "NETHER_BRICK"     => BrickMaterial.NETHER_BRICK
-      case it if it $is "RED_NETHER_BRICK" => BrickMaterial.RED_NETHER_BRICK
+    // BRICK
+    case r"BRICK.*"            => BrickMaterial.BRICK
+    case r"NETHER_BRICK.*"     => BrickMaterial.NETHER_BRICK
+    case r"RED_NETHER_BRICK.*" => BrickMaterial.RED_NETHER_BRICK
 
-      // COBBLESTONE
-      case it if it is "COBBLESTONE" => CobblestoneMaterial.COBBLESTONE
+    // COBBLESTONE
+    case r".*COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
 
-      // END_STONE
-      case it if it $is "END_STONE_BRICK" => EndStoneMaterial.END_STONE_BRICK
-      case it if it $is "END_STONE"       => EndStoneMaterial.END_STONE
+    // END_STONE
+    case r"END_STONE_BRICK.*" => EndStoneMaterial.END_STONE_BRICK
+    case r"END_STONE.*"       => EndStoneMaterial.END_STONE
 
-      // INFESTED_BLOCK
-      case it if it $is "INFESTED_COBBLESTONE" => CobblestoneMaterial.COBBLESTONE
-      case it if it $is "INFESTED_STONE_BRICK" => StoneMaterial.STONE_BRICK
-      case it if it $is "INFESTED_STONE"       => StoneMaterial.STONE
+    // INFESTED_BLOCK
+    case r"INFESTED_COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
+    case r"INFESTED_STONE_BRICK.*" => StoneMaterial.STONE_BRICK
+    case r"INFESTED_STONE.*"       => StoneMaterial.STONE
 
-      // IRON
-      case Material.IRON_DOOR => IronMaterial.IRON
+    // IRON
+    case Material.IRON_DOOR => IronMaterial.IRON
 
-      // PRISMARINE
-      case it if it $is "DARK_PRISMARINE"  => PrismarineMaterial.DARK_PRISMARINE
-      case it if it $is "PRISMARINE_BRICK" => PrismarineMaterial.PRISMARINE_BRICK
-      case it if it $is "PRISMARINE"       => PrismarineMaterial.PRISMARINE
+    // PRISMARINE
+    case r"DARK_PRISMARINE.*"  => PrismarineMaterial.DARK_PRISMARINE
+    case r"PRISMARINE_BRICK.*" => PrismarineMaterial.PRISMARINE_BRICK
+    case r"PRISMARINE.*"       => PrismarineMaterial.PRISMARINE
 
-      // PURPUR
-      case it if it $is "PURPUR" => PurpurMaterial.PURPUR
+    // PURPUR
+    case r"PURPUR.*" => PurpurMaterial.PURPUR
 
-      // QUARTZ
-      case it if it is "QUARTZ" => QuartzMaterial.QUARTZ
+    // QUARTZ
+    case r".*QUARTZ.*" => QuartzMaterial.QUARTZ
 
-      // SAND
-      case Material.SAND     => SandMaterial.SAND
-      case Material.RED_SAND => SandMaterial.RED_SAND
+    // SAND
+    case Material.SAND     => SandMaterial.SAND
+    case Material.RED_SAND => SandMaterial.RED_SAND
 
-      // SANDSTONE
-      case it if it is "RED_SANDSTONE" => SandstoneMaterial.RED_SANDSTONE
-      case it if it is "SANDSTONE"     => SandstoneMaterial.SANDSTONE
+    // SANDSTONE
+    case r".*RED_SANDSTONE.*" => SandstoneMaterial.RED_SANDSTONE
+    case r".*SANDSTONE.*"     => SandstoneMaterial.SANDSTONE
 
-      // STONE
-      case it if it is "STONE_BRICK" => StoneMaterial.STONE_BRICK
-      case it if it is "STONE"       => StoneMaterial.STONE
+    // STONE
+    case r".*STONE_BRICK.*" => StoneMaterial.STONE_BRICK
+    case r".*STONE.*"       => StoneMaterial.STONE
 
-      // STONITE
-      case it if it is "ANDESITE" => StoniteMaterial.ANDESITE
-      case it if it is "DIORITE"  => StoniteMaterial.DIORITE
-      case it if it is "GRANITE"  => StoniteMaterial.GRANITE
+    // STONITE
+    case r".*ANDESITE.*" => StoniteMaterial.ANDESITE
+    case r".*DIORITE.*"  => StoniteMaterial.DIORITE
+    case r".*GRANITE.*"  => StoniteMaterial.GRANITE
 
-      // WOOD
-      case it if it is "ACACIA"   => WoodMaterial.ACACIA
-      case it if it is "BIRCH"    => WoodMaterial.BIRCH
-      case it if it is "DARK_OAK" => WoodMaterial.DARK_OAK
-      case it if it is "JUNGLE"   => WoodMaterial.JUNGLE
-      case it if it is "OAK"      => WoodMaterial.OAK
-      case it if it is "SPRUCE"   => WoodMaterial.SPRUCE
+    // WOOD
+    case r".*ACACIA.*"   => WoodMaterial.ACACIA
+    case r".*BIRCH.*"    => WoodMaterial.BIRCH
+    case r".*DARK_OAK.*" => WoodMaterial.DARK_OAK
+    case r".*JUNGLE.*"   => WoodMaterial.JUNGLE
+    case r".*OAK.*"      => WoodMaterial.OAK
+    case r".*SPRUCE.*"   => WoodMaterial.SPRUCE
 
-      case _ => throw new IllegalArgumentException(s"$material")
-    })
+    case _ => throw new IllegalArgumentException(s"$material")
+  })
 
   def map(block: Block): Material = block match {
     case it: ColoredBlock     => colorMapper.map(it)

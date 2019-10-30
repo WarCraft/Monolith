@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block.BlockRotation
-import org.bukkit.block.{BlockFace => SpigotBlockFace}
+import org.bukkit.block.{ BlockFace => SpigotBlockFace }
 
 class SpigotBlockRotationMapper {
 
