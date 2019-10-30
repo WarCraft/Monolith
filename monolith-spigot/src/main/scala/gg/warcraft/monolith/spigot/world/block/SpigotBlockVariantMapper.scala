@@ -3,8 +3,9 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial, EndStoneMaterial,
-  PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial, StoneMaterial, StoniteMaterial, WoodMaterial }
+import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial,
+  EndStoneMaterial, PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial,
+  StoneMaterial, StoniteMaterial, WoodMaterial }
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.{ Material, Instrument => SpigotInstrument }
 import org.bukkit.block.data.`type`.Bamboo.{ Leaves => SpigotBambooLeaves }
