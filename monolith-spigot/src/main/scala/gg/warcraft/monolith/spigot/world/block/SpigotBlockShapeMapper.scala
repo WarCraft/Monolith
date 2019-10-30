@@ -16,7 +16,7 @@ class SpigotBlockShapeMapper {
         val shape = dataAs[SpigotRails].getShape
         map(shape)
 
-      case it if it is$ "STAIRS" =>
+      case r".*STAIRS" =>
         val shape = dataAs[SpigotStairs].getShape
         map(shape)
 

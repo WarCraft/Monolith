@@ -2,6 +2,7 @@ package gg.warcraft.monolith.spigot.world.block
 
 import java.util
 
+import gg.warcraft.monolith.api.core.Extensions._
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material.{ BrickMaterial, CobblestoneMaterial,
   EndStoneMaterial, PrismarineMaterial, PurpurMaterial, QuartzMaterial, SandstoneMaterial,
@@ -80,8 +81,8 @@ class SpigotBlockVariantMapper {
     case Material.TRAPPED_CHEST => ChestVariant.TRAPPED
 
     // COBBLESTONE
-    case it if it $is "COBBLESTONE"       => CobblestoneVariant.NORMAL
-    case it if it $is "MOSSY_COBBLESTONE" => CobblestoneVariant.MOSSY
+    case r"COBBLESTONE.*"       => CobblestoneVariant.NORMAL
+    case r"MOSSY_COBBLESTONE.*" => CobblestoneVariant.MOSSY
 
     // COMMAND_BLOCK
     case Material.COMMAND_BLOCK           => CommandBlockVariant.NORMAL
@@ -89,17 +90,17 @@ class SpigotBlockVariantMapper {
     case Material.REPEATING_COMMAND_BLOCK => CommandBlockVariant.REPEATING
 
     // CORAL
-    case it if it $is "BRAIN_CORAL"  => CoralVariant.BRAIN
-    case it if it $is "BUBBLE_CORAL" => CoralVariant.BUBBLE
-    case it if it $is "FIRE_CORAL"   => CoralVariant.FIRE
-    case it if it $is "HORN_CORAL"   => CoralVariant.HORN
-    case it if it $is "TUBE_CORAL"   => CoralVariant.TUBE
+    case r"BRAIN_CORAL.*"  => CoralVariant.BRAIN
+    case r"BUBBLE_CORAL.*" => CoralVariant.BUBBLE
+    case r"FIRE_CORAL.*"   => CoralVariant.FIRE
+    case r"HORN_CORAL.*"   => CoralVariant.HORN
+    case r"TUBE_CORAL.*"   => CoralVariant.TUBE
 
-    case it if it $is "DEAD_BRAIN_CORAL"  => CoralVariant.DEAD_BRAIN
-    case it if it $is "DEAD_BUBBLE_CORAL" => CoralVariant.DEAD_BUBBLE
-    case it if it $is "DEAD_FIRE_CORAL"   => CoralVariant.DEAD_FIRE
-    case it if it $is "DEAD_HORN_CORAL"   => CoralVariant.DEAD_HORN
-    case it if it $is "DEAD_TUBE_CORAL"   => CoralVariant.DEAD_TUBE
+    case r"DEAD_BRAIN_CORAL.*"  => CoralVariant.DEAD_BRAIN
+    case r"DEAD_BUBBLE_CORAL.*" => CoralVariant.DEAD_BUBBLE
+    case r"DEAD_FIRE_CORAL.*"   => CoralVariant.DEAD_FIRE
+    case r"DEAD_HORN_CORAL.*"   => CoralVariant.DEAD_HORN
+    case r"DEAD_TUBE_CORAL.*"   => CoralVariant.DEAD_TUBE
 
     // FLOWER
     case Material.ALLIUM             => FlowerVariant.ALLIUM
@@ -160,12 +161,12 @@ class SpigotBlockVariantMapper {
     case Material.INFESTED_MOSSY_STONE_BRICKS    => StoneVariant.MOSSY
 
     // MOB_HEAD
-    case it if it $is "CREEPER"         => MobHeadVariant.CREEPER
-    case it if it $is "DRAGON"          => MobHeadVariant.DRAGON
-    case it if it $is "PLAYER"          => MobHeadVariant.PLAYER
-    case it if it $is "SKELETON"        => MobHeadVariant.SKELETON
-    case it if it $is "WITHER_SKELETON" => MobHeadVariant.WITHER_SKELETON
-    case it if it $is "ZOMBIE"          => MobHeadVariant.ZOMBIE
+    case r"CREEPER.*"         => MobHeadVariant.CREEPER
+    case r"DRAGON.*"          => MobHeadVariant.DRAGON
+    case r"PLAYER.*"          => MobHeadVariant.PLAYER
+    case r"SKELETON.*"        => MobHeadVariant.SKELETON
+    case r"WITHER_SKELETON.*" => MobHeadVariant.WITHER_SKELETON
+    case r"ZOMBIE.*"          => MobHeadVariant.ZOMBIE
 
     // MUSHROOM
     case Material.BROWN_MUSHROOM => MushroomVariant.BROWN
@@ -177,9 +178,9 @@ class SpigotBlockVariantMapper {
     case Material.MUSHROOM_STEM        => MushroomBlockVariant.STEM
 
     // QUARTZ
-    case it if it $is "QUARTZ"          => QuartzVariant.NORMAL
-    case it if it $is "CHISELED_QUARTZ" => QuartzVariant.CHISELED
-    case it if it $is "SMOOTH_QUARTZ"   => QuartzVariant.SMOOTH
+    case r"QUARTZ.*"          => QuartzVariant.NORMAL
+    case r"CHISELED_QUARTZ.*" => QuartzVariant.CHISELED
+    case r"SMOOTH_QUARTZ.*"   => QuartzVariant.SMOOTH
 
     // RAILS
     case Material.RAIL           => RailsVariant.NORMAL
@@ -188,17 +189,17 @@ class SpigotBlockVariantMapper {
     case Material.POWERED_RAIL   => RailsVariant.POWERED
 
     // SANDSTONE
-    case it if it $is "SANDSTONE"     => SandstoneVariant.NORMAL
-    case it if it $is "RED_SANDSTONE" => SandstoneVariant.NORMAL
+    case r"SANDSTONE.*"     => SandstoneVariant.NORMAL
+    case r"RED_SANDSTONE.*" => SandstoneVariant.NORMAL
 
-    case it if it $is "CHISELED_SANDSTONE"     => SandstoneVariant.CHISELED
-    case it if it $is "CHISELED_RED_SANDSTONE" => SandstoneVariant.CHISELED
+    case r"CHISELED_SANDSTONE.*"     => SandstoneVariant.CHISELED
+    case r"CHISELED_RED_SANDSTONE.*" => SandstoneVariant.CHISELED
 
-    case it if it $is "CUT_SANDSTONE"     => SandstoneVariant.CUT
-    case it if it $is "CUT_RED_SANDSTONE" => SandstoneVariant.CUT
+    case r"CUT_SANDSTONE.*"     => SandstoneVariant.CUT
+    case r"CUT_RED_SANDSTONE.*" => SandstoneVariant.CUT
 
-    case it if it $is "SMOOTH_SANDSTONE"     => SandstoneVariant.SMOOTH
-    case it if it $is "SMOOTH_RED_SANDSTONE" => SandstoneVariant.SMOOTH
+    case r"SMOOTH_SANDSTONE.*"     => SandstoneVariant.SMOOTH
+    case r"SMOOTH_RED_SANDSTONE.*" => SandstoneVariant.SMOOTH
 
     // SAPLING
     case Material.BAMBOO_SAPLING => SaplingVariant.BAMBOO
@@ -211,29 +212,29 @@ class SpigotBlockVariantMapper {
     case Material.SPRUCE_SAPLING   => SaplingVariant.SPRUCE
 
     // STONE
-    case it if it $is "STONE_BRICK" => StoneVariant.NORMAL
-    case it if it $is "STONE"       => StoneVariant.NORMAL
+    case r"STONE_BRICK.*" => StoneVariant.NORMAL
+    case r"STONE.*"       => StoneVariant.NORMAL
 
-    case it if it $is "CHISELED_STONE_BRICK" => StoneVariant.CHISELED
-    case it if it $is "CHISELED_STONE"       => StoneVariant.CHISELED
+    case r"CHISELED_STONE_BRICK.*" => StoneVariant.CHISELED
+    case r"CHISELED_STONE.*"       => StoneVariant.CHISELED
 
-    case it if it $is "CRACKED_STONE_BRICK" => StoneVariant.CRACKED
-    case it if it $is "CRACKED_STONE"       => StoneVariant.CRACKED
+    case r"CRACKED_STONE_BRICK.*" => StoneVariant.CRACKED
+    case r"CRACKED_STONE.*"       => StoneVariant.CRACKED
 
-    case it if it $is "MOSSY_STONE_BRICK" => StoneVariant.MOSSY
-    case it if it $is "MOSSY_STONE"       => StoneVariant.MOSSY
+    case r"MOSSY_STONE_BRICK.*" => StoneVariant.MOSSY
+    case r"MOSSY_STONE.*"       => StoneVariant.MOSSY
 
-    case it if it $is "SMOOTH_STONE_BRICK" => StoneVariant.SMOOTH
-    case it if it $is "SMOOTH_STONE"       => StoneVariant.SMOOTH
+    case r"SMOOTH_STONE_BRICK.*" => StoneVariant.SMOOTH
+    case r"SMOOTH_STONE.*"       => StoneVariant.SMOOTH
 
     // STONITE
-    case it if it $is "ANDESITE" => StoniteVariant.NORMAL
-    case it if it $is "DIORITE"  => StoniteVariant.NORMAL
-    case it if it $is "GRANITE"  => StoniteVariant.NORMAL
+    case r"ANDESITE.*" => StoniteVariant.NORMAL
+    case r"DIORITE.*"  => StoniteVariant.NORMAL
+    case r"GRANITE.*"  => StoniteVariant.NORMAL
 
-    case it if it $is "POLISHED_ANDESITE" => StoniteVariant.POLISHED
-    case it if it $is "POLISHED_DIORITE"  => StoniteVariant.POLISHED
-    case it if it $is "POLISHED_GRANITE"  => StoniteVariant.POLISHED
+    case r"POLISHED_ANDESITE.*" => StoniteVariant.POLISHED
+    case r"POLISHED_DIORITE.*"  => StoniteVariant.POLISHED
+    case r"POLISHED_GRANITE.*"  => StoniteVariant.POLISHED
 
     // WEIGHTED_PRESSURE_PLATE
     case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateVariant.LIGHT

@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.spigot.world
 
-import org.bukkit.{ Bukkit, Material }
 import org.bukkit.block.{ Block, BlockState, Sign }
 import org.bukkit.block.data.{ BlockData, Rail }
 import org.bukkit.block.data.`type`._
@@ -41,10 +40,4 @@ package object block {
   // Mapper utility functions
   def dataAs[T <: SpigotBlockData](implicit data: SpigotBlockData): T =
     data.asInstanceOf[T]
-
-  implicit class MaterialExtensions(val material: Material) {
-    def is(s: String): Boolean = material.name().contains(s)
-    def $is(s: String): Boolean = material.name().startsWith(s)
-    def is$(s: String): Boolean = material.name().endsWith(s)
-  }
 }
