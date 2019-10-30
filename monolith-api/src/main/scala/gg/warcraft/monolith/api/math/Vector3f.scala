@@ -57,7 +57,7 @@ case class Vector3f(
 }
 
 object Vector3f {
-  val ZERO_PITCH_YAW = Vector3f(0, 0, 1)
+  val ZERO_PITCH_YAW: Vector3f = Vector3f(0, 0, 1)
 
   def apply(x: Double, y: Double, z: Double): Vector3f =
     Vector3f(x.toFloat, y.toFloat, z.toFloat)

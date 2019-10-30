@@ -3,521 +3,550 @@ package gg.warcraft.monolith.api.world.item
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.material._
 import gg.warcraft.monolith.api.world.block.variant._
+import gg.warcraft.monolith.api.world.item.material.{ ArmorMaterial, ToolMaterial }
 import gg.warcraft.monolith.api.world.item.variant._
 
 final case class Andesite(
     variant: StoniteVariant,
-    data: ItemData
-) extends VariedItem[StoniteVariant] {
+    name: String,
+    tooltip: Array[String],
+    attributes: List[String],
+    count: Int
+) extends VariedItem[StoniteVariant] with StackableItem {
   val `type` = ItemType.ANDESITE
 }
 
 final case class Anvil(
     variant: AnvilVariant,
-    data: ItemData
-) extends VariedItem[AnvilVariant] {
+
+) extends VariedItem[AnvilVariant] with StackableItem {
   val `type` = ItemType.ANVIL
 }
 
-final case class Apple(data: ItemData) extends Item {
+final case class Apple() extends StackableItem {
   val `type` = ItemType.APPLE
   override val edible = true
 }
 
-final case class ArmorStand(data: ItemData) extends Item {
+final case class ArmorStand() extends StackableItem {
   val `type` = ItemType.ARMOR_STAND
-  override val maxStackSize = 16
+  override val maxCount = 16
 }
 
-//final case class Arrow extends Item {
-//  // TODO
-//}
-//
-//final case class Axe extends Item {
-//  // TODO
-//}
+final case class Arrow(
+    variant: ArrowVariant,
 
-final case class Bamboo(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.ARROW
+}
+
+final case class Axe(
+    material: ToolMaterial,
+
+) extends StackableItem {
+  val `type` = ItemType.AXE
+}
+
+final case class Bamboo() extends StackableItem {
   val `type` = ItemType.BAMBOO
 }
 
 final case class Banner(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.BANNER
-  override val maxStackSize = 16
+  override val maxCount = 16
 }
 
 final case class BannerPattern(
     variant: BannerPatternVariant,
-    data: ItemData
+
 ) extends Item {
   val `type` = ItemType.BANNER_PATTERN
-  override val maxStackSize = 1
 }
 
-final case class Barrel(data: ItemData) extends Item {
+final case class Barrel() extends StackableItem {
   val `type` = ItemType.BARREL
 }
 
-final case class Barrier(data: ItemData) extends Item {
+final case class Barrier() extends StackableItem {
   val `type` = ItemType.BARRIER
 }
 
-final case class Beacon(data: ItemData) extends Item {
+final case class Beacon() extends StackableItem {
   val `type` = ItemType.BEACON
 }
 
 final case class Bed(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.BED
 }
 
-final case class Bedrock(data: ItemData) extends Item {
+final case class Bedrock() extends StackableItem {
   val `type` = ItemType.BEDROCK
 }
 
-//final case class Beef extends Item {
-//  // TODO cookable
-//}
-//
-//final case class Beetroot extends Item {
-//  // TODO edible?
-//}
+final case class Beef(
+    cooked: Boolean,
 
-final case class Bell(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.BEEF
+  override val edible = true
+}
+
+final case class Beetroot() extends StackableItem {
+  val `type` = ItemType.BEETROOT
+  override val edible = true
+}
+
+final case class Bell() extends StackableItem {
   val `type` = ItemType.BELL
 }
 
-final case class BlastFurnace(data: ItemData) extends Item {
+final case class BlastFurnace() extends StackableItem {
   val `type` = ItemType.BLAST_FURNACE
 }
 
-final case class BlazePowder(data: ItemData) extends Item {
+final case class BlazePowder() extends StackableItem {
   val `type` = ItemType.BLAZE_POWDER
 }
 
-final case class BlazeRod(data: ItemData) extends Item {
+final case class BlazeRod() extends StackableItem {
   val `type` = ItemType.BLAZE_ROD
 }
 
 final case class Boat(
     material: WoodMaterial,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.BOAT
 }
 
-final case class Bone(data: ItemData) extends Item {
+final case class Bone() extends StackableItem {
   val `type` = ItemType.BONE
 }
 
-final case class BoneBlock(data: ItemData) extends Item {
+final case class BoneBlock() extends StackableItem {
   val `type` = ItemType.BONE_BLOCK
 }
 
-final case class BoneMeal(data: ItemData) extends Item {
+final case class BoneMeal() extends StackableItem {
   val `type` = ItemType.BONE_MEAL
 }
 
-//final case class BottleOfEnchanting extends Item {
-//  // TODO Bottle 'o Enchanting
-//}
-//
+final case class BottleOfEnchanting() extends StackableItem {
+  val `type` = ItemType.BOTTLE_OF_ENCHANTING
+}
+
 //final case class Book extends Item {
 //  // TODO other book variants
 //}
 
-final case class Bookshelf(data: ItemData) extends Item {
+final case class Bookshelf() extends StackableItem {
   val `type` = ItemType.BOOKSHELF
 }
 
-//final case class Boots extends Item {
-//  // TODO
-//}
+final case class Boots(
+    material: ArmorMaterial,
 
-final case class Bow(data: ItemData) extends Item {
-  val `type` = ItemType.BOW
-  override val maxStackSize = 1
+) extends StackableItem {
+  val `type` = ItemType.BOOTS
 }
 
-final case class Bowl(data: ItemData) extends Item {
+final case class Bow() extends Item {
+  val `type` = ItemType.BOW
+  override val maxDurability = 384
+}
+
+final case class Bowl() extends StackableItem {
   val `type` = ItemType.BOWL
 }
 
-final case class Bread(data: ItemData) extends Item {
+final case class Bread() extends StackableItem {
   val `type` = ItemType.BREAD
+  override val edible = true
 }
 
-final case class BrewingStand(data: ItemData) extends Item {
+final case class BrewingStand() extends StackableItem {
   val `type` = ItemType.BREWING_STAND
 }
 
 final case class Brick(
     material: BrickMaterial,
-    data: ItemData
-) extends MaterialItem[BrickMaterial] {
+
+) extends MaterialItem[BrickMaterial] with StackableItem {
   val `type` = ItemType.BRICK
 }
 
 final case class BrickBlock(
     material: BrickMaterial,
-    data: ItemData
-) extends MaterialItem[BrickMaterial] {
+
+) extends MaterialItem[BrickMaterial] with StackableItem {
   val `type` = ItemType.BRICK_BLOCK
 }
 
 final case class Bucket(
     variant: BucketVariant,
-    data: ItemData
-) extends VariedItem[BucketVariant] {
+
+) extends VariedItem[BucketVariant] with StackableItem {
   val `type` = ItemType.BUCKET
-  override val maxStackSize = 16
+  override val maxCount = 16
 }
 
 final case class Button(
     material: ButtonMaterial,
-    data: ItemData
-) extends MaterialItem[ButtonMaterial] {
+
+) extends MaterialItem[ButtonMaterial] with StackableItem {
   val `type` = ItemType.BUTTON
 }
 
-final case class Cactus(data: ItemData) extends Item {
+final case class Cactus() extends StackableItem {
   val `type` = ItemType.CACTUS
 }
 
-final case class Cake(data: ItemData) extends Item {
+final case class Cake() extends Item {
   val `type` = ItemType.CAKE
-  override val maxStackSize = 1
 }
 
-final case class Campfire(data: ItemData) extends Item {
+final case class Campfire() extends StackableItem {
   val `type` = ItemType.CAMPFIRE
 }
 
 final case class Carpet(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.CARPET
 }
 
-final case class Carrot(data: ItemData) extends Item {
+final case class Carrot() extends StackableItem {
   val `type` = ItemType.CARROT
+  override val edible = true
 }
 
-final case class CarrotOnAStick(data: ItemData) extends Item {
+final case class CarrotOnAStick() extends Item {
   val `type` = ItemType.CARROT_ON_A_STICK
-  override val maxStackSize = 1
+  override val maxDurability = 25
 }
 
-final case class CartographyTable(data: ItemData) extends Item {
+final case class CartographyTable() extends StackableItem {
   val `type` = ItemType.CARTOGRAPHY_TABLE
 }
 
-final case class Charcoal(data: ItemData) extends Item {
+final case class Charcoal() extends StackableItem {
   val `type` = ItemType.CHARCOAL
 }
 
-final case class Cauldron(data: ItemData) extends Item {
+final case class Cauldron() extends StackableItem {
   val `type` = ItemType.CAULDRON
 }
 
 final case class Chest(
     variant: ChestVariant,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.CHEST
 }
 
-//final case class ChestPlate extends Item {
-//  // TODO
-//}
-//
-//final case class Chicken extends Item {
-//  // TODO cookable
-//}
+final case class Chestplate(
+    material: ArmorMaterial,
 
-final case class ChorusFlower(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.CHESTPLATE
+}
+
+final case class Chicken(
+    cooked: Boolean,
+
+) extends StackableItem {
+  val `type` = ItemType.CHICKEN
+  override val edible = true
+}
+
+final case class ChorusFlower() extends StackableItem {
   val `type` = ItemType.CHORUS_FLOWER
 }
 
 final case class ChorusFruit(
     popped: Boolean,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.CHORUS_FRUIT
   override val edible: Boolean = !popped
   def withPopped(popped: Boolean): ChorusFruit =
     copyWith("popped", popped)
 }
 
-final case class ChorusPlant(data: ItemData) extends Item {
+final case class ChorusPlant() extends StackableItem {
   val `type` = ItemType.CHORUS_PLANT
 }
 
-final case class Clay(data: ItemData) extends Item {
+final case class Clay() extends StackableItem {
   val `type` = ItemType.CLAY
 }
 
-final case class ClayBlock(data: ItemData) extends Item {
+final case class ClayBlock() extends StackableItem {
   val `type` = ItemType.CLAY_BLOCK
 }
 
-final case class Clock(data: ItemData) extends Item {
+final case class Clock() extends StackableItem {
   val `type` = ItemType.CLOCK
 }
 
-final case class Coal(data: ItemData) extends Item {
+final case class Coal() extends StackableItem {
   val `type` = ItemType.COAL
 }
 
-final case class CoalBlock(data: ItemData) extends Item {
+final case class CoalBlock() extends StackableItem {
   val `type` = ItemType.COAL_BLOCK
 }
 
-final case class CoalOre(data: ItemData) extends Item {
+final case class CoalOre() extends StackableItem {
   val `type` = ItemType.COAL_ORE
 }
 
 final case class Cobblestone(
     variant: CobblestoneVariant,
-    data: ItemData
-) extends VariedItem[CobblestoneVariant] {
+
+) extends VariedItem[CobblestoneVariant] with StackableItem {
   val `type` = ItemType.COBBLESTONE
 }
 
-final case class Cobweb(data: ItemData) extends Item {
+final case class Cobweb() extends StackableItem {
   val `type` = ItemType.COBWEB
 }
 
-final case class CocoaBeans(data: ItemData) extends Item {
+final case class CocoaBeans() extends StackableItem {
   val `type` = ItemType.COCOA_BEANS
 }
 
-//final case class Cod extends Item {
-//  // TODO cookable
-//}
+final case class Cod(
+    cooked: Boolean,
+
+) extends StackableItem {
+  val `type` = ItemType.CHICKEN
+  override val edible = true
+}
 
 final case class CommandBlock(
     variant: CommandBlockVariant,
-    data: ItemData
-) extends VariedItem[CommandBlockVariant] {
+
+) extends VariedItem[CommandBlockVariant] with StackableItem {
   val `type` = ItemType.COMMAND_BLOCK
 }
 
-final case class Comparator(data: ItemData) extends Item {
+final case class Comparator() extends StackableItem {
   val `type` = ItemType.COMPARATOR
 }
 
-final case class Compass(data: ItemData) extends Item {
+final case class Compass() extends StackableItem {
   val `type` = ItemType.COMPASS
 }
 
-final case class Composter(data: ItemData) extends Item {
+final case class Composter() extends StackableItem {
   val `type` = ItemType.COMPOSTER
 }
 
 final case class Concrete(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.CONCRETE
 }
 
 final case class ConcretePowder(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.CONCRETE_POWDER
 }
 
-final case class Conduit(data: ItemData) extends Item {
+final case class Conduit() extends StackableItem {
   val `type` = ItemType.CONDUIT
 }
 
-final case class Cookie(data: ItemData) extends Item {
+final case class Cookie() extends StackableItem {
   val `type` = ItemType.COOKIE
+  override val edible = true
 }
 
 final case class Coral(
     variant: CoralVariant,
-    data: ItemData
-) extends VariedItem[CoralVariant] {
+
+) extends VariedItem[CoralVariant] with StackableItem {
   val `type` = ItemType.CORAL
 }
 
 final case class CoralBlock(
     variant: CoralVariant,
-    data: ItemData
-) extends VariedItem[CoralVariant] {
+
+) extends VariedItem[CoralVariant] with StackableItem {
   val `type` = ItemType.CORAL_BLOCK
 }
 
 final case class CoralFan(
     variant: CoralVariant,
-    data: ItemData
-) extends VariedItem[CoralVariant] {
+
+) extends VariedItem[CoralVariant] with StackableItem {
   val `type` = ItemType.CORAL_FAN
 }
 
-final case class CraftingTable(data: ItemData) extends Item {
+final case class CraftingTable() extends StackableItem {
   val `type` = ItemType.CRAFTING_TABLE
 }
 
-final case class Crossbow(data: ItemData) extends Item {
+final case class Crossbow() extends Item {
   val `type` = ItemType.CROSSBOW
-  override val maxStackSize = 1
+  override val maxDurability = 326
 }
 
-final case class DaylightDetector(data: ItemData) extends Item {
+final case class DaylightDetector() extends StackableItem {
   val `type` = ItemType.DAYLIGHT_DETECTOR
 }
 
-final case class DeadBush(data: ItemData) extends Item {
+final case class DeadBush() extends StackableItem {
   val `type` = ItemType.DEAD_BUSH
 }
 
-final case class DebugStick(data: ItemData) extends Item {
+final case class DebugStick() extends Item {
   val `type` = ItemType.DEBUG_STICK
-  override val maxStackSize = 1
 }
 
-final case class Diamond(data: ItemData) extends Item {
+final case class Diamond() extends StackableItem {
   val `type` = ItemType.DIAMOND
 }
 
-final case class DiamondBlock(data: ItemData) extends Item {
+final case class DiamondBlock() extends StackableItem {
   val `type` = ItemType.DIAMOND_BLOCK
 }
 
-final case class DiamondOre(data: ItemData) extends Item {
+final case class DiamondOre() extends StackableItem {
   val `type` = ItemType.DIAMOND_ORE
 }
 
 final case class Diorite(
     variant: StoniteVariant,
-    data: ItemData
-) extends VariedItem[StoniteVariant] {
+
+) extends VariedItem[StoniteVariant] with StackableItem {
   val `type` = ItemType.DIORITE
 }
 
 final case class Dirt(
     coarse: Boolean,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.DIRT
-  def this(coarse: Boolean) =
-    this(coarse, ItemData(coarse, "Coarse", "Dirt"))
-  // TODO withCoarse
+  def withCoarse(coarse: Boolean): Dirt =
+    copyWith("coarse", coarse)
 }
 
-final case class Dispenser(data: ItemData) extends Item {
+final case class Dispenser() extends StackableItem {
   val `type` = ItemType.DISPENSER
 }
 
 final case class Door(
     material: DoorMaterial,
-    data: ItemData
-) extends MaterialItem[DoorMaterial] {
+
+) extends MaterialItem[DoorMaterial] with StackableItem {
   val `type` = ItemType.DOOR
 }
 
-final case class DragonBreath(data: ItemData) extends Item {
+final case class DragonBreath() extends StackableItem {
   val `type` = ItemType.DRAGON_BREATH
 }
 
-final case class DragonEgg(data: ItemData) extends Item {
+final case class DragonEgg() extends StackableItem {
   val `type` = ItemType.DRAGON_EGG
 }
 
-final case class DriedKelp(data: ItemData) extends Item {
+final case class DriedKelp() extends StackableItem {
   val `type` = ItemType.DRIED_KELP
+  override val edible = true
 }
 
-final case class DriedKelpBlock(data: ItemData) extends Item {
+final case class DriedKelpBlock() extends StackableItem {
   val `type` = ItemType.DRIED_KELP_BLOCK
 }
 
-final case class Dropper(data: ItemData) extends Item {
+final case class Dropper() extends StackableItem {
   val `type` = ItemType.DROPPER
 }
 
 final case class Dye(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.DYE
 }
 
-final case class Egg(data: ItemData) extends Item {
+final case class Egg() extends StackableItem {
   val `type` = ItemType.EGG
 }
 
-final case class Elytra(data: ItemData) extends Item {
+final case class Elytra() extends Item {
   val `type` = ItemType.ELYTRA
-  override val maxStackSize = 1
+  override val maxDurability = 432
 }
 
-final case class Emerald(data: ItemData) extends Item {
+final case class Emerald() extends StackableItem {
   val `type` = ItemType.EMERALD
 }
 
-final case class EmeraldBlock(data: ItemData) extends Item {
+final case class EmeraldBlock() extends StackableItem {
   val `type` = ItemType.EMERALD_BLOCK
 }
 
-final case class EmeraldOre(data: ItemData) extends Item {
+final case class EmeraldOre() extends StackableItem {
   val `type` = ItemType.EMERALD_ORE
 }
 
-final case class EnchantingTable(data: ItemData) extends Item {
+final case class EnchantingTable() extends StackableItem {
   val `type` = ItemType.ENCHANTING_TABLE
 }
 
-final case class EndCrystal(data: ItemData) extends Item {
+final case class EndCrystal() extends StackableItem {
   val `type` = ItemType.END_CRYSTAL
 }
 
-final case class EndPortalFrame(data: ItemData) extends Item {
+final case class EndPortalFrame() extends StackableItem {
   val `type` = ItemType.END_PORTAL_FRAME
 }
 
-final case class EndRod(data: ItemData) extends Item {
+final case class EndRod() extends StackableItem {
   val `type` = ItemType.END_ROD
 }
 
 final case class EndStone(
     material: EndStoneMaterial,
-    data: ItemData
-) extends MaterialItem[EndStoneMaterial] {
+
+) extends MaterialItem[EndStoneMaterial] with StackableItem {
   val `type` = ItemType.END_STONE // TODO rename EndStoneMaterial.END_STONE > NORMAL?
 }
 
-final case class EnderEye(data: ItemData) extends Item {
+final case class EnderEye() extends StackableItem {
   val `type` = ItemType.ENDER_EYE
 }
 
-final case class EnderPearl(data: ItemData) extends Item {
+final case class EnderPearl() extends StackableItem {
   val `type` = ItemType.ENDER_PEARL
-  override val maxStackSize = 16
+  override val maxCount = 16
 }
 
-final case class Farmland(data: ItemData) extends Item {
+final case class Farmland() extends StackableItem {
   val `type` = ItemType.FARMLAND
 }
 
-final case class Feather(data: ItemData) extends Item {
+final case class Feather() extends StackableItem {
   val `type` = ItemType.FEATHER
 }
 
 final case class Fence(
     material: FenceMaterial,
-    data: ItemData
-) extends MaterialItem[FenceMaterial] {
+
+) extends MaterialItem[FenceMaterial] with StackableItem {
   val `type` = ItemType.FENCE
 }
 
@@ -533,416 +562,452 @@ final case class Fence(
 //  // TODO
 //}
 
-final case class FishingRod(data: ItemData) extends Item {
+final case class FishingRod() extends Item {
   val `type` = ItemType.FISHING_ROD
-  override val maxStackSize = 1
+  override val maxDurability = 64
 }
 
-final case class FletchingTable(data: ItemData) extends Item {
+final case class FletchingTable() extends StackableItem {
   val `type` = ItemType.FLETCHING_TABLE
 }
 
-final case class Flint(data: ItemData) extends Item {
+final case class Flint() extends StackableItem {
   val `type` = ItemType.FLINT
 }
 
-final case class FlintAndSteel(data: ItemData) extends Item {
+final case class FlintAndSteel() extends Item {
   val `type` = ItemType.FLINT_AND_STEEL
-  override val maxStackSize = 1
+  override val maxDurability = 64
 }
 
-//final case class Flower extends Item {
-//  // TODO
-//}
+final case class Flower(
+    variant: FlowerVariant,
 
-final case class FlowerPot(data: ItemData) extends Item {
+) extends VariedItem[FlowerVariant] with StackableItem {
+  val `type` = ItemType.FLOWER
+}
+
+final case class FlowerPot() extends StackableItem {
   val `type` = ItemType.FLOWER_POT
 }
 
-final case class Furnace(data: ItemData) extends Item {
+final case class Furnace() extends StackableItem {
   val `type` = ItemType.FURNACE
 }
 
 final case class Gate(
     material: WoodMaterial,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.GATE
 }
 
-final case class GhastTear(data: ItemData) extends Item {
+final case class GhastTear() extends StackableItem {
   val `type` = ItemType.GHAST_TEAR
 }
 
 final case class Glass(
     color: Option[BlockColor],
-    data: ItemData
-) extends ColorableItem {
+
+) extends ColorableItem with StackableItem {
   val `type` = ItemType.GLASS
 }
 
-final case class GlassBottle(data: ItemData) extends Item {
+final case class GlassBottle() extends StackableItem {
   val `type` = ItemType.GLASS_BOTTLE
 }
 
 final case class GlassPane(
     color: Option[BlockColor],
-    data: ItemData
-) extends ColorableItem {
+
+) extends ColorableItem with StackableItem {
   val `type` = ItemType.GLASS_PANE
 }
 
 final case class GlazedTerracotta(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.GLAZED_TERRACOTTA
 }
 
-final case class Glowstone(data: ItemData) extends Item {
+final case class Glowstone() extends StackableItem {
   val `type` = ItemType.GLOWSTONE
 }
 
-final case class GlowstoneDust(data: ItemData) extends Item {
+final case class GlowstoneDust() extends StackableItem {
   val `type` = ItemType.GLOWSTONE_DUST
 }
 
-final case class GoldBlock(data: ItemData) extends Item {
+final case class GoldBlock() extends StackableItem {
   val `type` = ItemType.GOLD_BLOCK
 }
 
-final case class GoldIngot(data: ItemData) extends Item {
+final case class GoldIngot() extends StackableItem {
   val `type` = ItemType.GOLD_INGOT
 }
 
-final case class GoldNugget(data: ItemData) extends Item {
+final case class GoldNugget() extends StackableItem {
   val `type` = ItemType.GOLD_NUGGET
 }
 
-final case class GoldOre(data: ItemData) extends Item {
+final case class GoldOre() extends StackableItem {
   val `type` = ItemType.GOLD_ORE
 }
 
 final case class GoldenApple(
     enchanted: Boolean,
-    data: ItemData
-) extends Item {
+
+) extends Item with StackableItem {
   val `type` = ItemType.GOLDEN_APPLE
   override val edible = true
+  // TODO with enchanted
 }
 
-final case class GoldenCarrot(data: ItemData) extends Item {
+final case class GoldenCarrot() extends StackableItem {
   val `type` = ItemType.GOLDEN_CARROT
   override val edible = true
 }
 
-final case class GoldenMelonSlice(data: ItemData) extends Item {
+final case class GoldenMelonSlice() extends StackableItem {
   val `type` = ItemType.GOLDEN_MELON_SLICE
 }
 
 final case class Granite(
     variant: StoniteVariant,
-    data: ItemData
-) extends VariedItem[StoniteVariant] {
+
+) extends VariedItem[StoniteVariant] with StackableItem {
   val `type` = ItemType.GRANITE
 }
 
-final case class Grass(data: ItemData) extends Item {
+final case class Grass(
+    tall: Boolean,
+
+) extends StackableItem {
   val `type` = ItemType.GRASS
+  def withTall(tall: Boolean): Grass =
+    copyWith("tall", tall)
 }
 
-final case class GrassBlock(data: ItemData) extends Item {
+final case class GrassBlock() extends StackableItem {
   val `type` = ItemType.GRASS_BLOCK
 }
 
-final case class GrassPath(data: ItemData) extends Item {
+final case class GrassPath() extends StackableItem {
   val `type` = ItemType.GRASS_PATH
 }
 
-final case class Gravel(data: ItemData) extends Item {
+final case class Gravel() extends StackableItem {
   val `type` = ItemType.GRAVEL
 }
 
-final case class Grindstone(data: ItemData) extends Item {
+final case class Grindstone() extends StackableItem {
   val `type` = ItemType.GRINDSTONE
 }
 
-final case class Gunpowder(data: ItemData) extends Item {
+final case class Gunpowder() extends StackableItem {
   val `type` = ItemType.GUNPOWDER
 }
 
-final case class HayBale(data: ItemData) extends Item {
+final case class HayBale() extends StackableItem {
   val `type` = ItemType.HAY_BALE
 }
 
-final case class HeartOfTheSea(data: ItemData) extends Item {
+final case class HeartOfTheSea() extends StackableItem {
   val `type` = ItemType.HEART_OF_THE_SEA
 }
 
-//final case class Helmet extends Item {
-//  // TODO
-//}
-//
-//final case class Hoe extends Item {
-//  // TODO
-//}
+final case class Helmet(
+    material: ArmorMaterial,
 
-final case class Hopper(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.HELMET
+}
+
+final case class Hoe(
+    material: ToolMaterial,
+
+) extends StackableItem {
+  val `type` = ItemType.HOE
+}
+
+final case class Hopper() extends StackableItem {
   val `type` = ItemType.HOPPER
 }
 
-//final case class HorseArmor extends Item {
-//  // TODO
-//}
+final case class HorseArmor(
+    variant: HorseArmorVariant,
+
+) extends StackableItem {
+  val `type` = ItemType.HORSE_ARMOR
+}
 
 final case class Ice(
     variant: IceVariant,
-    data: ItemData
-) extends VariedItem[IceVariant] {
+
+) extends VariedItem[IceVariant] with StackableItem {
   val `type` = ItemType.ICE
 }
 
 final case class InfestedBlock(
     material: InfestedMaterial,
     variant: Option[InfestedVariant],
-    data: ItemData
-) extends MaterialItem[InfestedMaterial] {
+
+) extends MaterialItem[InfestedMaterial] with StackableItem {
   val `type` = ItemType.INFESTED_BLOCK
 }
 
-final case class InkSac(data: ItemData) extends Item {
+final case class InkSac() extends StackableItem {
   val `type` = ItemType.INK_SAC
 }
 
-final case class IronBars(data: ItemData) extends Item {
+final case class IronBars() extends StackableItem {
   val `type` = ItemType.IRON_BARS
 }
 
-final case class IronBlock(data: ItemData) extends Item {
+final case class IronBlock() extends StackableItem {
   val `type` = ItemType.IRON_BLOCK
 }
 
-final case class IronIngot(data: ItemData) extends Item {
+final case class IronIngot() extends StackableItem {
   val `type` = ItemType.IRON_INGOT
 }
 
-final case class IronNugget(data: ItemData) extends Item {
+final case class IronNugget() extends StackableItem {
   val `type` = ItemType.IRON_NUGGET
 }
 
-final case class IronOre(data: ItemData) extends Item {
+final case class IronOre() extends StackableItem {
   val `type` = ItemType.IRON_ORE
 }
 
-final case class ItemFrame(data: ItemData) extends Item {
+final case class ItemFrame() extends StackableItem {
   val `type` = ItemType.ITEM_FRAME
 }
 
-final case class JackOfTheLantern(data: ItemData) extends Item {
+final case class JackOfTheLantern() extends StackableItem {
   val `type` = ItemType.JACK_OF_THE_LANTERN
 }
 
-final case class JigsawBlock(data: ItemData) extends Item {
+final case class JigsawBlock() extends StackableItem {
   val `type` = ItemType.JIGSAW_BLOCK
 }
 
-final case class Jukebox(data: ItemData) extends Item {
+final case class Jukebox() extends StackableItem {
   val `type` = ItemType.JUKEBOX
 }
 
-final case class Kelp(data: ItemData) extends Item {
+final case class Kelp() extends StackableItem {
   val `type` = ItemType.KELP
 }
 
-final case class Ladder(data: ItemData) extends Item {
+final case class Ladder() extends StackableItem {
   val `type` = ItemType.LADDER
 }
 
-final case class Lantern(data: ItemData) extends Item {
+final case class Lantern() extends StackableItem {
   val `type` = ItemType.LANTERN
 }
 
-final case class Lapis(data: ItemData) extends Item {
+final case class Lapis() extends StackableItem {
   val `type` = ItemType.LAPIS
 }
 
-final case class LapisBlock(data: ItemData) extends Item {
+final case class LapisBlock() extends StackableItem {
   val `type` = ItemType.LAPIS_BLOCK
 }
 
-final case class LapisOre(data: ItemData) extends Item {
+final case class LapisOre() extends StackableItem {
   val `type` = ItemType.LAPIS_ORE
 }
 
-final case class Lead(data: ItemData) extends Item {
+final case class Lead() extends StackableItem {
   val `type` = ItemType.LEAD
 }
 
-final case class Leather(data: ItemData) extends Item {
+final case class Leather() extends StackableItem {
   val `type` = ItemType.LEATHER
 }
 
 final case class Leaves(
     material: WoodMaterial,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.LEAVES
 }
 
-final case class Lectern(data: ItemData) extends Item {
+final case class Lectern() extends StackableItem {
   val `type` = ItemType.LECTERN
 }
 
-//final case class Leggings extends Item {
-//  // TODO
-//}
+final case class Leggings(
+    material: ArmorMaterial,
 
-final case class Lever(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.LEGGINGS
+}
+
+final case class Lever() extends StackableItem {
   val `type` = ItemType.LEVER
 }
 
-final case class LilyPad(data: ItemData) extends Item {
+final case class LilyPad() extends StackableItem {
   val `type` = ItemType.LILY_PAD
 }
 
 final case class Log(
     material: WoodMaterial,
     stripped: Boolean,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.LOG
 }
 
-final case class Loom(data: ItemData) extends Item {
+final case class Loom() extends StackableItem {
   val `type` = ItemType.LOOM
 }
 
-final case class MagmaBlock(data: ItemData) extends Item {
+final case class MagmaBlock() extends StackableItem {
   val `type` = ItemType.MAGMA_BLOCK
 }
 
-final case class MagmaCream(data: ItemData) extends Item {
+final case class MagmaCream() extends StackableItem {
   val `type` = ItemType.MAGMA_CREAM
 }
 
 //final case class Map extends Item {
 //  // TODO filled variant
 //}
-//
-//final case class Melon extends Item {
-//  // TODO
-//}
-//
-//final case class MelonSlice extends Item {
-//  // TODO edible
-//}
+
+final case class Melon() extends StackableItem {
+  val `type` = ItemType.MELON
+}
+
+final case class MelonSlice() extends StackableItem {
+  val `type` = ItemType.MELON_SLICE
+  override val edible = true
+}
 
 final case class Minecart(
     variant: MinecartVariant,
-    data: ItemData
-) extends VariedItem[MinecartVariant] {
+
+) extends VariedItem[MinecartVariant] with StackableItem {
   val `type` = ItemType.MINECART
 }
 
 final case class MobHead(
     variant: MobHeadVariant,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.MOB_HEAD
 }
 
 final case class Mushroom(
     variant: MushroomVariant,
-    data: ItemData
-) extends VariedItem[MushroomVariant] {
+
+) extends VariedItem[MushroomVariant] with StackableItem {
   val `type` = ItemType.MUSHROOM
 }
 
 final case class MushroomBlock(
     variant: MushroomBlockVariant,
-    data: ItemData
-) extends VariedItem[MushroomBlockVariant] {
+
+) extends VariedItem[MushroomBlockVariant] with StackableItem {
   val `type` = ItemType.MUSHROOM_BLOCK
 }
 
 final case class MusicDisc(
     variant: MusicDiscVariant,
-    data: ItemData
-) extends VariedItem[MusicDiscVariant] {
+
+) extends VariedItem[MusicDiscVariant] with StackableItem {
   val `type` = ItemType.MUSIC_DISC
 }
 
-//final case class Mutton extends Item {
-//  // TODO cookable
-//}
-//
-//final case class Mycelium extends Item {
-//  // TODO
-//}
+final case class Mutton(
+    cooked: Boolean,
 
-final case class NameTag(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.MUTTON
+  override val edible = true
+}
+
+final case class Mycelium() extends StackableItem {
+  val `type` = ItemType.MYCELIUM
+}
+
+final case class NameTag() extends StackableItem {
   val `type` = ItemType.NAME_TAG
 }
 
-final case class NautilusShell(data: ItemData) extends Item {
+final case class NautilusShell() extends StackableItem {
   val `type` = ItemType.NAUTILUS_SHELL
 }
 
-final case class Netherrack(data: ItemData) extends Item {
+final case class Netherrack() extends StackableItem {
   val `type` = ItemType.NETHERRACK
 }
 
-final case class NetherStar(data: ItemData) extends Item {
+final case class NetherStar() extends StackableItem {
   val `type` = ItemType.NETHER_STAR
 }
 
-//final case class NetherWart extends Item {
-//  // TODO
-//}
-//
-//final case class NetherWartBlock extends Item {
-//  // TODO
-//}
+final case class NetherWart() extends StackableItem {
+  val `type` = ItemType.NETHER_WART
+}
 
-final case class NoteBlock(data: ItemData) extends Item {
+final case class NetherWartBlock() extends StackableItem {
+  val `type` = ItemType.NETHER_WART_BLOCK
+}
+
+final case class NoteBlock() extends StackableItem {
   val `type` = ItemType.NOTE_BLOCK
 }
 
-final case class Observer(data: ItemData) extends Item {
+final case class Observer() extends StackableItem {
   val `type` = ItemType.OBSERVER
 }
 
-final case class Obsidian(data: ItemData) extends Item {
+final case class Obsidian() extends StackableItem {
   val `type` = ItemType.OBSIDIAN
 }
 
-final case class Painting(data: ItemData) extends Item {
+final case class Painting() extends StackableItem {
   val `type` = ItemType.PAINTING
 }
 
-final case class Paper(data: ItemData) extends Item {
+final case class Paper() extends StackableItem {
   val `type` = ItemType.PAPER
 }
 
-final case class PhantomMembrane(data: ItemData) extends Item {
+final case class PhantomMembrane() extends StackableItem {
   val `type` = ItemType.PHANTOM_MEMBRANE
 }
 
-//final case class Pickaxe extends Item {
-//  // TODO
-//}
+final case class Plant(
+    variant: PlantVariant,
+
+) extends StackableItem {
+  val `type` = ItemType.PLANT
+}
+
+final case class Pickaxe(
+    material: ToolMaterial,
+
+) extends StackableItem {
+  val `type` = ItemType.PICKAXE
+}
 
 final case class Pillar(
     material: PillarMaterial,
-    data: ItemData
-) extends MaterialItem[PillarMaterial] {
+
+) extends MaterialItem[PillarMaterial] with StackableItem {
   val `type` = ItemType.PILLAR
 }
 
 final case class Piston(
     sticky: Boolean,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.PISTON
   def withSticky(sticky: Boolean): Piston =
     copyWith("sticky", sticky)
@@ -950,417 +1015,444 @@ final case class Piston(
 
 final case class Planks(
     material: WoodMaterial,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.PLANKS
 }
 
-//final case class Podzol extends Item {
-//  // TODO
-//}
-
-final case class PoisonousPotato(data: ItemData) extends Item {
-  val `type` = ItemType.POISONOUS_POTATO
+final case class Podzol() extends StackableItem {
+  val `type` = ItemType.PODZOL
 }
 
-//final case class Porkchop extends Item {
-//  // TODO cookable
-//}
-//
-//final case class Potato extends Item {
-//  // TODO cookable
-//}
-//
+final case class PoisonousPotato() extends StackableItem {
+  val `type` = ItemType.POISONOUS_POTATO
+  override val edible = true
+}
+
+final case class Porkchop(
+    cooked: Boolean,
+
+) extends StackableItem {
+  val `type` = ItemType.PORKCHOP
+  override val edible = true
+}
+
+final case class Potato(
+    cooked: Boolean, // TODO rename this baked? Also cooked items no longer have a withCooked def
+
+) extends StackableItem {
+  val `type` = ItemType.POTATO
+  override val edible = true
+}
+
 //final case class Potion extends Item {
 //  // TODO variants
 //}
 
 final case class PressurePlate(
     material: PressurePlateMaterial,
-    data: ItemData
-) extends MaterialItem[PressurePlateMaterial] {
+
+) extends MaterialItem[PressurePlateMaterial] with StackableItem {
   val `type` = ItemType.PRESSURE_PLATE
 }
 
 final case class Prismarine(
     material: PrismarineMaterial,
-    data: ItemData
-) extends MaterialItem[PrismarineMaterial] {
+
+) extends MaterialItem[PrismarineMaterial] with StackableItem {
   val `type` = ItemType.PRISMARINE
 }
 
-final case class PrismarineCrystals(data: ItemData) extends Item {
+final case class PrismarineCrystals() extends StackableItem {
   val `type` = ItemType.PRISMARINE_CRYSTALS
 }
 
-final case class PrismarineShard(data: ItemData) extends Item {
+final case class PrismarineShard() extends StackableItem {
   val `type` = ItemType.PRISMARINE_SHARD
 }
 
-final case class Pufferfish(data: ItemData) extends Item {
+final case class Pufferfish() extends StackableItem {
   val `type` = ItemType.PUFFERFISH
   override val edible = true
 }
 
-//final case class Pumpkin extends Item {
-//  // TODO
-//}
-//
-//final case class PumpkinPie extends Item {
-//  // TODO edible
-//}
+final case class Pumpkin(
+    carved: Boolean,
 
-final case class Purpur(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.PUMPKIN
+}
+
+final case class PumpkinPie() extends StackableItem {
+  val `type` = ItemType.PUMPKIN_PIE
+  override val edible = true
+}
+
+final case class Purpur() extends StackableItem {
   val `type` = ItemType.PURPUR
 }
 
-final case class Quartz(data: ItemData) extends Item {
+final case class Quartz() extends StackableItem {
   val `type` = ItemType.QUARTZ
 }
 
 final case class QuartzBlock(
     variant: QuartzVariant,
-    data: ItemData
-) extends VariedItem[QuartzVariant] {
+
+) extends VariedItem[QuartzVariant] with StackableItem {
   val `type` = ItemType.QUARTZ_BLOCK
 }
 
-final case class QuartzOre(data: ItemData) extends Item {
+final case class QuartzOre() extends StackableItem {
   val `type` = ItemType.QUARTZ_ORE
 }
 
-//final case class Rabbit extends Item {
-//  // TODO cookable
-//}
+final case class Rabbit(
+    cooked: Boolean,
 
-final case class RabbitFoot(data: ItemData) extends Item {
+) extends StackableItem {
+  val `type` = ItemType.RABBIT
+  override val edible = true
+}
+
+final case class RabbitFoot() extends StackableItem {
   val `type` = ItemType.RABBIT_FOOT
 }
 
-final case class RabbitHide(data: ItemData) extends Item {
+final case class RabbitHide() extends StackableItem {
   val `type` = ItemType.RABBIT_HIDE
 }
 
 final case class Rails(
     variant: RailsVariant,
-    data: ItemData
-) extends VariedItem[RailsVariant] {
+
+) extends VariedItem[RailsVariant] with StackableItem {
   val `type` = ItemType.RAILS
 }
 
-final case class Repeater(data: ItemData) extends Item {
+final case class Repeater() extends StackableItem {
   val `type` = ItemType.REPEATER
 }
 
-final case class Redstone(data: ItemData) extends Item {
+final case class Redstone() extends StackableItem {
   val `type` = ItemType.REDSTONE
 }
 
-final case class RedstoneBlock(data: ItemData) extends Item {
+final case class RedstoneBlock() extends StackableItem {
   val `type` = ItemType.REDSTONE_BLOCK
 }
 
-final case class RedstoneLamp(data: ItemData) extends Item {
+final case class RedstoneLamp() extends StackableItem {
   val `type` = ItemType.REDSTONE_LAMP
 }
 
-final case class RedstoneOre(data: ItemData) extends Item {
+final case class RedstoneOre() extends StackableItem {
   val `type` = ItemType.REDSTONE_ORE
 }
 
-final case class RedstoneTorch(data: ItemData) extends Item {
+final case class RedstoneTorch() extends StackableItem {
   val `type` = ItemType.REDSTONE_TORCH
 }
 
-final case class RottenFlesh(data: ItemData) extends Item {
+final case class RottenFlesh() extends StackableItem {
   val `type` = ItemType.ROTTEN_FLESH
+  override val edible = true
 }
 
-final case class Saddle(data: ItemData) extends Item {
+final case class Saddle() extends Item {
   val `type` = ItemType.SADDLE
-  override val maxStackSize = 1
 }
 
-//final case class Salmon extends Item {
-//  // TODO cookable
-//}
+final case class Salmon(
+    cooked: Boolean,
+
+) extends StackableItem {
+  val `type` = ItemType.SALMON
+  override val edible = true
+}
 
 final case class Sand(
     material: SandMaterial, // TODO should this be a variant?
 
-    data: ItemData
-) extends MaterialItem[SandMaterial] {
+) extends MaterialItem[SandMaterial] with StackableItem {
   val `type` = ItemType.SAND
 }
 
 final case class Sandstone(
     material: SandstoneMaterial,
     variant: SandstoneVariant,
-    data: ItemData
+
 ) extends MaterialItem[SandstoneMaterial]
-  with VariedItem[SandstoneVariant] {
+  with VariedItem[SandstoneVariant] with StackableItem {
   val `type` = ItemType.SANDSTONE
 }
 
 final case class Sapling(
-    variant: SaplingVariant, // TODO would kinda like this to be material again
-    data: ItemData
-) extends VariedItem[SaplingVariant] {
+    variant: SaplingVariant, // TODO would kinda like this to be material again, maybe especially
+    // since item Saplings cannot be Bamboo
+
+) extends VariedItem[SaplingVariant] with StackableItem {
   val `type` = ItemType.SAPLING
 }
 
-final case class Scaffolding(data: ItemData) extends Item {
+final case class Scaffolding() extends StackableItem {
   val `type` = ItemType.SCAFFOLDING
 }
 
-final case class Scute(data: ItemData) extends Item {
+final case class Scute() extends StackableItem {
   val `type` = ItemType.SCUTE
 }
 
-//final case class Seagrass extends Item {
-//  // TODO
-//}
+final case class Seagrass() extends StackableItem {
+  val `type` = ItemType.SEAGRASS
+}
 
-final case class SeaLantern(data: ItemData) extends Item {
+final case class SeaLantern() extends StackableItem {
   val `type` = ItemType.SEA_LANTERN
 }
 
-final case class SeaPickle(data: ItemData) extends Item {
+final case class SeaPickle() extends StackableItem {
   val `type` = ItemType.SEA_PICKLE
 }
 
-final case class Shears(data: ItemData) extends Item {
+final case class Shears() extends Item {
   val `type` = ItemType.SHEARS
-  override val maxStackSize = 1
+  override val maxDurability = 238
 }
 
-final case class Shield(data: ItemData) extends Item {
+final case class Shield() extends Item {
   val `type` = ItemType.SHIELD
-  override val maxStackSize = 1
+  override val maxDurability = 336
 }
 
-//final case class Shovel extends Item {
-//  // TODO
-//}
+final case class Shovel(
+    material: ToolMaterial,
+
+) extends StackableItem {
+  val `type` = ItemType.SHOVEL
+}
 
 final case class ShulkerBox(
     color: Option[BlockColor],
-    data: ItemData
-) extends ColorableItem {
+
+) extends ColorableItem with StackableItem {
   val `type` = ItemType.SHULKER_BOX
 }
 
-final case class ShulkerShell(data: ItemData) extends Item {
+final case class ShulkerShell() extends StackableItem {
   val `type` = ItemType.SHULKER_SHELL
 }
 
 final case class Sign(
     material: WoodMaterial,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.SIGN
-  override val maxStackSize = 16
+  override val maxCount = 16
 }
 
 final case class Slab(
     material: SlabMaterial,
     variant: Option[SlabVariant],
-    data: ItemData
+
 ) extends MaterialItem[SlabMaterial]
-  with VariableItem[SlabVariant] {
+  with VariableItem[SlabVariant] with StackableItem {
   val `type` = ItemType.SLAB
 }
 
-final case class Slimeball(data: ItemData) extends Item {
+final case class Slimeball() extends StackableItem {
   val `type` = ItemType.SLIMEBALL
 }
 
-final case class SlimeBlock(data: ItemData) extends Item {
+final case class SlimeBlock() extends StackableItem {
   val `type` = ItemType.SLIME_BLOCK
 }
 
-final case class SmithingTable(data: ItemData) extends Item {
+final case class SmithingTable() extends StackableItem {
   val `type` = ItemType.SMITHING_TABLE
 }
 
-final case class Smoker(data: ItemData) extends Item {
+final case class Smoker() extends StackableItem {
   val `type` = ItemType.SMOKER
 }
 
-final case class Snow(data: ItemData) extends Item {
+final case class Snow() extends StackableItem {
   val `type` = ItemType.SNOW
 }
 
-final case class Snowball(data: ItemData) extends Item {
+final case class Snowball() extends StackableItem {
   val `type` = ItemType.SNOWBALL
-  override val maxStackSize = 16
+  override val maxCount = 16
 }
 
-final case class SnowBlock(data: ItemData) extends Item {
+final case class SnowBlock() extends StackableItem {
   val `type` = ItemType.SNOW_BLOCK
 }
 
-final case class SoulSand(data: ItemData) extends Item {
+final case class SoulSand() extends StackableItem {
   val `type` = ItemType.SOUL_SAND
 }
 
 final case class SpawnEgg(
     variant: SpawnEggVariant,
-    data: ItemData
-) extends VariedItem[SpawnEggVariant] {
+
+) extends VariedItem[SpawnEggVariant] with StackableItem {
   val `type` = ItemType.SPAWN_EGG // TODO MonsterEgg?
 }
 
-final case class Spawner(data: ItemData) extends Item {
+final case class Spawner() extends StackableItem {
   val `type` = ItemType.SPAWNER
 }
 
 final case class SpiderEye(
     fermented: Boolean,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.SPIDER_EYE
+  override val edible = !fermented
 }
 
 final case class Sponge(
     wet: Boolean,
-    data: ItemData
-) extends Item {
+
+) extends StackableItem {
   val `type` = ItemType.SPONGE
 }
 
 final case class Stairs(
     material: StairsMaterial,
     variant: Option[StairsVariant],
-    data: ItemData
+
 ) extends MaterialItem[StairsMaterial]
-  with VariableItem[StairsVariant] {
+  with VariableItem[StairsVariant] with StackableItem {
   val `type` = ItemType.SLAB
 }
 
-final case class Stick(data: ItemData) extends Item {
+final case class Stick() extends StackableItem {
   val `type` = ItemType.STICK
 }
 
 final case class Stone(
     material: StoneMaterial,
     variant: StoneVariant,
-    data: ItemData
+
 ) extends MaterialItem[StoneMaterial]
-  with VariedItem[StoneVariant] {
+  with VariedItem[StoneVariant] with StackableItem {
   val `type` = ItemType.STONE
 }
 
-final case class Stonecutter(data: ItemData) extends Item {
+final case class Stonecutter() extends StackableItem {
   val `type` = ItemType.STONECUTTER
 }
 
-final case class PieceOfString(data: ItemData) extends Item {
+final case class PieceOfString() extends StackableItem {
   val `type` = ItemType.STRING
 }
 
-final case class Sugar(data: ItemData) extends Item {
+final case class Sugar() extends StackableItem {
   val `type` = ItemType.SUGAR
 }
 
-final case class SugarCane(data: ItemData) extends Item {
+final case class SugarCane() extends StackableItem {
   val `type` = ItemType.SUGAR_CANE
 }
 
-final case class SweetBerries(data: ItemData) extends Item {
+final case class SweetBerries() extends StackableItem {
   val `type` = ItemType.SWEET_BERRIES
   override val edible = true
 }
 
-//final case class Sword extends Item {
-//  // TODO
-//}
+final case class Sword(
+    material: ToolMaterial,
+
+) extends StackableItem {
+  val `type` = ItemType.SWORD
+}
 
 final case class Terracotta(
     color: Option[BlockColor],
-    data: ItemData
-) extends ColorableItem {
+
+) extends ColorableItem with StackableItem {
   val `type` = ItemType.TERRACOTTA
 }
 
-final case class TNT(data: ItemData) extends Item {
+final case class TNT() extends StackableItem {
   val `type` = ItemType.TNT
 }
 
-final case class Torch(data: ItemData) extends Item {
+final case class Torch() extends StackableItem {
   val `type` = ItemType.TORCH
 }
 
-final case class TotemOfUndying(data: ItemData) extends Item {
+final case class TotemOfUndying() extends Item {
   val `type` = ItemType.TOTEM_OF_UNDYING
-  override val maxStackSize = 1
 }
 
 final case class TrapDoor(
     material: TrapdoorMaterial,
-    data: ItemData
-) extends MaterialItem[TrapdoorMaterial] {
+
+) extends MaterialItem[TrapdoorMaterial] with StackableItem {
   val `type` = ItemType.TRAPDOOR
 }
 
-final case class Trident(data: ItemData) extends Item {
+final case class Trident() extends Item {
   val `type` = ItemType.TRIDENT
-  override val maxStackSize = 1
+  override val maxDurability = 250
 }
 
-final case class TripwireHook(data: ItemData) extends Item {
+final case class TripwireHook() extends StackableItem {
   val `type` = ItemType.TRIPWIRE_HOOK
 }
 
-final case class TropicalFish(data: ItemData) extends Item {
+final case class TropicalFish() extends StackableItem {
   val `type` = ItemType.TROPICAL_FISH
   override val edible = true
 }
 
-final case class TurtleEgg(data: ItemData) extends Item {
+final case class TurtleEgg() extends StackableItem {
   val `type` = ItemType.TURTLE_EGG
 }
 
-final case class TurtleHelmet(data: ItemData) extends Item {
+final case class TurtleHelmet() extends Item {
   val `type` = ItemType.TURTLE_HELMET
-  override val maxStackSize = 1
+  override val maxDurability = 275
 }
 
-final case class Vine(data: ItemData) extends Item {
+final case class Vine() extends StackableItem {
   val `type` = ItemType.VINE
 }
 
 final case class Wall(
     material: WallMaterial,
     variant: Option[WallVariant],
-    data: ItemData
+
 ) extends MaterialItem[WallMaterial]
-  with VariableItem[WallVariant] {
+  with VariableItem[WallVariant] with StackableItem {
   val `type` = ItemType.WALL
 }
 
 final case class WeightedPressurePlate(
     variant: WeightedPressurePlateVariant,
-    data: ItemData
-) extends VariedItem[WeightedPressurePlateVariant] {
+
+) extends VariedItem[WeightedPressurePlateVariant] with StackableItem {
   val `type` = ItemType.WEIGHTED_PRESSURE_PLATE
 }
 
-//final case class Wheat extends Item {
-//  // TODO
-//}
+final case class Wheat() extends StackableItem {
+  val `type` = ItemType.WHEAT
+}
 
 final case class Wood(
     material: WoodMaterial,
     stripped: Boolean,
-    data: ItemData
-) extends MaterialItem[WoodMaterial] {
+
+) extends MaterialItem[WoodMaterial] with StackableItem {
   val `type` = ItemType.WOOD
 }
 
 final case class Wool(
     color: BlockColor,
-    data: ItemData
-) extends ColoredItem {
+
+) extends ColoredItem with StackableItem {
   val `type` = ItemType.WOOL
 }

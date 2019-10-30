@@ -568,7 +568,7 @@ final case class Flower(
 final case class FlowerPot(
     location: BlockLocation,
     variant: Option[FlowerPotVariant]
-) extends VariableBlock[FlowerPotVariant] { // TODO why is EMPTY not a variant
+) extends VariableBlock[FlowerPotVariant] { // TODO why is EMPTY not a variant, or make another PottableVariant
   override val `type` = BlockType.FLOWER_POT
 }
 

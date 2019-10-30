@@ -1,8 +1,7 @@
 package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.world.block.BlockColor
-import gg.warcraft.monolith.api.world.item.material.ToolMaterial
-import org.scalatest.{fixture, Outcome}
+import org.scalatest.{ fixture, Outcome }
 
 class ItemSpec extends fixture.FunSpec {
   type FixtureParam = Bed
@@ -27,18 +26,38 @@ class ItemSpec extends fixture.FunSpec {
         // Then
         assert(copy.name == expectedCopy.name)
       }
-    }
-  }
 
-//  describe("PickAxe") {
-//
-//    describe("::withDurability(Int)") {
-//
-//      it("should throw an illegal argument exception") { fixture =>
-//        assertThrows[Throwable] {
-//          fixture.withDurability(2)
-//        }
-//      }
-//    }
-//  }
+      it("grabs the correct mapper branch") { fixture =>
+        val result = "ANDESITE" match {
+          case r"ANVIL"      => 1
+          case r".*ANDESITE" => 2
+          case _             => 3
+        }
+
+        assert(result == 2)
+      }
+
+      it("grabs the correct mapper branch 2") { fixture =>
+        val result = "POLISHED_ANDESITE" match {
+          case r"ANVIL"      => 1
+          case r".*ANDESITE" => 2
+          case _             => 3
+        }
+
+        assert(result == 2)
+      }
+    }
+
+    //  describe("PickAxe") {
+    //
+    //    describe("::withDurability(Int)") {
+    //
+    //      it("should throw an illegal argument exception") { fixture =>
+    //        assertThrows[Throwable] {
+    //          fixture.withDurability(2)
+    //        }
+    //      }
+    //    }
+    //  }
+  }
 }
