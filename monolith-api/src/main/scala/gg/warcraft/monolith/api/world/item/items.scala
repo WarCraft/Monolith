@@ -814,16 +814,36 @@ final case class Fence(
   val `type` = ItemType.FENCE
 }
 
-final case class FireCharge extends Item {
-  // TODO
+final case class Fern(
+    tall: Boolean,
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.FERN
+  def withTall(tall: Boolean): Fern =
+    copyWith("tall", tall)
 }
 
-final case class FireworkRocket extends Item {
-  // TODO
+final case class FireCharge(
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.FIRE_CHARGE
 }
 
-final case class FireworkStar extends Item {
-  // TODO
+final case class FireworkRocket(
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.FIREWORK_ROCKET
+}
+
+final case class FireworkStar(
+    color: BlockColor,
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends ColoredItem with StackableItem {
+  val `type` = ItemType.FIREWORK_STAR
 }
 
 final case class FishingRod(
@@ -975,7 +995,8 @@ final case class GoldenApple(
 ) extends Item with StackableItem {
   val `type` = ItemType.GOLDEN_APPLE
   override val edible = true
-  // TODO with enchanted
+  def withEnchanted(enchanted: Boolean): GoldenApple =
+    copyWith("enchanted", enchanted)
 }
 
 final case class GoldenCarrot(
@@ -1308,8 +1329,14 @@ final case class MagmaCream(
   val `type` = ItemType.MAGMA_CREAM
 }
 
-final case class Map extends Item {
-  // TODO filled variant
+final case class Map(
+    filled: Boolean,
+    name: String, tooltip: Array[String], count: Int,
+    attributes: Set[String], hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.MAP
+  def withFilled(filled: Boolean): Map =
+    copyWith("filled", filled)
 }
 
 final case class Melon(
@@ -1543,11 +1570,12 @@ final case class Potato(
 }
 
 final case class Potion(
+    variant: PotionVariant,
     hideEffects: Boolean,
-
-) extends Item {
-  // TODO variants
-
+    name: String, tooltip: Array[String],
+    attributes: Set[String], hideAttributes: Boolean
+) extends VariedItem[PotionVariant] {
+  val `type` = ItemType.POTION
   def withHideEffects(hideEffects: Boolean): this.type =
     copyWith("hideEffects", hideEffects)
 }
