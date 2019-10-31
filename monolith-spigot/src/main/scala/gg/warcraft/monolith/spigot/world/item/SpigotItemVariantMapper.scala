@@ -13,8 +13,8 @@ class SpigotItemVariantMapper @Inject()(
   private val cache =
     new util.EnumMap[Material, ItemVariant](classOf[Material])
 
-  def map(block: SpigotItemStack): ItemVariant =
-    cache.computeIfAbsent(block.getType, _ => compute(block))
+  def map(item: SpigotItemStack): ItemVariant =
+    cache.computeIfAbsent(item.getType, _ => compute(item))
 
   private def compute(item: SpigotItemStack): ItemVariant = item.getType match {
 
