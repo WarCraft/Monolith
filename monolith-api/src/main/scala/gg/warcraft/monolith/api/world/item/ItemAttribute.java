@@ -2,6 +2,7 @@ package gg.warcraft.monolith.api.world.item;
 
 public enum ItemAttribute {
     ENTITY_MAX_HEALTH,
+    ENTITY_FLYING_SPEED,
     ENTITY_FOLLOW_RANGE,
     ENTITY_KNOCKBACK_RESISTANCE,
     ENTITY_MOVEMENT_SPEED,
@@ -11,7 +12,6 @@ public enum ItemAttribute {
 
     HORSE_JUMP_STRENGTH,
 
-    PARROT_FLYING_SPEED,
 
     PLAYER_ATTACK_SPEED,
     PLAYER_LUCK,
