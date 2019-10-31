@@ -379,7 +379,7 @@ class SpigotItemMapper @Inject()(
         case r"STRUCTURE.*"         => () => StructureBlock(v[StructureBlockVariant], name, lore, count, attr, hAttr)
         case r".*SWORD"             => () => Sword(m[ToolMaterial], name, lore, count, attr, hAttr)
         case r".*TERRACOTTA"        => () => Terracotta(Some(color), name, lore, count, attr, hAttr)
-        case r".*TRAPDOOR"          => () => TrapDoor(m[TrapdoorMaterial], name, lore, count, attr, hAttr)
+        case r".*TRAPDOOR"          => () => Trapdoor(m[TrapdoorMaterial], name, lore, count, attr, hAttr)
         case r".*WALL"              => () => Wall(m[WallMaterial], Some(v[WallVariant]), name, lore, count, attr, hAttr)
         case r".*WOOD"              => () => Wood(m[WoodMaterial], stripped = false, name, lore, count, attr, hAttr)
         case r".*WOOL"              => () => Wool(color, name, lore, count, attr, hAttr)

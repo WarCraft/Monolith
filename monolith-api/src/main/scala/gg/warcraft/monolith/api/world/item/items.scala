@@ -2096,7 +2096,7 @@ final case class TotemOfUndying(
   val `type` = ItemType.TOTEM_OF_UNDYING
 }
 
-final case class TrapDoor(
+final case class Trapdoor(
     material: TrapdoorMaterial,
     name: String, tooltip: Array[String], count: Int,
     attributes: Set[String], hideAttributes: Boolean
