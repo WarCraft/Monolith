@@ -36,8 +36,4 @@ package object block {
   type SpigotStructureBlock = StructureBlock
   type SpigotTNT = TNT
   type SpigotTurtleEgg = TurtleEgg
-
-  // Mapper utility functions
-  def dataAs[T <: SpigotBlockData](implicit data: SpigotBlockData): T =
-    data.asInstanceOf[T]
 }
