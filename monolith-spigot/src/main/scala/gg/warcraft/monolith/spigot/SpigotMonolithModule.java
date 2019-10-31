@@ -17,7 +17,7 @@ import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
+import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
 import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 import gg.warcraft.monolith.app.AbstractMonolithModule;
 import gg.warcraft.monolith.app.effect.particle.MultiParticle;
@@ -40,7 +40,7 @@ import gg.warcraft.monolith.spigot.world.Overworld;
 import gg.warcraft.monolith.spigot.world.SpigotWorldService;
 import gg.warcraft.monolith.spigot.world.TheEnd;
 import gg.warcraft.monolith.spigot.world.TheNether;
-import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupCommandService;
+import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
@@ -149,8 +149,8 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
     }
 
     private void configureWorld() {
-        bind(BlockBackupCommandService.class).to(SpigotBlockBackupCommandService.class);
-        expose(BlockBackupCommandService.class);
+        bind(BlockBackupService.class).to(SpigotBlockBackupService.class);
+        expose(BlockBackupService.class);
 
         bind(WorldServerAdapter.class).to(SpigotWorldService.class);
         expose(WorldServerAdapter.class);
