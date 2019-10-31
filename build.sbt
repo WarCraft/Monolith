@@ -34,13 +34,10 @@ lazy val api = (project in file("monolith-api"))
         "com.google.guava" % "guava" % "28.1-jre",
         "com.google.inject" % "guice" % "4.2.3-SNAPSHOT",
         "com.google.inject.extensions" % "guice-assistedinject" % "4.2.3-SNAPSHOT",
+        "io.circe" %% "circe-core" % "0.12.3",
+        "io.circe" %% "circe-generic" % "0.12.3",
+        "io.circe" %% "circe-parser" % "0.12.3",
         "org.joml" % "joml" % "1.9.19"
-
-        /*
-         "io.circe" %% "circe-core" % "0.12.3"
-         "io.circe" %% "circe-generic" % "0.12.3"
-         "io.circe" %% "circe-parser" % "0.12.3"
-         */
       ))
 
 lazy val app = (project in file("monolith-app"))
