@@ -74,12 +74,6 @@ trait LightableBlock extends Block {
     copyWith("lit", lit)
 }
 
-trait MaterialBlock[T <: BlockMaterial] extends Block {
-  val material: T
-  def withMaterial(material: T): this.type =
-    copyWith("material", material)
-}
-
 trait OpenableBlock extends Block {
   val open: Boolean
   def withOpen(open: Boolean): this.type =
@@ -128,14 +122,8 @@ trait StickyBlock extends Block {
     copyWith("sticky", sticky)
 }
 
-trait VariedBlock[T <: BlockVariant] extends Block {
+trait VariableBlock[T <: BlockVariant] extends Block {
   val variant: T
   def withVariant(variant: T): this.type =
-    copyWith("variant", variant)
-}
-
-trait VariableBlock[T <: BlockVariant] extends Block {
-  val variant: Option[T]
-  def withVariant(variant: Option[T]): this.type =
     copyWith("variant", variant)
 }

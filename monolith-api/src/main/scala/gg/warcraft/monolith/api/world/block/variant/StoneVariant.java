@@ -1,15 +1,14 @@
 package gg.warcraft.monolith.api.world.block.variant;
 
-import gg.warcraft.monolith.api.world.block.InfestedVariant;
-import gg.warcraft.monolith.api.world.block.SlabVariant;
-import gg.warcraft.monolith.api.world.block.StairsVariant;
-import gg.warcraft.monolith.api.world.block.WallVariant;
+import gg.warcraft.monolith.api.world.block.BlockVariant;
+import gg.warcraft.monolith.api.world.item.ItemVariant;
 
-public enum StoneVariant implements InfestedVariant, SlabVariant,
-        StairsVariant, WallVariant {
+public enum StoneVariant implements BlockVariant, ItemVariant {
     NORMAL,
-    CHISELED,
-    CRACKED,
-    MOSSY,
     SMOOTH,
+
+    BRICK,
+    CHISELED_BRICK,
+    CRACKED_BRICK,
+    MOSSY_BRICK,
 }
