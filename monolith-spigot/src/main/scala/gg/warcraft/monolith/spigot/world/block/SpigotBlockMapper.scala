@@ -307,7 +307,7 @@ class SpigotBlockMapper @Inject() (
           Material.FIRE_CORAL_BLOCK | Material.DEAD_FIRE_CORAL_BLOCK |
           Material.HORN_CORAL_BLOCK | Material.DEAD_HORN_CORAL_BLOCK |
           Material.TUBE_CORAL_BLOCK | Material.DEAD_TUBE_CORAL_BLOCK =>
-        CoralBlock(loc, variantAs[CoralVariant])
+        CoralBlock(loc, variantAs[CoralBlockVariant])
 
       // CORAL_FAN
       case Material.BRAIN_CORAL_FAN | Material.DEAD_BRAIN_CORAL_FAN |
@@ -315,14 +315,14 @@ class SpigotBlockMapper @Inject() (
           Material.FIRE_CORAL_FAN | Material.DEAD_FIRE_CORAL_FAN |
           Material.HORN_CORAL_FAN | Material.DEAD_HORN_CORAL_FAN |
           Material.TUBE_CORAL_FAN | Material.DEAD_TUBE_CORAL_FAN =>
-        CoralFan(loc, variantAs[CoralVariant], None, flooded)
+        CoralFan(loc, variantAs[CoralFanVariant], None, flooded)
 
       case Material.BRAIN_CORAL_WALL_FAN | Material.DEAD_BRAIN_CORAL_WALL_FAN |
           Material.BUBBLE_CORAL_WALL_FAN | Material.DEAD_BUBBLE_CORAL_WALL_FAN |
           Material.FIRE_CORAL_WALL_FAN | Material.DEAD_FIRE_CORAL_WALL_FAN |
           Material.HORN_CORAL_WALL_FAN | Material.DEAD_HORN_CORAL_WALL_FAN |
           Material.TUBE_CORAL_WALL_FAN | Material.DEAD_TUBE_CORAL_WALL_FAN =>
-        CoralFan(loc, variantAs[CoralVariant], Some(dir), flooded)
+        CoralFan(loc, variantAs[CoralFanVariant], Some(dir), flooded)
 
       // DIRT
       case Material.DIRT        => Dirt(loc, coarse = false)
