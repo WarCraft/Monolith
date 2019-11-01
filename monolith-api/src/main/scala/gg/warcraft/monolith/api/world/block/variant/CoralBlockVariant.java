@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.block.variant;
 import gg.warcraft.monolith.api.world.block.BlockVariant;
 import gg.warcraft.monolith.api.world.item.ItemVariant;
 
-public enum CoralVariant implements BlockVariant, ItemVariant {
+public enum CoralBlockVariant implements BlockVariant, ItemVariant {
     BRAIN(true, false, false, false, false, false),
     BUBBLE(false, true, false, false, false, false),
     FIRE(false, false, true, false, false, false),
@@ -23,7 +23,7 @@ public enum CoralVariant implements BlockVariant, ItemVariant {
     public final boolean tube;
     public final boolean dead;
 
-    CoralVariant(
+    CoralBlockVariant(
             boolean brain,
             boolean bubble,
             boolean fire,

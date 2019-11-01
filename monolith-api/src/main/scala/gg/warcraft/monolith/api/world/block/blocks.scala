@@ -343,17 +343,17 @@ final case class Coral(
 
 final case class CoralBlock(
     location: BlockLocation,
-    variant: CoralVariant
-) extends VariableBlock[CoralVariant] {
+    variant: CoralBlockVariant
+) extends VariableBlock[CoralBlockVariant] {
   override val `type` = BlockType.CORAL_BLOCK
 }
 
 final case class CoralFan(
     location: BlockLocation,
-    variant: CoralVariant,
+    variant: CoralFanVariant,
     direction: Option[BlockFace],
     flooded: Boolean
-) extends VariableBlock[CoralVariant]
+) extends VariableBlock[CoralFanVariant]
     with DirectableBlock
     with FloodableBlock {
   override val `type` = BlockType.CORAL_FAN

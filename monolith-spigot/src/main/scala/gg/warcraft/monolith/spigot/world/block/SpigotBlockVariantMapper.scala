@@ -43,7 +43,56 @@ class SpigotBlockVariantMapper {
     case Material.CHAIN_COMMAND_BLOCK     => CommandBlockVariant.CHAIN
     case Material.REPEATING_COMMAND_BLOCK => CommandBlockVariant.REPEATING
 
-    // CORAL // TODO
+    // CORAL
+    case CoralVariant.BRAIN  => Material.BRAIN_CORAL
+    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL
+    case CoralVariant.FIRE   => Material.FIRE_CORAL
+    case CoralVariant.HORN   => Material.HORN_CORAL
+    case CoralVariant.TUBE   => Material.TUBE_CORAL
+
+    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL
+    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL
+    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL
+    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL
+    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL
+
+    // CORAL_BLOCK
+    case CoralBlockVariant.BRAIN  => Material.BRAIN_CORAL_BLOCK
+    case CoralBlockVariant.BUBBLE => Material.BUBBLE_CORAL_BLOCK
+    case CoralBlockVariant.FIRE   => Material.FIRE_CORAL_BLOCK
+    case CoralBlockVariant.HORN   => Material.HORN_CORAL_BLOCK
+    case CoralBlockVariant.TUBE   => Material.TUBE_CORAL_BLOCK
+
+    case CoralBlockVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_BLOCK
+
+    // CORAL_FAN
+    case CoralFanVariant.BRAIN  => Material.BRAIN_CORAL_FAN
+    case CoralFanVariant.BUBBLE => Material.BUBBLE_CORAL_FAN
+    case CoralFanVariant.FIRE   => Material.FIRE_CORAL_FAN
+    case CoralFanVariant.HORN   => Material.HORN_CORAL_FAN
+    case CoralFanVariant.TUBE   => Material.TUBE_CORAL_FAN
+
+    case CoralFanVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_FAN
+    case CoralFanVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_FAN
+    case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_FAN
+    case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
+    case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
+
+    case CoralFanVariant.BRAIN_WALL  => Material.BRAIN_CORAL_WALL_FAN
+    case CoralFanVariant.BUBBLE_WALL => Material.BUBBLE_CORAL_WALL_FAN
+    case CoralFanVariant.FIRE_WALL   => Material.FIRE_CORAL_WALL_FAN
+    case CoralFanVariant.HORN_WALL   => Material.HORN_CORAL_WALL_FAN
+    case CoralFanVariant.TUBE_WALL   => Material.TUBE_CORAL_WALL_FAN
+
+    case CoralFanVariant.DEAD_BRAIN_WALL  => Material.DEAD_BRAIN_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_BUBBLE_WALL => Material.DEAD_BUBBLE_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_FIRE_WALL   => Material.DEAD_FIRE_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_HORN_WALL   => Material.DEAD_HORN_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_TUBE_WALL   => Material.DEAD_TUBE_CORAL_WALL_FAN
 
     // DOOR
     case Material.ACACIA_DOOR   => DoorVariant.ACACIA
@@ -323,7 +372,7 @@ class SpigotBlockVariantMapper {
 
       case Material.STRUCTURE_BLOCK =>
         val mode = data.asInstanceOf[SpigotStructureBlock].getMode
-        mapStructureBlockMode(mode)
+        mapStructureMode(mode)
 
       case it => map(it)
     }
@@ -435,6 +484,13 @@ class SpigotBlockVariantMapper {
     case MobHeadVariant.WITHER_SKELETON => Material.WITHER_SKELETON_SKULL
     case MobHeadVariant.ZOMBIE          => Material.ZOMBIE_HEAD
 
+    case MobHeadVariant.CREEPER_WALL         => Material.CREEPER_WALL_HEAD
+    case MobHeadVariant.DRAGON_WALL          => Material.DRAGON_WALL_HEAD
+    case MobHeadVariant.PLAYER_WALL          => Material.PLAYER_WALL_HEAD
+    case MobHeadVariant.SKELETON_WALL        => Material.SKELETON_WALL_SKULL
+    case MobHeadVariant.WITHER_SKELETON_WALL => Material.WITHER_SKELETON_WALL_SKULL
+    case MobHeadVariant.ZOMBIE_WALL          => Material.ZOMBIE_WALL_HEAD
+
     // MUSHROOM
     case MushroomVariant.BROWN => Material.BROWN_MUSHROOM
     case MushroomVariant.RED   => Material.RED_MUSHROOM
@@ -501,7 +557,7 @@ class SpigotBlockVariantMapper {
     case WeightedPressurePlateVariant.HEAVY => Material.HEAVY_WEIGHTED_PRESSURE_PLATE
   }
 
-  def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
+  def map(block: VariableBlock[_ <: BlockVariant]): Material = {
     case _: Bamboo     => Material.BAMBOO
     case _: Comparator => Material.COMPARATOR
     case _: NoteBlock  => Material.NOTE_BLOCK
@@ -510,7 +566,7 @@ class SpigotBlockVariantMapper {
     // TODO map WALL_MOB_HEAD
     // TODO map CORAL types
 
-    case it => map(it.variant)
+    case it: VariableBlock[_] => map(it.variant)
   }
 
   def map(block: VariableBlock[_], data: SpigotBlockData): Unit = {
@@ -528,11 +584,9 @@ class SpigotBlockVariantMapper {
 
     case StructureBlock(_, variant) =>
       if (variant != StructureBlockVariant.VOID) {
-        val mode = mapStructureBlockMode(variant)
+        val mode = mapStructureMode(variant)
         data.asInstanceOf[SpigotStructureBlock].setMode(mode)
       }
-
-    case _ => ()
   }
 
   def mapBambooLeaves(leaves: SpigotBambooLeaves): BambooVariant = {
@@ -555,71 +609,6 @@ class SpigotBlockVariantMapper {
   def mapComparatorMode(variant: ComparatorVariant): SpigotComparatorMode = {
     case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
     case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
-  }
-
-  def mapCoral(variant: CoralVariant): Material = {
-    case CoralVariant.BRAIN  => Material.BRAIN_CORAL
-    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL
-    case CoralVariant.FIRE   => Material.FIRE_CORAL
-    case CoralVariant.HORN   => Material.HORN_CORAL
-    case CoralVariant.TUBE   => Material.TUBE_CORAL
-
-    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL
-    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL
-    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL
-    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL
-    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL
-  }
-
-  def mapCoralBlock(variant: CoralVariant): Material = {
-    case CoralVariant.BRAIN  => Material.BRAIN_CORAL_BLOCK
-    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL_BLOCK
-    case CoralVariant.FIRE   => Material.FIRE_CORAL_BLOCK
-    case CoralVariant.HORN   => Material.HORN_CORAL_BLOCK
-    case CoralVariant.TUBE   => Material.TUBE_CORAL_BLOCK
-
-    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_BLOCK
-    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_BLOCK
-    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_BLOCK
-    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_BLOCK
-    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_BLOCK
-  }
-
-  def mapCoralFan(variant: CoralVariant): Material = {
-    case CoralVariant.BRAIN  => Material.BRAIN_CORAL_FAN
-    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL_FAN
-    case CoralVariant.FIRE   => Material.FIRE_CORAL_FAN
-    case CoralVariant.HORN   => Material.HORN_CORAL_FAN
-    case CoralVariant.TUBE   => Material.TUBE_CORAL_FAN
-
-    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_FAN
-    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_FAN
-    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_FAN
-    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
-    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
-  }
-
-  def mapCoralWallFan(variant: CoralVariant): Material = {
-    case CoralVariant.BRAIN  => Material.BRAIN_CORAL_WALL_FAN
-    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL_WALL_FAN
-    case CoralVariant.FIRE   => Material.FIRE_CORAL_WALL_FAN
-    case CoralVariant.HORN   => Material.HORN_CORAL_WALL_FAN
-    case CoralVariant.TUBE   => Material.TUBE_CORAL_WALL_FAN
-
-    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_WALL_FAN
-    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_WALL_FAN
-    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_WALL_FAN
-    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_WALL_FAN
-    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_WALL_FAN
-  }
-
-  def mapWallMobHead(variant: MobHeadVariant): Material = {
-    case MobHeadVariant.CREEPER         => Material.CREEPER_WALL_HEAD
-    case MobHeadVariant.DRAGON          => Material.DRAGON_WALL_HEAD
-    case MobHeadVariant.PLAYER          => Material.PLAYER_WALL_HEAD
-    case MobHeadVariant.SKELETON        => Material.SKELETON_WALL_SKULL
-    case MobHeadVariant.WITHER_SKELETON => Material.WITHER_SKELETON_WALL_SKULL
-    case MobHeadVariant.ZOMBIE          => Material.ZOMBIE_WALL_HEAD
   }
 
   def mapNoteBlock(instrument: SpigotInstrument): NoteBlockVariant = {
@@ -852,16 +841,14 @@ class SpigotBlockVariantMapper {
 //      }
 //  }
 
-  def mapStructureBlockMode(mode: SpigotStructureBlockMode): StructureBlockVariant = {
+  def mapStructureMode(mode: SpigotStructureBlockMode): StructureBlockVariant = {
     case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
     case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
     case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
     case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
   }
 
-  def mapStructureBlockMode(
-      variant: StructureBlockVariant
-  ): SpigotStructureBlockMode = {
+  def mapStructureMode(variant: StructureBlockVariant): SpigotStructureBlockMode = {
     case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
     case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
     case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
