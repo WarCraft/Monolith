@@ -76,12 +76,6 @@ trait EnchantableItem extends Item {
     copyWith("hideEnchantments", hideEnchantments)
 }
 
-trait MaterialItem[T <: ItemMaterial] extends Item {
-  val material: T
-  def withMaterial(material: T): this.type =
-    copyWith("material", material)
-}
-
 trait StackableItem extends Item {
   val count: Int
   def withCount(count: Int): this.type =
@@ -93,14 +87,8 @@ trait StackableItem extends Item {
   })
 }
 
-trait VariedItem[T <: ItemVariant] extends Item {
+trait VariableItem[T <: ItemVariant] extends Item {
   val variant: T
   def withVariant(variant: T): this.type =
-    copyWith("variant", variant)
-}
-
-trait VariableItem[T <: ItemVariant] extends Item {
-  val variant: Option[T]
-  def withVariant(variant: Option[T]): this.type =
     copyWith("variant", variant)
 }
