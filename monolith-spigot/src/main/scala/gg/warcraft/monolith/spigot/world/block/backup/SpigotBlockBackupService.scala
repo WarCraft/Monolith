@@ -4,7 +4,7 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.PluginLogger
-import gg.warcraft.monolith.api.world.block.backup.{ BlockBackup, BlockBackupService }
+import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import io.circe.generic.auto._
@@ -15,29 +15,31 @@ import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
 import org.bukkit.Bukkit
 
-class SpigotBlockBackupService @Inject()(
-    plugin: Plugin, @PluginLogger pluginLogger: Logger,
-    locationMapper: SpigotLocationMapper,
+class SpigotBlockBackupService @Inject() (
+    plugin: Plugin,
+    @PluginLogger pluginLogger: Logger,
+    locationMapper: SpigotLocationMapper
 ) extends BlockBackupService {
+  private final val metaDataKey = getClass.getCanonicalName
 
   override def createBackup(location: BlockLocation): UUID = {
     val block = locationMapper.map(location).getBlock
 
     // check for existing backup
-    val metaData = block.getMetadata(SpigotBlockBackupService.metaDataKey)
+    val metaData = block.getMetadata(metaDataKey)
     if (!metaData.isEmpty) {
       val id = metaData.get(0).asString()
       return UUID.fromString(id)
     }
 
     // create backup
-    val id     = UUID.randomUUID()
-    val data   = block.getBlockData.getAsString()
+    val id = UUID.randomUUID()
+    val data = block.getBlockData.getAsString()
     val backup = BlockBackup(id, data, location)
 
     // set existing backup
     val metaDataValue = new FixedMetadataValue(plugin, id.toString)
-    block.setMetadata(SpigotBlockBackupService.metaDataKey, metaDataValue)
+    block.setMetadata(metaDataKey, metaDataValue)
 
     // save backup
     SpigotBlockBackupService.backups += (id -> backup)
@@ -53,33 +55,32 @@ class SpigotBlockBackupService @Inject()(
     }
 
     // check it equals existing backup
-    val block    = locationMapper.map(backup.location).getBlock
-    val metaData = block.getMetadata(SpigotBlockBackupService.metaDataKey)
+    val block = locationMapper.map(backup.location).getBlock
+    val metaData = block.getMetadata(metaDataKey)
     if (!metaData.isEmpty && metaData.get(0).asString() != backup.id.toString) {
-      println(s"Attempted to restore block backup for block with different meta data")
+      println(s"Attempted to restore backup for block with different meta data")
       return false
     }
 
     // restore backup
     val blockState = block.getState
-    val blockData  = Bukkit.createBlockData(backup.data)
+    val blockData = Bukkit.createBlockData(backup.data)
     blockState.setBlockData(blockData)
     blockState.update(true, false)
 
     // delete backup
-    block.removeMetadata(SpigotBlockBackupService.metaDataKey, plugin)
+    block.removeMetadata(metaDataKey, plugin)
     SpigotBlockBackupService.backups -= id
     // TODO delete from persistence
     true
   }
   override def restoreBackups(): Unit = {
     // TODO get from persistence
-    val keep   = ""
+    val keep = ""
     val backup = decode[BlockBackup](keep)
   }
 }
 
 private object SpigotBlockBackupService {
-  private final val metaDataKey = getClass.getCanonicalName
-  private final var backups     = Map[UUID, BlockBackup]()
+  private final var backups = Map[UUID, BlockBackup]()
 }
