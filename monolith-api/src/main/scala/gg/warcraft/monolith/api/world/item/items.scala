@@ -2132,7 +2132,8 @@ final case class Plant(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[PlantVariant]
+    with StackableItem {
   val `type` = ItemType.PLANT
 }
 
