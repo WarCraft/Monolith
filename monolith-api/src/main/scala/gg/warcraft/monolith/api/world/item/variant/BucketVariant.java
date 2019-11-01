@@ -5,12 +5,14 @@ import gg.warcraft.monolith.api.world.item.ItemVariant;
 public enum BucketVariant implements ItemVariant {
     EMPTY,
 
-    LAVA,
-    MILK,
-    WATER,
-
+    // FISH
     COD,
     PUFFERFISH,
     SALMON,
     TROPICAL_FISH,
+
+    // LIQUID
+    LAVA,
+    MILK,
+    WATER,
 }

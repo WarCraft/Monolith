@@ -2,6 +2,7 @@ package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
+import gg.warcraft.monolith.api.world.item
 import gg.warcraft.monolith.api.world.item.variant._
 
 final case class Andesite(
@@ -1934,7 +1935,8 @@ final case class Minecart(
   val `type` = ItemType.MINECART
 }
 
-final case class MobHead( // TODO add sepparate playerSkull item with name String
+// TODO add separate playerSkull item with name String
+final case class MobHead(
     variant: MobHeadVariant,
     name: String,
     tooltip: Array[String],
@@ -2520,13 +2522,13 @@ final case class Sandstone(
 }
 
 final case class Sapling(
-    variant: SaplingVariant,
+    variant: item.variant.SaplingVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[SaplingVariant]
+) extends VariableItem[item.variant.SaplingVariant]
     with StackableItem {
   val `type` = ItemType.SAPLING
 }

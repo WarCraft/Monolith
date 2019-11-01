@@ -5,6 +5,7 @@ import gg.warcraft.monolith.api.world.block.BlockVariant;
 public enum FlowerPotVariant implements BlockVariant {
     EMPTY,
 
+    // FLOWER
     ALLIUM,
     AZURE_BLUET,
     BLUE_ORCHID,
@@ -19,6 +20,7 @@ public enum FlowerPotVariant implements BlockVariant {
     WHITE_TULIP,
     WITHER_ROSE,
 
+    // SAPLING
     ACACIA,
     BIRCH,
     DARK_OAK,
@@ -26,11 +28,14 @@ public enum FlowerPotVariant implements BlockVariant {
     OAK,
     SPRUCE,
 
+    BAMBOO,
+
+    // MUSHROOM,
     BROWN_MUSHROOM,
     RED_MUSHROOM,
 
-    BAMBOO,
+    // MISC
     CACTUS,
     DEAD_BUSH,
-    FERN
+    FERN,
 }
