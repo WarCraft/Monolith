@@ -417,9 +417,23 @@ class SpigotBlockVariantMapper {
     case Material.OAK_STAIRS      => StairsVariant.OAK
     case Material.SPRUCE_STAIRS   => StairsVariant.SPRUCE
 
-    // STONE TODO
+    // STONE
+    case Material.STONE        => StoneVariant.NORMAL
+    case Material.SMOOTH_STONE => StoneVariant.SMOOTH
 
-    // STONITE TODO
+    case Material.STONE_BRICKS          => StoneVariant.BRICK
+    case Material.CHISELED_STONE_BRICKS => StoneVariant.CHISELED_BRICK
+    case Material.CRACKED_STONE_BRICKS  => StoneVariant.CRACKED_BRICK
+    case Material.MOSSY_STONE_BRICKS    => StoneVariant.MOSSY_BRICK
+
+    // STONITE
+    case Material.ANDESITE => StoniteVariant.ANDESITE
+    case Material.DIORITE  => StoniteVariant.DIORITE
+    case Material.GRANITE  => StoniteVariant.GRANITE
+
+    case Material.POLISHED_ANDESITE => StoniteVariant.POLISHED_ANDESITE
+    case Material.POLISHED_DIORITE  => StoniteVariant.POLISHED_DIORITE
+    case Material.POLISHED_GRANITE  => StoniteVariant.POLISHED_GRANITE
 
     // STRUCTURE_BLOCK
     case Material.STRUCTURE_VOID => StructureBlockVariant.VOID
@@ -467,6 +481,13 @@ class SpigotBlockVariantMapper {
     case Material.JUNGLE_WOOD   => WoodVariant.JUNGLE
     case Material.OAK_WOOD      => WoodVariant.OAK
     case Material.SPRUCE_WOOD   => WoodVariant.SPRUCE
+
+    case Material.STRIPPED_ACACIA_WOOD   => WoodVariant.STRIPPED_ACACIA
+    case Material.STRIPPED_BIRCH_WOOD    => WoodVariant.STRIPPED_BIRCH
+    case Material.STRIPPED_DARK_OAK_WOOD => WoodVariant.STRIPPED_DARK_OAK
+    case Material.STRIPPED_JUNGLE_WOOD   => WoodVariant.STRIPPED_JUNGLE
+    case Material.STRIPPED_OAK_WOOD      => WoodVariant.STRIPPED_OAK
+    case Material.STRIPPED_SPRUCE_WOOD   => WoodVariant.STRIPPED_SPRUCE
   }
 
   def map(block: SpigotBlock): BlockVariant = {
@@ -641,6 +662,21 @@ class SpigotBlockVariantMapper {
     case LeavesVariant.JUNGLE   => Material.JUNGLE_LEAVES
     case LeavesVariant.OAK      => Material.OAK_LEAVES
     case LeavesVariant.SPRUCE   => Material.SPRUCE_LEAVES
+
+    // LOG
+    case LogVariant.ACACIA   => Material.ACACIA_LOG
+    case LogVariant.BIRCH    => Material.BIRCH_LOG
+    case LogVariant.DARK_OAK => Material.DARK_OAK_LOG
+    case LogVariant.JUNGLE   => Material.JUNGLE_LOG
+    case LogVariant.OAK      => Material.OAK_LOG
+    case LogVariant.SPRUCE   => Material.SPRUCE_LOG
+
+    case LogVariant.STRIPPED_ACACIA   => Material.STRIPPED_ACACIA_LOG
+    case LogVariant.STRIPPED_BIRCH    => Material.STRIPPED_BIRCH_LOG
+    case LogVariant.STRIPPED_DARK_OAK => Material.STRIPPED_DARK_OAK_LOG
+    case LogVariant.STRIPPED_JUNGLE   => Material.STRIPPED_JUNGLE_LOG
+    case LogVariant.STRIPPED_OAK      => Material.STRIPPED_OAK_LOG
+    case LogVariant.STRIPPED_SPRUCE   => Material.STRIPPED_SPRUCE_LOG
 
     // MOB_HEAD
     case MobHeadVariant.CREEPER         => Material.CREEPER_HEAD
@@ -817,6 +853,24 @@ class SpigotBlockVariantMapper {
     case StairsVariant.OAK      => Material.OAK_STAIRS
     case StairsVariant.SPRUCE   => Material.SPRUCE_STAIRS
 
+    // STONE
+    case StoneVariant.NORMAL => Material.STONE
+    case StoneVariant.SMOOTH => Material.SMOOTH_STONE
+
+    case StoneVariant.BRICK          => Material.STONE_BRICKS
+    case StoneVariant.CHISELED_BRICK => Material.CHISELED_STONE_BRICKS
+    case StoneVariant.CRACKED_BRICK  => Material.CRACKED_STONE_BRICKS
+    case StoneVariant.MOSSY_BRICK    => Material.MOSSY_STONE_BRICKS
+
+    // STONITE
+    case StoniteVariant.ANDESITE => Material.ANDESITE
+    case StoniteVariant.DIORITE  => Material.DIORITE
+    case StoniteVariant.GRANITE  => Material.GRANITE
+
+    case StoniteVariant.POLISHED_ANDESITE => Material.POLISHED_ANDESITE
+    case StoniteVariant.POLISHED_DIORITE  => Material.POLISHED_DIORITE
+    case StoniteVariant.POLISHED_GRANITE  => Material.POLISHED_GRANITE
+
     // STRUCTURE_BLOCK
     case StructureBlockVariant.VOID => Material.STRUCTURE_VOID
     case _: StructureBlockVariant   => Material.STRUCTURE_BLOCK
@@ -846,6 +900,21 @@ class SpigotBlockVariantMapper {
     // WEIGHTED_PRESSURE_PLATE
     case WeightedPressurePlateVariant.LIGHT => Material.LIGHT_WEIGHTED_PRESSURE_PLATE
     case WeightedPressurePlateVariant.HEAVY => Material.HEAVY_WEIGHTED_PRESSURE_PLATE
+
+    // WOOD
+    case WoodVariant.ACACIA   => Material.ACACIA_WOOD
+    case WoodVariant.BIRCH    => Material.BIRCH_WOOD
+    case WoodVariant.DARK_OAK => Material.DARK_OAK_WOOD
+    case WoodVariant.JUNGLE   => Material.JUNGLE_WOOD
+    case WoodVariant.OAK      => Material.OAK_WOOD
+    case WoodVariant.SPRUCE   => Material.SPRUCE_WOOD
+
+    case WoodVariant.STRIPPED_ACACIA   => Material.STRIPPED_ACACIA_WOOD
+    case WoodVariant.STRIPPED_BIRCH    => Material.STRIPPED_BIRCH_WOOD
+    case WoodVariant.STRIPPED_DARK_OAK => Material.STRIPPED_DARK_OAK_WOOD
+    case WoodVariant.STRIPPED_JUNGLE   => Material.STRIPPED_JUNGLE_WOOD
+    case WoodVariant.STRIPPED_OAK      => Material.STRIPPED_OAK_WOOD
+    case WoodVariant.STRIPPED_SPRUCE   => Material.STRIPPED_SPRUCE_WOOD
   }
 
   def map(block: VariableBlock[_ <: BlockVariant]): Material = {
@@ -940,110 +1009,6 @@ class SpigotBlockVariantMapper {
     case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
   }
 
-//
-//  def mapStairs(mat: StairsMaterial, variant: Option[StairsVariant]): Material =
-//    mat match {
-//      // BRICK
-//      case BrickMaterial.BRICK            => Material.BRICK_STAIRS
-//      case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICK_STAIRS
-//      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
-//
-//      // COBBLESTONE
-//      case _: CobblestoneMaterial =>
-//        variant match {
-//          case Some(CobblestoneVariant.MOSSY) =>
-//            Material.MOSSY_COBBLESTONE_STAIRS
-//          case _ => Material.COBBLESTONE_STAIRS
-//        }
-//
-//      // END_STONE
-//      case _: EndStoneMaterial => Material.END_STONE_BRICK_STAIRS
-//
-//      // PRISMARINE
-//      case PrismarineMaterial.PRISMARINE      => Material.PRISMARINE_STAIRS
-//      case PrismarineMaterial.DARK_PRISMARINE => Material.DARK_PRISMARINE_STAIRS
-//      case PrismarineMaterial.PRISMARINE_BRICK =>
-//        Material.PRISMARINE_BRICK_STAIRS
-//
-//      // PURPUR
-//      case _: PurpurMaterial => Material.PURPUR_STAIRS
-//
-//      // QUARTZ
-//      case QuartzMaterial.QUARTZ =>
-//        variant match {
-//          case Some(QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ_STAIRS
-//          case _                          => Material.QUARTZ_STAIRS
-//        }
-//
-//      // SANDSTONE
-//      case SandstoneMaterial.SANDSTONE =>
-//        variant match {
-//          case Some(SandstoneVariant.SMOOTH) => Material.SMOOTH_SANDSTONE_STAIRS
-//          case _                             => Material.SANDSTONE_STAIRS
-//        }
-//
-//      case SandstoneMaterial.RED_SANDSTONE =>
-//        variant match {
-//          case Some(SandstoneVariant.SMOOTH) =>
-//            Material.SMOOTH_RED_SANDSTONE_STAIRS
-//          case _ => Material.RED_SANDSTONE_STAIRS
-//        }
-//
-//      // STONE
-//      case StoneMaterial.STONE => Material.STONE_STAIRS
-//      case StoneMaterial.STONE_BRICK =>
-//        variant match {
-//          case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_STAIRS
-//          case _                        => Material.STONE_BRICK_STAIRS
-//        }
-//
-//      // STONITE
-//      case StoniteMaterial.ANDESITE => Material.ANDESITE_STAIRS
-//      case StoniteMaterial.DIORITE  => Material.DIORITE_STAIRS
-//      case StoniteMaterial.GRANITE  => Material.GRANITE_STAIRS
-//
-//      // WOOD
-//      case WoodMaterial.ACACIA   => Material.ACACIA_STAIRS
-//      case WoodMaterial.BIRCH    => Material.BIRCH_STAIRS
-//      case WoodMaterial.DARK_OAK => Material.DARK_OAK_STAIRS
-//      case WoodMaterial.JUNGLE   => Material.JUNGLE_STAIRS
-//      case WoodMaterial.OAK      => Material.OAK_STAIRS
-//      case WoodMaterial.SPRUCE   => Material.SPRUCE_STAIRS
-//    }
-//
-//  def mapStone(mat: StoneMaterial, variant: StoneVariant): Material = {
-//      case StoneMaterial.STONE =>
-//        variant match {
-//          case StoneVariant.SMOOTH => Material.SMOOTH_STONE
-//          case _                   => Material.STONE
-//        }
-//      case StoneMaterial.STONE_BRICK =>
-//        variant match {
-//          case StoneVariant.CHISELED => Material.CHISELED_STONE_BRICKS
-//          case StoneVariant.CRACKED  => Material.CRACKED_STONE_BRICKS
-//          case StoneVariant.MOSSY    => Material.MOSSY_STONE_BRICKS
-//          case _                     => Material.STONE_BRICKS
-//        }
-//    }
-//
-//  def mapStonite(mat: StoniteMaterial, variant: StoniteVariant): Material = {
-//    case StoniteMaterial.ANDESITE =>
-//      variant match {
-//        case StoniteVariant.NORMAL   => Material.ANDESITE
-//        case StoniteVariant.POLISHED => Material.POLISHED_ANDESITE
-//      }
-//    case StoniteMaterial.DIORITE =>
-//      variant match {
-//        case StoniteVariant.NORMAL   => Material.DIORITE
-//        case StoniteVariant.POLISHED => Material.POLISHED_DIORITE
-//      }
-//    case StoniteMaterial.GRANITE =>
-//      variant match {
-//        case StoniteVariant.NORMAL   => Material.GRANITE
-//        case StoniteVariant.POLISHED => Material.POLISHED_GRANITE
-//      }
-//  }
-
   def mapStructureMode(mode: SpigotStructureBlockMode): StructureBlockVariant = {
     case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
     case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
@@ -1058,41 +1023,4 @@ class SpigotBlockVariantMapper {
     case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
     case StructureBlockVariant.VOID   => null
   }
-
-//  def mapWall(mat: WallMaterial, variant: Option[WallVariant]): Material =
-//    mat match {
-//      // BRICK
-//      case BrickMaterial.BRICK            => Material.BRICK_WALL
-//      case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICK_WALL
-//      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_WALL
-//
-//      // COBBLESTONE
-//      case _: CobblestoneMaterial =>
-//        variant match {
-//          case Some(CobblestoneVariant.MOSSY) => Material.MOSSY_COBBLESTONE_WALL
-//          case _                              => Material.COBBLESTONE_WALL
-//        }
-//
-//      // END_STONE
-//      case _: EndStoneMaterial => Material.END_STONE_BRICK_WALL
-//
-//      // PRISMARINE
-//      case _: PrismarineMaterial => Material.PRISMARINE_WALL
-//
-//      // SANDSTONE
-//      case SandstoneMaterial.SANDSTONE     => Material.SANDSTONE_WALL
-//      case SandstoneMaterial.RED_SANDSTONE => Material.RED_SANDSTONE_WALL
-//
-//      // STONE
-//      case _: StoneMaterial =>
-//        variant match {
-//          case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_WALL
-//          case _                        => Material.STONE_BRICK_WALL
-//        }
-//
-//      // STONITE
-//      case StoniteMaterial.ANDESITE => Material.ANDESITE_WALL
-//      case StoniteMaterial.DIORITE  => Material.DIORITE_WALL
-//      case StoniteMaterial.GRANITE  => Material.GRANITE_WALL
-//    }
 }
