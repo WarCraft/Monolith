@@ -44,55 +44,55 @@ class SpigotBlockVariantMapper {
     case Material.REPEATING_COMMAND_BLOCK => CommandBlockVariant.REPEATING
 
     // CORAL
-    case CoralVariant.BRAIN  => Material.BRAIN_CORAL
-    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL
-    case CoralVariant.FIRE   => Material.FIRE_CORAL
-    case CoralVariant.HORN   => Material.HORN_CORAL
-    case CoralVariant.TUBE   => Material.TUBE_CORAL
+    case Material.BRAIN_CORAL  => CoralVariant.BRAIN
+    case Material.BUBBLE_CORAL => CoralVariant.BUBBLE
+    case Material.FIRE_CORAL   => CoralVariant.FIRE
+    case Material.HORN_CORAL   => CoralVariant.HORN
+    case Material.TUBE_CORAL   => CoralVariant.TUBE
 
-    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL
-    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL
-    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL
-    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL
-    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL
+    case Material.DEAD_BRAIN_CORAL  => CoralVariant.DEAD_BRAIN
+    case Material.DEAD_BUBBLE_CORAL => CoralVariant.DEAD_BUBBLE
+    case Material.DEAD_FIRE_CORAL   => CoralVariant.DEAD_FIRE
+    case Material.DEAD_HORN_CORAL   => CoralVariant.DEAD_HORN
+    case Material.DEAD_TUBE_CORAL   => CoralVariant.DEAD_TUBE
 
     // CORAL_BLOCK
-    case CoralBlockVariant.BRAIN  => Material.BRAIN_CORAL_BLOCK
-    case CoralBlockVariant.BUBBLE => Material.BUBBLE_CORAL_BLOCK
-    case CoralBlockVariant.FIRE   => Material.FIRE_CORAL_BLOCK
-    case CoralBlockVariant.HORN   => Material.HORN_CORAL_BLOCK
-    case CoralBlockVariant.TUBE   => Material.TUBE_CORAL_BLOCK
+    case Material.BRAIN_CORAL_BLOCK  => CoralBlockVariant.BRAIN
+    case Material.BUBBLE_CORAL_BLOCK => CoralBlockVariant.BUBBLE
+    case Material.FIRE_CORAL_BLOCK   => CoralBlockVariant.FIRE
+    case Material.HORN_CORAL_BLOCK   => CoralBlockVariant.HORN
+    case Material.TUBE_CORAL_BLOCK   => CoralBlockVariant.TUBE
 
-    case CoralBlockVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_BLOCK
-    case CoralBlockVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_BLOCK
-    case CoralBlockVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_BLOCK
-    case CoralBlockVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_BLOCK
-    case CoralBlockVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_BLOCK
+    case Material.DEAD_BRAIN_CORAL_BLOCK  => CoralBlockVariant.DEAD_BRAIN
+    case Material.DEAD_BUBBLE_CORAL_BLOCK => CoralBlockVariant.DEAD_BUBBLE
+    case Material.DEAD_FIRE_CORAL_BLOCK   => CoralBlockVariant.DEAD_FIRE
+    case Material.DEAD_HORN_CORAL_BLOCK   => CoralBlockVariant.DEAD_HORN
+    case Material.DEAD_TUBE_CORAL_BLOCK   => CoralBlockVariant.DEAD_TUBE
 
     // CORAL_FAN
-    case CoralFanVariant.BRAIN  => Material.BRAIN_CORAL_FAN
-    case CoralFanVariant.BUBBLE => Material.BUBBLE_CORAL_FAN
-    case CoralFanVariant.FIRE   => Material.FIRE_CORAL_FAN
-    case CoralFanVariant.HORN   => Material.HORN_CORAL_FAN
-    case CoralFanVariant.TUBE   => Material.TUBE_CORAL_FAN
+    case Material.BRAIN_CORAL_FAN  => CoralFanVariant.BRAIN
+    case Material.BUBBLE_CORAL_FAN => CoralFanVariant.BUBBLE
+    case Material.FIRE_CORAL_FAN   => CoralFanVariant.FIRE
+    case Material.HORN_CORAL_FAN   => CoralFanVariant.HORN
+    case Material.TUBE_CORAL_FAN   => CoralFanVariant.TUBE
 
-    case CoralFanVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_FAN
-    case CoralFanVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_FAN
-    case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_FAN
-    case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
-    case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
+    case Material.DEAD_BRAIN_CORAL_FAN  => CoralFanVariant.DEAD_BRAIN
+    case Material.DEAD_BUBBLE_CORAL_FAN => CoralFanVariant.DEAD_BUBBLE
+    case Material.DEAD_FIRE_CORAL_FAN   => CoralFanVariant.DEAD_FIRE
+    case Material.DEAD_HORN_CORAL_FAN   => CoralFanVariant.DEAD_HORN
+    case Material.DEAD_TUBE_CORAL_FAN   => CoralFanVariant.DEAD_TUBE
 
-    case CoralFanVariant.BRAIN_WALL  => Material.BRAIN_CORAL_WALL_FAN
-    case CoralFanVariant.BUBBLE_WALL => Material.BUBBLE_CORAL_WALL_FAN
-    case CoralFanVariant.FIRE_WALL   => Material.FIRE_CORAL_WALL_FAN
-    case CoralFanVariant.HORN_WALL   => Material.HORN_CORAL_WALL_FAN
-    case CoralFanVariant.TUBE_WALL   => Material.TUBE_CORAL_WALL_FAN
+    case Material.BRAIN_CORAL_WALL_FAN  => CoralFanVariant.BRAIN_WALL
+    case Material.BUBBLE_CORAL_WALL_FAN => CoralFanVariant.BUBBLE_WALL
+    case Material.FIRE_CORAL_WALL_FAN   => CoralFanVariant.FIRE_WALL
+    case Material.HORN_CORAL_WALL_FAN   => CoralFanVariant.HORN_WALL
+    case Material.TUBE_CORAL_WALL_FAN   => CoralFanVariant.TUBE_WALL
 
-    case CoralFanVariant.DEAD_BRAIN_WALL  => Material.DEAD_BRAIN_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_BUBBLE_WALL => Material.DEAD_BUBBLE_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_FIRE_WALL   => Material.DEAD_FIRE_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_HORN_WALL   => Material.DEAD_HORN_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_TUBE_WALL   => Material.DEAD_TUBE_CORAL_WALL_FAN
+    case Material.DEAD_BRAIN_CORAL_WALL_FAN  => CoralFanVariant.DEAD_BRAIN_WALL
+    case Material.DEAD_BUBBLE_CORAL_WALL_FAN => CoralFanVariant.DEAD_BUBBLE_WALL
+    case Material.DEAD_FIRE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_FIRE_WALL
+    case Material.DEAD_HORN_CORAL_WALL_FAN   => CoralFanVariant.DEAD_HORN_WALL
+    case Material.DEAD_TUBE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_TUBE_WALL
 
     // DOOR
     case Material.ACACIA_DOOR   => DoorVariant.ACACIA
@@ -214,23 +214,19 @@ class SpigotBlockVariantMapper {
     case Material.STRIPPED_SPRUCE_LOG   => LogVariant.STRIPPED_SPRUCE
 
     // MOB_HEAD
-    case Material.CREEPER_HEAD      => MobHeadVariant.CREEPER
-    case Material.CREEPER_WALL_HEAD => MobHeadVariant.CREEPER
+    case Material.CREEPER_HEAD          => MobHeadVariant.CREEPER
+    case Material.DRAGON_HEAD           => MobHeadVariant.DRAGON
+    case Material.PLAYER_HEAD           => MobHeadVariant.PLAYER
+    case Material.SKELETON_SKULL        => MobHeadVariant.SKELETON
+    case Material.WITHER_SKELETON_SKULL => MobHeadVariant.WITHER_SKELETON
+    case Material.ZOMBIE_HEAD           => MobHeadVariant.ZOMBIE
 
-    case Material.DRAGON_HEAD      => MobHeadVariant.DRAGON
-    case Material.DRAGON_WALL_HEAD => MobHeadVariant.DRAGON
-
-    case Material.PLAYER_HEAD      => MobHeadVariant.PLAYER
-    case Material.PLAYER_WALL_HEAD => MobHeadVariant.PLAYER
-
-    case Material.SKELETON_SKULL      => MobHeadVariant.SKELETON
-    case Material.SKELETON_WALL_SKULL => MobHeadVariant.SKELETON
-
-    case Material.WITHER_SKELETON_SKULL      => MobHeadVariant.WITHER_SKELETON
-    case Material.WITHER_SKELETON_WALL_SKULL => MobHeadVariant.WITHER_SKELETON
-
-    case Material.ZOMBIE_HEAD      => MobHeadVariant.ZOMBIE
-    case Material.ZOMBIE_WALL_HEAD => MobHeadVariant.ZOMBIE
+    case Material.CREEPER_WALL_HEAD          => MobHeadVariant.CREEPER_WALL
+    case Material.DRAGON_WALL_HEAD           => MobHeadVariant.DRAGON_WALL
+    case Material.PLAYER_WALL_HEAD           => MobHeadVariant.PLAYER_WALL
+    case Material.SKELETON_WALL_SKULL        => MobHeadVariant.SKELETON_WALL
+    case Material.WITHER_SKELETON_WALL_SKULL => MobHeadVariant.WITHER_SKELETON_WALL
+    case Material.ZOMBIE_WALL_HEAD           => MobHeadVariant.ZOMBIE_WALL
 
     // MUSHROOM
     case Material.BROWN_MUSHROOM => MushroomVariant.BROWN
@@ -318,9 +314,108 @@ class SpigotBlockVariantMapper {
     case Material.OAK_SIGN      => SignVariant.OAK
     case Material.SPRUCE_SIGN   => SignVariant.SPRUCE
 
-    // SLAB TODO
+    case Material.ACACIA_WALL_SIGN   => SignVariant.ACACIA_WALL
+    case Material.BIRCH_WALL_SIGN    => SignVariant.BIRCH_WALL
+    case Material.DARK_OAK_WALL_SIGN => SignVariant.DARK_OAK_WALL
+    case Material.JUNGLE_WALL_SIGN   => SignVariant.JUNGLE_WALL
+    case Material.OAK_WALL_SIGN      => SignVariant.OAK_WALL
+    case Material.SPRUCE_WALL_SIGN   => SignVariant.SPRUCE_WALL
 
-    // STAIRS TODO
+    // SLAB
+    case Material.BRICK_SLAB            => SlabVariant.BRICK
+    case Material.NETHER_BRICK_SLAB     => SlabVariant.NETHER_BRICK
+    case Material.RED_NETHER_BRICK_SLAB => SlabVariant.RED_NETHER_BRICK
+
+    case Material.COBBLESTONE_SLAB       => SlabVariant.COBBLESTONE
+    case Material.MOSSY_COBBLESTONE_SLAB => SlabVariant.MOSSY_COBBLESTONE
+
+    case Material.END_STONE_BRICK_SLAB => SlabVariant.END_STONE_BRICK
+
+    case Material.PETRIFIED_OAK_SLAB => SlabVariant.PETRIFIED_OAK
+
+    case Material.PRISMARINE_SLAB       => SlabVariant.PRISMARINE
+    case Material.PRISMARINE_BRICK_SLAB => SlabVariant.PRISMARINE_BRICK
+    case Material.DARK_PRISMARINE_SLAB  => SlabVariant.DARK_PRISMARINE
+
+    case Material.PURPUR_SLAB => SlabVariant.PURPUR
+
+    case Material.QUARTZ_SLAB        => SlabVariant.QUARTZ
+    case Material.SMOOTH_QUARTZ_SLAB => SlabVariant.SMOOTH_QUARTZ
+
+    case Material.SANDSTONE_SLAB        => SlabVariant.SANDSTONE
+    case Material.CUT_SANDSTONE_SLAB    => SlabVariant.CUT_SANDSTONE
+    case Material.SMOOTH_SANDSTONE_SLAB => SlabVariant.SMOOTH_SANDSTONE
+
+    case Material.RED_SANDSTONE_SLAB        => SlabVariant.RED_SANDSTONE
+    case Material.CUT_RED_SANDSTONE_SLAB    => SlabVariant.CUT_RED_SANDSTONE
+    case Material.SMOOTH_RED_SANDSTONE_SLAB => SlabVariant.SMOOTH_RED_SANDSTONE
+
+    case Material.STONE_SLAB        => SlabVariant.STONE
+    case Material.SMOOTH_STONE_SLAB => SlabVariant.SMOOTH_STONE
+
+    case Material.STONE_BRICK_SLAB       => SlabVariant.STONE_BRICK
+    case Material.MOSSY_STONE_BRICK_SLAB => SlabVariant.MOSSY_STONE_BRICK
+
+    case Material.ANDESITE_SLAB          => SlabVariant.ANDESITE
+    case Material.POLISHED_ANDESITE_SLAB => SlabVariant.POLISHED_ANDESITE
+
+    case Material.DIORITE_SLAB          => SlabVariant.DIORITE
+    case Material.POLISHED_DIORITE_SLAB => SlabVariant.POLISHED_DIORITE
+
+    case Material.GRANITE_SLAB          => SlabVariant.GRANITE
+    case Material.POLISHED_GRANITE_SLAB => SlabVariant.POLISHED_GRANITE
+
+    case Material.ACACIA_SLAB   => SlabVariant.ACACIA
+    case Material.BIRCH_SLAB    => SlabVariant.BIRCH
+    case Material.DARK_OAK_SLAB => SlabVariant.DARK_OAK
+    case Material.JUNGLE_SLAB   => SlabVariant.JUNGLE
+    case Material.OAK_SLAB      => SlabVariant.OAK
+    case Material.SPRUCE_SLAB   => SlabVariant.SPRUCE
+
+    // STAIRS
+    case Material.BRICK_STAIRS            => StairsVariant.BRICK
+    case Material.NETHER_BRICK_STAIRS     => StairsVariant.NETHER_BRICK
+    case Material.RED_NETHER_BRICK_STAIRS => StairsVariant.RED_NETHER_BRICK
+
+    case Material.COBBLESTONE_STAIRS       => StairsVariant.COBBLESTONE
+    case Material.MOSSY_COBBLESTONE_STAIRS => StairsVariant.MOSSY_COBBLESTONE
+
+    case Material.END_STONE_BRICK_STAIRS => StairsVariant.END_STONE_BRICK
+
+    case Material.PRISMARINE_STAIRS       => StairsVariant.PRISMARINE
+    case Material.PRISMARINE_BRICK_STAIRS => StairsVariant.PRISMARINE_BRICK
+    case Material.DARK_PRISMARINE_STAIRS  => StairsVariant.DARK_PRISMARINE
+
+    case Material.PURPUR_STAIRS => StairsVariant.PURPUR
+
+    case Material.QUARTZ_STAIRS        => StairsVariant.QUARTZ
+    case Material.SMOOTH_QUARTZ_STAIRS => StairsVariant.SMOOTH_QUARTZ
+
+    case Material.SANDSTONE_STAIRS        => StairsVariant.SANDSTONE
+    case Material.SMOOTH_SANDSTONE_STAIRS => StairsVariant.SMOOTH_SANDSTONE
+
+    case Material.RED_SANDSTONE_STAIRS        => StairsVariant.RED_SANDSTONE
+    case Material.SMOOTH_RED_SANDSTONE_STAIRS => StairsVariant.SMOOTH_RED_SANDSTONE
+
+    case Material.STONE_STAIRS             => StairsVariant.STONE
+    case Material.STONE_BRICK_STAIRS       => StairsVariant.STONE_BRICK
+    case Material.MOSSY_STONE_BRICK_STAIRS => StairsVariant.MOSSY_STONE_BRICK
+
+    case Material.ANDESITE_STAIRS          => StairsVariant.ANDESITE
+    case Material.POLISHED_ANDESITE_STAIRS => StairsVariant.POLISHED_ANDESITE
+
+    case Material.DIORITE_STAIRS          => StairsVariant.DIORITE
+    case Material.POLISHED_DIORITE_STAIRS => StairsVariant.POLISHED_DIORITE
+
+    case Material.GRANITE_STAIRS          => StairsVariant.GRANITE
+    case Material.POLISHED_GRANITE_STAIRS => StairsVariant.POLISHED_GRANITE
+
+    case Material.ACACIA_STAIRS   => StairsVariant.ACACIA
+    case Material.BIRCH_STAIRS    => StairsVariant.BIRCH
+    case Material.DARK_OAK_STAIRS => StairsVariant.DARK_OAK
+    case Material.JUNGLE_STAIRS   => StairsVariant.JUNGLE
+    case Material.OAK_STAIRS      => StairsVariant.OAK
+    case Material.SPRUCE_STAIRS   => StairsVariant.SPRUCE
 
     // STONE TODO
 
@@ -339,7 +434,27 @@ class SpigotBlockVariantMapper {
 
     case Material.IRON_TRAPDOOR => TrapdoorVariant.IRON
 
-    // WALL TODO
+    // WALL
+    case Material.BRICK_WALL            => WallVariant.BRICK
+    case Material.NETHER_BRICK_WALL     => WallVariant.NETHER_BRICK
+    case Material.RED_NETHER_BRICK_WALL => WallVariant.RED_NETHER_BRICK
+
+    case Material.COBBLESTONE_WALL       => WallVariant.COBBLESTONE
+    case Material.MOSSY_COBBLESTONE_WALL => WallVariant.MOSSY_COBBLESTONE
+
+    case Material.END_STONE_BRICK_WALL => WallVariant.END_STONE_BRICK
+
+    case Material.PRISMARINE_WALL => WallVariant.PRISMARINE
+
+    case Material.SANDSTONE_WALL     => WallVariant.SANDSTONE
+    case Material.RED_SANDSTONE_WALL => WallVariant.RED_SANDSTONE
+
+    case Material.STONE_BRICK_WALL       => WallVariant.STONE_BRICK
+    case Material.MOSSY_STONE_BRICK_WALL => WallVariant.MOSSY_STONE_BRICK
+
+    case Material.ANDESITE_WALL => WallVariant.ANDESITE
+    case Material.DIORITE_WALL  => WallVariant.DIORITE
+    case Material.GRANITE_WALL  => WallVariant.GRANITE
 
     // WEIGHTED_PRESSURE_PLATE
     case Material.LIGHT_WEIGHTED_PRESSURE_PLATE => WeightedPressurePlateVariant.LIGHT
@@ -402,6 +517,57 @@ class SpigotBlockVariantMapper {
     case CommandBlockVariant.NORMAL    => Material.COMMAND_BLOCK
     case CommandBlockVariant.CHAIN     => Material.CHAIN_COMMAND_BLOCK
     case CommandBlockVariant.REPEATING => Material.REPEATING_COMMAND_BLOCK
+
+    // CORAL
+    case CoralVariant.BRAIN  => Material.BRAIN_CORAL
+    case CoralVariant.BUBBLE => Material.BUBBLE_CORAL
+    case CoralVariant.FIRE   => Material.FIRE_CORAL
+    case CoralVariant.HORN   => Material.HORN_CORAL
+    case CoralVariant.TUBE   => Material.TUBE_CORAL
+
+    case CoralVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL
+    case CoralVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL
+    case CoralVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL
+    case CoralVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL
+    case CoralVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL
+
+    // CORAL_BLOCK
+    case CoralBlockVariant.BRAIN  => Material.BRAIN_CORAL_BLOCK
+    case CoralBlockVariant.BUBBLE => Material.BUBBLE_CORAL_BLOCK
+    case CoralBlockVariant.FIRE   => Material.FIRE_CORAL_BLOCK
+    case CoralBlockVariant.HORN   => Material.HORN_CORAL_BLOCK
+    case CoralBlockVariant.TUBE   => Material.TUBE_CORAL_BLOCK
+
+    case CoralBlockVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_BLOCK
+    case CoralBlockVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_BLOCK
+
+    // CORAL_FAN
+    case CoralFanVariant.BRAIN  => Material.BRAIN_CORAL_FAN
+    case CoralFanVariant.BUBBLE => Material.BUBBLE_CORAL_FAN
+    case CoralFanVariant.FIRE   => Material.FIRE_CORAL_FAN
+    case CoralFanVariant.HORN   => Material.HORN_CORAL_FAN
+    case CoralFanVariant.TUBE   => Material.TUBE_CORAL_FAN
+
+    case CoralFanVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_FAN
+    case CoralFanVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_FAN
+    case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_FAN
+    case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
+    case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
+
+    case CoralFanVariant.BRAIN_WALL  => Material.BRAIN_CORAL_WALL_FAN
+    case CoralFanVariant.BUBBLE_WALL => Material.BUBBLE_CORAL_WALL_FAN
+    case CoralFanVariant.FIRE_WALL   => Material.FIRE_CORAL_WALL_FAN
+    case CoralFanVariant.HORN_WALL   => Material.HORN_CORAL_WALL_FAN
+    case CoralFanVariant.TUBE_WALL   => Material.TUBE_CORAL_WALL_FAN
+
+    case CoralFanVariant.DEAD_BRAIN_WALL  => Material.DEAD_BRAIN_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_BUBBLE_WALL => Material.DEAD_BUBBLE_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_FIRE_WALL   => Material.DEAD_FIRE_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_HORN_WALL   => Material.DEAD_HORN_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_TUBE_WALL   => Material.DEAD_TUBE_CORAL_WALL_FAN
 
     // FLOWER
     case FlowerVariant.ALLIUM             => Material.ALLIUM
@@ -548,9 +714,134 @@ class SpigotBlockVariantMapper {
     case SignVariant.OAK      => Material.OAK_SIGN
     case SignVariant.SPRUCE   => Material.SPRUCE_SIGN
 
+    case SignVariant.ACACIA_WALL   => Material.ACACIA_WALL_SIGN
+    case SignVariant.BIRCH_WALL    => Material.BIRCH_WALL_SIGN
+    case SignVariant.DARK_OAK_WALL => Material.DARK_OAK_WALL_SIGN
+    case SignVariant.JUNGLE_WALL   => Material.JUNGLE_WALL_SIGN
+    case SignVariant.OAK_WALL      => Material.OAK_WALL_SIGN
+    case SignVariant.SPRUCE_WALL   => Material.SPRUCE_WALL_SIGN
+
+    // SLAB
+    case SlabVariant.BRICK            => Material.BRICK_SLAB
+    case SlabVariant.NETHER_BRICK     => Material.NETHER_BRICK_SLAB
+    case SlabVariant.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
+
+    case SlabVariant.COBBLESTONE       => Material.COBBLESTONE_SLAB
+    case SlabVariant.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_SLAB
+
+    case SlabVariant.END_STONE_BRICK => Material.END_STONE_BRICK_SLAB
+
+    case SlabVariant.PETRIFIED_OAK => Material.PETRIFIED_OAK_SLAB
+
+    case SlabVariant.PRISMARINE       => Material.PRISMARINE_SLAB
+    case SlabVariant.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_SLAB
+    case SlabVariant.DARK_PRISMARINE  => Material.DARK_PRISMARINE_SLAB
+
+    case SlabVariant.PURPUR => Material.PURPUR_SLAB
+
+    case SlabVariant.QUARTZ        => Material.QUARTZ_SLAB
+    case SlabVariant.SMOOTH_QUARTZ => Material.SMOOTH_QUARTZ_SLAB
+
+    case SlabVariant.SANDSTONE        => Material.SANDSTONE_SLAB
+    case SlabVariant.CUT_SANDSTONE    => Material.CUT_SANDSTONE_SLAB
+    case SlabVariant.SMOOTH_SANDSTONE => Material.SMOOTH_SANDSTONE_SLAB
+
+    case SlabVariant.RED_SANDSTONE        => Material.RED_SANDSTONE_SLAB
+    case SlabVariant.CUT_RED_SANDSTONE    => Material.CUT_RED_SANDSTONE_SLAB
+    case SlabVariant.SMOOTH_RED_SANDSTONE => Material.SMOOTH_RED_SANDSTONE_SLAB
+
+    case SlabVariant.STONE        => Material.STONE_SLAB
+    case SlabVariant.SMOOTH_STONE => Material.SMOOTH_STONE_SLAB
+
+    case SlabVariant.STONE_BRICK       => Material.STONE_BRICK_SLAB
+    case SlabVariant.MOSSY_STONE_BRICK => Material.MOSSY_STONE_BRICK_SLAB
+
+    case SlabVariant.ANDESITE          => Material.ANDESITE_SLAB
+    case SlabVariant.POLISHED_ANDESITE => Material.POLISHED_ANDESITE_SLAB
+
+    case SlabVariant.DIORITE          => Material.DIORITE_SLAB
+    case SlabVariant.POLISHED_DIORITE => Material.POLISHED_DIORITE_SLAB
+
+    case SlabVariant.GRANITE          => Material.GRANITE_SLAB
+    case SlabVariant.POLISHED_GRANITE => Material.POLISHED_GRANITE_SLAB
+
+    case SlabVariant.ACACIA   => Material.ACACIA_SLAB
+    case SlabVariant.BIRCH    => Material.BIRCH_SLAB
+    case SlabVariant.DARK_OAK => Material.DARK_OAK_SLAB
+    case SlabVariant.JUNGLE   => Material.JUNGLE_SLAB
+    case SlabVariant.OAK      => Material.OAK_SLAB
+    case SlabVariant.SPRUCE   => Material.SPRUCE_SLAB
+
+    // STAIRS
+    case StairsVariant.BRICK            => Material.BRICK_STAIRS
+    case StairsVariant.NETHER_BRICK     => Material.NETHER_BRICK_STAIRS
+    case StairsVariant.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
+
+    case StairsVariant.COBBLESTONE       => Material.COBBLESTONE_STAIRS
+    case StairsVariant.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_STAIRS
+
+    case StairsVariant.END_STONE_BRICK => Material.END_STONE_BRICK_STAIRS
+
+    case StairsVariant.PRISMARINE       => Material.PRISMARINE_STAIRS
+    case StairsVariant.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_STAIRS
+    case StairsVariant.DARK_PRISMARINE  => Material.DARK_PRISMARINE_STAIRS
+
+    case StairsVariant.PURPUR => Material.PURPUR_STAIRS
+
+    case StairsVariant.QUARTZ        => Material.QUARTZ_STAIRS
+    case StairsVariant.SMOOTH_QUARTZ => Material.SMOOTH_QUARTZ_STAIRS
+
+    case StairsVariant.SANDSTONE        => Material.SANDSTONE_STAIRS
+    case StairsVariant.SMOOTH_SANDSTONE => Material.SMOOTH_SANDSTONE_STAIRS
+
+    case StairsVariant.RED_SANDSTONE        => Material.RED_SANDSTONE_STAIRS
+    case StairsVariant.SMOOTH_RED_SANDSTONE => Material.SMOOTH_RED_SANDSTONE_STAIRS
+
+    case StairsVariant.STONE             => Material.STONE_STAIRS
+    case StairsVariant.STONE_BRICK       => Material.STONE_BRICK_STAIRS
+    case StairsVariant.MOSSY_STONE_BRICK => Material.MOSSY_STONE_BRICK_STAIRS
+
+    case StairsVariant.ANDESITE          => Material.ANDESITE_STAIRS
+    case StairsVariant.POLISHED_ANDESITE => Material.POLISHED_ANDESITE_STAIRS
+
+    case StairsVariant.DIORITE          => Material.DIORITE_STAIRS
+    case StairsVariant.POLISHED_DIORITE => Material.POLISHED_DIORITE_STAIRS
+
+    case StairsVariant.GRANITE          => Material.GRANITE_STAIRS
+    case StairsVariant.POLISHED_GRANITE => Material.POLISHED_GRANITE_STAIRS
+
+    case StairsVariant.ACACIA   => Material.ACACIA_STAIRS
+    case StairsVariant.BIRCH    => Material.BIRCH_STAIRS
+    case StairsVariant.DARK_OAK => Material.DARK_OAK_STAIRS
+    case StairsVariant.JUNGLE   => Material.JUNGLE_STAIRS
+    case StairsVariant.OAK      => Material.OAK_STAIRS
+    case StairsVariant.SPRUCE   => Material.SPRUCE_STAIRS
+
     // STRUCTURE_BLOCK
     case StructureBlockVariant.VOID => Material.STRUCTURE_VOID
     case _: StructureBlockVariant   => Material.STRUCTURE_BLOCK
+
+    // WALL
+    case WallVariant.BRICK            => Material.BRICK_WALL
+    case WallVariant.NETHER_BRICK     => Material.NETHER_BRICK_WALL
+    case WallVariant.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_WALL
+
+    case WallVariant.COBBLESTONE       => Material.COBBLESTONE_WALL
+    case WallVariant.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_WALL
+
+    case WallVariant.END_STONE_BRICK => Material.END_STONE_BRICK_WALL
+
+    case WallVariant.PRISMARINE => Material.PRISMARINE_WALL
+
+    case WallVariant.SANDSTONE     => Material.SANDSTONE_WALL
+    case WallVariant.RED_SANDSTONE => Material.RED_SANDSTONE_WALL
+
+    case WallVariant.STONE_BRICK       => Material.STONE_BRICK_WALL
+    case WallVariant.MOSSY_STONE_BRICK => Material.MOSSY_STONE_BRICK_WALL
+
+    case WallVariant.ANDESITE => Material.ANDESITE_WALL
+    case WallVariant.DIORITE  => Material.DIORITE_WALL
+    case WallVariant.GRANITE  => Material.GRANITE_WALL
 
     // WEIGHTED_PRESSURE_PLATE
     case WeightedPressurePlateVariant.LIGHT => Material.LIGHT_WEIGHTED_PRESSURE_PLATE
@@ -648,95 +939,7 @@ class SpigotBlockVariantMapper {
     case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
     case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
   }
-//
-//  def mapSlab(mat: SlabMaterial, variant: Option[SlabVariant]): Material =
-//    mat match {
-//      // BRICK
-//      case BrickMaterial.BRICK            => Material.BRICK_SLAB
-//      case BrickMaterial.NETHER_BRICK     => Material.NETHER_BRICK_SLAB
-//      case BrickMaterial.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
-//
-//      // COBBLESTONE
-//      case _: CobblestoneMaterial =>
-//        variant match {
-//          case Some(CobblestoneVariant.MOSSY) => Material.MOSSY_COBBLESTONE_SLAB
-//          case _                              => Material.COBBLESTONE_SLAB
-//        }
-//
-//      // END_STONE
-//      case _: EndStoneMaterial => Material.END_STONE_BRICK_SLAB
-//
-//      // PRISMARINE
-//      case PrismarineMaterial.PRISMARINE       => Material.PRISMARINE_SLAB
-//      case PrismarineMaterial.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_SLAB
-//      case PrismarineMaterial.DARK_PRISMARINE  => Material.DARK_PRISMARINE_SLAB
-//
-//      // PURPUR
-//      case _: PurpurMaterial => Material.PURPUR_SLAB
-//
-//      // QUARTZ
-//      case QuartzMaterial.QUARTZ =>
-//        variant match {
-//          case Some(QuartzVariant.SMOOTH) => Material.SMOOTH_QUARTZ_SLAB
-//          case _                          => Material.QUARTZ_SLAB
-//        }
-//
-//      // SANDSTONE
-//      case SandstoneMaterial.SANDSTONE =>
-//        variant match {
-//          case Some(SandstoneVariant.CUT)    => Material.CUT_SANDSTONE_SLAB
-//          case Some(SandstoneVariant.SMOOTH) => Material.SMOOTH_SANDSTONE_SLAB
-//          case _                             => Material.SANDSTONE_SLAB
-//        }
-//
-//      case SandstoneMaterial.RED_SANDSTONE =>
-//        variant match {
-//          case Some(SandstoneVariant.CUT) => Material.CUT_RED_SANDSTONE_SLAB
-//          case Some(SandstoneVariant.SMOOTH) =>
-//            Material.SMOOTH_RED_SANDSTONE_SLAB
-//          case _ => Material.RED_SANDSTONE_SLAB
-//        }
-//
-//      // STONE
-//      case StoneMaterial.STONE =>
-//        variant match {
-//          case Some(StoneVariant.SMOOTH) => Material.SMOOTH_STONE_SLAB
-//          case _                         => Material.STONE_SLAB
-//        }
-//
-//      case StoneMaterial.STONE_BRICK =>
-//        variant match {
-//          case Some(StoneVariant.MOSSY) => Material.MOSSY_STONE_BRICK_SLAB
-//          case _                        => Material.STONE_BRICK_SLAB
-//        }
-//
-//      // STONITE
-//      case StoniteMaterial.ANDESITE =>
-//        variant match {
-//          case Some(StoniteVariant.POLISHED) => Material.POLISHED_ANDESITE_SLAB
-//          case _                             => Material.ANDESITE_SLAB
-//        }
-//
-//      case StoniteMaterial.DIORITE =>
-//        variant match {
-//          case Some(StoniteVariant.POLISHED) => Material.POLISHED_DIORITE_SLAB
-//          case _                             => Material.DIORITE_SLAB
-//        }
-//
-//      case StoniteMaterial.GRANITE =>
-//        variant match {
-//          case Some(StoniteVariant.POLISHED) => Material.POLISHED_GRANITE_SLAB
-//          case _                             => Material.GRANITE_SLAB
-//        }
-//
-//      // WOOD
-//      case WoodMaterial.ACACIA   => Material.ACACIA_SLAB
-//      case WoodMaterial.BIRCH    => Material.BIRCH_SLAB
-//      case WoodMaterial.DARK_OAK => Material.DARK_OAK_SLAB
-//      case WoodMaterial.JUNGLE   => Material.JUNGLE_SLAB
-//      case WoodMaterial.OAK      => Material.OAK_SLAB
-//      case WoodMaterial.SPRUCE   => Material.SPRUCE_SLAB
-//    }
+
 //
 //  def mapStairs(mat: StairsMaterial, variant: Option[StairsVariant]): Material =
 //    mat match {
