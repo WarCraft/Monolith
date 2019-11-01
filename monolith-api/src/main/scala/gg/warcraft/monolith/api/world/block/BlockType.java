@@ -124,6 +124,7 @@ public enum BlockType {
     OBSIDIAN,
     ORE,
     PLANKS,
+    PLANT,
     PILLAR,
     PISTON,
     PODZOL,

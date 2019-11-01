@@ -546,14 +546,10 @@ final case class FletchingTable(
 final case class Flower(
     location: BlockLocation,
     variant: FlowerVariant,
-    section: BlockBisection,
-    tall: Boolean
-) extends VariableBlock[FlowerVariant]
-    with BisectedBlock {
+    section: BlockBisection
+) extends VariableBlock[FlowerVariant] {
   override val `type` = BlockType.FLOWER
   override val solid: Boolean = false
-  def withTall(tall: Boolean): Flower =
-    copyWith("tall", tall)
 }
 
 final case class FlowerPot(
@@ -977,6 +973,15 @@ final case class Planks(
     variant: PlanksVariant
 ) extends VariableBlock[PlanksVariant] {
   override val `type` = BlockType.PLANKS
+}
+
+final case class Plant(
+    location: BlockLocation,
+    variant: PlantVariant,
+    section: BlockBisection
+) extends VariableBlock[PlantVariant]
+    with BisectedBlock {
+  override val `type` = BlockType.PLANT
 }
 
 final case class Podzol(

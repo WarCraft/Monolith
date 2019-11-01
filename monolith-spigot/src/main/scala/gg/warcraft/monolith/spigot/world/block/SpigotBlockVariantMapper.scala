@@ -710,6 +710,12 @@ class SpigotBlockVariantMapper {
     case PlanksVariant.OAK      => Material.OAK_PLANKS
     case PlanksVariant.SPRUCE   => Material.SPRUCE_PLANKS
 
+    // PLANT
+    case PlantVariant.SUNFLOWER => Material.SUNFLOWER
+    case PlantVariant.LILAC     => Material.LILAC
+    case PlantVariant.PEONY     => Material.PEONY
+    case PlantVariant.ROSE_BUSH => Material.ROSE_BUSH
+
     // QUARTZ_BLOCK
     case QuartzBlockVariant.NORMAL   => Material.QUARTZ_BLOCK
     case QuartzBlockVariant.CHISELED => Material.CHISELED_QUARTZ_BLOCK

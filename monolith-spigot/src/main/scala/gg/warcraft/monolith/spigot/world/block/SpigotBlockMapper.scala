@@ -224,7 +224,7 @@ class SpigotBlockMapper @Inject() (
       // BRICK
       case Material.BRICKS | Material.NETHER_BRICKS | Material.RED_NETHER_BRICKS =>
         null
-        // TODO BrickBlock(loc, variantAs[BrickVariant])
+      // TODO BrickBlock(loc, variantAs[BrickVariant])
 
       // BUBBLE_COLUMN
       case Material.BUBBLE_COLUMN =>
@@ -362,11 +362,7 @@ class SpigotBlockMapper @Inject() (
           Material.ORANGE_TULIP | Material.OXEYE_DAISY | Material.PINK_TULIP |
           Material.POPPY | Material.RED_TULIP | Material.WHITE_TULIP |
           Material.WITHER_ROSE =>
-        Flower(loc, variantAs[FlowerVariant], BlockBisection.BOTTOM, tall = false)
-
-      case Material.LILAC | Material.PEONY | Material.ROSE_BUSH |
-          Material.SUNFLOWER =>
-        Flower(loc, variantAs[FlowerVariant], bisection, tall = true)
+        Flower(loc, variantAs[FlowerVariant], BlockBisection.BOTTOM)
 
       // FLOWER_POT
       case Material.FLOWER_POT | Material.POTTED_ALLIUM |
@@ -524,6 +520,11 @@ class SpigotBlockMapper @Inject() (
           Material.DARK_OAK_PLANKS | Material.JUNGLE_PLANKS | Material.OAK_PLANKS |
           Material.SPRUCE_PLANKS =>
         Planks(loc, variantAs[PlanksVariant])
+
+      // PLANT
+      case Material.LILAC | Material.PEONY | Material.ROSE_BUSH |
+          Material.SUNFLOWER =>
+        Plant(loc, variantAs[PlantVariant], bisection)
 
       // PRESSURE_PLATE
       case Material.STONE_PRESSURE_PLATE | Material.ACACIA_PRESSURE_PLATE |
