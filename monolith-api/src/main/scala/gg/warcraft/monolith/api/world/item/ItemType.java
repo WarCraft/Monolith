@@ -227,7 +227,7 @@ public enum ItemType {
     RABBIT,
     RABBIT_FOOT,
     RABBIT_HIDE,
-    RAILS, // TODO rename Rail as per Minecraft's implementation?
+    RAIL, // TODO rename Rail as per Minecraft's implementation?
     REDSTONE,
     REDSTONE_BLOCK,
     REDSTONE_LAMP,
