@@ -7,9 +7,6 @@ import gg.warcraft.monolith.api.core.PluginLogger
 import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import io.circe.generic.auto._
-import io.circe.parser._
-import io.circe.syntax._
 import javax.inject.Inject
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
@@ -43,7 +40,7 @@ class SpigotBlockBackupService @Inject() (
 
     // save backup
     SpigotBlockBackupService.backups += (id -> backup)
-    val json = backup.asJson.noSpaces // TODO persist
+    // TODO persist
     id
   }
 
@@ -76,8 +73,6 @@ class SpigotBlockBackupService @Inject() (
   }
   override def restoreBackups(): Unit = {
     // TODO get from persistence
-    val keep = ""
-    val backup = decode[BlockBackup](keep)
   }
 }
 
