@@ -4,17 +4,23 @@ import gg.warcraft.monolith.api.world.block.BlockVariant;
 import gg.warcraft.monolith.api.world.item.ItemVariant;
 
 public enum LogVariant implements BlockVariant, ItemVariant {
-    ACACIA,
-    BIRCH,
-    DARK_OAK,
-    JUNGLE,
-    OAK,
-    SPRUCE,
+    ACACIA(false),
+    BIRCH(false),
+    DARK_OAK(false),
+    JUNGLE(false),
+    OAK(false),
+    SPRUCE(false),
 
-    STRIPPED_ACACIA,
-    STRIPPED_BIRCH,
-    STRIPPED_DARK_OAK,
-    STRIPPED_JUNGLE,
-    STRIPPED_OAK,
-    STRIPPED_SPRUCE,
+    STRIPPED_ACACIA(true),
+    STRIPPED_BIRCH(true),
+    STRIPPED_DARK_OAK(true),
+    STRIPPED_JUNGLE(true),
+    STRIPPED_OAK(true),
+    STRIPPED_SPRUCE(true);
+
+    public final boolean stripped;
+
+    LogVariant(boolean stripped) {
+        this.stripped = stripped;
+    }
 }
