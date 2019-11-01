@@ -6,7 +6,7 @@ import org.bukkit.Material
 class SpigotItemTypeMapper {
   def map(`type`: ItemType): Material = {
     case ItemType.AXE                     => Material.WOODEN_AXE
-    case ItemType.BANNER                  => Material.BLACK_BANNER
+    case ItemType.BANNER                  => Material.RED_BANNER
     case ItemType.BANNER_PATTERN          => Material.CREEPER_BANNER_PATTERN
     case ItemType.BED                     => Material.RED_BED
     case ItemType.BOAT                    => Material.OAK_BOAT
@@ -15,21 +15,21 @@ class SpigotItemTypeMapper {
     case ItemType.BOTTLE_OF_ENCHANTING    => Material.EXPERIENCE_BOTTLE
     case ItemType.BRICK_BLOCK             => Material.BRICKS
     case ItemType.BUTTON                  => Material.OAK_BUTTON
-    case ItemType.CARPET                  => Material.BLACK_CARPET
+    case ItemType.CARPET                  => Material.RED_CARPET
     case ItemType.CHESTPLATE              => Material.LEATHER_CHESTPLATE
     case ItemType.CLAY                    => Material.CLAY_BALL
     case ItemType.CLAY_BLOCK              => Material.CLAY
-    case ItemType.CONCRETE                => Material.BLACK_CONCRETE
-    case ItemType.CONCRETE_POWDER         => Material.BLACK_CONCRETE_POWDER
+    case ItemType.CONCRETE                => Material.RED_CONCRETE
+    case ItemType.CONCRETE_POWDER         => Material.RED_CONCRETE_POWDER
     case ItemType.CORAL                   => Material.BRAIN_CORAL
     case ItemType.CORAL_BLOCK             => Material.BRAIN_CORAL_BLOCK
     case ItemType.CORAL_FAN               => Material.BRAIN_CORAL_FAN
     case ItemType.DOOR                    => Material.OAK_DOOR
-    case ItemType.DYE                     => Material.BLACK_DYE
+    case ItemType.DYE                     => Material.RED_DYE
     case ItemType.FENCE                   => Material.OAK_FENCE
     case ItemType.FLOWER                  => Material.POPPY
     case ItemType.GATE                    => Material.OAK_FENCE_GATE
-    case ItemType.GLAZED_TERRACOTTA       => Material.BLACK_GLAZED_TERRACOTTA
+    case ItemType.GLAZED_TERRACOTTA       => Material.RED_GLAZED_TERRACOTTA
     case ItemType.GOLDEN_MELON_SLICE      => Material.GLISTERING_MELON_SLICE
     case ItemType.HELMET                  => Material.LEATHER_HELMET
     case ItemType.HOE                     => Material.WOODEN_HOE
@@ -65,7 +65,7 @@ class SpigotItemTypeMapper {
     case ItemType.WALL                    => Material.COBBLESTONE_WALL
     case ItemType.WEIGHTED_PRESSURE_PLATE => Material.LIGHT_WEIGHTED_PRESSURE_PLATE
     case ItemType.WOOD                    => Material.OAK_WOOD
-    case ItemType.WOOL                    => Material.BLACK_WOOL
+    case ItemType.WOOL                    => Material.RED_WOOL
 
     case it: ItemType => Material.valueOf(it.name)
   }
