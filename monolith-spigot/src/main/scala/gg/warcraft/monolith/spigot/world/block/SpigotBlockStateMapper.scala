@@ -2,17 +2,16 @@ package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.state._
-import org.bukkit.{ Material, Note => SpigotNote }
-import org.bukkit.block.data.{ Ageable, AnaloguePowerable, Levelled }
+import org.bukkit.{Material, Note => SpigotNote}
+import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
 
 class SpigotBlockStateMapper {
-
   def map(block: SpigotBlock): BlockState = {
-    implicit val data: SpigotBlockData = block.getState.getBlockData
+    val data: SpigotBlockData = block.getState.getBlockData
 
-    lazy val age   = dataAs[Ageable].getAge
-    lazy val level = dataAs[Levelled].getLevel
-    lazy val power = dataAs[AnaloguePowerable].getPower
+    lazy val age = data.asInstanceOf[Ageable].getAge
+    lazy val level = data.asInstanceOf[Levelled].getLevel
+    lazy val power = data.asInstanceOf[AnaloguePowerable].getPower
 
     block.getType match {
       case Material.BEETROOTS        => BeetrootState.valueOf(age)
@@ -36,12 +35,12 @@ class SpigotBlockStateMapper {
 
       // BAMBOO
       case Material.BAMBOO =>
-        val stage = dataAs[SpigotBamboo].getStage
+        val stage = data.asInstanceOf[SpigotBamboo].getStage
         BambooState.valueOf(stage)
 
       // CAKE
       case Material.CAKE =>
-        val bites = dataAs[SpigotCake].getBites
+        val bites = data.asInstanceOf[SpigotCake].getBites
         CakeState.valueOf(bites)
 
       // MELON_STEM
@@ -50,7 +49,7 @@ class SpigotBlockStateMapper {
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        val note = dataAs[SpigotNoteBlock].getNote.getId
+        val note = data.asInstanceOf[SpigotNoteBlock].getNote.getId
         NoteBlockState.valueOf(note)
 
       // PUMPKIN_STEM
@@ -59,26 +58,25 @@ class SpigotBlockStateMapper {
 
       // REPEATER
       case Material.REPEATER =>
-        val delay = dataAs[SpigotRepeater].getDelay
+        val delay = data.asInstanceOf[SpigotRepeater].getDelay
         RepeaterState.valueOf(delay)
 
       // SAPLING
       case Material.BAMBOO_SAPLING | Material.ACACIA_SAPLING |
-           Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
-           Material.JUNGLE_SAPLING | Material.OAK_SAPLING |
-           Material.SPRUCE_SAPLING =>
-        val stage = dataAs[SpigotSapling].getStage
+          Material.BIRCH_SAPLING | Material.DARK_OAK_SAPLING |
+          Material.JUNGLE_SAPLING | Material.OAK_SAPLING | Material.SPRUCE_SAPLING =>
+        val stage = data.asInstanceOf[SpigotSapling].getStage
         SaplingState.valueOf(stage)
 
       // SEA_PICKLE
       case Material.SEA_PICKLE =>
-        val pickles = dataAs[SpigotSeaPickle].getPickles
+        val pickles = data.asInstanceOf[SpigotSeaPickle].getPickles
         SeaPickleState.valueOf(pickles)
 
       // TURTLE_EGG
       case Material.TURTLE_EGG =>
-        val hatch = dataAs[SpigotTurtleEgg].getHatch
-        val eggs  = dataAs[SpigotTurtleEgg].getEggs
+        val hatch = data.asInstanceOf[SpigotTurtleEgg].getHatch
+        val eggs = data.asInstanceOf[SpigotTurtleEgg].getEggs
         TurtleEggState(
           TurtleEggAge.valueOf(hatch),
           TurtleEggCount.valueOf(eggs)
@@ -86,52 +84,48 @@ class SpigotBlockStateMapper {
 
       // WEIGHTED_PRESSURE_PLATE
       case Material.LIGHT_WEIGHTED_PRESSURE_PLATE |
-           Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
+          Material.HEAVY_WEIGHTED_PRESSURE_PLATE =>
         WeightedPressurePlateState.valueOf(power)
 
       case _ => throw new IllegalArgumentException(s"${block.getType}")
     }
   }
 
-  def map(
-      block: StatefulBlock[_ <: BlockState],
-      spigotData: SpigotBlockData
-  ): Unit = {
-    implicit val data: SpigotBlockData = spigotData
-
+  def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
     val state = block.state.toInt
-    data match {case it: Ageable => it.setAge(state)}
-    data match {case it: Levelled => it.setLevel(state)}
-    data match {case it: AnaloguePowerable => it.setPower(state)}
+
+    data match { case it: Ageable           => it.setAge(state) }
+    data match { case it: Levelled          => it.setLevel(state) }
+    data match { case it: AnaloguePowerable => it.setPower(state) }
 
     block match {
       case it: Bamboo =>
-        val bambooData = dataAs[SpigotBamboo]
+        val bambooData = data.asInstanceOf[SpigotBamboo]
         bambooData.setStage(it.state.toInt)
 
       case it: Cake =>
-        val cakeData = dataAs[SpigotCake]
+        val cakeData = data.asInstanceOf[SpigotCake]
         cakeData.setBites(it.state.toInt)
 
       case it: NoteBlock =>
-        val note          = new SpigotNote(it.state.toInt)
-        val noteBlockData = dataAs[SpigotNoteBlock]
+        val note = new SpigotNote(it.state.toInt)
+        val noteBlockData = data.asInstanceOf[SpigotNoteBlock]
         noteBlockData.setNote(note)
 
       case it: Repeater =>
-        val repeaterData = dataAs[SpigotRepeater]
+        val repeaterData = data.asInstanceOf[SpigotRepeater]
         repeaterData.setDelay(it.state.toInt)
 
       case it: Sapling =>
-        val saplingData = dataAs[SpigotSapling]
+        val saplingData = data.asInstanceOf[SpigotSapling]
         saplingData.setStage(it.state.toInt)
 
       case it: SeaPickle =>
-        val seaPickleData = dataAs[SpigotSeaPickle]
+        val seaPickleData = data.asInstanceOf[SpigotSeaPickle]
         seaPickleData.setPickles(it.state.toInt)
 
       case it: TurtleEgg =>
-        val turtleEggData = dataAs[SpigotTurtleEgg]
+        val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
         turtleEggData.setHatch(it.state.age.toInt)
         turtleEggData.setEggs(it.state.count.toInt)
     }
