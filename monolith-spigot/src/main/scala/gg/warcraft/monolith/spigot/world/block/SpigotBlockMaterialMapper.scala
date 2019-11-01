@@ -9,78 +9,81 @@ import gg.warcraft.monolith.api.world.block.state.KelpState
 import javax.inject.Inject
 import org.bukkit.Material
 
-class SpigotBlockMaterialMapper @Inject()(
+class SpigotBlockMaterialMapper @Inject() (
     private val colorMapper: SpigotBlockColorMapper,
     private val variantMapper: SpigotBlockVariantMapper
 ) {
-
   private val cache =
     new util.EnumMap[Material, BlockMaterial](classOf[Material])
 
-  def map(material: Material): BlockMaterial = cache.computeIfAbsent(material, {
-    case _ if !material.isBlock => throw new IllegalArgumentException(s"$material")
+  def map(material: Material): BlockMaterial =
+    cache.computeIfAbsent(
+      material, {
+        case _ if !material.isBlock =>
+          throw new IllegalArgumentException(s"$material")
 
-    // IRON
-    case Material.IRON_DOOR => IronMaterial.IRON
+        // IRON
+        case Material.IRON_DOOR => IronMaterial.IRON
 
-    // SAND
-    case Material.SAND     => SandMaterial.SAND
-    case Material.RED_SAND => SandMaterial.RED_SAND
+        // SAND
+        case Material.SAND     => SandMaterial.SAND
+        case Material.RED_SAND => SandMaterial.RED_SAND
 
-    case _ => material.name match {
+        case _ =>
+          material.name match {
+            // BRICK
+            case r"BRICK.*"            => BrickMaterial.BRICK
+            case r"NETHER_BRICK.*"     => BrickMaterial.NETHER_BRICK
+            case r"RED_NETHER_BRICK.*" => BrickMaterial.RED_NETHER_BRICK
 
-      // BRICK
-      case r"BRICK.*"            => BrickMaterial.BRICK
-      case r"NETHER_BRICK.*"     => BrickMaterial.NETHER_BRICK
-      case r"RED_NETHER_BRICK.*" => BrickMaterial.RED_NETHER_BRICK
+            // COBBLESTONE
+            case r".*COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
 
-      // COBBLESTONE
-      case r".*COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
+            // END_STONE
+            case r"END_STONE_BRICK.*" => EndStoneMaterial.END_STONE_BRICK
+            case r"END_STONE.*"       => EndStoneMaterial.END_STONE
 
-      // END_STONE
-      case r"END_STONE_BRICK.*" => EndStoneMaterial.END_STONE_BRICK
-      case r"END_STONE.*"       => EndStoneMaterial.END_STONE
+            // INFESTED_BLOCK
+            case r"INFESTED_COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
+            case r"INFESTED_STONE_BRICK.*" => StoneMaterial.STONE_BRICK
+            case r"INFESTED_STONE.*"       => StoneMaterial.STONE
 
-      // INFESTED_BLOCK
-      case r"INFESTED_COBBLESTONE.*" => CobblestoneMaterial.COBBLESTONE
-      case r"INFESTED_STONE_BRICK.*" => StoneMaterial.STONE_BRICK
-      case r"INFESTED_STONE.*"       => StoneMaterial.STONE
+            // PRISMARINE
+            case r"DARK_PRISMARINE.*"  => PrismarineMaterial.DARK_PRISMARINE
+            case r"PRISMARINE_BRICK.*" => PrismarineMaterial.PRISMARINE_BRICK
+            case r"PRISMARINE.*"       => PrismarineMaterial.PRISMARINE
 
-      // PRISMARINE
-      case r"DARK_PRISMARINE.*"  => PrismarineMaterial.DARK_PRISMARINE
-      case r"PRISMARINE_BRICK.*" => PrismarineMaterial.PRISMARINE_BRICK
-      case r"PRISMARINE.*"       => PrismarineMaterial.PRISMARINE
+            // PURPUR
+            case r"PURPUR.*" => PurpurMaterial.PURPUR
 
-      // PURPUR
-      case r"PURPUR.*" => PurpurMaterial.PURPUR
+            // QUARTZ
+            case r".*QUARTZ.*" => QuartzMaterial.QUARTZ
 
-      // QUARTZ
-      case r".*QUARTZ.*" => QuartzMaterial.QUARTZ
+            // SANDSTONE
+            case r".*RED_SANDSTONE.*" => SandstoneMaterial.RED_SANDSTONE
+            case r".*SANDSTONE.*"     => SandstoneMaterial.SANDSTONE
 
-      // SANDSTONE
-      case r".*RED_SANDSTONE.*" => SandstoneMaterial.RED_SANDSTONE
-      case r".*SANDSTONE.*"     => SandstoneMaterial.SANDSTONE
+            // STONE
+            case r".*STONE_BRICK.*" => StoneMaterial.STONE_BRICK
+            case r".*STONE.*"       => StoneMaterial.STONE
 
-      // STONE
-      case r".*STONE_BRICK.*" => StoneMaterial.STONE_BRICK
-      case r".*STONE.*"       => StoneMaterial.STONE
+            // STONITE
+            case r".*ANDESITE.*" => StoniteMaterial.ANDESITE
+            case r".*DIORITE.*"  => StoniteMaterial.DIORITE
+            case r".*GRANITE.*"  => StoniteMaterial.GRANITE
 
-      // STONITE
-      case r".*ANDESITE.*" => StoniteMaterial.ANDESITE
-      case r".*DIORITE.*"  => StoniteMaterial.DIORITE
-      case r".*GRANITE.*"  => StoniteMaterial.GRANITE
+            // WOOD
+            case r".*ACACIA.*"   => WoodMaterial.ACACIA
+            case r".*BIRCH.*"    => WoodMaterial.BIRCH
+            case r".*DARK_OAK.*" => WoodMaterial.DARK_OAK
+            case r".*JUNGLE.*"   => WoodMaterial.JUNGLE
+            case r".*OAK.*"      => WoodMaterial.OAK
+            case r".*SPRUCE.*"   => WoodMaterial.SPRUCE
 
-      // WOOD
-      case r".*ACACIA.*"   => WoodMaterial.ACACIA
-      case r".*BIRCH.*"    => WoodMaterial.BIRCH
-      case r".*DARK_OAK.*" => WoodMaterial.DARK_OAK
-      case r".*JUNGLE.*"   => WoodMaterial.JUNGLE
-      case r".*OAK.*"      => WoodMaterial.OAK
-      case r".*SPRUCE.*"   => WoodMaterial.SPRUCE
-
-      case _ => throw new IllegalArgumentException(s"$material")
-    }
-  })
+            case _ => throw new IllegalArgumentException(s"$material")
+          }
+      }
+    )
 
   def map(block: Block): Material = block match {
     case it: ColoredBlock     => colorMapper.map(it)
@@ -94,10 +97,10 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Beetroots        => Material.BEETROOTS
     case _: Bell             => Material.BELL
     case _: BlastFurnace     => Material.BLAST_FURNACE
-    case _: Bone             => Material.BONE_BLOCK
+    case _: BoneBlock        => Material.BONE_BLOCK
     case _: Bookshelf        => Material.BOOKSHELF
     case _: BrewingStand     => Material.BREWING_STAND
-    case _: Brick            => Material.BRICK
+    case _: BrickBlock            => Material.BRICK
     case _: BubbleColumn     => Material.BUBBLE_COLUMN
     case _: Cactus           => Material.CACTUS
     case _: Cake             => Material.CAKE
@@ -173,7 +176,7 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Prismarine       => Material.PRISMARINE
     case _: Pumpkin          => Material.PUMPKIN
     case _: PumpkinStem      => Material.PUMPKIN_STEM
-    case _: Purpur           => Material.PURPUR_BLOCK
+    case _: PurpurBlock      => Material.PURPUR_BLOCK
     case _: QuartzOre        => Material.NETHER_QUARTZ_ORE
     case _: Redstone         => Material.REDSTONE_BLOCK
     case _: RedstoneLamp     => Material.REDSTONE_LAMP
@@ -183,7 +186,7 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Scaffold         => Material.SCAFFOLDING
     case _: SeaLantern       => Material.SEA_LANTERN
     case _: SeaPickle        => Material.SEA_PICKLE
-    case _: Slime            => Material.SLIME_BLOCK
+    case _: SlimeBlock       => Material.SLIME_BLOCK
     case _: SmithingTable    => Material.SMITHING_TABLE
     case _: Smoker           => Material.SMOKER
     case _: Snow             => Material.SNOW
@@ -200,12 +203,12 @@ class SpigotBlockMaterialMapper @Inject()(
     case _: Wheat            => Material.WHEAT
 
     case it: Button        => mapButton(it.material)
-    case it: Brick         => mapBrick(it.material)
+    case it: BrickBlock         => mapBrick(it.material)
     case it: Door          => mapDoor(it.material)
     case it: EndStone      => mapEndStone(it.material)
     case it: Fence         => mapFence(it.material)
     case it: Fern          => mapFern(it.tall)
-    case it: Gate          => mapGate(it.material)
+    case it: FenceGate     => mapGate(it.material)
     case it: Grass         => mapGrass(it.tall)
     case it: Kelp          => mapKelp(it.state)
     case it: Leaves        => mapLeaves(it.material)
@@ -278,14 +281,15 @@ class SpigotBlockMaterialMapper @Inject()(
     if (tall) Material.LARGE_FERN
     else Material.FERN
 
-  def mapGate(material: WoodMaterial): Material = material match { // TODO rename Fence Gate
-    case WoodMaterial.ACACIA   => Material.ACACIA_FENCE_GATE
-    case WoodMaterial.BIRCH    => Material.BIRCH_FENCE_GATE
-    case WoodMaterial.DARK_OAK => Material.DARK_OAK_FENCE_GATE
-    case WoodMaterial.JUNGLE   => Material.JUNGLE_FENCE_GATE
-    case WoodMaterial.OAK      => Material.OAK_FENCE_GATE
-    case WoodMaterial.SPRUCE   => Material.SPRUCE_FENCE_GATE
-  }
+  def mapGate(material: WoodMaterial): Material =
+    material match { // TODO rename Fence Gate
+      case WoodMaterial.ACACIA   => Material.ACACIA_FENCE_GATE
+      case WoodMaterial.BIRCH    => Material.BIRCH_FENCE_GATE
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_FENCE_GATE
+      case WoodMaterial.JUNGLE   => Material.JUNGLE_FENCE_GATE
+      case WoodMaterial.OAK      => Material.OAK_FENCE_GATE
+      case WoodMaterial.SPRUCE   => Material.SPRUCE_FENCE_GATE
+    }
 
   def mapGrass(tall: Boolean): Material =
     if (tall) Material.TALL_GRASS
@@ -340,15 +344,16 @@ class SpigotBlockMaterialMapper @Inject()(
     case WoodMaterial.SPRUCE   => Material.SPRUCE_PLANKS
   }
 
-  def mapPressurePlate(material: PressurePlateMaterial): Material = material match {
-    case _: StoneMaterial      => Material.STONE_PRESSURE_PLATE
-    case WoodMaterial.ACACIA   => Material.ACACIA_PRESSURE_PLATE
-    case WoodMaterial.BIRCH    => Material.BIRCH_PRESSURE_PLATE
-    case WoodMaterial.DARK_OAK => Material.DARK_OAK_PRESSURE_PLATE
-    case WoodMaterial.JUNGLE   => Material.JUNGLE_PRESSURE_PLATE
-    case WoodMaterial.OAK      => Material.OAK_PRESSURE_PLATE
-    case WoodMaterial.SPRUCE   => Material.SPRUCE_PRESSURE_PLATE
-  }
+  def mapPressurePlate(material: PressurePlateMaterial): Material =
+    material match {
+      case _: StoneMaterial      => Material.STONE_PRESSURE_PLATE
+      case WoodMaterial.ACACIA   => Material.ACACIA_PRESSURE_PLATE
+      case WoodMaterial.BIRCH    => Material.BIRCH_PRESSURE_PLATE
+      case WoodMaterial.DARK_OAK => Material.DARK_OAK_PRESSURE_PLATE
+      case WoodMaterial.JUNGLE   => Material.JUNGLE_PRESSURE_PLATE
+      case WoodMaterial.OAK      => Material.OAK_PRESSURE_PLATE
+      case WoodMaterial.SPRUCE   => Material.SPRUCE_PRESSURE_PLATE
+    }
 
   def mapRedstoneTorch(direction: Option[BlockFace]): Material =
     if (direction.isEmpty) Material.REDSTONE_TORCH

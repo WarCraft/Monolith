@@ -364,7 +364,7 @@ class SpigotItemMapper @Inject()(
         case r".*PLANKS"            => () => Planks(m[WoodMaterial], name, lore, count, attr, hAttr)
         case r".*POTION"            => () => Potion(v[PotionVariant], hEffects, name, lore, attr, hAttr)
         case r".*PRESSURE_PLATE"    => () => PressurePlate(m[PressurePlateMaterial], name, lore, count, attr, hAttr)
-        case r".*RAIL"              => () => Rails(v[RailsVariant], name, lore, count, attr, hAttr) // TODO rename
+        case r".*RAIL"              => () => Rails(v[RailVariant], name, lore, count, attr, hAttr) // TODO rename
         case r".*SAND"              => () => Sand(m[SandMaterial], name, lore, count, attr, hAttr)
         case r".*SAPLING"           => () => Sapling(v[SaplingVariant], name, lore, count, attr, hAttr)
         case r".*SEEDS"             => () => Seeds(v[SeedsVariant], name, lore, count, attr, hAttr)
