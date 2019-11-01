@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.entity.player.service;
 
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.player.PlayerServerData;
-import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import java.util.Collection;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.menu;
 
-import gg.warcraft.monolith.api.item.ItemType;
+import gg.warcraft.monolith.api.world.item.ItemType;
 
 import java.util.List;
 import java.util.function.Consumer;

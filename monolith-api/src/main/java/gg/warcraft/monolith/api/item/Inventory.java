@@ -1,5 +1,8 @@
 package gg.warcraft.monolith.api.item;
 
+import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.world.item.ItemType;
+
 import java.util.List;
 
 public interface Inventory {

@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.menu;
 
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
-import gg.warcraft.monolith.api.item.ItemType;
+import gg.warcraft.monolith.api.world.item.ItemType;
 
 public interface ButtonBuilderFactory {
 

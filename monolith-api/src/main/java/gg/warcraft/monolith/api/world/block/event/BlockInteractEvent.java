@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world.block.event;
 
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.world.block.BlockFace;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import java.util.UUID;
 
