@@ -2343,13 +2343,13 @@ final case class Quartz(
 }
 
 final case class QuartzBlock(
-    variant: QuartzVariant,
+    variant: QuartzBlockVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariedItem[QuartzVariant]
+) extends VariedItem[QuartzBlockVariant]
     with StackableItem {
   val `type` = ItemType.QUARTZ_BLOCK
 }

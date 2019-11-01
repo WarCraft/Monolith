@@ -301,7 +301,7 @@ class SpigotItemMapper @Inject()(
       // QUARTZ_BLOCK
       case Material.QUARTZ_BLOCK | Material.CHISELED_QUARTZ_BLOCK |
            Material.SMOOTH_QUARTZ => () =>
-        QuartzBlock(v[QuartzVariant], name, lore, count, attr, hAttr)
+        QuartzBlock(v[QuartzBlockVariant], name, lore, count, attr, hAttr)
 
       case _ => item.getType.name match {
 

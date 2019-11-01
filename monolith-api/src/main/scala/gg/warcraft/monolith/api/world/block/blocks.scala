@@ -334,39 +334,30 @@ final case class Conduit(
 final case class Coral(
     location: BlockLocation,
     variant: CoralVariant,
-    dead: Boolean,
     flooded: Boolean
 ) extends VariableBlock[CoralVariant]
     with FloodableBlock {
   override val `type` = BlockType.CORAL
   override val solid: Boolean = false
-  def withDead(dead: Boolean): this.type =
-    copyWith("dead", dead)
 }
 
 final case class CoralBlock(
     location: BlockLocation,
-    variant: CoralVariant,
-    dead: Boolean
+    variant: CoralVariant
 ) extends VariableBlock[CoralVariant] {
   override val `type` = BlockType.CORAL_BLOCK
-  def withDead(dead: Boolean): this.type =
-    copyWith("dead", dead)
 }
 
 final case class CoralFan(
     location: BlockLocation,
     variant: CoralVariant,
     direction: Option[BlockFace],
-    dead: Boolean,
     flooded: Boolean
 ) extends VariableBlock[CoralVariant]
     with DirectableBlock
     with FloodableBlock {
   override val `type` = BlockType.CORAL_FAN
   override val solid: Boolean = false
-  def withDead(dead: Boolean): this.type =
-    copyWith("dead", dead)
 }
 
 final case class CraftingTable(
@@ -590,12 +581,12 @@ final case class Furnace(
 
 final case class FenceGate(
     location: BlockLocation,
-    variant: WoodVariant,
+    variant: FenceGateVariant,
     direction: BlockFace,
     open: Boolean,
     powered: Boolean,
     wall: Boolean
-) extends VariableBlock[WoodVariant]
+) extends VariableBlock[FenceGateVariant]
     with DirectedBlock
     with OpenableBlock
     with PowerableBlock {
@@ -803,8 +794,8 @@ final case class Lava(
 
 final case class Leaves(
     location: BlockLocation,
-    variant: WoodVariant
-) extends VariableBlock[WoodVariant] {
+    variant: LeavesVariant
+) extends VariableBlock[LeavesVariant] {
   override val `type` = BlockType.LEAVES
   override val solid: Boolean = false
 }
@@ -840,14 +831,11 @@ final case class LilyPad(
 
 final case class Log(
     location: BlockLocation,
-    variant: WoodVariant,
-    orientation: BlockOrientation,
-    stripped: Boolean
-) extends VariableBlock[WoodVariant]
+    variant: LogVariant,
+    orientation: BlockOrientation
+) extends VariableBlock[LogVariant]
     with OrientedBlock {
   override val `type` = BlockType.LOG
-  def withStripped(stripped: Boolean): Log =
-    copyWith("stripped", stripped)
 }
 
 final case class Loom(
@@ -986,8 +974,8 @@ final case class Piston(
 
 final case class Planks(
     location: BlockLocation,
-    variant: WoodVariant
-) extends VariableBlock[WoodVariant] {
+    variant: PlanksVariant
+) extends VariableBlock[PlanksVariant] {
   override val `type` = BlockType.PLANKS
 }
 
@@ -1051,8 +1039,8 @@ final case class PurpurBlock(
 
 final case class QuartzBlock(
     location: BlockLocation,
-    variant: QuartzVariant
-) extends VariableBlock[QuartzVariant] {
+    variant: QuartzBlockVariant
+) extends VariableBlock[QuartzBlockVariant] {
   override val `type` = BlockType.QUARTZ_BLOCK
 }
 
@@ -1135,10 +1123,8 @@ final case class Sand(
 
 final case class Sandstone(
     location: BlockLocation,
-    variant: SandstoneVariant,
     variant: SandstoneVariant
-) extends VariableBlock[SandstoneVariant]
-    with VariableBlock[SandstoneVariant] {
+) extends VariableBlock[SandstoneVariant] {
   override val `type` = BlockType.SANDSTONE
 }
 
@@ -1196,13 +1182,13 @@ final case class ShulkerBox(
 
 final case class Sign(
     location: BlockLocation,
-    variant: WoodVariant,
+    variant: SignVariant,
     direction: Option[BlockFace],
     rotation: Option[BlockRotation],
     flooded: Boolean,
     lines: List[String],
     editable: Boolean
-) extends VariableBlock[WoodVariant]
+) extends VariableBlock[SignVariant]
     with DirectableBlock
     with RotatableBlock
     with FloodableBlock {
@@ -1281,13 +1267,11 @@ final case class Sponge(
 final case class Stairs(
     location: BlockLocation,
     variant: StairsVariant,
-    variant: StairsVariant,
     shape: StairsShape,
     direction: BlockFace,
     section: BlockBisection,
     flooded: Boolean
 ) extends VariableBlock[StairsVariant]
-    with VariableBlock[StairsVariant]
     with ShapedBlock[StairsShape]
     with DirectedBlock
     with BisectedBlock
@@ -1297,10 +1281,8 @@ final case class Stairs(
 
 final case class Stone(
     location: BlockLocation,
-    variant: StoneVariant,
     variant: StoneVariant
-) extends VariableBlock[StoneVariant]
-    with VariableBlock[StoneVariant] {
+) extends VariableBlock[StoneVariant] {
   override val `type` = BlockType.STONE
 }
 
@@ -1437,12 +1419,9 @@ final case class Wheat(location: BlockLocation, state: WheatState)
 
 final case class Wood(
     location: BlockLocation,
-    variant: WoodVariant,
-    stripped: Boolean
+    variant: WoodVariant
 ) extends VariableBlock[WoodVariant] {
   override val `type` = BlockType.WOOD
-  def withStripped(stripped: Boolean): Wood =
-    copyWith("stripped", stripped)
 }
 
 final case class Wool(
