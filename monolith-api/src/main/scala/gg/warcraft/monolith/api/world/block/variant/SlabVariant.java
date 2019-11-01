@@ -4,49 +4,64 @@ import gg.warcraft.monolith.api.world.block.BlockVariant;
 import gg.warcraft.monolith.api.world.item.ItemVariant;
 
 public enum SlabVariant implements BlockVariant, ItemVariant {
-    ACACIA,
-    BIRCH,
-    DARK_OAK,
-    JUNGLE,
-    OAK,
-    SPRUCE,
-
+    // BRICK
     BRICK,
     NETHER_BRICK,
     RED_NETHER_BRICK,
 
+    // COBBLESTONE
+    COBBLESTONE,
+    MOSSY_COBBLESTONE,
+
+    // END_STONE
+    END_STONE_BRICK,
+
+    // PETRIFIED
+    PETRIFIED_OAK,
+
+    // PRISMARINE
+    PRISMARINE,
+    PRISMARINE_BRICK,
+    DARK_PRISMARINE,
+
+    // PURPUR
+    PURPUR,
+
+    // QUARTZ
+    QUARTZ,
+    SMOOTH_QUARTZ,
+
+    // SANDSTONE
     SANDSTONE,
     CUT_SANDSTONE,
     SMOOTH_SANDSTONE,
+
     RED_SANDSTONE,
     CUT_RED_SANDSTONE,
     SMOOTH_RED_SANDSTONE,
 
+    // STONE
     STONE,
     SMOOTH_STONE,
 
     STONE_BRICK,
     MOSSY_STONE_BRICK,
 
-    COBBLESTONE,
-    MOSSY_COBBLESTONE,
-
+    // STONITE
     ANDESITE,
     POLISHED_ANDESITE,
+
     DIORITE,
     POLISHED_DIORITE,
+
     GRANITE,
     POLISHED_GRANITE,
 
-    END_STONE_BRICK,
-
-    PRISMARINE,
-    PRISMARINE_BRICK,
-    DARK_PRISMARINE,
-
-    PURPUR,
-    QUARTZ,
-    SMOOTH_QUARTZ,
-
-    PETRIFIED_OAK,
+    // WOOD
+    ACACIA,
+    BIRCH,
+    DARK_OAK,
+    JUNGLE,
+    OAK,
+    SPRUCE,
 }
