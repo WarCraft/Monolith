@@ -9,4 +9,10 @@ public enum CoralVariant implements BlockVariant, ItemVariant {
     FIRE,
     HORN,
     TUBE,
+
+    DEAD_BRAIN,
+    DEAD_BUBBLE,
+    DEAD_FIRE,
+    DEAD_HORN,
+    DEAD_TUBE,
 }

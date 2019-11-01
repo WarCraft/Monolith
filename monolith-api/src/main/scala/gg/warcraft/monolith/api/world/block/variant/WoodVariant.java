@@ -10,4 +10,11 @@ public enum WoodVariant implements BlockVariant, ItemVariant {
     JUNGLE,
     OAK,
     SPRUCE,
+
+    STRIPPED_ACACIA,
+    STRIPPED_BIRCH,
+    STRIPPED_DARK_OAK,
+    STRIPPED_JUNGLE,
+    STRIPPED_OAK,
+    STRIPPED_SPRUCE,
 }
