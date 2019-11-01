@@ -61,7 +61,7 @@ lazy val spigot = (project in file("monolith-spigot"))
     assemblySettings,
     libraryDependencies ++= commonDependencies ++ Seq(
       "org.spigotmc" % "spigot" % "1.14.4-R0.1-SNAPSHOT" % Provided,
-      "de.slikey" % "EffectLib" % "6.3-SNAPSHOT" % Provided
+      "de.slikey" % "EffectLib" % "6.2-SNAPSHOT" % Provided
     )
   )
   .dependsOn(app)
