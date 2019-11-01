@@ -3,8 +3,9 @@ package gg.warcraft.monolith.spigot.item;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.item.Inventory;
-import gg.warcraft.monolith.api.item.Item;
-import gg.warcraft.monolith.api.item.ItemType;
+import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.world.item.ItemType;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
