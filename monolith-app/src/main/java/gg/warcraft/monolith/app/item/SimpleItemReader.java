@@ -3,12 +3,11 @@ package gg.warcraft.monolith.app.item;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.attribute.Attribute;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.item.ItemReader;
 import gg.warcraft.monolith.api.util.StringUtils;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class SimpleItemReader implements ItemReader {
     private final StringUtils stringUtils;
@@ -27,13 +26,13 @@ public class SimpleItemReader implements ItemReader {
             return null;
         }
 
-        List<String> lore = item.getLore();
-        if (lore.isEmpty()) {
+        String[] lore = item.tooltip();
+        if (lore.length == 0) {
             return null;
         }
 
-        if (lore.size() == 1 || stringUtils.removeChatCodes(lore.get(1)).isEmpty()) {
-            return stringUtils.removeChatCodes(lore.get(0));
+        if (lore.length == 1 || stringUtils.removeChatCodes(lore[1]).isEmpty()) {
+            return stringUtils.removeChatCodes(lore[0]);
         }
         return null;
     }
@@ -44,7 +43,7 @@ public class SimpleItemReader implements ItemReader {
             return 0;
         }
 
-        List<String> lore = item.getLore();
+        String[] lore = item.tooltip();
         for (String line : lore) {
             if (line.contains(attribute.getName())) {
                 String rawLine = stringUtils.removeChatCodes(line);

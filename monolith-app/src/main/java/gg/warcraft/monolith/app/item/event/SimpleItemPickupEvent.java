@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.app.item.event;
 
 import gg.warcraft.monolith.api.entity.EntityType;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.item.event.AbstractItemEvent;
 import gg.warcraft.monolith.api.item.event.ItemPickupEvent;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import java.util.UUID;
 
