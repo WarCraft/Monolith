@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class SpigotInventory implements Inventory {
     private final SpigotItemMapper itemMapper;
@@ -26,10 +25,10 @@ public class SpigotInventory implements Inventory {
 
     @Override
     public List<Item> getItems() {
-        return Arrays.stream(inventory.getContents())
-                .filter(Objects::nonNull)
-                .map(itemMapper::map)
-                .collect(Collectors.toList());
+        return null; // TODO Arrays.stream(inventory.getContents())
+//                .filter(Objects::nonNull)
+//                .map(itemMapper::map)
+//                .collect(Collectors.toList());
     }
 
     @Override
@@ -45,9 +44,10 @@ public class SpigotInventory implements Inventory {
                 .map(itemMapper::map)
                 .toArray(ItemStack[]::new);
         Map<Integer, ItemStack> excessItems = inventory.addItem(spigotItems);
-        return excessItems.values().stream()
-                .map(itemMapper::map)
-                .collect(Collectors.toList());
+        return null;
+        // TODO return excessItems.values().stream()
+//                .map(itemMapper::map)
+//                .collect(Collectors.toList());
     }
 
     @Override
@@ -65,13 +65,13 @@ public class SpigotInventory implements Inventory {
     @Override
     public boolean contains(Item item) {
         ItemStack spigotItem = itemMapper.map(item);
-        return inventory.contains(spigotItem, item.getStackSize());
+        return inventory.contains(spigotItem, 1); // TODO item.getStackSize());
     }
 
     @Override
     public boolean remove(Item item) {
         ItemStack spigotItem = itemMapper.map(item);
-        if (inventory.containsAtLeast(spigotItem, item.getStackSize())) {
+        if (inventory.containsAtLeast(spigotItem, 1)) { // TODO item.getStackSize())) {
             inventory.removeItem(spigotItem);
             return true;
         }
