@@ -3,11 +3,11 @@ package gg.warcraft.monolith.app.menu;
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import gg.warcraft.monolith.api.item.ItemType;
 import gg.warcraft.monolith.api.menu.Button;
 import gg.warcraft.monolith.api.menu.ButtonBuilder;
 import gg.warcraft.monolith.api.menu.Click;
 import gg.warcraft.monolith.api.util.ColorCode;
+import gg.warcraft.monolith.api.world.item.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;

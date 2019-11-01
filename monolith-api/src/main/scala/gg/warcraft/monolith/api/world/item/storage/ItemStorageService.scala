@@ -3,9 +3,6 @@ package gg.warcraft.monolith.api.world.item.storage
 import java.util.UUID
 
 import gg.warcraft.monolith.api.world.item.Item
-import io.circe.generic.auto._
-import io.circe.parser._
-import io.circe.syntax._
 
 class ItemStorageService {
   private final val emptyMap = Map.empty[UUID, StoredItem]
@@ -14,9 +11,10 @@ class ItemStorageService {
     ItemStorageService.storage.getOrElse(playerId, emptyMap).values
 
   def store(item: Item, playerId: UUID): UUID = {
+    val clazz = item.getClass
     val storedItem = StoredItem(
       UUID.randomUUID(),
-      item.asJson.noSpaces,
+      "", // TODO item.asJson.noSpaces,
       item.getClass.getCanonicalName
     )
 
@@ -32,7 +30,7 @@ class ItemStorageService {
   def claim(itemId: UUID, playerId: UUID): Boolean = {
     val json = ""
     // TODO get item from persistence
-    val item = decode[Item](json)
+    // val item = decode[Item](json)
 
     false
   }

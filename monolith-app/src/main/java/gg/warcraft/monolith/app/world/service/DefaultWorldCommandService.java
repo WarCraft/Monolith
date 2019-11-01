@@ -1,12 +1,12 @@
 package gg.warcraft.monolith.app.world.service;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.Sound;
 import gg.warcraft.monolith.api.world.SoundCategory;
 import gg.warcraft.monolith.api.world.block.Block;
+import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 

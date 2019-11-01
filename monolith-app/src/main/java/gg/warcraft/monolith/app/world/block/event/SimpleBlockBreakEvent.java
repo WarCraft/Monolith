@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.app.world.block.event;
 
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.event.AbstractBlockEvent;
 import gg.warcraft.monolith.api.world.block.event.BlockBreakEvent;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;

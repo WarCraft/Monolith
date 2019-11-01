@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.app.menu;
 
-import gg.warcraft.monolith.api.item.ItemType;
 import gg.warcraft.monolith.api.menu.Button;
 import gg.warcraft.monolith.api.menu.Click;
+import gg.warcraft.monolith.api.world.item.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;

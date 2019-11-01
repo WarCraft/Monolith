@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.entity.event;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.event.AbstractEntityEvent;
 import gg.warcraft.monolith.api.entity.event.EntityDeathEvent;
-import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;

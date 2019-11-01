@@ -2,7 +2,7 @@ package gg.warcraft.monolith.app.entity;
 
 import gg.warcraft.monolith.api.entity.Equipment;
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
-import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.world.item.Item;
 
 public class SimpleEquipment implements Equipment {
     private final Item head;
