@@ -922,10 +922,6 @@ class SpigotBlockVariantMapper {
     case _: Comparator => Material.COMPARATOR
     case _: NoteBlock  => Material.NOTE_BLOCK
 
-    // TODO map WALL_SIGN
-    // TODO map WALL_MOB_HEAD
-    // TODO map CORAL types
-
     case it: VariableBlock[_] => map(it.variant)
   }
 
