@@ -107,8 +107,8 @@ class SpigotWorldService @Inject()(
     val spigotLocation = locationMapper.map(location)
     val spigotWorld = spigotLocation.getWorld
 
-    null
-    /* TODO
+    throw new IllegalStateException()
+    /*
     org.bukkit.Location spigotLocation = locationMapper.map(location);
         org.bukkit.World spigotWorld = spigotLocation.getWorld();
         Vector spigotDirection = new Vector(direction.x(), direction.y(), direction.z());
@@ -121,4 +121,6 @@ class SpigotWorldService @Inject()(
         return arrow.getUniqueId();
    */
   }
+
+  // TODO add dropItems method
 }
