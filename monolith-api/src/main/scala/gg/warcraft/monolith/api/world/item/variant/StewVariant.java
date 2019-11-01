@@ -6,5 +6,5 @@ public enum StewVariant implements ItemVariant {
     BEETROOT,
     MUSHROOM,
     RABBIT,
-    SUSPICOUS,
+    SUSPICIOUS,
 }
