@@ -369,13 +369,13 @@ final case class Brick(
 }
 
 final case class BrickBlock(
-    variant: BrickVariant,
+    variant: BrickBlockVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[BrickVariant]
+) extends VariableItem[BrickBlockVariant]
     with StackableItem {
   val `type` = ItemType.BRICK_BLOCK
 }

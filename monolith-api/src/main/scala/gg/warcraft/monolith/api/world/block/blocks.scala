@@ -131,9 +131,9 @@ final case class BrewingStand(
 
 final case class BrickBlock(
     location: BlockLocation,
-    variant: BrickVariant
-) extends VariableBlock[BrickVariant] {
-  override val `type` = BlockType.BRICK_BLOCK // TODO BRICKS?
+    variant: BrickBlockVariant
+) extends VariableBlock[BrickBlockVariant] {
+  override val `type` = BlockType.BRICK_BLOCK
 }
 
 final case class BubbleColumn(
