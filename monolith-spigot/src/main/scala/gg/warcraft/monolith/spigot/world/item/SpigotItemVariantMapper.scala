@@ -301,6 +301,14 @@ class SpigotItemVariantMapper @Inject() (
     // BEEF
     case BeefVariant.RAW    => Material.BEEF
     case BeefVariant.COOKED => Material.COOKED_BEEF
+      
+    // BOAT
+    case BoatVariant.ACACIA   => Material.ACACIA_BOAT
+    case BoatVariant.BIRCH    => Material.BIRCH_BOAT
+    case BoatVariant.DARK_OAK => Material.DARK_OAK_BOAT
+    case BoatVariant.JUNGLE   => Material.JUNGLE_BOAT
+    case BoatVariant.OAK      => Material.OAK_BOAT
+    case BoatVariant.SPRUCE   => Material.SPRUCE_BOAT
 
     // BOOTS
     case BootsVariant.LEATHER   => Material.LEATHER_BOOTS
