@@ -1,6 +1,12 @@
 package gg.warcraft.monolith.spigot.world.item
 
 import gg.warcraft.monolith.api.world.block.BlockVariant
+import gg.warcraft.monolith.api.world.block.variant.{
+  ButtonVariant,
+  DoorVariant,
+  PressurePlateVariant,
+  TrapdoorVariant
+}
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant._
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockVariantMapper
@@ -65,6 +71,16 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MILK_BUCKET  => BucketVariant.MILK
     case Material.WATER_BUCKET => BucketVariant.WATER
 
+    // BUTTON
+    case Material.ACACIA_BUTTON   => ButtonVariant.ACACIA
+    case Material.BIRCH_BUTTON    => ButtonVariant.BIRCH
+    case Material.DARK_OAK_BUTTON => ButtonVariant.DARK_OAK
+    case Material.JUNGLE_BUTTON   => ButtonVariant.JUNGLE
+    case Material.OAK_BUTTON      => ButtonVariant.OAK
+    case Material.SPRUCE_BUTTON   => ButtonVariant.SPRUCE
+
+    case Material.STONE_BUTTON => ButtonVariant.STONE
+
     // CHESTPLATE
     case Material.LEATHER_CHESTPLATE   => ChestplateVariant.LEATHER
     case Material.CHAINMAIL_CHESTPLATE => ChestplateVariant.CHAINMAIL
@@ -83,6 +99,16 @@ class SpigotItemVariantMapper @Inject() (
     // COD
     case Material.COD        => CodVariant.RAW
     case Material.COOKED_COD => CodVariant.COOKED
+
+    // DOOR
+    case Material.ACACIA_DOOR   => DoorVariant.ACACIA
+    case Material.BIRCH_DOOR    => DoorVariant.BIRCH
+    case Material.DARK_OAK_DOOR => DoorVariant.DARK_OAK
+    case Material.JUNGLE_DOOR   => DoorVariant.JUNGLE
+    case Material.OAK_DOOR      => DoorVariant.OAK
+    case Material.SPRUCE_DOOR   => DoorVariant.SPRUCE
+
+    case Material.IRON_DOOR => DoorVariant.IRON
 
     // HELMET
     case Material.LEATHER_HELMET   => HelmetVariant.LEATHER
@@ -158,6 +184,16 @@ class SpigotItemVariantMapper @Inject() (
     case Material.POTION           => PotionVariant.NORMAL
     case Material.LINGERING_POTION => PotionVariant.LINGERING
     case Material.SPLASH_POTION    => PotionVariant.SPLASH
+
+    // PRESSURE_PLATE
+    case Material.ACACIA_PRESSURE_PLATE   => PressurePlateVariant.ACACIA
+    case Material.BIRCH_PRESSURE_PLATE    => PressurePlateVariant.BIRCH
+    case Material.DARK_OAK_PRESSURE_PLATE => PressurePlateVariant.DARK_OAK
+    case Material.JUNGLE_PRESSURE_PLATE   => PressurePlateVariant.JUNGLE
+    case Material.OAK_PRESSURE_PLATE      => PressurePlateVariant.OAK
+    case Material.SPRUCE_PRESSURE_PLATE   => PressurePlateVariant.SPRUCE
+
+    case Material.STONE_PRESSURE_PLATE => PressurePlateVariant.STONE
 
     // RABBIT
     case Material.RABBIT        => RabbitVariant.RAW
@@ -269,6 +305,16 @@ class SpigotItemVariantMapper @Inject() (
     case Material.GOLDEN_SWORD  => SwordVariant.GOLD
     case Material.DIAMOND_SWORD => SwordVariant.DIAMOND
 
+    // TRAPDOOR
+    case Material.ACACIA_TRAPDOOR   => TrapdoorVariant.ACACIA
+    case Material.BIRCH_TRAPDOOR    => TrapdoorVariant.BIRCH
+    case Material.DARK_OAK_TRAPDOOR => TrapdoorVariant.DARK_OAK
+    case Material.JUNGLE_TRAPDOOR   => TrapdoorVariant.JUNGLE
+    case Material.OAK_TRAPDOOR      => TrapdoorVariant.OAK
+    case Material.SPRUCE_TRAPDOOR   => TrapdoorVariant.SPRUCE
+
+    case Material.IRON_TRAPDOOR => TrapdoorVariant.IRON
+
     case it: Material => blockMapper.map(it).asInstanceOf[ItemVariant]
   }
 
@@ -301,7 +347,7 @@ class SpigotItemVariantMapper @Inject() (
     // BEEF
     case BeefVariant.RAW    => Material.BEEF
     case BeefVariant.COOKED => Material.COOKED_BEEF
-      
+
     // BOAT
     case BoatVariant.ACACIA   => Material.ACACIA_BOAT
     case BoatVariant.BIRCH    => Material.BIRCH_BOAT
@@ -333,6 +379,16 @@ class SpigotItemVariantMapper @Inject() (
     case BucketVariant.MILK  => Material.MILK_BUCKET
     case BucketVariant.WATER => Material.WATER_BUCKET
 
+    // BUTTON
+    case ButtonVariant.ACACIA   => Material.ACACIA_BUTTON
+    case ButtonVariant.BIRCH    => Material.BIRCH_BUTTON
+    case ButtonVariant.DARK_OAK => Material.DARK_OAK_BUTTON
+    case ButtonVariant.JUNGLE   => Material.JUNGLE_BUTTON
+    case ButtonVariant.OAK      => Material.OAK_BUTTON
+    case ButtonVariant.SPRUCE   => Material.SPRUCE_BUTTON
+
+    case ButtonVariant.STONE => Material.STONE_BUTTON
+
     // CHESTPLATE
     case ChestplateVariant.LEATHER   => Material.LEATHER_CHESTPLATE
     case ChestplateVariant.CHAINMAIL => Material.CHAINMAIL_CHESTPLATE
@@ -351,6 +407,16 @@ class SpigotItemVariantMapper @Inject() (
     // COD
     case CodVariant.RAW    => Material.COD
     case CodVariant.COOKED => Material.COOKED_COD
+
+    // DOOR
+    case DoorVariant.ACACIA   => Material.ACACIA_DOOR
+    case DoorVariant.BIRCH    => Material.BIRCH_DOOR
+    case DoorVariant.DARK_OAK => Material.DARK_OAK_DOOR
+    case DoorVariant.JUNGLE   => Material.JUNGLE_DOOR
+    case DoorVariant.OAK      => Material.OAK_DOOR
+    case DoorVariant.SPRUCE   => Material.SPRUCE_DOOR
+
+    case DoorVariant.IRON => Material.IRON_DOOR
 
     // HELMET
     case HelmetVariant.LEATHER   => Material.LEATHER_HELMET
@@ -426,6 +492,16 @@ class SpigotItemVariantMapper @Inject() (
     case PotionVariant.NORMAL    => Material.POTION
     case PotionVariant.LINGERING => Material.LINGERING_POTION
     case PotionVariant.SPLASH    => Material.SPLASH_POTION
+
+    // PRESSURE_PLATE
+    case PressurePlateVariant.ACACIA   => Material.ACACIA_PRESSURE_PLATE
+    case PressurePlateVariant.BIRCH    => Material.BIRCH_PRESSURE_PLATE
+    case PressurePlateVariant.DARK_OAK => Material.DARK_OAK_PRESSURE_PLATE
+    case PressurePlateVariant.JUNGLE   => Material.JUNGLE_PRESSURE_PLATE
+    case PressurePlateVariant.OAK      => Material.OAK_PRESSURE_PLATE
+    case PressurePlateVariant.SPRUCE   => Material.SPRUCE_PRESSURE_PLATE
+
+    case PressurePlateVariant.STONE => Material.STONE_PRESSURE_PLATE
 
     // RABBIT
     case RabbitVariant.RAW    => Material.RABBIT
@@ -536,6 +612,16 @@ class SpigotItemVariantMapper @Inject() (
     case SwordVariant.IRON    => Material.IRON_SWORD
     case SwordVariant.GOLD    => Material.GOLDEN_SWORD
     case SwordVariant.DIAMOND => Material.DIAMOND_SWORD
+
+    // TRAPDOOR
+    case TrapdoorVariant.ACACIA   => Material.ACACIA_TRAPDOOR
+    case TrapdoorVariant.BIRCH    => Material.BIRCH_TRAPDOOR
+    case TrapdoorVariant.DARK_OAK => Material.DARK_OAK_TRAPDOOR
+    case TrapdoorVariant.JUNGLE   => Material.JUNGLE_TRAPDOOR
+    case TrapdoorVariant.OAK      => Material.OAK_TRAPDOOR
+    case TrapdoorVariant.SPRUCE   => Material.SPRUCE_TRAPDOOR
+
+    case TrapdoorVariant.IRON => Material.IRON_TRAPDOOR
 
     case it: BlockVariant => blockMapper.map(it)
   }
