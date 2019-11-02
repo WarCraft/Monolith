@@ -2006,7 +2006,7 @@ final case class MobHead(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[MobHead]
+) extends VariableItem[MobHeadVariant]
     with StackableItem {
   val `type` = ItemType.MOB_HEAD
 }
