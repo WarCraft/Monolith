@@ -11,12 +11,17 @@ class SpigotItemVariantMapper @Inject() (
     blockMapper: SpigotBlockVariantMapper
 ) {
   def map(material: Material): ItemVariant = material match {
-    // ARMOR TODO make all armor variants
-
     // ARROW
     case Material.ARROW          => ArrowVariant.NORMAL
     case Material.SPECTRAL_ARROW => ArrowVariant.SPECTRAL
     case Material.TIPPED_ARROW   => ArrowVariant.TIPPED
+
+    // AXE
+    case Material.WOODEN_AXE  => AxeVariant.WOOD
+    case Material.STONE_AXE   => AxeVariant.STONE
+    case Material.IRON_AXE    => AxeVariant.IRON
+    case Material.GOLDEN_AXE  => AxeVariant.GOLD
+    case Material.DIAMOND_AXE => AxeVariant.DIAMOND
 
     // BANNER_PATTERN
     case Material.CREEPER_BANNER_PATTERN => BannerPatternVariant.CREEPER
@@ -32,6 +37,13 @@ class SpigotItemVariantMapper @Inject() (
     case Material.JUNGLE_BOAT   => BoatVariant.JUNGLE
     case Material.OAK_BOAT      => BoatVariant.OAK
     case Material.SPRUCE_BOAT   => BoatVariant.SPRUCE
+
+    // BOOTS
+    case Material.LEATHER_BOOTS   => BootsVariant.LEATHER
+    case Material.CHAINMAIL_BOOTS => BootsVariant.CHAINMAIL
+    case Material.IRON_BOOTS      => BootsVariant.IRON
+    case Material.GOLDEN_BOOTS    => BootsVariant.GOLD
+    case Material.DIAMOND_BOOTS   => BootsVariant.DIAMOND
 
     // BRICK
     case Material.BRICK        => BrickVariant.NORMAL
@@ -49,11 +61,39 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MILK_BUCKET  => BucketVariant.MILK
     case Material.WATER_BUCKET => BucketVariant.WATER
 
+    // CHESTPLATE
+    case Material.LEATHER_CHESTPLATE   => ChestplateVariant.LEATHER
+    case Material.CHAINMAIL_CHESTPLATE => ChestplateVariant.CHAINMAIL
+    case Material.IRON_CHESTPLATE      => ChestplateVariant.IRON
+    case Material.GOLDEN_CHESTPLATE    => ChestplateVariant.GOLD
+    case Material.DIAMOND_CHESTPLATE   => ChestplateVariant.DIAMOND
+
+    // HELMET
+    case Material.LEATHER_HELMET   => HelmetVariant.LEATHER
+    case Material.CHAINMAIL_HELMET => HelmetVariant.CHAINMAIL
+    case Material.IRON_HELMET      => HelmetVariant.IRON
+    case Material.GOLDEN_HELMET    => HelmetVariant.GOLD
+    case Material.DIAMOND_HELMET   => HelmetVariant.DIAMOND
+
+    // HOE
+    case Material.WOODEN_HOE  => HoeVariant.WOOD
+    case Material.STONE_HOE   => HoeVariant.STONE
+    case Material.IRON_HOE    => HoeVariant.IRON
+    case Material.GOLDEN_HOE  => HoeVariant.GOLD
+    case Material.DIAMOND_HOE => HoeVariant.DIAMOND
+
     // HORSE_ARMOR
     case Material.LEATHER_HORSE_ARMOR => HorseArmorVariant.LEATHER
     case Material.IRON_HORSE_ARMOR    => HorseArmorVariant.IRON
     case Material.GOLDEN_HORSE_ARMOR  => HorseArmorVariant.GOLD
     case Material.DIAMOND_HORSE_ARMOR => HorseArmorVariant.DIAMOND
+
+    // LEGGINGS
+    case Material.LEATHER_LEGGINGS   => LeggingsVariant.LEATHER
+    case Material.CHAINMAIL_LEGGINGS => LeggingsVariant.CHAINMAIL
+    case Material.IRON_LEGGINGS      => LeggingsVariant.IRON
+    case Material.GOLDEN_LEGGINGS    => LeggingsVariant.GOLD
+    case Material.DIAMOND_LEGGINGS   => LeggingsVariant.DIAMOND
 
     // MINECART
     case Material.MINECART => MinecartVariant.EMPTY
@@ -78,6 +118,13 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MUSIC_DISC_WAIT    => MusicDiscVariant.DISC_WAIT
     case Material.MUSIC_DISC_WARD    => MusicDiscVariant.DISC_WARD
 
+    // PICKAXE
+    case Material.WOODEN_PICKAXE  => PickaxeVariant.WOOD
+    case Material.STONE_PICKAXE   => PickaxeVariant.STONE
+    case Material.IRON_PICKAXE    => PickaxeVariant.IRON
+    case Material.GOLDEN_PICKAXE  => PickaxeVariant.GOLD
+    case Material.DIAMOND_PICKAXE => PickaxeVariant.DIAMOND
+
     // POTION
     case Material.POTION           => PotionVariant.NORMAL
     case Material.LINGERING_POTION => PotionVariant.LINGERING
@@ -96,6 +143,13 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MELON_SEEDS    => SeedsVariant.MELON
     case Material.PUMPKIN_SEEDS  => SeedsVariant.PUMPKIN
     case Material.WHEAT_SEEDS    => SeedsVariant.WHEAT
+
+    // SHOVEL
+    case Material.WOODEN_SHOVEL  => ShovelVariant.WOOD
+    case Material.STONE_SHOVEL   => ShovelVariant.STONE
+    case Material.IRON_SHOVEL    => ShovelVariant.IRON
+    case Material.GOLDEN_SHOVEL  => ShovelVariant.GOLD
+    case Material.DIAMOND_SHOVEL => ShovelVariant.DIAMOND
 
     // SPAWN_EGG
     case Material.BAT_SPAWN_EGG              => SpawnEggVariant.BAT
@@ -167,7 +221,12 @@ class SpigotItemVariantMapper @Inject() (
     case Material.STRUCTURE_BLOCK => StructureBlockVariant.BLOCK
     case Material.STRUCTURE_VOID  => StructureBlockVariant.VOID
 
-    // TOOL TODO make all tool variants
+    // SWORD
+    case Material.WOODEN_SWORD  => SwordVariant.WOOD
+    case Material.STONE_SWORD   => SwordVariant.STONE
+    case Material.IRON_SWORD    => SwordVariant.IRON
+    case Material.GOLDEN_SWORD  => SwordVariant.GOLD
+    case Material.DIAMOND_SWORD => SwordVariant.DIAMOND
 
     case it: Material => blockMapper.map(it).asInstanceOf[ItemVariant]
   }
@@ -179,12 +238,17 @@ class SpigotItemVariantMapper @Inject() (
   }
 
   def map(variant: ItemVariant): Material = variant match {
-    // ARMOR TODO make all armor variants
-
     // ARROW
     case ArrowVariant.NORMAL   => Material.ARROW
     case ArrowVariant.SPECTRAL => Material.SPECTRAL_ARROW
     case ArrowVariant.TIPPED   => Material.TIPPED_ARROW
+
+    // AXE
+    case AxeVariant.WOOD    => Material.WOODEN_AXE
+    case AxeVariant.STONE   => Material.STONE_AXE
+    case AxeVariant.IRON    => Material.IRON_AXE
+    case AxeVariant.GOLD    => Material.GOLDEN_AXE
+    case AxeVariant.DIAMOND => Material.DIAMOND_AXE
 
     // BANNER_PATTERN
     case BannerPatternVariant.CREEPER => Material.CREEPER_BANNER_PATTERN
@@ -192,6 +256,13 @@ class SpigotItemVariantMapper @Inject() (
     case BannerPatternVariant.GLOBE   => Material.GLOBE_BANNER_PATTERN
     case BannerPatternVariant.MOJANG  => Material.MOJANG_BANNER_PATTERN
     case BannerPatternVariant.SKULL   => Material.SKULL_BANNER_PATTERN
+
+    // BOOTS
+    case BootsVariant.LEATHER   => Material.LEATHER_BOOTS
+    case BootsVariant.CHAINMAIL => Material.CHAINMAIL_BOOTS
+    case BootsVariant.IRON      => Material.IRON_BOOTS
+    case BootsVariant.GOLD      => Material.GOLDEN_BOOTS
+    case BootsVariant.DIAMOND   => Material.DIAMOND_BOOTS
 
     // BRICK
     case BrickVariant.NORMAL => Material.BRICK
@@ -209,11 +280,39 @@ class SpigotItemVariantMapper @Inject() (
     case BucketVariant.MILK  => Material.MILK_BUCKET
     case BucketVariant.WATER => Material.WATER_BUCKET
 
+    // HOE
+    case HoeVariant.WOOD    => Material.WOODEN_HOE
+    case HoeVariant.STONE   => Material.STONE_HOE
+    case HoeVariant.IRON    => Material.IRON_HOE
+    case HoeVariant.GOLD    => Material.GOLDEN_HOE
+    case HoeVariant.DIAMOND => Material.DIAMOND_HOE
+
+    // HELMET
+    case HelmetVariant.LEATHER   => Material.LEATHER_HELMET
+    case HelmetVariant.CHAINMAIL => Material.CHAINMAIL_HELMET
+    case HelmetVariant.IRON      => Material.IRON_HELMET
+    case HelmetVariant.GOLD      => Material.GOLDEN_HELMET
+    case HelmetVariant.DIAMOND   => Material.DIAMOND_HELMET
+
+    // HOE
+    case HoeVariant.WOOD    => Material.WOODEN_HOE
+    case HoeVariant.STONE   => Material.STONE_HOE
+    case HoeVariant.IRON    => Material.IRON_HOE
+    case HoeVariant.GOLD    => Material.GOLDEN_HOE
+    case HoeVariant.DIAMOND => Material.DIAMOND_HOE
+
     // HORSE_ARMOR
     case HorseArmorVariant.LEATHER => Material.LEATHER_HORSE_ARMOR
     case HorseArmorVariant.IRON    => Material.IRON_HORSE_ARMOR
     case HorseArmorVariant.GOLD    => Material.GOLDEN_HORSE_ARMOR
     case HorseArmorVariant.DIAMOND => Material.DIAMOND_HORSE_ARMOR
+
+    // LEGGINGS
+    case LeggingsVariant.LEATHER   => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.CHAINMAIL => Material.CHAINMAIL_LEGGINGS
+    case LeggingsVariant.IRON      => Material.IRON_LEGGINGS
+    case LeggingsVariant.GOLD      => Material.GOLDEN_LEGGINGS
+    case LeggingsVariant.DIAMOND   => Material.DIAMOND_LEGGINGS
 
     // MINECART
     case MinecartVariant.EMPTY => Material.MINECART
@@ -238,6 +337,13 @@ class SpigotItemVariantMapper @Inject() (
     case MusicDiscVariant.DISC_WAIT    => Material.MUSIC_DISC_WAIT
     case MusicDiscVariant.DISC_WARD    => Material.MUSIC_DISC_WARD
 
+    // PICKAXE
+    case PickaxeVariant.WOOD    => Material.WOODEN_PICKAXE
+    case PickaxeVariant.STONE   => Material.STONE_PICKAXE
+    case PickaxeVariant.IRON    => Material.IRON_PICKAXE
+    case PickaxeVariant.GOLD    => Material.GOLDEN_PICKAXE
+    case PickaxeVariant.DIAMOND => Material.DIAMOND_PICKAXE
+
     // POTION
     case PotionVariant.NORMAL    => Material.POTION
     case PotionVariant.LINGERING => Material.LINGERING_POTION
@@ -256,6 +362,13 @@ class SpigotItemVariantMapper @Inject() (
     case SeedsVariant.MELON    => Material.MELON_SEEDS
     case SeedsVariant.PUMPKIN  => Material.PUMPKIN_SEEDS
     case SeedsVariant.WHEAT    => Material.WHEAT_SEEDS
+
+    // SHOVEL
+    case ShovelVariant.WOOD    => Material.WOODEN_SHOVEL
+    case ShovelVariant.STONE   => Material.STONE_SHOVEL
+    case ShovelVariant.IRON    => Material.IRON_SHOVEL
+    case ShovelVariant.GOLD    => Material.GOLDEN_SHOVEL
+    case ShovelVariant.DIAMOND => Material.DIAMOND_SHOVEL
 
     // SPAWN_EGG
     case SpawnEggVariant.BAT              => Material.BAT_SPAWN_EGG
@@ -327,7 +440,12 @@ class SpigotItemVariantMapper @Inject() (
     case StructureBlockVariant.BLOCK => Material.STRUCTURE_BLOCK
     case StructureBlockVariant.VOID  => Material.STRUCTURE_VOID
 
-    // TOOL TODO make all tool variants
+    // SWORD
+    case SwordVariant.WOOD    => Material.WOODEN_SWORD
+    case SwordVariant.STONE   => Material.STONE_SWORD
+    case SwordVariant.IRON    => Material.IRON_SWORD
+    case SwordVariant.GOLD    => Material.GOLDEN_SWORD
+    case SwordVariant.DIAMOND => Material.DIAMOND_SWORD
 
     case it: BlockVariant => blockMapper.map(it)
   }

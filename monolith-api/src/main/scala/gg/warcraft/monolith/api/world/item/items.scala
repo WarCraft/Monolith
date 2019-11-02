@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.item
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item
-import gg.warcraft.monolith.api.world.item.variant.{ StructureBlockVariant, _ }
+import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 
 final case class Andesite(
     variant: StoniteVariant,
@@ -63,13 +63,14 @@ final case class Arrow(
 }
 
 final case class Axe(
-    variant: ToolVariant,
+    variant: AxeVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[AxeVariant]
+    with StackableItem {
   val `type` = ItemType.AXE
 }
 
@@ -303,13 +304,14 @@ final case class Bookshelf(
 }
 
 final case class Boots(
-    variant: ArmorVariant,
+    variant: BootsVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[BootsVariant]
+    with StackableItem {
   val `type` = ItemType.BOOTS
 }
 
@@ -513,13 +515,14 @@ final case class Chest(
 }
 
 final case class Chestplate(
-    variant: ArmorVariant,
+    variant: ChestplateVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[ChestplateVariant]
+    with StackableItem {
   val `type` = ItemType.CHESTPLATE
 }
 
@@ -1538,24 +1541,26 @@ final case class HeartOfTheSea(
 }
 
 final case class Helmet(
-    variant: ArmorVariant,
+    variant: HelmetVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[HelmetVariant]
+    with StackableItem {
   val `type` = ItemType.HELMET
 }
 
 final case class Hoe(
-    variant: ToolVariant,
+    variant: HoeVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[HoeVariant]
+    with StackableItem {
   val `type` = ItemType.HOE
 }
 
@@ -1816,13 +1821,14 @@ final case class Lectern(
 }
 
 final case class Leggings(
-    variant: ArmorVariant,
+    variant: LeggingsVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[LeggingsVariant]
+    with StackableItem {
   val `type` = ItemType.LEGGINGS
 }
 
@@ -2137,13 +2143,14 @@ final case class Plant(
 }
 
 final case class Pickaxe(
-    variant: ToolVariant,
+    variant: PickaxeVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[PickaxeVariant]
+    with StackableItem {
   val `type` = ItemType.PICKAXE
 }
 
@@ -2622,13 +2629,14 @@ final case class Shield(
 }
 
 final case class Shovel(
-    variant: ToolVariant,
+    variant: ShovelVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[ShovelVariant]
+    with StackableItem {
   val `type` = ItemType.SHOVEL
 }
 
@@ -2916,13 +2924,14 @@ final case class SweetBerries(
 }
 
 final case class Sword(
-    variant: ToolVariant,
+    variant: SwordVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[SwordVariant]
+    with StackableItem {
   val `type` = ItemType.SWORD
 }
 

@@ -24,6 +24,14 @@ object Extensions {
       Material.TIPPED_ARROW
     )
 
+    private final val axe = util.EnumSet.of(
+      Material.WOODEN_AXE,
+      Material.STONE_AXE,
+      Material.IRON_AXE,
+      Material.GOLDEN_AXE,
+      Material.DIAMOND_AXE
+    )
+
     private final val banner = util.EnumSet.of(
       Material.BLACK_BANNER,
       Material.BLUE_BANNER,
@@ -98,6 +106,14 @@ object Extensions {
       Material.SPRUCE_BOAT
     )
 
+    private final val boots = util.EnumSet.of(
+      Material.LEATHER_BOOTS,
+      Material.CHAINMAIL_BOOTS,
+      Material.IRON_BOOTS,
+      Material.GOLDEN_BOOTS,
+      Material.DIAMOND_BOOTS
+    )
+
     private final val brick = util.EnumSet.of(
       Material.BRICK,
       Material.NETHER_BRICK
@@ -158,6 +174,14 @@ object Extensions {
       Material.CHEST,
       Material.ENDER_CHEST,
       Material.TRAPPED_CHEST
+    )
+
+    private final val chestplate = util.EnumSet.of(
+      Material.LEATHER_CHESTPLATE,
+      Material.CHAINMAIL_CHESTPLATE,
+      Material.IRON_CHESTPLATE,
+      Material.GOLDEN_CHESTPLATE,
+      Material.DIAMOND_CHESTPLATE
     )
 
     private final val commandBlock = util.EnumSet.of(
@@ -423,6 +447,22 @@ object Extensions {
       Material.TALL_GRASS
     )
 
+    private final val helmet = util.EnumSet.of(
+      Material.LEATHER_HELMET,
+      Material.CHAINMAIL_HELMET,
+      Material.IRON_HELMET,
+      Material.GOLDEN_HELMET,
+      Material.DIAMOND_HELMET
+    )
+
+    private final val hoe = util.EnumSet.of(
+      Material.WOODEN_HOE,
+      Material.STONE_HOE,
+      Material.IRON_HOE,
+      Material.GOLDEN_HOE,
+      Material.DIAMOND_HOE
+    )
+
     private final val horseArmor = util.EnumSet.of(
       Material.LEATHER_HORSE_ARMOR,
       Material.IRON_HORSE_ARMOR,
@@ -452,6 +492,14 @@ object Extensions {
       Material.JUNGLE_LEAVES,
       Material.OAK_LEAVES,
       Material.SPRUCE_LEAVES
+    )
+
+    private final val leggings = util.EnumSet.of(
+      Material.LEATHER_LEGGINGS,
+      Material.CHAINMAIL_LEGGINGS,
+      Material.IRON_LEGGINGS,
+      Material.GOLDEN_LEGGINGS,
+      Material.DIAMOND_LEGGINGS
     )
 
     private final val log = util.EnumSet.of(
@@ -520,6 +568,14 @@ object Extensions {
       Material.MUSIC_DISC_STRAD,
       Material.MUSIC_DISC_WAIT,
       Material.MUSIC_DISC_WARD
+    )
+
+    private final val pickaxe = util.EnumSet.of(
+      Material.WOODEN_PICKAXE,
+      Material.STONE_PICKAXE,
+      Material.IRON_PICKAXE,
+      Material.GOLDEN_PICKAXE,
+      Material.DIAMOND_PICKAXE
     )
 
     private final val pillar = util.EnumSet.of(
@@ -614,6 +670,14 @@ object Extensions {
       Material.MELON_SEEDS,
       Material.PUMPKIN_SEEDS,
       Material.WHEAT_SEEDS
+    )
+
+    private final val shovel = util.EnumSet.of(
+      Material.WOODEN_SHOVEL,
+      Material.STONE_SHOVEL,
+      Material.IRON_SHOVEL,
+      Material.GOLDEN_SHOVEL,
+      Material.DIAMOND_SHOVEL
     )
 
     private final val shulkerBox = util.EnumSet.of(
@@ -711,6 +775,14 @@ object Extensions {
       Material.MUSHROOM_STEW,
       Material.RABBIT_STEW,
       Material.SUSPICIOUS_STEW
+    )
+
+    private final val sword = util.EnumSet.of(
+      Material.WOODEN_SWORD,
+      Material.STONE_SWORD,
+      Material.IRON_SWORD,
+      Material.GOLDEN_SWORD,
+      Material.DIAMOND_SWORD
     )
 
     private final val wallSign = util.EnumSet.of(
@@ -911,7 +983,9 @@ object Extensions {
     def isAir: Boolean = air.contains(material)
     def isAnvil: Boolean = anvil.contains(material)
     def isArrow: Boolean = arrow.contains(material)
+    def isAxe: Boolean = axe.contains(material)
     def isBanner: Boolean = banner.contains(material)
+    def isBoots: Boolean = boots.contains(material)
     def isBucket: Boolean = bucket.contains(material)
     def isWallBanner: Boolean = wallBanner.contains(material)
     def isBannerPattern: Boolean = bannerPattern.contains(material)
@@ -923,6 +997,7 @@ object Extensions {
     def isCarpet: Boolean = carpet.contains(material)
     def isCobblestone: Boolean = cobblestone.contains(material)
     def isChest: Boolean = chest.contains(material)
+    def isChestplate: Boolean = chestplate.contains(material)
     def isCommandBlock: Boolean = commandBlock.contains(material)
     def isConcrete: Boolean = concrete.contains(material)
     def isConcretePowder: Boolean = concretePowder.contains(material)
@@ -942,10 +1017,13 @@ object Extensions {
     def isGlassPane: Boolean = glassPane.contains(material)
     def isGlazedTerracotta: Boolean = glazedTerracotta.contains(material)
     def isGrass: Boolean = grass.contains(material)
+    def isHelmet: Boolean = helmet.contains(material)
+    def isHoe: Boolean = hoe.contains(material)
     def isHorseArmor: Boolean = horseArmor.contains(material)
     def isIce: Boolean = ice.contains(material)
     def isInfestedBlock: Boolean = infestedBlock.contains(material)
     def isLeaves: Boolean = leaves.contains(material)
+    def isLeggings: Boolean = leggings.contains(material)
     def isLog: Boolean = log.contains(material)
     def isMinecart: Boolean = minecart.contains(material)
     def isMobHead: Boolean = mobHead.contains(material)
@@ -953,6 +1031,7 @@ object Extensions {
     def isMushroom: Boolean = mushroom.contains(material)
     def isMushroomBlock: Boolean = mushroomBlock.contains(material)
     def isMusicDisc: Boolean = musicDisc.contains(material)
+    def isPickaxe: Boolean = pickaxe.contains(material)
     def isPillar: Boolean = pillar.contains(material)
     def isPlanks: Boolean = planks.contains(material)
     def isPlant: Boolean = plant.contains(material)
@@ -966,6 +1045,7 @@ object Extensions {
     def isSapling: Boolean = sapling.contains(material)
     def isSeagrass: Boolean = seagrass.contains(material)
     def isSeeds: Boolean = seeds.contains(material)
+    def isShovel: Boolean = shovel.contains(material)
     def isShulkerBox: Boolean = shulkerBox.contains(material)
     def isSign: Boolean = sign.contains(material)
     def isSpawnEgg: Boolean = spawnEgg.contains(material)
@@ -977,6 +1057,7 @@ object Extensions {
     def isStone: Boolean = stone.contains(material)
     def isStonite: Boolean = stonite.contains(material)
     def isStructureBlock: Boolean = structureBlock.contains(material)
+    def isSword: Boolean = sword.contains(material)
     def isTerracotta: Boolean = terracotta.contains(material)
     def isTrapdoor: Boolean = trapdoor.contains(material)
     def isWall: Boolean = wall.contains(material)

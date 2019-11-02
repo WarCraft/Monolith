@@ -3,7 +3,11 @@ package gg.warcraft.monolith.spigot.world.item
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.block.BlockColor
 import gg.warcraft.monolith.api.world.item._
-import gg.warcraft.monolith.api.world.item.variant.{SaplingVariant, _}
+import gg.warcraft.monolith.api.world.item.variant.{
+  SaplingVariant,
+  StructureBlockVariant,
+  _
+}
 import gg.warcraft.monolith.spigot.Extensions._
 import javax.inject.Inject
 import org.bukkit.Material
@@ -287,9 +291,11 @@ class SpigotItemMapper @Inject() (
 
       case m if m.isAnvil            => Anvil.tupled(p[AnvilVariant])
       case m if m.isArrow            => Arrow.tupled(p[ArrowVariant])
+      case m if m.isAxe              => Axe.tupled(p[AxeVariant])
       case m if m.isBanner           => Banner.tupled(colorParams)
       case m if m.isBed              => Bed.tupled(colorParams)
       case m if m.isBoat             => Boat.tupled(p[BoatVariant])
+      case m if m.isBoots            => Boots.tupled(p[BootsVariant])
       case m if m.isBrick            => Brick.tupled(p[BrickVariant])
       case m if m.isBrickBlock       => BrickBlock.tupled(p[BrickBlockVariant])
       case m if m.isBucket           => Bucket.tupled(p[BucketVariant])
@@ -297,6 +303,7 @@ class SpigotItemMapper @Inject() (
       case m if m.isCarpet           => Carpet.tupled(colorParams)
       case m if m.isCobblestone      => Cobblestone.tupled(p[CobblestoneVariant])
       case m if m.isChest            => Chest.tupled(p[ChestVariant])
+      case m if m.isChestplate       => Chestplate.tupled(p[ChestplateVariant])
       case m if m.isCommandBlock     => CommandBlock.tupled(p[CommandBlockVariant])
       case m if m.isConcrete         => Concrete.tupled(colorParams)
       case m if m.isConcretePowder   => ConcretePowder.tupled(colorParams)
@@ -312,14 +319,18 @@ class SpigotItemMapper @Inject() (
       case m if m.isGlass            => Glass.tupled(colorableParams)
       case m if m.isGlassPane        => GlassPane.tupled(colorableParams)
       case m if m.isGlazedTerracotta => GlazedTerracotta.tupled(colorParams)
+      case m if m.isHelmet           => Helmet.tupled(p[HelmetVariant])
+      case m if m.isHoe              => Hoe.tupled(p[HoeVariant])
       case m if m.isHorseArmor       => HorseArmor.tupled(p[HorseArmorVariant])
       case m if m.isIce              => Ice.tupled(p[IceVariant])
       case m if m.isLeaves           => Leaves.tupled(p[LeavesVariant])
+      case m if m.isLeggings         => Leggings.tupled(p[LeggingsVariant])
       case m if m.isLog              => Log.tupled(p[LogVariant])
       case m if m.isMinecart         => Minecart.tupled(p[MinecartVariant])
       case m if m.isMobHead          => MobHead.tupled(p[MobHeadVariant])
       case m if m.isMushroom         => Mushroom.tupled(p[MushroomVariant])
       case m if m.isMusicDisc        => MusicDisc.tupled(p[MusicDiscVariant])
+      case m if m.isPickaxe          => Pickaxe.tupled(p[PickaxeVariant])
       case m if m.isPillar           => Pillar.tupled(p[PillarVariant])
       case m if m.isPlanks           => Planks.tupled(p[PlanksVariant])
       case m if m.isPlant            => Plant.tupled(p[PlantVariant])
@@ -332,12 +343,14 @@ class SpigotItemMapper @Inject() (
       case m if m.isSapling          => Sapling.tupled(p[SaplingVariant])
       case m if m.isSeeds            => Seeds.tupled(p[SeedsVariant])
       case m if m.isShulkerBox       => ShulkerBox.tupled(colorableParams)
+      case m if m.isShovel           => Shovel.tupled(p[ShovelVariant])
       case m if m.isSign             => Sign.tupled(p[SignVariant])
       case m if m.isSlab             => Slab.tupled(p[SlabVariant])
       case m if m.isSpawnEgg         => SpawnEgg.tupled(p[SpawnEggVariant])
       case m if m.isStairs           => Stairs.tupled(p[StairsVariant])
       case m if m.isStew             => Stew.tupled(p[StewVariant])
       case m if m.isStone            => Stone.tupled(p[StoneVariant])
+      case m if m.isSword            => Sword.tupled(p[SwordVariant])
       case m if m.isTerracotta       => Terracotta.tupled(colorableParams)
       case m if m.isTrapdoor         => Trapdoor.tupled(p[TrapdoorVariant])
       case m if m.isWall             => Wall.tupled(p[WallVariant])
@@ -345,7 +358,6 @@ class SpigotItemMapper @Inject() (
       case m if m.isWool             => Wool.tupled(colorParams)
 
       // TODO
-      // case m if m.isSapling          => Sapling.tupled(params[SaplingVariant])
       // case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
 
       case m if m.isBannerPattern =>
@@ -368,18 +380,6 @@ class SpigotItemMapper @Inject() (
 
       case m if m.isWeightedPressurePlate =>
         WeightedPressurePlate.tupled(p[WeightedPressurePlateVariant])
-
-      /* TODO
-     case r".*PICKAXE" =>
-       case r".*AXE" =>
-       case r".*BOOTS" =>
-       case r".*CHESTPLATE" =>
-       case r".*HELMET" =>
-       case r".*HOE" =>
-       case r".*LEGGINGS" =>
-       case r".*SHOVEL" =>
-       case r".*SWORD" =>
-     */
     })
   }
 
