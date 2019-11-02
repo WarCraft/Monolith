@@ -3,11 +3,12 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block.BlockFace
+import javax.inject.Inject
 import org.bukkit.block.{ BlockFace => SpigotBlockFace }
 
 import scala.collection.mutable
 
-class SpigotBlockExtensionMapper(
+class SpigotBlockExtensionMapper @Inject()(
     private val blockFaceMapper: SpigotBlockFaceMapper
 ) {
 
