@@ -109,6 +109,7 @@ import gg.warcraft.monolith.app.config.service.GitHubConfigurationCommandService
 import gg.warcraft.monolith.app.config.service.LocalConfigurationCommandService;
 import gg.warcraft.monolith.app.core.GuavaEventService;
 import gg.warcraft.monolith.app.core.InMemoryPersistenceCache;
+import gg.warcraft.monolith.app.core.InMemoryPersistenceService;
 import gg.warcraft.monolith.app.core.JedisPersistenceService;
 import gg.warcraft.monolith.app.effect.DynamicEffect;
 import gg.warcraft.monolith.app.effect.PeriodicDynamicEffect;
@@ -409,7 +410,7 @@ public class AbstractMonolithModule extends PrivateModule {
     }
 
     private void configureItem() {
-        expose(ItemStorageService.class);
+        // TODO bind ItemStorageService
 
         install(new FactoryModuleBuilder()
                 .implement(ItemReader.class, SimpleItemReader.class)
@@ -444,6 +445,10 @@ public class AbstractMonolithModule extends PrivateModule {
         expose(PersistenceCache.class);
 
         switch (persistenceService) {
+            case "INMEMORY":
+                bind(PersistenceService.class).to(InMemoryPersistenceService.class);
+                expose(PersistenceService.class);
+                break;
             case "REDIS":
                 JedisPoolConfig jedisConfiguration = new JedisPoolConfig();
                 jedisConfiguration.setBlockWhenExhausted(false);
