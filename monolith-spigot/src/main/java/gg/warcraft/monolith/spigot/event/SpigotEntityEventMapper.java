@@ -16,7 +16,6 @@ import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.entity.event.*;
-import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Server;
@@ -45,7 +44,6 @@ public class SpigotEntityEventMapper implements Listener {
     private final EventService eventService;
     private final TaskService taskService;
     private final CombatFactory combatFactory;
-    private final SpigotEntityTypeMapper entityTypeMapper;
     private final SpigotItemMapper itemMapper;
     private final SpigotLocationMapper locationMapper;
     private final Server server;
@@ -58,7 +56,6 @@ public class SpigotEntityEventMapper implements Listener {
                                    EventService eventService,
                                    TaskService taskService,
                                    CombatFactory combatFactory,
-                                   SpigotEntityTypeMapper entityTypeMapper,
                                    SpigotItemMapper itemMapper,
                                    SpigotLocationMapper locationMapper,
                                    Server server, Plugin plugin) {
@@ -66,7 +63,6 @@ public class SpigotEntityEventMapper implements Listener {
         this.eventService = eventService;
         this.taskService = taskService;
         this.combatFactory = combatFactory;
-        this.entityTypeMapper = entityTypeMapper;
         this.itemMapper = itemMapper;
         this.locationMapper = locationMapper;
         this.server = server;
@@ -79,7 +75,7 @@ public class SpigotEntityEventMapper implements Listener {
     public void onEntityPreSpawnEvent(org.bukkit.event.entity.EntitySpawnEvent event) {
         Entity entity = event.getEntity();
         UUID entityId = entity.getUniqueId();
-        EntityType entityType = entityTypeMapper.map(event.getEntityType());
+        EntityType entityType = EntityType.valueOf(event.getEntityType().name());
         Location location = locationMapper.map(entity.getLocation());
         EntityPreSpawnEvent entityPreSpawnEvent =
                 new SimpleEntityPreSpawnEvent(entityId, entityType, location, event.isCancelled());
@@ -93,7 +89,7 @@ public class SpigotEntityEventMapper implements Listener {
     public void onEntitySpawnEvent(org.bukkit.event.entity.EntitySpawnEvent event) {
         Entity entity = event.getEntity();
         UUID entityId = entity.getUniqueId();
-        EntityType entityType = entityTypeMapper.map(event.getEntityType());
+        EntityType entityType = EntityType.valueOf(event.getEntityType().name());
         Location location = locationMapper.map(entity.getLocation());
         EntitySpawnEvent entitySpawnEvent = new SimpleEntitySpawnEvent(entityId, entityType, location);
         eventService.publish(entitySpawnEvent);
@@ -107,7 +103,7 @@ public class SpigotEntityEventMapper implements Listener {
 
         org.bukkit.entity.Player player = event.getPlayer();
         UUID entityId = event.getRightClicked().getUniqueId();
-        EntityType entityType = entityTypeMapper.map(event.getRightClicked().getType());
+        EntityType entityType = EntityType.valueOf(event.getRightClicked().getType().name());
         UUID playerId = player.getUniqueId();
         Item itemInClickHand = event.getHand() == EquipmentSlot.HAND
                 ? itemMapper.map(player.getEquipment().getItemInMainHand()).get() // TODO use Option
@@ -129,7 +125,7 @@ public class SpigotEntityEventMapper implements Listener {
 
         org.bukkit.entity.Player player = event.getPlayer();
         UUID entityId = event.getRightClicked().getUniqueId(); // FIXME do we only want this for livingentities? Gonna need a new event for others
-        EntityType entityType = entityTypeMapper.map(event.getRightClicked().getType());
+        EntityType entityType = EntityType.valueOf(event.getRightClicked().getType().name());
         UUID playerId = player.getUniqueId();
         Item itemInClickHand = event.getHand() == EquipmentSlot.HAND
                 ? itemMapper.map(player.getEquipment().getItemInMainHand()).get() // TODO use Option
@@ -158,7 +154,7 @@ public class SpigotEntityEventMapper implements Listener {
         }
 
         UUID entityId = entity.getUniqueId();
-        EntityType entityType = entityTypeMapper.map(entity.getType());
+        EntityType entityType = EntityType.valueOf(entity.getType().name());
         Status entityStatus = statusQueryService.getStatus(entityId);
         CombatValue damage = combatValues.get(event);
         if (damage == null) {
@@ -227,7 +223,7 @@ public class SpigotEntityEventMapper implements Listener {
         }
 
         UUID entityId = entity.getUniqueId();
-        EntityType entityType = entityTypeMapper.map(entity.getType());
+        EntityType entityType = EntityType.valueOf(entity.getType().name());
         Status entityStatus = statusQueryService.getStatus(entityId);
         CombatValue damage = combatValues.remove(event);
         if (damage == null) {
@@ -271,7 +267,7 @@ public class SpigotEntityEventMapper implements Listener {
     private CombatValue onEntityPreAttackEvent(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
         UUID entityId = entity.getUniqueId();
-        EntityType entityType = entityTypeMapper.map(entity.getType());
+        EntityType entityType = EntityType.valueOf(entity.getType().name());
 
         Entity damager = event.getDamager();
         UUID attackerId = damager.getUniqueId();
@@ -306,7 +302,7 @@ public class SpigotEntityEventMapper implements Listener {
     private void onEntityAttackEvent(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
         UUID entityId = entity.getUniqueId();
-        EntityType entityType = entityTypeMapper.map(entity.getType());
+        EntityType entityType = EntityType.valueOf(entity.getType().name());
 
         Entity damager = event.getDamager();
         UUID attackerId = damager.getUniqueId();
@@ -331,7 +327,7 @@ public class SpigotEntityEventMapper implements Listener {
     @EventHandler
     public void onEntityDeathEvent(org.bukkit.event.entity.EntityDeathEvent event) {
         UUID entityId = event.getEntity().getUniqueId();
-        EntityType entityType = entityTypeMapper.map(event.getEntityType());
+        EntityType entityType = EntityType.valueOf(event.getEntityType().name());
         Status entityStatus = statusQueryService.getStatus(entityId);
         List<Item> drops = event.getDrops().stream()
                 .map(itemMapper::map)

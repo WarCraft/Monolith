@@ -23,15 +23,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 public class SpigotEntityData implements EntityServerData {
-    private final SpigotEntityTypeMapper entityTypeMapper;
     private final SpigotLocationMapper locationMapper;
     private final SpigotItemMapper itemMapper;
     private final LivingEntity entity;
 
     @Inject
-    public SpigotEntityData(SpigotEntityTypeMapper entityTypeMapper, SpigotLocationMapper locationMapper,
+    public SpigotEntityData(SpigotLocationMapper locationMapper,
                             SpigotItemMapper itemMapper, @Assisted LivingEntity entity) {
-        this.entityTypeMapper = entityTypeMapper;
         this.locationMapper = locationMapper;
         this.itemMapper = itemMapper;
         this.entity = entity;
@@ -45,7 +43,7 @@ public class SpigotEntityData implements EntityServerData {
 
     @Override
     public EntityType getType() {
-        EntityType type = entityTypeMapper.map(entity.getType());
+        EntityType type = EntityType.valueOf(entity.getType().name());
         return checkNotNull(type);
     }
 

@@ -26,7 +26,6 @@ import gg.warcraft.monolith.app.world.block.event.*;
 import gg.warcraft.monolith.app.world.chunk.events.SimpleChunkLoadedEvent;
 import gg.warcraft.monolith.app.world.chunk.events.SimpleChunkPreUnloadEvent;
 import gg.warcraft.monolith.app.world.chunk.events.SimpleChunkUnloadedEvent;
-import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockFaceMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
@@ -49,7 +48,6 @@ public class SpigotWorldEventMapper implements Listener {
     private final SpigotBlockMapper blockMapper;
     private final SpigotBlockFaceMapper blockFaceMapper;
     private final SpigotItemMapper itemMapper;
-    private final SpigotEntityTypeMapper entityTypeMapper;
     private final WorldCommandService worldCommandService;
     private final SpigotLocationMapper locationMapper;
 
@@ -58,13 +56,12 @@ public class SpigotWorldEventMapper implements Listener {
     @Inject
     public SpigotWorldEventMapper(EventService eventService, SpigotBlockMapper blockMapper,
                                   SpigotBlockFaceMapper blockFaceMapper, SpigotItemMapper itemMapper,
-                                  SpigotEntityTypeMapper entityTypeMapper, SpigotLocationMapper locationMapper,
+                                  SpigotLocationMapper locationMapper,
                                   WorldCommandService worldCommandService) {
         this.eventService = eventService;
         this.blockMapper = blockMapper;
         this.blockFaceMapper = blockFaceMapper;
         this.itemMapper = itemMapper;
-        this.entityTypeMapper = entityTypeMapper;
         this.worldCommandService = worldCommandService;
         this.locationMapper = locationMapper;
         this.alternativeDropsByEvent = new HashMap<>();
@@ -236,7 +233,7 @@ public class SpigotWorldEventMapper implements Listener {
         Set<Entity> allowedRespawns = new HashSet<>();
         for (Entity entity : chunk.getEntities()) {
             UUID entityId = entity.getUniqueId();
-            EntityType entityType = entityTypeMapper.map(entity.getType());
+            EntityType entityType = EntityType.valueOf(entity.getType().name());
             Location entityLocation = locationMapper.map(entity.getLocation());
             EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, entityLocation, false);
             eventService.publish(preRespawnEvent);
@@ -250,7 +247,7 @@ public class SpigotWorldEventMapper implements Listener {
 
         for (Entity entity : allowedRespawns) {
             UUID entityId = entity.getUniqueId();
-            EntityType entityType = entityTypeMapper.map(entity.getType());
+            EntityType entityType = EntityType.valueOf(entity.getType().name());
             Location entityLocation = locationMapper.map(entity.getLocation());
             EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType, entityLocation);
             eventService.publish(respawnEvent);
@@ -273,7 +270,7 @@ public class SpigotWorldEventMapper implements Listener {
         boolean cancelled = false;
         for (Entity entity : chunk.getEntities()) {
             UUID entityId = entity.getUniqueId();
-            EntityType entityType = entityTypeMapper.map(entity.getType());
+            EntityType entityType = EntityType.valueOf(entity.getType().name());
             EntityPreDespawnEvent preDespawnEvent = new SimpleEntityPreDespawnEvent(entityId, entityType, false);
             eventService.publish(preDespawnEvent);
             if (preDespawnEvent.isCancelled() && !preDespawnEvent.isExplicitlyAllowed()) {
@@ -294,7 +291,7 @@ public class SpigotWorldEventMapper implements Listener {
 
         for (Entity entity : chunk.getEntities()) {
             UUID entityId = entity.getUniqueId();
-            EntityType entityType = entityTypeMapper.map(entity.getType());
+            EntityType entityType = EntityType.valueOf(entity.getType().name());
             EntityDespawnEvent despawnEvent = new SimpleEntityDespawnEvent(entityId, entityType);
             eventService.publish(despawnEvent);
         }

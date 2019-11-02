@@ -19,7 +19,6 @@ import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.spigot.combat.SpigotPotionEffectTypeMapper;
 import gg.warcraft.monolith.spigot.entity.GenericAttributeMapper;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityDataFactory;
-import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import org.bukkit.GameMode;
 import org.bukkit.Server;
@@ -42,7 +41,6 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
     private final Plugin plugin;
     private final AttributeQueryService attributeQueryService;
     private final DirectionUtils directionUtils;
-    private final SpigotEntityTypeMapper entityTypeMapper;
     private final SpigotLocationMapper locationMapper;
     private final SpigotEntityDataFactory entityDataFactory;
     private final SpigotPotionEffectTypeMapper potionEffectTypeMapper;
@@ -52,7 +50,6 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
     public SpigotEntityAdapter(Server server, Plugin plugin,
                                AttributeQueryService attributeQueryService,
                                DirectionUtils directionUtils,
-                               SpigotEntityTypeMapper entityTypeMapper,
                                SpigotLocationMapper locationMapper,
                                SpigotEntityDataFactory entityDataFactory,
                                SpigotPotionEffectTypeMapper potionEffectTypeMapper,
@@ -61,7 +58,6 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
         this.plugin = plugin;
         this.attributeQueryService = attributeQueryService;
         this.directionUtils = directionUtils;
-        this.entityTypeMapper = entityTypeMapper;
         this.locationMapper = locationMapper;
         this.entityDataFactory = entityDataFactory;
         this.potionEffectTypeMapper = potionEffectTypeMapper;
@@ -157,7 +153,7 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
 
     @Override
     public UUID spawnEntity(EntityType type, Location spawnLocation) {
-        org.bukkit.entity.EntityType spigotEntityType = entityTypeMapper.map(type);
+        org.bukkit.entity.EntityType spigotEntityType = org.bukkit.entity.EntityType.valueOf(type.name());
         org.bukkit.Location spigotSpawnLocation = locationMapper.map(spawnLocation);
         if (!spigotSpawnLocation.getChunk().isLoaded()) {
             spigotSpawnLocation.getChunk().load();

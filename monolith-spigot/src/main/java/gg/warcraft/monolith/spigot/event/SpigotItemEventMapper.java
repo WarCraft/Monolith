@@ -8,7 +8,6 @@ import gg.warcraft.monolith.api.item.event.ItemPrePickupEvent;
 import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.item.event.SimpleItemPickupEvent;
 import gg.warcraft.monolith.app.item.event.SimpleItemPrePickupEvent;
-import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,15 +19,12 @@ import java.util.UUID;
 public class SpigotItemEventMapper implements Listener {
     private EventService eventService;
     private final SpigotItemMapper itemMapper;
-    private final SpigotEntityTypeMapper entityTypeMapper;
 
     @Inject
     public SpigotItemEventMapper(EventService eventService,
-                                 SpigotItemMapper itemMapper,
-                                 SpigotEntityTypeMapper entityTypeMapper) {
+                                 SpigotItemMapper itemMapper) {
         this.eventService = eventService;
         this.itemMapper = itemMapper;
-        this.entityTypeMapper = entityTypeMapper;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -37,7 +33,7 @@ public class SpigotItemEventMapper implements Listener {
         Item item = itemMapper.map(event.getItem().getItemStack()).get(); // TODO use Option
 
         UUID entityId = event.getEntity().getUniqueId();
-        EntityType entityType = entityTypeMapper.map(event.getEntity().getType());
+        EntityType entityType = EntityType.valueOf(event.getEntity().getType().name());
 
         ItemPrePickupEvent itemPrePickupEvent = new SimpleItemPrePickupEvent(itemId, item, entityId, entityType, event.isCancelled());
         eventService.publish(itemPrePickupEvent);
@@ -51,7 +47,7 @@ public class SpigotItemEventMapper implements Listener {
         Item item = itemMapper.map(event.getItem().getItemStack()).get(); // TODO use Option
 
         UUID entityId = event.getEntity().getUniqueId();
-        EntityType entityType = entityTypeMapper.map(event.getEntity().getType());
+        EntityType entityType = EntityType.valueOf(event.getEntity().getType().name());
 
         ItemPickupEvent itemPickupEvent = new SimpleItemPickupEvent(itemId, item, entityId, entityType);
         eventService.publish(itemPickupEvent);

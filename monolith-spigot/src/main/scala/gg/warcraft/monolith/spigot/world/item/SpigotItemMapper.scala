@@ -440,7 +440,6 @@ class SpigotItemMapper @Inject() (
       case _: Observer         => Material.OBSERVER
       case _: Obsidian         => Material.OBSIDIAN
       case _: Podzol           => Material.PODZOL
-      case _: Potato           => Material.POTATO
       case _: Pumpkin          => Material.PUMPKIN
       case _: PurpurBlock      => Material.PURPUR_BLOCK
       case _: QuartzOre        => Material.NETHER_QUARTZ_ORE

@@ -410,6 +410,7 @@ class SpigotBlockMapper @Inject() (
       case it: ColoredBlock     => colorMapper.map(it)
       case it: VariableBlock[_] => variantMapper.map(it)
 
+      // TODO match on item.type to get a switch?
       case _: Barrel           => Material.BARREL
       case _: Barrier          => Material.BARRIER
       case _: Beacon           => Material.BEACON
@@ -441,7 +442,6 @@ class SpigotBlockMapper @Inject() (
       case _: DeadBush         => Material.DEAD_BUSH
       case _: DiamondBlock     => Material.DIAMOND_BLOCK
       case _: DiamondOre       => Material.DIAMOND_ORE
-      case _: Dirt             => Material.DIRT
       case _: Dispenser        => Material.DISPENSER
       case _: DragonEgg        => Material.DRAGON_EGG
       case _: DriedKelp        => Material.DRIED_KELP_BLOCK
