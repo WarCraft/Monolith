@@ -46,8 +46,11 @@ class SpigotItemMapper @Inject() (
     lazy val singleParams = (name, tooltip, attr, hideAttr)
     lazy val durableParams =
       (name, tooltip, attr, hideAttr, durability, unbreakable, hideUnbreakable)
+    def v[T <: ItemVariant]: T = variant.asInstanceOf[T]
     def p[T <: ItemVariant] =
-      (variant.asInstanceOf[T], name, tooltip, count, attr, hideAttr)
+      (v[T], name, tooltip, count, attr, hideAttr)
+    def e[T <: ItemVariant] =
+      (v[T], name, tooltip, attr, hideAttr, durability, unbreakable, hideUnbreakable)
 
     // Map item
     Some(material match {
@@ -256,21 +259,23 @@ class SpigotItemMapper @Inject() (
       //      case Material.CARVED_PUMPKIN => Pumpkin(carved = true, name, tooltip, count, attr, hideAttr)
       //      case Material.GOLDEN_APPLE => GoldenApple(enchanted = false, name, tooltip, count, attr, hideAttr)
       //      case Material.ENCHANTED_GOLDEN_APPLE => GoldenApple(enchanted = true, name, tooltip, count, attr, hideAttr)
+
       //      case Material.FERN       => Fern(tall = false, name, tooltip, count, attr, hideAttr)
       //      case Material.LARGE_FERN => Fern(tall = true, name, tooltip, count, attr, hideAttr)
-      //      case Material.MAP        => Map(filled = false, name, tooltip, count, attr, hideAttr) TODO does a filled map have lots of extra data? Make own item?
-      //      case Material.FILLED_MAP => Map(filled = true, name, tooltip, count, attr, hideAttr)
       //      case Material.GRASS      => Grass(tall = false, name, tooltip, count, attr, hideAttr)
       //      case Material.TALL_GRASS => Grass(tall = true, name, tooltip, count, attr, hideAttr)
 
+      //      case Material.MAP        => Map(filled = false, name, tooltip, count, attr, hideAttr) TODO does a filled map have lots of extra data? Make own item?
+      //      case Material.FILLED_MAP => Map(filled = true, name, tooltip, count, attr, hideAttr)
+
       case m if m.isAnvil            => Anvil.tupled(p[AnvilVariant])
       case m if m.isArrow            => Arrow.tupled(p[ArrowVariant])
-      case m if m.isAxe              => Axe.tupled(p[AxeVariant])
+      case m if m.isAxe              => Axe.tupled(e[AxeVariant])
       case m if m.isBanner           => Banner.tupled(colorParams)
       case m if m.isBed              => Bed.tupled(colorParams)
       case m if m.isBeef             => Beef.tupled(p[BeefVariant])
       case m if m.isBoat             => Boat.tupled(p[BoatVariant])
-      case m if m.isBoots            => Boots.tupled(p[BootsVariant])
+      case m if m.isBoots            => Boots.tupled(e[BootsVariant])
       case m if m.isBrick            => Brick.tupled(p[BrickVariant])
       case m if m.isBrickBlock       => BrickBlock.tupled(p[BrickBlockVariant])
       case m if m.isBucket           => Bucket.tupled(p[BucketVariant])
@@ -278,7 +283,7 @@ class SpigotItemMapper @Inject() (
       case m if m.isCarpet           => Carpet.tupled(colorParams)
       case m if m.isCobblestone      => Cobblestone.tupled(p[CobblestoneVariant])
       case m if m.isChest            => Chest.tupled(p[ChestVariant])
-      case m if m.isChestplate       => Chestplate.tupled(p[ChestplateVariant])
+      case m if m.isChestplate       => Chestplate.tupled(e[ChestplateVariant])
       case m if m.isChicken          => Chicken.tupled(p[ChickenVariant])
       case m if m.isChorusFruit      => ChorusFruit.tupled(p[ChorusFruitVariant])
       case m if m.isCod              => Cod.tupled(p[CodVariant])
@@ -297,13 +302,12 @@ class SpigotItemMapper @Inject() (
       case m if m.isGlass            => Glass.tupled(colorableParams)
       case m if m.isGlassPane        => GlassPane.tupled(colorableParams)
       case m if m.isGlazedTerracotta => GlazedTerracotta.tupled(colorParams)
-      case m if m.isHelmet           => Helmet.tupled(p[HelmetVariant])
-      case m if m.isHoe              => Hoe.tupled(p[HoeVariant])
-      case m if m.isHorseArmor       => HorseArmor.tupled(p[HorseArmorVariant])
+      case m if m.isHelmet           => Helmet.tupled(e[HelmetVariant])
+      case m if m.isHoe              => Hoe.tupled(e[HoeVariant])
       case m if m.isIce              => Ice.tupled(p[IceVariant])
       case m if m.isInfestedBlock    => InfestedBlock.tupled(p[InfestedBlockVariant])
       case m if m.isLeaves           => Leaves.tupled(p[LeavesVariant])
-      case m if m.isLeggings         => Leggings.tupled(p[LeggingsVariant])
+      case m if m.isLeggings         => Leggings.tupled(e[LeggingsVariant])
       case m if m.isLog              => Log.tupled(p[LogVariant])
       case m if m.isMinecart         => Minecart.tupled(p[MinecartVariant])
       case m if m.isMobHead          => MobHead.tupled(p[MobHeadVariant])
@@ -311,7 +315,7 @@ class SpigotItemMapper @Inject() (
       case m if m.isMushroomBlock    => MushroomBlock.tupled(p[MushroomBlockVariant])
       case m if m.isMusicDisc        => MusicDisc.tupled(p[MusicDiscVariant])
       case m if m.isMutton           => Mutton.tupled(p[MuttonVariant])
-      case m if m.isPickaxe          => Pickaxe.tupled(p[PickaxeVariant])
+      case m if m.isPickaxe          => Pickaxe.tupled(e[PickaxeVariant])
       case m if m.isPillar           => Pillar.tupled(p[PillarVariant])
       case m if m.isPlanks           => Planks.tupled(p[PlanksVariant])
       case m if m.isPlant            => Plant.tupled(p[PlantVariant])
@@ -328,7 +332,7 @@ class SpigotItemMapper @Inject() (
       case m if m.isSapling          => Sapling.tupled(p[SaplingVariant])
       case m if m.isSeeds            => Seeds.tupled(p[SeedsVariant])
       case m if m.isShulkerBox       => ShulkerBox.tupled(colorableParams)
-      case m if m.isShovel           => Shovel.tupled(p[ShovelVariant])
+      case m if m.isShovel           => Shovel.tupled(e[ShovelVariant])
       case m if m.isSign             => Sign.tupled(p[SignVariant])
       case m if m.isSlab             => Slab.tupled(p[SlabVariant])
       case m if m.isSpawnEgg         => SpawnEgg.tupled(p[SpawnEggVariant])
@@ -337,7 +341,7 @@ class SpigotItemMapper @Inject() (
       case m if m.isStew             => Stew.tupled(p[StewVariant])
       case m if m.isStone            => Stone.tupled(p[StoneVariant])
       case m if m.isStructureBlock   => StructureBlock.tupled(p[StructureBlockVariant])
-      case m if m.isSword            => Sword.tupled(p[SwordVariant])
+      case m if m.isSword            => Sword.tupled(e[SwordVariant])
       case m if m.isTerracotta       => Terracotta.tupled(colorableParams)
       case m if m.isTrapdoor         => Trapdoor.tupled(p[TrapdoorVariant])
       case m if m.isWall             => Wall.tupled(p[WallVariant])
@@ -345,13 +349,14 @@ class SpigotItemMapper @Inject() (
       case m if m.isWool             => Wool.tupled(colorParams)
 
       case m if m.isBannerPattern =>
-        val _variant = variant.asInstanceOf[BannerPatternVariant]
-        BannerPattern(_variant, name, tooltip, attr, hideAttr)
+        BannerPattern(v[BannerPatternVariant], name, tooltip, attr, hideAttr)
+
+      case m if m.isHorseArmor =>
+        HorseArmor(v[HorseArmorVariant], name, tooltip, attr, hideAttr)
 
       case m if m.isPotion =>
-        val _variant = variant.asInstanceOf[PotionVariant]
         val hideEffects = meta.hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)
-        Potion(_variant, hideEffects, name, tooltip, attr, hideAttr)
+        Potion(v[PotionVariant], hideEffects, name, tooltip, attr, hideAttr)
 
       case m if m.isWeightedPressurePlate =>
         WeightedPressurePlate.tupled(p[WeightedPressurePlateVariant])

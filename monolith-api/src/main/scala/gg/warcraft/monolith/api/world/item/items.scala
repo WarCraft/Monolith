@@ -66,12 +66,21 @@ final case class Axe(
     variant: AxeVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[AxeVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.AXE
+  override def maxDurability: Int = variant match {
+    case AxeVariant.WOOD    => 59
+    case AxeVariant.STONE   => 131
+    case AxeVariant.IRON    => 250
+    case AxeVariant.GOLD    => 32
+    case AxeVariant.DIAMOND => 1561
+  }
 }
 
 final case class Bamboo(
@@ -308,12 +317,21 @@ final case class Boots(
     variant: BootsVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[BootsVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.BOOTS
+  override def maxDurability: Int = variant match {
+    case BootsVariant.LEATHER   => 65
+    case BootsVariant.CHAINMAIL => 195
+    case BootsVariant.IRON      => 195
+    case BootsVariant.GOLD      => 91
+    case BootsVariant.DIAMOND   => 429
+  }
 }
 
 final case class Bow(
@@ -519,12 +537,21 @@ final case class Chestplate(
     variant: ChestplateVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[ChestplateVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.CHESTPLATE
+  override def maxDurability: Int = variant match {
+    case ChestplateVariant.LEATHER   => 80
+    case ChestplateVariant.CHAINMAIL => 240
+    case ChestplateVariant.IRON      => 240
+    case ChestplateVariant.GOLD      => 112
+    case ChestplateVariant.DIAMOND   => 528
+  }
 }
 
 final case class Chicken(
@@ -1547,24 +1574,42 @@ final case class Helmet(
     variant: HelmetVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[HelmetVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.HELMET
+  override def maxDurability: Int = variant match {
+    case HelmetVariant.LEATHER   => 55
+    case HelmetVariant.CHAINMAIL => 165
+    case HelmetVariant.IRON      => 165
+    case HelmetVariant.GOLD      => 77
+    case HelmetVariant.DIAMOND   => 363
+  }
 }
 
 final case class Hoe(
     variant: HoeVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[HoeVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.HOE
+  override def maxDurability: Int = variant match {
+    case HoeVariant.WOOD    => 59
+    case HoeVariant.STONE   => 131
+    case HoeVariant.IRON    => 250
+    case HoeVariant.GOLD    => 32
+    case HoeVariant.DIAMOND => 1561
+  }
 }
 
 final case class Hopper(
@@ -1581,10 +1626,9 @@ final case class HorseArmor(
     variant: HorseArmorVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends Item {
   val `type` = ItemType.HORSE_ARMOR
 }
 
@@ -1827,12 +1871,21 @@ final case class Leggings(
     variant: LeggingsVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[LeggingsVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.LEGGINGS
+  override def maxDurability: Int = variant match {
+    case LeggingsVariant.LEATHER   => 75
+    case LeggingsVariant.CHAINMAIL => 225
+    case LeggingsVariant.IRON      => 225
+    case LeggingsVariant.GOLD      => 105
+    case LeggingsVariant.DIAMOND   => 495
+  }
 }
 
 final case class Lever(
@@ -2150,12 +2203,21 @@ final case class Pickaxe(
     variant: PickaxeVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[PickaxeVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.PICKAXE
+  override def maxDurability: Int = variant match {
+    case PickaxeVariant.WOOD    => 59
+    case PickaxeVariant.STONE   => 131
+    case PickaxeVariant.IRON    => 250
+    case PickaxeVariant.GOLD    => 32
+    case PickaxeVariant.DIAMOND => 1561
+  }
 }
 
 final case class Pillar(
@@ -2629,12 +2691,21 @@ final case class Shovel(
     variant: ShovelVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[ShovelVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.SHOVEL
+  override def maxDurability: Int = variant match {
+    case ShovelVariant.WOOD    => 59
+    case ShovelVariant.STONE   => 131
+    case ShovelVariant.IRON    => 250
+    case ShovelVariant.GOLD    => 32
+    case ShovelVariant.DIAMOND => 1561
+  }
 }
 
 final case class ShulkerBox(
@@ -2927,12 +2998,21 @@ final case class Sword(
     variant: SwordVariant,
     name: String,
     tooltip: Array[String],
-    count: Int,
     attributes: Set[String],
-    hideAttributes: Boolean
+    hideAttributes: Boolean,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
 ) extends VariableItem[SwordVariant]
-    with StackableItem {
+    with DurableItem {
   val `type` = ItemType.SWORD
+  override def maxDurability: Int = variant match {
+    case SwordVariant.WOOD    => 59
+    case SwordVariant.STONE   => 131
+    case SwordVariant.IRON    => 250
+    case SwordVariant.GOLD    => 32
+    case SwordVariant.DIAMOND => 1561
+  }
 }
 
 final case class Terracotta(
