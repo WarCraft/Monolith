@@ -124,8 +124,6 @@ class SpigotBlockMapper @Inject() (
       case Material.END_PORTAL          => EndPortal(loc)
       case Material.END_ROD             => EndRod(loc, dir)
       case Material.FARMLAND            => Farmland(loc)
-      case Material.FERN                => Fern(loc, BlockBisection.BOTTOM, tall = false)
-      case Material.LARGE_FERN          => Fern(loc, bisection, tall = true)
       case Material.FIRE                => Fire(loc)
       case Material.FLETCHING_TABLE     => FletchingTable(loc)
       case Material.FROSTED_ICE         => Frost(loc, s[FrostState])
@@ -204,9 +202,13 @@ class SpigotBlockMapper @Inject() (
         val eye = dataAs[SpigotEndPortalFrame].hasEye
         EndPortalFrame(loc, dir, eye)
 
+      // FERN TODO should section be an Option?
+      case Material.FERN       => Fern(loc, v[FernVariant], BlockBisection.BOTTOM)
+      case Material.LARGE_FERN => Fern(loc, v[FernVariant], bisection)
+
       // GRASS
-      case Material.GRASS      => Grass(loc, BlockBisection.BOTTOM, tall = false)
-      case Material.TALL_GRASS => Grass(loc, bisection, tall = true)
+      case Material.GRASS      => Grass(loc, v[GrassVariant], BlockBisection.BOTTOM)
+      case Material.TALL_GRASS => Grass(loc, v[GrassVariant], bisection)
 
       // HOPPER
       case Material.HOPPER =>
@@ -518,22 +520,9 @@ class SpigotBlockMapper @Inject() (
       case _: Water            => Material.WATER
       case _: Wheat            => Material.WHEAT
 
-      // TODO turn all boolean flags into BlockVariants?
-      case it: Fern =>
-        if (it.tall) Material.LARGE_FERN
-        else Material.FERN
-
-      case it: Grass =>
-        if (it.tall) Material.TALL_GRASS
-        else Material.GRASS
-
       case it: Kelp =>
         if (it.state == KelpState.AGE_25) Material.KELP_PLANT
         else Material.KELP
-
-      case it: Piston =>
-        if (it.sticky) Material.STICKY_PISTON
-        else Material.PISTON
 
       case it: RedstoneTorch =>
         if (it.direction.isEmpty) Material.REDSTONE_TORCH
@@ -542,10 +531,6 @@ class SpigotBlockMapper @Inject() (
       case it: Seagrass =>
         if (it.tall) Material.TALL_SEAGRASS
         else Material.SEAGRASS
-
-      case it: Sponge =>
-        if (it.wet) Material.WET_SPONGE
-        else Material.SPONGE
     }
 
     val data = Bukkit.createBlockData(material)

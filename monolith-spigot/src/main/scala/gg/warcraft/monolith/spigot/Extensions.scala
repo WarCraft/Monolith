@@ -358,6 +358,11 @@ object Extensions {
       Material.SPRUCE_FENCE_GATE
     )
 
+    private final val fern = util.EnumSet.of(
+      Material.FERN,
+      Material.LARGE_FERN
+    )
+
     private final val flower = util.EnumSet.of(
       Material.ALLIUM,
       Material.AZURE_BLUET,
@@ -1071,6 +1076,7 @@ object Extensions {
     def isEndStone: Boolean = endStone.contains(material)
     def isFence: Boolean = fence.contains(material)
     def isFenceGate: Boolean = fenceGate.contains(material)
+    def isFern: Boolean = fern.contains(material)
     def isFlower: Boolean = flower.contains(material)
     def isFlowerPot: Boolean = flowerPot.contains(material)
     def isGlass: Boolean = glass.contains(material)

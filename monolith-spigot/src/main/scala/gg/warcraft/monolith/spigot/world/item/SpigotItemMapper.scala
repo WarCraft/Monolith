@@ -260,11 +260,6 @@ class SpigotItemMapper @Inject() (
       //      case Material.GOLDEN_APPLE => GoldenApple(enchanted = false, name, tooltip, count, attr, hideAttr)
       //      case Material.ENCHANTED_GOLDEN_APPLE => GoldenApple(enchanted = true, name, tooltip, count, attr, hideAttr)
 
-      //      case Material.FERN       => Fern(tall = false, name, tooltip, count, attr, hideAttr)
-      //      case Material.LARGE_FERN => Fern(tall = true, name, tooltip, count, attr, hideAttr)
-      //      case Material.GRASS      => Grass(tall = false, name, tooltip, count, attr, hideAttr)
-      //      case Material.TALL_GRASS => Grass(tall = true, name, tooltip, count, attr, hideAttr)
-
       //      case Material.MAP        => Map(filled = false, name, tooltip, count, attr, hideAttr) TODO does a filled map have lots of extra data? Make own item?
       //      case Material.FILLED_MAP => Map(filled = true, name, tooltip, count, attr, hideAttr)
 

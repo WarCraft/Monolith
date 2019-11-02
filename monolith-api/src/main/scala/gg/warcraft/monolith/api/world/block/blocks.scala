@@ -519,13 +519,12 @@ final case class Fence(
 
 final case class Fern(
     location: BlockLocation,
-    section: BlockBisection,
-    tall: Boolean
-) extends BisectedBlock {
+    variant: FernVariant,
+    section: BlockBisection
+) extends VariableBlock[FernVariant]
+    with BisectedBlock {
   override val `type` = BlockType.FERN
   override val solid: Boolean = false
-  def withTall(tall: Boolean): Fern =
-    copyWith("tall", tall)
 }
 
 final case class Fire(
@@ -633,13 +632,12 @@ final case class GoldOre(
 
 final case class Grass(
     location: BlockLocation,
-    section: BlockBisection,
-    tall: Boolean
-) extends BisectedBlock {
+    variant: GrassVariant,
+    section: BlockBisection
+) extends VariableBlock[GrassVariant]
+    with BisectedBlock {
   override val `type` = BlockType.GRASS
   override val solid: Boolean = false
-  def withTall(tall: Boolean): Grass =
-    copyWith("tall", tall)
 }
 
 final case class GrassBlock(
@@ -1259,11 +1257,9 @@ final case class Spawner(
 
 final case class Sponge(
     location: BlockLocation,
-    wet: Boolean
-) extends Block {
+    variant: SpongeVariant
+) extends VariableBlock[SpongeVariant] {
   override val `type` = BlockType.SPONGE
-  def withWet(wet: Boolean): Sponge =
-    copyWith("wet", wet)
 }
 
 final case class Stairs(

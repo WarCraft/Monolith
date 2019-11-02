@@ -122,6 +122,10 @@ class SpigotBlockVariantMapper {
     case Material.OAK_FENCE_GATE      => FenceGateVariant.OAK
     case Material.SPRUCE_FENCE_GATE   => FenceGateVariant.SPRUCE
 
+    // FERN
+    case Material.FERN       => FernVariant.NORMAL
+    case Material.LARGE_FERN => FernVariant.TALL
+
     // FLOWER
     case Material.ALLIUM             => FlowerVariant.ALLIUM
     case Material.AZURE_BLUET        => FlowerVariant.AZURE_BLUET
@@ -168,6 +172,10 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_CACTUS    => FlowerPotVariant.CACTUS
     case Material.POTTED_DEAD_BUSH => FlowerPotVariant.DEAD_BUSH
     case Material.POTTED_FERN      => FlowerPotVariant.FERN
+
+    // GRASS
+    case Material.GRASS      => GrassVariant.NORMAL
+    case Material.TALL_GRASS => GrassVariant.TALL
 
     // ICE
     case Material.ICE        => IceVariant.NORMAL
@@ -600,6 +608,28 @@ class SpigotBlockVariantMapper {
     case DirtVariant.NORMAL => Material.DIRT
     case DirtVariant.COARSE => Material.COARSE_DIRT
 
+    // FENCE
+    case FenceVariant.ACACIA   => Material.ACACIA_FENCE
+    case FenceVariant.BIRCH    => Material.BIRCH_FENCE
+    case FenceVariant.DARK_OAK => Material.DARK_OAK_FENCE
+    case FenceVariant.JUNGLE   => Material.JUNGLE_FENCE
+    case FenceVariant.OAK      => Material.OAK_FENCE
+    case FenceVariant.SPRUCE   => Material.SPRUCE_FENCE
+
+    case FenceVariant.NETHER_BRICK => Material.NETHER_BRICK_FENCE
+
+    // FENCE_GATE
+    case FenceGateVariant.ACACIA   => Material.ACACIA_FENCE_GATE
+    case FenceGateVariant.BIRCH    => Material.BIRCH_FENCE_GATE
+    case FenceGateVariant.DARK_OAK => Material.DARK_OAK_FENCE_GATE
+    case FenceGateVariant.JUNGLE   => Material.JUNGLE_FENCE_GATE
+    case FenceGateVariant.OAK      => Material.OAK_FENCE_GATE
+    case FenceGateVariant.SPRUCE   => Material.SPRUCE_FENCE_GATE
+
+    // FERN
+    case FernVariant.NORMAL => Material.FERN
+    case FernVariant.TALL   => Material.LARGE_FERN
+
     // FLOWER
     case FlowerVariant.ALLIUM             => Material.ALLIUM
     case FlowerVariant.AZURE_BLUET        => Material.AZURE_BLUET
@@ -646,6 +676,10 @@ class SpigotBlockVariantMapper {
     case FlowerPotVariant.CACTUS    => Material.POTTED_CACTUS
     case FlowerPotVariant.DEAD_BUSH => Material.POTTED_DEAD_BUSH
     case FlowerPotVariant.FERN      => Material.POTTED_FERN
+
+    // GRASS
+    case GrassVariant.NORMAL => Material.GRASS
+    case GrassVariant.TALL   => Material.TALL_GRASS
 
     // INFESTED_BLOCK
     case InfestedBlockVariant.STONE       => Material.INFESTED_STONE
