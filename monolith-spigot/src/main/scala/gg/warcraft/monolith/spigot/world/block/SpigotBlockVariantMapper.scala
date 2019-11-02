@@ -87,18 +87,6 @@ class SpigotBlockVariantMapper {
     case Material.DEAD_HORN_CORAL_FAN   => CoralFanVariant.DEAD_HORN
     case Material.DEAD_TUBE_CORAL_FAN   => CoralFanVariant.DEAD_TUBE
 
-    case Material.BRAIN_CORAL_WALL_FAN  => CoralFanVariant.BRAIN_WALL
-    case Material.BUBBLE_CORAL_WALL_FAN => CoralFanVariant.BUBBLE_WALL
-    case Material.FIRE_CORAL_WALL_FAN   => CoralFanVariant.FIRE_WALL
-    case Material.HORN_CORAL_WALL_FAN   => CoralFanVariant.HORN_WALL
-    case Material.TUBE_CORAL_WALL_FAN   => CoralFanVariant.TUBE_WALL
-
-    case Material.DEAD_BRAIN_CORAL_WALL_FAN  => CoralFanVariant.DEAD_BRAIN_WALL
-    case Material.DEAD_BUBBLE_CORAL_WALL_FAN => CoralFanVariant.DEAD_BUBBLE_WALL
-    case Material.DEAD_FIRE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_FIRE_WALL
-    case Material.DEAD_HORN_CORAL_WALL_FAN   => CoralFanVariant.DEAD_HORN_WALL
-    case Material.DEAD_TUBE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_TUBE_WALL
-
     // DOOR
     case Material.ACACIA_DOOR   => DoorVariant.ACACIA
     case Material.BIRCH_DOOR    => DoorVariant.BIRCH
@@ -226,13 +214,6 @@ class SpigotBlockVariantMapper {
     case Material.WITHER_SKELETON_SKULL => MobHeadVariant.WITHER_SKELETON
     case Material.ZOMBIE_HEAD           => MobHeadVariant.ZOMBIE
 
-    case Material.CREEPER_WALL_HEAD          => MobHeadVariant.CREEPER_WALL
-    case Material.DRAGON_WALL_HEAD           => MobHeadVariant.DRAGON_WALL
-    case Material.PLAYER_WALL_HEAD           => MobHeadVariant.PLAYER_WALL
-    case Material.SKELETON_WALL_SKULL        => MobHeadVariant.SKELETON_WALL
-    case Material.WITHER_SKELETON_WALL_SKULL => MobHeadVariant.WITHER_SKELETON_WALL
-    case Material.ZOMBIE_WALL_HEAD           => MobHeadVariant.ZOMBIE_WALL
-
     // MUSHROOM
     case Material.BROWN_MUSHROOM => MushroomVariant.BROWN
     case Material.RED_MUSHROOM   => MushroomVariant.RED
@@ -318,13 +299,6 @@ class SpigotBlockVariantMapper {
     case Material.JUNGLE_SIGN   => SignVariant.JUNGLE
     case Material.OAK_SIGN      => SignVariant.OAK
     case Material.SPRUCE_SIGN   => SignVariant.SPRUCE
-
-    case Material.ACACIA_WALL_SIGN   => SignVariant.ACACIA_WALL
-    case Material.BIRCH_WALL_SIGN    => SignVariant.BIRCH_WALL
-    case Material.DARK_OAK_WALL_SIGN => SignVariant.DARK_OAK_WALL
-    case Material.JUNGLE_WALL_SIGN   => SignVariant.JUNGLE_WALL
-    case Material.OAK_WALL_SIGN      => SignVariant.OAK_WALL
-    case Material.SPRUCE_WALL_SIGN   => SignVariant.SPRUCE_WALL
 
     // SLAB
     case Material.BRICK_SLAB            => SlabVariant.BRICK
@@ -610,18 +584,6 @@ class SpigotBlockVariantMapper {
     case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
     case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
 
-    case CoralFanVariant.BRAIN_WALL  => Material.BRAIN_CORAL_WALL_FAN
-    case CoralFanVariant.BUBBLE_WALL => Material.BUBBLE_CORAL_WALL_FAN
-    case CoralFanVariant.FIRE_WALL   => Material.FIRE_CORAL_WALL_FAN
-    case CoralFanVariant.HORN_WALL   => Material.HORN_CORAL_WALL_FAN
-    case CoralFanVariant.TUBE_WALL   => Material.TUBE_CORAL_WALL_FAN
-
-    case CoralFanVariant.DEAD_BRAIN_WALL  => Material.DEAD_BRAIN_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_BUBBLE_WALL => Material.DEAD_BUBBLE_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_FIRE_WALL   => Material.DEAD_FIRE_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_HORN_WALL   => Material.DEAD_HORN_CORAL_WALL_FAN
-    case CoralFanVariant.DEAD_TUBE_WALL   => Material.DEAD_TUBE_CORAL_WALL_FAN
-
     // FLOWER
     case FlowerVariant.ALLIUM             => Material.ALLIUM
     case FlowerVariant.AZURE_BLUET        => Material.AZURE_BLUET
@@ -718,13 +680,6 @@ class SpigotBlockVariantMapper {
     case MobHeadVariant.WITHER_SKELETON => Material.WITHER_SKELETON_SKULL
     case MobHeadVariant.ZOMBIE          => Material.ZOMBIE_HEAD
 
-    case MobHeadVariant.CREEPER_WALL         => Material.CREEPER_WALL_HEAD
-    case MobHeadVariant.DRAGON_WALL          => Material.DRAGON_WALL_HEAD
-    case MobHeadVariant.PLAYER_WALL          => Material.PLAYER_WALL_HEAD
-    case MobHeadVariant.SKELETON_WALL        => Material.SKELETON_WALL_SKULL
-    case MobHeadVariant.WITHER_SKELETON_WALL => Material.WITHER_SKELETON_WALL_SKULL
-    case MobHeadVariant.ZOMBIE_WALL          => Material.ZOMBIE_WALL_HEAD
-
     // MUSHROOM
     case MushroomVariant.BROWN => Material.BROWN_MUSHROOM
     case MushroomVariant.RED   => Material.RED_MUSHROOM
@@ -792,13 +747,6 @@ class SpigotBlockVariantMapper {
     case SignVariant.JUNGLE   => Material.JUNGLE_SIGN
     case SignVariant.OAK      => Material.OAK_SIGN
     case SignVariant.SPRUCE   => Material.SPRUCE_SIGN
-
-    case SignVariant.ACACIA_WALL   => Material.ACACIA_WALL_SIGN
-    case SignVariant.BIRCH_WALL    => Material.BIRCH_WALL_SIGN
-    case SignVariant.DARK_OAK_WALL => Material.DARK_OAK_WALL_SIGN
-    case SignVariant.JUNGLE_WALL   => Material.JUNGLE_WALL_SIGN
-    case SignVariant.OAK_WALL      => Material.OAK_WALL_SIGN
-    case SignVariant.SPRUCE_WALL   => Material.SPRUCE_WALL_SIGN
 
     // SLAB
     case SlabVariant.BRICK            => Material.BRICK_SLAB
@@ -964,6 +912,41 @@ class SpigotBlockVariantMapper {
     case _: Bamboo     => Material.BAMBOO
     case _: Comparator => Material.COMPARATOR
     case _: NoteBlock  => Material.NOTE_BLOCK
+
+    case CoralFan(_, variant, Some(_), _) =>
+      variant match {
+        case CoralFanVariant.BRAIN  => Material.BRAIN_CORAL_WALL_FAN
+        case CoralFanVariant.BUBBLE => Material.BUBBLE_CORAL_WALL_FAN
+        case CoralFanVariant.FIRE   => Material.FIRE_CORAL_WALL_FAN
+        case CoralFanVariant.HORN   => Material.HORN_CORAL_WALL_FAN
+        case CoralFanVariant.TUBE   => Material.TUBE_CORAL_WALL_FAN
+
+        case CoralFanVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_WALL_FAN
+        case CoralFanVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_WALL_FAN
+        case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_WALL_FAN
+        case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_WALL_FAN
+        case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_WALL_FAN
+      }
+
+    case MobHead(_, variant, Some(_), _) =>
+      variant match {
+        case MobHeadVariant.CREEPER         => Material.CREEPER_WALL_HEAD
+        case MobHeadVariant.DRAGON          => Material.DRAGON_WALL_HEAD
+        case MobHeadVariant.PLAYER          => Material.PLAYER_WALL_HEAD
+        case MobHeadVariant.SKELETON        => Material.SKELETON_WALL_SKULL
+        case MobHeadVariant.WITHER_SKELETON => Material.WITHER_SKELETON_WALL_SKULL
+        case MobHeadVariant.ZOMBIE          => Material.ZOMBIE_WALL_HEAD
+      }
+
+    case Sign(_, variant, Some(_), _, _, _, _) =>
+      variant match {
+        case SignVariant.ACACIA   => Material.ACACIA_WALL_SIGN
+        case SignVariant.BIRCH    => Material.BIRCH_WALL_SIGN
+        case SignVariant.DARK_OAK => Material.DARK_OAK_WALL_SIGN
+        case SignVariant.JUNGLE   => Material.JUNGLE_WALL_SIGN
+        case SignVariant.OAK      => Material.OAK_WALL_SIGN
+        case SignVariant.SPRUCE   => Material.SPRUCE_WALL_SIGN
+      }
 
     case it: VariableBlock[_] => map(it.variant)
   }
