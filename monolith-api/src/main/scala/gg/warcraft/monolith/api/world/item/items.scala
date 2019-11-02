@@ -2,8 +2,11 @@ package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
-import gg.warcraft.monolith.api.world.item
-import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
+import gg.warcraft.monolith.api.world.item.variant.{
+  SaplingVariant,
+  StructureBlockVariant,
+  _
+}
 
 final case class Andesite(
     variant: StoniteVariant,
@@ -58,7 +61,8 @@ final case class Arrow(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[ArrowVariant]
+    with StackableItem {
   val `type` = ItemType.ARROW
 }
 
@@ -112,7 +116,7 @@ final case class BannerPattern(
     tooltip: Array[String],
     attributes: Set[String],
     hideAttributes: Boolean
-) extends Item {
+) extends VariableItem[BannerPatternVariant] {
   val `type` = ItemType.BANNER_PATTERN
 }
 
@@ -529,7 +533,8 @@ final case class Chest(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[ChestVariant]
+    with StackableItem {
   val `type` = ItemType.CHEST
 }
 
@@ -924,16 +929,15 @@ final case class Diorite(
 }
 
 final case class Dirt(
-    coarse: Boolean,
+    variant: DirtVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[DirtVariant]
+    with StackableItem {
   val `type` = ItemType.DIRT
-  def withCoarse(coarse: Boolean): Dirt =
-    copyWith("coarse", coarse)
 }
 
 final case class Dispenser(
@@ -1189,16 +1193,15 @@ final case class Fence(
 }
 
 final case class Fern(
-    tall: Boolean,
+    variant: FernVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[FernVariant]
+    with StackableItem {
   val `type` = ItemType.FERN
-  def withTall(tall: Boolean): Fern =
-    copyWith("tall", tall)
 }
 
 final case class FireCharge(
@@ -1488,16 +1491,15 @@ final case class Granite(
 }
 
 final case class Grass(
-    tall: Boolean,
+    variant: GrassVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[GrassVariant]
+    with StackableItem {
   val `type` = ItemType.GRASS
-  def withTall(tall: Boolean): Grass =
-    copyWith("tall", tall)
 }
 
 final case class GrassBlock(
@@ -1628,7 +1630,7 @@ final case class HorseArmor(
     tooltip: Array[String],
     attributes: Set[String],
     hideAttributes: Boolean
-) extends Item {
+) extends VariableItem[HorseArmorVariant] {
   val `type` = ItemType.HORSE_ARMOR
 }
 
@@ -2004,7 +2006,8 @@ final case class MobHead(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[MobHead]
+    with StackableItem {
   val `type` = ItemType.MOB_HEAD
 }
 
@@ -2233,13 +2236,14 @@ final case class Pillar(
 }
 
 final case class Piston(
-    sticky: Boolean,
+    variant: PistonVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[PistonVariant]
+    with StackableItem {
   val `type` = ItemType.PISTON
   def withSticky(sticky: Boolean): Piston =
     copyWith("sticky", sticky)
@@ -2588,13 +2592,13 @@ final case class Sandstone(
 }
 
 final case class Sapling(
-    variant: item.variant.SaplingVariant,
+    variant: SaplingVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[item.variant.SaplingVariant]
+) extends VariableItem[SaplingVariant]
     with StackableItem {
   val `type` = ItemType.SAPLING
 }
