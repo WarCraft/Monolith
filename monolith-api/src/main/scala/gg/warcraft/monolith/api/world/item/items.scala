@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.item
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item
-import gg.warcraft.monolith.api.world.item.variant._
+import gg.warcraft.monolith.api.world.item.variant.{ StructureBlockVariant, _ }
 
 final case class Andesite(
     variant: StoniteVariant,
@@ -48,7 +48,7 @@ final case class ArmorStand(
     hideAttributes: Boolean
 ) extends StackableItem {
   val `type` = ItemType.ARMOR_STAND
-  override val maxCount = 16
+  override def maxCount = 16
 }
 
 final case class Arrow(
@@ -93,7 +93,7 @@ final case class Banner(
 ) extends ColoredItem
     with StackableItem {
   val `type` = ItemType.BANNER
-  override val maxCount = 16
+  override def maxCount = 16
 }
 
 final case class BannerPattern(
@@ -323,7 +323,7 @@ final case class Bow(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.BOW
-  override val maxDurability = 384
+  override def maxDurability = 384
 }
 
 final case class Bowl(
@@ -391,7 +391,7 @@ final case class Bucket(
 ) extends VariableItem[BucketVariant]
     with StackableItem {
   val `type` = ItemType.BUCKET
-  override val maxCount = 16
+  override def maxCount = 16
 }
 
 final case class Button(
@@ -468,7 +468,7 @@ final case class CarrotOnAStick(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.CARROT_ON_A_STICK
-  override val maxDurability = 25
+  override def maxDurability = 25
 }
 
 final case class CartographyTable(
@@ -816,7 +816,7 @@ final case class Crossbow(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.CROSSBOW
-  override val maxDurability = 326
+  override def maxDurability = 326
 }
 
 final case class DaylightDetector(
@@ -1008,7 +1008,7 @@ final case class Elytra(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.ELYTRA
-  override val maxDurability = 432
+  override def maxDurability = 432
 }
 
 final case class Emerald(
@@ -1120,7 +1120,7 @@ final case class EnderPearl(
     hideAttributes: Boolean
 ) extends StackableItem {
   val `type` = ItemType.ENDER_PEARL
-  override val maxCount = 16
+  override def maxCount = 16
 }
 
 final case class Farmland(
@@ -1210,7 +1210,7 @@ final case class FishingRod(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.FISHING_ROD
-  override val maxDurability = 64
+  override def maxDurability = 64
 }
 
 final case class FletchingTable(
@@ -1243,7 +1243,7 @@ final case class FlintAndSteel(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.FLINT_AND_STEEL
-  override val maxDurability = 64
+  override def maxDurability = 64
 }
 
 final case class Flower(
@@ -2605,7 +2605,7 @@ final case class Shears(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.SHEARS
-  override val maxDurability = 238
+  override def maxDurability = 238
 }
 
 final case class Shield(
@@ -2618,7 +2618,7 @@ final case class Shield(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.SHIELD
-  override val maxDurability = 336
+  override def maxDurability = 336
 }
 
 final case class Shovel(
@@ -2664,7 +2664,7 @@ final case class Sign(
 ) extends VariableItem[SignVariant]
     with StackableItem {
   val `type` = ItemType.SIGN
-  override val maxCount = 16
+  override def maxCount = 16
 }
 
 final case class Slab(
@@ -2737,7 +2737,7 @@ final case class Snowball(
     hideAttributes: Boolean
 ) extends StackableItem {
   val `type` = ItemType.SNOWBALL
-  override val maxCount = 16
+  override def maxCount = 16
 }
 
 final case class SnowBlock(
@@ -2989,7 +2989,7 @@ final case class Trident(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.TRIDENT
-  override val maxDurability = 250
+  override def maxDurability = 250
 }
 
 final case class TripwireHook(
@@ -3033,7 +3033,7 @@ final case class TurtleHelmet(
     hideUnbreakable: Boolean
 ) extends DurableItem {
   val `type` = ItemType.TURTLE_HELMET
-  override val maxDurability = 275
+  override def maxDurability = 275
 }
 
 final case class Vine(
@@ -3112,5 +3112,5 @@ final case class WrittenBook(
     hideAttributes: Boolean
 ) extends StackableItem {
   val `type` = ItemType.WRITTEN_BOOK
-  override val maxCount = 16
+  override def maxCount = 16
 }

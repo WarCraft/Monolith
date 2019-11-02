@@ -25,6 +25,14 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MOJANG_BANNER_PATTERN  => BannerPatternVariant.MOJANG
     case Material.SKULL_BANNER_PATTERN   => BannerPatternVariant.SKULL
 
+    // BOAT
+    case Material.ACACIA_BOAT   => BoatVariant.ACACIA
+    case Material.BIRCH_BOAT    => BoatVariant.BIRCH
+    case Material.DARK_OAK_BOAT => BoatVariant.DARK_OAK
+    case Material.JUNGLE_BOAT   => BoatVariant.JUNGLE
+    case Material.OAK_BOAT      => BoatVariant.OAK
+    case Material.SPRUCE_BOAT   => BoatVariant.SPRUCE
+
     // BRICK
     case Material.BRICK        => BrickVariant.NORMAL
     case Material.NETHER_BRICK => BrickVariant.NETHER
@@ -154,6 +162,10 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MUSHROOM_STEW   => StewVariant.MUSHROOM
     case Material.RABBIT_STEW     => StewVariant.RABBIT
     case Material.SUSPICIOUS_STEW => StewVariant.SUSPICIOUS
+
+    // STRUCTURE_BLOCK
+    case Material.STRUCTURE_BLOCK => StructureBlockVariant.BLOCK
+    case Material.STRUCTURE_VOID  => StructureBlockVariant.VOID
 
     // TOOL TODO make all tool variants
 
@@ -310,6 +322,10 @@ class SpigotItemVariantMapper @Inject() (
     case StewVariant.MUSHROOM   => Material.MUSHROOM_STEW
     case StewVariant.RABBIT     => Material.RABBIT_STEW
     case StewVariant.SUSPICIOUS => Material.SUSPICIOUS_STEW
+
+    // STRUCTURE_BLOCK
+    case StructureBlockVariant.BLOCK => Material.STRUCTURE_BLOCK
+    case StructureBlockVariant.VOID  => Material.STRUCTURE_VOID
 
     // TOOL TODO make all tool variants
 

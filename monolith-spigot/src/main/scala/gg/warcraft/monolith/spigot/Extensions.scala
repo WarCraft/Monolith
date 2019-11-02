@@ -471,7 +471,7 @@ object Extensions {
 
     private final val minecart = util.EnumSet.of(
       Material.MINECART,
-      Material.CHEST,
+      Material.CHEST_MINECART,
       Material.COMMAND_BLOCK_MINECART,
       Material.FURNACE_MINECART,
       Material.HOPPER_MINECART,

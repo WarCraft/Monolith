@@ -48,7 +48,7 @@ trait DurableItem extends Item {
   def withDurability(durability: Int): this.type =
     copyWith("durability", durability)
 
-  val maxDurability: Int
+  def maxDurability: Int
   require(durability > 0 && durability <= maxDurability, {
     s"durability is $durability, must be > 0 and <= $maxDurability"
   })
@@ -81,7 +81,7 @@ trait StackableItem extends Item {
   def withCount(count: Int): this.type =
     copyWith("count", count)
 
-  val maxCount: Int = 64
+  def maxCount: Int = 64
   require(count > 0 && count <= maxCount, {
     s"count is $count, must be > 0 and <= $maxCount"
   })
