@@ -176,7 +176,7 @@ class SpigotItemMaterialMapper @Inject()(
     case it: EndStone      => blockMapper.mapEndStone(it.material)
     case it: Fence         => blockMapper.mapFence(it.material)
     case it: Fern          => blockMapper.mapFern(it.tall)
-    case it: Gate          => blockMapper.mapGate(it.material)
+    case it: FenceGate     => blockMapper.mapGate(it.material)
     case it: Grass         => blockMapper.mapGrass(it.tall)
     case it: Leaves        => blockMapper.mapLeaves(it.material)
     case it: Pillar        => blockMapper.mapPillar(it.material)

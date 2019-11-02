@@ -545,8 +545,7 @@ final case class FletchingTable(
 
 final case class Flower(
     location: BlockLocation,
-    variant: FlowerVariant,
-    section: BlockBisection
+    variant: FlowerVariant
 ) extends VariableBlock[FlowerVariant] {
   override val `type` = BlockType.FLOWER
   override val solid: Boolean = false

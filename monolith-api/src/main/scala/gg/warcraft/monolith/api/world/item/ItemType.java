@@ -122,7 +122,7 @@ public enum ItemType {
     FLOWER,
     FLOWER_POT,
     FURNACE,
-    GATE,
+    FENCE_GATE,
     GHAST_TEAR,
     GLASS,
     GLASS_BOTTLE,

@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.spigot.world.item
 
-import gg.warcraft.monolith.api.core.Extensions.Regex
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant._
+import gg.warcraft.monolith.spigot.Extensions._
 import javax.inject.Inject
 import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
@@ -14,32 +14,37 @@ class SpigotItemMapper @Inject() (
     private val variantMapper: SpigotItemVariantMapper
 ) {
   def map(item: SpigotItemStack): Option[Item] = {
-    if (item.getType.name.endsWith("AIR")) return None
+    // return None if Air
+    val material = item.getType
+    if (material.name.endsWith("AIR")) return None
+
+    // Set common item data
     val meta = item.getItemMeta
+    val name = meta.getDisplayName
+    val tooltip: Array[String] = Array() // TODO item.getItemMeta.getLore
+    val attr = Set.empty[String] // TODO map attributes
+    val hideAttr = meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
 
-    val name = item.getItemMeta.getDisplayName
-    val tooltip: Array[String] = Array() // item.getItemMeta.getLore
-    val count = item.getAmount
-    val attr = Set.empty[String]
-    val hideAttr = item.getItemMeta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
-
-    lazy val color = colorMapper.map(item.getType)
+    // Lazily compute generic item data
+    lazy val color = colorMapper.map(material)
+    lazy val count = item.getAmount
     lazy val durability = item.getDurability.toInt // TODO keep int or let be short?
     lazy val unbreakable = meta.isUnbreakable
     lazy val hideUnbreakable = meta.hasItemFlag(ItemFlag.HIDE_UNBREAKABLE)
-    lazy val hideEffects = meta.hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)
     lazy val variant = variantMapper.map(item)
 
+    // Lazily construct tuples for all the different types of parameter sets
     lazy val params = (name, tooltip, count, attr, hideAttr)
     lazy val colorParams = (color, name, tooltip, count, attr, hideAttr)
+    lazy val colorableParams = (Option(color), name, tooltip, count, attr, hideAttr)
     lazy val singleParams = (name, tooltip, attr, hideAttr)
     lazy val durableParams =
       (name, tooltip, attr, hideAttr, durability, unbreakable, hideUnbreakable)
-
-    def variantParams[T <: ItemVariant] =
+    def params[T <: ItemVariant] =
       (variant.asInstanceOf[T], name, tooltip, count, attr, hideAttr)
 
-    Some(item.getType match {
+    // Map item
+    Some(material match {
       case Material.APPLE                  => Apple.tupled(params)
       case Material.ARMOR_STAND            => ArmorStand.tupled(params)
       case Material.BAMBOO                 => Bamboo.tupled(params)
@@ -235,225 +240,130 @@ class SpigotItemMapper @Inject() (
       case Material.WRITABLE_BOOK          => BookAndQuill.tupled(singleParams)
       case Material.WRITTEN_BOOK           => WrittenBook.tupled(params)
 
-      // BRICK
-      case Material.BRICK | Material.NETHER_BRICK =>
-        Brick.tupled(variantParams[BrickVariant])
+      // TODO andesite etc are split in items, but merged in block, choose
 
-      // BRICK_BLOCK
-      case Material.BRICKS | Material.NETHER_BRICKS | Material.RED_NETHER_BRICKS =>
-        BrickBlock.tupled(variantParams[BrickBlockVariant])
+      //      case Material.MUTTON  => Mutton(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.BAKED_POTATO => Potato(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.BEEF => Beef(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.CARVED_PUMPKIN => Pumpkin(carved = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.CHICKEN => Chicken(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.CHORUS_FRUIT => ChorusFruit(popped = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.COARSE_DIRT => Dirt(coarse = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COD => Cod(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_BEEF => Beef(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_CHICKEN => Chicken(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_COD => Cod(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_MUTTON => Mutton(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_PORKCHOP => Porkchop(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_RABBIT => Rabbit(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.COOKED_SALMON => Salmon(cooked = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.DIRT => Dirt(coarse = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.ENCHANTED_GOLDEN_APPLE => GoldenApple(enchanted = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.FERMENTED_SPIDER_EYE => SpiderEye(fermented = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.FERN       => Fern(tall = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.FILLED_MAP => Map(filled = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.GOLDEN_APPLE => GoldenApple(enchanted = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.GRASS      => Grass(tall = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.LARGE_FERN => Fern(tall = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.MAP        => Map(filled = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.PISTON => Piston(sticky = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.POPPED_CHORUS_FRUIT => ChorusFruit(popped = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.PORKCHOP => Porkchop(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.POTATO => Potato(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.PUMPKIN => Pumpkin(carved = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.RABBIT => Rabbit(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.SALMON => Salmon(cooked = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.SPIDER_EYE => SpiderEye(fermented = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.SPONGE => Sponge(wet = false, name, tooltip, count, attr, hideAttr)
+      //      case Material.STICKY_PISTON => Piston(sticky = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.TALL_GRASS => Grass(tall = true, name, tooltip, count, attr, hideAttr)
+      //      case Material.WET_SPONGE => Sponge(wet = true, name, tooltip, count, attr, hideAttr)
 
-      // FLOWER
-      case Material.ALLIUM | Material.AZURE_BLUET | Material.BLUE_ORCHID |
-          Material.CORNFLOWER | Material.DANDELION | Material.LILY_OF_THE_VALLEY |
-          Material.ORANGE_TULIP | Material.OXEYE_DAISY | Material.PINK_TULIP |
-          Material.POPPY | Material.RED_TULIP | Material.WHITE_TULIP |
-          Material.WITHER_ROSE =>
-        Flower.tupled(variantParams[FlowerVariant])
+      case m if m.isAnvil            => Anvil.tupled(params[AnvilVariant])
+      case m if m.isArrow            => Arrow.tupled(params[ArrowVariant])
+      case m if m.isBanner           => Banner.tupled(colorParams)
+      case m if m.isBed              => Bed.tupled(colorParams)
+      case m if m.isBoat             => Boat.tupled(params[BoatVariant])
+      case m if m.isBrick            => Brick.tupled(params[BrickVariant])
+      case m if m.isBrickBlock       => BrickBlock.tupled(params[BrickBlockVariant])
+      case m if m.isBucket           => Bucket.tupled(params[BucketVariant])
+      case m if m.isButton           => Button.tupled(params[ButtonVariant])
+      case m if m.isCarpet           => Carpet.tupled(colorParams)
+      case m if m.isCobblestone      => Cobblestone.tupled(params[CobblestoneVariant])
+      case m if m.isChest            => Chest.tupled(params[ChestVariant])
+      case m if m.isConcrete         => Concrete.tupled(colorParams)
+      case m if m.isConcretePowder   => ConcretePowder.tupled(colorParams)
+      case m if m.isCoral            => Coral.tupled(params[CoralVariant])
+      case m if m.isCoralBlock       => CoralBlock.tupled(params[CoralBlockVariant])
+      case m if m.isCoralFan         => CoralFan.tupled(params[CoralFanVariant])
+      case m if m.isDye              => Dye.tupled(colorParams)
+      case m if m.isEndStone         => EndStone.tupled(params[EndStoneVariant])
+      case m if m.isFence            => Fence.tupled(params[FenceVariant])
+      case m if m.isFenceGate        => FenceGate.tupled(params[FenceGateVariant])
+      case m if m.isFlower           => Flower.tupled(params[FlowerVariant])
+      case m if m.isGlass            => Glass.tupled(colorableParams)
+      case m if m.isGlassPane        => GlassPane.tupled(colorableParams)
+      case m if m.isGlazedTerracotta => GlazedTerracotta.tupled(colorParams)
+      case m if m.isHorseArmor       => HorseArmor.tupled(params[HorseArmorVariant])
+      case m if m.isIce              => Ice.tupled(params[IceVariant])
+      case m if m.isLeaves           => Leaves.tupled(params[LeavesVariant])
+      case m if m.isLog              => Log.tupled(params[LogVariant])
+      case m if m.isMinecart         => Minecart.tupled(params[MinecartVariant])
+      case m if m.isMobHead          => MobHead.tupled(params[MobHeadVariant])
+      case m if m.isMushroom         => Mushroom.tupled(params[MushroomVariant])
+      case m if m.isMusicDisc        => MusicDisc.tupled(params[MusicDiscVariant])
+      case m if m.isPillar           => Pillar.tupled(params[PillarVariant])
+      case m if m.isPlanks           => Planks.tupled(params[PlanksVariant])
+      case m if m.isPlant            => Plant.tupled(params[PlantVariant])
+      case m if m.isPrismarine       => Prismarine.tupled(params[PrismarineVariant])
+      case m if m.isQuartzBlock      => QuartzBlock.tupled(params[QuartzBlockVariant])
+      case m if m.isRail             => Rail.tupled(params[RailVariant])
+      case m if m.isSand             => Sand.tupled(params[SandVariant])
+      case m if m.isSandstone        => Sandstone.tupled(params[SandstoneVariant])
+      case m if m.isSeeds            => Seeds.tupled(params[SeedsVariant])
+      case m if m.isShulkerBox       => ShulkerBox.tupled(colorableParams)
+      case m if m.isSlab             => Slab.tupled(params[SlabVariant])
+      case m if m.isSpawnEgg         => SpawnEgg.tupled(params[SpawnEggVariant])
+      case m if m.isStew             => Stew.tupled(params[StewVariant])
+      case m if m.isStone            => Stone.tupled(params[StoneVariant])
+      case m if m.isTerracotta       => Terracotta.tupled(colorableParams)
+      case m if m.isWall             => Wall.tupled(params[WallVariant])
+      case m if m.isWood             => Wood.tupled(params[WoodVariant])
+      case m if m.isWool             => Wool.tupled(colorParams)
 
-      // PLANT
-      case Material.LILAC | Material.PEONY | Material.ROSE_BUSH |
-          Material.SUNFLOWER =>
-        Plant.tupled(variantParams[PlantVariant])
+      // TODO
+      // case m if m.isSapling          => Sapling.tupled(params[SaplingVariant])
+      // case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
 
-      // PRISMARINE
-      case Material.PRISMARINE | Material.PRISMARINE_BRICKS |
-          Material.DARK_PRISMARINE =>
-        Prismarine.tupled(variantParams[PrismarineVariant])
+      case m if m.isBannerPattern =>
+        val _variant = variant.asInstanceOf[BannerPatternVariant]
+        BannerPattern(_variant, name, tooltip, attr, hideAttr)
 
-      // QUARTZ_BLOCK
-      case Material.QUARTZ_BLOCK | Material.CHISELED_QUARTZ_BLOCK |
-          Material.SMOOTH_QUARTZ =>
-        QuartzBlock.tupled(variantParams[QuartzBlockVariant])
+      case m if m.isInfestedBlock =>
+        InfestedBlock.tupled(params[InfestedBlockVariant])
 
-        // TODO andesite etc are split in items, but merged in block, choose
+      case m if m.isMushroomBlock =>
+        MushroomBlock.tupled(params[MushroomBlockVariant])
 
-        /*
-        case r".*PICKAXE" =>
-            Pickaxe(variantAs[ToolVariant], name, tooltip, count, attr, hideAttr)
-          case r"STRIPPED.*LOG" =>
-            Log(variantAs[WoodVariant], stripped = true, name, tooltip, count, attr, hideAttr)
-          case r"STRIPPED.*WOOD" =>
-            Wood(variantAs[WoodVariant], stripped = true, name, tooltip, count, attr, hideAttr)
+      case m if m.isPotion =>
+        val _variant = variant.asInstanceOf[PotionVariant]
+        val hideEffects = meta.hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)
+        Potion(_variant, hideEffects, name, tooltip, attr, hideAttr)
 
-          case r".*SANDSTONE" =>
-            Sandstone(variantAs[SandstoneVariant], variantAs[SandstoneVariant], name, tooltip, count, attr, hideAttr)
+      case m if m.isStructureBlock =>
+        StructureBlock.tupled(params[StructureBlockVariant])
 
-          case r".*ANDESITE" =>
-            Andesite(variantAs[StoniteVariant], name, tooltip, count, attr, hideAttr)
-          case r".*ANVIL" =>
-            Anvil(variantAs[AnvilVariant], name, tooltip, count, attr, hideAttr)
-          case r".*ARROW" =>
-            Arrow(variantAs[ArrowVariant], name, tooltip, count, attr, hideAttr)
-          case r".*AXE" =>
-            Axe(variantAs[ToolVariant], name, tooltip, count, attr, hideAttr)
-          case r".*BANNER" => Banner(color, name, tooltip, count, attr, hideAttr)
-          case r".*BANNER_PATTERN" =>
-            BannerPattern(variantAs[BannerPatternVariant], name, tooltip, attr, hideAttr)
-          case r".*BED" => Bed(color, name, tooltip, count, attr, hideAttr)
-          case r".*BOAT" =>
-            Boat(variantAs[WoodVariant], name, tooltip, count, attr, hideAttr)
-          case r".*BOOTS" =>
-            Boots(variantAs[ArmorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*BUCKET" =>
-            Bucket(variantAs[BucketVariant], name, tooltip, count, attr, hideAttr)
-          case r".*BUTTON" =>
-            Button(variantAs[ButtonVariant], name, tooltip, count, attr, hideAttr)
-          case r".*CARPET" => Carpet(color, name, tooltip, count, attr, hideAttr)
-          case r".*CHEST" =>
-            Chest(variantAs[ChestVariant], name, tooltip, count, attr, hideAttr)
-          case r".*CHESTPLATE" =>
-            Chestplate(variantAs[ArmorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*COBBLESTONE" =>
-            Cobblestone(variantAs[CobblestoneVariant], name, tooltip, count, attr, hideAttr)
-          case r".*COMMAND_BLOCK" =>
-            CommandBlock(variantAs[CommandBlockVariant], name, tooltip, count, attr, hideAttr)
-          case r".*CONCRETE" => Concrete(color, name, tooltip, count, attr, hideAttr)
-          case r".*CONCRETE_POWDER" =>
-            ConcretePowder(color, name, tooltip, count, attr, hideAttr)
-          case r".*CORAL" =>
-            Coral(variantAs[CoralVariant], name, tooltip, count, attr, hideAttr)
-          case r".*CORAL_BLOCK" =>
-            CoralBlock(variantAs[CoralVariant], name, tooltip, count, attr, hideAttr)
-          case r".*CORAL_FAN" =>
-            CoralFan(variantAs[CoralVariant], name, tooltip, count, attr, hideAttr)
-          case r".*DIORITE" =>
-            Diorite(variantAs[StoniteVariant], name, tooltip, count, attr, hideAttr)
-          case r".*DOOR" =>
-            Door(variantAs[DoorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*DYE" => Dye(color, name, tooltip, count, attr, hideAttr)
-          case r"END_STONE.*" =>
-            EndStone(variantAs[EndStoneVariant], name, tooltip, count, attr, hideAttr)
-          case r".*FENCE" =>
-            Fence(variantAs[FenceVariant], name, tooltip, count, attr, hideAttr)
-          case r".*GATE" =>
-            Gate(variantAs[WoodVariant], name, tooltip, count, attr, hideAttr)
-          case r".*GLASS" => Glass(Some(color), name, tooltip, count, attr, hideAttr)
-          case r".*GLASS_PANE" =>
-            GlassPane(Some(color), name, tooltip, count, attr, hideAttr)
-          case r".*GLAZED_TERRACOTTA" =>
-            GlazedTerracotta(color, name, tooltip, count, attr, hideAttr)
-          case r".*GRANITE" =>
-            Granite(variantAs[StoniteVariant], name, tooltip, count, attr, hideAttr)
-          case r".*HEAD" =>
-            MobHead(variantAs[MobHeadVariant], name, tooltip, count, attr, hideAttr)
-          case r".*HELMET" =>
-            Helmet(variantAs[ArmorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*HOE" =>
-            Hoe(variantAs[ToolVariant], name, tooltip, count, attr, hideAttr)
-          case r".*HORSE_ARMOR" =>
-            HorseArmor(variantAs[HorseArmorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*ICE" => Ice(variantAs[IceVariant], name, tooltip, count, attr, hideAttr)
-          case r".*LEAVES" =>
-            Leaves(variantAs[WoodVariant], name, tooltip, count, attr, hideAttr)
-          case r".*LEGGINGS" =>
-            Leggings(variantAs[ArmorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*LOG" =>
-            Log(variantAs[WoodVariant], stripped = false, name, tooltip, count, attr, hideAttr)
-          case r".*MINECART" =>
-            Minecart(variantAs[MinecartVariant], name, tooltip, count, attr, hideAttr)
-          case r".*MUSHROOM" =>
-            Mushroom(variantAs[MushroomVariant], name, tooltip, count, attr, hideAttr)
-          case r".*MUSHROOM_BLOCK" =>
-            MushroomBlock(variantAs[MushroomBlockVariant], name, tooltip, count, attr, hideAttr)
-          case r"MUSIC_DISC.*" =>
-            MusicDisc(variantAs[MusicDiscVariant], name, tooltip, count, attr, hideAttr)
-          case r".*PILLAR" =>
-            Pillar(variantAs[PillarVariant], name, tooltip, count, attr, hideAttr)
-          case r".*PLANKS" =>
-            Planks(variantAs[WoodVariant], name, tooltip, count, attr, hideAttr)
-          case r".*POTION" =>
-            Potion(variantAs[PotionVariant], hideEffects, name, tooltip, attr, hideAttr)
-          case r".*PRESSURE_PLATE" =>
-            PressurePlate(
-              variantAs[PressurePlateVariant], name, tooltip, count, attr, hideAttr)
-          case r".*RAIL" =>
-            Rail(variantAs[RailVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SAND" =>
-            Sand(variantAs[SandVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SAPLING" =>
-            Sapling(variantAs[SaplingVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SEEDS" =>
-            Seeds(variantAs[SeedsVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SHOVEL" =>
-            Shovel(variantAs[ToolVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SHULKER_BOX" =>
-            ShulkerBox(Some(color), name, tooltip, count, attr, hideAttr)
-          case r".*SIGN" =>
-            Sign(variantAs[WoodVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SKULL" =>
-            MobHead(variantAs[MobHeadVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SLAB" =>
-            Slab(variantAs[SlabVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SPAWN_EGG" =>
-            SpawnEgg(variantAs[SpawnEggVariant], name, tooltip, count, attr, hideAttr)
-          case r".*STEW" =>
-            Stew(variantAs[StewVariant], name, tooltip, count, attr, hideAttr)
-          case r".*STONE" =>
-            Stone(variantAs[StoneVariant], name, tooltip, count, attr, hideAttr)
-          case r"STRUCTURE.*" =>
-            StructureBlock(variantAs[StructureBlockVariant], name, tooltip, count, attr, hideAttr)
-          case r".*SWORD" =>
-            Sword(variantAs[ToolVariant], name, tooltip, count, attr, hideAttr)
-          case r".*TERRACOTTA" =>
-            Terracotta(Some(color), name, tooltip, count, attr, hideAttr)
-          case r".*TRAPDOOR" =>
-            Trapdoor(variantAs[TrapdoorVariant], name, tooltip, count, attr, hideAttr)
-          case r".*WALL" =>
-            Wall(variantAs[WallVariant], name, tooltip, count, attr, hideAttr)
-          case r".*WOOD" =>
-            Wood(variantAs[WoodVariant], stripped = false, name, tooltip, count, attr, hideAttr)
-          case r".*WOOL" => Wool(color, name, tooltip, count, attr, hideAttr)
-
-          case r"INFESTED.*" =>
-            InfestedBlock(variantAs[InfestedVariant], name, tooltip, count, attr, hideAttr)
-
-          case r".*STAIRS" =>
-            Stairs(variantAs[StairsVariant], name, tooltip, count, attr, hideAttr)
-
-          case r".*WEIGHTED_PRESSURE_PLATE" =>
-            WeightedPressurePlate(variantAs[WeightedPressurePlateVariant], name, tooltip, count, attr, hideAttr)
-         */
-
-
-      // format: off
-      case Material.MUTTON  => Mutton(cooked = false, name, tooltip, count, attr, hideAttr)
-
-      case Material.BAKED_POTATO => Potato(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.BEEF => Beef(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.CARVED_PUMPKIN => Pumpkin(carved = true, name, tooltip, count, attr, hideAttr)
-      case Material.CHICKEN => Chicken(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.CHORUS_FRUIT => ChorusFruit(popped = false, name, tooltip, count, attr, hideAttr)
-      case Material.COARSE_DIRT => Dirt(coarse = true, name, tooltip, count, attr, hideAttr)
-      case Material.COD => Cod(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_BEEF => Beef(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_CHICKEN => Chicken(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_COD => Cod(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_MUTTON => Mutton(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_PORKCHOP => Porkchop(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_RABBIT => Rabbit(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.COOKED_SALMON => Salmon(cooked = true, name, tooltip, count, attr, hideAttr)
-      case Material.DIRT => Dirt(coarse = false, name, tooltip, count, attr, hideAttr)
-      case Material.ENCHANTED_GOLDEN_APPLE => GoldenApple(enchanted = true, name, tooltip, count, attr, hideAttr)
-      case Material.FERMENTED_SPIDER_EYE => SpiderEye(fermented = true, name, tooltip, count, attr, hideAttr)
-      case Material.FERN       => Fern(tall = false, name, tooltip, count, attr, hideAttr)
-      case Material.FILLED_MAP => Map(filled = true, name, tooltip, count, attr, hideAttr)
-      case Material.GOLDEN_APPLE => GoldenApple(enchanted = false, name, tooltip, count, attr, hideAttr)
-      case Material.GRASS      => Grass(tall = false, name, tooltip, count, attr, hideAttr)
-      case Material.LARGE_FERN => Fern(tall = true, name, tooltip, count, attr, hideAttr)
-      case Material.MAP        => Map(filled = false, name, tooltip, count, attr, hideAttr)
-      case Material.PISTON => Piston(sticky = false, name, tooltip, count, attr, hideAttr)
-      case Material.POPPED_CHORUS_FRUIT => ChorusFruit(popped = true, name, tooltip, count, attr, hideAttr)
-      case Material.PORKCHOP => Porkchop(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.POTATO => Potato(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.PUMPKIN => Pumpkin(carved = false, name, tooltip, count, attr, hideAttr)
-      case Material.RABBIT => Rabbit(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.SALMON => Salmon(cooked = false, name, tooltip, count, attr, hideAttr)
-      case Material.SPIDER_EYE => SpiderEye(fermented = false, name, tooltip, count, attr, hideAttr)
-      case Material.SPONGE => Sponge(wet = false, name, tooltip, count, attr, hideAttr)
-      case Material.STICKY_PISTON => Piston(sticky = true, name, tooltip, count, attr, hideAttr)
-      case Material.TALL_GRASS => Grass(tall = true, name, tooltip, count, attr, hideAttr)
-      case Material.WET_SPONGE => Sponge(wet = true, name, tooltip, count, attr, hideAttr)
+      /* TODO
+     case r".*PICKAXE" =>
+       case r".*AXE" =>
+       case r".*BOOTS" =>
+       case r".*CHESTPLATE" =>
+       case r".*HELMET" =>
+       case r".*HOE" =>
+       case r".*LEGGINGS" =>
+       case r".*SHOVEL" =>
+       case r".*SWORD" =>
+     */
     })
   }
 

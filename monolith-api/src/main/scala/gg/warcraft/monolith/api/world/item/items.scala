@@ -222,13 +222,13 @@ final case class BlazeRod(
 }
 
 final case class Boat(
-    variant: WoodVariant,
-    name: String,
+    variant: BoatVariant, // TODO merge variants that are blatantly the same
+    name: String, // TODO into WoodVariant?
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[WoodVariant]
+) extends VariableItem[BoatVariant]
     with StackableItem {
   val `type` = ItemType.BOAT
 }
@@ -773,25 +773,25 @@ final case class Coral(
 }
 
 final case class CoralBlock(
-    variant: CoralVariant,
+    variant: CoralBlockVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[CoralVariant]
+) extends VariableItem[CoralBlockVariant] // TODO merge all into CoralVariant?
     with StackableItem {
   val `type` = ItemType.CORAL_BLOCK
 }
 
 final case class CoralFan(
-    variant: CoralVariant,
+    variant: CoralFanVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[CoralVariant]
+) extends VariableItem[CoralFanVariant]
     with StackableItem {
   val `type` = ItemType.CORAL_FAN
 }
@@ -1278,16 +1278,16 @@ final case class Furnace(
   val `type` = ItemType.FURNACE
 }
 
-final case class Gate(
-    variant: WoodVariant,
+final case class FenceGate(
+    variant: FenceGateVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[WoodVariant]
+) extends VariableItem[FenceGateVariant] // TODO merge with WoodVariant?
     with StackableItem {
-  val `type` = ItemType.GATE
+  val `type` = ItemType.FENCE_GATE
 }
 
 final case class GhastTear(
@@ -1794,13 +1794,13 @@ final case class Leather(
 }
 
 final case class Leaves(
-    variant: WoodVariant,
+    variant: LeavesVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[WoodVariant]
+) extends VariableItem[LeavesVariant]
     with StackableItem {
   val `type` = ItemType.LEAVES
 }
@@ -1847,14 +1847,13 @@ final case class LilyPad(
 }
 
 final case class Log(
-    variant: WoodVariant,
-    stripped: Boolean,
+    variant: LogVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[WoodVariant]
+) extends VariableItem[LogVariant]
     with StackableItem {
   val `type` = ItemType.LOG
 }
@@ -2174,13 +2173,13 @@ final case class Piston(
 }
 
 final case class Planks(
-    variant: WoodVariant,
+    variant: PlanksVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[WoodVariant]
+) extends VariableItem[PlanksVariant]
     with StackableItem {
   val `type` = ItemType.PLANKS
 }
@@ -2656,13 +2655,13 @@ final case class ShulkerShell(
 }
 
 final case class Sign(
-    variant: WoodVariant,
+    variant: SignVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[WoodVariant]
+) extends VariableItem[SignVariant]
     with StackableItem {
   val `type` = ItemType.SIGN
   override val maxCount = 16
@@ -3083,7 +3082,6 @@ final case class Wheat(
 
 final case class Wood(
     variant: WoodVariant,
-    stripped: Boolean,
     name: String,
     tooltip: Array[String],
     count: Int,
