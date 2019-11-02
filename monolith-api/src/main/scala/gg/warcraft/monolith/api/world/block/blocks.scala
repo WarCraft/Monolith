@@ -245,10 +245,10 @@ final case class Clay(
   override val `type` = BlockType.CLAY
 }
 
-final case class Coal(
+final case class CoalBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.COAL
+  override val `type` = BlockType.COAL_BLOCK
 }
 
 final case class CoalOre(
@@ -379,10 +379,10 @@ final case class DeadBush(
   override val solid: Boolean = false
 }
 
-final case class Diamond(
+final case class DiamondBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.DIAMOND
+  override val `type` = BlockType.DIAMOND_BLOCK
 }
 
 final case class DiamondOre(
@@ -447,10 +447,10 @@ final case class Dropper(
   override val `type` = BlockType.DROPPER
 }
 
-final case class Emerald(
+final case class EmeraldBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.EMERALD
+  override val `type` = BlockType.EMERALD_BLOCK
 }
 
 final case class EmeraldOre(
@@ -621,10 +621,10 @@ final case class Glowstone(
   override val `type` = BlockType.GLOWSTONE
 }
 
-final case class Gold(
+final case class GoldBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.GOLD
+  override val `type` = BlockType.GOLD_BLOCK
 }
 
 final case class GoldOre(
@@ -702,10 +702,10 @@ final case class InfestedBlock(
   override val `type` = BlockType.INFESTED_BLOCK
 }
 
-final case class Iron(
+final case class IronBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.IRON
+  override val `type` = BlockType.IRON_BLOCK
 }
 
 final case class IronBars(
@@ -723,11 +723,11 @@ final case class IronOre(
   override val `type` = BlockType.IRON_ORE
 }
 
-final case class Jigsaw(
+final case class JigsawBlock(
     location: BlockLocation,
     direction: BlockFace
 ) extends DirectedBlock {
-  override val `type` = BlockType.JIGSAW
+  override val `type` = BlockType.JIGSAW_BLOCK
 }
 
 final case class Jukebox(
@@ -766,10 +766,10 @@ final case class Lantern(
     copyWith("hanging", hanging)
 }
 
-final case class Lapis(
+final case class LapisBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.LAPIS
+  override val `type` = BlockType.LAPIS_BLOCK
 }
 
 final case class LapisOre(
@@ -840,10 +840,10 @@ final case class Loom(
   override val `type` = BlockType.LOOM
 }
 
-final case class Magma(
+final case class MagmaBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.MAGMA
+  override val `type` = BlockType.MAGMA_BLOCK
 }
 
 final case class Melon(
@@ -1066,10 +1066,10 @@ final case class Rail(
   override val solid: Boolean = false
 }
 
-final case class Redstone(
+final case class RedstoneBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.REDSTONE
+  override val `type` = BlockType.REDSTONE_BLOCK
 }
 
 final case class RedstoneLamp(
@@ -1143,10 +1143,10 @@ final case class Sapling(
   override val solid: Boolean = false
 }
 
-final case class Scaffold(
+final case class Scaffolding(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.SCAFFOLD
+  override val `type` = BlockType.SCAFFOLDING
 }
 
 final case class Seagrass(
@@ -1290,11 +1290,11 @@ final case class Stone(
   override val `type` = BlockType.STONE
 }
 
-final case class StoneCutter(
+final case class Stonecutter(
     location: BlockLocation,
     direction: BlockFace
 ) extends DirectedBlock {
-  override val `type` = BlockType.STONE_CUTTER
+  override val `type` = BlockType.STONECUTTER
 }
 
 final case class Stonite(

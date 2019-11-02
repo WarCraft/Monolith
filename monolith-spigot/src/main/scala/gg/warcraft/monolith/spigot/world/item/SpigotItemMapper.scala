@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemFlag
 
 class SpigotItemMapper @Inject() (
     private val colorMapper: SpigotItemColorMapper,
-    private val materialMapper: SpigotItemMaterialMapper,
     private val variantMapper: SpigotItemVariantMapper
 ) {
   def map(item: SpigotItemStack): Option[Item] = {
@@ -368,9 +367,119 @@ class SpigotItemMapper @Inject() (
   }
 
   def map(item: Item): SpigotItemStack = {
-    val spigotItem: SpigotItemStack = item match {
-      case _ => null
+    val material = item match {
+      case it: ColoredItem     => colorMapper.map(it)
+      case it: VariableItem[_] => variantMapper.map(it)
+
+      // TODO add item types, mostly only blocks atm
+
+      case _: Barrel           => Material.BARREL
+      case _: Barrier          => Material.BARRIER
+      case _: Beacon           => Material.BEACON
+      case _: Bedrock          => Material.BEDROCK
+      case _: Beetroot         => Material.BEETROOT
+      case _: Bell             => Material.BELL
+      case _: BlastFurnace     => Material.BLAST_FURNACE
+      case _: Bone             => Material.BONE_BLOCK
+      case _: Bookshelf        => Material.BOOKSHELF
+      case _: BrewingStand     => Material.BREWING_STAND
+      case _: Brick            => Material.BRICK
+      case _: Cactus           => Material.CACTUS
+      case _: Cake             => Material.CAKE
+      case _: Campfire         => Material.CAMPFIRE
+      case _: Carrot           => Material.CARROT
+      case _: CartographyTable => Material.CARTOGRAPHY_TABLE
+      case _: Cauldron         => Material.CAULDRON
+      case _: ChorusFlower     => Material.CHORUS_FLOWER
+      case _: ChorusPlant      => Material.CHORUS_PLANT
+      case _: Clay             => Material.CLAY
+      case _: Coal             => Material.COAL_BLOCK
+      case _: CoalOre          => Material.COAL_ORE
+      case _: Cobweb           => Material.COBWEB
+      case _: Composter        => Material.COMPOSTER
+      case _: Conduit          => Material.CONDUIT
+      case _: CraftingTable    => Material.CRAFTING_TABLE
+      case _: DaylightDetector => Material.DAYLIGHT_DETECTOR
+      case _: DeadBush         => Material.DEAD_BUSH
+      case _: Diamond          => Material.DIAMOND
+      case _: DiamondBlock     => Material.DIAMOND_BLOCK
+      case _: DiamondOre       => Material.DIAMOND_ORE
+      case _: Dirt             => Material.DIRT
+      case _: Dispenser        => Material.DISPENSER
+      case _: DragonEgg        => Material.DRAGON_EGG
+      case _: DriedKelp        => Material.DRIED_KELP_BLOCK
+      case _: Dropper          => Material.DROPPER
+      case _: Emerald          => Material.EMERALD_BLOCK
+      case _: EmeraldOre       => Material.EMERALD_ORE
+      case _: EnchantingTable  => Material.ENCHANTING_TABLE
+      case _: EndPortalFrame   => Material.END_PORTAL_FRAME
+      case _: EndRod           => Material.END_ROD
+      case _: Farmland         => Material.FARMLAND
+      case _: FletchingTable   => Material.FLETCHING_TABLE
+      case _: Furnace          => Material.FURNACE
+      case _: Glowstone        => Material.GLOWSTONE
+      case _: GoldBlock        => Material.GOLD_BLOCK
+      case _: GoldOre          => Material.GOLD_ORE
+      case _: GrassBlock       => Material.GRASS_BLOCK
+      case _: GrassPath        => Material.GRASS_PATH
+      case _: Gravel           => Material.GRAVEL
+      case _: Grindstone       => Material.GRINDSTONE
+      case _: HayBale          => Material.HAY_BLOCK
+      case _: Hopper           => Material.HOPPER
+      case _: IronBlock        => Material.IRON_BLOCK
+      case _: IronBars         => Material.IRON_BARS
+      case _: IronOre          => Material.IRON_ORE
+      case _: JigsawBlock      => Material.JIGSAW
+      case _: Jukebox          => Material.JUKEBOX
+      case _: Kelp             => Material.KELP
+      case _: Ladder           => Material.LADDER
+      case _: Lantern          => Material.LANTERN
+      case _: Lapis            => Material.LAPIS_BLOCK
+      case _: LapisOre         => Material.LAPIS_ORE
+      case _: Lectern          => Material.LECTERN
+      case _: Lever            => Material.LEVER
+      case _: LilyPad          => Material.LILY_PAD
+      case _: Loom             => Material.LOOM
+      case _: MagmaBlock       => Material.MAGMA_BLOCK
+      case _: Melon            => Material.MELON
+      case _: Mycelium         => Material.MYCELIUM
+      case _: Netherrack       => Material.NETHERRACK
+      case _: NetherWart       => Material.NETHER_WART
+      case _: NetherWartBlock  => Material.NETHER_WART_BLOCK
+      case _: Observer         => Material.OBSERVER
+      case _: Obsidian         => Material.OBSIDIAN
+      case _: Podzol           => Material.PODZOL
+      case _: Potato           => Material.POTATO
+      case _: Prismarine       => Material.PRISMARINE
+      case _: Pumpkin          => Material.PUMPKIN
+      case _: PurpurBlock      => Material.PURPUR_BLOCK
+      case _: QuartzOre        => Material.NETHER_QUARTZ_ORE
+      case _: Redstone         => Material.REDSTONE_BLOCK
+      case _: RedstoneLamp     => Material.REDSTONE_LAMP
+      case _: RedstoneOre      => Material.REDSTONE_ORE
+      case _: RedstoneTorch    => Material.REDSTONE_TORCH
+      case _: Repeater         => Material.REPEATER
+      case _: Scaffolding      => Material.SCAFFOLDING
+      case _: Seagrass         => Material.SEAGRASS
+      case _: SeaLantern       => Material.SEA_LANTERN
+      case _: SeaPickle        => Material.SEA_PICKLE
+      case _: SlimeBlock       => Material.SLIME_BLOCK
+      case _: SmithingTable    => Material.SMITHING_TABLE
+      case _: Smoker           => Material.SMOKER
+      case _: Snow             => Material.SNOW
+      case _: SnowBlock        => Material.SNOW_BLOCK
+      case _: Spawner          => Material.SPAWNER
+      case _: Stonecutter      => Material.STONECUTTER
+      case _: SugarCane        => Material.SUGAR_CANE
+      case _: SweetBerries     => Material.SWEET_BERRIES
+      case _: TNT              => Material.TNT
+      case _: Torch            => Material.TORCH
+      case _: TurtleEgg        => Material.TURTLE_EGG
+      case _: Vine             => Material.VINE
+      case _: Wheat            => Material.WHEAT
     }
+
+    val spigotItem = new SpigotItemStack(material)
 
     // TODO map skull meta
 
