@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import gg.warcraft.monolith.api.menu.Button;
 import gg.warcraft.monolith.api.menu.Menu;
 import gg.warcraft.monolith.app.menu.SkullButton;
-import gg.warcraft.monolith.spigot.world.MaterialData;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.SkullType;
@@ -52,8 +51,8 @@ public class SpigotMenuMapper {
             return mapSkull((SkullButton) button);
         }
 
-        MaterialData iconData = null; // TODO itemTypeMapper.map(button.getIcon());
-        ItemStack item = new ItemStack(iconData.getMaterial(), 1, (short) 0, iconData.getData());
+        // MaterialData iconData = null; // TODO itemTypeMapper.map(button.getIcon());
+        ItemStack item = new ItemStack(Material.BARRIER, 1, (short) 0, (byte)0); // TODO This will render everything as Barriers
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(button.getTitle());
         meta.setLore(button.getTooltip());

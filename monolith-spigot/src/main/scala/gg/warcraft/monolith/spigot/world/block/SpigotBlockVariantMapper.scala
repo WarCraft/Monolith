@@ -8,7 +8,7 @@ import org.bukkit.block.data.`type`.Comparator.{Mode => SpigotComparatorMode}
 import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureBlockMode}
 
 class SpigotBlockVariantMapper {
-  def map(material: Material): BlockVariant = {
+  def map(material: Material): BlockVariant = material match {
     // AIR
     case Material.AIR      => AirVariant.NORMAL
     case Material.CAVE_AIR => AirVariant.CAVE
@@ -28,6 +28,11 @@ class SpigotBlockVariantMapper {
     case Material.SPRUCE_BUTTON   => ButtonVariant.SPRUCE
 
     case Material.STONE_BUTTON => ButtonVariant.STONE
+
+    // BRICK_BLOCK
+    case Material.BRICKS            => BrickBlockVariant.NORMAL
+    case Material.NETHER_BRICKS     => BrickBlockVariant.NETHER
+    case Material.RED_NETHER_BRICKS => BrickBlockVariant.RED_NETHER
 
     // CHEST
     case Material.CHEST         => ChestVariant.NORMAL
@@ -488,6 +493,8 @@ class SpigotBlockVariantMapper {
     case Material.STRIPPED_JUNGLE_WOOD   => WoodVariant.STRIPPED_JUNGLE
     case Material.STRIPPED_OAK_WOOD      => WoodVariant.STRIPPED_OAK
     case Material.STRIPPED_SPRUCE_WOOD   => WoodVariant.STRIPPED_SPRUCE
+
+    case _ => throw new IllegalArgumentException(s"$material")
   }
 
   def map(block: SpigotBlock): BlockVariant = {
@@ -514,7 +521,7 @@ class SpigotBlockVariantMapper {
     }
   }
 
-  def map(variant: BlockVariant): Material = {
+  def map(variant: BlockVariant): Material = variant match {
     // AIR
     case AirVariant.NORMAL => Material.AIR
     case AirVariant.CAVE   => Material.CAVE_AIR
@@ -625,14 +632,14 @@ class SpigotBlockVariantMapper {
     case FlowerPotVariant.BROWN_MUSHROOM => Material.POTTED_BROWN_MUSHROOM
     case FlowerPotVariant.RED_MUSHROOM   => Material.POTTED_RED_MUSHROOM
 
-    case SaplingVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
-    case SaplingVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
-    case SaplingVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
-    case SaplingVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
-    case SaplingVariant.OAK      => Material.POTTED_OAK_SAPLING
-    case SaplingVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
+    case FlowerPotVariant.ACACIA   => Material.POTTED_ACACIA_SAPLING
+    case FlowerPotVariant.BIRCH    => Material.POTTED_BIRCH_SAPLING
+    case FlowerPotVariant.DARK_OAK => Material.POTTED_DARK_OAK_SAPLING
+    case FlowerPotVariant.JUNGLE   => Material.POTTED_JUNGLE_SAPLING
+    case FlowerPotVariant.OAK      => Material.POTTED_OAK_SAPLING
+    case FlowerPotVariant.SPRUCE   => Material.POTTED_SPRUCE_SAPLING
 
-    case SaplingVariant.BAMBOO      => Material.POTTED_BAMBOO
+    case FlowerPotVariant.BAMBOO      => Material.POTTED_BAMBOO
     case FlowerPotVariant.CACTUS    => Material.POTTED_CACTUS
     case FlowerPotVariant.DEAD_BUSH => Material.POTTED_DEAD_BUSH
     case FlowerPotVariant.FERN      => Material.POTTED_FERN
@@ -715,6 +722,11 @@ class SpigotBlockVariantMapper {
     case PlantVariant.LILAC     => Material.LILAC
     case PlantVariant.PEONY     => Material.PEONY
     case PlantVariant.ROSE_BUSH => Material.ROSE_BUSH
+
+    // PRISMARINE
+    case PrismarineVariant.NORMAL => Material.PRISMARINE
+    case PrismarineVariant.BRICK  => Material.PRISMARINE_BRICKS
+    case PrismarineVariant.DARK   => Material.DARK_PRISMARINE
 
     // QUARTZ_BLOCK
     case QuartzBlockVariant.NORMAL   => Material.QUARTZ_BLOCK
@@ -923,7 +935,7 @@ class SpigotBlockVariantMapper {
     case WoodVariant.STRIPPED_SPRUCE   => Material.STRIPPED_SPRUCE_WOOD
   }
 
-  def map(block: VariableBlock[_ <: BlockVariant]): Material = {
+  def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
     case _: Bamboo     => Material.BAMBOO
     case _: Comparator => Material.COMPARATOR
     case _: NoteBlock  => Material.NOTE_BLOCK
@@ -931,7 +943,7 @@ class SpigotBlockVariantMapper {
     case it: VariableBlock[_] => map(it.variant)
   }
 
-  def map(block: VariableBlock[_], data: SpigotBlockData): Unit = {
+  def map(block: VariableBlock[_], data: SpigotBlockData): Unit = block match {
     case Bamboo(_, variant, _, _) =>
       val leaves = mapBambooLeaves(variant)
       data.asInstanceOf[SpigotBamboo].setLeaves(leaves)
@@ -951,29 +963,29 @@ class SpigotBlockVariantMapper {
       }
   }
 
-  def mapBambooLeaves(leaves: SpigotBambooLeaves): BambooVariant = {
+  def mapBambooLeaves(leaves: SpigotBambooLeaves): BambooVariant = leaves match {
     case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
     case SpigotBambooLeaves.SMALL => BambooVariant.SMALL_LEAVES
     case SpigotBambooLeaves.LARGE => BambooVariant.LARGE_LEAVES
   }
 
-  def mapBambooLeaves(variant: BambooVariant): SpigotBambooLeaves = {
+  def mapBambooLeaves(variant: BambooVariant): SpigotBambooLeaves = variant match {
     case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
     case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
     case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
   }
 
-  def mapComparatorMode(mode: SpigotComparatorMode): ComparatorVariant = {
+  def mapComparatorMode(mode: SpigotComparatorMode): ComparatorVariant = mode match {
     case SpigotComparatorMode.COMPARE  => ComparatorVariant.COMPARE
     case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
   }
 
-  def mapComparatorMode(variant: ComparatorVariant): SpigotComparatorMode = {
+  def mapComparatorMode(variant: ComparatorVariant): SpigotComparatorMode = variant match {
     case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
     case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
   }
 
-  def mapNoteBlock(instrument: SpigotInstrument): NoteBlockVariant = {
+  def mapNoteBlock(instrument: SpigotInstrument): NoteBlockVariant = instrument match {
     case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
     case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
     case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
@@ -992,7 +1004,7 @@ class SpigotBlockVariantMapper {
     case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
   }
 
-  def mapNoteBlock(variant: NoteBlockVariant): SpigotInstrument = {
+  def mapNoteBlock(variant: NoteBlockVariant): SpigotInstrument = variant match {
     case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
     case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
     case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
@@ -1011,14 +1023,14 @@ class SpigotBlockVariantMapper {
     case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
   }
 
-  def mapStructureMode(mode: SpigotStructureBlockMode): StructureBlockVariant = {
+  def mapStructureMode(mode: SpigotStructureBlockMode): StructureBlockVariant = mode match {
     case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
     case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
     case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
     case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
   }
 
-  def mapStructureMode(variant: StructureBlockVariant): SpigotStructureBlockMode = {
+  def mapStructureMode(variant: StructureBlockVariant): SpigotStructureBlockMode = variant match {
     case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
     case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
     case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD

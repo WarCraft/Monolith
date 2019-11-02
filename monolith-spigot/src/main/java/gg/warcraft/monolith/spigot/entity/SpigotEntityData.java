@@ -5,12 +5,12 @@ import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.Equipment;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.entity.SimpleEquipment;
-import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import net.minecraft.server.v1_14_R1.AxisAlignedBB;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
@@ -88,12 +88,12 @@ public class SpigotEntityData implements EntityServerData {
     public Equipment getEquipment() {
         // TODO how do we want to check this state, is null legal?
 
-        Item helmet = itemMapper.map(entity.getEquipment().getHelmet());
-        Item chest = itemMapper.map(entity.getEquipment().getChestplate());
-        Item legs = itemMapper.map(entity.getEquipment().getLeggings());
-        Item feet = itemMapper.map(entity.getEquipment().getBoots());
-        Item mainHand = itemMapper.map(entity.getEquipment().getItemInMainHand());
-        Item offHand = itemMapper.map(entity.getEquipment().getItemInOffHand());
+        Item helmet = itemMapper.map(entity.getEquipment().getHelmet()).get(); // TODO pass options through
+        Item chest = itemMapper.map(entity.getEquipment().getChestplate()).get();
+        Item legs = itemMapper.map(entity.getEquipment().getLeggings()).get();
+        Item feet = itemMapper.map(entity.getEquipment().getBoots()).get();
+        Item mainHand = itemMapper.map(entity.getEquipment().getItemInMainHand()).get();
+        Item offHand = itemMapper.map(entity.getEquipment().getItemInOffHand()).get();
         return new SimpleEquipment(helmet, chest, legs, feet, mainHand, offHand);
     }
 

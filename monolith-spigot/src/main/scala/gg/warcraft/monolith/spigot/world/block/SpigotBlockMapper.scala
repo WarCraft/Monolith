@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
-import gg.warcraft.monolith.api.world.block._
+import gg.warcraft.monolith.api.world.block.{ Rail, _ }
 import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
@@ -428,7 +428,6 @@ class SpigotBlockMapper @Inject() (
       case _: BoneBlock        => Material.BONE_BLOCK
       case _: Bookshelf        => Material.BOOKSHELF
       case _: BrewingStand     => Material.BREWING_STAND
-      case _: BrickBlock       => Material.BRICK
       case _: BubbleColumn     => Material.BUBBLE_COLUMN
       case _: Cactus           => Material.CACTUS
       case _: Cake             => Material.CAKE
@@ -501,7 +500,6 @@ class SpigotBlockMapper @Inject() (
       case _: Obsidian         => Material.OBSIDIAN
       case _: Podzol           => Material.PODZOL
       case _: Potatoes         => Material.POTATOES
-      case _: Prismarine       => Material.PRISMARINE
       case _: Pumpkin          => Material.PUMPKIN
       case _: PumpkinStem      => Material.PUMPKIN_STEM
       case _: PurpurBlock      => Material.PURPUR_BLOCK
@@ -631,7 +629,6 @@ class SpigotBlockMapper @Inject() (
       case it: Campfire       => dataAs[SpigotCampfire].setSignalFire(it.signal)
       case it: EndPortalFrame => dataAs[SpigotEndPortalFrame].setEye(it.eye)
       case it: Hopper         => dataAs[SpigotHopper].setEnabled(it.powered)
-      case it: Lantern        => dataAs[SpigotLantern].setHanging(it.hanging)
       case it: Piston         => dataAs[SpigotPiston].setExtended(it.extended)
       case it: Repeater       => dataAs[SpigotRepeater].setLocked(it.locked)
       case it: TNT            => dataAs[SpigotTNT].setUnstable(it.unstable)
@@ -642,6 +639,9 @@ class SpigotBlockMapper @Inject() (
 
       case it: CommandBlock =>
         dataAs[SpigotCommandBlock].setConditional(it.conditional)
+
+      case it: Lantern =>
+        data.asInstanceOf[SpigotLantern].setHanging(it.hanging)
     }
 
     // Return block data object

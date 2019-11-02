@@ -9,7 +9,6 @@ import gg.warcraft.monolith.api.world.service.WorldServerAdapter
 import gg.warcraft.monolith.spigot.world.block.{
   SpigotBlock,
   SpigotBlockMapper,
-  SpigotBlockMaterialMapper
 }
 import javax.inject.Inject
 import org.bukkit.Server
@@ -17,7 +16,6 @@ import org.bukkit.Server
 class SpigotWorldService @Inject()(
     private val server: Server,
     private val locationMapper: SpigotLocationMapper,
-    private val materialMapper: SpigotBlockMaterialMapper,
     private val worldMapper: SpigotWorldMapper,
     private val blockMapper: SpigotBlockMapper,
     private val soundMapper: SpigotSoundMapper

@@ -7,7 +7,6 @@ import gg.warcraft.monolith.api.entity.event.EntityDespawnEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreDespawnEvent;
 import gg.warcraft.monolith.api.entity.event.EntityPreRespawnEvent;
 import gg.warcraft.monolith.api.entity.event.EntityRespawnEvent;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
@@ -17,6 +16,7 @@ import gg.warcraft.monolith.api.world.block.event.*;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkLoadedEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkPreUnloadEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkUnloadedEvent;
+import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.api.world.service.WorldCommandService;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDespawnEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDespawnEvent;
@@ -27,10 +27,10 @@ import gg.warcraft.monolith.app.world.chunk.events.SimpleChunkLoadedEvent;
 import gg.warcraft.monolith.app.world.chunk.events.SimpleChunkPreUnloadEvent;
 import gg.warcraft.monolith.app.world.chunk.events.SimpleChunkUnloadedEvent;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
-import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockFaceMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
@@ -148,7 +148,7 @@ public class SpigotWorldEventMapper implements Listener {
         Block block = blockMapper.map(event.getClickedBlock());
         BlockFace clickedFace = blockFaceMapper.map(event.getBlockFace());
         BlockInteraction interaction = BlockInteraction.valueOf(event.getAction().name());
-        Item itemInClickHand = itemMapper.map(event.getItem());
+        Item itemInClickHand = itemMapper.map(event.getItem()).get(); // TODO use Option
         UUID playerId = event.getPlayer().getUniqueId();
         boolean wasCancelled = event.isCancelled();
         BlockPreInteractEvent blockPreInteractEvent = new SimpleBlockPreInteractEvent(block, interaction, clickedFace,
@@ -196,7 +196,7 @@ public class SpigotWorldEventMapper implements Listener {
         Block block = blockMapper.map(event.getClickedBlock());
         BlockFace clickedFace = blockFaceMapper.map(event.getBlockFace());
         BlockInteraction interaction = BlockInteraction.valueOf(event.getAction().name());
-        Item itemInClickHand = itemMapper.map(event.getItem());
+        Item itemInClickHand = itemMapper.map(event.getItem()).get(); // TODO use Option
         UUID playerId = event.getPlayer().getUniqueId();
         BlockInteractEvent blockInteractEvent = new SimpleBlockInteractEvent(block, interaction, clickedFace,
                 itemInClickHand, playerId);

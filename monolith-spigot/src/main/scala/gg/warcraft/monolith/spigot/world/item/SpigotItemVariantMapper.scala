@@ -10,7 +10,7 @@ import org.bukkit.Material
 class SpigotItemVariantMapper @Inject() (
     blockMapper: SpigotBlockVariantMapper
 ) {
-  def map(material: Material): ItemVariant = {
+  def map(material: Material): ItemVariant = material match {
     // ARMOR TODO make all armor variants
 
     // ARROW
@@ -160,13 +160,13 @@ class SpigotItemVariantMapper @Inject() (
     case it: Material => blockMapper.map(it).asInstanceOf[ItemVariant]
   }
 
-  def map(item: SpigotItemStack): ItemVariant = {
+  def map(item: SpigotItemStack): ItemVariant = item match {
     // TODO map item specifics
 
     case it: SpigotItemStack => map(it.getType)
   }
 
-  def map(variant: ItemVariant): Material = {
+  def map(variant: ItemVariant): Material = variant match {
     // ARMOR TODO make all armor variants
 
     // ARROW
@@ -316,9 +316,9 @@ class SpigotItemVariantMapper @Inject() (
     case it: BlockVariant => blockMapper.map(it)
   }
 
-  def map(item: VariableItem[_ <: ItemVariant]): Material = {
+  def map(item: VariableItem[_ <: ItemVariant]): Material = item match {
     // TODO map item specifics
 
-    case it: VariableItem[_] => map(it.variant)
+    case it => map(it.variant)
   }
 }

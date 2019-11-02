@@ -11,8 +11,7 @@ import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
-import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
-import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupQueryService;
+import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.app.command.ConsoleCommandSender;
 import gg.warcraft.monolith.app.command.PlayerCommandSender;
@@ -182,11 +181,8 @@ public class MonolithPlugin extends JavaPlugin {
         blockBuildCommandService.initializeBuilds();
 
         // restore any outstanding block backups
-        BlockBackupQueryService blockBackupQueryService = injector.getInstance(BlockBackupQueryService.class);
-        BlockBackupCommandService blockBackupCommandService = injector.getInstance(BlockBackupCommandService.class);
-        blockBackupQueryService.getAllBlockBackups().stream()
-                .map(BlockBackup::getId)
-                .forEach(blockBackupCommandService::restoreBlockBackup);
+        BlockBackupService blockBackupService = injector.getInstance(BlockBackupService.class);
+        // TODO blockBackupService.restoreAll();
     }
 
     @Override

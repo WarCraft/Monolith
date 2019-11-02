@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.world.item.ItemType
 import org.bukkit.Material
 
 class SpigotItemTypeMapper {
-  def map(`type`: ItemType): Material = {
+  def map(`type`: ItemType): Material = `type` match {
     case ItemType.AXE                     => Material.WOODEN_AXE
     case ItemType.BANNER                  => Material.RED_BANNER
     case ItemType.BANNER_PATTERN          => Material.CREEPER_BANNER_PATTERN

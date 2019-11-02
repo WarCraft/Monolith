@@ -3,13 +3,13 @@ package gg.warcraft.monolith.spigot.event;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.entity.EntityType;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.item.event.ItemPickupEvent;
 import gg.warcraft.monolith.api.item.event.ItemPrePickupEvent;
+import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.item.event.SimpleItemPickupEvent;
 import gg.warcraft.monolith.app.item.event.SimpleItemPrePickupEvent;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
-import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,7 +34,7 @@ public class SpigotItemEventMapper implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityPickupItemEvent(EntityPickupItemEvent event) {
         UUID itemId = event.getItem().getUniqueId();
-        Item item = itemMapper.map(event.getItem().getItemStack());
+        Item item = itemMapper.map(event.getItem().getItemStack()).get(); // TODO use Option
 
         UUID entityId = event.getEntity().getUniqueId();
         EntityType entityType = entityTypeMapper.map(event.getEntity().getType());
@@ -48,7 +48,7 @@ public class SpigotItemEventMapper implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityPickupItemEventMonitor(EntityPickupItemEvent event) {
         UUID itemId = event.getItem().getUniqueId();
-        Item item = itemMapper.map(event.getItem().getItemStack());
+        Item item = itemMapper.map(event.getItem().getItemStack()).get(); // TODO use Option
 
         UUID entityId = event.getEntity().getUniqueId();
         EntityType entityType = entityTypeMapper.map(event.getEntity().getType());

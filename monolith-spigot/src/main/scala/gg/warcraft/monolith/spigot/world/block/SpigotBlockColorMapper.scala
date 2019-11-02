@@ -41,7 +41,7 @@ class SpigotBlockColorMapper {
   def map(block: ColoredBlock): Material = block match {
     case Banner(_, color, _, None)  => mapBanner(color)
     case Banner(_, color, None, _)  => mapWallBanner(color)
-    case Bed(_, color, _, _, _)     => mapBed(color)
+    case Bed(_, color, _, _)        => mapBed(color)
     case Carpet(_, color)           => mapCarpet(color)
     case Concrete(_, color)         => mapConcrete(color)
     case ConcretePowder(_, color)   => mapConcretePowder(color)

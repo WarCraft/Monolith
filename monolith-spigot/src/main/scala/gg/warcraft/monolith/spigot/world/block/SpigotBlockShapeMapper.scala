@@ -9,15 +9,15 @@ import org.bukkit.block.data.`type`.Stairs.{ Shape => SpigotStairsShape }
 class SpigotBlockShapeMapper {
 
   def map(block: SpigotBlock): BlockShape = {
-    implicit val data: SpigotBlockData = block.getState.getBlockData
+    val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType.name match {
       case r".*RAIL" =>
-        val shape = dataAs[SpigotRails].getShape
+        val shape = data.asInstanceOf[SpigotRails].getShape
         map(shape)
 
       case r".*STAIRS" =>
-        val shape = dataAs[SpigotStairs].getShape
+        val shape = data.asInstanceOf[SpigotStairs].getShape
         map(shape)
 
       case _ => throw new IllegalArgumentException(s"${block.getType}")
@@ -25,16 +25,16 @@ class SpigotBlockShapeMapper {
   }
 
   def map(block: ShapedBlock[_], spigotData: SpigotBlockData): Unit = {
-    implicit val data: SpigotBlockData = spigotData
+    val data: SpigotBlockData = spigotData
 
     block.shape match {
       case it: RailsShape =>
         val shape = map(it)
-        dataAs[SpigotRails].setShape(shape)
+        data.asInstanceOf[SpigotRails].setShape(shape)
 
       case it: StairsShape =>
         val shape = map(it)
-        dataAs[SpigotStairs].setShape(shape)
+        data.asInstanceOf[SpigotStairs].setShape(shape)
 
       case _ => throw new IllegalArgumentException(s"${block.`type`}")
     }

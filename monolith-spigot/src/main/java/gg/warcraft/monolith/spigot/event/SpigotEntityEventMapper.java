@@ -13,12 +13,12 @@ import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.event.*;
 import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.entity.event.*;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
-import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
@@ -110,8 +110,8 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = entityTypeMapper.map(event.getRightClicked().getType());
         UUID playerId = player.getUniqueId();
         Item itemInClickHand = event.getHand() == EquipmentSlot.HAND
-                ? itemMapper.map(player.getEquipment().getItemInMainHand())
-                : itemMapper.map(player.getEquipment().getItemInOffHand());
+                ? itemMapper.map(player.getEquipment().getItemInMainHand()).get() // TODO use Option
+                : itemMapper.map(player.getEquipment().getItemInOffHand()).get();
         Location interactLocation = locationMapper.map(event.getClickedPosition().toLocation(player.getWorld()));
         EntityPreInteractEvent entityPreInteractEvent = new SimpleEntityPreInteractEvent(entityId, entityType, playerId,
                 itemInClickHand, interactLocation, event.isCancelled());
@@ -132,8 +132,8 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = entityTypeMapper.map(event.getRightClicked().getType());
         UUID playerId = player.getUniqueId();
         Item itemInClickHand = event.getHand() == EquipmentSlot.HAND
-                ? itemMapper.map(player.getEquipment().getItemInMainHand())
-                : itemMapper.map(player.getEquipment().getItemInOffHand());
+                ? itemMapper.map(player.getEquipment().getItemInMainHand()).get() // TODO use Option
+                : itemMapper.map(player.getEquipment().getItemInOffHand()).get();
         Location interactLocation = locationMapper.map(event.getClickedPosition().toLocation(player.getWorld()));
         EntityInteractEvent entityInteractEvent =
                 new SimpleEntityInteractEvent(entityId, entityType, playerId, itemInClickHand, interactLocation);
@@ -335,6 +335,7 @@ public class SpigotEntityEventMapper implements Listener {
         Status entityStatus = statusQueryService.getStatus(entityId);
         List<Item> drops = event.getDrops().stream()
                 .map(itemMapper::map)
+                .map(it -> it.get()) // TODO use Option
                 .collect(Collectors.toList());
         EntityDeathEvent entityDeathEvent = new SimpleEntityDeathEvent(entityId, entityType, drops);
         eventService.publish(entityDeathEvent);
