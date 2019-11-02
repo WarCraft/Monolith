@@ -280,12 +280,12 @@ class SpigotItemVariantMapper @Inject() (
     case BucketVariant.MILK  => Material.MILK_BUCKET
     case BucketVariant.WATER => Material.WATER_BUCKET
 
-    // HOE
-    case HoeVariant.WOOD    => Material.WOODEN_HOE
-    case HoeVariant.STONE   => Material.STONE_HOE
-    case HoeVariant.IRON    => Material.IRON_HOE
-    case HoeVariant.GOLD    => Material.GOLDEN_HOE
-    case HoeVariant.DIAMOND => Material.DIAMOND_HOE
+    // CHESTPLATE
+    case ChestplateVariant.LEATHER   => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.CHAINMAIL => Material.CHAINMAIL_CHESTPLATE
+    case ChestplateVariant.IRON      => Material.IRON_CHESTPLATE
+    case ChestplateVariant.GOLD      => Material.GOLDEN_CHESTPLATE
+    case ChestplateVariant.DIAMOND   => Material.DIAMOND_CHESTPLATE
 
     // HELMET
     case HelmetVariant.LEATHER   => Material.LEATHER_HELMET
