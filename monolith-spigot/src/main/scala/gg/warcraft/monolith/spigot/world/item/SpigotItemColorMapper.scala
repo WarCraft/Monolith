@@ -19,6 +19,7 @@ class SpigotItemColorMapper @Inject()(
     case Carpet(color, _, _, _, _, _)           => blockMapper.mapCarpet(color)
     case Concrete(color, _, _, _, _, _)         => blockMapper.mapConcrete(color)
     case ConcretePowder(color, _, _, _, _, _)   => blockMapper.mapConcretePowder(color)
+    case Dye(color, _, _, _, _, _)              => mapDye(color)
     case GlazedTerracotta(color, _, _, _, _, _) => blockMapper.mapGlazedTerracotta(color)
     case Wool(color, _, _, _, _, _)             => blockMapper.mapWool(color)
 
@@ -39,5 +40,24 @@ class SpigotItemColorMapper @Inject()(
     case Terracotta(Some(color), _, _, _, _, _) => blockMapper.mapTerracotta(color)
 
     case _ => throw new IllegalArgumentException(s"$item")
+  }
+
+  def mapDye(color: BlockColor): Material = color match {
+    case BlockColor.BLACK      => Material.BLACK_DYE
+    case BlockColor.BLUE       => Material.BLUE_DYE
+    case BlockColor.BROWN      => Material.BROWN_DYE
+    case BlockColor.CYAN       => Material.CYAN_DYE
+    case BlockColor.GRAY       => Material.GRAY_DYE
+    case BlockColor.GREEN      => Material.GREEN_DYE
+    case BlockColor.LIGHT_BLUE => Material.LIGHT_BLUE_DYE
+    case BlockColor.LIGHT_GRAY => Material.LIGHT_GRAY_DYE
+    case BlockColor.LIME       => Material.LIME_DYE
+    case BlockColor.MAGENTA    => Material.MAGENTA_DYE
+    case BlockColor.ORANGE     => Material.ORANGE_DYE
+    case BlockColor.PINK       => Material.PINK_DYE
+    case BlockColor.PURPLE     => Material.PURPLE_DYE
+    case BlockColor.RED        => Material.RED_DYE
+    case BlockColor.WHITE      => Material.WHITE_DYE
+    case BlockColor.YELLOW     => Material.YELLOW_DYE
   }
 }
