@@ -272,7 +272,7 @@ class SpigotBlockVariantMapper {
     case Material.DARK_PRISMARINE   => PrismarineVariant.DARK
     case Material.PRISMARINE_BRICKS => PrismarineVariant.BRICK
 
-    // QUARTZ
+    // QUARTZ_BLOCK
     case Material.QUARTZ_BLOCK          => QuartzBlockVariant.NORMAL
     case Material.CHISELED_QUARTZ_BLOCK => QuartzBlockVariant.CHISELED
     case Material.SMOOTH_QUARTZ         => QuartzBlockVariant.SMOOTH
@@ -608,6 +608,10 @@ class SpigotBlockVariantMapper {
     case DirtVariant.NORMAL => Material.DIRT
     case DirtVariant.COARSE => Material.COARSE_DIRT
 
+    // END_STONE
+    case EndStoneVariant.NORMAL => Material.END_STONE
+    case EndStoneVariant.BRICK  => Material.END_STONE_BRICKS
+
     // FENCE
     case FenceVariant.ACACIA   => Material.ACACIA_FENCE
     case FenceVariant.BIRCH    => Material.BIRCH_FENCE
@@ -739,6 +743,10 @@ class SpigotBlockVariantMapper {
     case MushroomBlockVariant.RED   => Material.RED_MUSHROOM_BLOCK
     case MushroomBlockVariant.STEM  => Material.MUSHROOM_STEM
 
+    // PILLAR
+    case PillarVariant.PURPUR => Material.PURPUR_PILLAR
+    case PillarVariant.QUARTZ => Material.QUARTZ_PILLAR
+
     // PISTON
     case PistonVariant.NORMAL => Material.PISTON
     case PistonVariant.STICKY => Material.STICKY_PISTON
@@ -772,6 +780,10 @@ class SpigotBlockVariantMapper {
     case RailVariant.ACTIVATOR => Material.ACTIVATOR_RAIL
     case RailVariant.DETECTOR  => Material.DETECTOR_RAIL
     case RailVariant.POWERED   => Material.POWERED_RAIL
+
+    // SAND
+    case SandVariant.NORMAL => Material.SAND
+    case SandVariant.RED    => Material.RED_SAND
 
     // SANDSTONE
     case SandstoneVariant.NORMAL   => Material.SANDSTONE
