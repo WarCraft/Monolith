@@ -1,10 +1,7 @@
 package gg.warcraft.monolith.api.world.item;
 
 public enum ItemType {
-    // TODO ItemType.SLIME_BLOCK then becomes BlockType.SLIME and ItemType.SLIME remains the Slime Ball
-    // TODO maybe suffix all proper block items with BLOCK? GOLD_ORE_BLOCK etc
-    // TODO right now an ItemType.GOLD_BLOCK turns into a BlockType.GOLD, maybe makes sense?
-    ANDESITE, // TODO remove NORMAL from variants and make VariableBlock?
+    ANDESITE,
     ANVIL,
     APPLE,
     ARMOR_STAND,
@@ -38,7 +35,7 @@ public enum ItemType {
     BREAD,
     BREWING_STAND,
     BRICK,
-    BRICK_BLOCK,  // TODO what to do with Block naming here
+    BRICK_BLOCK,
     BUCKET,
     BUTTON,
     CACTUS,
@@ -61,7 +58,7 @@ public enum ItemType {
     CLOCK,
     COAL,
     COAL_BLOCK,
-    COAL_ORE, // TODO to keep parity with blocks should the block.Diamond be renamed block.DiamondBlock?
+    COAL_ORE,
     COBBLESTONE,
     COBWEB,
     COCOA_BEANS,
@@ -178,7 +175,7 @@ public enum ItemType {
     LILY_PAD,
     LOG,
     LOOM,
-    MAGMA_BLOCK, // TODO rename slime block to SLIME_BLOCK? Item is called Slime Block ingame
+    MAGMA_BLOCK,
     MAGMA_CREAM,
     MAP,
     MELON,
@@ -225,7 +222,7 @@ public enum ItemType {
     RABBIT,
     RABBIT_FOOT,
     RABBIT_HIDE,
-    RAIL, // TODO rename Rail as per Minecraft's implementation?
+    RAIL,
     REDSTONE,
     REDSTONE_BLOCK,
     REDSTONE_LAMP,
@@ -252,7 +249,7 @@ public enum ItemType {
     SIGN,
     SLAB,
     SLIMEBALL,
-    SLIME_BLOCK, // TODO this is called Slime Block in MC, rename block type to SlimeBlock too?
+    SLIME_BLOCK,
     SMITHING_TABLE,
     SMOKER,
     SNOW,
