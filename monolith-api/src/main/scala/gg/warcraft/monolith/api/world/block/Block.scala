@@ -116,12 +116,6 @@ trait StatefulBlock[T <: BlockState] extends Block {
     copyWith("state", state)
 }
 
-trait StickyBlock extends Block {
-  val sticky: Boolean
-  def withSticky(sticky: Boolean): this.type =
-    copyWith("sticky", sticky)
-}
-
 trait VariableBlock[T <: BlockVariant] extends Block {
   val variant: T
   def withVariant(variant: T): this.type =

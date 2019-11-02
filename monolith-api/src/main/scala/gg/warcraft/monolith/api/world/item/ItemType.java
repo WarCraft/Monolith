@@ -208,8 +208,6 @@ public enum ItemType {
     PLANKS,
     PLANT,
     PODZOL,
-    POISONOUS_POTATO,
-    POPPED_CHORUS_FRUIT,
     PORKCHOP,
     POTATO,
     POTION,

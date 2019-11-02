@@ -30,6 +30,10 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MOJANG_BANNER_PATTERN  => BannerPatternVariant.MOJANG
     case Material.SKULL_BANNER_PATTERN   => BannerPatternVariant.SKULL
 
+    // BEEF
+    case Material.BEEF        => BeefVariant.RAW
+    case Material.COOKED_BEEF => BeefVariant.COOKED
+
     // BOAT
     case Material.ACACIA_BOAT   => BoatVariant.ACACIA
     case Material.BIRCH_BOAT    => BoatVariant.BIRCH
@@ -67,6 +71,18 @@ class SpigotItemVariantMapper @Inject() (
     case Material.IRON_CHESTPLATE      => ChestplateVariant.IRON
     case Material.GOLDEN_CHESTPLATE    => ChestplateVariant.GOLD
     case Material.DIAMOND_CHESTPLATE   => ChestplateVariant.DIAMOND
+
+    // CHICKEN
+    case Material.CHICKEN        => ChickenVariant.RAW
+    case Material.COOKED_CHICKEN => ChickenVariant.COOKED
+
+    // CHORUS_FRUIT
+    case Material.CHORUS_FRUIT        => ChorusFruitVariant.NORMAL
+    case Material.POPPED_CHORUS_FRUIT => ChorusFruitVariant.POPPED
+
+    // COD
+    case Material.COD        => CodVariant.RAW
+    case Material.COOKED_COD => CodVariant.COOKED
 
     // HELMET
     case Material.LEATHER_HELMET   => HelmetVariant.LEATHER
@@ -118,6 +134,10 @@ class SpigotItemVariantMapper @Inject() (
     case Material.MUSIC_DISC_WAIT    => MusicDiscVariant.DISC_WAIT
     case Material.MUSIC_DISC_WARD    => MusicDiscVariant.DISC_WARD
 
+    // MUTTON
+    case Material.MUTTON        => MuttonVariant.RAW
+    case Material.COOKED_MUTTON => MuttonVariant.COOKED
+
     // PICKAXE
     case Material.WOODEN_PICKAXE  => PickaxeVariant.WOOD
     case Material.STONE_PICKAXE   => PickaxeVariant.STONE
@@ -125,10 +145,27 @@ class SpigotItemVariantMapper @Inject() (
     case Material.GOLDEN_PICKAXE  => PickaxeVariant.GOLD
     case Material.DIAMOND_PICKAXE => PickaxeVariant.DIAMOND
 
+    // PORKCHOP
+    case Material.PORKCHOP        => PorkchopVariant.RAW
+    case Material.COOKED_PORKCHOP => PorkchopVariant.COOKED
+
+    // POTATO
+    case Material.POTATO           => PotatoVariant.NORMAL
+    case Material.BAKED_POTATO     => PotatoVariant.BAKED
+    case Material.POISONOUS_POTATO => PotatoVariant.POISONOUS
+
     // POTION
     case Material.POTION           => PotionVariant.NORMAL
     case Material.LINGERING_POTION => PotionVariant.LINGERING
     case Material.SPLASH_POTION    => PotionVariant.SPLASH
+
+    // RABBIT
+    case Material.RABBIT        => RabbitVariant.RAW
+    case Material.COOKED_RABBIT => RabbitVariant.COOKED
+
+    // SALMON
+    case Material.SALMON        => SalmonVariant.RAW
+    case Material.COOKED_SALMON => SalmonVariant.COOKED
 
     // SAPLING
     case Material.ACACIA_SAPLING   => SaplingVariant.ACACIA
@@ -211,6 +248,10 @@ class SpigotItemVariantMapper @Inject() (
     case Material.ZOMBIE_SPAWN_EGG           => SpawnEggVariant.ZOMBIE
     case Material.ZOMBIE_VILLAGER_SPAWN_EGG  => SpawnEggVariant.ZOMBIE_VILLAGER
 
+    // SPIDER_EYE
+    case Material.SPIDER_EYE           => SpiderEyeVariant.NORMAL
+    case Material.FERMENTED_SPIDER_EYE => SpiderEyeVariant.FERMENTED
+
     // STEW
     case Material.BEETROOT_SOUP   => StewVariant.BEETROOT
     case Material.MUSHROOM_STEW   => StewVariant.MUSHROOM
@@ -257,6 +298,10 @@ class SpigotItemVariantMapper @Inject() (
     case BannerPatternVariant.MOJANG  => Material.MOJANG_BANNER_PATTERN
     case BannerPatternVariant.SKULL   => Material.SKULL_BANNER_PATTERN
 
+    // BEEF
+    case BeefVariant.RAW    => Material.BEEF
+    case BeefVariant.COOKED => Material.COOKED_BEEF
+
     // BOOTS
     case BootsVariant.LEATHER   => Material.LEATHER_BOOTS
     case BootsVariant.CHAINMAIL => Material.CHAINMAIL_BOOTS
@@ -286,6 +331,18 @@ class SpigotItemVariantMapper @Inject() (
     case ChestplateVariant.IRON      => Material.IRON_CHESTPLATE
     case ChestplateVariant.GOLD      => Material.GOLDEN_CHESTPLATE
     case ChestplateVariant.DIAMOND   => Material.DIAMOND_CHESTPLATE
+
+    // CHICKEN
+    case ChickenVariant.RAW    => Material.CHICKEN
+    case ChickenVariant.COOKED => Material.COOKED_CHICKEN
+
+    // CHORUS_FRUIT
+    case ChorusFruitVariant.NORMAL => Material.CHORUS_FRUIT
+    case ChorusFruitVariant.POPPED => Material.POPPED_CHORUS_FRUIT
+
+    // COD
+    case CodVariant.RAW    => Material.COD
+    case CodVariant.COOKED => Material.COOKED_COD
 
     // HELMET
     case HelmetVariant.LEATHER   => Material.LEATHER_HELMET
@@ -337,6 +394,10 @@ class SpigotItemVariantMapper @Inject() (
     case MusicDiscVariant.DISC_WAIT    => Material.MUSIC_DISC_WAIT
     case MusicDiscVariant.DISC_WARD    => Material.MUSIC_DISC_WARD
 
+    // MUTTON
+    case MuttonVariant.RAW    => Material.MUTTON
+    case MuttonVariant.COOKED => Material.COOKED_MUTTON
+
     // PICKAXE
     case PickaxeVariant.WOOD    => Material.WOODEN_PICKAXE
     case PickaxeVariant.STONE   => Material.STONE_PICKAXE
@@ -344,10 +405,27 @@ class SpigotItemVariantMapper @Inject() (
     case PickaxeVariant.GOLD    => Material.GOLDEN_PICKAXE
     case PickaxeVariant.DIAMOND => Material.DIAMOND_PICKAXE
 
+    // PORKCHOP
+    case PorkchopVariant.RAW    => Material.PORKCHOP
+    case PorkchopVariant.COOKED => Material.COOKED_PORKCHOP
+
+    // POTATO
+    case PotatoVariant.NORMAL    => Material.POTATO
+    case PotatoVariant.BAKED     => Material.BAKED_POTATO
+    case PotatoVariant.POISONOUS => Material.POISONOUS_POTATO
+
     // POTION
     case PotionVariant.NORMAL    => Material.POTION
     case PotionVariant.LINGERING => Material.LINGERING_POTION
     case PotionVariant.SPLASH    => Material.SPLASH_POTION
+
+    // RABBIT
+    case RabbitVariant.RAW    => Material.RABBIT
+    case RabbitVariant.COOKED => Material.COOKED_RABBIT
+
+    // SALMON
+    case SalmonVariant.RAW    => Material.SALMON
+    case SalmonVariant.COOKED => Material.COOKED_SALMON
 
     // SAPLING
     case SaplingVariant.ACACIA   => Material.ACACIA_SAPLING
@@ -429,6 +507,10 @@ class SpigotItemVariantMapper @Inject() (
     case SpawnEggVariant.ZOMBIE_PIGMAN    => Material.ZOMBIE_PIGMAN_SPAWN_EGG
     case SpawnEggVariant.ZOMBIE           => Material.ZOMBIE_SPAWN_EGG
     case SpawnEggVariant.ZOMBIE_VILLAGER  => Material.ZOMBIE_VILLAGER_SPAWN_EGG
+
+    // SPIDER_EYE
+    case SpiderEyeVariant.NORMAL    => Material.SPIDER_EYE
+    case SpiderEyeVariant.FERMENTED => Material.FERMENTED_SPIDER_EYE
 
     // STEW
     case StewVariant.BEETROOT   => Material.BEETROOT_SOUP

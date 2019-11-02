@@ -87,6 +87,10 @@ class SpigotBlockVariantMapper {
     case Material.DEAD_HORN_CORAL_FAN   => CoralFanVariant.DEAD_HORN
     case Material.DEAD_TUBE_CORAL_FAN   => CoralFanVariant.DEAD_TUBE
 
+    // DIRT
+    case Material.DIRT        => DirtVariant.NORMAL
+    case Material.COARSE_DIRT => DirtVariant.COARSE
+
     // DOOR
     case Material.ACACIA_DOOR   => DoorVariant.ACACIA
     case Material.BIRCH_DOOR    => DoorVariant.BIRCH
@@ -227,6 +231,10 @@ class SpigotBlockVariantMapper {
     case Material.PURPUR_PILLAR => PillarVariant.PURPUR
     case Material.QUARTZ_PILLAR => PillarVariant.QUARTZ
 
+    // PISTON
+    case Material.PISTON        => PistonVariant.NORMAL
+    case Material.STICKY_PISTON => PistonVariant.STICKY
+
     // PLANKS
     case Material.ACACIA_PLANKS   => PlanksVariant.ACACIA
     case Material.BIRCH_PLANKS    => PlanksVariant.BIRCH
@@ -350,6 +358,10 @@ class SpigotBlockVariantMapper {
     case Material.JUNGLE_SLAB   => SlabVariant.JUNGLE
     case Material.OAK_SLAB      => SlabVariant.OAK
     case Material.SPRUCE_SLAB   => SlabVariant.SPRUCE
+
+    // SPONGE
+    case Material.SPONGE     => SpongeVariant.NORMAL
+    case Material.WET_SPONGE => SpongeVariant.WET
 
     // STAIRS
     case Material.BRICK_STAIRS            => StairsVariant.BRICK
@@ -584,6 +596,10 @@ class SpigotBlockVariantMapper {
     case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
     case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
 
+    // DIRT
+    case DirtVariant.NORMAL => Material.DIRT
+    case DirtVariant.COARSE => Material.COARSE_DIRT
+
     // FLOWER
     case FlowerVariant.ALLIUM             => Material.ALLIUM
     case FlowerVariant.AZURE_BLUET        => Material.AZURE_BLUET
@@ -688,6 +704,10 @@ class SpigotBlockVariantMapper {
     case MushroomBlockVariant.BROWN => Material.BROWN_MUSHROOM_BLOCK
     case MushroomBlockVariant.RED   => Material.RED_MUSHROOM_BLOCK
     case MushroomBlockVariant.STEM  => Material.MUSHROOM_STEM
+
+    // PISTON
+    case PistonVariant.NORMAL => Material.PISTON
+    case PistonVariant.STICKY => Material.STICKY_PISTON
 
     // PLANKS
     case PlanksVariant.ACACIA   => Material.ACACIA_PLANKS
@@ -798,6 +818,10 @@ class SpigotBlockVariantMapper {
     case SlabVariant.JUNGLE   => Material.JUNGLE_SLAB
     case SlabVariant.OAK      => Material.OAK_SLAB
     case SlabVariant.SPRUCE   => Material.SPRUCE_SLAB
+
+    // SPONGE
+    case SpongeVariant.NORMAL => Material.SPONGE
+    case SpongeVariant.WET    => Material.WET_SPONGE
 
     // STAIRS
     case StairsVariant.BRICK            => Material.BRICK_STAIRS

@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import com.google.inject.Inject
-import gg.warcraft.monolith.api.world.block.{ Rail, _ }
+import gg.warcraft.monolith.api.world.block.{Rail, _}
 import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
@@ -199,10 +199,6 @@ class SpigotBlockMapper @Inject() (
         val signal = dataAs[SpigotCampfire].isSignalFire
         Campfire(loc, dir, flooded, lit, signal)
 
-      // DIRT
-      case Material.DIRT        => Dirt(loc, coarse = false)
-      case Material.COARSE_DIRT => Dirt(loc, coarse = true)
-
       // END_PORTAL_FRAME
       case Material.END_PORTAL_FRAME =>
         val eye = dataAs[SpigotEndPortalFrame].hasEye
@@ -248,13 +244,9 @@ class SpigotBlockMapper @Inject() (
         NoteBlock(loc, v[NoteBlockVariant], s[NoteBlockState], powered)
 
       // PISTON
-      case Material.PISTON =>
+      case Material.PISTON | Material.STICKY_PISTON =>
         val extended = dataAs[SpigotPiston].isExtended
-        Piston(loc, dir, sticky = false, extended)
-
-      case Material.STICKY_PISTON =>
-        val extended = dataAs[SpigotPiston].isExtended
-        Piston(loc, dir, sticky = true, extended)
+        Piston(loc, v[PistonVariant], dir, extended)
 
       case Material.MOVING_PISTON | Material.PISTON_HEAD =>
         throw new IllegalArgumentException("Technical block")
@@ -284,10 +276,6 @@ class SpigotBlockMapper @Inject() (
       // SEAGRASS
       case Material.SEAGRASS      => Seagrass(loc, BlockBisection.BOTTOM, tall = false)
       case Material.TALL_SEAGRASS => Seagrass(loc, bisection, tall = true)
-
-      // SPONGE
-      case Material.SPONGE     => Sponge(loc, wet = false)
-      case Material.WET_SPONGE => Sponge(loc, wet = true)
 
       // SWEET_BERRY_BUSH
       case Material.SWEET_BERRY_BUSH =>
@@ -322,6 +310,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isCoral            => Coral(loc, v[CoralVariant], flooded)
       case m if m.isCoralBlock       => CoralBlock(loc, v[CoralBlockVariant])
       case m if m.isCoralFan         => CoralFan(loc, v[CoralFanVariant], None, flooded)
+      case m if m.isDirt             => Dirt(loc, v[DirtVariant])
       case m if m.isEndStone         => EndStone(loc, v[EndStoneVariant])
       case m if m.isFence            => Fence(loc, v[FenceVariant], extensions, flooded)
       case m if m.isFlower           => Flower(loc, v[FlowerVariant])
@@ -348,6 +337,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isSapling          => Sapling(loc, v[SaplingVariant], s[SaplingState])
       case m if m.isShulkerBox       => ShulkerBox(loc, Some(color))
       case m if m.isSlab             => Slab(loc, v[SlabVariant], bisection)
+      case m if m.isSponge           => Sponge(loc, v[SpongeVariant])
       case m if m.isStone            => Stone(loc, v[StoneVariant])
       case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
       case m if m.isStructureBlock   => StructureBlock(loc, v[StructureBlockVariant])

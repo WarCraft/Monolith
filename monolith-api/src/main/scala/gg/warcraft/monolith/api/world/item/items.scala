@@ -160,13 +160,14 @@ final case class Bedrock(
 }
 
 final case class Beef(
-    cooked: Boolean,
+    variant: BeefVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[BeefVariant]
+    with StackableItem {
   val `type` = ItemType.BEEF
   override val edible = true
 }
@@ -223,8 +224,8 @@ final case class BlazeRod(
 }
 
 final case class Boat(
-    variant: BoatVariant, // TODO merge variants that are blatantly the same
-    name: String, // TODO into WoodVariant?
+    variant: BoatVariant,
+    name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
@@ -527,13 +528,14 @@ final case class Chestplate(
 }
 
 final case class Chicken(
-    cooked: Boolean,
+    variant: ChickenVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[ChickenVariant]
+    with StackableItem {
   val `type` = ItemType.CHICKEN
   override val edible = true
 }
@@ -549,17 +551,17 @@ final case class ChorusFlower(
 }
 
 final case class ChorusFruit(
-    popped: Boolean,
+    variant: ChorusFruitVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[ChorusFruitVariant]
+    with StackableItem {
   val `type` = ItemType.CHORUS_FRUIT
-  override val edible: Boolean = !popped
-  def withPopped(popped: Boolean): ChorusFruit =
-    copyWith("popped", popped)
+  override val edible: Boolean =
+    variant == ChorusFruitVariant.NORMAL
 }
 
 final case class ChorusPlant(
@@ -665,13 +667,14 @@ final case class CocoaBeans(
 }
 
 final case class Cod(
-    cooked: Boolean,
+    variant: CodVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[CodVariant]
+    with StackableItem {
   val `type` = ItemType.CHICKEN
   override val edible = true
 }
@@ -782,7 +785,7 @@ final case class CoralBlock(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[CoralBlockVariant] // TODO merge all into CoralVariant?
+) extends VariableItem[CoralBlockVariant]
     with StackableItem {
   val `type` = ItemType.CORAL_BLOCK
 }
@@ -1288,7 +1291,7 @@ final case class FenceGate(
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[FenceGateVariant] // TODO merge with WoodVariant?
+) extends VariableItem[FenceGateVariant]
     with StackableItem {
   val `type` = ItemType.FENCE_GATE
 }
@@ -1989,13 +1992,14 @@ final case class MusicDisc(
 }
 
 final case class Mutton(
-    cooked: Boolean,
+    variant: MuttonVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[MuttonVariant]
+    with StackableItem {
   val `type` = ItemType.MUTTON
   override val edible = true
 }
@@ -2201,37 +2205,28 @@ final case class Podzol(
   val `type` = ItemType.PODZOL
 }
 
-final case class PoisonousPotato(
-    name: String,
-    tooltip: Array[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
-) extends StackableItem {
-  val `type` = ItemType.POISONOUS_POTATO
-  override val edible = true
-}
-
 final case class Porkchop(
-    cooked: Boolean,
+    variant: PorkchopVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[PorkchopVariant]
+    with StackableItem {
   val `type` = ItemType.PORKCHOP
   override val edible = true
 }
 
 final case class Potato(
-    cooked: Boolean, // TODO rename this baked? Also cooked items no longer have a withCooked def
+    variant: PotatoVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[PotatoVariant]
+    with StackableItem {
   val `type` = ItemType.POTATO
   override val edible = true
 }
@@ -2369,13 +2364,14 @@ final case class QuartzOre(
 }
 
 final case class Rabbit(
-    cooked: Boolean,
+    variant: RabbitVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[RabbitVariant]
+    with StackableItem {
   val `type` = ItemType.RABBIT
   override val edible = true
 }
@@ -2493,13 +2489,14 @@ final case class Saddle(
 }
 
 final case class Salmon(
-    cooked: Boolean,
+    variant: SalmonVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[SalmonVariant]
+    with StackableItem {
   val `type` = ItemType.SALMON
   override val edible = true
 }
@@ -2791,25 +2788,28 @@ final case class Spawner(
 }
 
 final case class SpiderEye(
-    fermented: Boolean,
+    variant: SpiderEyeVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[SpiderEyeVariant]
+    with StackableItem {
   val `type` = ItemType.SPIDER_EYE
-  override val edible: Boolean = !fermented
+  override val edible: Boolean =
+    variant == SpiderEyeVariant.NORMAL
 }
 
 final case class Sponge(
-    wet: Boolean,
+    variant: SpongeVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends StackableItem {
+) extends VariableItem[SpongeVariant]
+    with StackableItem {
   val `type` = ItemType.SPONGE
 }
 

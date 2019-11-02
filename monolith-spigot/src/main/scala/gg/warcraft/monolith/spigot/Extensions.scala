@@ -97,6 +97,11 @@ object Extensions {
       Material.YELLOW_BED
     )
 
+    private final val beef = util.EnumSet.of(
+      Material.BEEF,
+      Material.COOKED_BEEF
+    )
+
     private final val boat = util.EnumSet.of(
       Material.ACACIA_BOAT,
       Material.BIRCH_BOAT,
@@ -165,9 +170,19 @@ object Extensions {
       Material.YELLOW_CARPET
     )
 
+    private final val chicken = util.EnumSet.of(
+      Material.CHICKEN,
+      Material.COOKED_CHICKEN
+    )
+
     private final val cobblestone = util.EnumSet.of(
       Material.COBBLESTONE,
       Material.MOSSY_COBBLESTONE
+    )
+
+    private final val cod = util.EnumSet.of(
+      Material.COD,
+      Material.COOKED_COD
     )
 
     private final val chest = util.EnumSet.of(
@@ -182,6 +197,11 @@ object Extensions {
       Material.IRON_CHESTPLATE,
       Material.GOLDEN_CHESTPLATE,
       Material.DIAMOND_CHESTPLATE
+    )
+
+    private final val chorusFruit = util.EnumSet.of(
+      Material.CHORUS_FRUIT,
+      Material.POPPED_CHORUS_FRUIT
     )
 
     private final val commandBlock = util.EnumSet.of(
@@ -570,6 +590,11 @@ object Extensions {
       Material.MUSIC_DISC_WARD
     )
 
+    private final val mutton = util.EnumSet.of(
+      Material.MUTTON,
+      Material.COOKED_MUTTON
+    )
+
     private final val pickaxe = util.EnumSet.of(
       Material.WOODEN_PICKAXE,
       Material.STONE_PICKAXE,
@@ -581,6 +606,11 @@ object Extensions {
     private final val pillar = util.EnumSet.of(
       Material.PURPUR_PILLAR,
       Material.QUARTZ_PILLAR
+    )
+
+    private final val piston = util.EnumSet.of(
+      Material.PISTON,
+      Material.STICKY_PISTON
     )
 
     private final val planks = util.EnumSet.of(
@@ -597,6 +627,17 @@ object Extensions {
       Material.PEONY,
       Material.ROSE_BUSH,
       Material.SUNFLOWER
+    )
+
+    private final val porkchop = util.EnumSet.of(
+      Material.PORKCHOP,
+      Material.COOKED_PORKCHOP
+    )
+
+    private final val potato = util.EnumSet.of(
+      Material.POTATO,
+      Material.BAKED_POTATO,
+      Material.POISONOUS_POTATO
     )
 
     private final val potion = util.EnumSet.of(
@@ -627,11 +668,21 @@ object Extensions {
       Material.SMOOTH_QUARTZ
     )
 
+    private final val rabbit = util.EnumSet.of(
+      Material.RABBIT,
+      Material.COOKED_RABBIT
+    )
+
     private final val rail = util.EnumSet.of(
       Material.RAIL,
       Material.ACTIVATOR_RAIL,
       Material.DETECTOR_RAIL,
       Material.POWERED_RAIL
+    )
+
+    private final val salmon = util.EnumSet.of(
+      Material.SALMON,
+      Material.COOKED_SALMON
     )
 
     private final val sand = util.EnumSet.of(
@@ -709,6 +760,53 @@ object Extensions {
       Material.SPRUCE_SIGN
     )
 
+    private final val wallSign = util.EnumSet.of(
+      Material.ACACIA_WALL_SIGN,
+      Material.BIRCH_WALL_SIGN,
+      Material.DARK_OAK_WALL_SIGN,
+      Material.JUNGLE_WALL_SIGN,
+      Material.OAK_WALL_SIGN,
+      Material.SPRUCE_WALL_SIGN
+    )
+
+    private final val slab = util.EnumSet.of(
+      Material.BRICK_SLAB,
+      Material.NETHER_BRICK_SLAB,
+      Material.RED_NETHER_BRICK_SLAB,
+      Material.SANDSTONE_SLAB,
+      Material.RED_SANDSTONE_SLAB,
+      Material.STONE_SLAB,
+      Material.STONE_BRICK_SLAB,
+      Material.COBBLESTONE_SLAB,
+      Material.ANDESITE_SLAB,
+      Material.DIORITE_SLAB,
+      Material.GRANITE_SLAB,
+      Material.END_STONE_BRICK_SLAB,
+      Material.PRISMARINE_SLAB,
+      Material.PRISMARINE_BRICK_SLAB,
+      Material.DARK_PRISMARINE_SLAB,
+      Material.PURPUR_SLAB,
+      Material.QUARTZ_SLAB,
+      Material.ACACIA_SLAB,
+      Material.BIRCH_SLAB,
+      Material.DARK_OAK_SLAB,
+      Material.JUNGLE_SLAB,
+      Material.OAK_SLAB,
+      Material.SPRUCE_SLAB,
+      Material.PETRIFIED_OAK_SLAB,
+      Material.CUT_SANDSTONE_SLAB,
+      Material.SMOOTH_SANDSTONE_SLAB,
+      Material.CUT_RED_SANDSTONE_SLAB,
+      Material.SMOOTH_RED_SANDSTONE_SLAB,
+      Material.SMOOTH_STONE_SLAB,
+      Material.MOSSY_STONE_BRICK_SLAB,
+      Material.MOSSY_COBBLESTONE_SLAB,
+      Material.POLISHED_ANDESITE_SLAB,
+      Material.POLISHED_DIORITE_SLAB,
+      Material.POLISHED_GRANITE_SLAB,
+      Material.SMOOTH_QUARTZ_SLAB
+    )
+
     private final val spawnEgg = util.EnumSet.of(
       Material.BAT_SPAWN_EGG,
       Material.BLAZE_SPAWN_EGG,
@@ -770,66 +868,9 @@ object Extensions {
       Material.ZOMBIE_VILLAGER_SPAWN_EGG
     )
 
-    private final val stew = util.EnumSet.of(
-      Material.BEETROOT_SOUP,
-      Material.MUSHROOM_STEW,
-      Material.RABBIT_STEW,
-      Material.SUSPICIOUS_STEW
-    )
-
-    private final val sword = util.EnumSet.of(
-      Material.WOODEN_SWORD,
-      Material.STONE_SWORD,
-      Material.IRON_SWORD,
-      Material.GOLDEN_SWORD,
-      Material.DIAMOND_SWORD
-    )
-
-    private final val wallSign = util.EnumSet.of(
-      Material.ACACIA_WALL_SIGN,
-      Material.BIRCH_WALL_SIGN,
-      Material.DARK_OAK_WALL_SIGN,
-      Material.JUNGLE_WALL_SIGN,
-      Material.OAK_WALL_SIGN,
-      Material.SPRUCE_WALL_SIGN
-    )
-
-    private final val slab = util.EnumSet.of(
-      Material.BRICK_SLAB,
-      Material.NETHER_BRICK_SLAB,
-      Material.RED_NETHER_BRICK_SLAB,
-      Material.SANDSTONE_SLAB,
-      Material.RED_SANDSTONE_SLAB,
-      Material.STONE_SLAB,
-      Material.STONE_BRICK_SLAB,
-      Material.COBBLESTONE_SLAB,
-      Material.ANDESITE_SLAB,
-      Material.DIORITE_SLAB,
-      Material.GRANITE_SLAB,
-      Material.END_STONE_BRICK_SLAB,
-      Material.PRISMARINE_SLAB,
-      Material.PRISMARINE_BRICK_SLAB,
-      Material.DARK_PRISMARINE_SLAB,
-      Material.PURPUR_SLAB,
-      Material.QUARTZ_SLAB,
-      Material.ACACIA_SLAB,
-      Material.BIRCH_SLAB,
-      Material.DARK_OAK_SLAB,
-      Material.JUNGLE_SLAB,
-      Material.OAK_SLAB,
-      Material.SPRUCE_SLAB,
-      Material.PETRIFIED_OAK_SLAB,
-      Material.CUT_SANDSTONE_SLAB,
-      Material.SMOOTH_SANDSTONE_SLAB,
-      Material.CUT_RED_SANDSTONE_SLAB,
-      Material.SMOOTH_RED_SANDSTONE_SLAB,
-      Material.SMOOTH_STONE_SLAB,
-      Material.MOSSY_STONE_BRICK_SLAB,
-      Material.MOSSY_COBBLESTONE_SLAB,
-      Material.POLISHED_ANDESITE_SLAB,
-      Material.POLISHED_DIORITE_SLAB,
-      Material.POLISHED_GRANITE_SLAB,
-      Material.SMOOTH_QUARTZ_SLAB
+    private final val spiderEye = util.EnumSet.of(
+      Material.SPIDER_EYE,
+      Material.FERMENTED_SPIDER_EYE
     )
 
     private final val sponge = util.EnumSet.of(
@@ -871,6 +912,13 @@ object Extensions {
       Material.SMOOTH_QUARTZ_STAIRS
     )
 
+    private final val stew = util.EnumSet.of(
+      Material.BEETROOT_SOUP,
+      Material.MUSHROOM_STEW,
+      Material.RABBIT_STEW,
+      Material.SUSPICIOUS_STEW
+    )
+
     private final val stone = util.EnumSet.of(
       Material.STONE,
       Material.SMOOTH_STONE,
@@ -892,6 +940,14 @@ object Extensions {
     private final val structureBlock = util.EnumSet.of(
       Material.STRUCTURE_BLOCK,
       Material.STRUCTURE_VOID
+    )
+
+    private final val sword = util.EnumSet.of(
+      Material.WOODEN_SWORD,
+      Material.STONE_SWORD,
+      Material.IRON_SWORD,
+      Material.GOLDEN_SWORD,
+      Material.DIAMOND_SWORD
     )
 
     private final val terracotta = util.EnumSet.of(
@@ -985,9 +1041,10 @@ object Extensions {
     def isArrow: Boolean = arrow.contains(material)
     def isAxe: Boolean = axe.contains(material)
     def isBanner: Boolean = banner.contains(material)
+    def isWallBanner: Boolean = wallBanner.contains(material)
+    def isBeef: Boolean = beef.contains(material)
     def isBoots: Boolean = boots.contains(material)
     def isBucket: Boolean = bucket.contains(material)
-    def isWallBanner: Boolean = wallBanner.contains(material)
     def isBannerPattern: Boolean = bannerPattern.contains(material)
     def isBed: Boolean = bed.contains(material)
     def isBoat: Boolean = boat.contains(material)
@@ -998,6 +1055,9 @@ object Extensions {
     def isCobblestone: Boolean = cobblestone.contains(material)
     def isChest: Boolean = chest.contains(material)
     def isChestplate: Boolean = chestplate.contains(material)
+    def isChicken: Boolean = chicken.contains(material)
+    def isChorusFruit: Boolean = chorusFruit.contains(material)
+    def isCod: Boolean = cod.contains(material)
     def isCommandBlock: Boolean = commandBlock.contains(material)
     def isConcrete: Boolean = concrete.contains(material)
     def isConcretePowder: Boolean = concretePowder.contains(material)
@@ -1031,15 +1091,21 @@ object Extensions {
     def isMushroom: Boolean = mushroom.contains(material)
     def isMushroomBlock: Boolean = mushroomBlock.contains(material)
     def isMusicDisc: Boolean = musicDisc.contains(material)
+    def isMutton: Boolean = mutton.contains(material)
     def isPickaxe: Boolean = pickaxe.contains(material)
     def isPillar: Boolean = pillar.contains(material)
+    def isPiston: Boolean = piston.contains(material)
     def isPlanks: Boolean = planks.contains(material)
     def isPlant: Boolean = plant.contains(material)
+    def isPorkchop: Boolean = porkchop.contains(material)
+    def isPotato: Boolean = potato.contains(material)
     def isPotion: Boolean = potion.contains(material)
     def isPressurePlate: Boolean = pressurePlate.contains(material)
     def isPrismarine: Boolean = prismarine.contains(material)
     def isQuartzBlock: Boolean = quartzBlock.contains(material)
+    def isRabbit: Boolean = rabbit.contains(material)
     def isRail: Boolean = rail.contains(material)
+    def isSalmon: Boolean = salmon.contains(material)
     def isSand: Boolean = sand.contains(material)
     def isSandstone: Boolean = sandstone.contains(material)
     def isSapling: Boolean = sapling.contains(material)
@@ -1049,6 +1115,7 @@ object Extensions {
     def isShulkerBox: Boolean = shulkerBox.contains(material)
     def isSign: Boolean = sign.contains(material)
     def isSpawnEgg: Boolean = spawnEgg.contains(material)
+    def isSpiderEye: Boolean = spiderEye.contains(material)
     def isStew: Boolean = stew.contains(material)
     def isWallSign: Boolean = wallSign.contains(material)
     def isSlab: Boolean = slab.contains(material)

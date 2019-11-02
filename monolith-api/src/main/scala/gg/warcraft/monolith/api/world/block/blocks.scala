@@ -393,11 +393,9 @@ final case class DiamondOre(
 
 final case class Dirt(
     location: BlockLocation,
-    coarse: Boolean
-) extends Block {
+    variant: DirtVariant
+) extends VariableBlock[DirtVariant] {
   override val `type` = BlockType.DIRT
-  def withCoarse(coarse: Boolean): Dirt =
-    copyWith("coarse", coarse)
 }
 
 final case class Dispenser(
@@ -957,11 +955,11 @@ final case class Pillar(
 
 final case class Piston(
     location: BlockLocation,
+    variant: PistonVariant,
     direction: BlockFace,
-    sticky: Boolean,
     extended: Boolean
-) extends DirectedBlock
-    with StickyBlock {
+) extends VariableBlock[PistonVariant]
+    with DirectedBlock {
   override val `type` = BlockType.PISTON
   def withExtended(extended: Boolean): Piston =
     copyWith("extended", extended)
@@ -1415,8 +1413,10 @@ final case class WeightedPressurePlate(
   override val `type` = BlockType.WEIGHTED_PRESSURE_PLATE
 }
 
-final case class Wheat(location: BlockLocation, state: WheatState)
-    extends StatefulBlock[WheatState] {
+final case class Wheat(
+    location: BlockLocation,
+    state: WheatState
+) extends StatefulBlock[WheatState] {
   override val `type` = BlockType.WHEAT
   override val solid: Boolean = false
 }
