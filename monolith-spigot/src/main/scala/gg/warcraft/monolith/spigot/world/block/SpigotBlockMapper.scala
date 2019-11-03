@@ -85,7 +85,6 @@ class SpigotBlockMapper @Inject() (
     def dataAs[T <: SpigotBlockData]: T = spigotData.asInstanceOf[T]
 
     block.getType match {
-      case Material.BARREL              => Barrel(loc, dir, open)
       case Material.BARRIER             => Barrier(loc)
       case Material.BEACON              => Beacon(loc)
       case Material.BEDROCK             => Bedrock(loc)
@@ -124,7 +123,7 @@ class SpigotBlockMapper @Inject() (
       case Material.END_PORTAL          => EndPortal(loc)
       case Material.END_ROD             => EndRod(loc, dir)
       case Material.FARMLAND            => Farmland(loc)
-      case Material.FIRE                => Fire(loc)
+      case Material.FIRE                => Fire(loc, s[FireState], extensions)
       case Material.FLETCHING_TABLE     => FletchingTable(loc)
       case Material.FROSTED_ICE         => Frost(loc, s[FrostState])
       case Material.FURNACE             => Furnace(loc, dir, lit)
@@ -188,6 +187,11 @@ class SpigotBlockMapper @Inject() (
         val thick = dataAs[SpigotBamboo].getAge == 1
         Bamboo(loc, v[BambooVariant], s[BambooState], thick)
 
+      // BARREL
+      case Material.BARREL =>
+        val _open = false // TODO not currently exposed by the Spigot API
+        Barrel(loc, dir, _open)
+
       // BUBBLE_COLUMN
       case Material.BUBBLE_COLUMN =>
         val drag = dataAs[SpigotBubbleColumn].isDrag
@@ -200,8 +204,9 @@ class SpigotBlockMapper @Inject() (
 
       // DISPENSER
       case Material.DISPENSER =>
+        val _dir = BlockFace.NORTH // TODO currently not exposed by Spigot API
         val _powered = dataAs[SpigotDispenser].isTriggered
-        Dispenser(loc, dir, _powered)
+        Dispenser(loc, _dir, _powered)
 
       // DROPPER
       case Material.DROPPER =>

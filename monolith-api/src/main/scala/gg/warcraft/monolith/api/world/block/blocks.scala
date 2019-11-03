@@ -531,8 +531,11 @@ final case class Fern(
 }
 
 final case class Fire(
-    location: BlockLocation
-) extends Block {
+    location: BlockLocation,
+    state: FireState,
+    extensions: Set[BlockFace]
+) extends StatefulBlock[FireState]
+    with ExtendableBlock {
   override val `type` = BlockType.FIRE
   override val solid: Boolean = false
 }
