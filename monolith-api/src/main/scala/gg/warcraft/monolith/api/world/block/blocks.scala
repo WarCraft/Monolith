@@ -884,11 +884,12 @@ final case class Mushroom(
   override val solid: Boolean = false
 }
 
-// TODO multi-orientations
 final case class MushroomBlock(
     location: BlockLocation,
-    variant: MushroomBlockVariant
-) extends VariableBlock[MushroomBlockVariant] {
+    variant: MushroomBlockVariant,
+    extensions: Set[BlockFace]
+) extends VariableBlock[MushroomBlockVariant]
+    with ExtendableBlock {
   override val `type` = BlockType.MUSHROOM_BLOCK
 }
 

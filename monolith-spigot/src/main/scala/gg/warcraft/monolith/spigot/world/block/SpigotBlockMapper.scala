@@ -199,14 +199,14 @@ class SpigotBlockMapper @Inject() (
 
       // CAMPFIRE
       case Material.CAMPFIRE =>
+        val _dir = BlockFace.NORTH // TODO currently not exposed by Spigot API
         val signal = dataAs[SpigotCampfire].isSignalFire
         Campfire(loc, dir, flooded, lit, signal)
 
       // DISPENSER
       case Material.DISPENSER =>
-        val _dir = BlockFace.NORTH // TODO currently not exposed by Spigot API
         val _powered = dataAs[SpigotDispenser].isTriggered
-        Dispenser(loc, _dir, _powered)
+        Dispenser(loc, dir, _powered)
 
       // DROPPER
       case Material.DROPPER =>
@@ -343,7 +343,6 @@ class SpigotBlockMapper @Inject() (
       case m if m.isMobHead          => MobHead(loc, v[MobHeadVariant], None, Some(rotation))
       case m if m.isWallMobHead      => MobHead(loc, v[MobHeadVariant], Some(dir), None)
       case m if m.isMushroom         => Mushroom(loc, v[MushroomVariant])
-      case m if m.isMushroomBlock    => MushroomBlock(loc, v[MushroomBlockVariant])
       case m if m.isPillar           => Pillar(loc, v[PillarVariant], orientation)
       case m if m.isPlanks           => Planks(loc, v[PlanksVariant])
       case m if m.isPlant            => Plant(loc, v[PlantVariant], bisection)
@@ -386,6 +385,10 @@ class SpigotBlockMapper @Inject() (
       // FENCE_GATE
       case m if m.isFenceGate =>
         FenceGate(loc, v[FenceGateVariant], dir, open, powered, wall = false)
+
+      // MUSHROOM_BLOCK
+      case m if m.isMushroomBlock =>
+        MushroomBlock(loc, v[MushroomBlockVariant], extensions)
 
       // PRESSURE_PLATE
       case m if m.isPressurePlate =>
