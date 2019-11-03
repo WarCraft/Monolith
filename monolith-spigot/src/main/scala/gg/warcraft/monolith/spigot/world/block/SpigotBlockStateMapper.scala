@@ -96,14 +96,22 @@ class SpigotBlockStateMapper {
   }
 
   def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
-    val state = block.state.toInt
+    block match {
+      // TODO remove this hack
+      case it: TurtleEgg =>
+        val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
+        turtleEggData.setHatch(it.state.age.toInt)
+        turtleEggData.setEggs(it.state.count.toInt)
 
-    if (data.isInstanceOf[Ageable])
-      data.asInstanceOf[Ageable].setAge(state)
-    if (data.isInstanceOf[Levelled])
-      data.asInstanceOf[Levelled].setLevel(state)
-    if (data.isInstanceOf[AnaloguePowerable])
-      data.asInstanceOf[AnaloguePowerable].setPower(state)
+      case _ =>
+        val state = block.state.toInt
+        if (data.isInstanceOf[Ageable])
+          data.asInstanceOf[Ageable].setAge(state)
+        if (data.isInstanceOf[Levelled])
+          data.asInstanceOf[Levelled].setLevel(state)
+        if (data.isInstanceOf[AnaloguePowerable])
+          data.asInstanceOf[AnaloguePowerable].setPower(state)
+    }
 
     block match {
       case it: Bamboo =>
@@ -132,11 +140,6 @@ class SpigotBlockStateMapper {
       case it: SeaPickle =>
         val seaPickleData = data.asInstanceOf[SpigotSeaPickle]
         seaPickleData.setPickles(it.state.toInt)
-
-      case it: TurtleEgg =>
-        val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
-        turtleEggData.setHatch(it.state.age.toInt)
-        turtleEggData.setEggs(it.state.count.toInt)
 
       case _ => ()
     }
