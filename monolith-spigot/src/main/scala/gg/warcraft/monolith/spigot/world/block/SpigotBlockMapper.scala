@@ -166,7 +166,7 @@ class SpigotBlockMapper @Inject() (
       case Material.REDSTONE_TORCH      => RedstoneTorch(loc, None, lit)
       case Material.REDSTONE_WALL_TORCH => RedstoneTorch(loc, Some(dir), lit)
       case Material.REDSTONE_WIRE       => RedstoneWire(loc, s[RedstoneWireState])
-      case Material.SCAFFOLDING         => Scaffolding(loc)
+      case Material.SCAFFOLDING         => Scaffolding(loc, flooded)
       case Material.SEA_LANTERN         => SeaLantern(loc)
       case Material.SEA_PICKLE          => SeaPickle(loc, s[SeaPickleState], flooded)
       case Material.SLIME_BLOCK         => SlimeBlock(loc)

@@ -1147,9 +1147,11 @@ final case class Sapling(
   override val solid: Boolean = false
 }
 
+// TODO bottom and distance vals
 final case class Scaffolding(
-    location: BlockLocation
-) extends Block {
+    location: BlockLocation,
+    flooded: Boolean
+) extends FloodableBlock {
   override val `type` = BlockType.SCAFFOLDING
 }
 
