@@ -4,7 +4,6 @@ import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.block.BlockColor
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant.{
-  SaplingVariant,
   StructureBlockVariant,
   _
 }

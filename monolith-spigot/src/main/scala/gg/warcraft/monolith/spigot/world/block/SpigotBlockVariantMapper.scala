@@ -326,8 +326,6 @@ class SpigotBlockVariantMapper {
     case Material.OAK_SAPLING      => SaplingVariant.OAK
     case Material.SPRUCE_SAPLING   => SaplingVariant.SPRUCE
 
-    case Material.BAMBOO_SAPLING => SaplingVariant.BAMBOO
-
     // SIGN
     case Material.ACACIA_SIGN   => SignVariant.ACACIA
     case Material.BIRCH_SIGN    => SignVariant.BIRCH
@@ -522,6 +520,7 @@ class SpigotBlockVariantMapper {
     lazy val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
+      case Material.BAMBOO_SAPLING => BambooVariant.SAPLING
       case Material.BAMBOO =>
         data.asInstanceOf[SpigotBamboo].getLeaves match {
           case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
@@ -866,8 +865,6 @@ class SpigotBlockVariantMapper {
     case SaplingVariant.OAK      => Material.OAK_SAPLING
     case SaplingVariant.SPRUCE   => Material.SPRUCE_SAPLING
 
-    case SaplingVariant.BAMBOO => Material.BAMBOO_SAPLING
-
     // SIGN
     case SignVariant.ACACIA   => Material.ACACIA_SIGN
     case SignVariant.BIRCH    => Material.BIRCH_SIGN
@@ -1051,9 +1048,11 @@ class SpigotBlockVariantMapper {
   }
 
   def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
-    case _: Bamboo     => Material.BAMBOO
     case _: Comparator => Material.COMPARATOR
     case _: NoteBlock  => Material.NOTE_BLOCK
+
+    case Bamboo(_, BambooVariant.SAPLING, _, _) => Material.BAMBOO_SAPLING
+    case _: Bamboo                              => Material.BAMBOO
 
     case CoralFan(_, variant, Some(_), _) =>
       variant match {
@@ -1095,12 +1094,15 @@ class SpigotBlockVariantMapper {
 
   def map(block: VariableBlock[_], data: SpigotBlockData): Unit = block match {
     case Bamboo(_, variant, _, _) =>
-      val leaves = variant match {
-        case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
-        case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
-        case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+      if (variant != BambooVariant.SAPLING) {
+        val leaves = variant match {
+          case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
+          case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
+          case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+          case BambooVariant.SAPLING      => null
+        }
+        data.asInstanceOf[SpigotBamboo].setLeaves(leaves)
       }
-      data.asInstanceOf[SpigotBamboo].setLeaves(leaves)
 
     case Comparator(_, variant, _, _) =>
       val mode = variant match {

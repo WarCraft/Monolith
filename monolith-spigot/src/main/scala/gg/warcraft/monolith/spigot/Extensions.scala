@@ -713,7 +713,6 @@ object Extensions {
       Material.JUNGLE_SAPLING,
       Material.OAK_SAPLING,
       Material.SPRUCE_SAPLING,
-      Material.BAMBOO_SAPLING
     )
 
     private final val seagrass = util.EnumSet.of(

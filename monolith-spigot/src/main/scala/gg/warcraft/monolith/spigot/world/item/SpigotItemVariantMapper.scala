@@ -167,14 +167,6 @@ class SpigotItemVariantMapper @Inject() (
     case Material.SALMON        => SalmonVariant.RAW
     case Material.COOKED_SALMON => SalmonVariant.COOKED
 
-    // SAPLING
-    case Material.ACACIA_SAPLING   => SaplingVariant.ACACIA
-    case Material.BIRCH_SAPLING    => SaplingVariant.BIRCH
-    case Material.DARK_OAK_SAPLING => SaplingVariant.DARK_OAK
-    case Material.JUNGLE_SAPLING   => SaplingVariant.JUNGLE
-    case Material.OAK_SAPLING      => SaplingVariant.OAK
-    case Material.SPRUCE_SAPLING   => SaplingVariant.SPRUCE
-
     // SEEDS
     case Material.BEETROOT_SEEDS => SeedsVariant.BEETROOT
     case Material.MELON_SEEDS    => SeedsVariant.MELON
@@ -434,14 +426,6 @@ class SpigotItemVariantMapper @Inject() (
     // SALMON
     case SalmonVariant.RAW    => Material.SALMON
     case SalmonVariant.COOKED => Material.COOKED_SALMON
-
-    // SAPLING
-    case SaplingVariant.ACACIA   => Material.ACACIA_SAPLING
-    case SaplingVariant.BIRCH    => Material.BIRCH_SAPLING
-    case SaplingVariant.DARK_OAK => Material.DARK_OAK_SAPLING
-    case SaplingVariant.JUNGLE   => Material.JUNGLE_SAPLING
-    case SaplingVariant.OAK      => Material.OAK_SAPLING
-    case SaplingVariant.SPRUCE   => Material.SPRUCE_SAPLING
 
     // SEEDS
     case SeedsVariant.BEETROOT => Material.BEETROOT_SEEDS

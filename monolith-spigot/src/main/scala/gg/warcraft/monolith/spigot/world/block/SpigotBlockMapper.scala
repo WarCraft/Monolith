@@ -201,7 +201,7 @@ class SpigotBlockMapper @Inject() (
       case Material.CAMPFIRE =>
         val _dir = BlockFace.NORTH // TODO currently not exposed by Spigot API
         val signal = dataAs[SpigotCampfire].isSignalFire
-        Campfire(loc, dir, flooded, lit, signal)
+        Campfire(loc, _dir, flooded, lit, signal)
 
       // DISPENSER
       case Material.DISPENSER =>

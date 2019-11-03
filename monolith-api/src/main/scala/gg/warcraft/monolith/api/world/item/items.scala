@@ -3,7 +3,6 @@ package gg.warcraft.monolith.api.world.item
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item.variant.{
-  SaplingVariant,
   StructureBlockVariant,
   _
 }
