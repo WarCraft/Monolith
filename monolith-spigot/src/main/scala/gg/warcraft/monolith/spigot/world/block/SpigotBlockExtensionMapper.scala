@@ -4,23 +4,17 @@ import java.util
 
 import gg.warcraft.monolith.api.world.block.BlockFace
 import javax.inject.Inject
-import org.bukkit.block.{ BlockFace => SpigotBlockFace }
+import org.bukkit.block.{BlockFace => SpigotBlockFace}
 
-import scala.collection.mutable
+import scala.jdk.CollectionConverters._
 
-class SpigotBlockExtensionMapper @Inject()(
+class SpigotBlockExtensionMapper @Inject() (
     private val blockFaceMapper: SpigotBlockFaceMapper
 ) {
+  // TODO move these 2 methods to BlockFaceMapper?
+  def map(facing: util.Set[SpigotBlockFace]): Set[BlockFace] =
+    facing.asScala.map(blockFaceMapper.map).toSet
 
-  def map(facing: util.Set[SpigotBlockFace]): Set[BlockFace] = {
-    val extensions = mutable.Set[BlockFace]()
-    facing.forEach(face => extensions.add(blockFaceMapper.map(face)))
-    extensions.asInstanceOf[Set[BlockFace]]
-  }
-
-  def map(facing: Set[BlockFace]): util.Set[SpigotBlockFace] = {
-    val extensions = new util.HashSet[SpigotBlockFace]()
-    facing.foreach(face => extensions.add(blockFaceMapper.map(face)))
-    extensions
-  }
+  def map(facing: Set[BlockFace]): util.Set[SpigotBlockFace] =
+    facing.map(blockFaceMapper.map).asJava
 }

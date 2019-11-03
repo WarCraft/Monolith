@@ -9,6 +9,7 @@ import gg.warcraft.monolith.spigot.Extensions._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.{Bukkit, Material}
 import org.bukkit.block.data._
+import org.bukkit.block.data.`type`.Bed.{Part => SpigotBedPart}
 import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
 import org.bukkit.block.data.`type`.Switch
 
@@ -27,17 +28,17 @@ class SpigotBlockMapper @Inject() (
 ) {
   def map(block: SpigotBlock): Block = {
     val loc = locationMapper.map(block.getLocation).toBlockLocation
+    val spigotData = block.getBlockData
     val spigotState = block.getState
-    val spigotData = spigotState.getBlockData
 
     // Lazily compute generic block data
     lazy val color = colorMapper.map(block.getType)
-    lazy val flooded = spigotState.asInstanceOf[Waterlogged].isWaterlogged
-    lazy val lit = spigotState.asInstanceOf[Lightable].isLit
-    lazy val open = spigotState.asInstanceOf[Openable].isOpen
-    lazy val powered = spigotState.asInstanceOf[Powerable].isPowered
+    lazy val flooded = spigotData.asInstanceOf[Waterlogged].isWaterlogged
+    lazy val lit = spigotData.asInstanceOf[Lightable].isLit
+    lazy val open = spigotData.asInstanceOf[Openable].isOpen
+    lazy val powered = spigotData.asInstanceOf[Powerable].isPowered
     lazy val shape = shapeMapper.map(block)
-    lazy val snowy = spigotState.asInstanceOf[Snowable].isSnowy
+    lazy val snowy = spigotData.asInstanceOf[Snowable].isSnowy
     lazy val state = stateMapper.map(block)
     lazy val variant = variantMapper.map(block)
 
@@ -46,33 +47,33 @@ class SpigotBlockMapper @Inject() (
       if (block.getType == Material.GRINDSTONE) {
         BlockAttachment.FLOOR
       } else {
-        val switch = spigotState.asInstanceOf[Switch]
+        val switch = spigotData.asInstanceOf[Switch]
         attachmentMapper.map(switch)
       }
     }
 
     lazy val bisection = {
-      val bisected = spigotState.asInstanceOf[Bisected]
+      val bisected = spigotData.asInstanceOf[Bisected]
       bisectionMapper.map(bisected.getHalf)
     }
 
     lazy val dir = {
-      val directional = spigotState.asInstanceOf[Directional]
+      val directional = spigotData.asInstanceOf[Directional]
       faceMapper.map(directional.getFacing)
     }
 
     lazy val extensions = {
-      val multipleFacing = spigotState.asInstanceOf[MultipleFacing]
+      val multipleFacing = spigotData.asInstanceOf[MultipleFacing]
       extensionMapper.map(multipleFacing.getFaces)
     }
 
     lazy val orientation = {
-      val orientable = spigotState.asInstanceOf[Orientable]
+      val orientable = spigotData.asInstanceOf[Orientable]
       orientationMapper.map(orientable.getAxis)
     }
 
     lazy val rotation = {
-      val rotatable = spigotState.asInstanceOf[Rotatable]
+      val rotatable = spigotData.asInstanceOf[Rotatable]
       rotationMapper.map(rotatable.getRotation)
     }
 
@@ -113,10 +114,8 @@ class SpigotBlockMapper @Inject() (
       case Material.DEAD_BUSH           => DeadBush(loc)
       case Material.DIAMOND_BLOCK       => DiamondBlock(loc)
       case Material.DIAMOND_ORE         => DiamondOre(loc)
-      case Material.DISPENSER           => Dispenser(loc, dir, powered)
       case Material.DRAGON_EGG          => DragonEgg(loc)
       case Material.DRIED_KELP_BLOCK    => DriedKelp(loc)
-      case Material.DROPPER             => Dropper(loc, dir, powered)
       case Material.EMERALD_BLOCK       => EmeraldBlock(loc)
       case Material.EMERALD_ORE         => EmeraldOre(loc)
       case Material.ENCHANTING_TABLE    => EnchantingTable(loc)
@@ -174,6 +173,7 @@ class SpigotBlockMapper @Inject() (
       case Material.SMOKER              => Smoker(loc, dir, lit)
       case Material.SNOW                => Snow(loc)
       case Material.SNOW_BLOCK          => SnowBlock(loc)
+      case Material.SOUL_SAND           => SoulSand(loc)
       case Material.SPAWNER             => Spawner(loc)
       case Material.STONECUTTER         => Stonecutter(loc, dir)
       case Material.SUGAR_CANE          => SugarCane(loc, s[SugarCaneState])
@@ -196,6 +196,16 @@ class SpigotBlockMapper @Inject() (
       case Material.CAMPFIRE =>
         val signal = dataAs[SpigotCampfire].isSignalFire
         Campfire(loc, dir, flooded, lit, signal)
+
+      // DISPENSER
+      case Material.DISPENSER =>
+        val _powered = dataAs[SpigotDispenser].isTriggered
+        Dispenser(loc, dir, _powered)
+
+      // DROPPER
+      case Material.DROPPER =>
+        val _powered = dataAs[SpigotDropper].isTriggered
+        Dropper(loc, dir, _powered)
 
       // END_PORTAL_FRAME
       case Material.END_PORTAL_FRAME =>
@@ -333,12 +343,10 @@ class SpigotBlockMapper @Inject() (
       case m if m.isPlant            => Plant(loc, v[PlantVariant], bisection)
       case m if m.isPrismarine       => Prismarine(loc, v[PrismarineVariant])
       case m if m.isQuartzBlock      => QuartzBlock(loc, v[QuartzBlockVariant])
-      case m if m.isRail             => Rail(loc, v[RailVariant], shapeAs[RailsShape], powered)
       case m if m.isSand             => Sand(loc, v[SandVariant])
       case m if m.isSandstone        => Sandstone(loc, v[SandstoneVariant])
       case m if m.isSapling          => Sapling(loc, v[SaplingVariant], s[SaplingState])
       case m if m.isShulkerBox       => ShulkerBox(loc, Some(color))
-      case m if m.isSlab             => Slab(loc, v[SlabVariant], bisection)
       case m if m.isSponge           => Sponge(loc, v[SpongeVariant])
       case m if m.isStone            => Stone(loc, v[StoneVariant])
       case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
@@ -350,8 +358,10 @@ class SpigotBlockMapper @Inject() (
 
       // BED
       case m if m.isBed => // TODO use occupied flag
-        val occupied = dataAs[SpigotBed].isOccupied
-        Bed(loc, color, dir, bisection)
+        val bed = dataAs[SpigotBed]
+        val occupied = bed.isOccupied
+        val _bisection = mapBedPart(bed.getPart)
+        Bed(loc, color, dir, _bisection)
 
       // COMMAND_BLOCK
       case m if m.isCommandBlock =>
@@ -375,18 +385,32 @@ class SpigotBlockMapper @Inject() (
       case m if m.isPressurePlate =>
         PressurePlate(loc, v[PressurePlateVariant], powered)
 
+      // RAIL
+      case m if m.isRail =>
+        // TODO powered only applies to PoweredRail
+        val _variant = v[RailVariant]
+        val _powered =
+          if (_variant == RailVariant.POWERED) powered
+          else false
+        Rail(loc, v[RailVariant], shapeAs[RailsShape], _powered)
+
       // SIGN
       case m if m.isSign =>
         val sign = spigotState.asInstanceOf[SpigotSign]
         val lines = sign.getLines.toList // TODO keep as array? seem to be immutable
         val editable = sign.isEditable
-        Sign(loc, v[SignVariant], Some(dir), None, flooded, lines, editable)
+        Sign(loc, v[SignVariant], None, Some(rotation), flooded, lines, editable)
 
       case m if m.isWallSign =>
         val sign = spigotState.asInstanceOf[SpigotSign]
         val lines = sign.getLines.toList
         val editable = sign.isEditable
-        Sign(loc, v[SignVariant], None, Some(rotation), flooded, lines, editable)
+        Sign(loc, v[SignVariant], Some(dir), None, flooded, lines, editable)
+
+      // SLAB
+      case m if m.isSlab =>
+        val section = dataAs[SpigotSlab].getType // TODO map to bisection or slab specific data
+        Slab(loc, v[SlabVariant], bisection)
 
       // STAIRS
       case m if m.isStairs =>
@@ -509,6 +533,7 @@ class SpigotBlockMapper @Inject() (
       case _: Smoker           => Material.SMOKER
       case _: Snow             => Material.SNOW
       case _: SnowBlock        => Material.SNOW_BLOCK
+      case _: SoulSand         => Material.SOUL_SAND
       case _: Spawner          => Material.SPAWNER
       case _: Stonecutter      => Material.STONECUTTER
       case _: SugarCane        => Material.SUGAR_CANE
@@ -528,7 +553,7 @@ class SpigotBlockMapper @Inject() (
         if (it.direction.isEmpty) Material.REDSTONE_TORCH
         else Material.REDSTONE_WALL_TORCH
 
-      case it: Seagrass =>
+      case it: Seagrass => // TODO SeagrassVariant (BlockVariant only)
         if (it.tall) Material.TALL_SEAGRASS
         else Material.SEAGRASS
     }
@@ -612,8 +637,20 @@ class SpigotBlockMapper @Inject() (
         val age = if (it.thick) 1 else 0
         dataAs[SpigotBamboo].setAge(age)
 
+      case it: Bed =>
+        val part = mapBedPart(it.section)
+        dataAs[SpigotBed].setPart(part)
+
       case it: CommandBlock =>
         dataAs[SpigotCommandBlock].setConditional(it.conditional)
+
+      case it: Dispenser =>
+        val triggered = it.powered
+        dataAs[SpigotDispenser].setTriggered(triggered)
+
+      case it: Dropper =>
+        val triggered = it.powered
+        dataAs[SpigotDispenser].setTriggered(triggered)
 
       case it: Lantern =>
         data.asInstanceOf[SpigotLantern].setHanging(it.hanging)
@@ -632,6 +669,16 @@ class SpigotBlockMapper @Inject() (
         lines.zipWithIndex foreach { case (line, i) => sign.setLine(i, line) }
         sign.setEditable(editable)
     }
+  }
+
+  def mapBedPart(part: SpigotBedPart): BlockBisection = part match {
+    case SpigotBedPart.HEAD => BlockBisection.TOP
+    case SpigotBedPart.FOOT => BlockBisection.BOTTOM
+  }
+
+  def mapBedPart(part: BlockBisection): SpigotBedPart = part match {
+    case BlockBisection.TOP    => SpigotBedPart.HEAD
+    case BlockBisection.BOTTOM => SpigotBedPart.FOOT
   }
 
   def mapDoorHinge(hinge: SpigotDoorHinge): BlockHinge = hinge match {

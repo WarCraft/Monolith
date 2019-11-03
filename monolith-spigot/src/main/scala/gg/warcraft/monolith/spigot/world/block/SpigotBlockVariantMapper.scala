@@ -87,6 +87,18 @@ class SpigotBlockVariantMapper {
     case Material.DEAD_HORN_CORAL_FAN   => CoralFanVariant.DEAD_HORN
     case Material.DEAD_TUBE_CORAL_FAN   => CoralFanVariant.DEAD_TUBE
 
+    case Material.BRAIN_CORAL_WALL_FAN  => CoralFanVariant.BRAIN
+    case Material.BUBBLE_CORAL_WALL_FAN => CoralFanVariant.BUBBLE
+    case Material.FIRE_CORAL_WALL_FAN   => CoralFanVariant.FIRE
+    case Material.HORN_CORAL_WALL_FAN   => CoralFanVariant.HORN
+    case Material.TUBE_CORAL_WALL_FAN   => CoralFanVariant.TUBE
+
+    case Material.DEAD_BRAIN_CORAL_WALL_FAN  => CoralFanVariant.DEAD_BRAIN
+    case Material.DEAD_BUBBLE_CORAL_WALL_FAN => CoralFanVariant.DEAD_BUBBLE
+    case Material.DEAD_FIRE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_FIRE
+    case Material.DEAD_HORN_CORAL_WALL_FAN   => CoralFanVariant.DEAD_HORN
+    case Material.DEAD_TUBE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_TUBE
+
     // DIRT
     case Material.DIRT        => DirtVariant.NORMAL
     case Material.COARSE_DIRT => DirtVariant.COARSE
@@ -226,6 +238,13 @@ class SpigotBlockVariantMapper {
     case Material.WITHER_SKELETON_SKULL => MobHeadVariant.WITHER_SKELETON
     case Material.ZOMBIE_HEAD           => MobHeadVariant.ZOMBIE
 
+    case Material.CREEPER_WALL_HEAD          => MobHeadVariant.CREEPER
+    case Material.DRAGON_WALL_HEAD           => MobHeadVariant.DRAGON
+    case Material.PLAYER_WALL_HEAD           => MobHeadVariant.PLAYER
+    case Material.SKELETON_WALL_SKULL        => MobHeadVariant.SKELETON
+    case Material.WITHER_SKELETON_WALL_SKULL => MobHeadVariant.WITHER_SKELETON
+    case Material.ZOMBIE_WALL_HEAD           => MobHeadVariant.ZOMBIE
+
     // MUSHROOM
     case Material.BROWN_MUSHROOM => MushroomVariant.BROWN
     case Material.RED_MUSHROOM   => MushroomVariant.RED
@@ -315,6 +334,13 @@ class SpigotBlockVariantMapper {
     case Material.JUNGLE_SIGN   => SignVariant.JUNGLE
     case Material.OAK_SIGN      => SignVariant.OAK
     case Material.SPRUCE_SIGN   => SignVariant.SPRUCE
+
+    case Material.ACACIA_WALL_SIGN   => SignVariant.ACACIA
+    case Material.BIRCH_WALL_SIGN    => SignVariant.BIRCH
+    case Material.DARK_OAK_WALL_SIGN => SignVariant.DARK_OAK
+    case Material.JUNGLE_WALL_SIGN   => SignVariant.JUNGLE
+    case Material.OAK_WALL_SIGN      => SignVariant.OAK
+    case Material.SPRUCE_WALL_SIGN   => SignVariant.SPRUCE
 
     // SLAB
     case Material.BRICK_SLAB            => SlabVariant.BRICK

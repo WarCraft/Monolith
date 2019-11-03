@@ -20,6 +20,8 @@ package object block {
   type SpigotCommandBlock = CommandBlock
   type SpigotComparator = Comparator
   type SpigotDoor = Door
+  type SpigotDispenser = Dispenser
+  type SpigotDropper = Dispenser
   type SpigotEndPortalFrame = EndPortalFrame
   type SpigotHopper = Hopper
   type SpigotJukebox = Jukebox
@@ -27,11 +29,12 @@ package object block {
   type SpigotLectern = Lectern
   type SpigotNoteBlock = NoteBlock
   type SpigotPiston = Piston
-  type SpigotRails = Rail
+  type SpigotRail = Rail
   type SpigotRepeater = Repeater
   type SpigotSapling = Sapling
   type SpigotSeaPickle = SeaPickle
   type SpigotSign = Sign
+  type SpigotSlab = Slab
   type SpigotStairs = Stairs
   type SpigotStructureBlock = StructureBlock
   type SpigotTNT = TNT

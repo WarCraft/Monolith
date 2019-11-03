@@ -13,7 +13,7 @@ class SpigotBlockShapeMapper {
 
     block.getType.name match {
       case r".*RAIL" =>
-        val shape = data.asInstanceOf[SpigotRails].getShape
+        val shape = data.asInstanceOf[SpigotRail].getShape
         map(shape)
 
       case r".*STAIRS" =>
@@ -30,7 +30,7 @@ class SpigotBlockShapeMapper {
     block.shape match {
       case it: RailsShape =>
         val shape = map(it)
-        data.asInstanceOf[SpigotRails].setShape(shape)
+        data.asInstanceOf[SpigotRail].setShape(shape)
 
       case it: StairsShape =>
         val shape = map(it)

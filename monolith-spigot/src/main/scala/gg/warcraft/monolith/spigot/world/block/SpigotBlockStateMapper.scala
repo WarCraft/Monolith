@@ -7,7 +7,7 @@ import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
 
 class SpigotBlockStateMapper {
   def map(block: SpigotBlock): BlockState = {
-    val data: SpigotBlockData = block.getState.getBlockData
+    val data: SpigotBlockData = block.getBlockData
 
     lazy val age = data.asInstanceOf[Ageable].getAge
     lazy val level = data.asInstanceOf[Levelled].getLevel
@@ -43,7 +43,7 @@ class SpigotBlockStateMapper {
         val bites = data.asInstanceOf[SpigotCake].getBites
         CakeState.valueOf(bites)
 
-      // MELON_STEM
+      // MELON_STEM TODO state is not present in ATTACHED variant, same for PUMPKIN
       case Material.MELON_STEM | Material.ATTACHED_MELON_STEM =>
         MelonStemState.valueOf(age)
 
