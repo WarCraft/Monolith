@@ -2,19 +2,16 @@ package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
-import gg.warcraft.monolith.api.world.item.variant.{
-  StructureBlockVariant,
-  _
-}
+import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 
 final case class Andesite(
-    variant: StoniteVariant,
+    variant: AndesiteVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[StoniteVariant]
+) extends VariableItem[AndesiteVariant]
     with StackableItem {
   val `type` = ItemType.ANDESITE
 }
@@ -916,13 +913,13 @@ final case class DiamondOre(
 }
 
 final case class Diorite(
-    variant: StoniteVariant,
+    variant: DioriteVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[StoniteVariant]
+) extends VariableItem[DioriteVariant]
     with StackableItem {
   val `type` = ItemType.DIORITE
 }
@@ -1478,13 +1475,13 @@ final case class GoldenMelonSlice(
 }
 
 final case class Granite(
-    variant: StoniteVariant,
+    variant: GraniteVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[StoniteVariant]
+) extends VariableItem[GraniteVariant]
     with StackableItem {
   val `type` = ItemType.GRANITE
 }

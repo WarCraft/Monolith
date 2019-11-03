@@ -12,6 +12,11 @@ object Extensions {
       Material.VOID_AIR
     )
 
+    private final val andesite = util.EnumSet.of(
+      Material.ANDESITE,
+      Material.POLISHED_ANDESITE
+    )
+
     private final val anvil = util.EnumSet.of(
       Material.ANVIL,
       Material.CHIPPED_ANVIL,
@@ -300,6 +305,11 @@ object Extensions {
       Material.DEAD_TUBE_CORAL_WALL_FAN
     )
 
+    private final val diorite = util.EnumSet.of(
+      Material.DIORITE,
+      Material.POLISHED_DIORITE
+    )
+
     private final val dirt = util.EnumSet.of(
       Material.DIRT,
       Material.COARSE_DIRT
@@ -465,6 +475,11 @@ object Extensions {
       Material.RED_GLAZED_TERRACOTTA,
       Material.WHITE_GLAZED_TERRACOTTA,
       Material.YELLOW_GLAZED_TERRACOTTA
+    )
+
+    private final val granite = util.EnumSet.of(
+      Material.GRANITE,
+      Material.POLISHED_GRANITE
     )
 
     private final val grass = util.EnumSet.of(
@@ -712,7 +727,7 @@ object Extensions {
       Material.DARK_OAK_SAPLING,
       Material.JUNGLE_SAPLING,
       Material.OAK_SAPLING,
-      Material.SPRUCE_SAPLING,
+      Material.SPRUCE_SAPLING
     )
 
     private final val seagrass = util.EnumSet.of(
@@ -932,15 +947,6 @@ object Extensions {
       Material.MOSSY_STONE_BRICKS
     )
 
-    private final val stonite = util.EnumSet.of(
-      Material.ANDESITE,
-      Material.DIORITE,
-      Material.GRANITE,
-      Material.POLISHED_ANDESITE,
-      Material.POLISHED_DIORITE,
-      Material.POLISHED_GRANITE
-    )
-
     private final val structureBlock = util.EnumSet.of(
       Material.STRUCTURE_BLOCK,
       Material.STRUCTURE_VOID
@@ -1041,6 +1047,7 @@ object Extensions {
     )
 
     def isAir: Boolean = air.contains(material)
+    def isAndesite: Boolean = andesite.contains(material)
     def isAnvil: Boolean = anvil.contains(material)
     def isArrow: Boolean = arrow.contains(material)
     def isAxe: Boolean = axe.contains(material)
@@ -1069,6 +1076,7 @@ object Extensions {
     def isCoralBlock: Boolean = coralBlock.contains(material)
     def isCoralFan: Boolean = coralFan.contains(material)
     def isCoralWallFan: Boolean = coralWallFan.contains(material)
+    def isDiorite: Boolean = diorite.contains(material)
     def isDirt: Boolean = dirt.contains(material)
     def isDoor: Boolean = door.contains(material)
     def isDye: Boolean = dye.contains(material)
@@ -1081,6 +1089,7 @@ object Extensions {
     def isGlass: Boolean = glass.contains(material)
     def isGlassPane: Boolean = glassPane.contains(material)
     def isGlazedTerracotta: Boolean = glazedTerracotta.contains(material)
+    def isGranite: Boolean = granite.contains(material)
     def isGrass: Boolean = grass.contains(material)
     def isHelmet: Boolean = helmet.contains(material)
     def isHoe: Boolean = hoe.contains(material)
@@ -1127,7 +1136,6 @@ object Extensions {
     def isSponge: Boolean = sponge.contains(material)
     def isStairs: Boolean = stairs.contains(material)
     def isStone: Boolean = stone.contains(material)
-    def isStonite: Boolean = stonite.contains(material)
     def isStructureBlock: Boolean = structureBlock.contains(material)
     def isSword: Boolean = sword.contains(material)
     def isTerracotta: Boolean = terracotta.contains(material)

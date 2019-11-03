@@ -2,6 +2,7 @@ package gg.warcraft.monolith.api.world.block;
 
 public enum BlockType {
     AIR,
+    ANDESITE,
     ANVIL,
     BAMBOO,
     BANNER,
@@ -49,6 +50,7 @@ public enum BlockType {
     DEAD_BUSH,
     DIAMOND_BLOCK,
     DIAMOND_ORE,
+    DIORITE,
     DIRT,
     DISPENSER,
     DOOR,
@@ -79,6 +81,7 @@ public enum BlockType {
     GLOWSTONE,
     GOLD_BLOCK,
     GOLD_ORE,
+    GRANITE,
     GRASS,
     GRASS_BLOCK,
     GRASS_PATH,
@@ -88,7 +91,6 @@ public enum BlockType {
     HAY_BALE,
     HOPPER,
     ICE,
-    STONITE,
     INFESTED_BLOCK,
     IRON_BLOCK,
     IRON_BARS,

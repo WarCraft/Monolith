@@ -322,6 +322,7 @@ class SpigotBlockMapper @Inject() (
         TripwireHook(loc, dir, powered, connected)
 
       case m if m.isAir              => Air(loc, v[AirVariant])
+      case m if m.isAndesite         => Andesite(loc, v[AndesiteVariant])
       case m if m.isAnvil            => Anvil(loc, v[AnvilVariant], dir)
       case m if m.isBanner           => Banner(loc, color, Some(rotation), None)
       case m if m.isWallBanner       => Banner(loc, color, None, Some(dir))
@@ -335,6 +336,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isCoral            => Coral(loc, v[CoralVariant], flooded)
       case m if m.isCoralBlock       => CoralBlock(loc, v[CoralBlockVariant])
       case m if m.isCoralFan         => CoralFan(loc, v[CoralFanVariant], None, flooded)
+      case m if m.isDiorite          => Diorite(loc, v[DioriteVariant])
       case m if m.isDirt             => Dirt(loc, v[DirtVariant])
       case m if m.isEndStone         => EndStone(loc, v[EndStoneVariant])
       case m if m.isFence            => Fence(loc, v[FenceVariant], extensions, flooded)
@@ -343,6 +345,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isGlass            => Glass(loc, Option(color))
       case m if m.isGlassPane        => GlassPane(loc, Option(color), extensions, flooded)
       case m if m.isGlazedTerracotta => GlazedTerracotta(loc, color, dir)
+      case m if m.isGranite          => Granite(loc, v[GraniteVariant])
       case m if m.isIce              => Ice(loc, v[IceVariant])
       case m if m.isInfestedBlock    => InfestedBlock(loc, v[InfestedBlockVariant])
       case m if m.isLeaves           => Leaves(loc, v[LeavesVariant])
@@ -361,7 +364,6 @@ class SpigotBlockMapper @Inject() (
       case m if m.isShulkerBox       => ShulkerBox(loc, Option(color), dir)
       case m if m.isSponge           => Sponge(loc, v[SpongeVariant])
       case m if m.isStone            => Stone(loc, v[StoneVariant])
-      case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
       case m if m.isStructureBlock   => StructureBlock(loc, v[StructureBlockVariant])
       case m if m.isTerracotta       => Terracotta(loc, Option(color))
       case m if m.isWall             => Wall(loc, v[WallVariant], extensions, flooded)
@@ -675,7 +677,7 @@ class SpigotBlockMapper @Inject() (
       case it: TNT            => dataAs[SpigotTNT].setUnstable(it.unstable)
 
       case it: Bamboo =>
-        if(it.variant != BambooVariant.SAPLING) {
+        if (it.variant != BambooVariant.SAPLING) {
           val age = if (it.thick) 1 else 0
           dataAs[SpigotBamboo].setAge(age)
         }

@@ -14,6 +14,10 @@ class SpigotBlockVariantMapper {
     case Material.CAVE_AIR => AirVariant.CAVE
     case Material.VOID_AIR => AirVariant.VOID
 
+    // ANDESITE
+    case Material.ANDESITE          => AndesiteVariant.NORMAL
+    case Material.POLISHED_ANDESITE => AndesiteVariant.POLISHED
+
     // ANVIL
     case Material.ANVIL         => AnvilVariant.NORMAL
     case Material.CHIPPED_ANVIL => AnvilVariant.CHIPPED
@@ -98,6 +102,10 @@ class SpigotBlockVariantMapper {
     case Material.DEAD_FIRE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_FIRE
     case Material.DEAD_HORN_CORAL_WALL_FAN   => CoralFanVariant.DEAD_HORN
     case Material.DEAD_TUBE_CORAL_WALL_FAN   => CoralFanVariant.DEAD_TUBE
+
+    // DIORITE
+    case Material.DIORITE          => DioriteVariant.NORMAL
+    case Material.POLISHED_DIORITE => DioriteVariant.POLISHED
 
     // DIRT
     case Material.DIRT        => DirtVariant.NORMAL
@@ -185,6 +193,10 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_CACTUS    => FlowerPotVariant.CACTUS
     case Material.POTTED_DEAD_BUSH => FlowerPotVariant.DEAD_BUSH
     case Material.POTTED_FERN      => FlowerPotVariant.FERN
+
+    // GRANITE
+    case Material.GRANITE          => GraniteVariant.NORMAL
+    case Material.POLISHED_GRANITE => GraniteVariant.POLISHED
 
     // GRASS
     case Material.GRASS      => GrassVariant.NORMAL
@@ -450,15 +462,6 @@ class SpigotBlockVariantMapper {
     case Material.CRACKED_STONE_BRICKS  => StoneVariant.CRACKED_BRICK
     case Material.MOSSY_STONE_BRICKS    => StoneVariant.MOSSY_BRICK
 
-    // STONITE
-    case Material.ANDESITE => StoniteVariant.ANDESITE
-    case Material.DIORITE  => StoniteVariant.DIORITE
-    case Material.GRANITE  => StoniteVariant.GRANITE
-
-    case Material.POLISHED_ANDESITE => StoniteVariant.POLISHED_ANDESITE
-    case Material.POLISHED_DIORITE  => StoniteVariant.POLISHED_DIORITE
-    case Material.POLISHED_GRANITE  => StoniteVariant.POLISHED_GRANITE
-
     // STRUCTURE_BLOCK
     case Material.STRUCTURE_VOID => StructureBlockVariant.VOID
 
@@ -572,6 +575,10 @@ class SpigotBlockVariantMapper {
     case AirVariant.CAVE   => Material.CAVE_AIR
     case AirVariant.VOID   => Material.VOID_AIR
 
+    // ANDESITE
+    case AndesiteVariant.NORMAL   => Material.ANDESITE
+    case AndesiteVariant.POLISHED => Material.POLISHED_ANDESITE
+
     // ANVIL
     case AnvilVariant.NORMAL  => Material.ANVIL
     case AnvilVariant.CHIPPED => Material.CHIPPED_ANVIL
@@ -644,6 +651,10 @@ class SpigotBlockVariantMapper {
     case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_FAN
     case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_FAN
     case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_FAN
+
+    // DIORITE
+    case DioriteVariant.NORMAL   => Material.DIORITE
+    case DioriteVariant.POLISHED => Material.POLISHED_DIORITE
 
     // DIRT
     case DirtVariant.NORMAL => Material.DIRT
@@ -731,6 +742,10 @@ class SpigotBlockVariantMapper {
     case FlowerPotVariant.CACTUS    => Material.POTTED_CACTUS
     case FlowerPotVariant.DEAD_BUSH => Material.POTTED_DEAD_BUSH
     case FlowerPotVariant.FERN      => Material.POTTED_FERN
+
+    // GRANITE
+    case GraniteVariant.NORMAL   => Material.GRANITE
+    case GraniteVariant.POLISHED => Material.POLISHED_GRANITE
 
     // GRASS
     case GrassVariant.NORMAL => Material.GRASS
@@ -981,15 +996,6 @@ class SpigotBlockVariantMapper {
     case StoneVariant.CHISELED_BRICK => Material.CHISELED_STONE_BRICKS
     case StoneVariant.CRACKED_BRICK  => Material.CRACKED_STONE_BRICKS
     case StoneVariant.MOSSY_BRICK    => Material.MOSSY_STONE_BRICKS
-
-    // STONITE
-    case StoniteVariant.ANDESITE => Material.ANDESITE
-    case StoniteVariant.DIORITE  => Material.DIORITE
-    case StoniteVariant.GRANITE  => Material.GRANITE
-
-    case StoniteVariant.POLISHED_ANDESITE => Material.POLISHED_ANDESITE
-    case StoniteVariant.POLISHED_DIORITE  => Material.POLISHED_DIORITE
-    case StoniteVariant.POLISHED_GRANITE  => Material.POLISHED_GRANITE
 
     // STRUCTURE_BLOCK
     case StructureBlockVariant.VOID => Material.STRUCTURE_VOID

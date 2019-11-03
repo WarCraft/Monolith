@@ -13,6 +13,13 @@ final case class Air(
   override val solid: Boolean = false
 }
 
+final case class Andesite(
+    location: BlockLocation,
+    variant: AndesiteVariant
+) extends VariableBlock[AndesiteVariant] {
+  override val `type` = BlockType.ANDESITE
+}
+
 final case class Anvil(
     location: BlockLocation,
     variant: AnvilVariant,
@@ -394,6 +401,13 @@ final case class DiamondOre(
   override val `type` = BlockType.DIAMOND_ORE
 }
 
+final case class Diorite(
+    location: BlockLocation,
+    variant: DioriteVariant
+) extends VariableBlock[DioriteVariant] {
+  override val `type` = BlockType.DIORITE
+}
+
 final case class Dirt(
     location: BlockLocation,
     variant: DirtVariant
@@ -636,6 +650,13 @@ final case class GoldOre(
     location: BlockLocation
 ) extends Block {
   override val `type` = BlockType.GOLD_ORE
+}
+
+final case class Granite(
+    location: BlockLocation,
+    variant: GraniteVariant
+) extends VariableBlock[GraniteVariant] {
+  override val `type` = BlockType.GRANITE
 }
 
 final case class Grass(
@@ -1307,13 +1328,6 @@ final case class Stonecutter(
     direction: BlockFace
 ) extends DirectedBlock {
   override val `type` = BlockType.STONECUTTER
-}
-
-final case class Stonite(
-    location: BlockLocation,
-    variant: StoniteVariant
-) extends VariableBlock[StoniteVariant] {
-  override val `type` = BlockType.STONITE
 }
 
 final case class StructureBlock(
