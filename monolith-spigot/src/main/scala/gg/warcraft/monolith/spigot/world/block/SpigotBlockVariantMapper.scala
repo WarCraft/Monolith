@@ -110,7 +110,8 @@ class SpigotBlockVariantMapper {
     case Material.JUNGLE_DOOR   => DoorVariant.JUNGLE
     case Material.OAK_DOOR      => DoorVariant.OAK
     case Material.SPRUCE_DOOR   => DoorVariant.SPRUCE
-    case Material.IRON_DOOR     => DoorVariant.IRON
+
+    case Material.IRON_DOOR => DoorVariant.IRON
 
     // END_STONE
     case Material.END_STONE        => EndStoneVariant.NORMAL
@@ -577,6 +578,16 @@ class SpigotBlockVariantMapper {
     case AnvilVariant.CHIPPED => Material.CHIPPED_ANVIL
     case AnvilVariant.DAMAGED => Material.DAMAGED_ANVIL
 
+    // BUTTON
+    case ButtonVariant.ACACIA   => Material.ACACIA_BUTTON
+    case ButtonVariant.BIRCH    => Material.BIRCH_BUTTON
+    case ButtonVariant.DARK_OAK => Material.DARK_OAK_BUTTON
+    case ButtonVariant.JUNGLE   => Material.JUNGLE_BUTTON
+    case ButtonVariant.OAK      => Material.OAK_BUTTON
+    case ButtonVariant.SPRUCE   => Material.SPRUCE_BUTTON
+
+    case ButtonVariant.STONE => Material.STONE_BUTTON
+
     // CHEST
     case ChestVariant.NORMAL  => Material.CHEST
     case ChestVariant.ENDER   => Material.ENDER_CHEST
@@ -633,6 +644,16 @@ class SpigotBlockVariantMapper {
     // DIRT
     case DirtVariant.NORMAL => Material.DIRT
     case DirtVariant.COARSE => Material.COARSE_DIRT
+
+    // DOOR
+    case DoorVariant.ACACIA   => Material.ACACIA_DOOR
+    case DoorVariant.BIRCH    => Material.BIRCH_DOOR
+    case DoorVariant.DARK_OAK => Material.DARK_OAK_DOOR
+    case DoorVariant.JUNGLE   => Material.JUNGLE_DOOR
+    case DoorVariant.OAK      => Material.OAK_DOOR
+    case DoorVariant.SPRUCE   => Material.SPRUCE_DOOR
+
+    case DoorVariant.IRON => Material.IRON_DOOR
 
     // END_STONE
     case EndStoneVariant.NORMAL => Material.END_STONE
@@ -790,6 +811,16 @@ class SpigotBlockVariantMapper {
     case PlantVariant.LILAC     => Material.LILAC
     case PlantVariant.PEONY     => Material.PEONY
     case PlantVariant.ROSE_BUSH => Material.ROSE_BUSH
+
+    // PRESSURE_PLATE
+    case PressurePlateVariant.ACACIA   => Material.ACACIA_PRESSURE_PLATE
+    case PressurePlateVariant.BIRCH    => Material.BIRCH_PRESSURE_PLATE
+    case PressurePlateVariant.DARK_OAK => Material.DARK_OAK_PRESSURE_PLATE
+    case PressurePlateVariant.JUNGLE   => Material.JUNGLE_PRESSURE_PLATE
+    case PressurePlateVariant.OAK      => Material.OAK_PRESSURE_PLATE
+    case PressurePlateVariant.SPRUCE   => Material.SPRUCE_PRESSURE_PLATE
+
+    case PressurePlateVariant.STONE => Material.STONE_PRESSURE_PLATE
 
     // PRISMARINE
     case PrismarineVariant.NORMAL => Material.PRISMARINE
@@ -961,6 +992,16 @@ class SpigotBlockVariantMapper {
     // STRUCTURE_BLOCK
     case StructureBlockVariant.VOID => Material.STRUCTURE_VOID
     case _: StructureBlockVariant   => Material.STRUCTURE_BLOCK
+
+    // TRAPDOOR
+    case TrapdoorVariant.ACACIA   => Material.ACACIA_TRAPDOOR
+    case TrapdoorVariant.BIRCH    => Material.BIRCH_TRAPDOOR
+    case TrapdoorVariant.DARK_OAK => Material.DARK_OAK_TRAPDOOR
+    case TrapdoorVariant.JUNGLE   => Material.JUNGLE_TRAPDOOR
+    case TrapdoorVariant.OAK      => Material.OAK_TRAPDOOR
+    case TrapdoorVariant.SPRUCE   => Material.SPRUCE_TRAPDOOR
+
+    case TrapdoorVariant.IRON => Material.IRON_TRAPDOOR
 
     // WALL
     case WallVariant.BRICK            => Material.BRICK_WALL
