@@ -2,6 +2,7 @@ package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.state._
+import gg.warcraft.monolith.api.world.block.variant.BambooVariant
 import org.bukkit.{Material, Note => SpigotNote}
 import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
 
@@ -103,8 +104,10 @@ class SpigotBlockStateMapper {
 
     block match {
       case it: Bamboo =>
-        val bambooData = data.asInstanceOf[SpigotBamboo]
-        bambooData.setStage(it.state.toInt)
+        if (it.variant != BambooVariant.SAPLING) {
+          val bambooData = data.asInstanceOf[SpigotBamboo]
+          bambooData.setStage(it.state.toInt)
+        }
 
       case it: Cake =>
         val cakeData = data.asInstanceOf[SpigotCake]

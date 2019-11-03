@@ -675,8 +675,10 @@ class SpigotBlockMapper @Inject() (
       case it: TNT            => dataAs[SpigotTNT].setUnstable(it.unstable)
 
       case it: Bamboo =>
-        val age = if (it.thick) 1 else 0
-        dataAs[SpigotBamboo].setAge(age)
+        if(it.variant != BambooVariant.SAPLING) {
+          val age = if (it.thick) 1 else 0
+          dataAs[SpigotBamboo].setAge(age)
+        }
 
       case it: Bed =>
         val part = mapBedPart(it.section)
