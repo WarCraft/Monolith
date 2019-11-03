@@ -94,9 +94,12 @@ class SpigotBlockStateMapper {
   def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
     val state = block.state.toInt
 
-    data match { case it: Ageable           => it.setAge(state) }
-    data match { case it: Levelled          => it.setLevel(state) }
-    data match { case it: AnaloguePowerable => it.setPower(state) }
+    if (data.isInstanceOf[Ageable])
+      data.asInstanceOf[Ageable].setAge(state)
+    if (data.isInstanceOf[Levelled])
+      data.asInstanceOf[Levelled].setLevel(state)
+    if (data.isInstanceOf[AnaloguePowerable])
+      data.asInstanceOf[AnaloguePowerable].setPower(state)
 
     block match {
       case it: Bamboo =>
@@ -128,6 +131,8 @@ class SpigotBlockStateMapper {
         val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
         turtleEggData.setHatch(it.state.age.toInt)
         turtleEggData.setEggs(it.state.count.toInt)
+
+      case _ => ()
     }
   }
 }
