@@ -317,7 +317,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isButton           => Button(loc, v[ButtonVariant], dir, attached, powered)
       case m if m.isCarpet           => Carpet(loc, color)
       case m if m.isCobblestone      => Cobblestone(loc, v[CobblestoneVariant])
-      case m if m.isChest            => Chest(loc, v[ChestVariant], dir)
+      case m if m.isChest            => Chest(loc, v[ChestVariant], dir, flooded)
       case m if m.isConcrete         => Concrete(loc, color)
       case m if m.isConcretePowder   => ConcretePowder(loc, color)
       case m if m.isCoral            => Coral(loc, v[CoralVariant], flooded)

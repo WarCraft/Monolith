@@ -216,12 +216,15 @@ final case class Cauldron(
   override val `type` = BlockType.CAULDRON
 }
 
+// TODO add DOUBLE_LEFT/DOUBLE_RIGHT/SINGLE
 final case class Chest(
     location: BlockLocation,
     variant: ChestVariant,
-    direction: BlockFace
+    direction: BlockFace,
+    flooded: Boolean
 ) extends VariableBlock[ChestVariant]
-    with DirectedBlock {
+    with DirectedBlock
+    with FloodableBlock {
   override val `type` = BlockType.CHEST
 }
 
