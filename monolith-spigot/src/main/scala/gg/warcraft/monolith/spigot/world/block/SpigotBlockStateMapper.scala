@@ -24,7 +24,6 @@ class SpigotBlockStateMapper {
       case Material.COMPOSTER        => ComposterState.valueOf(level)
       case Material.FIRE             => FireState.valueOf(age)
       case Material.FROSTED_ICE      => FrostState.valueOf(age)
-      case Material.KELP_PLANT       => KelpState.valueOf(age)
       case Material.LAVA             => LavaState.valueOf(level)
       case Material.NETHER_WART      => NetherWartState.valueOf(age)
       case Material.POTATOES         => PotatoState.valueOf(age)
@@ -43,6 +42,10 @@ class SpigotBlockStateMapper {
       case Material.CAKE =>
         val bites = data.asInstanceOf[SpigotCake].getBites
         CakeState.valueOf(bites)
+
+      // KELP
+      case Material.KELP       => KelpState.valueOf(age)
+      case Material.KELP_PLANT => KelpState.FULLY_GROWN
 
       // MELON
       case Material.MELON_STEM          => MelonStemState.valueOf(age)

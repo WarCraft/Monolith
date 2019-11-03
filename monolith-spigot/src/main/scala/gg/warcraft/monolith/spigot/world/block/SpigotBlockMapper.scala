@@ -242,7 +242,7 @@ class SpigotBlockMapper @Inject() (
 
       // KELP
       case Material.KELP       => Kelp(loc, s[KelpState])
-      case Material.KELP_PLANT => Kelp(loc, KelpState.AGE_25)
+      case Material.KELP_PLANT => Kelp(loc, KelpState.FULLY_GROWN)
 
       // LANTERN
       case Material.LANTERN =>
@@ -276,7 +276,7 @@ class SpigotBlockMapper @Inject() (
         PistonHead(loc, v[PistonHeadVariant], dir, short)
 
       case Material.MOVING_PISTON =>
-        throw new IllegalArgumentException("Technical block")
+        throw new IllegalArgumentException(s"Technical block: $block")
 
       // PUMPKIN
       case Material.PUMPKIN =>
@@ -578,7 +578,7 @@ class SpigotBlockMapper @Inject() (
       case _: Wheat            => Material.WHEAT
 
       case it: Kelp =>
-        if (it.state == KelpState.AGE_25) Material.KELP_PLANT
+        if (it.state == KelpState.FULLY_GROWN) Material.KELP_PLANT
         else Material.KELP
 
       case it: MelonStem =>
