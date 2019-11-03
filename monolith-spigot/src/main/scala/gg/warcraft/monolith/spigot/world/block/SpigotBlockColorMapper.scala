@@ -7,46 +7,48 @@ import gg.warcraft.monolith.api.world.block._
 import org.bukkit.Material
 
 class SpigotBlockColorMapper {
-
   private val cache =
     new util.EnumMap[Material, BlockColor](classOf[Material])
 
-  def map(material: Material): BlockColor = cache.computeIfAbsent(material, {
-    case Material.GLASS | Material.GLASS_PANE | Material.SHULKER_BOX |
-         Material.TERRACOTTA =>
-      null
+  def map(material: Material): BlockColor = cache.computeIfAbsent(
+    material, {
+      case Material.GLASS | Material.GLASS_PANE | Material.SHULKER_BOX |
+          Material.TERRACOTTA =>
+        null
 
-    case _ => material.name match {
-      case r"BLACK.*"      => BlockColor.BLACK
-      case r"BLUE.*"       => BlockColor.BLUE
-      case r"BROWN.*"      => BlockColor.BROWN
-      case r"CYAN.*"       => BlockColor.CYAN
-      case r"GRAY.*"       => BlockColor.GRAY
-      case r"GREEN.*"      => BlockColor.GREEN
-      case r"LIGHT_BLUE.*" => BlockColor.LIGHT_BLUE
-      case r"LIGHT_GRAY.*" => BlockColor.LIGHT_GRAY
-      case r"LIME.*"       => BlockColor.LIME
-      case r"MAGENTA.*"    => BlockColor.MAGENTA
-      case r"ORANGE.*"     => BlockColor.ORANGE
-      case r"PINK.*"       => BlockColor.PINK
-      case r"PURPLE.*"     => BlockColor.PURPLE
-      case r"RED.*"        => BlockColor.RED
-      case r"WHITE.*"      => BlockColor.WHITE
-      case r"YELLOW.*"     => BlockColor.YELLOW
+      case _ =>
+        material.name match {
+          case r"BLACK.*"      => BlockColor.BLACK
+          case r"BLUE.*"       => BlockColor.BLUE
+          case r"BROWN.*"      => BlockColor.BROWN
+          case r"CYAN.*"       => BlockColor.CYAN
+          case r"GRAY.*"       => BlockColor.GRAY
+          case r"GREEN.*"      => BlockColor.GREEN
+          case r"LIGHT_BLUE.*" => BlockColor.LIGHT_BLUE
+          case r"LIGHT_GRAY.*" => BlockColor.LIGHT_GRAY
+          case r"LIME.*"       => BlockColor.LIME
+          case r"MAGENTA.*"    => BlockColor.MAGENTA
+          case r"ORANGE.*"     => BlockColor.ORANGE
+          case r"PINK.*"       => BlockColor.PINK
+          case r"PURPLE.*"     => BlockColor.PURPLE
+          case r"RED.*"        => BlockColor.RED
+          case r"WHITE.*"      => BlockColor.WHITE
+          case r"YELLOW.*"     => BlockColor.YELLOW
 
-      case _ => throw new IllegalArgumentException(s"$material")
+          case _ => throw new IllegalArgumentException(s"$material")
+        }
     }
-  })
+  )
 
   def map(block: ColoredBlock): Material = block match {
-    case Banner(_, color, _, None)  => mapBanner(color)
-    case Banner(_, color, None, _)  => mapWallBanner(color)
-    case Bed(_, color, _, _)        => mapBed(color)
-    case Carpet(_, color)           => mapCarpet(color)
-    case Concrete(_, color)         => mapConcrete(color)
-    case ConcretePowder(_, color)   => mapConcretePowder(color)
-    case GlazedTerracotta(_, color) => mapGlazedTerracotta(color)
-    case Wool(_, color)             => mapWool(color)
+    case Banner(_, color, _, None)     => mapBanner(color)
+    case Banner(_, color, None, _)     => mapWallBanner(color)
+    case Bed(_, color, _, _)           => mapBed(color)
+    case Carpet(_, color)              => mapCarpet(color)
+    case Concrete(_, color)            => mapConcrete(color)
+    case ConcretePowder(_, color)      => mapConcretePowder(color)
+    case GlazedTerracotta(_, color, _) => mapGlazedTerracotta(color)
+    case Wool(_, color)                => mapWool(color)
 
     case _ => throw new IllegalArgumentException(s"$block")
   }
