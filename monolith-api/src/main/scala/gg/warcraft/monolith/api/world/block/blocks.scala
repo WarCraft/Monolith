@@ -607,8 +607,10 @@ final case class GlassPane(
 
 final case class GlazedTerracotta(
     location: BlockLocation,
-    color: BlockColor
-) extends ColoredBlock {
+    color: BlockColor,
+    direction: BlockFace
+) extends ColoredBlock
+    with DirectedBlock {
   override val `type` = BlockType.GLAZED_TERRACOTTA
 }
 

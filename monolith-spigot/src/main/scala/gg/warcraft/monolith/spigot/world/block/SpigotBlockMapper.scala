@@ -330,7 +330,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isFlowerPot        => FlowerPot(loc, v[FlowerPotVariant])
       case m if m.isGlass            => Glass(loc, Some(color))
       case m if m.isGlassPane        => GlassPane(loc, Some(color), extensions, flooded)
-      case m if m.isGlazedTerracotta => GlazedTerracotta(loc, color)
+      case m if m.isGlazedTerracotta => GlazedTerracotta(loc, color, dir)
       case m if m.isIce              => Ice(loc, v[IceVariant])
       case m if m.isInfestedBlock    => InfestedBlock(loc, v[InfestedBlockVariant])
       case m if m.isLeaves           => Leaves(loc, v[LeavesVariant])
@@ -438,6 +438,7 @@ class SpigotBlockMapper @Inject() (
     // Create new block data object
     val material = block match {
       case it: ColoredBlock     => colorMapper.map(it)
+      case it: ColorableBlock   => colorMapper.map(it)
       case it: VariableBlock[_] => variantMapper.map(it)
 
       // TODO match on item.type to get a switch?
@@ -644,7 +645,7 @@ class SpigotBlockMapper @Inject() (
       case it: Comparator     => variantMapper.map(it, data)
       case it: NoteBlock      => variantMapper.map(it, data)
       case it: StructureBlock => variantMapper.map(it, data)
-      case _ => ()
+      case _                  => ()
     }
 
     block match {
