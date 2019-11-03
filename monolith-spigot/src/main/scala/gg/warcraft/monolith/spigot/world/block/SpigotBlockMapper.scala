@@ -11,6 +11,7 @@ import org.bukkit.{Bukkit, Material}
 import org.bukkit.block.data._
 import org.bukkit.block.data.`type`.Bed.{Part => SpigotBedPart}
 import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
+import org.bukkit.block.data.`type`.Slab.{Type => SpigotSlabType}
 import org.bukkit.block.data.`type`.Switch
 
 class SpigotBlockMapper @Inject() (
@@ -409,8 +410,13 @@ class SpigotBlockMapper @Inject() (
 
       // SLAB
       case m if m.isSlab =>
-        val section = dataAs[SpigotSlab].getType // TODO map to bisection or slab specific data
-        Slab(loc, v[SlabVariant], bisection)
+        val _bisection = mapSlabType(dataAs[SpigotSlab].getType)
+        if (_bisection.isDefined) Slab(loc, v[SlabVariant], _bisection.get)
+        else {
+          // TODO map to Planks/non-double-slab type
+          println("SpigotBlockMapper encountered DoubleSlab, mapping to TOP Slab!")
+          Slab(loc, v[SlabVariant], BlockBisection.TOP)
+        }
 
       // STAIRS
       case m if m.isStairs =>
@@ -654,6 +660,10 @@ class SpigotBlockMapper @Inject() (
 
       case it: Lantern =>
         data.asInstanceOf[SpigotLantern].setHanging(it.hanging)
+
+      case it: Slab =>
+        val `type` = mapSlabType(it.section)
+        data.asInstanceOf[SpigotSlab].setType(`type`)
     }
 
     // Return block data object
@@ -689,5 +699,16 @@ class SpigotBlockMapper @Inject() (
   def mapDoorHinge(hinge: BlockHinge): SpigotDoorHinge = hinge match {
     case BlockHinge.LEFT  => SpigotDoorHinge.LEFT
     case BlockHinge.RIGHT => SpigotDoorHinge.RIGHT
+  }
+
+  def mapSlabType(`type`: SpigotSlabType): Option[BlockBisection] = `type` match {
+    case SpigotSlabType.TOP    => Some(BlockBisection.TOP)
+    case SpigotSlabType.BOTTOM => Some(BlockBisection.BOTTOM)
+    case SpigotSlabType.DOUBLE => None
+  }
+
+  def mapSlabType(`type`: BlockBisection): SpigotSlabType = `type` match {
+    case BlockBisection.TOP    => SpigotSlabType.TOP
+    case BlockBisection.BOTTOM => SpigotSlabType.BOTTOM
   }
 }
