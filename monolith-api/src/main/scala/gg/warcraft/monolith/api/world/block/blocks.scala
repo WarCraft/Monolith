@@ -1177,8 +1177,10 @@ final case class SeaPickle(
 
 final case class ShulkerBox(
     location: BlockLocation,
-    color: Option[BlockColor]
-) extends ColorableBlock {
+    color: Option[BlockColor],
+    direction: BlockFace
+) extends ColorableBlock
+    with DirectedBlock {
   override val `type` = BlockType.SHULKER_BOX
 }
 

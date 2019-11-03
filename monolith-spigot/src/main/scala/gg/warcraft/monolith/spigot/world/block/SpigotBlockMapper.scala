@@ -347,7 +347,7 @@ class SpigotBlockMapper @Inject() (
       case m if m.isSand             => Sand(loc, v[SandVariant])
       case m if m.isSandstone        => Sandstone(loc, v[SandstoneVariant])
       case m if m.isSapling          => Sapling(loc, v[SaplingVariant], s[SaplingState])
-      case m if m.isShulkerBox       => ShulkerBox(loc, Some(color))
+      case m if m.isShulkerBox       => ShulkerBox(loc, Some(color), dir)
       case m if m.isSponge           => Sponge(loc, v[SpongeVariant])
       case m if m.isStone            => Stone(loc, v[StoneVariant])
       case m if m.isStonite          => Stonite(loc, v[StoniteVariant])

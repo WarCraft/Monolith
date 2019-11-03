@@ -60,8 +60,8 @@ class SpigotBlockColorMapper {
     case GlassPane(_, None, _, _)        => Material.GLASS_PANE
     case GlassPane(_, Some(color), _, _) => mapStainedGlassPane(color)
 
-    case ShulkerBox(_, None)        => Material.SHULKER_BOX
-    case ShulkerBox(_, Some(color)) => mapShulkerBox(color)
+    case ShulkerBox(_, None, _)        => Material.SHULKER_BOX
+    case ShulkerBox(_, Some(color), _) => mapShulkerBox(color)
 
     case Terracotta(_, None)        => Material.TERRACOTTA
     case Terracotta(_, Some(color)) => mapTerracotta(color)
