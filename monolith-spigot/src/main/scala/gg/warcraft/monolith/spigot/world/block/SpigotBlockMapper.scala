@@ -563,6 +563,7 @@ class SpigotBlockMapper @Inject() (
       case _: SweetBerryBush   => Material.SWEET_BERRY_BUSH
       case _: TNT              => Material.TNT
       case _: Torch            => Material.TORCH
+      case _: TripwireHook     => Material.TRIPWIRE_HOOK
       case _: TurtleEgg        => Material.TURTLE_EGG
       case _: Vine             => Material.VINE
       case _: Water            => Material.WATER
