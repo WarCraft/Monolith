@@ -313,7 +313,10 @@ class SpigotBlockMapper @Inject() (
       case Material.WALL_TORCH => Torch(loc, dir, wall = true)
 
       // TRIPWIRE
-      case Material.TRIPWIRE => // TODO
+      case Material.TRIPWIRE =>
+        val connected = dataAs[SpigotTripwire].isAttached
+        val disarmed = dataAs[SpigotTripwire].isDisarmed
+        Tripwire(loc, extensions, powered, connected, disarmed)
         throw new IllegalArgumentException(s"${block.getType}")
 
       // TRIPWIRE_HOOK
@@ -703,6 +706,12 @@ class SpigotBlockMapper @Inject() (
       case it: Slab =>
         val `type` = mapSlabType(it.section)
         data.asInstanceOf[SpigotSlab].setType(`type`)
+
+      case it: Tripwire =>
+        data.asInstanceOf[SpigotTripwire].setAttached(it.connected)
+        data.asInstanceOf[SpigotTripwire].setDisarmed(it.disarmed)
+
+      // TODO this match seems to be missing quite a few custom block data updates
 
       case _ => ()
     }

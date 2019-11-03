@@ -38,6 +38,7 @@ package object block {
   type SpigotStairs = Stairs
   type SpigotStructureBlock = StructureBlock
   type SpigotTNT = TNT
+  type SpigotTripwire = Tripwire
   type SpigotTripwireHook = TripwireHook
   type SpigotTurtleEgg = TurtleEgg
 }

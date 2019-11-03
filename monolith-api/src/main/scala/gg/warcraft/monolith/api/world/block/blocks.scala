@@ -1398,6 +1398,22 @@ final case class Trapdoor(
   override val solid: Boolean = false
 }
 
+final case class Tripwire(
+    location: BlockLocation,
+    extensions: Set[BlockFace],
+    powered: Boolean,
+    connected: Boolean,
+    disarmed: Boolean
+) extends ExtendableBlock
+    with PowerableBlock {
+  override val `type` = BlockType.TRIPWIRE
+  override val solid: Boolean = false
+  def withConnected(connected: Boolean): Tripwire =
+    copyWith("connected", connected)
+  def withDisarmed(disarmed: Boolean): Tripwire =
+    copyWith("disarmed", disarmed)
+}
+
 final case class TripwireHook(
     location: BlockLocation,
     direction: BlockFace,
