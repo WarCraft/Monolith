@@ -951,8 +951,10 @@ final case class Obsidian(
 
 final case class Pillar(
     location: BlockLocation,
-    variant: PillarVariant
-) extends VariableBlock[PillarVariant] {
+    variant: PillarVariant,
+    orientation: BlockOrientation
+) extends VariableBlock[PillarVariant]
+    with OrientedBlock {
   override val `type` = BlockType.PILLAR
 }
 
@@ -1081,8 +1083,9 @@ final case class RedstoneLamp(
 }
 
 final case class RedstoneOre(
-    location: BlockLocation
-) extends Block {
+    location: BlockLocation,
+    lit: Boolean
+) extends LightableBlock {
   override val `type` = BlockType.REDSTONE_ORE
 }
 
