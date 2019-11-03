@@ -328,8 +328,8 @@ class SpigotBlockMapper @Inject() (
       case m if m.isFence            => Fence(loc, v[FenceVariant], extensions, flooded)
       case m if m.isFlower           => Flower(loc, v[FlowerVariant])
       case m if m.isFlowerPot        => FlowerPot(loc, v[FlowerPotVariant])
-      case m if m.isGlass            => Glass(loc, Some(color))
-      case m if m.isGlassPane        => GlassPane(loc, Some(color), extensions, flooded)
+      case m if m.isGlass            => Glass(loc, Option(color))
+      case m if m.isGlassPane        => GlassPane(loc, Option(color), extensions, flooded)
       case m if m.isGlazedTerracotta => GlazedTerracotta(loc, color, dir)
       case m if m.isIce              => Ice(loc, v[IceVariant])
       case m if m.isInfestedBlock    => InfestedBlock(loc, v[InfestedBlockVariant])
@@ -347,12 +347,12 @@ class SpigotBlockMapper @Inject() (
       case m if m.isSand             => Sand(loc, v[SandVariant])
       case m if m.isSandstone        => Sandstone(loc, v[SandstoneVariant])
       case m if m.isSapling          => Sapling(loc, v[SaplingVariant], s[SaplingState])
-      case m if m.isShulkerBox       => ShulkerBox(loc, Some(color), dir)
+      case m if m.isShulkerBox       => ShulkerBox(loc, Option(color), dir)
       case m if m.isSponge           => Sponge(loc, v[SpongeVariant])
       case m if m.isStone            => Stone(loc, v[StoneVariant])
       case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
       case m if m.isStructureBlock   => StructureBlock(loc, v[StructureBlockVariant])
-      case m if m.isTerracotta       => Terracotta(loc, Some(color))
+      case m if m.isTerracotta       => Terracotta(loc, Option(color))
       case m if m.isWall             => Wall(loc, v[WallVariant], extensions, flooded)
       case m if m.isWood             => Wood(loc, v[WoodVariant], orientation)
       case m if m.isWool             => Wool(loc, color)
@@ -487,6 +487,7 @@ class SpigotBlockMapper @Inject() (
       case _: Farmland         => Material.FARMLAND
       case _: Fire             => Material.FIRE
       case _: FletchingTable   => Material.FLETCHING_TABLE
+      case _: Frost            => Material.FROSTED_ICE
       case _: Furnace          => Material.FURNACE
       case _: Glowstone        => Material.GLOWSTONE
       case _: GoldBlock        => Material.GOLD_BLOCK
