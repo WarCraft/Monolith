@@ -171,6 +171,8 @@ public enum BlockType {
     TNT,
     TORCH,
     TRAPDOOR,
+    TRIPWIRE,
+    TRIPWIRE_HOOK,
     TURTLE_EGG,
     VINE,
     WALL,

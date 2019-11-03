@@ -183,9 +183,13 @@ class SpigotBlockMapper @Inject() (
       case Material.WHEAT               => Wheat(loc, s[WheatState])
 
       // BAMBOO
-      case Material.BAMBOO | Material.BAMBOO_SAPLING =>
+      case Material.BAMBOO =>
         val thick = dataAs[SpigotBamboo].getAge == 1
         Bamboo(loc, v[BambooVariant], s[BambooState], thick)
+
+      // TODO Split SAPLING into its own block, has different data values than BAMBOO
+      case Material.BAMBOO_SAPLING =>
+        Bamboo(loc, BambooVariant.SAPLING, BambooState.STAGE_0, thick = false)
 
       // BARREL
       case Material.BARREL =>
@@ -311,8 +315,11 @@ class SpigotBlockMapper @Inject() (
       // TRIPWIRE
       case Material.TRIPWIRE => // TODO
         throw new IllegalArgumentException(s"${block.getType}")
-      case Material.TRIPWIRE_HOOK => // TODO
-        throw new IllegalArgumentException(s"${block.getType}")
+
+      // TRIPWIRE_HOOK
+      case Material.TRIPWIRE_HOOK =>
+        val connected = dataAs[SpigotTripwireHook].isAttached
+        TripwireHook(loc, dir, powered, connected)
 
       case m if m.isAir              => Air(loc, v[AirVariant])
       case m if m.isAnvil            => Anvil(loc, v[AnvilVariant], dir)

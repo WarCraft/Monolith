@@ -1384,6 +1384,19 @@ final case class Trapdoor(
   override val solid: Boolean = false
 }
 
+final case class TripwireHook(
+    location: BlockLocation,
+    direction: BlockFace,
+    powered: Boolean,
+    connected: Boolean
+) extends DirectedBlock
+    with PowerableBlock {
+  override val `type` = BlockType.TRIPWIRE_HOOK
+  override val solid: Boolean = false
+  def withConnected(connected: Boolean): TripwireHook =
+    copyWith("connected", connected)
+}
+
 final case class TurtleEgg(
     location: BlockLocation,
     state: TurtleEggState
