@@ -995,6 +995,18 @@ final case class Piston(
     copyWith("extended", extended)
 }
 
+final case class PistonHead(
+    location: BlockLocation,
+    variant: PistonHeadVariant,
+    direction: BlockFace,
+    short: Boolean
+) extends VariableBlock[PistonHeadVariant]
+    with DirectedBlock {
+  override val `type` = BlockType.PISTON
+  def withShort(short: Boolean): PistonHead =
+    copyWith("short", short)
+}
+
 final case class Planks(
     location: BlockLocation,
     variant: PlanksVariant

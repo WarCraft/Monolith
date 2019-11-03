@@ -270,7 +270,12 @@ class SpigotBlockMapper @Inject() (
         val extended = dataAs[SpigotPiston].isExtended
         Piston(loc, v[PistonVariant], dir, extended)
 
-      case Material.MOVING_PISTON | Material.PISTON_HEAD =>
+      // PISTON_HEAD
+      case Material.PISTON_HEAD =>
+        val short = dataAs[SpigotPistonHead].isShort
+        PistonHead(loc, v[PistonHeadVariant], dir, short)
+
+      case Material.MOVING_PISTON =>
         throw new IllegalArgumentException("Technical block")
 
       // PUMPKIN
@@ -317,7 +322,6 @@ class SpigotBlockMapper @Inject() (
         val connected = dataAs[SpigotTripwire].isAttached
         val disarmed = dataAs[SpigotTripwire].isDisarmed
         Tripwire(loc, extensions, powered, connected, disarmed)
-        throw new IllegalArgumentException(s"${block.getType}")
 
       // TRIPWIRE_HOOK
       case Material.TRIPWIRE_HOOK =>
@@ -534,7 +538,6 @@ class SpigotBlockMapper @Inject() (
       case _: Loom             => Material.LOOM
       case _: MagmaBlock       => Material.MAGMA_BLOCK
       case _: Melon            => Material.MELON
-      case _: MelonStem        => Material.MELON_STEM
       case _: Mycelium         => Material.MYCELIUM
       case _: NetherPortal     => Material.NETHER_PORTAL
       case _: Netherrack       => Material.NETHERRACK
@@ -545,7 +548,6 @@ class SpigotBlockMapper @Inject() (
       case _: Podzol           => Material.PODZOL
       case _: Potatoes         => Material.POTATOES
       case _: Pumpkin          => Material.PUMPKIN
-      case _: PumpkinStem      => Material.PUMPKIN_STEM
       case _: PurpurBlock      => Material.PURPUR_BLOCK
       case _: QuartzOre        => Material.NETHER_QUARTZ_ORE
       case _: RedstoneBlock    => Material.REDSTONE_BLOCK
@@ -568,6 +570,7 @@ class SpigotBlockMapper @Inject() (
       case _: SweetBerryBush   => Material.SWEET_BERRY_BUSH
       case _: TNT              => Material.TNT
       case _: Torch            => Material.TORCH
+      case _: Tripwire         => Material.TRIPWIRE
       case _: TripwireHook     => Material.TRIPWIRE_HOOK
       case _: TurtleEgg        => Material.TURTLE_EGG
       case _: Vine             => Material.VINE
@@ -577,6 +580,14 @@ class SpigotBlockMapper @Inject() (
       case it: Kelp =>
         if (it.state == KelpState.AGE_25) Material.KELP_PLANT
         else Material.KELP
+
+      case it: MelonStem =>
+        if (it.state == MelonStemState.ATTACHED) Material.ATTACHED_MELON_STEM
+        else Material.MELON_STEM
+
+      case it: PumpkinStem =>
+        if (it.state == PumpkinStemState.ATTACHED) Material.ATTACHED_PUMPKIN_STEM
+        else Material.PUMPKIN_STEM
 
       case it: RedstoneTorch =>
         if (it.direction.isEmpty) Material.REDSTONE_TORCH

@@ -10,7 +10,9 @@ public enum MelonStemState implements BlockState {
     AGE_4,
     AGE_5,
     AGE_6,
-    AGE_7;
+    AGE_7,
+
+    ATTACHED;
 
     private static final MelonStemState[] finalValues = values();
 

@@ -129,6 +129,7 @@ public enum BlockType {
     PLANT,
     PILLAR,
     PISTON,
+    PISTON_HEAD,
     PODZOL,
     POTATOES,
     PRESSURE_PLATE,

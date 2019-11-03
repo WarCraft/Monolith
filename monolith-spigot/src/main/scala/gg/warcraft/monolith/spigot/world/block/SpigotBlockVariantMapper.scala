@@ -6,6 +6,7 @@ import org.bukkit.{Material, Instrument => SpigotInstrument}
 import org.bukkit.block.data.`type`.Bamboo.{Leaves => SpigotBambooLeaves}
 import org.bukkit.block.data.`type`.Comparator.{Mode => SpigotComparatorMode}
 import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureBlockMode}
+import org.bukkit.block.data.`type`.TechnicalPiston.{Type => SpigotPistonType}
 
 class SpigotBlockVariantMapper {
   def map(material: Material): BlockVariant = material match {
@@ -557,6 +558,12 @@ class SpigotBlockVariantMapper {
           case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
         }
 
+      case Material.PISTON_HEAD =>
+        data.asInstanceOf[SpigotPistonHead].getType match {
+          case SpigotPistonType.NORMAL => PistonHeadVariant.NORMAL
+          case SpigotPistonType.STICKY => PistonHeadVariant.STICKY
+        }
+
       case Material.STRUCTURE_BLOCK =>
         data.asInstanceOf[SpigotStructureBlock].getMode match {
           case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
@@ -816,6 +823,10 @@ class SpigotBlockVariantMapper {
     // PISTON
     case PistonVariant.NORMAL => Material.PISTON
     case PistonVariant.STICKY => Material.STICKY_PISTON
+
+    // PISTON_HEAD
+    case PistonHeadVariant.NORMAL => Material.PISTON_HEAD
+    case PistonHeadVariant.STICKY => Material.PISTON_HEAD
 
     // PLANKS
     case PlanksVariant.ACACIA   => Material.ACACIA_PLANKS
@@ -1137,6 +1148,13 @@ class SpigotBlockVariantMapper {
         case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
       }
       data.asInstanceOf[SpigotNoteBlock].setInstrument(instrument)
+
+    case PistonHead(_, variant, _, _) =>
+      val `type` = variant match {
+        case PistonHeadVariant.NORMAL => SpigotPistonType.NORMAL
+        case PistonHeadVariant.STICKY => SpigotPistonType.STICKY
+      }
+      data.asInstanceOf[SpigotPistonHead].setType(`type`)
 
     case StructureBlock(_, variant) =>
       if (variant != StructureBlockVariant.VOID) {

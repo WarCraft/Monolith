@@ -29,6 +29,7 @@ package object block {
   type SpigotLectern = Lectern
   type SpigotNoteBlock = NoteBlock
   type SpigotPiston = Piston
+  type SpigotPistonHead = PistonHead
   type SpigotRail = Rail
   type SpigotRepeater = Repeater
   type SpigotSapling = Sapling

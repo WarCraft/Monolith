@@ -44,18 +44,18 @@ class SpigotBlockStateMapper {
         val bites = data.asInstanceOf[SpigotCake].getBites
         CakeState.valueOf(bites)
 
-      // MELON_STEM TODO state is not present in ATTACHED variant, same for PUMPKIN
-      case Material.MELON_STEM | Material.ATTACHED_MELON_STEM =>
-        MelonStemState.valueOf(age)
+      // MELON
+      case Material.MELON_STEM          => MelonStemState.valueOf(age)
+      case Material.ATTACHED_MELON_STEM => MelonStemState.ATTACHED
 
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
         val note = data.asInstanceOf[SpigotNoteBlock].getNote.getId
         NoteBlockState.valueOf(note)
 
-      // PUMPKIN_STEM
-      case Material.PUMPKIN_STEM | Material.ATTACHED_PUMPKIN_STEM =>
-        PumpkinStemState.valueOf(age)
+      // PUMPKIN
+      case Material.PUMPKIN_STEM          => PumpkinStemState.valueOf(age)
+      case Material.ATTACHED_PUMPKIN_STEM => PumpkinStemState.ATTACHED
 
       // REPEATER
       case Material.REPEATER =>
