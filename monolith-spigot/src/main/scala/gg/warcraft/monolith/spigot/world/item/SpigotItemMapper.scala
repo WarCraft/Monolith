@@ -3,10 +3,7 @@ package gg.warcraft.monolith.spigot.world.item
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.block.BlockColor
 import gg.warcraft.monolith.api.world.item._
-import gg.warcraft.monolith.api.world.item.variant.{
-  StructureBlockVariant,
-  _
-}
+import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 import gg.warcraft.monolith.spigot.Extensions._
 import javax.inject.Inject
 import org.bukkit.Material
@@ -511,6 +508,7 @@ class SpigotItemMapper @Inject() (
           case ItemType.PUMPKIN             => Material.PUMPKIN
           case ItemType.PUMPKIN_PIE         => Material.PUMPKIN_PIE
           case ItemType.PURPUR_BLOCK        => Material.PURPUR_BLOCK
+          case ItemType.QUARTZ              => Material.QUARTZ
           case ItemType.QUARTZ_ORE          => Material.NETHER_QUARTZ_ORE
           case ItemType.RABBIT_FOOT         => Material.RABBIT_FOOT
           case ItemType.RABBIT_HIDE         => Material.RABBIT_HIDE
