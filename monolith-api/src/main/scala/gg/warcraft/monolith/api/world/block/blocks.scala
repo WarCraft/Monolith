@@ -1202,9 +1202,11 @@ final case class Sign(
 final case class Slab(
     location: BlockLocation,
     variant: SlabVariant,
-    section: BlockBisection
+    section: BlockBisection,
+    flooded: Boolean
 ) extends VariableBlock[SlabVariant]
-    with BisectedBlock {
+    with BisectedBlock
+    with FloodableBlock {
   override val `type` = BlockType.SLAB
 }
 
@@ -1385,9 +1387,11 @@ final case class Vine(
 final case class Wall(
     location: BlockLocation,
     variant: WallVariant,
-    extensions: Set[BlockFace]
+    extensions: Set[BlockFace],
+    flooded: Boolean
 ) extends VariableBlock[WallVariant]
-    with ExtendableBlock {
+    with ExtendableBlock
+    with FloodableBlock {
   override val `type` = BlockType.WALL
 }
 
@@ -1419,8 +1423,10 @@ final case class Wheat(
 
 final case class Wood(
     location: BlockLocation,
-    variant: WoodVariant
-) extends VariableBlock[WoodVariant] {
+    variant: WoodVariant,
+    orientation: BlockOrientation
+) extends VariableBlock[WoodVariant]
+    with OrientedBlock {
   override val `type` = BlockType.WOOD
 }
 

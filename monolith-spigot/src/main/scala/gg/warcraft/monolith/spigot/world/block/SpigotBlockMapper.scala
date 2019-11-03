@@ -353,8 +353,8 @@ class SpigotBlockMapper @Inject() (
       case m if m.isStonite          => Stonite(loc, v[StoniteVariant])
       case m if m.isStructureBlock   => StructureBlock(loc, v[StructureBlockVariant])
       case m if m.isTerracotta       => Terracotta(loc, Some(color))
-      case m if m.isWall             => Wall(loc, v[WallVariant], extensions)
-      case m if m.isWood             => Wood(loc, v[WoodVariant])
+      case m if m.isWall             => Wall(loc, v[WallVariant], extensions, flooded)
+      case m if m.isWood             => Wood(loc, v[WoodVariant], orientation)
       case m if m.isWool             => Wool(loc, color)
 
       // BED
@@ -411,11 +411,11 @@ class SpigotBlockMapper @Inject() (
       // SLAB
       case m if m.isSlab =>
         val _bisection = mapSlabType(dataAs[SpigotSlab].getType)
-        if (_bisection.isDefined) Slab(loc, v[SlabVariant], _bisection.get)
+        if (_bisection.isDefined) Slab(loc, v[SlabVariant], _bisection.get, flooded)
         else {
           // TODO map to Planks/non-double-slab type
           println("SpigotBlockMapper encountered DoubleSlab, mapping to TOP Slab!")
-          Slab(loc, v[SlabVariant], BlockBisection.TOP)
+          Slab(loc, v[SlabVariant], BlockBisection.TOP, flooded)
         }
 
       // STAIRS
@@ -606,29 +606,46 @@ class SpigotBlockMapper @Inject() (
     }
 
     // Set generic block data
-    data match { case it: Bisected    => it.setHalf(bisection) }
-    data match { case it: Directional => it.setFacing(direction) }
-    data match { case it: Lightable   => it.setLit(lit) }
-    data match { case it: Openable    => it.setOpen(open) }
-    data match { case it: Orientable  => it.setAxis(orientation) }
-    data match { case it: Powerable   => it.setPowered(powered) }
-    data match { case it: Rotatable   => it.setRotation(rotation) }
-    data match { case it: Snowable    => it.setSnowy(snowy) }
-    data match { case it: Switch      => it.setFace(attached) }
-    data match { case it: Waterlogged => it.setWaterlogged(flooded) }
-
-    data match {
-      case it: MultipleFacing =>
-        it.getAllowedFaces.forEach(face => it.setFace(face, false)) // TODO check if this is
-        // necessary on fresh BlockData objects
-        extensions.forEach(face => it.setFace(face, true))
+    if (data.isInstanceOf[Bisected])
+      data.asInstanceOf[Bisected].setHalf(bisection)
+    if (data.isInstanceOf[Directional])
+      data.asInstanceOf[Directional].setFacing(direction)
+    if (data.isInstanceOf[Lightable])
+      data.asInstanceOf[Lightable].setLit(lit)
+    if (data.isInstanceOf[Openable])
+      data.asInstanceOf[Openable].setOpen(open)
+    if (data.isInstanceOf[Orientable])
+      data.asInstanceOf[Orientable].setAxis(orientation)
+    if (data.isInstanceOf[Powerable])
+      data.asInstanceOf[Powerable].setPowered(powered)
+    if (data.isInstanceOf[Rotatable])
+      data.asInstanceOf[Rotatable].setRotation(rotation)
+    if (data.isInstanceOf[Snowable])
+      data.asInstanceOf[Snowable].setSnowy(snowy)
+    if (data.isInstanceOf[Switch])
+      data.asInstanceOf[Switch].setFace(attached)
+    if (data.isInstanceOf[Waterlogged])
+      data.asInstanceOf[Waterlogged].setWaterlogged(flooded)
+    if (data.isInstanceOf[MultipleFacing]) {
+      val multipleFacing = data.asInstanceOf[MultipleFacing]
+      // TODO check if this is necessary on fresh BlockData objects
+      multipleFacing.getAllowedFaces.forEach(multipleFacing.setFace(_, false))
+      extensions.forEach(multipleFacing.setFace(_, true))
     }
 
     // Set specific block data
     def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
 
-    block match { case it: StatefulBlock[_] => stateMapper.map(it, data) }
-    block match { case it: VariableBlock[_] => variantMapper.map(it, data) }
+    if (block.isInstanceOf[StatefulBlock[_ <: BlockState]])
+      stateMapper.map(block.asInstanceOf[StatefulBlock[_ <: BlockState]], data)
+
+    block match {
+      case it: Bamboo         => variantMapper.map(it, data)
+      case it: Comparator     => variantMapper.map(it, data)
+      case it: NoteBlock      => variantMapper.map(it, data)
+      case it: StructureBlock => variantMapper.map(it, data)
+      case _ => ()
+    }
 
     block match {
       case it: BubbleColumn   => dataAs[SpigotBubbleColumn].setDrag(it.drag)
@@ -664,6 +681,8 @@ class SpigotBlockMapper @Inject() (
       case it: Slab =>
         val `type` = mapSlabType(it.section)
         data.asInstanceOf[SpigotSlab].setType(`type`)
+
+      case _ => ()
     }
 
     // Return block data object
