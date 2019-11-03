@@ -183,7 +183,7 @@ class SpigotBlockMapper @Inject() (
       case Material.WHEAT               => Wheat(loc, s[WheatState])
 
       // BAMBOO
-      case Material.BAMBOO =>
+      case Material.BAMBOO | Material.BAMBOO_SAPLING =>
         val thick = dataAs[SpigotBamboo].getAge == 1
         Bamboo(loc, v[BambooVariant], s[BambooState], thick)
 
