@@ -578,6 +578,11 @@ class SpigotBlockVariantMapper {
     case AnvilVariant.CHIPPED => Material.CHIPPED_ANVIL
     case AnvilVariant.DAMAGED => Material.DAMAGED_ANVIL
 
+    // BRICK_BLOCK
+    case BrickBlockVariant.NORMAL     => Material.BRICKS
+    case BrickBlockVariant.NETHER     => Material.NETHER_BRICKS
+    case BrickBlockVariant.RED_NETHER => Material.RED_NETHER_BRICKS
+
     // BUTTON
     case ButtonVariant.ACACIA   => Material.ACACIA_BUTTON
     case ButtonVariant.BIRCH    => Material.BIRCH_BUTTON
