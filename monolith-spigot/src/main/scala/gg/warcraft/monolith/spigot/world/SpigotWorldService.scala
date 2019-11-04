@@ -3,10 +3,17 @@ package gg.warcraft.monolith.spigot.world
 import java.util.UUID
 
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.{ BlockLocation, Location, Sound, SoundCategory, World, WorldService }
+import gg.warcraft.monolith.api.world.{
+  BlockLocation,
+  Location,
+  Sound,
+  SoundCategory,
+  World,
+  WorldService
+}
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.item.Item
-import gg.warcraft.monolith.spigot.world.block.{ SpigotBlock, SpigotBlockMapper }
+import gg.warcraft.monolith.spigot.world.block.{SpigotBlock, SpigotBlockMapper}
 import javax.inject.Inject
 import org.bukkit.Server
 
