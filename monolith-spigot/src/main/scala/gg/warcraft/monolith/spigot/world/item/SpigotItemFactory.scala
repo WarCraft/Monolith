@@ -30,10 +30,15 @@ class SpigotItemFactory @Inject() (
   }
 
   override def create(variant: String): Item = {
-    val Array(enum, value) = variant.split(':')
-    val clazz = Class.forName(s"$itemVariantPackage.$enum")
-    val valueOf = clazz.getMethod("valueOf", classOf[String])
-    val constant = valueOf.invoke(null, value).asInstanceOf[ItemVariant]
-    create(constant).asInstanceOf[Item]
+    if (variant.contains(':')) {
+      val Array(enum, value) = variant.split(':')
+      val clazz = Class.forName(s"$itemVariantPackage.$enum")
+      val valueOf = clazz.getMethod("valueOf", classOf[String])
+      val constant = valueOf.invoke(null, value).asInstanceOf[ItemVariant]
+      create(constant).asInstanceOf[Item]
+    } else {
+      val constant = ItemType.valueOf(variant)
+      create(constant)
+    }
   }
 }
