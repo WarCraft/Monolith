@@ -19,6 +19,8 @@ trait Item extends CaseClass {
     copyWith("tooltip", tooltip)
 
   val attributes: Set[String]
+  @varargs def hasAttributes(attributes: String*): Boolean =
+    attributes.forall(this.attributes.contains)
   @varargs def addAttributes(attributes: String*): this.type =
     copyWith("attributes", this.attributes ++ attributes)
   @varargs def removeAttributes(attributes: String*): this.type =
@@ -29,6 +31,8 @@ trait Item extends CaseClass {
   val hideAttributes: Boolean
   def withHideAttributes(hideAttributes: Boolean): this.type =
     copyWith("hideAttributes", hideAttributes)
+
+  def isVariant(variant: ItemVariant): Boolean = false
 }
 
 trait ColoredItem extends Item {
@@ -91,4 +95,7 @@ trait VariableItem[T <: ItemVariant] extends Item {
   val variant: T
   def withVariant(variant: T): this.type =
     copyWith("variant", variant)
+
+  override def isVariant(variant: ItemVariant): Boolean =
+    this.variant == variant
 }

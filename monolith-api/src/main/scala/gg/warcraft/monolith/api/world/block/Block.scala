@@ -11,6 +11,9 @@ trait Block extends CaseClass {
   val location: BlockLocation
   def withLocation(location: BlockLocation): this.type =
     copyWith("location", location)
+
+  def isVariant(variant: BlockVariant): Boolean = false
+  def hasState(state: BlockState): Boolean = false
 }
 
 trait AttachedBlock extends Block {
@@ -114,10 +117,16 @@ trait StatefulBlock[T <: BlockState] extends Block {
   val state: T
   def withState(state: T): this.type =
     copyWith("state", state)
+
+  override def hasState(state: BlockState): Boolean =
+    this.state == state
 }
 
 trait VariableBlock[T <: BlockVariant] extends Block {
   val variant: T
   def withVariant(variant: T): this.type =
     copyWith("variant", variant)
+
+  override def isVariant(variant: BlockVariant): Boolean =
+    this.variant == variant
 }

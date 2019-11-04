@@ -1,9 +1,11 @@
 package gg.warcraft.monolith.api.world.block
 
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
+import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
+
+import scala.beans.{ BeanProperty, BooleanBeanProperty }
 
 final case class Air(
     location: BlockLocation,
@@ -430,8 +432,8 @@ final case class Door(
     direction: BlockFace,
     hinge: BlockHinge,
     section: BlockBisection,
-    open: Boolean,
-    powered: Boolean
+    open: Boolean, // TODO should this be isOpen? Currently exposes open() to java
+    powered: Boolean//  which is like a method call to open the door
 ) extends VariableBlock[DoorVariant]
     with DirectedBlock
     with HingedBlock
