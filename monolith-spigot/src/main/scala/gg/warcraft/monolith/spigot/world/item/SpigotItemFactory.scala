@@ -29,16 +29,15 @@ class SpigotItemFactory @Inject() (
     itemMapper.map(item).get.asInstanceOf[VariableItem[T]]
   }
 
-  override def create(variant: String): Item = {
-    if (variant.contains(':')) {
-      val Array(enum, value) = variant.split(':')
+  override def create(`type`: String): Item = {
+    if (`type`.contains(':')) {
+      val Array(enum, value) = `type`.split(':')
       val clazz = Class.forName(s"$itemVariantPackage.$enum")
       val valueOf = clazz.getMethod("valueOf", classOf[String])
-      val constant = valueOf.invoke(null, value).asInstanceOf[ItemVariant]
-      create(constant).asInstanceOf[Item]
+      val variant = valueOf.invoke(null, value).asInstanceOf[ItemVariant]
+      create(variant).asInstanceOf[Item]
     } else {
-      val constant = ItemType.valueOf(variant)
-      create(constant)
+      create(ItemType.valueOf(`type`))
     }
   }
 }
