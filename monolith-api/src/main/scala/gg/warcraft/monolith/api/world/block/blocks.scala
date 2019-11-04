@@ -249,10 +249,10 @@ final case class ChorusPlant(
   override val `type` = BlockType.CHORUS_PLANT
 }
 
-final case class Clay(
+final case class ClayBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.CLAY
+  override val `type` = BlockType.CLAY_BLOCK
 }
 
 final case class CoalBlock(
@@ -447,10 +447,10 @@ final case class DragonEgg(
   override val `type` = BlockType.DRAGON_EGG
 }
 
-final case class DriedKelp(
+final case class DriedKelpBlock(
     location: BlockLocation
 ) extends Block {
-  override val `type` = BlockType.DRIED_KELP
+  override val `type` = BlockType.DRIED_KELP_BLOCK
 }
 
 final case class Dropper(

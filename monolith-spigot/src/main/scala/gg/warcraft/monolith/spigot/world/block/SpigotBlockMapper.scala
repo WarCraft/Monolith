@@ -99,7 +99,7 @@ class SpigotBlockMapper @Inject() (
       case Material.CAULDRON            => Cauldron(loc, s[CauldronState])
       case Material.CHORUS_FLOWER       => ChorusFlower(loc, s[ChorusFlowerState])
       case Material.CHORUS_PLANT        => ChorusPlant(loc, extensions)
-      case Material.CLAY                => Clay(loc)
+      case Material.CLAY                => ClayBlock(loc)
       case Material.COAL_BLOCK          => CoalBlock(loc)
       case Material.COAL_ORE            => CoalOre(loc)
       case Material.COBWEB              => Cobweb(loc)
@@ -113,7 +113,7 @@ class SpigotBlockMapper @Inject() (
       case Material.DIAMOND_BLOCK       => DiamondBlock(loc)
       case Material.DIAMOND_ORE         => DiamondOre(loc)
       case Material.DRAGON_EGG          => DragonEgg(loc)
-      case Material.DRIED_KELP_BLOCK    => DriedKelp(loc)
+      case Material.DRIED_KELP_BLOCK    => DriedKelpBlock(loc)
       case Material.EMERALD_BLOCK       => EmeraldBlock(loc)
       case Material.EMERALD_ORE         => EmeraldOre(loc)
       case Material.ENCHANTING_TABLE    => EnchantingTable(loc)
@@ -487,7 +487,7 @@ class SpigotBlockMapper @Inject() (
       case _: Cauldron         => Material.CAULDRON
       case _: ChorusFlower     => Material.CHORUS_FLOWER
       case _: ChorusPlant      => Material.CHORUS_PLANT
-      case _: Clay             => Material.CLAY
+      case _: ClayBlock        => Material.CLAY
       case _: CoalBlock        => Material.COAL_BLOCK
       case _: CoalOre          => Material.COAL_ORE
       case _: Cobweb           => Material.COBWEB
@@ -501,7 +501,7 @@ class SpigotBlockMapper @Inject() (
       case _: DiamondOre       => Material.DIAMOND_ORE
       case _: Dispenser        => Material.DISPENSER
       case _: DragonEgg        => Material.DRAGON_EGG
-      case _: DriedKelp        => Material.DRIED_KELP_BLOCK
+      case _: DriedKelpBlock   => Material.DRIED_KELP_BLOCK
       case _: Dropper          => Material.DROPPER
       case _: EmeraldBlock     => Material.EMERALD_BLOCK
       case _: EmeraldOre       => Material.EMERALD_ORE
