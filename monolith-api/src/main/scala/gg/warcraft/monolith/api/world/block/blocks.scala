@@ -1,11 +1,9 @@
 package gg.warcraft.monolith.api.world.block
 
 import gg.warcraft.monolith.api.world.BlockLocation
-import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
+import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
-
-import scala.beans.{ BeanProperty, BooleanBeanProperty }
 
 final case class Air(
     location: BlockLocation,
