@@ -1,7 +1,6 @@
 package gg.warcraft.monolith.api.world.item
 
 import gg.warcraft.monolith.api.core.CaseClass
-import gg.warcraft.monolith.api.world.block.BlockColor
 
 import scala.annotation.varargs
 import scala.collection.immutable.Map
@@ -33,18 +32,6 @@ trait Item extends CaseClass {
     copyWith("hideAttributes", hideAttributes)
 
   def isVariant(variant: ItemVariant): Boolean = false
-}
-
-trait ColoredItem extends Item {
-  val color: BlockColor
-  def withColor(color: BlockColor): this.type =
-    copyWith("color", color)
-}
-
-trait ColorableItem extends Item {
-  val color: Option[BlockColor]
-  def withColor(color: Option[BlockColor]): this.type =
-    copyWith("color", color)
 }
 
 trait DurableItem extends Item {

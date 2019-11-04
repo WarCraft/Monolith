@@ -28,18 +28,6 @@ trait BisectedBlock extends Block {
     copyWith("section", section)
 }
 
-trait ColoredBlock extends Block {
-  val color: BlockColor
-  def withColor(color: BlockColor): this.type =
-    copyWith("color", color)
-}
-
-trait ColorableBlock extends Block {
-  val color: Option[BlockColor]
-  def withColor(color: Option[BlockColor]): this.type =
-    copyWith("color", color)
-}
-
 trait DirectedBlock extends Block {
   val direction: BlockFace
   def withDirection(direction: BlockFace): this.type =

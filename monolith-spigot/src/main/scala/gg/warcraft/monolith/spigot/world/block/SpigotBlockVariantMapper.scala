@@ -24,6 +24,47 @@ class SpigotBlockVariantMapper {
     case Material.CHIPPED_ANVIL => AnvilVariant.CHIPPED
     case Material.DAMAGED_ANVIL => AnvilVariant.DAMAGED
 
+    // BANNER
+    case Material.BLACK_BANNER      => BannerVariant.BLACK
+    case Material.BLUE_BANNER       => BannerVariant.BLUE
+    case Material.BROWN_BANNER      => BannerVariant.BROWN
+    case Material.CYAN_BANNER       => BannerVariant.CYAN
+    case Material.GRAY_BANNER       => BannerVariant.GRAY
+    case Material.GREEN_BANNER      => BannerVariant.GREEN
+    case Material.LIGHT_BLUE_BANNER => BannerVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_BANNER => BannerVariant.LIGHT_GRAY
+    case Material.LIME_BANNER       => BannerVariant.LIME
+    case Material.MAGENTA_BANNER    => BannerVariant.MAGENTA
+    case Material.ORANGE_BANNER     => BannerVariant.ORANGE
+    case Material.PINK_BANNER       => BannerVariant.PINK
+    case Material.PURPLE_BANNER     => BannerVariant.PURPLE
+    case Material.RED_BANNER        => BannerVariant.RED
+    case Material.WHITE_BANNER      => BannerVariant.WHITE
+    case Material.YELLOW_BANNER     => BannerVariant.YELLOW
+
+    // BED
+    case Material.BLACK_BED      => BedVariant.BLACK
+    case Material.BLUE_BED       => BedVariant.BLUE
+    case Material.BROWN_BED      => BedVariant.BROWN
+    case Material.CYAN_BED       => BedVariant.CYAN
+    case Material.GRAY_BED       => BedVariant.GRAY
+    case Material.GREEN_BED      => BedVariant.GREEN
+    case Material.LIGHT_BLUE_BED => BedVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_BED => BedVariant.LIGHT_GRAY
+    case Material.LIME_BED       => BedVariant.LIME
+    case Material.MAGENTA_BED    => BedVariant.MAGENTA
+    case Material.ORANGE_BED     => BedVariant.ORANGE
+    case Material.PINK_BED       => BedVariant.PINK
+    case Material.PURPLE_BED     => BedVariant.PURPLE
+    case Material.RED_BED        => BedVariant.RED
+    case Material.WHITE_BED      => BedVariant.WHITE
+    case Material.YELLOW_BED     => BedVariant.YELLOW
+
+    // BRICK_BLOCK
+    case Material.BRICKS            => BrickBlockVariant.NORMAL
+    case Material.NETHER_BRICKS     => BrickBlockVariant.NETHER
+    case Material.RED_NETHER_BRICKS => BrickBlockVariant.RED_NETHER
+
     // BUTTON
     case Material.ACACIA_BUTTON   => ButtonVariant.ACACIA
     case Material.BIRCH_BUTTON    => ButtonVariant.BIRCH
@@ -34,10 +75,23 @@ class SpigotBlockVariantMapper {
 
     case Material.STONE_BUTTON => ButtonVariant.STONE
 
-    // BRICK_BLOCK
-    case Material.BRICKS            => BrickBlockVariant.NORMAL
-    case Material.NETHER_BRICKS     => BrickBlockVariant.NETHER
-    case Material.RED_NETHER_BRICKS => BrickBlockVariant.RED_NETHER
+    // CARPET
+    case Material.BLACK_CARPET      => CarpetVariant.BLACK
+    case Material.BLUE_CARPET       => CarpetVariant.BLUE
+    case Material.BROWN_CARPET      => CarpetVariant.BROWN
+    case Material.CYAN_CARPET       => CarpetVariant.CYAN
+    case Material.GRAY_CARPET       => CarpetVariant.GRAY
+    case Material.GREEN_CARPET      => CarpetVariant.GREEN
+    case Material.LIGHT_BLUE_CARPET => CarpetVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_CARPET => CarpetVariant.LIGHT_GRAY
+    case Material.LIME_CARPET       => CarpetVariant.LIME
+    case Material.MAGENTA_CARPET    => CarpetVariant.MAGENTA
+    case Material.ORANGE_CARPET     => CarpetVariant.ORANGE
+    case Material.PINK_CARPET       => CarpetVariant.PINK
+    case Material.PURPLE_CARPET     => CarpetVariant.PURPLE
+    case Material.RED_CARPET        => CarpetVariant.RED
+    case Material.WHITE_CARPET      => CarpetVariant.WHITE
+    case Material.YELLOW_CARPET     => CarpetVariant.YELLOW
 
     // CHEST
     case Material.CHEST         => ChestVariant.NORMAL
@@ -52,6 +106,42 @@ class SpigotBlockVariantMapper {
     case Material.COMMAND_BLOCK           => CommandBlockVariant.NORMAL
     case Material.CHAIN_COMMAND_BLOCK     => CommandBlockVariant.CHAIN
     case Material.REPEATING_COMMAND_BLOCK => CommandBlockVariant.REPEATING
+
+    // CONCRETE
+    case Material.BLACK_CONCRETE      => ConcreteVariant.BLACK
+    case Material.BLUE_CONCRETE       => ConcreteVariant.BLUE
+    case Material.BROWN_CONCRETE      => ConcreteVariant.BROWN
+    case Material.CYAN_CONCRETE       => ConcreteVariant.CYAN
+    case Material.GRAY_CONCRETE       => ConcreteVariant.GRAY
+    case Material.GREEN_CONCRETE      => ConcreteVariant.GREEN
+    case Material.LIGHT_BLUE_CONCRETE => ConcreteVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_CONCRETE => ConcreteVariant.LIGHT_GRAY
+    case Material.LIME_CONCRETE       => ConcreteVariant.LIME
+    case Material.MAGENTA_CONCRETE    => ConcreteVariant.MAGENTA
+    case Material.ORANGE_CONCRETE     => ConcreteVariant.ORANGE
+    case Material.PINK_CONCRETE       => ConcreteVariant.PINK
+    case Material.PURPLE_CONCRETE     => ConcreteVariant.PURPLE
+    case Material.RED_CONCRETE        => ConcreteVariant.RED
+    case Material.WHITE_CONCRETE      => ConcreteVariant.WHITE
+    case Material.YELLOW_CONCRETE     => ConcreteVariant.YELLOW
+
+    // CONCRETE_POWDER
+    case Material.BLACK_CONCRETE_POWDER      => ConcretePowderVariant.BLACK
+    case Material.BLUE_CONCRETE_POWDER       => ConcretePowderVariant.BLUE
+    case Material.BROWN_CONCRETE_POWDER      => ConcretePowderVariant.BROWN
+    case Material.CYAN_CONCRETE_POWDER       => ConcretePowderVariant.CYAN
+    case Material.GRAY_CONCRETE_POWDER       => ConcretePowderVariant.GRAY
+    case Material.GREEN_CONCRETE_POWDER      => ConcretePowderVariant.GREEN
+    case Material.LIGHT_BLUE_CONCRETE_POWDER => ConcretePowderVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_CONCRETE_POWDER => ConcretePowderVariant.LIGHT_GRAY
+    case Material.LIME_CONCRETE_POWDER       => ConcretePowderVariant.LIME
+    case Material.MAGENTA_CONCRETE_POWDER    => ConcretePowderVariant.MAGENTA
+    case Material.ORANGE_CONCRETE_POWDER     => ConcretePowderVariant.ORANGE
+    case Material.PINK_CONCRETE_POWDER       => ConcretePowderVariant.PINK
+    case Material.PURPLE_CONCRETE_POWDER     => ConcretePowderVariant.PURPLE
+    case Material.RED_CONCRETE_POWDER        => ConcretePowderVariant.RED
+    case Material.WHITE_CONCRETE_POWDER      => ConcretePowderVariant.WHITE
+    case Material.YELLOW_CONCRETE_POWDER     => ConcretePowderVariant.YELLOW
 
     // CORAL
     case Material.BRAIN_CORAL  => CoralVariant.BRAIN
@@ -194,6 +284,62 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_CACTUS    => FlowerPotVariant.CACTUS
     case Material.POTTED_DEAD_BUSH => FlowerPotVariant.DEAD_BUSH
     case Material.POTTED_FERN      => FlowerPotVariant.FERN
+
+    // GLASS
+    case Material.GLASS                    => GlassVariant.NORMAL
+    case Material.BLACK_STAINED_GLASS      => GlassVariant.BLACK
+    case Material.BLUE_STAINED_GLASS       => GlassVariant.BLUE
+    case Material.BROWN_STAINED_GLASS      => GlassVariant.BROWN
+    case Material.CYAN_STAINED_GLASS       => GlassVariant.CYAN
+    case Material.GRAY_STAINED_GLASS       => GlassVariant.GRAY
+    case Material.GREEN_STAINED_GLASS      => GlassVariant.GREEN
+    case Material.LIGHT_BLUE_STAINED_GLASS => GlassVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_STAINED_GLASS => GlassVariant.LIGHT_GRAY
+    case Material.LIME_STAINED_GLASS       => GlassVariant.LIME
+    case Material.MAGENTA_STAINED_GLASS    => GlassVariant.MAGENTA
+    case Material.ORANGE_STAINED_GLASS     => GlassVariant.ORANGE
+    case Material.PINK_STAINED_GLASS       => GlassVariant.PINK
+    case Material.PURPLE_STAINED_GLASS     => GlassVariant.PURPLE
+    case Material.RED_STAINED_GLASS        => GlassVariant.RED
+    case Material.WHITE_STAINED_GLASS      => GlassVariant.WHITE
+    case Material.YELLOW_STAINED_GLASS     => GlassVariant.YELLOW
+
+    // GLASS_PANE
+    case Material.GLASS_PANE                    => GlassPaneVariant.NORMAL
+    case Material.BLACK_STAINED_GLASS_PANE      => GlassPaneVariant.BLACK
+    case Material.BLUE_STAINED_GLASS_PANE       => GlassPaneVariant.BLUE
+    case Material.BROWN_STAINED_GLASS_PANE      => GlassPaneVariant.BROWN
+    case Material.CYAN_STAINED_GLASS_PANE       => GlassPaneVariant.CYAN
+    case Material.GRAY_STAINED_GLASS_PANE       => GlassPaneVariant.GRAY
+    case Material.GREEN_STAINED_GLASS_PANE      => GlassPaneVariant.GREEN
+    case Material.LIGHT_BLUE_STAINED_GLASS_PANE => GlassPaneVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_STAINED_GLASS_PANE => GlassPaneVariant.LIGHT_GRAY
+    case Material.LIME_STAINED_GLASS_PANE       => GlassPaneVariant.LIME
+    case Material.MAGENTA_STAINED_GLASS_PANE    => GlassPaneVariant.MAGENTA
+    case Material.ORANGE_STAINED_GLASS_PANE     => GlassPaneVariant.ORANGE
+    case Material.PINK_STAINED_GLASS_PANE       => GlassPaneVariant.PINK
+    case Material.PURPLE_STAINED_GLASS_PANE     => GlassPaneVariant.PURPLE
+    case Material.RED_STAINED_GLASS_PANE        => GlassPaneVariant.RED
+    case Material.WHITE_STAINED_GLASS_PANE      => GlassPaneVariant.WHITE
+    case Material.YELLOW_STAINED_GLASS_PANE     => GlassPaneVariant.YELLOW
+
+    // GLAZED_TERRACOTTA
+    case Material.BLACK_GLAZED_TERRACOTTA      => GlazedTerracottaVariant.BLACK
+    case Material.BLUE_GLAZED_TERRACOTTA       => GlazedTerracottaVariant.BLUE
+    case Material.BROWN_GLAZED_TERRACOTTA      => GlazedTerracottaVariant.BROWN
+    case Material.CYAN_GLAZED_TERRACOTTA       => GlazedTerracottaVariant.CYAN
+    case Material.GRAY_GLAZED_TERRACOTTA       => GlazedTerracottaVariant.GRAY
+    case Material.GREEN_GLAZED_TERRACOTTA      => GlazedTerracottaVariant.GREEN
+    case Material.LIGHT_BLUE_GLAZED_TERRACOTTA => GlazedTerracottaVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_GLAZED_TERRACOTTA => GlazedTerracottaVariant.LIGHT_GRAY
+    case Material.LIME_GLAZED_TERRACOTTA       => GlazedTerracottaVariant.LIME
+    case Material.MAGENTA_GLAZED_TERRACOTTA    => GlazedTerracottaVariant.MAGENTA
+    case Material.ORANGE_GLAZED_TERRACOTTA     => GlazedTerracottaVariant.ORANGE
+    case Material.PINK_GLAZED_TERRACOTTA       => GlazedTerracottaVariant.PINK
+    case Material.PURPLE_GLAZED_TERRACOTTA     => GlazedTerracottaVariant.PURPLE
+    case Material.RED_GLAZED_TERRACOTTA        => GlazedTerracottaVariant.RED
+    case Material.WHITE_GLAZED_TERRACOTTA      => GlazedTerracottaVariant.WHITE
+    case Material.YELLOW_GLAZED_TERRACOTTA     => GlazedTerracottaVariant.YELLOW
 
     // GRANITE
     case Material.GRANITE          => GraniteVariant.NORMAL
@@ -339,6 +485,25 @@ class SpigotBlockVariantMapper {
     case Material.OAK_SAPLING      => SaplingVariant.OAK
     case Material.SPRUCE_SAPLING   => SaplingVariant.SPRUCE
 
+    // SHULKER_BOX
+    case Material.SHULKER_BOX            => ShulkerBoxVariant.NORMAL
+    case Material.BLACK_SHULKER_BOX      => ShulkerBoxVariant.BLACK
+    case Material.BLUE_SHULKER_BOX       => ShulkerBoxVariant.BLUE
+    case Material.BROWN_SHULKER_BOX      => ShulkerBoxVariant.BROWN
+    case Material.CYAN_SHULKER_BOX       => ShulkerBoxVariant.CYAN
+    case Material.GRAY_SHULKER_BOX       => ShulkerBoxVariant.GRAY
+    case Material.GREEN_SHULKER_BOX      => ShulkerBoxVariant.GREEN
+    case Material.LIGHT_BLUE_SHULKER_BOX => ShulkerBoxVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_SHULKER_BOX => ShulkerBoxVariant.LIGHT_GRAY
+    case Material.LIME_SHULKER_BOX       => ShulkerBoxVariant.LIME
+    case Material.MAGENTA_SHULKER_BOX    => ShulkerBoxVariant.MAGENTA
+    case Material.ORANGE_SHULKER_BOX     => ShulkerBoxVariant.ORANGE
+    case Material.PINK_SHULKER_BOX       => ShulkerBoxVariant.PINK
+    case Material.PURPLE_SHULKER_BOX     => ShulkerBoxVariant.PURPLE
+    case Material.RED_SHULKER_BOX        => ShulkerBoxVariant.RED
+    case Material.WHITE_SHULKER_BOX      => ShulkerBoxVariant.WHITE
+    case Material.YELLOW_SHULKER_BOX     => ShulkerBoxVariant.YELLOW
+
     // SIGN
     case Material.ACACIA_SIGN   => SignVariant.ACACIA
     case Material.BIRCH_SIGN    => SignVariant.BIRCH
@@ -466,6 +631,25 @@ class SpigotBlockVariantMapper {
     // STRUCTURE_BLOCK
     case Material.STRUCTURE_VOID => StructureBlockVariant.VOID
 
+    // TERRACOTTA
+    case Material.TERRACOTTA            => TerracottaVariant.NORMAL
+    case Material.BLACK_TERRACOTTA      => TerracottaVariant.BLACK
+    case Material.BLUE_TERRACOTTA       => TerracottaVariant.BLUE
+    case Material.BROWN_TERRACOTTA      => TerracottaVariant.BROWN
+    case Material.CYAN_TERRACOTTA       => TerracottaVariant.CYAN
+    case Material.GRAY_TERRACOTTA       => TerracottaVariant.GRAY
+    case Material.GREEN_TERRACOTTA      => TerracottaVariant.GREEN
+    case Material.LIGHT_BLUE_TERRACOTTA => TerracottaVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_TERRACOTTA => TerracottaVariant.LIGHT_GRAY
+    case Material.LIME_TERRACOTTA       => TerracottaVariant.LIME
+    case Material.MAGENTA_TERRACOTTA    => TerracottaVariant.MAGENTA
+    case Material.ORANGE_TERRACOTTA     => TerracottaVariant.ORANGE
+    case Material.PINK_TERRACOTTA       => TerracottaVariant.PINK
+    case Material.PURPLE_TERRACOTTA     => TerracottaVariant.PURPLE
+    case Material.RED_TERRACOTTA        => TerracottaVariant.RED
+    case Material.WHITE_TERRACOTTA      => TerracottaVariant.WHITE
+    case Material.YELLOW_TERRACOTTA     => TerracottaVariant.YELLOW
+
     // TRAPDOOR
     case Material.ACACIA_TRAPDOOR   => TrapdoorVariant.ACACIA
     case Material.BIRCH_TRAPDOOR    => TrapdoorVariant.BIRCH
@@ -516,6 +700,24 @@ class SpigotBlockVariantMapper {
     case Material.STRIPPED_JUNGLE_WOOD   => WoodVariant.STRIPPED_JUNGLE
     case Material.STRIPPED_OAK_WOOD      => WoodVariant.STRIPPED_OAK
     case Material.STRIPPED_SPRUCE_WOOD   => WoodVariant.STRIPPED_SPRUCE
+
+    // WOOL
+    case Material.BLACK_WOOL      => WoolVariant.BLACK
+    case Material.BLUE_WOOL       => WoolVariant.BLUE
+    case Material.BROWN_WOOL      => WoolVariant.BROWN
+    case Material.CYAN_WOOL       => WoolVariant.CYAN
+    case Material.GRAY_WOOL       => WoolVariant.GRAY
+    case Material.GREEN_WOOL      => WoolVariant.GREEN
+    case Material.LIGHT_BLUE_WOOL => WoolVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_WOOL => WoolVariant.LIGHT_GRAY
+    case Material.LIME_WOOL       => WoolVariant.LIME
+    case Material.MAGENTA_WOOL    => WoolVariant.MAGENTA
+    case Material.ORANGE_WOOL     => WoolVariant.ORANGE
+    case Material.PINK_WOOL       => WoolVariant.PINK
+    case Material.PURPLE_WOOL     => WoolVariant.PURPLE
+    case Material.RED_WOOL        => WoolVariant.RED
+    case Material.WHITE_WOOL      => WoolVariant.WHITE
+    case Material.YELLOW_WOOL     => WoolVariant.YELLOW
 
     case _ => throw new IllegalArgumentException(s"$material")
   }
@@ -591,6 +793,42 @@ class SpigotBlockVariantMapper {
     case AnvilVariant.CHIPPED => Material.CHIPPED_ANVIL
     case AnvilVariant.DAMAGED => Material.DAMAGED_ANVIL
 
+    // BANNER
+    case BannerVariant.BLACK      => Material.BLACK_BANNER
+    case BannerVariant.BLUE       => Material.BLUE_BANNER
+    case BannerVariant.BROWN      => Material.BROWN_BANNER
+    case BannerVariant.CYAN       => Material.CYAN_BANNER
+    case BannerVariant.GRAY       => Material.GRAY_BANNER
+    case BannerVariant.GREEN      => Material.GREEN_BANNER
+    case BannerVariant.LIGHT_BLUE => Material.LIGHT_BLUE_BANNER
+    case BannerVariant.LIGHT_GRAY => Material.LIGHT_GRAY_BANNER
+    case BannerVariant.LIME       => Material.LIME_BANNER
+    case BannerVariant.MAGENTA    => Material.MAGENTA_BANNER
+    case BannerVariant.ORANGE     => Material.ORANGE_BANNER
+    case BannerVariant.PINK       => Material.PINK_BANNER
+    case BannerVariant.PURPLE     => Material.PURPLE_BANNER
+    case BannerVariant.RED        => Material.RED_BANNER
+    case BannerVariant.WHITE      => Material.WHITE_BANNER
+    case BannerVariant.YELLOW     => Material.YELLOW_BANNER
+
+    // BED
+    case BedVariant.BLACK      => Material.BLACK_BED
+    case BedVariant.BLUE       => Material.BLUE_BED
+    case BedVariant.BROWN      => Material.BROWN_BED
+    case BedVariant.CYAN       => Material.CYAN_BED
+    case BedVariant.GRAY       => Material.GRAY_BED
+    case BedVariant.GREEN      => Material.GREEN_BED
+    case BedVariant.LIGHT_BLUE => Material.LIGHT_BLUE_BED
+    case BedVariant.LIGHT_GRAY => Material.LIGHT_GRAY_BED
+    case BedVariant.LIME       => Material.LIME_BED
+    case BedVariant.MAGENTA    => Material.MAGENTA_BED
+    case BedVariant.ORANGE     => Material.ORANGE_BED
+    case BedVariant.PINK       => Material.PINK_BED
+    case BedVariant.PURPLE     => Material.PURPLE_BED
+    case BedVariant.RED        => Material.RED_BED
+    case BedVariant.WHITE      => Material.WHITE_BED
+    case BedVariant.YELLOW     => Material.YELLOW_BED
+
     // BRICK_BLOCK
     case BrickBlockVariant.NORMAL     => Material.BRICKS
     case BrickBlockVariant.NETHER     => Material.NETHER_BRICKS
@@ -606,6 +844,24 @@ class SpigotBlockVariantMapper {
 
     case ButtonVariant.STONE => Material.STONE_BUTTON
 
+    // CARPET
+    case CarpetVariant.BLACK      => Material.BLACK_CARPET
+    case CarpetVariant.BLUE       => Material.BLUE_CARPET
+    case CarpetVariant.BROWN      => Material.BROWN_CARPET
+    case CarpetVariant.CYAN       => Material.CYAN_CARPET
+    case CarpetVariant.GRAY       => Material.GRAY_CARPET
+    case CarpetVariant.GREEN      => Material.GREEN_CARPET
+    case CarpetVariant.LIGHT_BLUE => Material.LIGHT_BLUE_CARPET
+    case CarpetVariant.LIGHT_GRAY => Material.LIGHT_GRAY_CARPET
+    case CarpetVariant.LIME       => Material.LIME_CARPET
+    case CarpetVariant.MAGENTA    => Material.MAGENTA_CARPET
+    case CarpetVariant.ORANGE     => Material.ORANGE_CARPET
+    case CarpetVariant.PINK       => Material.PINK_CARPET
+    case CarpetVariant.PURPLE     => Material.PURPLE_CARPET
+    case CarpetVariant.RED        => Material.RED_CARPET
+    case CarpetVariant.WHITE      => Material.WHITE_CARPET
+    case CarpetVariant.YELLOW     => Material.YELLOW_CARPET
+
     // CHEST
     case ChestVariant.NORMAL  => Material.CHEST
     case ChestVariant.ENDER   => Material.ENDER_CHEST
@@ -619,6 +875,42 @@ class SpigotBlockVariantMapper {
     case CommandBlockVariant.NORMAL    => Material.COMMAND_BLOCK
     case CommandBlockVariant.CHAIN     => Material.CHAIN_COMMAND_BLOCK
     case CommandBlockVariant.REPEATING => Material.REPEATING_COMMAND_BLOCK
+
+    // CONCRETE
+    case ConcreteVariant.BLACK      => Material.BLACK_CONCRETE
+    case ConcreteVariant.BLUE       => Material.BLUE_CONCRETE
+    case ConcreteVariant.BROWN      => Material.BROWN_CONCRETE
+    case ConcreteVariant.CYAN       => Material.CYAN_CONCRETE
+    case ConcreteVariant.GRAY       => Material.GRAY_CONCRETE
+    case ConcreteVariant.GREEN      => Material.GREEN_CONCRETE
+    case ConcreteVariant.LIGHT_BLUE => Material.LIGHT_BLUE_CONCRETE
+    case ConcreteVariant.LIGHT_GRAY => Material.LIGHT_GRAY_CONCRETE
+    case ConcreteVariant.LIME       => Material.LIME_CONCRETE
+    case ConcreteVariant.MAGENTA    => Material.MAGENTA_CONCRETE
+    case ConcreteVariant.ORANGE     => Material.ORANGE_CONCRETE
+    case ConcreteVariant.PINK       => Material.PINK_CONCRETE
+    case ConcreteVariant.PURPLE     => Material.PURPLE_CONCRETE
+    case ConcreteVariant.RED        => Material.RED_CONCRETE
+    case ConcreteVariant.WHITE      => Material.WHITE_CONCRETE
+    case ConcreteVariant.YELLOW     => Material.YELLOW_CONCRETE
+
+    // CONCRETE_POWDER
+    case ConcretePowderVariant.BLACK      => Material.BLACK_CONCRETE_POWDER
+    case ConcretePowderVariant.BLUE       => Material.BLUE_CONCRETE_POWDER
+    case ConcretePowderVariant.BROWN      => Material.BROWN_CONCRETE_POWDER
+    case ConcretePowderVariant.CYAN       => Material.CYAN_CONCRETE_POWDER
+    case ConcretePowderVariant.GRAY       => Material.GRAY_CONCRETE_POWDER
+    case ConcretePowderVariant.GREEN      => Material.GREEN_CONCRETE_POWDER
+    case ConcretePowderVariant.LIGHT_BLUE => Material.LIGHT_BLUE_CONCRETE_POWDER
+    case ConcretePowderVariant.LIGHT_GRAY => Material.LIGHT_GRAY_CONCRETE_POWDER
+    case ConcretePowderVariant.LIME       => Material.LIME_CONCRETE_POWDER
+    case ConcretePowderVariant.MAGENTA    => Material.MAGENTA_CONCRETE_POWDER
+    case ConcretePowderVariant.ORANGE     => Material.ORANGE_CONCRETE_POWDER
+    case ConcretePowderVariant.PINK       => Material.PINK_CONCRETE_POWDER
+    case ConcretePowderVariant.PURPLE     => Material.PURPLE_CONCRETE_POWDER
+    case ConcretePowderVariant.RED        => Material.RED_CONCRETE_POWDER
+    case ConcretePowderVariant.WHITE      => Material.WHITE_CONCRETE_POWDER
+    case ConcretePowderVariant.YELLOW     => Material.YELLOW_CONCRETE_POWDER
 
     // CORAL
     case CoralVariant.BRAIN  => Material.BRAIN_CORAL
@@ -749,6 +1041,62 @@ class SpigotBlockVariantMapper {
     case FlowerPotVariant.CACTUS    => Material.POTTED_CACTUS
     case FlowerPotVariant.DEAD_BUSH => Material.POTTED_DEAD_BUSH
     case FlowerPotVariant.FERN      => Material.POTTED_FERN
+
+    // GLASS
+    case GlassVariant.NORMAL     => Material.GLASS
+    case GlassVariant.BLACK      => Material.BLACK_STAINED_GLASS
+    case GlassVariant.BLUE       => Material.BLUE_STAINED_GLASS
+    case GlassVariant.BROWN      => Material.BROWN_STAINED_GLASS
+    case GlassVariant.CYAN       => Material.CYAN_STAINED_GLASS
+    case GlassVariant.GRAY       => Material.GRAY_STAINED_GLASS
+    case GlassVariant.GREEN      => Material.GREEN_STAINED_GLASS
+    case GlassVariant.LIGHT_BLUE => Material.LIGHT_BLUE_STAINED_GLASS
+    case GlassVariant.LIGHT_GRAY => Material.LIGHT_GRAY_STAINED_GLASS
+    case GlassVariant.LIME       => Material.LIME_STAINED_GLASS
+    case GlassVariant.MAGENTA    => Material.MAGENTA_STAINED_GLASS
+    case GlassVariant.ORANGE     => Material.ORANGE_STAINED_GLASS
+    case GlassVariant.PINK       => Material.PINK_STAINED_GLASS
+    case GlassVariant.PURPLE     => Material.PURPLE_STAINED_GLASS
+    case GlassVariant.RED        => Material.RED_STAINED_GLASS
+    case GlassVariant.WHITE      => Material.WHITE_STAINED_GLASS
+    case GlassVariant.YELLOW     => Material.YELLOW_STAINED_GLASS
+
+    // GLASS_PANE
+    case GlassPaneVariant.NORMAL     => Material.GLASS_PANE
+    case GlassPaneVariant.BLACK      => Material.BLACK_STAINED_GLASS_PANE
+    case GlassPaneVariant.BLUE       => Material.BLUE_STAINED_GLASS_PANE
+    case GlassPaneVariant.BROWN      => Material.BROWN_STAINED_GLASS_PANE
+    case GlassPaneVariant.CYAN       => Material.CYAN_STAINED_GLASS_PANE
+    case GlassPaneVariant.GRAY       => Material.GRAY_STAINED_GLASS_PANE
+    case GlassPaneVariant.GREEN      => Material.GREEN_STAINED_GLASS_PANE
+    case GlassPaneVariant.LIGHT_BLUE => Material.LIGHT_BLUE_STAINED_GLASS_PANE
+    case GlassPaneVariant.LIGHT_GRAY => Material.LIGHT_GRAY_STAINED_GLASS_PANE
+    case GlassPaneVariant.LIME       => Material.LIME_STAINED_GLASS_PANE
+    case GlassPaneVariant.MAGENTA    => Material.MAGENTA_STAINED_GLASS_PANE
+    case GlassPaneVariant.ORANGE     => Material.ORANGE_STAINED_GLASS_PANE
+    case GlassPaneVariant.PINK       => Material.PINK_STAINED_GLASS_PANE
+    case GlassPaneVariant.PURPLE     => Material.PURPLE_STAINED_GLASS_PANE
+    case GlassPaneVariant.RED        => Material.RED_STAINED_GLASS_PANE
+    case GlassPaneVariant.WHITE      => Material.WHITE_STAINED_GLASS_PANE
+    case GlassPaneVariant.YELLOW     => Material.YELLOW_STAINED_GLASS_PANE
+
+    // GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.BLACK      => Material.BLACK_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.BLUE       => Material.BLUE_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.BROWN      => Material.BROWN_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.CYAN       => Material.CYAN_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.GRAY       => Material.GRAY_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.GREEN      => Material.GREEN_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.LIGHT_BLUE => Material.LIGHT_BLUE_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.LIGHT_GRAY => Material.LIGHT_GRAY_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.LIME       => Material.LIME_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.MAGENTA    => Material.MAGENTA_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.ORANGE     => Material.ORANGE_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.PINK       => Material.PINK_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.PURPLE     => Material.PURPLE_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.RED        => Material.RED_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.WHITE      => Material.WHITE_GLAZED_TERRACOTTA
+    case GlazedTerracottaVariant.YELLOW     => Material.YELLOW_GLAZED_TERRACOTTA
 
     // GRANITE
     case GraniteVariant.NORMAL   => Material.GRANITE
@@ -891,6 +1239,25 @@ class SpigotBlockVariantMapper {
     case SaplingVariant.OAK      => Material.OAK_SAPLING
     case SaplingVariant.SPRUCE   => Material.SPRUCE_SAPLING
 
+    // SHULKER_BOX
+    case ShulkerBoxVariant.NORMAL     => Material.SHULKER_BOX
+    case ShulkerBoxVariant.BLACK      => Material.BLACK_SHULKER_BOX
+    case ShulkerBoxVariant.BLUE       => Material.BLUE_SHULKER_BOX
+    case ShulkerBoxVariant.BROWN      => Material.BROWN_SHULKER_BOX
+    case ShulkerBoxVariant.CYAN       => Material.CYAN_SHULKER_BOX
+    case ShulkerBoxVariant.GRAY       => Material.GRAY_SHULKER_BOX
+    case ShulkerBoxVariant.GREEN      => Material.GREEN_SHULKER_BOX
+    case ShulkerBoxVariant.LIGHT_BLUE => Material.LIGHT_BLUE_SHULKER_BOX
+    case ShulkerBoxVariant.LIGHT_GRAY => Material.LIGHT_GRAY_SHULKER_BOX
+    case ShulkerBoxVariant.LIME       => Material.LIME_SHULKER_BOX
+    case ShulkerBoxVariant.MAGENTA    => Material.MAGENTA_SHULKER_BOX
+    case ShulkerBoxVariant.ORANGE     => Material.ORANGE_SHULKER_BOX
+    case ShulkerBoxVariant.PINK       => Material.PINK_SHULKER_BOX
+    case ShulkerBoxVariant.PURPLE     => Material.PURPLE_SHULKER_BOX
+    case ShulkerBoxVariant.RED        => Material.RED_SHULKER_BOX
+    case ShulkerBoxVariant.WHITE      => Material.WHITE_SHULKER_BOX
+    case ShulkerBoxVariant.YELLOW     => Material.YELLOW_SHULKER_BOX
+
     // SIGN
     case SignVariant.ACACIA   => Material.ACACIA_SIGN
     case SignVariant.BIRCH    => Material.BIRCH_SIGN
@@ -1012,6 +1379,25 @@ class SpigotBlockVariantMapper {
     case StructureBlockVariant.VOID => Material.STRUCTURE_VOID
     case _: StructureBlockVariant   => Material.STRUCTURE_BLOCK
 
+    // TERRACOTTA
+    case TerracottaVariant.NORMAL     => Material.TERRACOTTA
+    case TerracottaVariant.BLACK      => Material.BLACK_TERRACOTTA
+    case TerracottaVariant.BLUE       => Material.BLUE_TERRACOTTA
+    case TerracottaVariant.BROWN      => Material.BROWN_TERRACOTTA
+    case TerracottaVariant.CYAN       => Material.CYAN_TERRACOTTA
+    case TerracottaVariant.GRAY       => Material.GRAY_TERRACOTTA
+    case TerracottaVariant.GREEN      => Material.GREEN_TERRACOTTA
+    case TerracottaVariant.LIGHT_BLUE => Material.LIGHT_BLUE_TERRACOTTA
+    case TerracottaVariant.LIGHT_GRAY => Material.LIGHT_GRAY_TERRACOTTA
+    case TerracottaVariant.LIME       => Material.LIME_TERRACOTTA
+    case TerracottaVariant.MAGENTA    => Material.MAGENTA_TERRACOTTA
+    case TerracottaVariant.ORANGE     => Material.ORANGE_TERRACOTTA
+    case TerracottaVariant.PINK       => Material.PINK_TERRACOTTA
+    case TerracottaVariant.PURPLE     => Material.PURPLE_TERRACOTTA
+    case TerracottaVariant.RED        => Material.RED_TERRACOTTA
+    case TerracottaVariant.WHITE      => Material.WHITE_TERRACOTTA
+    case TerracottaVariant.YELLOW     => Material.YELLOW_TERRACOTTA
+
     // TRAPDOOR
     case TrapdoorVariant.ACACIA   => Material.ACACIA_TRAPDOOR
     case TrapdoorVariant.BIRCH    => Material.BIRCH_TRAPDOOR
@@ -1062,6 +1448,24 @@ class SpigotBlockVariantMapper {
     case WoodVariant.STRIPPED_JUNGLE   => Material.STRIPPED_JUNGLE_WOOD
     case WoodVariant.STRIPPED_OAK      => Material.STRIPPED_OAK_WOOD
     case WoodVariant.STRIPPED_SPRUCE   => Material.STRIPPED_SPRUCE_WOOD
+
+    // WOOL
+    case WoolVariant.BLACK      => Material.BLACK_WOOL
+    case WoolVariant.BLUE       => Material.BLUE_WOOL
+    case WoolVariant.BROWN      => Material.BROWN_WOOL
+    case WoolVariant.CYAN       => Material.CYAN_WOOL
+    case WoolVariant.GRAY       => Material.GRAY_WOOL
+    case WoolVariant.GREEN      => Material.GREEN_WOOL
+    case WoolVariant.LIGHT_BLUE => Material.LIGHT_BLUE_WOOL
+    case WoolVariant.LIGHT_GRAY => Material.LIGHT_GRAY_WOOL
+    case WoolVariant.LIME       => Material.LIME_WOOL
+    case WoolVariant.MAGENTA    => Material.MAGENTA_WOOL
+    case WoolVariant.ORANGE     => Material.ORANGE_WOOL
+    case WoolVariant.PINK       => Material.PINK_WOOL
+    case WoolVariant.PURPLE     => Material.PURPLE_WOOL
+    case WoolVariant.RED        => Material.RED_WOOL
+    case WoolVariant.WHITE      => Material.WHITE_WOOL
+    case WoolVariant.YELLOW     => Material.YELLOW_WOOL
   }
 
   def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
@@ -1070,6 +1474,26 @@ class SpigotBlockVariantMapper {
 
     case Bamboo(_, BambooVariant.SAPLING, _, _) => Material.BAMBOO_SAPLING
     case _: Bamboo                              => Material.BAMBOO
+
+    case Banner(_, variant, None, _) =>
+      variant match {
+        case BannerVariant.BLACK      => Material.BLACK_WALL_BANNER
+        case BannerVariant.BLUE       => Material.BLUE_WALL_BANNER
+        case BannerVariant.BROWN      => Material.BROWN_WALL_BANNER
+        case BannerVariant.CYAN       => Material.CYAN_WALL_BANNER
+        case BannerVariant.GRAY       => Material.GRAY_WALL_BANNER
+        case BannerVariant.GREEN      => Material.GREEN_WALL_BANNER
+        case BannerVariant.LIGHT_BLUE => Material.LIGHT_BLUE_WALL_BANNER
+        case BannerVariant.LIGHT_GRAY => Material.LIGHT_GRAY_WALL_BANNER
+        case BannerVariant.LIME       => Material.LIME_WALL_BANNER
+        case BannerVariant.MAGENTA    => Material.MAGENTA_WALL_BANNER
+        case BannerVariant.ORANGE     => Material.ORANGE_WALL_BANNER
+        case BannerVariant.PINK       => Material.PINK_WALL_BANNER
+        case BannerVariant.PURPLE     => Material.PURPLE_WALL_BANNER
+        case BannerVariant.RED        => Material.RED_WALL_BANNER
+        case BannerVariant.WHITE      => Material.WHITE_WALL_BANNER
+        case BannerVariant.YELLOW     => Material.YELLOW_WALL_BANNER
+      }
 
     case CoralFan(_, variant, Some(_), _) =>
       variant match {

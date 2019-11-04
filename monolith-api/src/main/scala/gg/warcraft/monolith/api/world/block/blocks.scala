@@ -43,10 +43,10 @@ final case class Bamboo(
 
 final case class Banner(
     location: BlockLocation,
-    color: BlockColor,
+    variant: BannerVariant,
     rotation: Option[BlockRotation],
     direction: Option[BlockFace]
-) extends ColoredBlock
+) extends VariableBlock[BannerVariant]
     with RotatableBlock
     with DirectableBlock {
   override val `type` = BlockType.BANNER
@@ -76,10 +76,10 @@ final case class Beacon(
 // TODO add occupied flag
 final case class Bed(
     location: BlockLocation,
-    color: BlockColor,
+    variant: BedVariant,
     direction: BlockFace,
     section: BlockBisection
-) extends ColoredBlock
+) extends VariableBlock[BedVariant]
     with DirectedBlock
     with BisectedBlock {
   override val `type` = BlockType.BED
@@ -197,8 +197,8 @@ final case class Campfire(
 
 final case class Carpet(
     location: BlockLocation,
-    color: BlockColor
-) extends ColoredBlock {
+    variant: CarpetVariant
+) extends VariableBlock[CarpetVariant] {
   override val `type` = BlockType.CARPET
 }
 
@@ -322,15 +322,15 @@ final case class Composter(
 
 final case class Concrete(
     location: BlockLocation,
-    color: BlockColor
-) extends ColoredBlock {
+    variant: ConcreteVariant
+) extends VariableBlock[ConcreteVariant] {
   override val `type` = BlockType.CONCRETE
 }
 
 final case class ConcretePowder(
     location: BlockLocation,
-    color: BlockColor
-) extends ColoredBlock {
+    variant: ConcretePowderVariant
+) extends VariableBlock[ConcretePowderVariant] {
   override val `type` = BlockType.CONCRETE_POWDER
 }
 
@@ -609,17 +609,17 @@ final case class FenceGate(
 
 final case class Glass(
     location: BlockLocation,
-    color: Option[BlockColor]
-) extends ColorableBlock {
+    variant: GlassVariant
+) extends VariableBlock[GlassVariant] {
   override val `type` = BlockType.GLASS
 }
 
 final case class GlassPane(
     location: BlockLocation,
-    color: Option[BlockColor],
+    variant: GlassPaneVariant,
     extensions: Set[BlockFace],
     flooded: Boolean
-) extends ColorableBlock
+) extends VariableBlock[GlassPaneVariant]
     with ExtendableBlock
     with FloodableBlock {
   override val `type` = BlockType.GLASS_PANE
@@ -627,9 +627,9 @@ final case class GlassPane(
 
 final case class GlazedTerracotta(
     location: BlockLocation,
-    color: BlockColor,
+    variant: GlazedTerracottaVariant,
     direction: BlockFace
-) extends ColoredBlock
+) extends VariableBlock[GlazedTerracottaVariant]
     with DirectedBlock {
   override val `type` = BlockType.GLAZED_TERRACOTTA
 }
@@ -1222,9 +1222,9 @@ final case class SeaPickle(
 
 final case class ShulkerBox(
     location: BlockLocation,
-    color: Option[BlockColor],
+    variant: ShulkerBoxVariant,
     direction: BlockFace
-) extends ColorableBlock
+) extends VariableBlock[ShulkerBoxVariant]
     with DirectedBlock {
   override val `type` = BlockType.SHULKER_BOX
 }
@@ -1367,8 +1367,8 @@ final case class SweetBerryBush(
 
 final case class Terracotta(
     location: BlockLocation,
-    color: Option[BlockColor]
-) extends ColorableBlock {
+    variant: TerracottaVariant
+) extends VariableBlock[TerracottaVariant] {
   override val `type` = BlockType.TERRACOTTA
 }
 
@@ -1503,7 +1503,7 @@ final case class Wood(
 
 final case class Wool(
     location: BlockLocation,
-    color: BlockColor
-) extends ColoredBlock {
+    variant: WoolVariant
+) extends VariableBlock[WoolVariant] {
   override val `type` = BlockType.WOOL
 }

@@ -18,7 +18,6 @@ class SpigotBlockMapper @Inject() (
     private val locationMapper: SpigotLocationMapper,
     private val attachmentMapper: SpigotBlockAttachmentMapper,
     private val bisectionMapper: SpigotBlockBisectionMapper,
-    private val colorMapper: SpigotBlockColorMapper,
     private val extensionMapper: SpigotBlockExtensionMapper,
     private val faceMapper: SpigotBlockFaceMapper,
     private val orientationMapper: SpigotBlockOrientationMapper,
@@ -33,7 +32,6 @@ class SpigotBlockMapper @Inject() (
     val spigotState = block.getState
 
     // Lazily compute generic block data
-    lazy val color = colorMapper.map(block.getType)
     lazy val flooded = spigotData.asInstanceOf[Waterlogged].isWaterlogged
     lazy val lit = spigotData.asInstanceOf[Lightable].isLit
     lazy val open = spigotData.asInstanceOf[Openable].isOpen
@@ -328,61 +326,59 @@ class SpigotBlockMapper @Inject() (
         val connected = dataAs[SpigotTripwireHook].isAttached
         TripwireHook(loc, dir, powered, connected)
 
-      case m if m.isAir              => Air(loc, v[AirVariant])
-      case m if m.isAndesite         => Andesite(loc, v[AndesiteVariant])
-      case m if m.isAnvil            => Anvil(loc, v[AnvilVariant], dir)
-      case m if m.isBanner           => Banner(loc, color, Some(rotation), None)
-      case m if m.isWallBanner       => Banner(loc, color, None, Some(dir))
-      case m if m.isBrickBlock       => BrickBlock(loc, v[BrickBlockVariant])
-      case m if m.isButton           => Button(loc, v[ButtonVariant], dir, attached, powered)
-      case m if m.isCarpet           => Carpet(loc, color)
-      case m if m.isCobblestone      => Cobblestone(loc, v[CobblestoneVariant])
-      case m if m.isChest            => Chest(loc, v[ChestVariant], dir, flooded)
-      case m if m.isConcrete         => Concrete(loc, color)
-      case m if m.isConcretePowder   => ConcretePowder(loc, color)
-      case m if m.isCoral            => Coral(loc, v[CoralVariant], flooded)
-      case m if m.isCoralBlock       => CoralBlock(loc, v[CoralBlockVariant])
-      case m if m.isCoralFan         => CoralFan(loc, v[CoralFanVariant], None, flooded)
-      case m if m.isDiorite          => Diorite(loc, v[DioriteVariant])
-      case m if m.isDirt             => Dirt(loc, v[DirtVariant])
-      case m if m.isEndStone         => EndStone(loc, v[EndStoneVariant])
-      case m if m.isFence            => Fence(loc, v[FenceVariant], extensions, flooded)
-      case m if m.isFlower           => Flower(loc, v[FlowerVariant])
-      case m if m.isFlowerPot        => FlowerPot(loc, v[FlowerPotVariant])
-      case m if m.isGlass            => Glass(loc, Option(color))
-      case m if m.isGlassPane        => GlassPane(loc, Option(color), extensions, flooded)
-      case m if m.isGlazedTerracotta => GlazedTerracotta(loc, color, dir)
-      case m if m.isGranite          => Granite(loc, v[GraniteVariant])
-      case m if m.isIce              => Ice(loc, v[IceVariant])
-      case m if m.isInfestedBlock    => InfestedBlock(loc, v[InfestedBlockVariant])
-      case m if m.isLeaves           => Leaves(loc, v[LeavesVariant])
-      case m if m.isLog              => Log(loc, v[LogVariant], orientation)
-      case m if m.isMobHead          => MobHead(loc, v[MobHeadVariant], None, Some(rotation))
-      case m if m.isWallMobHead      => MobHead(loc, v[MobHeadVariant], Some(dir), None)
-      case m if m.isMushroom         => Mushroom(loc, v[MushroomVariant])
-      case m if m.isPillar           => Pillar(loc, v[PillarVariant], orientation)
-      case m if m.isPlanks           => Planks(loc, v[PlanksVariant])
-      case m if m.isPlant            => Plant(loc, v[PlantVariant], bisection)
-      case m if m.isPrismarine       => Prismarine(loc, v[PrismarineVariant])
-      case m if m.isQuartzBlock      => QuartzBlock(loc, v[QuartzBlockVariant])
-      case m if m.isSand             => Sand(loc, v[SandVariant])
-      case m if m.isSandstone        => Sandstone(loc, v[SandstoneVariant])
-      case m if m.isSapling          => Sapling(loc, v[SaplingVariant], s[SaplingState])
-      case m if m.isShulkerBox       => ShulkerBox(loc, Option(color), dir)
-      case m if m.isSponge           => Sponge(loc, v[SpongeVariant])
-      case m if m.isStone            => Stone(loc, v[StoneVariant])
-      case m if m.isStructureBlock   => StructureBlock(loc, v[StructureBlockVariant])
-      case m if m.isTerracotta       => Terracotta(loc, Option(color))
-      case m if m.isWall             => Wall(loc, v[WallVariant], extensions, flooded)
-      case m if m.isWood             => Wood(loc, v[WoodVariant], orientation)
-      case m if m.isWool             => Wool(loc, color)
+      case m if m.isAir            => Air(loc, v[AirVariant])
+      case m if m.isAndesite       => Andesite(loc, v[AndesiteVariant])
+      case m if m.isAnvil          => Anvil(loc, v[AnvilVariant], dir)
+      case m if m.isBanner         => Banner(loc, v[BannerVariant], Some(rotation), None)
+      case m if m.isWallBanner     => Banner(loc, v[BannerVariant], None, Some(dir))
+      case m if m.isBrickBlock     => BrickBlock(loc, v[BrickBlockVariant])
+      case m if m.isButton         => Button(loc, v[ButtonVariant], dir, attached, powered)
+      case m if m.isCarpet         => Carpet(loc, v[CarpetVariant])
+      case m if m.isCobblestone    => Cobblestone(loc, v[CobblestoneVariant])
+      case m if m.isChest          => Chest(loc, v[ChestVariant], dir, flooded)
+      case m if m.isConcrete       => Concrete(loc, v[ConcreteVariant])
+      case m if m.isConcretePowder => ConcretePowder(loc, v[ConcretePowderVariant])
+      case m if m.isCoral          => Coral(loc, v[CoralVariant], flooded)
+      case m if m.isCoralBlock     => CoralBlock(loc, v[CoralBlockVariant])
+      case m if m.isCoralFan       => CoralFan(loc, v[CoralFanVariant], None, flooded)
+      case m if m.isDiorite        => Diorite(loc, v[DioriteVariant])
+      case m if m.isDirt           => Dirt(loc, v[DirtVariant])
+      case m if m.isEndStone       => EndStone(loc, v[EndStoneVariant])
+      case m if m.isFence          => Fence(loc, v[FenceVariant], extensions, flooded)
+      case m if m.isFlower         => Flower(loc, v[FlowerVariant])
+      case m if m.isFlowerPot      => FlowerPot(loc, v[FlowerPotVariant])
+      case m if m.isGlass          => Glass(loc, v[GlassVariant])
+      case m if m.isGranite        => Granite(loc, v[GraniteVariant])
+      case m if m.isIce            => Ice(loc, v[IceVariant])
+      case m if m.isInfestedBlock  => InfestedBlock(loc, v[InfestedBlockVariant])
+      case m if m.isLeaves         => Leaves(loc, v[LeavesVariant])
+      case m if m.isLog            => Log(loc, v[LogVariant], orientation)
+      case m if m.isMobHead        => MobHead(loc, v[MobHeadVariant], None, Some(rotation))
+      case m if m.isWallMobHead    => MobHead(loc, v[MobHeadVariant], Some(dir), None)
+      case m if m.isMushroom       => Mushroom(loc, v[MushroomVariant])
+      case m if m.isPillar         => Pillar(loc, v[PillarVariant], orientation)
+      case m if m.isPlanks         => Planks(loc, v[PlanksVariant])
+      case m if m.isPlant          => Plant(loc, v[PlantVariant], bisection)
+      case m if m.isPrismarine     => Prismarine(loc, v[PrismarineVariant])
+      case m if m.isQuartzBlock    => QuartzBlock(loc, v[QuartzBlockVariant])
+      case m if m.isSand           => Sand(loc, v[SandVariant])
+      case m if m.isSandstone      => Sandstone(loc, v[SandstoneVariant])
+      case m if m.isSapling        => Sapling(loc, v[SaplingVariant], s[SaplingState])
+      case m if m.isShulkerBox     => ShulkerBox(loc, v[ShulkerBoxVariant], dir)
+      case m if m.isSponge         => Sponge(loc, v[SpongeVariant])
+      case m if m.isStone          => Stone(loc, v[StoneVariant])
+      case m if m.isStructureBlock => StructureBlock(loc, v[StructureBlockVariant])
+      case m if m.isTerracotta     => Terracotta(loc, v[TerracottaVariant])
+      case m if m.isWall           => Wall(loc, v[WallVariant], extensions, flooded)
+      case m if m.isWood           => Wood(loc, v[WoodVariant], orientation)
+      case m if m.isWool           => Wool(loc, v[WoolVariant])
 
       // BED
       case m if m.isBed => // TODO use occupied flag
         val bed = dataAs[SpigotBed]
         val occupied = bed.isOccupied
         val _bisection = mapBedPart(bed.getPart)
-        Bed(loc, color, dir, _bisection)
+        Bed(loc, v[BedVariant], dir, _bisection)
 
       // COMMAND_BLOCK
       case m if m.isCommandBlock =>
@@ -401,6 +397,14 @@ class SpigotBlockMapper @Inject() (
       // FENCE_GATE
       case m if m.isFenceGate =>
         FenceGate(loc, v[FenceGateVariant], dir, open, powered, wall = false)
+
+      // GLASS_PANE
+      case m if m.isGlassPane =>
+        GlassPane(loc, v[GlassPaneVariant], extensions, flooded)
+
+      // GLAZED_TERRACOTTA
+      case m if m.isGlazedTerracotta =>
+        GlazedTerracotta(loc, v[GlazedTerracottaVariant], dir)
 
       // MUSHROOM_BLOCK
       case m if m.isMushroomBlock =>
@@ -461,8 +465,6 @@ class SpigotBlockMapper @Inject() (
   def map(block: Block): SpigotBlockData = {
     // Create new block data object
     val material = block match {
-      case it: ColoredBlock     => colorMapper.map(it)
-      case it: ColorableBlock   => colorMapper.map(it)
       case it: VariableBlock[_] => variantMapper.map(it)
 
       // TODO match on item.type to get a switch?

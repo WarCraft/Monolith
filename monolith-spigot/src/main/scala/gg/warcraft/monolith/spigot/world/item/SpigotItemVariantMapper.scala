@@ -84,6 +84,24 @@ class SpigotItemVariantMapper @Inject() (
     case Material.COD        => CodVariant.RAW
     case Material.COOKED_COD => CodVariant.COOKED
 
+    // DYE
+    case Material.BLACK_DYE      => DyeVariant.BLACK
+    case Material.BLUE_DYE       => DyeVariant.BLUE
+    case Material.BROWN_DYE      => DyeVariant.BROWN
+    case Material.CYAN_DYE       => DyeVariant.CYAN
+    case Material.GRAY_DYE       => DyeVariant.GRAY
+    case Material.GREEN_DYE      => DyeVariant.GREEN
+    case Material.LIGHT_BLUE_DYE => DyeVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_DYE => DyeVariant.LIGHT_GRAY
+    case Material.LIME_DYE       => DyeVariant.LIME
+    case Material.MAGENTA_DYE    => DyeVariant.MAGENTA
+    case Material.ORANGE_DYE     => DyeVariant.ORANGE
+    case Material.PINK_DYE       => DyeVariant.PINK
+    case Material.PURPLE_DYE     => DyeVariant.PURPLE
+    case Material.RED_DYE        => DyeVariant.RED
+    case Material.WHITE_DYE      => DyeVariant.WHITE
+    case Material.YELLOW_DYE     => DyeVariant.YELLOW
+
     // HELMET
     case Material.LEATHER_HELMET   => HelmetVariant.LEATHER
     case Material.CHAINMAIL_HELMET => HelmetVariant.CHAINMAIL
@@ -343,6 +361,42 @@ class SpigotItemVariantMapper @Inject() (
     // COD
     case CodVariant.RAW    => Material.COD
     case CodVariant.COOKED => Material.COOKED_COD
+
+    // DYE
+    case DyeVariant.BLACK      => Material.BLACK_DYE
+    case DyeVariant.BLUE       => Material.BLUE_DYE
+    case DyeVariant.BROWN      => Material.BROWN_DYE
+    case DyeVariant.CYAN       => Material.CYAN_DYE
+    case DyeVariant.GRAY       => Material.GRAY_DYE
+    case DyeVariant.GREEN      => Material.GREEN_DYE
+    case DyeVariant.LIGHT_BLUE => Material.LIGHT_BLUE_DYE
+    case DyeVariant.LIGHT_GRAY => Material.LIGHT_GRAY_DYE
+    case DyeVariant.LIME       => Material.LIME_DYE
+    case DyeVariant.MAGENTA    => Material.MAGENTA_DYE
+    case DyeVariant.ORANGE     => Material.ORANGE_DYE
+    case DyeVariant.PINK       => Material.PINK_DYE
+    case DyeVariant.PURPLE     => Material.PURPLE_DYE
+    case DyeVariant.RED        => Material.RED_DYE
+    case DyeVariant.WHITE      => Material.WHITE_DYE
+    case DyeVariant.YELLOW     => Material.YELLOW_DYE
+
+    // FIREWORK_STAR
+    case FireworkStarVariant.BLACK      => Material.FIREWORK_STAR
+    case FireworkStarVariant.BLUE       => Material.FIREWORK_STAR
+    case FireworkStarVariant.BROWN      => Material.FIREWORK_STAR
+    case FireworkStarVariant.CYAN       => Material.FIREWORK_STAR
+    case FireworkStarVariant.GRAY       => Material.FIREWORK_STAR
+    case FireworkStarVariant.GREEN      => Material.FIREWORK_STAR
+    case FireworkStarVariant.LIGHT_BLUE => Material.FIREWORK_STAR
+    case FireworkStarVariant.LIGHT_GRAY => Material.FIREWORK_STAR
+    case FireworkStarVariant.LIME       => Material.FIREWORK_STAR
+    case FireworkStarVariant.MAGENTA    => Material.FIREWORK_STAR
+    case FireworkStarVariant.ORANGE     => Material.FIREWORK_STAR
+    case FireworkStarVariant.PINK       => Material.FIREWORK_STAR
+    case FireworkStarVariant.PURPLE     => Material.FIREWORK_STAR
+    case FireworkStarVariant.RED        => Material.FIREWORK_STAR
+    case FireworkStarVariant.WHITE      => Material.FIREWORK_STAR
+    case FireworkStarVariant.YELLOW     => Material.FIREWORK_STAR
 
     // HELMET
     case HelmetVariant.LEATHER   => Material.LEATHER_HELMET

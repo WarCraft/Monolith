@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.api.world.item
 
-import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 
@@ -94,13 +93,13 @@ final case class Bamboo(
 }
 
 final case class Banner(
-    color: BlockColor,
+    variant: BannerVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[BannerVariant]
     with StackableItem {
   val `type` = ItemType.BANNER
   override def maxCount = 16
@@ -147,13 +146,13 @@ final case class Beacon(
 }
 
 final case class Bed(
-    color: BlockColor,
+    variant: BedVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[BedVariant]
     with StackableItem {
   val `type` = ItemType.BED
 }
@@ -457,13 +456,13 @@ final case class Campfire(
 }
 
 final case class Carpet(
-    color: BlockColor,
+    variant: CarpetVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[CarpetVariant]
     with StackableItem {
   val `type` = ItemType.CARPET
 }
@@ -750,25 +749,25 @@ final case class Composter(
 }
 
 final case class Concrete(
-    color: BlockColor,
+    variant: ConcreteVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[ConcreteVariant]
     with StackableItem {
   val `type` = ItemType.CONCRETE
 }
 
 final case class ConcretePowder(
-    color: BlockColor,
+    variant: ConcretePowderVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[ConcretePowderVariant]
     with StackableItem {
   val `type` = ItemType.CONCRETE_POWDER
 }
@@ -1010,13 +1009,13 @@ final case class Dropper(
 }
 
 final case class Dye(
-    color: BlockColor,
+    variant: DyeVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[DyeVariant]
     with StackableItem {
   val `type` = ItemType.DYE
 }
@@ -1221,13 +1220,13 @@ final case class FireworkRocket(
 }
 
 final case class FireworkStar(
-    color: BlockColor,
+    variant: FireworkStarVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[FireworkStarVariant]
     with StackableItem {
   val `type` = ItemType.FIREWORK_STAR
 }
@@ -1333,13 +1332,13 @@ final case class GhastTear(
 }
 
 final case class Glass(
-    color: Option[BlockColor],
+    variant: GlassVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColorableItem
+) extends VariableItem[GlassVariant]
     with StackableItem {
   val `type` = ItemType.GLASS
 }
@@ -1355,25 +1354,25 @@ final case class GlassBottle(
 }
 
 final case class GlassPane(
-    color: Option[BlockColor],
+    variant: GlassPaneVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColorableItem
+) extends VariableItem[GlassPaneVariant]
     with StackableItem {
   val `type` = ItemType.GLASS_PANE
 }
 
 final case class GlazedTerracotta(
-    color: BlockColor,
+    variant: GlazedTerracottaVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[GlazedTerracottaVariant]
     with StackableItem {
   val `type` = ItemType.GLAZED_TERRACOTTA
 }
@@ -2709,13 +2708,13 @@ final case class Shovel(
 }
 
 final case class ShulkerBox(
-    color: Option[BlockColor],
+    variant: ShulkerBoxVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColorableItem
+) extends VariableItem[ShulkerBoxVariant]
     with StackableItem {
   val `type` = ItemType.SHULKER_BOX
 }
@@ -3016,13 +3015,13 @@ final case class Sword(
 }
 
 final case class Terracotta(
-    color: Option[BlockColor],
+    variant: TerracottaVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColorableItem
+) extends VariableItem[TerracottaVariant]
     with StackableItem {
   val `type` = ItemType.TERRACOTTA
 }
@@ -3182,13 +3181,13 @@ final case class Wood(
 }
 
 final case class Wool(
-    color: BlockColor,
+    variant: WoolVariant,
     name: String,
     tooltip: Array[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends ColoredItem
+) extends VariableItem[WoolVariant]
     with StackableItem {
   val `type` = ItemType.WOOL
 }

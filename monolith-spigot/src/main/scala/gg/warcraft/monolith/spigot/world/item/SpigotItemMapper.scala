@@ -1,7 +1,6 @@
 package gg.warcraft.monolith.spigot.world.item
 
 import gg.warcraft.monolith.api.world.block.variant._
-import gg.warcraft.monolith.api.world.block.BlockColor
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 import gg.warcraft.monolith.spigot.Extensions._
@@ -11,7 +10,6 @@ import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.Damageable
 
 class SpigotItemMapper @Inject() (
-    private val colorMapper: SpigotItemColorMapper,
     private val variantMapper: SpigotItemVariantMapper
 ) {
   def map(item: SpigotItemStack): Option[Item] = {
@@ -27,7 +25,6 @@ class SpigotItemMapper @Inject() (
     val hideAttr = meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
 
     // Lazily compute generic item data
-    lazy val color = colorMapper.map(material)
     lazy val count = item.getAmount
     lazy val durability = material.getMaxDurability -
       meta.asInstanceOf[Damageable].getDamage
@@ -37,8 +34,6 @@ class SpigotItemMapper @Inject() (
 
     // Lazily construct tuples for all the different types of parameter sets
     lazy val params = (name, tooltip, count, attr, hideAttr)
-    lazy val colorParams = (color, name, tooltip, count, attr, hideAttr)
-    lazy val colorableParams = (Option(color), name, tooltip, count, attr, hideAttr)
     lazy val singleParams = (name, tooltip, attr, hideAttr)
     lazy val durableParams =
       (name, tooltip, attr, hideAttr, durability, unbreakable, hideUnbreakable)
@@ -247,7 +242,7 @@ class SpigotItemMapper @Inject() (
       case Material.FIREWORK_STAR =>
         // TODO FIREWORK_STAR doesn't store color data in material
         //  BlockColorMapper has no idea what to do with it
-        FireworkStar(BlockColor.RED, name, tooltip, count, attr, hideAttr)
+        FireworkStar(FireworkStarVariant.RED, name, tooltip, count, attr, hideAttr)
 
       // GOLDEN_APPLE TODO move ENCHANTED and CARVED onto Apple/PumpkinVariant?
       case Material.GOLDEN_APPLE =>
@@ -271,96 +266,98 @@ class SpigotItemMapper @Inject() (
       case Material.CARVED_PUMPKIN =>
         Pumpkin(carved = true, name, tooltip, count, attr, hideAttr)
 
-      case m if m.isAndesite         => Andesite.tupled(p[AndesiteVariant])
-      case m if m.isAnvil            => Anvil.tupled(p[AnvilVariant])
-      case m if m.isArrow            => Arrow.tupled(p[ArrowVariant])
-      case m if m.isAxe              => Axe.tupled(e[AxeVariant])
-      case m if m.isBanner           => Banner.tupled(colorParams)
-      case m if m.isBed              => Bed.tupled(colorParams)
-      case m if m.isBeef             => Beef.tupled(p[BeefVariant])
-      case m if m.isBoat             => Boat.tupled(p[BoatVariant])
-      case m if m.isBoots            => Boots.tupled(e[BootsVariant])
-      case m if m.isBrick            => Brick.tupled(p[BrickVariant])
-      case m if m.isBrickBlock       => BrickBlock.tupled(p[BrickBlockVariant])
-      case m if m.isBucket           => Bucket.tupled(p[BucketVariant])
-      case m if m.isButton           => Button.tupled(p[ButtonVariant])
-      case m if m.isCarpet           => Carpet.tupled(colorParams)
-      case m if m.isCobblestone      => Cobblestone.tupled(p[CobblestoneVariant])
-      case m if m.isChest            => Chest.tupled(p[ChestVariant])
-      case m if m.isChestplate       => Chestplate.tupled(e[ChestplateVariant])
-      case m if m.isChicken          => Chicken.tupled(p[ChickenVariant])
-      case m if m.isChorusFruit      => ChorusFruit.tupled(p[ChorusFruitVariant])
-      case m if m.isCod              => Cod.tupled(p[CodVariant])
-      case m if m.isCommandBlock     => CommandBlock.tupled(p[CommandBlockVariant])
-      case m if m.isConcrete         => Concrete.tupled(colorParams)
-      case m if m.isConcretePowder   => ConcretePowder.tupled(colorParams)
-      case m if m.isCoral            => Coral.tupled(p[CoralVariant])
-      case m if m.isCoralBlock       => CoralBlock.tupled(p[CoralBlockVariant])
-      case m if m.isCoralFan         => CoralFan.tupled(p[CoralFanVariant])
-      case m if m.isDiorite          => Diorite.tupled(p[DioriteVariant])
-      case m if m.isDirt             => Dirt.tupled(p[DirtVariant])
-      case m if m.isDoor             => Door.tupled(p[DoorVariant])
-      case m if m.isDye              => Dye.tupled(colorParams)
-      case m if m.isEndStone         => EndStone.tupled(p[EndStoneVariant])
-      case m if m.isFence            => Fence.tupled(p[FenceVariant])
-      case m if m.isFenceGate        => FenceGate.tupled(p[FenceGateVariant])
-      case m if m.isFern             => Fern.tupled(p[FernVariant])
-      case m if m.isFlower           => Flower.tupled(p[FlowerVariant])
-      case m if m.isGlass            => Glass.tupled(colorableParams)
-      case m if m.isGlassPane        => GlassPane.tupled(colorableParams)
-      case m if m.isGlazedTerracotta => GlazedTerracotta.tupled(colorParams)
-      case m if m.isGranite          => Granite.tupled(p[GraniteVariant])
-      case m if m.isGrass            => Grass.tupled(p[GrassVariant])
-      case m if m.isHelmet           => Helmet.tupled(e[HelmetVariant])
-      case m if m.isHoe              => Hoe.tupled(e[HoeVariant])
-      case m if m.isIce              => Ice.tupled(p[IceVariant])
-      case m if m.isInfestedBlock    => InfestedBlock.tupled(p[InfestedBlockVariant])
-      case m if m.isLeaves           => Leaves.tupled(p[LeavesVariant])
-      case m if m.isLeggings         => Leggings.tupled(e[LeggingsVariant])
-      case m if m.isLog              => Log.tupled(p[LogVariant])
-      case m if m.isMinecart         => Minecart.tupled(p[MinecartVariant])
-      case m if m.isMobHead          => MobHead.tupled(p[MobHeadVariant])
-      case m if m.isMushroom         => Mushroom.tupled(p[MushroomVariant])
-      case m if m.isMushroomBlock    => MushroomBlock.tupled(p[MushroomBlockVariant])
-      case m if m.isMusicDisc        => MusicDisc.tupled(p[MusicDiscVariant])
-      case m if m.isMutton           => Mutton.tupled(p[MuttonVariant])
-      case m if m.isPickaxe          => Pickaxe.tupled(e[PickaxeVariant])
-      case m if m.isPillar           => Pillar.tupled(p[PillarVariant])
-      case m if m.isPiston           => Piston.tupled(p[PistonVariant])
-      case m if m.isPlanks           => Planks.tupled(p[PlanksVariant])
-      case m if m.isPlant            => Plant.tupled(p[PlantVariant])
-      case m if m.isPorkchop         => Porkchop.tupled(p[PorkchopVariant])
-      case m if m.isPotato           => Potato.tupled(p[PotatoVariant])
-      case m if m.isPressurePlate    => PressurePlate.tupled(p[PressurePlateVariant])
-      case m if m.isPrismarine       => Prismarine.tupled(p[PrismarineVariant])
-      case m if m.isQuartzBlock      => QuartzBlock.tupled(p[QuartzBlockVariant])
-      case m if m.isRabbit           => Rabbit.tupled(p[RabbitVariant])
-      case m if m.isRail             => Rail.tupled(p[RailVariant])
-      case m if m.isSalmon           => Salmon.tupled(p[SalmonVariant])
-      case m if m.isSand             => Sand.tupled(p[SandVariant])
-      case m if m.isSandstone        => Sandstone.tupled(p[SandstoneVariant])
-      case m if m.isSapling          => Sapling.tupled(p[SaplingVariant])
-      case m if m.isSeeds            => Seeds.tupled(p[SeedsVariant])
-      case m if m.isShulkerBox       => ShulkerBox.tupled(colorableParams)
-      case m if m.isShovel           => Shovel.tupled(e[ShovelVariant])
-      case m if m.isSign             => Sign.tupled(p[SignVariant])
-      case m if m.isSlab             => Slab.tupled(p[SlabVariant])
-      case m if m.isSpawnEgg         => SpawnEgg.tupled(p[SpawnEggVariant])
-      case m if m.isSpiderEye        => SpiderEye.tupled(p[SpiderEyeVariant])
-      case m if m.isSponge           => Sponge.tupled(p[SpongeVariant])
-      case m if m.isStairs           => Stairs.tupled(p[StairsVariant])
-      case m if m.isStew             => Stew.tupled(p[StewVariant])
-      case m if m.isStone            => Stone.tupled(p[StoneVariant])
-      case m if m.isStructureBlock   => StructureBlock.tupled(p[StructureBlockVariant])
-      case m if m.isSword            => Sword.tupled(e[SwordVariant])
-      case m if m.isTerracotta       => Terracotta.tupled(colorableParams)
-      case m if m.isTrapdoor         => Trapdoor.tupled(p[TrapdoorVariant])
-      case m if m.isWall             => Wall.tupled(p[WallVariant])
-      case m if m.isWood             => Wood.tupled(p[WoodVariant])
-      case m if m.isWool             => Wool.tupled(colorParams)
+      case m if m.isAndesite       => Andesite.tupled(p[AndesiteVariant])
+      case m if m.isAnvil          => Anvil.tupled(p[AnvilVariant])
+      case m if m.isArrow          => Arrow.tupled(p[ArrowVariant])
+      case m if m.isAxe            => Axe.tupled(e[AxeVariant])
+      case m if m.isBanner         => Banner.tupled(p[BannerVariant])
+      case m if m.isBed            => Bed.tupled(p[BedVariant])
+      case m if m.isBeef           => Beef.tupled(p[BeefVariant])
+      case m if m.isBoat           => Boat.tupled(p[BoatVariant])
+      case m if m.isBoots          => Boots.tupled(e[BootsVariant])
+      case m if m.isBrick          => Brick.tupled(p[BrickVariant])
+      case m if m.isBrickBlock     => BrickBlock.tupled(p[BrickBlockVariant])
+      case m if m.isBucket         => Bucket.tupled(p[BucketVariant])
+      case m if m.isButton         => Button.tupled(p[ButtonVariant])
+      case m if m.isCarpet         => Carpet.tupled(p[CarpetVariant])
+      case m if m.isCobblestone    => Cobblestone.tupled(p[CobblestoneVariant])
+      case m if m.isChest          => Chest.tupled(p[ChestVariant])
+      case m if m.isChestplate     => Chestplate.tupled(e[ChestplateVariant])
+      case m if m.isChicken        => Chicken.tupled(p[ChickenVariant])
+      case m if m.isChorusFruit    => ChorusFruit.tupled(p[ChorusFruitVariant])
+      case m if m.isCod            => Cod.tupled(p[CodVariant])
+      case m if m.isCommandBlock   => CommandBlock.tupled(p[CommandBlockVariant])
+      case m if m.isConcrete       => Concrete.tupled(p[ConcreteVariant])
+      case m if m.isConcretePowder => ConcretePowder.tupled(p[ConcretePowderVariant])
+      case m if m.isCoral          => Coral.tupled(p[CoralVariant])
+      case m if m.isCoralBlock     => CoralBlock.tupled(p[CoralBlockVariant])
+      case m if m.isCoralFan       => CoralFan.tupled(p[CoralFanVariant])
+      case m if m.isDiorite        => Diorite.tupled(p[DioriteVariant])
+      case m if m.isDirt           => Dirt.tupled(p[DirtVariant])
+      case m if m.isDoor           => Door.tupled(p[DoorVariant])
+      case m if m.isDye            => Dye.tupled(p[DyeVariant])
+      case m if m.isEndStone       => EndStone.tupled(p[EndStoneVariant])
+      case m if m.isFence          => Fence.tupled(p[FenceVariant])
+      case m if m.isFenceGate      => FenceGate.tupled(p[FenceGateVariant])
+      case m if m.isFern           => Fern.tupled(p[FernVariant])
+      case m if m.isFlower         => Flower.tupled(p[FlowerVariant])
+      case m if m.isGlass          => Glass.tupled(p[GlassVariant])
+      case m if m.isGlassPane      => GlassPane.tupled(p[GlassPaneVariant])
+      case m if m.isGranite        => Granite.tupled(p[GraniteVariant])
+      case m if m.isGrass          => Grass.tupled(p[GrassVariant])
+      case m if m.isHelmet         => Helmet.tupled(e[HelmetVariant])
+      case m if m.isHoe            => Hoe.tupled(e[HoeVariant])
+      case m if m.isIce            => Ice.tupled(p[IceVariant])
+      case m if m.isInfestedBlock  => InfestedBlock.tupled(p[InfestedBlockVariant])
+      case m if m.isLeaves         => Leaves.tupled(p[LeavesVariant])
+      case m if m.isLeggings       => Leggings.tupled(e[LeggingsVariant])
+      case m if m.isLog            => Log.tupled(p[LogVariant])
+      case m if m.isMinecart       => Minecart.tupled(p[MinecartVariant])
+      case m if m.isMobHead        => MobHead.tupled(p[MobHeadVariant])
+      case m if m.isMushroom       => Mushroom.tupled(p[MushroomVariant])
+      case m if m.isMushroomBlock  => MushroomBlock.tupled(p[MushroomBlockVariant])
+      case m if m.isMusicDisc      => MusicDisc.tupled(p[MusicDiscVariant])
+      case m if m.isMutton         => Mutton.tupled(p[MuttonVariant])
+      case m if m.isPickaxe        => Pickaxe.tupled(e[PickaxeVariant])
+      case m if m.isPillar         => Pillar.tupled(p[PillarVariant])
+      case m if m.isPiston         => Piston.tupled(p[PistonVariant])
+      case m if m.isPlanks         => Planks.tupled(p[PlanksVariant])
+      case m if m.isPlant          => Plant.tupled(p[PlantVariant])
+      case m if m.isPorkchop       => Porkchop.tupled(p[PorkchopVariant])
+      case m if m.isPotato         => Potato.tupled(p[PotatoVariant])
+      case m if m.isPressurePlate  => PressurePlate.tupled(p[PressurePlateVariant])
+      case m if m.isPrismarine     => Prismarine.tupled(p[PrismarineVariant])
+      case m if m.isQuartzBlock    => QuartzBlock.tupled(p[QuartzBlockVariant])
+      case m if m.isRabbit         => Rabbit.tupled(p[RabbitVariant])
+      case m if m.isRail           => Rail.tupled(p[RailVariant])
+      case m if m.isSalmon         => Salmon.tupled(p[SalmonVariant])
+      case m if m.isSand           => Sand.tupled(p[SandVariant])
+      case m if m.isSandstone      => Sandstone.tupled(p[SandstoneVariant])
+      case m if m.isSapling        => Sapling.tupled(p[SaplingVariant])
+      case m if m.isSeeds          => Seeds.tupled(p[SeedsVariant])
+      case m if m.isShulkerBox     => ShulkerBox.tupled(p[ShulkerBoxVariant])
+      case m if m.isShovel         => Shovel.tupled(e[ShovelVariant])
+      case m if m.isSign           => Sign.tupled(p[SignVariant])
+      case m if m.isSlab           => Slab.tupled(p[SlabVariant])
+      case m if m.isSpawnEgg       => SpawnEgg.tupled(p[SpawnEggVariant])
+      case m if m.isSpiderEye      => SpiderEye.tupled(p[SpiderEyeVariant])
+      case m if m.isSponge         => Sponge.tupled(p[SpongeVariant])
+      case m if m.isStairs         => Stairs.tupled(p[StairsVariant])
+      case m if m.isStew           => Stew.tupled(p[StewVariant])
+      case m if m.isStone          => Stone.tupled(p[StoneVariant])
+      case m if m.isStructureBlock => StructureBlock.tupled(p[StructureBlockVariant])
+      case m if m.isSword          => Sword.tupled(e[SwordVariant])
+      case m if m.isTerracotta     => Terracotta.tupled(p[TerracottaVariant])
+      case m if m.isTrapdoor       => Trapdoor.tupled(p[TrapdoorVariant])
+      case m if m.isWall           => Wall.tupled(p[WallVariant])
+      case m if m.isWood           => Wood.tupled(p[WoodVariant])
+      case m if m.isWool           => Wool.tupled(p[WoolVariant])
 
       case m if m.isBannerPattern =>
         BannerPattern(v[BannerPatternVariant], name, tooltip, attr, hideAttr)
+
+      case m if m.isGlazedTerracotta =>
+        GlazedTerracotta.tupled(p[GlazedTerracottaVariant])
 
       case m if m.isHorseArmor =>
         HorseArmor(v[HorseArmorVariant], name, tooltip, attr, hideAttr)
@@ -376,8 +373,6 @@ class SpigotItemMapper @Inject() (
 
   def map(item: Item): SpigotItemStack = {
     val material = item match {
-      case it: ColoredItem     => colorMapper.map(it)
-      case it: ColorableItem   => colorMapper.map(it)
       case it: VariableItem[_] => variantMapper.map(it)
 
       case it: GoldenApple =>

@@ -1,6 +1,8 @@
-package gg.warcraft.monolith.api.world.block;
+package gg.warcraft.monolith.api.world.item.variant;
 
-public enum BlockColor {
+import gg.warcraft.monolith.api.world.item.ItemVariant;
+
+public enum FireworkStarVariant implements ItemVariant {
     BLACK,
     BLUE,
     BROWN,
