@@ -14,6 +14,9 @@ class SpigotItemFactory @Inject() (
     typeMapper: SpigotItemTypeMapper,
     variantMapper: SpigotItemVariantMapper
 ) extends ItemFactory {
+  private final val itemVariantPackage =
+    "gg.warcraft.monolith.api.world.item.variant"
+
   override def create(`type`: ItemType): Item = {
     val material = typeMapper.map(`type`)
     val item = new SpigotItemStack(material)
@@ -24,5 +27,13 @@ class SpigotItemFactory @Inject() (
     val material = variantMapper.map(variant)
     val item = new SpigotItemStack(material)
     itemMapper.map(item).get.asInstanceOf[VariableItem[T]]
+  }
+
+  override def create(variant: String): Item = {
+    val Array(enum, value) = variant.split(':')
+    val clazz = Class.forName(s"$itemVariantPackage.$enum")
+    val valueOf = clazz.getMethod("valueOf", classOf[String])
+    val constant = valueOf.invoke(null, value).asInstanceOf[ItemVariant]
+    create(constant).asInstanceOf[Item]
   }
 }
