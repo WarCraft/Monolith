@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class SpigotBlockFactory @Inject() (
     blockMapper: SpigotBlockMapper,
-    typeMapper: SpigotBlockTypeMapper,
+//    typeMapper: SpigotBlockTypeMapper,
     variantMapper: SpigotBlockVariantMapper
 ) extends BlockFactory {
   private final val blockVariantPackage =
@@ -22,15 +22,17 @@ class SpigotBlockFactory @Inject() (
     "gg.warcraft.monolith.api.world.block.state"
 
   override def create(`type`: BlockType): Block = {
-    val material = typeMapper.map(`type`)
+    //  val material = typeMapper.map(`type`)
 //    val block = new SpigotBlockStack(material)
-    blockMapper.map(block).get
+    //   blockMapper.map(block).get
+    null
   }
 
   override def create[T <: BlockVariant](variant: T): VariableBlock[T] = {
     val material = variantMapper.map(variant)
 //    val block = new SpigotBlockStack(material)
-    blockMapper.map(block).get.asInstanceOf[VariableBlock[T]]
+    //  blockMapper.map(block).get.asInstanceOf[VariableBlock[T]]
+    null
   }
 
   override def create(`type`: String): Block = {
@@ -45,7 +47,8 @@ class SpigotBlockFactory @Inject() (
         val clazz = Class.forName(s"$blockStatePackage.$enum")
         val valueOf = clazz.getMethod("valueOf", classOf[String])
         val state = valueOf.invoke(null, value).asInstanceOf[BlockState]
-        create(state).asInstanceOf[Block]
+        //  create(state).asInstanceOf[Block]
+        null
       }
     } else {
       create(BlockType.valueOf(`type`))
