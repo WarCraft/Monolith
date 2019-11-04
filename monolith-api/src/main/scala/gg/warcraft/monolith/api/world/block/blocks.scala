@@ -431,7 +431,7 @@ final case class Door(
     hinge: BlockHinge,
     section: BlockBisection,
     open: Boolean, // TODO should this be isOpen? Currently exposes open() to java
-    powered: Boolean//  which is like a method call to open the door
+    powered: Boolean //  which is like a method call to open the door
 ) extends VariableBlock[DoorVariant]
     with DirectedBlock
     with HingedBlock
