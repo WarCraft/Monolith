@@ -5,10 +5,10 @@ import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.*;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import org.joml.*;
 
 import java.util.Collection;
@@ -19,14 +19,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class DefaultBlockUtils implements BlockUtils {
-    private final WorldQueryService worldQueryService;
+    private final WorldService worldService;
     private final BlockIteratorFactory blockIteratorFactory;
     private final BoundingBlockBoxFactory boundingBlockBoxFactory;
 
     @Inject
-    public DefaultBlockUtils(WorldQueryService worldQueryService, BlockIteratorFactory blockIteratorFactory,
+    public DefaultBlockUtils(WorldService worldService, BlockIteratorFactory blockIteratorFactory,
                              BoundingBlockBoxFactory boundingBlockBoxFactory) {
-        this.worldQueryService = worldQueryService;
+        this.worldService = worldService;
         this.blockIteratorFactory = blockIteratorFactory;
         this.boundingBlockBoxFactory = boundingBlockBoxFactory;
     }
@@ -54,11 +54,11 @@ public class DefaultBlockUtils implements BlockUtils {
         int currentX = location.x();
 
         BlockLocation leftNeighbourLocation = location.withX(currentX - 1);
-        Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
+        Block leftNeighbour = worldService.getBlock(leftNeighbourLocation);
         blocks.add(leftNeighbour);
 
         BlockLocation rightNeighbourLocation = location.withX(currentX + 1);
-        Block rightNeighbour = worldQueryService.getBlockAt(rightNeighbourLocation);
+        Block rightNeighbour = worldService.getBlock(rightNeighbourLocation);
         blocks.add(rightNeighbour);
 
         return blocks;
@@ -71,11 +71,11 @@ public class DefaultBlockUtils implements BlockUtils {
         int currentY = location.y();
 
         BlockLocation leftNeighbourLocation = location.withY(currentY - 1);
-        Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
+        Block leftNeighbour = worldService.getBlock(leftNeighbourLocation);
         blocks.add(leftNeighbour);
 
         BlockLocation rightNeighbourLocation = location.withY(currentY + 1);
-        Block rightNeighbour = worldQueryService.getBlockAt(rightNeighbourLocation);
+        Block rightNeighbour = worldService.getBlock(rightNeighbourLocation);
         blocks.add(rightNeighbour);
 
         return blocks;
@@ -88,11 +88,11 @@ public class DefaultBlockUtils implements BlockUtils {
         int currentZ = location.z();
 
         BlockLocation leftNeighbourLocation = location.withZ(currentZ - 1);
-        Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
+        Block leftNeighbour = worldService.getBlock(leftNeighbourLocation);
         blocks.add(leftNeighbour);
 
         BlockLocation rightNeighbourLocation = location.withZ(currentZ + 1);
-        Block rightNeighbour = worldQueryService.getBlockAt(rightNeighbourLocation);
+        Block rightNeighbour = worldService.getBlock(rightNeighbourLocation);
         blocks.add(rightNeighbour);
 
         return blocks;
@@ -131,22 +131,22 @@ public class DefaultBlockUtils implements BlockUtils {
         switch (at) {
             case NORTH:
                 BlockLocation northLocation = location.withZ(currentZ - 1);
-                return worldQueryService.getBlockAt(northLocation);
+                return worldService.getBlock(northLocation);
             case EAST:
                 BlockLocation eastLocation = location.withX(currentX + 1);
-                return worldQueryService.getBlockAt(eastLocation);
+                return worldService.getBlock(eastLocation);
             case SOUTH:
                 BlockLocation southLocation = location.withZ(currentZ + 1);
-                return worldQueryService.getBlockAt(southLocation);
+                return worldService.getBlock(southLocation);
             case WEST:
                 BlockLocation westLocation = location.withX(currentX - 1);
-                return worldQueryService.getBlockAt(westLocation);
+                return worldService.getBlock(westLocation);
             case UP:
                 BlockLocation upLocation = location.withY(currentY + 1);
-                return worldQueryService.getBlockAt(upLocation);
+                return worldService.getBlock(upLocation);
             case DOWN:
                 BlockLocation downLocation = location.withY(currentY - 1);
-                return worldQueryService.getBlockAt(downLocation);
+                return worldService.getBlock(downLocation);
             default:
                 throw new IllegalArgumentException("Failed to get relative block for illegal block face " + at);
         }

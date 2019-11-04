@@ -5,10 +5,10 @@ import gg.warcraft.monolith.api.util.Offset;
 import gg.warcraft.monolith.api.util.TriFunction;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.World;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxReader;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.util.SimpleOffset;
 
 import java.util.function.Function;
@@ -24,7 +24,7 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
     final Function<Block, Offset> readOffsetFor;
 
     @Inject
-    public SimpleBoundingBlockBoxReader(WorldQueryService worldQueryService, BoundingBlockBox boundingBlockBox,
+    public SimpleBoundingBlockBoxReader(WorldService worldService, BoundingBlockBox boundingBlockBox,
                                         Direction readDirection) {
         this.boundingBlockBox = boundingBlockBox;
 
@@ -35,7 +35,7 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     int x = boundingBlockBox.getWestBoundary() + horizontalOffset;
                     int y = boundingBlockBox.getLowerBoundary() + verticalOffset;
                     int z = boundingBlockBox.getSouthBoundary() - depthOffset;
-                    return worldQueryService.getBlockAt(world, x, y, z);
+                    return worldService.getBlock(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
                     int horizontalOffset = block.location().x() - boundingBlockBox.getWestBoundary();
@@ -49,7 +49,7 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     int x = boundingBlockBox.getWestBoundary() + depthOffset;
                     int y = boundingBlockBox.getLowerBoundary() + verticalOffset;
                     int z = boundingBlockBox.getNorthBoundary() + horizontalOffset;
-                    return worldQueryService.getBlockAt(world, x, y, z);
+                    return worldService.getBlock(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
                     int horizontalOffset = block.location().z() - boundingBlockBox.getNorthBoundary();
@@ -63,7 +63,7 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     int x = boundingBlockBox.getEastBoundary() - horizontalOffset;
                     int y = boundingBlockBox.getLowerBoundary() + verticalOffset;
                     int z = boundingBlockBox.getNorthBoundary() + depthOffset;
-                    return worldQueryService.getBlockAt(world, x, y, z);
+                    return worldService.getBlock(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
                     int horizontalOffset = boundingBlockBox.getEastBoundary() - block.location().x();
@@ -77,7 +77,7 @@ public class SimpleBoundingBlockBoxReader implements BoundingBlockBoxReader {
                     int x = boundingBlockBox.getEastBoundary() - depthOffset;
                     int y = boundingBlockBox.getLowerBoundary() + verticalOffset;
                     int z = boundingBlockBox.getSouthBoundary() - horizontalOffset;
-                    return worldQueryService.getBlockAt(world, x, y, z);
+                    return worldService.getBlock(world, x, y, z);
                 };
                 readOffsetFor = (block) -> {
                     int horizontalOffset = boundingBlockBox.getSouthBoundary() - block.location().z();

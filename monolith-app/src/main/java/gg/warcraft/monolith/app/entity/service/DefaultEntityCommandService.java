@@ -13,8 +13,8 @@ import gg.warcraft.monolith.api.entity.service.EntityRepository;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.util.TimeUtils;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.entity.SimpleEntityProfile;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityTeamChangedEvent;
 
@@ -29,9 +29,9 @@ public class DefaultEntityCommandService extends AbstractEntityCommandService {
     @Inject
     public DefaultEntityCommandService(EntityProfileRepository entityProfileRepository, EntityRepository entityRepository,
                                        EntityQueryService entityQueryService, TimeUtils timeUtils,
-                                       EntityServerAdapter entityServerAdapter, WorldQueryService worldQueryService,
+                                       EntityServerAdapter entityServerAdapter, WorldService worldService,
                                        EventService eventService, BlockUtils blockUtils) {
-        super(entityQueryService, entityServerAdapter, entityRepository, entityProfileRepository, worldQueryService,
+        super(entityQueryService, entityServerAdapter, entityRepository, entityProfileRepository, worldService,
                 eventService, blockUtils, timeUtils);
         this.entityProfileRepository = entityProfileRepository;
         this.entityQueryService = entityQueryService;

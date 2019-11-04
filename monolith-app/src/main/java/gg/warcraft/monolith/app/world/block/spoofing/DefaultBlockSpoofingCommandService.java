@@ -2,11 +2,10 @@ package gg.warcraft.monolith.app.world.block.spoofing;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.world.BlockLocation;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingCommandService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingRepository;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
-import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,31 +15,28 @@ import java.util.UUID;
 
 public class DefaultBlockSpoofingCommandService implements BlockSpoofingCommandService {
     private final BlockSpoofingRepository blockSpoofingRepository;
-    private final WorldQueryService worldQueryService;
-    private final WorldServerAdapter worldServerAdapter;
+    private final WorldService worldService;
 
     @Inject
     public DefaultBlockSpoofingCommandService(BlockSpoofingRepository blockSpoofingRepository,
-                                              WorldQueryService worldQueryService,
-                                              WorldServerAdapter worldServerAdapter) {
+                                              WorldService worldService) {
         this.blockSpoofingRepository = blockSpoofingRepository;
-        this.worldQueryService = worldQueryService;
-        this.worldServerAdapter = worldServerAdapter;
+        this.worldService = worldService;
     }
 
     @Override
     public void spoofBlock(Block fakeBlock, UUID... playerIds) {
         Arrays.stream(playerIds).forEach(playerId -> {
-            worldServerAdapter.spoofBlock(fakeBlock, playerId);
+            worldService.spoofBlock(fakeBlock, playerId);
             blockSpoofingRepository.save(fakeBlock, playerId);
         });
     }
 
     @Override
     public void unspoofBlock(BlockLocation location, UUID... playerIds) {
-        Block realBlock = worldQueryService.getBlockAt(location);
+        Block realBlock = worldService.getBlock(location);
         Arrays.stream(playerIds).forEach(playerId -> {
-            worldServerAdapter.spoofBlock(realBlock, playerId);
+            worldService.spoofBlock(realBlock, playerId);
             blockSpoofingRepository.delete(location, playerId);
         });
     }
@@ -52,8 +48,8 @@ public class DefaultBlockSpoofingCommandService implements BlockSpoofingCommandS
             List<Block> fakeBlocks = blockSpoofingRepository.getSpoofedBlocks(playerId);
             fakeBlocks.forEach(fakeBlock -> {
                 BlockLocation location = fakeBlock.location();
-                Block realBlock = realBlocks.computeIfAbsent(location, worldQueryService::getBlockAt);
-                worldServerAdapter.spoofBlock(realBlock, playerId);
+                Block realBlock = realBlocks.computeIfAbsent(location, worldService::getBlock);
+                worldService.spoofBlock(realBlock, playerId);
                 blockSpoofingRepository.delete(location, playerId);
             });
         });

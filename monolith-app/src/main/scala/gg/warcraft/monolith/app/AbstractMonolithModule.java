@@ -85,12 +85,9 @@ import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingCommandService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingQueryService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingRepository;
-import gg.warcraft.monolith.api.world.item.storage.ItemStorageService;
 import gg.warcraft.monolith.api.world.portal.service.PortalCommandService;
 import gg.warcraft.monolith.api.world.portal.service.PortalQueryService;
 import gg.warcraft.monolith.api.world.portal.service.PortalRepository;
-import gg.warcraft.monolith.api.world.service.WorldCommandService;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.combat.AmbientPotionEffect;
 import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
 import gg.warcraft.monolith.app.combat.SimpleCombatSource;
@@ -170,8 +167,6 @@ import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingReposit
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalCommandService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalQueryService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalRepository;
-import gg.warcraft.monolith.app.world.service.DefaultWorldCommandService;
-import gg.warcraft.monolith.app.world.service.DefaultWorldQueryService;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -481,13 +476,6 @@ public class AbstractMonolithModule extends PrivateModule {
     }
 
     private void configureWorld() {
-        // World bindings
-        bind(WorldQueryService.class).to(DefaultWorldQueryService.class);
-        expose(WorldQueryService.class);
-
-        bind(WorldCommandService.class).to(DefaultWorldCommandService.class);
-        expose(WorldCommandService.class);
-
         bind(DirectionUtils.class).to(DefaultDirectionUtils.class);
         expose(DirectionUtils.class);
 

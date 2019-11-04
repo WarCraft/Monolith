@@ -7,6 +7,7 @@ import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.World;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.BlockType;
@@ -17,7 +18,6 @@ import gg.warcraft.monolith.api.world.block.build.BlockBuild;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
 import gg.warcraft.monolith.api.world.block.Sign;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.world.block.build.SimpleBlockBuild;
 
 import java.util.*;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DefaultBlockBuildCommandService implements BlockBuildCommandService {
-    private final WorldQueryService worldQueryService;
+    private final WorldService worldService;
     private final BlockBuildRepository buildRepository;
     private final BlockUtils blockUtils;
     private final Logger logger;
@@ -36,13 +36,13 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     private final BoundingBlockBox buildRepositoryBoundingBox;
 
     @Inject
-    public DefaultBlockBuildCommandService(WorldQueryService worldQueryService,
+    public DefaultBlockBuildCommandService(WorldService worldService,
                                            BlockBuildRepository buildRepository,
                                            BlockUtils blockUtils, BoundingBlockBoxFactory blockBoxFactory,
                                            @PluginLogger Logger logger, @Named("BuildRepositoryWorld") World world,
                                            @Named("BuildRepositoryMinimumCorner") Vector3i minimumCorner,
                                            @Named("BuildRepositoryMaximumCorner") Vector3i maximumCorner) {
-        this.worldQueryService = worldQueryService;
+        this.worldService = worldService;
         this.buildRepository = buildRepository;
         this.blockUtils = blockUtils;
         this.logger = logger;
@@ -62,20 +62,20 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         switch (sign.direction().get()) {
             case NORTH:
                 BlockLocation attachedLocation = sign.location().add(0, 0, 1);
-                attachedTo = worldQueryService.getBlockAt(attachedLocation);
+                attachedTo = worldService.getBlock(attachedLocation);
                 break;
             case EAST:
                 BlockLocation attachedLocation2 = sign.location().add(-1, 0, 0);
-                attachedTo = worldQueryService.getBlockAt(attachedLocation2);
+                attachedTo = worldService.getBlock(attachedLocation2);
                 break;
             case WEST:
                 BlockLocation attachedLocation4 = sign.location().add(1, 0, 0);
-                attachedTo = worldQueryService.getBlockAt(attachedLocation4);
+                attachedTo = worldService.getBlock(attachedLocation4);
                 break;
             case SOUTH:
             default:
                 BlockLocation attachedLocation3 = sign.location().add(0, 0, -1);
-                attachedTo = worldQueryService.getBlockAt(attachedLocation3);
+                attachedTo = worldService.getBlock(attachedLocation3);
                 break;
         }
         if (attachedTo.type() != BlockType.GLASS) {
@@ -121,7 +121,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
 
         int minY = sign.location().y() + 1;
         int maxY = findMinMaxCoordinate(glassBlocks, block -> {
-            Block highestBlock = worldQueryService.getHighestBlockAt(block.location());
+            Block highestBlock = worldService.getHighestBlock(block.location());
             return highestBlock.location().y();
         }, Integer::max);
 

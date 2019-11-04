@@ -3,37 +3,41 @@ package gg.warcraft.monolith.spigot.world
 import java.util.UUID
 
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.{Location, Sound, SoundCategory, World}
+import gg.warcraft.monolith.api.world.{ BlockLocation, Location, Sound, SoundCategory, World, WorldService }
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.service.WorldServerAdapter
-import gg.warcraft.monolith.spigot.world.block.{
-  SpigotBlock,
-  SpigotBlockMapper,
-}
+import gg.warcraft.monolith.api.world.item.Item
+import gg.warcraft.monolith.spigot.world.block.{ SpigotBlock, SpigotBlockMapper }
 import javax.inject.Inject
 import org.bukkit.Server
 
-class SpigotWorldService @Inject()(
+import scala.annotation.varargs
+
+class SpigotWorldService @Inject() (
     private val server: Server,
     private val locationMapper: SpigotLocationMapper,
     private val worldMapper: SpigotWorldMapper,
     private val blockMapper: SpigotBlockMapper,
     private val soundMapper: SpigotSoundMapper
-) extends WorldServerAdapter {
-
+) extends WorldService {
   private var spoofBlock: SpigotBlock = null // TODO initialize
 
-  override def getBlockAt(world: World, x: Int, y: Int, z: Int): Block = {
+  override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
     blockMapper.map(spigotBlock)
   }
 
-  override def getHighestBlockAt(world: World, x: Int, z: Int): Block = {
+  override def getBlock(location: BlockLocation): Block =
+    getBlock(location.world, location.x, location.y, location.z)
+
+  override def getHighestBlock(world: World, x: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getHighestBlockAt(x, z)
     blockMapper.map(spigotBlock)
   }
+
+  override def getHighestBlock(location: BlockLocation): Block =
+    getHighestBlock(location.world, location.x, location.z)
 
   private def update(spigotBlock: SpigotBlock, to: Block): Unit = {
     val spigotBlockState = spigotBlock.getState
@@ -49,10 +53,19 @@ class SpigotWorldService @Inject()(
     newSpigotBlockState.update( /* force */ true, /* physics */ false)
   }
 
-  override def updateBlock(block: Block): Unit = {
+  override def setBlock(location: BlockLocation, block: Block): Unit = {
     val spigotLocation = locationMapper.map(block.location)
     update(spigotLocation.getBlock, block)
   }
+
+  override def setBlockType(location: BlockLocation, `type`: BlockType): Unit = {
+    val spigotLocation = locationMapper.map(location)
+    val spigotType = null // TODO map BlockType to Material
+    spigotLocation.getBlock.setType(spigotType)
+  }
+
+  override def updateBlock(block: Block): Unit =
+    setBlock(block.location, block)
 
   override def spoofBlock(block: Block, playerId: UUID): Unit = {
     val spigotPlayer = server.getPlayer(playerId)
@@ -61,6 +74,10 @@ class SpigotWorldService @Inject()(
       update(spoofBlock, block)
       spigotPlayer.sendBlockChange(spigotLocation, spoofBlock.getBlockData)
     }
+  }
+
+  @varargs override def dropItems(location: Location, items: Item*): Unit = {
+    throw new IllegalArgumentException // TODO
   }
 
   override def playSound(
@@ -80,6 +97,12 @@ class SpigotWorldService @Inject()(
       pitch
     )
   }
+
+  override def playSound(
+      location: Location,
+      sound: Sound,
+      category: SoundCategory
+  ): Unit = playSound(location, sound, category, volume = 1, pitch = 1)
 
   override def strikeLightning(location: Location, ambient: Boolean): Unit = {
     val spigotLocation = locationMapper.map(location)
@@ -119,6 +142,4 @@ class SpigotWorldService @Inject()(
         return arrow.getUniqueId();
    */
   }
-
-  // TODO add dropItems method
 }

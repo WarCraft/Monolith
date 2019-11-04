@@ -17,8 +17,8 @@ import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
 import gg.warcraft.monolith.api.world.World;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
-import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
 import gg.warcraft.monolith.app.AbstractMonolithModule;
 import gg.warcraft.monolith.app.effect.particle.MultiParticle;
 import gg.warcraft.monolith.spigot.command.SpigotCommandAdapter;
@@ -152,8 +152,8 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         bind(BlockBackupService.class).to(SpigotBlockBackupService.class);
         expose(BlockBackupService.class);
 
-        bind(WorldServerAdapter.class).to(SpigotWorldService.class);
-        expose(WorldServerAdapter.class);
+        bind(WorldService.class).to(SpigotWorldService.class);
+        expose(WorldService.class);
     }
 
     private void configureMapper() {
