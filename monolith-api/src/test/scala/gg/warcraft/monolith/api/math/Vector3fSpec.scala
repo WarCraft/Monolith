@@ -1,10 +1,11 @@
 package gg.warcraft.monolith.api.math
 
-import org.scalactic.TolerantNumerics
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest.{fixture, Outcome}
 
 class Vector3fSpec extends fixture.FunSpec {
-  private implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
+  private implicit val floatEq: Equality[Float] =
+    TolerantNumerics.tolerantFloatEquality(1e-6f)
 
   private val inverseTanOneDivSqrtTwoToDegrees =
     Math.toDegrees(Math.atan(1.0 / Math.sqrt(2.0))).toFloat
