@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 final case class Andesite(
     variant: AndesiteVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -18,7 +18,7 @@ final case class Andesite(
 final case class Anvil(
     variant: AnvilVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -29,7 +29,7 @@ final case class Anvil(
 
 final case class Apple(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -40,7 +40,7 @@ final case class Apple(
 
 final case class ArmorStand(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -52,7 +52,7 @@ final case class ArmorStand(
 final case class Arrow(
     variant: ArrowVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -64,7 +64,7 @@ final case class Arrow(
 final case class Axe(
     variant: AxeVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -84,7 +84,7 @@ final case class Axe(
 
 final case class Bamboo(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -95,7 +95,7 @@ final case class Bamboo(
 final case class Banner(
     variant: BannerVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -108,7 +108,7 @@ final case class Banner(
 final case class BannerPattern(
     variant: BannerPatternVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends VariableItem[BannerPatternVariant] {
@@ -117,7 +117,7 @@ final case class BannerPattern(
 
 final case class Barrel(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -127,7 +127,7 @@ final case class Barrel(
 
 final case class Barrier(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -137,7 +137,7 @@ final case class Barrier(
 
 final case class Beacon(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -148,7 +148,7 @@ final case class Beacon(
 final case class Bed(
     variant: BedVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -159,7 +159,7 @@ final case class Bed(
 
 final case class Bedrock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -170,7 +170,7 @@ final case class Bedrock(
 final case class Beef(
     variant: BeefVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -182,7 +182,7 @@ final case class Beef(
 
 final case class Beetroot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -193,7 +193,7 @@ final case class Beetroot(
 
 final case class Bell(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -203,7 +203,7 @@ final case class Bell(
 
 final case class BlastFurnace(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -213,7 +213,7 @@ final case class BlastFurnace(
 
 final case class BlazePowder(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -223,7 +223,7 @@ final case class BlazePowder(
 
 final case class BlazeRod(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -234,7 +234,7 @@ final case class BlazeRod(
 final case class Boat(
     variant: BoatVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -245,7 +245,7 @@ final case class Boat(
 
 final case class Bone(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -255,7 +255,7 @@ final case class Bone(
 
 final case class BoneBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -265,7 +265,7 @@ final case class BoneBlock(
 
 final case class BoneMeal(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -275,7 +275,7 @@ final case class BoneMeal(
 
 final case class BottleOfEnchanting(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -285,7 +285,7 @@ final case class BottleOfEnchanting(
 
 final case class Book(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -295,7 +295,7 @@ final case class Book(
 
 final case class BookAndQuill(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -304,7 +304,7 @@ final case class BookAndQuill(
 
 final case class Bookshelf(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -315,7 +315,7 @@ final case class Bookshelf(
 final case class Boots(
     variant: BootsVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -335,7 +335,7 @@ final case class Boots(
 
 final case class Bow(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -348,7 +348,7 @@ final case class Bow(
 
 final case class Bowl(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -358,7 +358,7 @@ final case class Bowl(
 
 final case class Bread(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -369,7 +369,7 @@ final case class Bread(
 
 final case class BrewingStand(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -380,7 +380,7 @@ final case class BrewingStand(
 final case class Brick(
     variant: BrickVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -392,7 +392,7 @@ final case class Brick(
 final case class BrickBlock(
     variant: BrickBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -404,7 +404,7 @@ final case class BrickBlock(
 final case class Bucket(
     variant: BucketVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -417,7 +417,7 @@ final case class Bucket(
 final case class Button(
     variant: ButtonVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -428,7 +428,7 @@ final case class Button(
 
 final case class Cactus(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -438,7 +438,7 @@ final case class Cactus(
 
 final case class Cake(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -447,7 +447,7 @@ final case class Cake(
 
 final case class Campfire(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -458,7 +458,7 @@ final case class Campfire(
 final case class Carpet(
     variant: CarpetVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -469,7 +469,7 @@ final case class Carpet(
 
 final case class Carrot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -480,7 +480,7 @@ final case class Carrot(
 
 final case class CarrotOnAStick(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -493,7 +493,7 @@ final case class CarrotOnAStick(
 
 final case class CartographyTable(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -503,7 +503,7 @@ final case class CartographyTable(
 
 final case class Charcoal(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -513,7 +513,7 @@ final case class Charcoal(
 
 final case class Cauldron(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -524,7 +524,7 @@ final case class Cauldron(
 final case class Chest(
     variant: ChestVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -536,7 +536,7 @@ final case class Chest(
 final case class Chestplate(
     variant: ChestplateVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -557,7 +557,7 @@ final case class Chestplate(
 final case class Chicken(
     variant: ChickenVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -569,7 +569,7 @@ final case class Chicken(
 
 final case class ChorusFlower(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -580,7 +580,7 @@ final case class ChorusFlower(
 final case class ChorusFruit(
     variant: ChorusFruitVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -593,7 +593,7 @@ final case class ChorusFruit(
 
 final case class ChorusPlant(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -603,7 +603,7 @@ final case class ChorusPlant(
 
 final case class Clay(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -613,7 +613,7 @@ final case class Clay(
 
 final case class ClayBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -623,7 +623,7 @@ final case class ClayBlock(
 
 final case class Clock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -633,7 +633,7 @@ final case class Clock(
 
 final case class Coal(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -643,7 +643,7 @@ final case class Coal(
 
 final case class CoalBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -653,7 +653,7 @@ final case class CoalBlock(
 
 final case class CoalOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -664,7 +664,7 @@ final case class CoalOre(
 final case class Cobblestone(
     variant: CobblestoneVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -675,7 +675,7 @@ final case class Cobblestone(
 
 final case class Cobweb(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -685,7 +685,7 @@ final case class Cobweb(
 
 final case class CocoaBeans(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -696,7 +696,7 @@ final case class CocoaBeans(
 final case class Cod(
     variant: CodVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -709,7 +709,7 @@ final case class Cod(
 final case class CommandBlock(
     variant: CommandBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -720,7 +720,7 @@ final case class CommandBlock(
 
 final case class Comparator(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -730,7 +730,7 @@ final case class Comparator(
 
 final case class Compass(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -740,7 +740,7 @@ final case class Compass(
 
 final case class Composter(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -751,7 +751,7 @@ final case class Composter(
 final case class Concrete(
     variant: ConcreteVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -763,7 +763,7 @@ final case class Concrete(
 final case class ConcretePowder(
     variant: ConcretePowderVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -774,7 +774,7 @@ final case class ConcretePowder(
 
 final case class Conduit(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -784,7 +784,7 @@ final case class Conduit(
 
 final case class Cookie(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -796,7 +796,7 @@ final case class Cookie(
 final case class Coral(
     variant: CoralVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -808,7 +808,7 @@ final case class Coral(
 final case class CoralBlock(
     variant: CoralBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -820,7 +820,7 @@ final case class CoralBlock(
 final case class CoralFan(
     variant: CoralFanVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -831,7 +831,7 @@ final case class CoralFan(
 
 final case class CraftingTable(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -841,7 +841,7 @@ final case class CraftingTable(
 
 final case class Crossbow(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -854,7 +854,7 @@ final case class Crossbow(
 
 final case class DaylightDetector(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -864,7 +864,7 @@ final case class DaylightDetector(
 
 final case class DeadBush(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -874,7 +874,7 @@ final case class DeadBush(
 
 final case class DebugStick(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -883,7 +883,7 @@ final case class DebugStick(
 
 final case class Diamond(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -893,7 +893,7 @@ final case class Diamond(
 
 final case class DiamondBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -903,7 +903,7 @@ final case class DiamondBlock(
 
 final case class DiamondOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -914,7 +914,7 @@ final case class DiamondOre(
 final case class Diorite(
     variant: DioriteVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -926,7 +926,7 @@ final case class Diorite(
 final case class Dirt(
     variant: DirtVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -937,7 +937,7 @@ final case class Dirt(
 
 final case class Dispenser(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -948,7 +948,7 @@ final case class Dispenser(
 final case class Door(
     variant: DoorVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -959,7 +959,7 @@ final case class Door(
 
 final case class DragonBreath(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -969,7 +969,7 @@ final case class DragonBreath(
 
 final case class DragonEgg(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -979,7 +979,7 @@ final case class DragonEgg(
 
 final case class DriedKelp(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -990,7 +990,7 @@ final case class DriedKelp(
 
 final case class DriedKelpBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1000,7 +1000,7 @@ final case class DriedKelpBlock(
 
 final case class Dropper(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1011,7 +1011,7 @@ final case class Dropper(
 final case class Dye(
     variant: DyeVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1022,7 +1022,7 @@ final case class Dye(
 
 final case class Egg(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1032,7 +1032,7 @@ final case class Egg(
 
 final case class Elytra(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -1045,7 +1045,7 @@ final case class Elytra(
 
 final case class Emerald(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1055,7 +1055,7 @@ final case class Emerald(
 
 final case class EmeraldBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1065,7 +1065,7 @@ final case class EmeraldBlock(
 
 final case class EmeraldOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1075,7 +1075,7 @@ final case class EmeraldOre(
 
 final case class EnchantedBook(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -1084,7 +1084,7 @@ final case class EnchantedBook(
 
 final case class EnchantingTable(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1094,7 +1094,7 @@ final case class EnchantingTable(
 
 final case class EndCrystal(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1104,7 +1104,7 @@ final case class EndCrystal(
 
 final case class EndPortalFrame(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1114,7 +1114,7 @@ final case class EndPortalFrame(
 
 final case class EndRod(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1125,7 +1125,7 @@ final case class EndRod(
 final case class EndStone(
     variant: EndStoneVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1136,7 +1136,7 @@ final case class EndStone(
 
 final case class EnderEye(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1146,7 +1146,7 @@ final case class EnderEye(
 
 final case class EnderPearl(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1157,7 +1157,7 @@ final case class EnderPearl(
 
 final case class Farmland(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1167,7 +1167,7 @@ final case class Farmland(
 
 final case class Feather(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1178,7 +1178,7 @@ final case class Feather(
 final case class Fence(
     variant: FenceVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1190,7 +1190,7 @@ final case class Fence(
 final case class Fern(
     variant: FernVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1201,7 +1201,7 @@ final case class Fern(
 
 final case class FireCharge(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1211,7 +1211,7 @@ final case class FireCharge(
 
 final case class FireworkRocket(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1222,7 +1222,7 @@ final case class FireworkRocket(
 final case class FireworkStar(
     variant: FireworkStarVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1233,7 +1233,7 @@ final case class FireworkStar(
 
 final case class FishingRod(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -1246,7 +1246,7 @@ final case class FishingRod(
 
 final case class FletchingTable(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1256,7 +1256,7 @@ final case class FletchingTable(
 
 final case class Flint(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1266,7 +1266,7 @@ final case class Flint(
 
 final case class FlintAndSteel(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -1280,7 +1280,7 @@ final case class FlintAndSteel(
 final case class Flower(
     variant: FlowerVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1291,7 +1291,7 @@ final case class Flower(
 
 final case class FlowerPot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1301,7 +1301,7 @@ final case class FlowerPot(
 
 final case class Furnace(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1312,7 +1312,7 @@ final case class Furnace(
 final case class FenceGate(
     variant: FenceGateVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1323,7 +1323,7 @@ final case class FenceGate(
 
 final case class GhastTear(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1334,7 +1334,7 @@ final case class GhastTear(
 final case class Glass(
     variant: GlassVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1345,7 +1345,7 @@ final case class Glass(
 
 final case class GlassBottle(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1356,7 +1356,7 @@ final case class GlassBottle(
 final case class GlassPane(
     variant: GlassPaneVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1368,7 +1368,7 @@ final case class GlassPane(
 final case class GlazedTerracotta(
     variant: GlazedTerracottaVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1379,7 +1379,7 @@ final case class GlazedTerracotta(
 
 final case class Glowstone(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1389,7 +1389,7 @@ final case class Glowstone(
 
 final case class GlowstoneDust(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1399,7 +1399,7 @@ final case class GlowstoneDust(
 
 final case class GoldBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1409,7 +1409,7 @@ final case class GoldBlock(
 
 final case class GoldIngot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1419,7 +1419,7 @@ final case class GoldIngot(
 
 final case class GoldNugget(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1429,7 +1429,7 @@ final case class GoldNugget(
 
 final case class GoldOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1440,7 +1440,7 @@ final case class GoldOre(
 final case class GoldenApple(
     enchanted: Boolean,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1454,7 +1454,7 @@ final case class GoldenApple(
 
 final case class GoldenCarrot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1465,7 +1465,7 @@ final case class GoldenCarrot(
 
 final case class GoldenMelonSlice(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1476,7 +1476,7 @@ final case class GoldenMelonSlice(
 final case class Granite(
     variant: GraniteVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1488,7 +1488,7 @@ final case class Granite(
 final case class Grass(
     variant: GrassVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1499,7 +1499,7 @@ final case class Grass(
 
 final case class GrassBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1509,7 +1509,7 @@ final case class GrassBlock(
 
 final case class GrassPath(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1519,7 +1519,7 @@ final case class GrassPath(
 
 final case class Gravel(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1529,7 +1529,7 @@ final case class Gravel(
 
 final case class Grindstone(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1539,7 +1539,7 @@ final case class Grindstone(
 
 final case class Gunpowder(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1549,7 +1549,7 @@ final case class Gunpowder(
 
 final case class HayBale(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1559,7 +1559,7 @@ final case class HayBale(
 
 final case class HeartOfTheSea(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1570,7 +1570,7 @@ final case class HeartOfTheSea(
 final case class Helmet(
     variant: HelmetVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -1591,7 +1591,7 @@ final case class Helmet(
 final case class Hoe(
     variant: HoeVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -1611,7 +1611,7 @@ final case class Hoe(
 
 final case class Hopper(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1622,7 +1622,7 @@ final case class Hopper(
 final case class HorseArmor(
     variant: HorseArmorVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends VariableItem[HorseArmorVariant] {
@@ -1632,7 +1632,7 @@ final case class HorseArmor(
 final case class Ice(
     variant: IceVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1644,7 +1644,7 @@ final case class Ice(
 final case class InfestedBlock(
     variant: InfestedBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1655,7 +1655,7 @@ final case class InfestedBlock(
 
 final case class InkSac(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1665,7 +1665,7 @@ final case class InkSac(
 
 final case class IronBars(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1675,7 +1675,7 @@ final case class IronBars(
 
 final case class IronBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1685,7 +1685,7 @@ final case class IronBlock(
 
 final case class IronIngot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1695,7 +1695,7 @@ final case class IronIngot(
 
 final case class IronNugget(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1705,7 +1705,7 @@ final case class IronNugget(
 
 final case class IronOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1715,7 +1715,7 @@ final case class IronOre(
 
 final case class ItemFrame(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1725,7 +1725,7 @@ final case class ItemFrame(
 
 final case class JackOfTheLantern(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1735,7 +1735,7 @@ final case class JackOfTheLantern(
 
 final case class JigsawBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1745,7 +1745,7 @@ final case class JigsawBlock(
 
 final case class Jukebox(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1755,7 +1755,7 @@ final case class Jukebox(
 
 final case class Kelp(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1765,7 +1765,7 @@ final case class Kelp(
 
 final case class KnowledgeBook(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -1774,7 +1774,7 @@ final case class KnowledgeBook(
 
 final case class Ladder(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1784,7 +1784,7 @@ final case class Ladder(
 
 final case class Lantern(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1794,7 +1794,7 @@ final case class Lantern(
 
 final case class Lapis(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1804,7 +1804,7 @@ final case class Lapis(
 
 final case class LapisBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1814,7 +1814,7 @@ final case class LapisBlock(
 
 final case class LapisOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1824,7 +1824,7 @@ final case class LapisOre(
 
 final case class Lead(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1834,7 +1834,7 @@ final case class Lead(
 
 final case class Leather(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1845,7 +1845,7 @@ final case class Leather(
 final case class Leaves(
     variant: LeavesVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1856,7 +1856,7 @@ final case class Leaves(
 
 final case class Lectern(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1867,7 +1867,7 @@ final case class Lectern(
 final case class Leggings(
     variant: LeggingsVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -1887,7 +1887,7 @@ final case class Leggings(
 
 final case class Lever(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1897,7 +1897,7 @@ final case class Lever(
 
 final case class LilyPad(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1908,7 +1908,7 @@ final case class LilyPad(
 final case class Log(
     variant: LogVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1919,7 +1919,7 @@ final case class Log(
 
 final case class Loom(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1929,7 +1929,7 @@ final case class Loom(
 
 final case class MagmaBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1939,7 +1939,7 @@ final case class MagmaBlock(
 
 final case class MagmaCream(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1950,7 +1950,7 @@ final case class MagmaCream(
 final case class Map(
     filled: Boolean,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1962,7 +1962,7 @@ final case class Map(
 
 final case class Melon(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1972,7 +1972,7 @@ final case class Melon(
 
 final case class MelonSlice(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1984,7 +1984,7 @@ final case class MelonSlice(
 final case class Minecart(
     variant: MinecartVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -1997,7 +1997,7 @@ final case class Minecart(
 final case class MobHead(
     variant: MobHeadVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2009,7 +2009,7 @@ final case class MobHead(
 final case class Mushroom(
     variant: MushroomVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2021,7 +2021,7 @@ final case class Mushroom(
 final case class MushroomBlock(
     variant: MushroomBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2033,7 +2033,7 @@ final case class MushroomBlock(
 final case class MusicDisc(
     variant: MusicDiscVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2045,7 +2045,7 @@ final case class MusicDisc(
 final case class Mutton(
     variant: MuttonVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2057,7 +2057,7 @@ final case class Mutton(
 
 final case class Mycelium(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2067,7 +2067,7 @@ final case class Mycelium(
 
 final case class NameTag(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2077,7 +2077,7 @@ final case class NameTag(
 
 final case class NautilusShell(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2087,7 +2087,7 @@ final case class NautilusShell(
 
 final case class Netherrack(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2097,7 +2097,7 @@ final case class Netherrack(
 
 final case class NetherStar(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2107,7 +2107,7 @@ final case class NetherStar(
 
 final case class NetherWart(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2117,7 +2117,7 @@ final case class NetherWart(
 
 final case class NetherWartBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2127,7 +2127,7 @@ final case class NetherWartBlock(
 
 final case class NoteBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2137,7 +2137,7 @@ final case class NoteBlock(
 
 final case class Observer(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2147,7 +2147,7 @@ final case class Observer(
 
 final case class Obsidian(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2157,7 +2157,7 @@ final case class Obsidian(
 
 final case class Painting(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2167,7 +2167,7 @@ final case class Painting(
 
 final case class Paper(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2177,7 +2177,7 @@ final case class Paper(
 
 final case class PhantomMembrane(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2188,7 +2188,7 @@ final case class PhantomMembrane(
 final case class Plant(
     variant: PlantVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2200,7 +2200,7 @@ final case class Plant(
 final case class Pickaxe(
     variant: PickaxeVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -2221,7 +2221,7 @@ final case class Pickaxe(
 final case class Pillar(
     variant: PillarVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2233,7 +2233,7 @@ final case class Pillar(
 final case class Piston(
     variant: PistonVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2247,7 +2247,7 @@ final case class Piston(
 final case class Planks(
     variant: PlanksVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2258,7 +2258,7 @@ final case class Planks(
 
 final case class Podzol(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2269,7 +2269,7 @@ final case class Podzol(
 final case class Porkchop(
     variant: PorkchopVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2282,7 +2282,7 @@ final case class Porkchop(
 final case class Potato(
     variant: PotatoVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2296,7 +2296,7 @@ final case class Potion(
     variant: PotionVariant,
     hideEffects: Boolean,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends VariableItem[PotionVariant] {
@@ -2308,7 +2308,7 @@ final case class Potion(
 final case class PressurePlate(
     variant: PressurePlateVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2320,7 +2320,7 @@ final case class PressurePlate(
 final case class Prismarine(
     variant: PrismarineVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2331,7 +2331,7 @@ final case class Prismarine(
 
 final case class PrismarineCrystals(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2341,7 +2341,7 @@ final case class PrismarineCrystals(
 
 final case class PrismarineShard(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2351,7 +2351,7 @@ final case class PrismarineShard(
 
 final case class Pufferfish(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2363,7 +2363,7 @@ final case class Pufferfish(
 final case class Pumpkin(
     carved: Boolean,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2373,7 +2373,7 @@ final case class Pumpkin(
 
 final case class PumpkinPie(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2384,7 +2384,7 @@ final case class PumpkinPie(
 
 final case class PurpurBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2394,7 +2394,7 @@ final case class PurpurBlock(
 
 final case class Quartz(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2405,7 +2405,7 @@ final case class Quartz(
 final case class QuartzBlock(
     variant: QuartzBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2416,7 +2416,7 @@ final case class QuartzBlock(
 
 final case class QuartzOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2427,7 +2427,7 @@ final case class QuartzOre(
 final case class Rabbit(
     variant: RabbitVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2439,7 +2439,7 @@ final case class Rabbit(
 
 final case class RabbitFoot(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2449,7 +2449,7 @@ final case class RabbitFoot(
 
 final case class RabbitHide(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2460,7 +2460,7 @@ final case class RabbitHide(
 final case class Rail(
     variant: RailVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2471,7 +2471,7 @@ final case class Rail(
 
 final case class Repeater(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2481,7 +2481,7 @@ final case class Repeater(
 
 final case class Redstone(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2491,7 +2491,7 @@ final case class Redstone(
 
 final case class RedstoneBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2501,7 +2501,7 @@ final case class RedstoneBlock(
 
 final case class RedstoneLamp(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2511,7 +2511,7 @@ final case class RedstoneLamp(
 
 final case class RedstoneOre(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2521,7 +2521,7 @@ final case class RedstoneOre(
 
 final case class RedstoneTorch(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2531,7 +2531,7 @@ final case class RedstoneTorch(
 
 final case class RottenFlesh(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2542,7 +2542,7 @@ final case class RottenFlesh(
 
 final case class Saddle(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -2552,7 +2552,7 @@ final case class Saddle(
 final case class Salmon(
     variant: SalmonVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2565,7 +2565,7 @@ final case class Salmon(
 final case class Sand(
     variant: SandVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2577,7 +2577,7 @@ final case class Sand(
 final case class Sandstone(
     variant: SandstoneVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2589,7 +2589,7 @@ final case class Sandstone(
 final case class Sapling(
     variant: SaplingVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2600,7 +2600,7 @@ final case class Sapling(
 
 final case class Scaffolding(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2610,7 +2610,7 @@ final case class Scaffolding(
 
 final case class Scute(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2620,7 +2620,7 @@ final case class Scute(
 
 final case class Seagrass(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2630,7 +2630,7 @@ final case class Seagrass(
 
 final case class SeaLantern(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2640,7 +2640,7 @@ final case class SeaLantern(
 
 final case class SeaPickle(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2651,7 +2651,7 @@ final case class SeaPickle(
 final case class Seeds(
     variant: SeedsVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2662,7 +2662,7 @@ final case class Seeds(
 
 final case class Shears(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -2675,7 +2675,7 @@ final case class Shears(
 
 final case class Shield(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -2689,7 +2689,7 @@ final case class Shield(
 final case class Shovel(
     variant: ShovelVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -2710,7 +2710,7 @@ final case class Shovel(
 final case class ShulkerBox(
     variant: ShulkerBoxVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2721,7 +2721,7 @@ final case class ShulkerBox(
 
 final case class ShulkerShell(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2732,7 +2732,7 @@ final case class ShulkerShell(
 final case class Sign(
     variant: SignVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2745,7 +2745,7 @@ final case class Sign(
 final case class Slab(
     variant: SlabVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2756,7 +2756,7 @@ final case class Slab(
 
 final case class Slimeball(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2766,7 +2766,7 @@ final case class Slimeball(
 
 final case class SlimeBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2776,7 +2776,7 @@ final case class SlimeBlock(
 
 final case class SmithingTable(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2786,7 +2786,7 @@ final case class SmithingTable(
 
 final case class Smoker(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2796,7 +2796,7 @@ final case class Smoker(
 
 final case class Snow(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2806,7 +2806,7 @@ final case class Snow(
 
 final case class Snowball(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2817,7 +2817,7 @@ final case class Snowball(
 
 final case class SnowBlock(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2827,7 +2827,7 @@ final case class SnowBlock(
 
 final case class SoulSand(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2838,7 +2838,7 @@ final case class SoulSand(
 final case class SpawnEgg(
     variant: SpawnEggVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2849,7 +2849,7 @@ final case class SpawnEgg(
 
 final case class Spawner(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2860,7 +2860,7 @@ final case class Spawner(
 final case class SpiderEye(
     variant: SpiderEyeVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2874,7 +2874,7 @@ final case class SpiderEye(
 final case class Sponge(
     variant: SpongeVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2886,7 +2886,7 @@ final case class Sponge(
 final case class Stairs(
     variant: StairsVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2898,7 +2898,7 @@ final case class Stairs(
 final case class Stew(
     variant: StewVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2910,7 +2910,7 @@ final case class Stew(
 
 final case class Stick(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2921,7 +2921,7 @@ final case class Stick(
 final case class Stone(
     variant: StoneVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2932,7 +2932,7 @@ final case class Stone(
 
 final case class Stonecutter(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2943,7 +2943,7 @@ final case class Stonecutter(
 final case class StructureBlock(
     variant: StructureBlockVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2954,7 +2954,7 @@ final case class StructureBlock(
 
 final case class PieceOfString(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2964,7 +2964,7 @@ final case class PieceOfString(
 
 final case class Sugar(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2974,7 +2974,7 @@ final case class Sugar(
 
 final case class SugarCane(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2984,7 +2984,7 @@ final case class SugarCane(
 
 final case class SweetBerries(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -2996,7 +2996,7 @@ final case class SweetBerries(
 final case class Sword(
     variant: SwordVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -3017,7 +3017,7 @@ final case class Sword(
 final case class Terracotta(
     variant: TerracottaVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3028,7 +3028,7 @@ final case class Terracotta(
 
 final case class TNT(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3038,7 +3038,7 @@ final case class TNT(
 
 final case class Torch(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3048,7 +3048,7 @@ final case class Torch(
 
 final case class TotemOfUndying(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends Item {
@@ -3058,7 +3058,7 @@ final case class TotemOfUndying(
 final case class Trapdoor(
     variant: TrapdoorVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3069,7 +3069,7 @@ final case class Trapdoor(
 
 final case class Trident(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -3082,7 +3082,7 @@ final case class Trident(
 
 final case class TripwireHook(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3092,7 +3092,7 @@ final case class TripwireHook(
 
 final case class TropicalFish(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3103,7 +3103,7 @@ final case class TropicalFish(
 
 final case class TurtleEgg(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3113,7 +3113,7 @@ final case class TurtleEgg(
 
 final case class TurtleHelmet(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     attributes: Set[String],
     hideAttributes: Boolean,
     durability: Int,
@@ -3126,7 +3126,7 @@ final case class TurtleHelmet(
 
 final case class Vine(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3137,7 +3137,7 @@ final case class Vine(
 final case class Wall(
     variant: WallVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3149,7 +3149,7 @@ final case class Wall(
 final case class WeightedPressurePlate(
     variant: WeightedPressurePlateVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3160,7 +3160,7 @@ final case class WeightedPressurePlate(
 
 final case class Wheat(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3171,7 +3171,7 @@ final case class Wheat(
 final case class Wood(
     variant: WoodVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3183,7 +3183,7 @@ final case class Wood(
 final case class Wool(
     variant: WoolVariant,
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
@@ -3194,7 +3194,7 @@ final case class Wool(
 
 final case class WrittenBook(
     name: String,
-    tooltip: Array[String],
+    tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean

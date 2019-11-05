@@ -1,9 +1,12 @@
 package gg.warcraft.monolith.api.world.item
 
+import java.util
+
 import gg.warcraft.monolith.api.core.CaseClass
 
 import scala.annotation.varargs
 import scala.collection.immutable.Map
+import scala.jdk.CollectionConverters._
 
 trait Item extends CaseClass {
   val `type`: ItemType
@@ -13,11 +16,15 @@ trait Item extends CaseClass {
   def withName(name: String): this.type =
     copyWith("name", name)
 
-  val tooltip: Array[String]
-  def withTooltip(tooltip: Array[String]): this.type =
-    copyWith("tooltip", tooltip)
+  val tooltip: List[String]
+  def getTooltip: util.List[String] = tooltip.asJava
+  @varargs def addTooltip(tooltip: String*): this.type =
+    copyWith("tooltip", this.tooltip ++ tooltip)
+  @varargs def withTooltip(tooltip: String*): this.type =
+    copyWith("tooltip", List(tooltip: _*))
 
   val attributes: Set[String]
+  def getAttributes: util.Set[String] = attributes.asJava
   @varargs def hasAttributes(attributes: String*): Boolean =
     attributes.forall(this.attributes.contains)
   @varargs def addAttributes(attributes: String*): this.type =

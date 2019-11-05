@@ -21,7 +21,7 @@ class SpigotItemMapper @Inject() (
     // Set common item data
     val meta = item.getItemMeta
     val name = meta.getDisplayName
-    val tooltip: Array[String] = Array() // TODO item.getItemMeta.getLore
+    val tooltip: List[String] = List.empty // TODO item.getItemMeta.getLore
     val attr = Set.empty[String] // TODO map attributes
     val hideAttr = meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
 

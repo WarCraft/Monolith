@@ -12,7 +12,6 @@ public enum ItemAttribute {
 
     HORSE_JUMP_STRENGTH,
 
-
     PLAYER_ATTACK_SPEED,
     PLAYER_LUCK,
 
