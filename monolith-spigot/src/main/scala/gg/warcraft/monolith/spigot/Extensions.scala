@@ -344,11 +344,6 @@ object Extensions {
       Material.YELLOW_DYE
     )
 
-    private final val endStone = util.EnumSet.of(
-      Material.END_STONE,
-      Material.END_STONE_BRICKS
-    )
-
     private final val fence = util.EnumSet.of(
       Material.ACACIA_FENCE,
       Material.BIRCH_FENCE,
@@ -941,6 +936,9 @@ object Extensions {
     private final val stone = util.EnumSet.of(
       Material.STONE,
       Material.SMOOTH_STONE,
+    )
+
+    private final val stoneBrick = util.EnumSet.of(
       Material.STONE_BRICKS,
       Material.CHISELED_STONE_BRICKS,
       Material.CRACKED_STONE_BRICKS,
@@ -1080,7 +1078,6 @@ object Extensions {
     def isDirt: Boolean = dirt.contains(material)
     def isDoor: Boolean = door.contains(material)
     def isDye: Boolean = dye.contains(material)
-    def isEndStone: Boolean = endStone.contains(material)
     def isFence: Boolean = fence.contains(material)
     def isFenceGate: Boolean = fenceGate.contains(material)
     def isFern: Boolean = fern.contains(material)
@@ -1136,6 +1133,7 @@ object Extensions {
     def isSponge: Boolean = sponge.contains(material)
     def isStairs: Boolean = stairs.contains(material)
     def isStone: Boolean = stone.contains(material)
+    def isStoneBrick: Boolean = stoneBrick.contains(material)
     def isStructureBlock: Boolean = structureBlock.contains(material)
     def isSword: Boolean = sword.contains(material)
     def isTerracotta: Boolean = terracotta.contains(material)

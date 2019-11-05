@@ -3,7 +3,9 @@ package gg.warcraft.monolith.api.world.block.variant;
 import gg.warcraft.monolith.api.world.block.BlockVariant;
 import gg.warcraft.monolith.api.world.item.ItemVariant;
 
-public enum EndStoneVariant implements BlockVariant, ItemVariant {
+public enum StoneBrickVariant implements BlockVariant, ItemVariant {
     NORMAL,
-    BRICK,
+    CHISELED,
+    CRACKED,
+    MOSSY,
 }

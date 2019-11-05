@@ -1123,14 +1123,22 @@ case class EndRod(
 }
 
 case class EndStone(
-    variant: EndStoneVariant,
     name: String,
     tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
-) extends VariableItem[EndStoneVariant]
-    with StackableItem {
+) extends StackableItem {
+  val `type` = ItemType.END_STONE
+}
+
+case class EndStoneBrick(
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
   val `type` = ItemType.END_STONE
 }
 
@@ -2926,6 +2934,18 @@ case class Stone(
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends VariableItem[StoneVariant]
+    with StackableItem {
+  val `type` = ItemType.STONE
+}
+
+case class StoneBrick(
+    variant: StoneBrickVariant,
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends VariableItem[StoneBrickVariant]
     with StackableItem {
   val `type` = ItemType.STONE
 }

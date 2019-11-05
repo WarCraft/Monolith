@@ -13,7 +13,7 @@ public enum WallVariant implements BlockVariant, ItemVariant {
     COBBLESTONE,
     MOSSY_COBBLESTONE,
 
-    // END_STONE
+    // END_STONE_BRICK
     END_STONE_BRICK,
 
     // PRISMARINE
@@ -23,7 +23,7 @@ public enum WallVariant implements BlockVariant, ItemVariant {
     SANDSTONE,
     RED_SANDSTONE,
 
-    // STONE
+    // STONE_BRICK
     STONE_BRICK,
     MOSSY_STONE_BRICK,
 

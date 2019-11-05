@@ -515,10 +515,15 @@ final case class EndRod(
 }
 
 final case class EndStone(
-    location: BlockLocation,
-    variant: EndStoneVariant
-) extends VariableBlock[EndStoneVariant] {
+    location: BlockLocation
+) extends Block {
   override val `type` = BlockType.END_STONE
+}
+
+final case class EndStoneBrick(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.END_STONE_BRICK
 }
 
 // TODO add wetness state
@@ -1339,6 +1344,13 @@ final case class Stone(
     variant: StoneVariant
 ) extends VariableBlock[StoneVariant] {
   override val `type` = BlockType.STONE
+}
+
+final case class StoneBrick(
+    location: BlockLocation,
+    variant: StoneBrickVariant
+) extends VariableBlock[StoneBrickVariant] {
+  override val `type` = BlockType.STONE_BRICK
 }
 
 final case class Stonecutter(

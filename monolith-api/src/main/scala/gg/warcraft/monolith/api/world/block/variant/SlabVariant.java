@@ -13,7 +13,7 @@ public enum SlabVariant implements BlockVariant, ItemVariant {
     COBBLESTONE,
     MOSSY_COBBLESTONE,
 
-    // END_STONE
+    // END_STONE_BRICK
     END_STONE_BRICK,
 
     // PETRIFIED
@@ -44,6 +44,7 @@ public enum SlabVariant implements BlockVariant, ItemVariant {
     STONE,
     SMOOTH_STONE,
 
+    // STONE_BRICK
     STONE_BRICK,
     MOSSY_STONE_BRICK,
 

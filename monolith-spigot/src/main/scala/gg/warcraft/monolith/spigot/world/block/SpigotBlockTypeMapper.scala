@@ -5,13 +5,14 @@ import org.bukkit.Material
 
 class SpigotBlockTypeMapper {
   def map(`type`: BlockType): Material = `type` match {
-    case BlockType.BRICK_BLOCK    => Material.BRICKS
-    case BlockType.CLAY_BLOCK     => Material.CLAY
-    case BlockType.COCOA_POD      => Material.COCOA
-    case BlockType.HAY_BALE       => Material.HAY_BLOCK
-    case BlockType.INFESTED_BLOCK => Material.INFESTED_STONE
-    case BlockType.JIGSAW_BLOCK   => Material.JIGSAW
-    case BlockType.QUARTZ_ORE     => Material.NETHER_QUARTZ_ORE
+    case BlockType.BRICK_BLOCK     => Material.BRICKS
+    case BlockType.CLAY_BLOCK      => Material.CLAY
+    case BlockType.COCOA_POD       => Material.COCOA
+    case BlockType.END_STONE_BRICK => Material.END_STONE_BRICKS
+    case BlockType.HAY_BALE        => Material.HAY_BLOCK
+    case BlockType.INFESTED_BLOCK  => Material.INFESTED_STONE
+    case BlockType.JIGSAW_BLOCK    => Material.JIGSAW
+    case BlockType.QUARTZ_ORE      => Material.NETHER_QUARTZ_ORE
 
     // variable blocks with no clear default
     case BlockType.BANNER                  => Material.RED_BANNER

@@ -13,7 +13,7 @@ public enum StairsVariant implements BlockVariant, ItemVariant {
     COBBLESTONE,
     MOSSY_COBBLESTONE,
 
-    // END_STONE
+    // END_STONE_BRICK
     END_STONE_BRICK,
 
     // PRISMARINE
@@ -37,6 +37,8 @@ public enum StairsVariant implements BlockVariant, ItemVariant {
 
     // STONE
     STONE,
+
+    // STONE_BRICK
     STONE_BRICK,
     MOSSY_STONE_BRICK,
 

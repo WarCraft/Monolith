@@ -212,10 +212,6 @@ class SpigotBlockVariantMapper {
 
     case Material.IRON_DOOR => DoorVariant.IRON
 
-    // END_STONE
-    case Material.END_STONE        => EndStoneVariant.NORMAL
-    case Material.END_STONE_BRICKS => EndStoneVariant.BRICK
-
     // FENCE
     case Material.ACACIA_FENCE   => FenceVariant.ACACIA
     case Material.BIRCH_FENCE    => FenceVariant.BIRCH
@@ -623,10 +619,11 @@ class SpigotBlockVariantMapper {
     case Material.STONE        => StoneVariant.NORMAL
     case Material.SMOOTH_STONE => StoneVariant.SMOOTH
 
-    case Material.STONE_BRICKS          => StoneVariant.BRICK
-    case Material.CHISELED_STONE_BRICKS => StoneVariant.CHISELED_BRICK
-    case Material.CRACKED_STONE_BRICKS  => StoneVariant.CRACKED_BRICK
-    case Material.MOSSY_STONE_BRICKS    => StoneVariant.MOSSY_BRICK
+    // STONE_BRICK
+    case Material.STONE_BRICKS          => StoneBrickVariant.NORMAL
+    case Material.CHISELED_STONE_BRICKS => StoneBrickVariant.CHISELED
+    case Material.CRACKED_STONE_BRICKS  => StoneBrickVariant.CRACKED
+    case Material.MOSSY_STONE_BRICKS    => StoneBrickVariant.MOSSY
 
     // STRUCTURE_BLOCK
     case Material.STRUCTURE_VOID => StructureBlockVariant.VOID
@@ -968,10 +965,6 @@ class SpigotBlockVariantMapper {
     case DoorVariant.SPRUCE   => Material.SPRUCE_DOOR
 
     case DoorVariant.IRON => Material.IRON_DOOR
-
-    // END_STONE
-    case EndStoneVariant.NORMAL => Material.END_STONE
-    case EndStoneVariant.BRICK  => Material.END_STONE_BRICKS
 
     // FENCE
     case FenceVariant.ACACIA   => Material.ACACIA_FENCE
@@ -1370,10 +1363,11 @@ class SpigotBlockVariantMapper {
     case StoneVariant.NORMAL => Material.STONE
     case StoneVariant.SMOOTH => Material.SMOOTH_STONE
 
-    case StoneVariant.BRICK          => Material.STONE_BRICKS
-    case StoneVariant.CHISELED_BRICK => Material.CHISELED_STONE_BRICKS
-    case StoneVariant.CRACKED_BRICK  => Material.CRACKED_STONE_BRICKS
-    case StoneVariant.MOSSY_BRICK    => Material.MOSSY_STONE_BRICKS
+    // STONE_BRICK
+    case StoneBrickVariant.NORMAL   => Material.STONE_BRICKS
+    case StoneBrickVariant.CHISELED => Material.CHISELED_STONE_BRICKS
+    case StoneBrickVariant.CRACKED  => Material.CRACKED_STONE_BRICKS
+    case StoneBrickVariant.MOSSY    => Material.MOSSY_STONE_BRICKS
 
     // STRUCTURE_BLOCK
     case StructureBlockVariant.VOID => Material.STRUCTURE_VOID
