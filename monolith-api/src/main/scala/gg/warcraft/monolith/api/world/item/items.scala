@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world.item
 import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 
-final case class Andesite(
+case class Andesite(
     variant: AndesiteVariant,
     name: String,
     tooltip: List[String],
@@ -15,7 +15,7 @@ final case class Andesite(
   val `type` = ItemType.ANDESITE
 }
 
-final case class Anvil(
+case class Anvil(
     variant: AnvilVariant,
     name: String,
     tooltip: List[String],
@@ -27,7 +27,7 @@ final case class Anvil(
   val `type` = ItemType.ANVIL
 }
 
-final case class Apple(
+case class Apple(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -38,7 +38,7 @@ final case class Apple(
   override val edible = true
 }
 
-final case class ArmorStand(
+case class ArmorStand(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -49,7 +49,7 @@ final case class ArmorStand(
   override def maxCount = 16
 }
 
-final case class Arrow(
+case class Arrow(
     variant: ArrowVariant,
     name: String,
     tooltip: List[String],
@@ -61,7 +61,7 @@ final case class Arrow(
   val `type` = ItemType.ARROW
 }
 
-final case class Axe(
+case class Axe(
     variant: AxeVariant,
     name: String,
     tooltip: List[String],
@@ -82,7 +82,7 @@ final case class Axe(
   }
 }
 
-final case class Bamboo(
+case class Bamboo(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -92,7 +92,7 @@ final case class Bamboo(
   val `type` = ItemType.BAMBOO
 }
 
-final case class Banner(
+case class Banner(
     variant: BannerVariant,
     name: String,
     tooltip: List[String],
@@ -105,7 +105,7 @@ final case class Banner(
   override def maxCount = 16
 }
 
-final case class BannerPattern(
+case class BannerPattern(
     variant: BannerPatternVariant,
     name: String,
     tooltip: List[String],
@@ -115,7 +115,7 @@ final case class BannerPattern(
   val `type` = ItemType.BANNER_PATTERN
 }
 
-final case class Barrel(
+case class Barrel(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -125,7 +125,7 @@ final case class Barrel(
   val `type` = ItemType.BARREL
 }
 
-final case class Barrier(
+case class Barrier(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -135,7 +135,7 @@ final case class Barrier(
   val `type` = ItemType.BARRIER
 }
 
-final case class Beacon(
+case class Beacon(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -145,7 +145,7 @@ final case class Beacon(
   val `type` = ItemType.BEACON
 }
 
-final case class Bed(
+case class Bed(
     variant: BedVariant,
     name: String,
     tooltip: List[String],
@@ -157,7 +157,7 @@ final case class Bed(
   val `type` = ItemType.BED
 }
 
-final case class Bedrock(
+case class Bedrock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -167,7 +167,7 @@ final case class Bedrock(
   val `type` = ItemType.BEDROCK
 }
 
-final case class Beef(
+case class Beef(
     variant: BeefVariant,
     name: String,
     tooltip: List[String],
@@ -180,7 +180,7 @@ final case class Beef(
   override val edible = true
 }
 
-final case class Beetroot(
+case class Beetroot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -191,7 +191,7 @@ final case class Beetroot(
   override val edible = true
 }
 
-final case class Bell(
+case class Bell(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -201,7 +201,7 @@ final case class Bell(
   val `type` = ItemType.BELL
 }
 
-final case class BlastFurnace(
+case class BlastFurnace(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -211,7 +211,7 @@ final case class BlastFurnace(
   val `type` = ItemType.BLAST_FURNACE
 }
 
-final case class BlazePowder(
+case class BlazePowder(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -221,7 +221,7 @@ final case class BlazePowder(
   val `type` = ItemType.BLAZE_POWDER
 }
 
-final case class BlazeRod(
+case class BlazeRod(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -231,7 +231,7 @@ final case class BlazeRod(
   val `type` = ItemType.BLAZE_ROD
 }
 
-final case class Boat(
+case class Boat(
     variant: BoatVariant,
     name: String,
     tooltip: List[String],
@@ -243,7 +243,7 @@ final case class Boat(
   val `type` = ItemType.BOAT
 }
 
-final case class Bone(
+case class Bone(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -253,7 +253,7 @@ final case class Bone(
   val `type` = ItemType.BONE
 }
 
-final case class BoneBlock(
+case class BoneBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -263,7 +263,7 @@ final case class BoneBlock(
   val `type` = ItemType.BONE_BLOCK
 }
 
-final case class BoneMeal(
+case class BoneMeal(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -273,7 +273,7 @@ final case class BoneMeal(
   val `type` = ItemType.BONE_MEAL
 }
 
-final case class BottleOfEnchanting(
+case class BottleOfEnchanting(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -283,7 +283,7 @@ final case class BottleOfEnchanting(
   val `type` = ItemType.BOTTLE_OF_ENCHANTING
 }
 
-final case class Book(
+case class Book(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -293,7 +293,7 @@ final case class Book(
   val `type` = ItemType.BOOK
 }
 
-final case class BookAndQuill(
+case class BookAndQuill(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -302,7 +302,7 @@ final case class BookAndQuill(
   val `type` = ItemType.BOOK_AND_QUILL
 }
 
-final case class Bookshelf(
+case class Bookshelf(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -312,7 +312,7 @@ final case class Bookshelf(
   val `type` = ItemType.BOOKSHELF
 }
 
-final case class Boots(
+case class Boots(
     variant: BootsVariant,
     name: String,
     tooltip: List[String],
@@ -333,7 +333,7 @@ final case class Boots(
   }
 }
 
-final case class Bow(
+case class Bow(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -346,7 +346,7 @@ final case class Bow(
   override def maxDurability = 384
 }
 
-final case class Bowl(
+case class Bowl(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -356,7 +356,7 @@ final case class Bowl(
   val `type` = ItemType.BOWL
 }
 
-final case class Bread(
+case class Bread(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -367,7 +367,7 @@ final case class Bread(
   override val edible = true
 }
 
-final case class BrewingStand(
+case class BrewingStand(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -377,7 +377,7 @@ final case class BrewingStand(
   val `type` = ItemType.BREWING_STAND
 }
 
-final case class Brick(
+case class Brick(
     variant: BrickVariant,
     name: String,
     tooltip: List[String],
@@ -389,7 +389,7 @@ final case class Brick(
   val `type` = ItemType.BRICK
 }
 
-final case class BrickBlock(
+case class BrickBlock(
     variant: BrickBlockVariant,
     name: String,
     tooltip: List[String],
@@ -401,7 +401,7 @@ final case class BrickBlock(
   val `type` = ItemType.BRICK_BLOCK
 }
 
-final case class Bucket(
+case class Bucket(
     variant: BucketVariant,
     name: String,
     tooltip: List[String],
@@ -414,7 +414,7 @@ final case class Bucket(
   override def maxCount = 16
 }
 
-final case class Button(
+case class Button(
     variant: ButtonVariant,
     name: String,
     tooltip: List[String],
@@ -426,7 +426,7 @@ final case class Button(
   val `type` = ItemType.BUTTON
 }
 
-final case class Cactus(
+case class Cactus(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -436,7 +436,7 @@ final case class Cactus(
   val `type` = ItemType.CACTUS
 }
 
-final case class Cake(
+case class Cake(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -445,7 +445,7 @@ final case class Cake(
   val `type` = ItemType.CAKE
 }
 
-final case class Campfire(
+case class Campfire(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -455,7 +455,7 @@ final case class Campfire(
   val `type` = ItemType.CAMPFIRE
 }
 
-final case class Carpet(
+case class Carpet(
     variant: CarpetVariant,
     name: String,
     tooltip: List[String],
@@ -467,7 +467,7 @@ final case class Carpet(
   val `type` = ItemType.CARPET
 }
 
-final case class Carrot(
+case class Carrot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -478,7 +478,7 @@ final case class Carrot(
   override val edible = true
 }
 
-final case class CarrotOnAStick(
+case class CarrotOnAStick(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -491,7 +491,7 @@ final case class CarrotOnAStick(
   override def maxDurability = 25
 }
 
-final case class CartographyTable(
+case class CartographyTable(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -501,7 +501,7 @@ final case class CartographyTable(
   val `type` = ItemType.CARTOGRAPHY_TABLE
 }
 
-final case class Charcoal(
+case class Charcoal(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -511,7 +511,7 @@ final case class Charcoal(
   val `type` = ItemType.CHARCOAL
 }
 
-final case class Cauldron(
+case class Cauldron(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -521,7 +521,7 @@ final case class Cauldron(
   val `type` = ItemType.CAULDRON
 }
 
-final case class Chest(
+case class Chest(
     variant: ChestVariant,
     name: String,
     tooltip: List[String],
@@ -533,7 +533,7 @@ final case class Chest(
   val `type` = ItemType.CHEST
 }
 
-final case class Chestplate(
+case class Chestplate(
     variant: ChestplateVariant,
     name: String,
     tooltip: List[String],
@@ -554,7 +554,7 @@ final case class Chestplate(
   }
 }
 
-final case class Chicken(
+case class Chicken(
     variant: ChickenVariant,
     name: String,
     tooltip: List[String],
@@ -567,7 +567,7 @@ final case class Chicken(
   override val edible = true
 }
 
-final case class ChorusFlower(
+case class ChorusFlower(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -577,7 +577,7 @@ final case class ChorusFlower(
   val `type` = ItemType.CHORUS_FLOWER
 }
 
-final case class ChorusFruit(
+case class ChorusFruit(
     variant: ChorusFruitVariant,
     name: String,
     tooltip: List[String],
@@ -591,7 +591,7 @@ final case class ChorusFruit(
     variant == ChorusFruitVariant.NORMAL
 }
 
-final case class ChorusPlant(
+case class ChorusPlant(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -601,7 +601,7 @@ final case class ChorusPlant(
   val `type` = ItemType.CHORUS_PLANT
 }
 
-final case class Clay(
+case class Clay(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -611,7 +611,7 @@ final case class Clay(
   val `type` = ItemType.CLAY
 }
 
-final case class ClayBlock(
+case class ClayBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -621,7 +621,7 @@ final case class ClayBlock(
   val `type` = ItemType.CLAY_BLOCK
 }
 
-final case class Clock(
+case class Clock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -631,7 +631,7 @@ final case class Clock(
   val `type` = ItemType.CLOCK
 }
 
-final case class Coal(
+case class Coal(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -641,7 +641,7 @@ final case class Coal(
   val `type` = ItemType.COAL
 }
 
-final case class CoalBlock(
+case class CoalBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -651,7 +651,7 @@ final case class CoalBlock(
   val `type` = ItemType.COAL_BLOCK
 }
 
-final case class CoalOre(
+case class CoalOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -661,7 +661,7 @@ final case class CoalOre(
   val `type` = ItemType.COAL_ORE
 }
 
-final case class Cobblestone(
+case class Cobblestone(
     variant: CobblestoneVariant,
     name: String,
     tooltip: List[String],
@@ -673,7 +673,7 @@ final case class Cobblestone(
   val `type` = ItemType.COBBLESTONE
 }
 
-final case class Cobweb(
+case class Cobweb(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -683,7 +683,7 @@ final case class Cobweb(
   val `type` = ItemType.COBWEB
 }
 
-final case class CocoaBeans(
+case class CocoaBeans(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -693,7 +693,7 @@ final case class CocoaBeans(
   val `type` = ItemType.COCOA_BEANS
 }
 
-final case class Cod(
+case class Cod(
     variant: CodVariant,
     name: String,
     tooltip: List[String],
@@ -706,7 +706,7 @@ final case class Cod(
   override val edible = true
 }
 
-final case class CommandBlock(
+case class CommandBlock(
     variant: CommandBlockVariant,
     name: String,
     tooltip: List[String],
@@ -718,7 +718,7 @@ final case class CommandBlock(
   val `type` = ItemType.COMMAND_BLOCK
 }
 
-final case class Comparator(
+case class Comparator(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -728,7 +728,7 @@ final case class Comparator(
   val `type` = ItemType.COMPARATOR
 }
 
-final case class Compass(
+case class Compass(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -738,7 +738,7 @@ final case class Compass(
   val `type` = ItemType.COMPASS
 }
 
-final case class Composter(
+case class Composter(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -748,7 +748,7 @@ final case class Composter(
   val `type` = ItemType.COMPOSTER
 }
 
-final case class Concrete(
+case class Concrete(
     variant: ConcreteVariant,
     name: String,
     tooltip: List[String],
@@ -760,7 +760,7 @@ final case class Concrete(
   val `type` = ItemType.CONCRETE
 }
 
-final case class ConcretePowder(
+case class ConcretePowder(
     variant: ConcretePowderVariant,
     name: String,
     tooltip: List[String],
@@ -772,7 +772,7 @@ final case class ConcretePowder(
   val `type` = ItemType.CONCRETE_POWDER
 }
 
-final case class Conduit(
+case class Conduit(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -782,7 +782,7 @@ final case class Conduit(
   val `type` = ItemType.CONDUIT
 }
 
-final case class Cookie(
+case class Cookie(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -793,7 +793,7 @@ final case class Cookie(
   override val edible = true
 }
 
-final case class Coral(
+case class Coral(
     variant: CoralVariant,
     name: String,
     tooltip: List[String],
@@ -805,7 +805,7 @@ final case class Coral(
   val `type` = ItemType.CORAL
 }
 
-final case class CoralBlock(
+case class CoralBlock(
     variant: CoralBlockVariant,
     name: String,
     tooltip: List[String],
@@ -817,7 +817,7 @@ final case class CoralBlock(
   val `type` = ItemType.CORAL_BLOCK
 }
 
-final case class CoralFan(
+case class CoralFan(
     variant: CoralFanVariant,
     name: String,
     tooltip: List[String],
@@ -829,7 +829,7 @@ final case class CoralFan(
   val `type` = ItemType.CORAL_FAN
 }
 
-final case class CraftingTable(
+case class CraftingTable(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -839,7 +839,7 @@ final case class CraftingTable(
   val `type` = ItemType.CRAFTING_TABLE
 }
 
-final case class Crossbow(
+case class Crossbow(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -852,7 +852,7 @@ final case class Crossbow(
   override def maxDurability = 326
 }
 
-final case class DaylightDetector(
+case class DaylightDetector(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -862,7 +862,7 @@ final case class DaylightDetector(
   val `type` = ItemType.DAYLIGHT_DETECTOR
 }
 
-final case class DeadBush(
+case class DeadBush(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -872,7 +872,7 @@ final case class DeadBush(
   val `type` = ItemType.DEAD_BUSH
 }
 
-final case class DebugStick(
+case class DebugStick(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -881,7 +881,7 @@ final case class DebugStick(
   val `type` = ItemType.DEBUG_STICK
 }
 
-final case class Diamond(
+case class Diamond(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -891,7 +891,7 @@ final case class Diamond(
   val `type` = ItemType.DIAMOND
 }
 
-final case class DiamondBlock(
+case class DiamondBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -901,7 +901,7 @@ final case class DiamondBlock(
   val `type` = ItemType.DIAMOND_BLOCK
 }
 
-final case class DiamondOre(
+case class DiamondOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -911,7 +911,7 @@ final case class DiamondOre(
   val `type` = ItemType.DIAMOND_ORE
 }
 
-final case class Diorite(
+case class Diorite(
     variant: DioriteVariant,
     name: String,
     tooltip: List[String],
@@ -923,7 +923,7 @@ final case class Diorite(
   val `type` = ItemType.DIORITE
 }
 
-final case class Dirt(
+case class Dirt(
     variant: DirtVariant,
     name: String,
     tooltip: List[String],
@@ -935,7 +935,7 @@ final case class Dirt(
   val `type` = ItemType.DIRT
 }
 
-final case class Dispenser(
+case class Dispenser(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -945,7 +945,7 @@ final case class Dispenser(
   val `type` = ItemType.DISPENSER
 }
 
-final case class Door(
+case class Door(
     variant: DoorVariant,
     name: String,
     tooltip: List[String],
@@ -957,7 +957,7 @@ final case class Door(
   val `type` = ItemType.DOOR
 }
 
-final case class DragonBreath(
+case class DragonBreath(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -967,7 +967,7 @@ final case class DragonBreath(
   val `type` = ItemType.DRAGON_BREATH
 }
 
-final case class DragonEgg(
+case class DragonEgg(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -977,7 +977,7 @@ final case class DragonEgg(
   val `type` = ItemType.DRAGON_EGG
 }
 
-final case class DriedKelp(
+case class DriedKelp(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -988,7 +988,7 @@ final case class DriedKelp(
   override val edible = true
 }
 
-final case class DriedKelpBlock(
+case class DriedKelpBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -998,7 +998,7 @@ final case class DriedKelpBlock(
   val `type` = ItemType.DRIED_KELP_BLOCK
 }
 
-final case class Dropper(
+case class Dropper(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1008,7 +1008,7 @@ final case class Dropper(
   val `type` = ItemType.DROPPER
 }
 
-final case class Dye(
+case class Dye(
     variant: DyeVariant,
     name: String,
     tooltip: List[String],
@@ -1020,7 +1020,7 @@ final case class Dye(
   val `type` = ItemType.DYE
 }
 
-final case class Egg(
+case class Egg(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1030,7 +1030,7 @@ final case class Egg(
   val `type` = ItemType.EGG
 }
 
-final case class Elytra(
+case class Elytra(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -1043,7 +1043,7 @@ final case class Elytra(
   override def maxDurability = 432
 }
 
-final case class Emerald(
+case class Emerald(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1053,7 +1053,7 @@ final case class Emerald(
   val `type` = ItemType.EMERALD
 }
 
-final case class EmeraldBlock(
+case class EmeraldBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1063,7 +1063,7 @@ final case class EmeraldBlock(
   val `type` = ItemType.EMERALD_BLOCK
 }
 
-final case class EmeraldOre(
+case class EmeraldOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1073,7 +1073,7 @@ final case class EmeraldOre(
   val `type` = ItemType.EMERALD_ORE
 }
 
-final case class EnchantedBook(
+case class EnchantedBook(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -1082,7 +1082,7 @@ final case class EnchantedBook(
   val `type` = ItemType.ENCHANTED_BOOK
 }
 
-final case class EnchantingTable(
+case class EnchantingTable(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1092,7 +1092,7 @@ final case class EnchantingTable(
   val `type` = ItemType.ENCHANTING_TABLE
 }
 
-final case class EndCrystal(
+case class EndCrystal(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1102,7 +1102,7 @@ final case class EndCrystal(
   val `type` = ItemType.END_CRYSTAL
 }
 
-final case class EndPortalFrame(
+case class EndPortalFrame(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1112,7 +1112,7 @@ final case class EndPortalFrame(
   val `type` = ItemType.END_PORTAL_FRAME
 }
 
-final case class EndRod(
+case class EndRod(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1122,7 +1122,7 @@ final case class EndRod(
   val `type` = ItemType.END_ROD
 }
 
-final case class EndStone(
+case class EndStone(
     variant: EndStoneVariant,
     name: String,
     tooltip: List[String],
@@ -1134,7 +1134,7 @@ final case class EndStone(
   val `type` = ItemType.END_STONE
 }
 
-final case class EnderEye(
+case class EnderEye(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1144,7 +1144,7 @@ final case class EnderEye(
   val `type` = ItemType.ENDER_EYE
 }
 
-final case class EnderPearl(
+case class EnderPearl(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1155,7 +1155,7 @@ final case class EnderPearl(
   override def maxCount = 16
 }
 
-final case class Farmland(
+case class Farmland(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1165,7 +1165,7 @@ final case class Farmland(
   val `type` = ItemType.FARMLAND
 }
 
-final case class Feather(
+case class Feather(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1175,7 +1175,7 @@ final case class Feather(
   val `type` = ItemType.FEATHER
 }
 
-final case class Fence(
+case class Fence(
     variant: FenceVariant,
     name: String,
     tooltip: List[String],
@@ -1187,7 +1187,7 @@ final case class Fence(
   val `type` = ItemType.FENCE
 }
 
-final case class Fern(
+case class Fern(
     variant: FernVariant,
     name: String,
     tooltip: List[String],
@@ -1199,7 +1199,7 @@ final case class Fern(
   val `type` = ItemType.FERN
 }
 
-final case class FireCharge(
+case class FireCharge(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1209,7 +1209,7 @@ final case class FireCharge(
   val `type` = ItemType.FIRE_CHARGE
 }
 
-final case class FireworkRocket(
+case class FireworkRocket(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1219,7 +1219,7 @@ final case class FireworkRocket(
   val `type` = ItemType.FIREWORK_ROCKET
 }
 
-final case class FireworkStar(
+case class FireworkStar(
     variant: FireworkStarVariant,
     name: String,
     tooltip: List[String],
@@ -1231,7 +1231,7 @@ final case class FireworkStar(
   val `type` = ItemType.FIREWORK_STAR
 }
 
-final case class FishingRod(
+case class FishingRod(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -1244,7 +1244,7 @@ final case class FishingRod(
   override def maxDurability = 64
 }
 
-final case class FletchingTable(
+case class FletchingTable(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1254,7 +1254,7 @@ final case class FletchingTable(
   val `type` = ItemType.FLETCHING_TABLE
 }
 
-final case class Flint(
+case class Flint(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1264,7 +1264,7 @@ final case class Flint(
   val `type` = ItemType.FLINT
 }
 
-final case class FlintAndSteel(
+case class FlintAndSteel(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -1277,7 +1277,7 @@ final case class FlintAndSteel(
   override def maxDurability = 64
 }
 
-final case class Flower(
+case class Flower(
     variant: FlowerVariant,
     name: String,
     tooltip: List[String],
@@ -1289,7 +1289,7 @@ final case class Flower(
   val `type` = ItemType.FLOWER
 }
 
-final case class FlowerPot(
+case class FlowerPot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1299,7 +1299,7 @@ final case class FlowerPot(
   val `type` = ItemType.FLOWER_POT
 }
 
-final case class Furnace(
+case class Furnace(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1309,7 +1309,7 @@ final case class Furnace(
   val `type` = ItemType.FURNACE
 }
 
-final case class FenceGate(
+case class FenceGate(
     variant: FenceGateVariant,
     name: String,
     tooltip: List[String],
@@ -1321,7 +1321,7 @@ final case class FenceGate(
   val `type` = ItemType.FENCE_GATE
 }
 
-final case class GhastTear(
+case class GhastTear(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1331,7 +1331,7 @@ final case class GhastTear(
   val `type` = ItemType.GHAST_TEAR
 }
 
-final case class Glass(
+case class Glass(
     variant: GlassVariant,
     name: String,
     tooltip: List[String],
@@ -1343,7 +1343,7 @@ final case class Glass(
   val `type` = ItemType.GLASS
 }
 
-final case class GlassBottle(
+case class GlassBottle(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1353,7 +1353,7 @@ final case class GlassBottle(
   val `type` = ItemType.GLASS_BOTTLE
 }
 
-final case class GlassPane(
+case class GlassPane(
     variant: GlassPaneVariant,
     name: String,
     tooltip: List[String],
@@ -1365,7 +1365,7 @@ final case class GlassPane(
   val `type` = ItemType.GLASS_PANE
 }
 
-final case class GlazedTerracotta(
+case class GlazedTerracotta(
     variant: GlazedTerracottaVariant,
     name: String,
     tooltip: List[String],
@@ -1377,7 +1377,7 @@ final case class GlazedTerracotta(
   val `type` = ItemType.GLAZED_TERRACOTTA
 }
 
-final case class Glowstone(
+case class Glowstone(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1387,7 +1387,7 @@ final case class Glowstone(
   val `type` = ItemType.GLOWSTONE
 }
 
-final case class GlowstoneDust(
+case class GlowstoneDust(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1397,7 +1397,7 @@ final case class GlowstoneDust(
   val `type` = ItemType.GLOWSTONE_DUST
 }
 
-final case class GoldBlock(
+case class GoldBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1407,7 +1407,7 @@ final case class GoldBlock(
   val `type` = ItemType.GOLD_BLOCK
 }
 
-final case class GoldIngot(
+case class GoldIngot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1417,7 +1417,7 @@ final case class GoldIngot(
   val `type` = ItemType.GOLD_INGOT
 }
 
-final case class GoldNugget(
+case class GoldNugget(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1427,7 +1427,7 @@ final case class GoldNugget(
   val `type` = ItemType.GOLD_NUGGET
 }
 
-final case class GoldOre(
+case class GoldOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1437,7 +1437,7 @@ final case class GoldOre(
   val `type` = ItemType.GOLD_ORE
 }
 
-final case class GoldenApple(
+case class GoldenApple(
     enchanted: Boolean,
     name: String,
     tooltip: List[String],
@@ -1452,7 +1452,7 @@ final case class GoldenApple(
     copyWith("enchanted", enchanted)
 }
 
-final case class GoldenCarrot(
+case class GoldenCarrot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1463,7 +1463,7 @@ final case class GoldenCarrot(
   override val edible = true
 }
 
-final case class GoldenMelonSlice(
+case class GoldenMelonSlice(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1473,7 +1473,7 @@ final case class GoldenMelonSlice(
   val `type` = ItemType.GOLDEN_MELON_SLICE
 }
 
-final case class Granite(
+case class Granite(
     variant: GraniteVariant,
     name: String,
     tooltip: List[String],
@@ -1485,7 +1485,7 @@ final case class Granite(
   val `type` = ItemType.GRANITE
 }
 
-final case class Grass(
+case class Grass(
     variant: GrassVariant,
     name: String,
     tooltip: List[String],
@@ -1497,7 +1497,7 @@ final case class Grass(
   val `type` = ItemType.GRASS
 }
 
-final case class GrassBlock(
+case class GrassBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1507,7 +1507,7 @@ final case class GrassBlock(
   val `type` = ItemType.GRASS_BLOCK
 }
 
-final case class GrassPath(
+case class GrassPath(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1517,7 +1517,7 @@ final case class GrassPath(
   val `type` = ItemType.GRASS_PATH
 }
 
-final case class Gravel(
+case class Gravel(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1527,7 +1527,7 @@ final case class Gravel(
   val `type` = ItemType.GRAVEL
 }
 
-final case class Grindstone(
+case class Grindstone(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1537,7 +1537,7 @@ final case class Grindstone(
   val `type` = ItemType.GRINDSTONE
 }
 
-final case class Gunpowder(
+case class Gunpowder(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1547,7 +1547,7 @@ final case class Gunpowder(
   val `type` = ItemType.GUNPOWDER
 }
 
-final case class HayBale(
+case class HayBale(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1557,7 +1557,7 @@ final case class HayBale(
   val `type` = ItemType.HAY_BALE
 }
 
-final case class HeartOfTheSea(
+case class HeartOfTheSea(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1567,7 +1567,7 @@ final case class HeartOfTheSea(
   val `type` = ItemType.HEART_OF_THE_SEA
 }
 
-final case class Helmet(
+case class Helmet(
     variant: HelmetVariant,
     name: String,
     tooltip: List[String],
@@ -1588,7 +1588,7 @@ final case class Helmet(
   }
 }
 
-final case class Hoe(
+case class Hoe(
     variant: HoeVariant,
     name: String,
     tooltip: List[String],
@@ -1609,7 +1609,7 @@ final case class Hoe(
   }
 }
 
-final case class Hopper(
+case class Hopper(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1619,7 +1619,7 @@ final case class Hopper(
   val `type` = ItemType.HOPPER
 }
 
-final case class HorseArmor(
+case class HorseArmor(
     variant: HorseArmorVariant,
     name: String,
     tooltip: List[String],
@@ -1629,7 +1629,7 @@ final case class HorseArmor(
   val `type` = ItemType.HORSE_ARMOR
 }
 
-final case class Ice(
+case class Ice(
     variant: IceVariant,
     name: String,
     tooltip: List[String],
@@ -1641,7 +1641,7 @@ final case class Ice(
   val `type` = ItemType.ICE
 }
 
-final case class InfestedBlock(
+case class InfestedBlock(
     variant: InfestedBlockVariant,
     name: String,
     tooltip: List[String],
@@ -1653,7 +1653,7 @@ final case class InfestedBlock(
   val `type` = ItemType.INFESTED_BLOCK
 }
 
-final case class InkSac(
+case class InkSac(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1663,7 +1663,7 @@ final case class InkSac(
   val `type` = ItemType.INK_SAC
 }
 
-final case class IronBars(
+case class IronBars(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1673,7 +1673,7 @@ final case class IronBars(
   val `type` = ItemType.IRON_BARS
 }
 
-final case class IronBlock(
+case class IronBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1683,7 +1683,7 @@ final case class IronBlock(
   val `type` = ItemType.IRON_BLOCK
 }
 
-final case class IronIngot(
+case class IronIngot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1693,7 +1693,7 @@ final case class IronIngot(
   val `type` = ItemType.IRON_INGOT
 }
 
-final case class IronNugget(
+case class IronNugget(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1703,7 +1703,7 @@ final case class IronNugget(
   val `type` = ItemType.IRON_NUGGET
 }
 
-final case class IronOre(
+case class IronOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1713,7 +1713,7 @@ final case class IronOre(
   val `type` = ItemType.IRON_ORE
 }
 
-final case class ItemFrame(
+case class ItemFrame(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1723,7 +1723,7 @@ final case class ItemFrame(
   val `type` = ItemType.ITEM_FRAME
 }
 
-final case class JackOfTheLantern(
+case class JackOfTheLantern(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1733,7 +1733,7 @@ final case class JackOfTheLantern(
   val `type` = ItemType.JACK_OF_THE_LANTERN
 }
 
-final case class JigsawBlock(
+case class JigsawBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1743,7 +1743,7 @@ final case class JigsawBlock(
   val `type` = ItemType.JIGSAW_BLOCK
 }
 
-final case class Jukebox(
+case class Jukebox(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1753,7 +1753,7 @@ final case class Jukebox(
   val `type` = ItemType.JUKEBOX
 }
 
-final case class Kelp(
+case class Kelp(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1763,7 +1763,7 @@ final case class Kelp(
   val `type` = ItemType.KELP
 }
 
-final case class KnowledgeBook(
+case class KnowledgeBook(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -1772,7 +1772,7 @@ final case class KnowledgeBook(
   val `type` = ItemType.KNOWLEDGE_BOOK
 }
 
-final case class Ladder(
+case class Ladder(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1782,7 +1782,7 @@ final case class Ladder(
   val `type` = ItemType.LADDER
 }
 
-final case class Lantern(
+case class Lantern(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1792,7 +1792,7 @@ final case class Lantern(
   val `type` = ItemType.LANTERN
 }
 
-final case class Lapis(
+case class Lapis(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1802,7 +1802,7 @@ final case class Lapis(
   val `type` = ItemType.LAPIS
 }
 
-final case class LapisBlock(
+case class LapisBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1812,7 +1812,7 @@ final case class LapisBlock(
   val `type` = ItemType.LAPIS_BLOCK
 }
 
-final case class LapisOre(
+case class LapisOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1822,7 +1822,7 @@ final case class LapisOre(
   val `type` = ItemType.LAPIS_ORE
 }
 
-final case class Lead(
+case class Lead(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1832,7 +1832,7 @@ final case class Lead(
   val `type` = ItemType.LEAD
 }
 
-final case class Leather(
+case class Leather(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1842,7 +1842,7 @@ final case class Leather(
   val `type` = ItemType.LEATHER
 }
 
-final case class Leaves(
+case class Leaves(
     variant: LeavesVariant,
     name: String,
     tooltip: List[String],
@@ -1854,7 +1854,7 @@ final case class Leaves(
   val `type` = ItemType.LEAVES
 }
 
-final case class Lectern(
+case class Lectern(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1864,7 +1864,7 @@ final case class Lectern(
   val `type` = ItemType.LECTERN
 }
 
-final case class Leggings(
+case class Leggings(
     variant: LeggingsVariant,
     name: String,
     tooltip: List[String],
@@ -1885,7 +1885,7 @@ final case class Leggings(
   }
 }
 
-final case class Lever(
+case class Lever(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1895,7 +1895,7 @@ final case class Lever(
   val `type` = ItemType.LEVER
 }
 
-final case class LilyPad(
+case class LilyPad(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1905,7 +1905,7 @@ final case class LilyPad(
   val `type` = ItemType.LILY_PAD
 }
 
-final case class Log(
+case class Log(
     variant: LogVariant,
     name: String,
     tooltip: List[String],
@@ -1917,7 +1917,7 @@ final case class Log(
   val `type` = ItemType.LOG
 }
 
-final case class Loom(
+case class Loom(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1927,7 +1927,7 @@ final case class Loom(
   val `type` = ItemType.LOOM
 }
 
-final case class MagmaBlock(
+case class MagmaBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1937,7 +1937,7 @@ final case class MagmaBlock(
   val `type` = ItemType.MAGMA_BLOCK
 }
 
-final case class MagmaCream(
+case class MagmaCream(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1947,7 +1947,7 @@ final case class MagmaCream(
   val `type` = ItemType.MAGMA_CREAM
 }
 
-final case class Map(
+case class Map(
     filled: Boolean,
     name: String,
     tooltip: List[String],
@@ -1960,7 +1960,7 @@ final case class Map(
     copyWith("filled", filled)
 }
 
-final case class Melon(
+case class Melon(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1970,7 +1970,7 @@ final case class Melon(
   val `type` = ItemType.MELON
 }
 
-final case class MelonSlice(
+case class MelonSlice(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1981,7 +1981,7 @@ final case class MelonSlice(
   override val edible = true
 }
 
-final case class Minecart(
+case class Minecart(
     variant: MinecartVariant,
     name: String,
     tooltip: List[String],
@@ -1994,7 +1994,7 @@ final case class Minecart(
 }
 
 // TODO add separate playerSkull item with name String
-final case class MobHead(
+case class MobHead(
     variant: MobHeadVariant,
     name: String,
     tooltip: List[String],
@@ -2006,7 +2006,7 @@ final case class MobHead(
   val `type` = ItemType.MOB_HEAD
 }
 
-final case class Mushroom(
+case class Mushroom(
     variant: MushroomVariant,
     name: String,
     tooltip: List[String],
@@ -2018,7 +2018,7 @@ final case class Mushroom(
   val `type` = ItemType.MUSHROOM
 }
 
-final case class MushroomBlock(
+case class MushroomBlock(
     variant: MushroomBlockVariant,
     name: String,
     tooltip: List[String],
@@ -2030,7 +2030,7 @@ final case class MushroomBlock(
   val `type` = ItemType.MUSHROOM_BLOCK
 }
 
-final case class MusicDisc(
+case class MusicDisc(
     variant: MusicDiscVariant,
     name: String,
     tooltip: List[String],
@@ -2042,7 +2042,7 @@ final case class MusicDisc(
   val `type` = ItemType.MUSIC_DISC
 }
 
-final case class Mutton(
+case class Mutton(
     variant: MuttonVariant,
     name: String,
     tooltip: List[String],
@@ -2055,7 +2055,7 @@ final case class Mutton(
   override val edible = true
 }
 
-final case class Mycelium(
+case class Mycelium(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2065,7 +2065,7 @@ final case class Mycelium(
   val `type` = ItemType.MYCELIUM
 }
 
-final case class NameTag(
+case class NameTag(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2075,7 +2075,7 @@ final case class NameTag(
   val `type` = ItemType.NAME_TAG
 }
 
-final case class NautilusShell(
+case class NautilusShell(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2085,7 +2085,7 @@ final case class NautilusShell(
   val `type` = ItemType.NAUTILUS_SHELL
 }
 
-final case class Netherrack(
+case class Netherrack(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2095,7 +2095,7 @@ final case class Netherrack(
   val `type` = ItemType.NETHERRACK
 }
 
-final case class NetherStar(
+case class NetherStar(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2105,7 +2105,7 @@ final case class NetherStar(
   val `type` = ItemType.NETHER_STAR
 }
 
-final case class NetherWart(
+case class NetherWart(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2115,7 +2115,7 @@ final case class NetherWart(
   val `type` = ItemType.NETHER_WART
 }
 
-final case class NetherWartBlock(
+case class NetherWartBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2125,7 +2125,7 @@ final case class NetherWartBlock(
   val `type` = ItemType.NETHER_WART_BLOCK
 }
 
-final case class NoteBlock(
+case class NoteBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2135,7 +2135,7 @@ final case class NoteBlock(
   val `type` = ItemType.NOTE_BLOCK
 }
 
-final case class Observer(
+case class Observer(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2145,7 +2145,7 @@ final case class Observer(
   val `type` = ItemType.OBSERVER
 }
 
-final case class Obsidian(
+case class Obsidian(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2155,7 +2155,7 @@ final case class Obsidian(
   val `type` = ItemType.OBSIDIAN
 }
 
-final case class Painting(
+case class Painting(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2165,7 +2165,7 @@ final case class Painting(
   val `type` = ItemType.PAINTING
 }
 
-final case class Paper(
+case class Paper(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2175,7 +2175,7 @@ final case class Paper(
   val `type` = ItemType.PAPER
 }
 
-final case class PhantomMembrane(
+case class PhantomMembrane(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2185,7 +2185,7 @@ final case class PhantomMembrane(
   val `type` = ItemType.PHANTOM_MEMBRANE
 }
 
-final case class Plant(
+case class Plant(
     variant: PlantVariant,
     name: String,
     tooltip: List[String],
@@ -2197,7 +2197,7 @@ final case class Plant(
   val `type` = ItemType.PLANT
 }
 
-final case class Pickaxe(
+case class Pickaxe(
     variant: PickaxeVariant,
     name: String,
     tooltip: List[String],
@@ -2218,7 +2218,7 @@ final case class Pickaxe(
   }
 }
 
-final case class Pillar(
+case class Pillar(
     variant: PillarVariant,
     name: String,
     tooltip: List[String],
@@ -2230,7 +2230,7 @@ final case class Pillar(
   val `type` = ItemType.PILLAR
 }
 
-final case class Piston(
+case class Piston(
     variant: PistonVariant,
     name: String,
     tooltip: List[String],
@@ -2244,7 +2244,7 @@ final case class Piston(
     copyWith("sticky", sticky)
 }
 
-final case class Planks(
+case class Planks(
     variant: PlanksVariant,
     name: String,
     tooltip: List[String],
@@ -2256,7 +2256,7 @@ final case class Planks(
   val `type` = ItemType.PLANKS
 }
 
-final case class Podzol(
+case class Podzol(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2266,7 +2266,7 @@ final case class Podzol(
   val `type` = ItemType.PODZOL
 }
 
-final case class Porkchop(
+case class Porkchop(
     variant: PorkchopVariant,
     name: String,
     tooltip: List[String],
@@ -2279,7 +2279,7 @@ final case class Porkchop(
   override val edible = true
 }
 
-final case class Potato(
+case class Potato(
     variant: PotatoVariant,
     name: String,
     tooltip: List[String],
@@ -2292,7 +2292,7 @@ final case class Potato(
   override val edible = true
 }
 
-final case class Potion(
+case class Potion(
     variant: PotionVariant,
     hideEffects: Boolean,
     name: String,
@@ -2305,7 +2305,7 @@ final case class Potion(
     copyWith("hideEffects", hideEffects)
 }
 
-final case class PressurePlate(
+case class PressurePlate(
     variant: PressurePlateVariant,
     name: String,
     tooltip: List[String],
@@ -2317,7 +2317,7 @@ final case class PressurePlate(
   val `type` = ItemType.PRESSURE_PLATE
 }
 
-final case class Prismarine(
+case class Prismarine(
     variant: PrismarineVariant,
     name: String,
     tooltip: List[String],
@@ -2329,7 +2329,7 @@ final case class Prismarine(
   val `type` = ItemType.PRISMARINE
 }
 
-final case class PrismarineCrystals(
+case class PrismarineCrystals(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2339,7 +2339,7 @@ final case class PrismarineCrystals(
   val `type` = ItemType.PRISMARINE_CRYSTALS
 }
 
-final case class PrismarineShard(
+case class PrismarineShard(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2349,7 +2349,7 @@ final case class PrismarineShard(
   val `type` = ItemType.PRISMARINE_SHARD
 }
 
-final case class Pufferfish(
+case class Pufferfish(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2360,7 +2360,7 @@ final case class Pufferfish(
   override val edible = true
 }
 
-final case class Pumpkin(
+case class Pumpkin(
     carved: Boolean,
     name: String,
     tooltip: List[String],
@@ -2371,7 +2371,7 @@ final case class Pumpkin(
   val `type` = ItemType.PUMPKIN
 }
 
-final case class PumpkinPie(
+case class PumpkinPie(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2382,7 +2382,7 @@ final case class PumpkinPie(
   override val edible = true
 }
 
-final case class PurpurBlock(
+case class PurpurBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2392,7 +2392,7 @@ final case class PurpurBlock(
   val `type` = ItemType.PURPUR_BLOCK
 }
 
-final case class Quartz(
+case class Quartz(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2402,7 +2402,7 @@ final case class Quartz(
   val `type` = ItemType.QUARTZ
 }
 
-final case class QuartzBlock(
+case class QuartzBlock(
     variant: QuartzBlockVariant,
     name: String,
     tooltip: List[String],
@@ -2414,7 +2414,7 @@ final case class QuartzBlock(
   val `type` = ItemType.QUARTZ_BLOCK
 }
 
-final case class QuartzOre(
+case class QuartzOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2424,7 +2424,7 @@ final case class QuartzOre(
   val `type` = ItemType.QUARTZ_ORE
 }
 
-final case class Rabbit(
+case class Rabbit(
     variant: RabbitVariant,
     name: String,
     tooltip: List[String],
@@ -2437,7 +2437,7 @@ final case class Rabbit(
   override val edible = true
 }
 
-final case class RabbitFoot(
+case class RabbitFoot(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2447,7 +2447,7 @@ final case class RabbitFoot(
   val `type` = ItemType.RABBIT_FOOT
 }
 
-final case class RabbitHide(
+case class RabbitHide(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2457,7 +2457,7 @@ final case class RabbitHide(
   val `type` = ItemType.RABBIT_HIDE
 }
 
-final case class Rail(
+case class Rail(
     variant: RailVariant,
     name: String,
     tooltip: List[String],
@@ -2469,7 +2469,7 @@ final case class Rail(
   val `type` = ItemType.RAIL
 }
 
-final case class Repeater(
+case class Repeater(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2479,7 +2479,7 @@ final case class Repeater(
   val `type` = ItemType.REPEATER
 }
 
-final case class Redstone(
+case class Redstone(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2489,7 +2489,7 @@ final case class Redstone(
   val `type` = ItemType.REDSTONE
 }
 
-final case class RedstoneBlock(
+case class RedstoneBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2499,7 +2499,7 @@ final case class RedstoneBlock(
   val `type` = ItemType.REDSTONE_BLOCK
 }
 
-final case class RedstoneLamp(
+case class RedstoneLamp(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2509,7 +2509,7 @@ final case class RedstoneLamp(
   val `type` = ItemType.REDSTONE_LAMP
 }
 
-final case class RedstoneOre(
+case class RedstoneOre(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2519,7 +2519,7 @@ final case class RedstoneOre(
   val `type` = ItemType.REDSTONE_ORE
 }
 
-final case class RedstoneTorch(
+case class RedstoneTorch(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2529,7 +2529,7 @@ final case class RedstoneTorch(
   val `type` = ItemType.REDSTONE_TORCH
 }
 
-final case class RottenFlesh(
+case class RottenFlesh(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2540,7 +2540,7 @@ final case class RottenFlesh(
   override val edible = true
 }
 
-final case class Saddle(
+case class Saddle(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -2549,7 +2549,7 @@ final case class Saddle(
   val `type` = ItemType.SADDLE
 }
 
-final case class Salmon(
+case class Salmon(
     variant: SalmonVariant,
     name: String,
     tooltip: List[String],
@@ -2562,7 +2562,7 @@ final case class Salmon(
   override val edible = true
 }
 
-final case class Sand(
+case class Sand(
     variant: SandVariant,
     name: String,
     tooltip: List[String],
@@ -2574,7 +2574,7 @@ final case class Sand(
   val `type` = ItemType.SAND
 }
 
-final case class Sandstone(
+case class Sandstone(
     variant: SandstoneVariant,
     name: String,
     tooltip: List[String],
@@ -2586,7 +2586,7 @@ final case class Sandstone(
   val `type` = ItemType.SANDSTONE
 }
 
-final case class Sapling(
+case class Sapling(
     variant: SaplingVariant,
     name: String,
     tooltip: List[String],
@@ -2598,7 +2598,7 @@ final case class Sapling(
   val `type` = ItemType.SAPLING
 }
 
-final case class Scaffolding(
+case class Scaffolding(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2608,7 +2608,7 @@ final case class Scaffolding(
   val `type` = ItemType.SCAFFOLDING
 }
 
-final case class Scute(
+case class Scute(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2618,7 +2618,7 @@ final case class Scute(
   val `type` = ItemType.SCUTE
 }
 
-final case class Seagrass(
+case class Seagrass(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2628,7 +2628,7 @@ final case class Seagrass(
   val `type` = ItemType.SEAGRASS
 }
 
-final case class SeaLantern(
+case class SeaLantern(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2638,7 +2638,7 @@ final case class SeaLantern(
   val `type` = ItemType.SEA_LANTERN
 }
 
-final case class SeaPickle(
+case class SeaPickle(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2648,7 +2648,7 @@ final case class SeaPickle(
   val `type` = ItemType.SEA_PICKLE
 }
 
-final case class Seeds(
+case class Seeds(
     variant: SeedsVariant,
     name: String,
     tooltip: List[String],
@@ -2660,7 +2660,7 @@ final case class Seeds(
   val `type` = ItemType.SEEDS
 }
 
-final case class Shears(
+case class Shears(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -2673,7 +2673,7 @@ final case class Shears(
   override def maxDurability = 238
 }
 
-final case class Shield(
+case class Shield(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -2686,7 +2686,7 @@ final case class Shield(
   override def maxDurability = 336
 }
 
-final case class Shovel(
+case class Shovel(
     variant: ShovelVariant,
     name: String,
     tooltip: List[String],
@@ -2707,7 +2707,7 @@ final case class Shovel(
   }
 }
 
-final case class ShulkerBox(
+case class ShulkerBox(
     variant: ShulkerBoxVariant,
     name: String,
     tooltip: List[String],
@@ -2719,7 +2719,7 @@ final case class ShulkerBox(
   val `type` = ItemType.SHULKER_BOX
 }
 
-final case class ShulkerShell(
+case class ShulkerShell(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2729,7 +2729,7 @@ final case class ShulkerShell(
   val `type` = ItemType.SHULKER_SHELL
 }
 
-final case class Sign(
+case class Sign(
     variant: SignVariant,
     name: String,
     tooltip: List[String],
@@ -2742,7 +2742,7 @@ final case class Sign(
   override def maxCount = 16
 }
 
-final case class Slab(
+case class Slab(
     variant: SlabVariant,
     name: String,
     tooltip: List[String],
@@ -2754,7 +2754,7 @@ final case class Slab(
   val `type` = ItemType.SLAB
 }
 
-final case class Slimeball(
+case class Slimeball(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2764,7 +2764,7 @@ final case class Slimeball(
   val `type` = ItemType.SLIMEBALL
 }
 
-final case class SlimeBlock(
+case class SlimeBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2774,7 +2774,7 @@ final case class SlimeBlock(
   val `type` = ItemType.SLIME_BLOCK
 }
 
-final case class SmithingTable(
+case class SmithingTable(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2784,7 +2784,7 @@ final case class SmithingTable(
   val `type` = ItemType.SMITHING_TABLE
 }
 
-final case class Smoker(
+case class Smoker(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2794,7 +2794,7 @@ final case class Smoker(
   val `type` = ItemType.SMOKER
 }
 
-final case class Snow(
+case class Snow(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2804,7 +2804,7 @@ final case class Snow(
   val `type` = ItemType.SNOW
 }
 
-final case class Snowball(
+case class Snowball(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2815,7 +2815,7 @@ final case class Snowball(
   override def maxCount = 16
 }
 
-final case class SnowBlock(
+case class SnowBlock(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2825,7 +2825,7 @@ final case class SnowBlock(
   val `type` = ItemType.SNOW_BLOCK
 }
 
-final case class SoulSand(
+case class SoulSand(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2835,7 +2835,7 @@ final case class SoulSand(
   val `type` = ItemType.SOUL_SAND
 }
 
-final case class SpawnEgg(
+case class SpawnEgg(
     variant: SpawnEggVariant,
     name: String,
     tooltip: List[String],
@@ -2847,7 +2847,7 @@ final case class SpawnEgg(
   val `type` = ItemType.SPAWN_EGG
 }
 
-final case class Spawner(
+case class Spawner(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2857,7 +2857,7 @@ final case class Spawner(
   val `type` = ItemType.SPAWNER
 }
 
-final case class SpiderEye(
+case class SpiderEye(
     variant: SpiderEyeVariant,
     name: String,
     tooltip: List[String],
@@ -2871,7 +2871,7 @@ final case class SpiderEye(
     variant == SpiderEyeVariant.NORMAL
 }
 
-final case class Sponge(
+case class Sponge(
     variant: SpongeVariant,
     name: String,
     tooltip: List[String],
@@ -2883,7 +2883,7 @@ final case class Sponge(
   val `type` = ItemType.SPONGE
 }
 
-final case class Stairs(
+case class Stairs(
     variant: StairsVariant,
     name: String,
     tooltip: List[String],
@@ -2895,7 +2895,7 @@ final case class Stairs(
   val `type` = ItemType.SLAB
 }
 
-final case class Stew(
+case class Stew(
     variant: StewVariant,
     name: String,
     tooltip: List[String],
@@ -2908,7 +2908,7 @@ final case class Stew(
   override val edible = true
 }
 
-final case class Stick(
+case class Stick(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2918,7 +2918,7 @@ final case class Stick(
   val `type` = ItemType.STICK
 }
 
-final case class Stone(
+case class Stone(
     variant: StoneVariant,
     name: String,
     tooltip: List[String],
@@ -2930,7 +2930,7 @@ final case class Stone(
   val `type` = ItemType.STONE
 }
 
-final case class Stonecutter(
+case class Stonecutter(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2940,7 +2940,7 @@ final case class Stonecutter(
   val `type` = ItemType.STONECUTTER
 }
 
-final case class StructureBlock(
+case class StructureBlock(
     variant: StructureBlockVariant,
     name: String,
     tooltip: List[String],
@@ -2952,7 +2952,7 @@ final case class StructureBlock(
   val `type` = ItemType.STRUCTURE_BLOCK
 }
 
-final case class PieceOfString(
+case class PieceOfString(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2962,7 +2962,7 @@ final case class PieceOfString(
   val `type` = ItemType.STRING
 }
 
-final case class Sugar(
+case class Sugar(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2972,7 +2972,7 @@ final case class Sugar(
   val `type` = ItemType.SUGAR
 }
 
-final case class SugarCane(
+case class SugarCane(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2982,7 +2982,7 @@ final case class SugarCane(
   val `type` = ItemType.SUGAR_CANE
 }
 
-final case class SweetBerries(
+case class SweetBerries(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -2993,7 +2993,7 @@ final case class SweetBerries(
   override val edible = true
 }
 
-final case class Sword(
+case class Sword(
     variant: SwordVariant,
     name: String,
     tooltip: List[String],
@@ -3014,7 +3014,7 @@ final case class Sword(
   }
 }
 
-final case class Terracotta(
+case class Terracotta(
     variant: TerracottaVariant,
     name: String,
     tooltip: List[String],
@@ -3026,7 +3026,7 @@ final case class Terracotta(
   val `type` = ItemType.TERRACOTTA
 }
 
-final case class TNT(
+case class TNT(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3036,7 +3036,7 @@ final case class TNT(
   val `type` = ItemType.TNT
 }
 
-final case class Torch(
+case class Torch(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3046,7 +3046,7 @@ final case class Torch(
   val `type` = ItemType.TORCH
 }
 
-final case class TotemOfUndying(
+case class TotemOfUndying(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -3055,7 +3055,7 @@ final case class TotemOfUndying(
   val `type` = ItemType.TOTEM_OF_UNDYING
 }
 
-final case class Trapdoor(
+case class Trapdoor(
     variant: TrapdoorVariant,
     name: String,
     tooltip: List[String],
@@ -3067,7 +3067,7 @@ final case class Trapdoor(
   val `type` = ItemType.TRAPDOOR
 }
 
-final case class Trident(
+case class Trident(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -3080,7 +3080,7 @@ final case class Trident(
   override def maxDurability = 250
 }
 
-final case class TripwireHook(
+case class TripwireHook(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3090,7 +3090,7 @@ final case class TripwireHook(
   val `type` = ItemType.TRIPWIRE_HOOK
 }
 
-final case class TropicalFish(
+case class TropicalFish(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3101,7 +3101,7 @@ final case class TropicalFish(
   override val edible = true
 }
 
-final case class TurtleEgg(
+case class TurtleEgg(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3111,7 +3111,7 @@ final case class TurtleEgg(
   val `type` = ItemType.TURTLE_EGG
 }
 
-final case class TurtleHelmet(
+case class TurtleHelmet(
     name: String,
     tooltip: List[String],
     attributes: Set[String],
@@ -3124,7 +3124,7 @@ final case class TurtleHelmet(
   override def maxDurability = 275
 }
 
-final case class Vine(
+case class Vine(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3134,7 +3134,7 @@ final case class Vine(
   val `type` = ItemType.VINE
 }
 
-final case class Wall(
+case class Wall(
     variant: WallVariant,
     name: String,
     tooltip: List[String],
@@ -3146,7 +3146,7 @@ final case class Wall(
   val `type` = ItemType.WALL
 }
 
-final case class WeightedPressurePlate(
+case class WeightedPressurePlate(
     variant: WeightedPressurePlateVariant,
     name: String,
     tooltip: List[String],
@@ -3158,7 +3158,7 @@ final case class WeightedPressurePlate(
   val `type` = ItemType.WEIGHTED_PRESSURE_PLATE
 }
 
-final case class Wheat(
+case class Wheat(
     name: String,
     tooltip: List[String],
     count: Int,
@@ -3168,7 +3168,7 @@ final case class Wheat(
   val `type` = ItemType.WHEAT
 }
 
-final case class Wood(
+case class Wood(
     variant: WoodVariant,
     name: String,
     tooltip: List[String],
@@ -3180,7 +3180,7 @@ final case class Wood(
   val `type` = ItemType.WOOD
 }
 
-final case class Wool(
+case class Wool(
     variant: WoolVariant,
     name: String,
     tooltip: List[String],
@@ -3192,7 +3192,7 @@ final case class Wool(
   val `type` = ItemType.WOOL
 }
 
-final case class WrittenBook(
+case class WrittenBook(
     name: String,
     tooltip: List[String],
     count: Int,
