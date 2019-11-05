@@ -1,9 +1,14 @@
 package gg.warcraft.monolith.api.world.block
 
+import java.util
+
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
+
+import scala.annotation.varargs
+import scala.jdk.CollectionConverters._
 
 final case class Air(
     location: BlockLocation,
@@ -1242,7 +1247,8 @@ final case class Sign(
     with RotatableBlock
     with FloodableBlock {
   override val `type` = BlockType.SIGN
-  def withLines(lines: List[String]): Sign =
+  def getLines: util.List[String] = lines.asJava
+  @varargs def withLines(lines: String*): Sign =
     copyWith("lines", lines.slice(0, 4))
   def withEditable(editable: Boolean): Sign =
     copyWith("editable", editable)
