@@ -11,9 +11,9 @@ trait ItemService {
 
   def giveTo(playerId: UUID, `type`: ItemType, count: Int): Boolean
   def giveTo(playerId: UUID, variant: ItemVariant, count: Int): Boolean
-  @varargs def giveTo(playerId: UUID, item: Item*): Boolean
+  @varargs def giveTo(playerId: UUID, items: Item*): Boolean
 
   def takeFrom(playerId: UUID, `type`: ItemType, count: Int): Boolean
   def takeFrom(playerId: UUID, variant: ItemVariant, count: Int): Boolean
-  @varargs def takeFrom(playerId: UUID, item: Item*): Boolean
+  @varargs def takeFrom(playerId: UUID, items: Item*): Boolean
 }

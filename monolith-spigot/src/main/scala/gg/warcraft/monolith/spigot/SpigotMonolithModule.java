@@ -36,10 +36,7 @@ import gg.warcraft.monolith.spigot.entity.player.service.SpigotPlayerAdapter;
 import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
 import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.menu.service.SpigotMenuAdapter;
-import gg.warcraft.monolith.spigot.world.Overworld;
 import gg.warcraft.monolith.spigot.world.SpigotWorldService;
-import gg.warcraft.monolith.spigot.world.TheEnd;
-import gg.warcraft.monolith.spigot.world.TheNether;
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -48,21 +45,15 @@ import java.util.logging.Logger;
 
 public class SpigotMonolithModule extends AbstractMonolithModule {
     private final Plugin plugin;
-    private final String overworldName;
-    private final String theNetherName;
-    private final String theEndName;
 
     public SpigotMonolithModule(String configurationService, String gitHubAccount, String gitHubRepository,
                                 String persistenceService, String redisHost, int redisPort,
                                 float baseHealth, World buildRepositoryWorld,
                                 Vector3i buildRepositoryMinimumCorner, Vector3i buildRepositoryMaximumCorner,
-                                Plugin plugin, String overworldName, String theNetherName, String theEndName) {
+                                Plugin plugin) {
         super(configurationService, gitHubAccount, gitHubRepository, persistenceService, redisHost, redisPort,
                 baseHealth, buildRepositoryWorld, buildRepositoryMinimumCorner, buildRepositoryMaximumCorner);
         this.plugin = plugin;
-        this.overworldName = overworldName;
-        this.theNetherName = theNetherName;
-        this.theEndName = theEndName;
     }
 
     @Override
@@ -85,16 +76,6 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
         bind(Server.class).toProvider(plugin::getServer);
         expose(Server.class);
-
-        // Bukkit world bindings
-        bind(org.bukkit.World.class).annotatedWith(Overworld.class).toProvider(() -> plugin.getServer().getWorld(overworldName));
-        expose(Key.get(org.bukkit.World.class, Overworld.class));
-
-        bind(org.bukkit.World.class).annotatedWith(TheNether.class).toProvider(() -> plugin.getServer().getWorld(theNetherName));
-        expose(Key.get(org.bukkit.World.class, TheNether.class));
-
-        bind(org.bukkit.World.class).annotatedWith(TheEnd.class).toProvider(() -> plugin.getServer().getWorld(theEndName));
-        expose(Key.get(org.bukkit.World.class, TheEnd.class));
     }
 
     private void configureCommand() {

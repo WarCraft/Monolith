@@ -9,6 +9,7 @@ trait Inventory {
   val items: List[Item]
   def getItems: util.List[Item] = items.asJava
 
+  def hasSpace(count: Int): Boolean
   def hasSpaceFor(@varargs items: Item*): Boolean
 
   def contains(`type`: ItemType, count: Int): Boolean

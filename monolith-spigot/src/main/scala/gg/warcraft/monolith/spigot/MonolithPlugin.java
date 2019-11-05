@@ -139,6 +139,7 @@ public class MonolithPlugin extends JavaPlugin {
                 localConfig.getInt("buildRepository.maximumCorner.y"),
                 localConfig.getInt("buildRepository.maximumCorner.z"));
 
+        // TODO remove
         String overworldName = localConfig.getString("worldDirectoryName");
         String netherName = localConfig.getString("netherDirectoryName");
         String theEndName = localConfig.getString("endDirectoryName");
@@ -148,7 +149,7 @@ public class MonolithPlugin extends JavaPlugin {
                 persistenceService, redisHost, redisPort,
                 baseHealth, buildRepositoryWorld,
                 buildRepositoryMinimumCorner, buildRepositoryMaximumCorner,
-                this, overworldName, netherName, theEndName);
+                this);
         Monolith.registerModule(spigotMonolithModule);
     }
 
