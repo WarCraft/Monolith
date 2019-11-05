@@ -47,16 +47,12 @@ class ItemSpec extends fixture.FunSpec {
       }
     }
 
-    //  describe("PickAxe") {
-    //
-    //    describe("::withDurability(Int)") {
-    //
-    //      it("should throw an illegal argument exception") { fixture =>
-    //        assertThrows[Throwable] {
-    //          fixture.withDurability(2)
-    //        }
-    //      }
-    //    }
-    //  }
+    describe("::withCount(Int)") {
+      it("should throw an illegal argument exception") { fixture =>
+        assertThrows[Throwable] {
+          fixture.withCount(-1)
+        }
+      }
+    }
   }
 }
