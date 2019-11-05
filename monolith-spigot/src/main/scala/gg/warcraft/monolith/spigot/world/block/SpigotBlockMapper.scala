@@ -16,6 +16,7 @@ import org.bukkit.block.data.`type`.Switch
 
 class SpigotBlockMapper @Inject() (
     private val locationMapper: SpigotLocationMapper,
+    private val typeMapper: SpigotBlockTypeMapper,
     private val attachmentMapper: SpigotBlockAttachmentMapper,
     private val bisectionMapper: SpigotBlockBisectionMapper,
     private val extensionMapper: SpigotBlockExtensionMapper,
@@ -467,118 +468,6 @@ class SpigotBlockMapper @Inject() (
     val material = block match {
       case it: VariableBlock[_] => variantMapper.map(it)
 
-      // TODO match on item.type to get a switch?
-      case _: Barrel           => Material.BARREL
-      case _: Barrier          => Material.BARRIER
-      case _: Beacon           => Material.BEACON
-      case _: Bedrock          => Material.BEDROCK
-      case _: Beetroots        => Material.BEETROOTS
-      case _: Bell             => Material.BELL
-      case _: BlastFurnace     => Material.BLAST_FURNACE
-      case _: BoneBlock        => Material.BONE_BLOCK
-      case _: Bookshelf        => Material.BOOKSHELF
-      case _: BrewingStand     => Material.BREWING_STAND
-      case _: BubbleColumn     => Material.BUBBLE_COLUMN
-      case _: Cactus           => Material.CACTUS
-      case _: Cake             => Material.CAKE
-      case _: Campfire         => Material.CAMPFIRE
-      case _: Carrots          => Material.CARROTS
-      case _: CartographyTable => Material.CARTOGRAPHY_TABLE
-      case _: Cauldron         => Material.CAULDRON
-      case _: ChorusFlower     => Material.CHORUS_FLOWER
-      case _: ChorusPlant      => Material.CHORUS_PLANT
-      case _: ClayBlock        => Material.CLAY
-      case _: CoalBlock        => Material.COAL_BLOCK
-      case _: CoalOre          => Material.COAL_ORE
-      case _: Cobweb           => Material.COBWEB
-      case _: CocoaPod         => Material.COCOA
-      case _: Composter        => Material.COMPOSTER
-      case _: Conduit          => Material.CONDUIT
-      case _: CraftingTable    => Material.CRAFTING_TABLE
-      case _: DaylightDetector => Material.DAYLIGHT_DETECTOR
-      case _: DeadBush         => Material.DEAD_BUSH
-      case _: DiamondBlock     => Material.DIAMOND_BLOCK
-      case _: DiamondOre       => Material.DIAMOND_ORE
-      case _: Dispenser        => Material.DISPENSER
-      case _: DragonEgg        => Material.DRAGON_EGG
-      case _: DriedKelpBlock   => Material.DRIED_KELP_BLOCK
-      case _: Dropper          => Material.DROPPER
-      case _: EmeraldBlock     => Material.EMERALD_BLOCK
-      case _: EmeraldOre       => Material.EMERALD_ORE
-      case _: EnchantingTable  => Material.ENCHANTING_TABLE
-      case _: EndGateway       => Material.END_GATEWAY
-      case _: EndPortal        => Material.END_PORTAL
-      case _: EndPortalFrame   => Material.END_PORTAL_FRAME
-      case _: EndRod           => Material.END_ROD
-      case _: Farmland         => Material.FARMLAND
-      case _: Fire             => Material.FIRE
-      case _: FletchingTable   => Material.FLETCHING_TABLE
-      case _: Frost            => Material.FROSTED_ICE
-      case _: Furnace          => Material.FURNACE
-      case _: Glowstone        => Material.GLOWSTONE
-      case _: GoldBlock        => Material.GOLD_BLOCK
-      case _: GoldOre          => Material.GOLD_ORE
-      case _: GrassBlock       => Material.GRASS_BLOCK
-      case _: GrassPath        => Material.GRASS_PATH
-      case _: Gravel           => Material.GRAVEL
-      case _: Grindstone       => Material.GRINDSTONE
-      case _: HayBale          => Material.HAY_BLOCK
-      case _: Hopper           => Material.HOPPER
-      case _: IronBlock        => Material.IRON_BLOCK
-      case _: IronBars         => Material.IRON_BARS
-      case _: IronOre          => Material.IRON_ORE
-      case _: JigsawBlock      => Material.JIGSAW
-      case _: Jukebox          => Material.JUKEBOX
-      case _: Ladder           => Material.LADDER
-      case _: Lantern          => Material.LANTERN
-      case _: LapisBlock       => Material.LAPIS_BLOCK
-      case _: LapisOre         => Material.LAPIS_ORE
-      case _: Lava             => Material.LAVA
-      case _: Lectern          => Material.LECTERN
-      case _: Lever            => Material.LEVER
-      case _: LilyPad          => Material.LILY_PAD
-      case _: Loom             => Material.LOOM
-      case _: MagmaBlock       => Material.MAGMA_BLOCK
-      case _: Melon            => Material.MELON
-      case _: Mycelium         => Material.MYCELIUM
-      case _: NetherPortal     => Material.NETHER_PORTAL
-      case _: Netherrack       => Material.NETHERRACK
-      case _: NetherWarts      => Material.NETHER_WART
-      case _: NetherWartBlock  => Material.NETHER_WART_BLOCK
-      case _: Observer         => Material.OBSERVER
-      case _: Obsidian         => Material.OBSIDIAN
-      case _: Podzol           => Material.PODZOL
-      case _: Potatoes         => Material.POTATOES
-      case _: Pumpkin          => Material.PUMPKIN
-      case _: PurpurBlock      => Material.PURPUR_BLOCK
-      case _: QuartzOre        => Material.NETHER_QUARTZ_ORE
-      case _: RedstoneBlock    => Material.REDSTONE_BLOCK
-      case _: RedstoneLamp     => Material.REDSTONE_LAMP
-      case _: RedstoneOre      => Material.REDSTONE_ORE
-      case _: RedstoneWire     => Material.REDSTONE_WIRE
-      case _: Repeater         => Material.REPEATER
-      case _: Scaffolding      => Material.SCAFFOLDING
-      case _: SeaLantern       => Material.SEA_LANTERN
-      case _: SeaPickle        => Material.SEA_PICKLE
-      case _: SlimeBlock       => Material.SLIME_BLOCK
-      case _: SmithingTable    => Material.SMITHING_TABLE
-      case _: Smoker           => Material.SMOKER
-      case _: Snow             => Material.SNOW
-      case _: SnowBlock        => Material.SNOW_BLOCK
-      case _: SoulSand         => Material.SOUL_SAND
-      case _: Spawner          => Material.SPAWNER
-      case _: Stonecutter      => Material.STONECUTTER
-      case _: SugarCane        => Material.SUGAR_CANE
-      case _: SweetBerryBush   => Material.SWEET_BERRY_BUSH
-      case _: TNT              => Material.TNT
-      case _: Torch            => Material.TORCH
-      case _: Tripwire         => Material.TRIPWIRE
-      case _: TripwireHook     => Material.TRIPWIRE_HOOK
-      case _: TurtleEgg        => Material.TURTLE_EGG
-      case _: Vine             => Material.VINE
-      case _: Water            => Material.WATER
-      case _: Wheat            => Material.WHEAT
-
       case it: Kelp =>
         if (it.state == KelpState.FULLY_GROWN) Material.KELP_PLANT
         else Material.KELP
@@ -598,6 +487,8 @@ class SpigotBlockMapper @Inject() (
       case it: Seagrass => // TODO SeagrassVariant (BlockVariant only)
         if (it.tall) Material.TALL_SEAGRASS
         else Material.SEAGRASS
+
+      case it => typeMapper.map(it.`type`)
     }
 
     val data = Bukkit.createBlockData(material)
