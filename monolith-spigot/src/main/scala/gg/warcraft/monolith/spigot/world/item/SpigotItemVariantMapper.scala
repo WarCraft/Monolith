@@ -4,11 +4,10 @@ import gg.warcraft.monolith.api.world.block.BlockVariant
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant._
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockVariantMapper
-import javax.inject.Inject
 import org.bukkit.Material
 
-class SpigotItemVariantMapper @Inject() (
-    blockMapper: SpigotBlockVariantMapper
+class SpigotItemVariantMapper(
+    private implicit val blockMapper: SpigotBlockVariantMapper
 ) {
   def map(material: Material): ItemVariant = material match {
     // ARROW

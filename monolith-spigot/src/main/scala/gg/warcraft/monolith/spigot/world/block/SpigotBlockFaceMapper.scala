@@ -1,10 +1,13 @@
 package gg.warcraft.monolith.spigot.world.block
 
+import java.util
+
 import gg.warcraft.monolith.api.world.block.BlockFace
-import org.bukkit.block.{ BlockFace => SpigotBlockFace }
+import org.bukkit.block.{BlockFace => SpigotBlockFace}
+
+import scala.jdk.CollectionConverters._
 
 class SpigotBlockFaceMapper {
-
   def map(face: SpigotBlockFace): BlockFace = face match {
     case SpigotBlockFace.NORTH => BlockFace.NORTH
     case SpigotBlockFace.EAST  => BlockFace.EAST
@@ -12,8 +15,6 @@ class SpigotBlockFaceMapper {
     case SpigotBlockFace.WEST  => BlockFace.WEST
     case SpigotBlockFace.UP    => BlockFace.UP
     case SpigotBlockFace.DOWN  => BlockFace.DOWN
-
-    case _ => throw new IllegalArgumentException(s"$face")
   }
 
   def map(face: BlockFace): SpigotBlockFace = face match {
@@ -24,4 +25,10 @@ class SpigotBlockFaceMapper {
     case BlockFace.UP    => SpigotBlockFace.UP
     case BlockFace.DOWN  => SpigotBlockFace.DOWN
   }
+
+  def map(facing: util.Set[SpigotBlockFace]): Set[BlockFace] =
+    facing.asScala.map(map).toSet
+
+  def map(facing: Set[BlockFace]): util.Set[SpigotBlockFace] =
+    facing.map(map).asJava
 }

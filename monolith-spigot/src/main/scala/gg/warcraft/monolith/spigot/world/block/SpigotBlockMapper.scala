@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.spigot.world.block
 
-import com.google.inject.Inject
 import gg.warcraft.monolith.api.world.block.{Rail, _}
 import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.world.block.state._
@@ -14,18 +13,17 @@ import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
 import org.bukkit.block.data.`type`.Slab.{Type => SpigotSlabType}
 import org.bukkit.block.data.`type`.Switch
 
-class SpigotBlockMapper @Inject() (
-    private val locationMapper: SpigotLocationMapper,
-    private val typeMapper: SpigotBlockTypeMapper,
-    private val attachmentMapper: SpigotBlockAttachmentMapper,
-    private val bisectionMapper: SpigotBlockBisectionMapper,
-    private val extensionMapper: SpigotBlockExtensionMapper,
-    private val faceMapper: SpigotBlockFaceMapper,
-    private val orientationMapper: SpigotBlockOrientationMapper,
-    private val rotationMapper: SpigotBlockRotationMapper,
-    private val shapeMapper: SpigotBlockShapeMapper,
-    private val stateMapper: SpigotBlockStateMapper,
-    private val variantMapper: SpigotBlockVariantMapper
+class SpigotBlockMapper(
+    private implicit val locationMapper: SpigotLocationMapper,
+    private implicit val typeMapper: SpigotBlockTypeMapper,
+    private implicit val attachmentMapper: SpigotBlockAttachmentMapper,
+    private implicit val bisectionMapper: SpigotBlockBisectionMapper,
+    private implicit val faceMapper: SpigotBlockFaceMapper,
+    private implicit val orientationMapper: SpigotBlockOrientationMapper,
+    private implicit val rotationMapper: SpigotBlockRotationMapper,
+    private implicit val shapeMapper: SpigotBlockShapeMapper,
+    private implicit val stateMapper: SpigotBlockStateMapper,
+    private implicit val variantMapper: SpigotBlockVariantMapper
 ) {
   def map(block: SpigotBlock): Block = {
     val loc = locationMapper.map(block.getLocation).toBlockLocation
@@ -64,7 +62,7 @@ class SpigotBlockMapper @Inject() (
 
     lazy val extensions = {
       val multipleFacing = spigotData.asInstanceOf[MultipleFacing]
-      extensionMapper.map(multipleFacing.getFaces)
+      faceMapper.map(multipleFacing.getFaces)
     }
 
     lazy val orientation = {
@@ -519,7 +517,7 @@ class SpigotBlockMapper @Inject() (
 
     lazy val extensions = {
       val extensions = blockAs[ExtendableBlock].extensions
-      extensionMapper.map(extensions)
+      faceMapper.map(extensions)
     }
 
     lazy val orientation = {

@@ -1,15 +1,14 @@
 package gg.warcraft.monolith.spigot.world
 
-import com.google.inject.Inject
 import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
 import gg.warcraft.monolith.api.world.{BlockLocation, Location}
+import gg.warcraft.monolith.spigot.SpigotWorldMapper
 import org.bukkit.{Location => SpigotLocation}
 import org.bukkit.block.{Block => SpigotBlock}
 
-class SpigotLocationMapper @Inject()(
-    private val worldMapper: SpigotWorldMapper
+class SpigotLocationMapper(
+    private implicit val worldMapper: SpigotWorldMapper
 ) {
-
   def map(loc: BlockLocation): SpigotLocation = {
     val world = worldMapper.map(loc.world)
     val Vector3i(x, y, z) = loc.translation

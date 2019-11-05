@@ -18,20 +18,20 @@ import gg.warcraft.monolith.spigot.world.block.{
   SpigotBlockMapper,
   SpigotBlockTypeMapper
 }
-import javax.inject.Inject
+import gg.warcraft.monolith.spigot.SpigotWorldMapper
 import org.bukkit.Server
 
 import scala.annotation.varargs
 
-class SpigotWorldService @Inject() (
-    private val server: Server,
-    private val locationMapper: SpigotLocationMapper,
-    private val worldMapper: SpigotWorldMapper,
-    private val blockMapper: SpigotBlockMapper,
-    private val blockTypeMapper: SpigotBlockTypeMapper,
-    private val soundMapper: SpigotSoundMapper
+class SpigotWorldService(
+    private implicit val server: Server,
+    private implicit val worldMapper: SpigotWorldMapper,
+    private implicit val locationMapper: SpigotLocationMapper,
+    private implicit val blockTypeMapper: SpigotBlockTypeMapper,
+    private implicit val blockMapper: SpigotBlockMapper,
+    private implicit val soundMapper: SpigotSoundMapper
 ) extends WorldService {
-  private var spoofBlock: SpigotBlock = null // TODO initialize
+  private var spoofBlock: SpigotBlock = _ // TODO initialize
 
   override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world)

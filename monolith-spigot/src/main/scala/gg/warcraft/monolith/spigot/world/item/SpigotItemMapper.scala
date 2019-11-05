@@ -4,14 +4,13 @@ import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 import gg.warcraft.monolith.spigot.Extensions._
-import javax.inject.Inject
 import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.Damageable
 
-class SpigotItemMapper @Inject() (
-    private val typeMapper: SpigotItemTypeMapper,
-    private val variantMapper: SpigotItemVariantMapper
+class SpigotItemMapper(
+    private implicit val typeMapper: SpigotItemTypeMapper,
+    private implicit val variantMapper: SpigotItemVariantMapper
 ) {
   def map(item: SpigotItemStack): Option[Item] = {
     // return None if Air
