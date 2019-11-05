@@ -13,7 +13,11 @@ import gg.warcraft.monolith.api.world.{
 }
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.item.Item
-import gg.warcraft.monolith.spigot.world.block.{SpigotBlock, SpigotBlockMapper}
+import gg.warcraft.monolith.spigot.world.block.{
+  SpigotBlock,
+  SpigotBlockMapper,
+  SpigotBlockTypeMapper
+}
 import javax.inject.Inject
 import org.bukkit.Server
 
@@ -24,6 +28,7 @@ class SpigotWorldService @Inject() (
     private val locationMapper: SpigotLocationMapper,
     private val worldMapper: SpigotWorldMapper,
     private val blockMapper: SpigotBlockMapper,
+    private val blockTypeMapper: SpigotBlockTypeMapper,
     private val soundMapper: SpigotSoundMapper
 ) extends WorldService {
   private var spoofBlock: SpigotBlock = null // TODO initialize
@@ -67,7 +72,7 @@ class SpigotWorldService @Inject() (
 
   override def setBlockType(location: BlockLocation, `type`: BlockType): Unit = {
     val spigotLocation = locationMapper.map(location)
-    val spigotType = null // TODO map BlockType to Material
+    val spigotType = blockTypeMapper.map(`type`)
     spigotLocation.getBlock.setType(spigotType)
   }
 
