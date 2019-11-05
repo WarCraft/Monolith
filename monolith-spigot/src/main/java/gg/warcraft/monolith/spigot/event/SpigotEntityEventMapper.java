@@ -16,6 +16,7 @@ import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.entity.event.*;
+import gg.warcraft.monolith.spigot.Implicits;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Server;
@@ -56,15 +57,13 @@ public class SpigotEntityEventMapper implements Listener {
                                    EventService eventService,
                                    TaskService taskService,
                                    CombatFactory combatFactory,
-                                   SpigotItemMapper itemMapper,
-                                   SpigotLocationMapper locationMapper,
                                    Server server, Plugin plugin) {
         this.statusQueryService = statusQueryService;
         this.eventService = eventService;
         this.taskService = taskService;
         this.combatFactory = combatFactory;
-        this.itemMapper = itemMapper;
-        this.locationMapper = locationMapper;
+        this.locationMapper = Implicits.locationMapper();
+        this.itemMapper = Implicits.itemMapper(); // TODO undo
         this.server = server;
         this.plugin = plugin;
 

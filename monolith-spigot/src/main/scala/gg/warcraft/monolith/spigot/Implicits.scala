@@ -17,27 +17,27 @@ import org.bukkit.Server
 object Implicits {
   implicit var server: Server = _
 
-  implicit val worldMapper: SpigotWorldMapper = new SpigotWorldMapper
-  implicit val locationMapper: SpigotLocationMapper = new SpigotLocationMapper
+  implicit lazy val worldMapper: SpigotWorldMapper = new SpigotWorldMapper
+  implicit lazy val locationMapper: SpigotLocationMapper = new SpigotLocationMapper
 
-  implicit val blockTypeMapper: SpigotBlockTypeMapper = new SpigotBlockTypeMapper
-  implicit val blockVariantMapper: SpigotBlockVariantMapper = new SpigotBlockVariantMapper
-  implicit val blockStateMapper: SpigotBlockStateMapper = new SpigotBlockStateMapper
-  implicit val blockAttachmentMapper: SpigotBlockAttachmentMapper = new SpigotBlockAttachmentMapper
-  implicit val blockBisectionMapper: SpigotBlockBisectionMapper = new SpigotBlockBisectionMapper
-  implicit val blockFaceMapper: SpigotBlockFaceMapper = new SpigotBlockFaceMapper
-  implicit val blockOrientationMapper: SpigotBlockOrientationMapper = new SpigotBlockOrientationMapper
-  implicit val blockRotationMapper: SpigotBlockRotationMapper = new SpigotBlockRotationMapper
-  implicit val blockShapeMapper: SpigotBlockShapeMapper = new SpigotBlockShapeMapper
-  implicit val blockMapper: SpigotBlockMapper = new SpigotBlockMapper
+  implicit lazy val blockTypeMapper: SpigotBlockTypeMapper = new SpigotBlockTypeMapper
+  implicit lazy val blockVariantMapper: SpigotBlockVariantMapper = new SpigotBlockVariantMapper
+  implicit lazy val blockStateMapper: SpigotBlockStateMapper = new SpigotBlockStateMapper
+  implicit lazy val blockAttachmentMapper: SpigotBlockAttachmentMapper = new SpigotBlockAttachmentMapper
+  implicit lazy val blockBisectionMapper: SpigotBlockBisectionMapper = new SpigotBlockBisectionMapper
+  implicit lazy val blockFaceMapper: SpigotBlockFaceMapper = new SpigotBlockFaceMapper
+  implicit lazy val blockOrientationMapper: SpigotBlockOrientationMapper = new SpigotBlockOrientationMapper
+  implicit lazy val blockRotationMapper: SpigotBlockRotationMapper = new SpigotBlockRotationMapper
+  implicit lazy val blockShapeMapper: SpigotBlockShapeMapper = new SpigotBlockShapeMapper
+  implicit lazy val blockMapper: SpigotBlockMapper = new SpigotBlockMapper
 
-  implicit val itemTypeMapper: SpigotItemTypeMapper = new SpigotItemTypeMapper
-  implicit val itemVariantMapper: SpigotItemVariantMapper = new SpigotItemVariantMapper
-  implicit val itemMapper: SpigotItemMapper = new SpigotItemMapper
+  implicit lazy val itemTypeMapper: SpigotItemTypeMapper = new SpigotItemTypeMapper
+  implicit lazy val itemVariantMapper: SpigotItemVariantMapper = new SpigotItemVariantMapper
+  implicit lazy val itemMapper: SpigotItemMapper = new SpigotItemMapper
 
   // TODO rewrite to scala class
-  implicit val soundMapper: SpigotSoundMapper = new SpigotSoundMapper
+  implicit lazy val soundMapper: SpigotSoundMapper = new SpigotSoundMapper
 
-  implicit val worldService: SpigotWorldService = new SpigotWorldService
-  implicit val itemService: SpigotItemService = new SpigotItemService
+  implicit lazy val worldService: SpigotWorldService = new SpigotWorldService
+  implicit lazy val itemService: SpigotItemService = new SpigotItemService
 }

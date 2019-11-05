@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.spigot;
 
-import com.google.inject.Key;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import gg.warcraft.monolith.api.command.service.CommandServerAdapter;
@@ -36,8 +35,10 @@ import gg.warcraft.monolith.spigot.entity.player.service.SpigotPlayerAdapter;
 import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
 import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.menu.service.SpigotMenuAdapter;
-import gg.warcraft.monolith.spigot.world.SpigotWorldService;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
@@ -133,8 +134,14 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         bind(BlockBackupService.class).to(SpigotBlockBackupService.class);
         expose(BlockBackupService.class);
 
-        bind(WorldService.class).to(SpigotWorldService.class);
-        expose(WorldService.class);
+        bind(WorldService.class).toProvider(Implicits::worldService);
+        expose(WorldService.class); // TODO remove when app no longer depends on it
+        bind(SpigotLocationMapper.class).toProvider(Implicits::locationMapper);
+        expose(SpigotLocationMapper.class);
+        bind(SpigotItemMapper.class).toProvider(Implicits::itemMapper);
+        expose(SpigotItemMapper.class);
+        bind(SpigotBlockMapper.class).toProvider(Implicits::blockMapper);
+        expose(SpigotBlockMapper.class);
     }
 
     private void configureMapper() {

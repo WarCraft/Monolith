@@ -115,6 +115,7 @@ public class MonolithPlugin extends JavaPlugin {
     @Override
     public void onLoad() {
         new ImplicitsJavaHack().doTheThing(getServer());
+
         saveDefaultConfig();
         FileConfiguration localConfig = getConfig();
 

@@ -5,6 +5,7 @@ import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.player.PlayerServerData;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.spigot.Implicits;
 import gg.warcraft.monolith.spigot.entity.player.SpigotOfflinePlayerData;
 import gg.warcraft.monolith.spigot.entity.player.SpigotPlayerDataFactory;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
@@ -26,11 +27,10 @@ public class SpigotPlayerAdapter implements PlayerServerAdapter {
     private final SpigotItemMapper itemMapper;
 
     @Inject
-    public SpigotPlayerAdapter(Server server, SpigotPlayerDataFactory playerDataFactory,
-                               SpigotItemMapper itemMapper) {
+    public SpigotPlayerAdapter(Server server, SpigotPlayerDataFactory playerDataFactory) {
         this.server = server;
         this.playerDataFactory = playerDataFactory;
-        this.itemMapper = itemMapper;
+        this.itemMapper = Implicits.itemMapper(); // TODO undo
     }
 
     @Override

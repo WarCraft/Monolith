@@ -16,6 +16,7 @@ import gg.warcraft.monolith.api.util.Duration;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.DirectionUtils;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.spigot.Implicits;
 import gg.warcraft.monolith.spigot.combat.SpigotPotionEffectTypeMapper;
 import gg.warcraft.monolith.spigot.entity.GenericAttributeMapper;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityDataFactory;
@@ -50,7 +51,6 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
     public SpigotEntityAdapter(Server server, Plugin plugin,
                                AttributeQueryService attributeQueryService,
                                DirectionUtils directionUtils,
-                               SpigotLocationMapper locationMapper,
                                SpigotEntityDataFactory entityDataFactory,
                                SpigotPotionEffectTypeMapper potionEffectTypeMapper,
                                GenericAttributeMapper genericAttributeMapper) {
@@ -58,7 +58,7 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
         this.plugin = plugin;
         this.attributeQueryService = attributeQueryService;
         this.directionUtils = directionUtils;
-        this.locationMapper = locationMapper;
+        this.locationMapper = Implicits.locationMapper(); // TODO undo
         this.entityDataFactory = entityDataFactory;
         this.potionEffectTypeMapper = potionEffectTypeMapper;
         this.genericAttributeMapper = genericAttributeMapper;

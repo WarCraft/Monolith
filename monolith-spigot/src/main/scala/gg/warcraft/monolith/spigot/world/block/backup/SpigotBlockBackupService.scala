@@ -4,9 +4,10 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.PluginLogger
-import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
+import gg.warcraft.monolith.api.world.block.backup.{ BlockBackup, BlockBackupService }
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
+import gg.warcraft.monolith.spigot.Implicits
 import javax.inject.Inject
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
@@ -14,10 +15,11 @@ import org.bukkit.Bukkit
 
 class SpigotBlockBackupService @Inject() (
     plugin: Plugin,
-    @PluginLogger pluginLogger: Logger,
-    locationMapper: SpigotLocationMapper
+    @PluginLogger pluginLogger: Logger
 ) extends BlockBackupService {
   private final val metaDataKey = getClass.getCanonicalName
+
+  val locationMapper: SpigotLocationMapper = Implicits.locationMapper // TODO undo
 
   override def createBackup(location: BlockLocation): UUID = {
     val block = locationMapper.map(location).getBlock
