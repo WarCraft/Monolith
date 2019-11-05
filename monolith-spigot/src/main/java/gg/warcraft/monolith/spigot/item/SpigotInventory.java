@@ -8,10 +8,7 @@ import gg.warcraft.monolith.api.world.item.ItemType;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class SpigotInventory implements Inventory {
     private final SpigotItemMapper itemMapper;
@@ -25,7 +22,8 @@ public class SpigotInventory implements Inventory {
 
     @Override
     public List<Item> getItems() {
-        return null; // TODO Arrays.stream(inventory.getContents())
+        System.out.println("WARNING Attempted to read items from inventory, always returning empty");
+        return new ArrayList<>(); // TODO Arrays.stream(inventory.getContents())
 //                .filter(Objects::nonNull)
 //                .map(itemMapper::map)
 //                .collect(Collectors.toList());
@@ -44,7 +42,8 @@ public class SpigotInventory implements Inventory {
                 .map(itemMapper::map)
                 .toArray(ItemStack[]::new);
         Map<Integer, ItemStack> excessItems = inventory.addItem(spigotItems);
-        return null;
+        System.out.println("WARNING Attempted to add item to inventory, always returning empty");
+        return new ArrayList<>();
         // TODO return excessItems.values().stream()
 //                .map(itemMapper::map)
 //                .collect(Collectors.toList());
