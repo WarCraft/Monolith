@@ -42,6 +42,23 @@ class SpigotBlockVariantMapper {
     case Material.WHITE_BANNER      => BannerVariant.WHITE
     case Material.YELLOW_BANNER     => BannerVariant.YELLOW
 
+    case Material.BLACK_WALL_BANNER      => BannerVariant.BLACK
+    case Material.BLUE_WALL_BANNER       => BannerVariant.BLUE
+    case Material.BROWN_WALL_BANNER      => BannerVariant.BROWN
+    case Material.CYAN_WALL_BANNER       => BannerVariant.CYAN
+    case Material.GRAY_WALL_BANNER       => BannerVariant.GRAY
+    case Material.GREEN_WALL_BANNER      => BannerVariant.GREEN
+    case Material.LIGHT_BLUE_WALL_BANNER => BannerVariant.LIGHT_BLUE
+    case Material.LIGHT_GRAY_WALL_BANNER => BannerVariant.LIGHT_GRAY
+    case Material.LIME_WALL_BANNER       => BannerVariant.LIME
+    case Material.MAGENTA_WALL_BANNER    => BannerVariant.MAGENTA
+    case Material.ORANGE_WALL_BANNER     => BannerVariant.ORANGE
+    case Material.PINK_WALL_BANNER       => BannerVariant.PINK
+    case Material.PURPLE_WALL_BANNER     => BannerVariant.PURPLE
+    case Material.RED_WALL_BANNER        => BannerVariant.RED
+    case Material.WHITE_WALL_BANNER      => BannerVariant.WHITE
+    case Material.YELLOW_WALL_BANNER     => BannerVariant.YELLOW
+
     // BED
     case Material.BLACK_BED      => BedVariant.BLACK
     case Material.BLUE_BED       => BedVariant.BLUE

@@ -9,9 +9,11 @@ class SpigotBlockTypeMapper {
     case BlockType.CLAY_BLOCK      => Material.CLAY
     case BlockType.COCOA_POD       => Material.COCOA
     case BlockType.END_STONE_BRICK => Material.END_STONE_BRICKS
+    case BlockType.FROST           => Material.FROSTED_ICE
     case BlockType.HAY_BALE        => Material.HAY_BLOCK
     case BlockType.INFESTED_BLOCK  => Material.INFESTED_STONE
     case BlockType.JIGSAW_BLOCK    => Material.JIGSAW
+    case BlockType.NETHER_WARTS    => Material.NETHER_WART
     case BlockType.QUARTZ_ORE      => Material.NETHER_QUARTZ_ORE
 
     // variable blocks with no clear default
