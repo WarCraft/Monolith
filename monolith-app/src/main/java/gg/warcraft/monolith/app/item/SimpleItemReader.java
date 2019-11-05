@@ -8,6 +8,7 @@ import gg.warcraft.monolith.api.util.StringUtils;
 import gg.warcraft.monolith.api.world.item.Item;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class SimpleItemReader implements ItemReader {
     private final StringUtils stringUtils;
@@ -26,13 +27,13 @@ public class SimpleItemReader implements ItemReader {
             return null;
         }
 
-        String[] lore = item.tooltip();
-        if (lore.length == 0) {
+        List<String> lore = item.getTooltip();
+        if (lore.size() == 0) {
             return null;
         }
 
-        if (lore.length == 1 || stringUtils.removeChatCodes(lore[1]).isEmpty()) {
-            return stringUtils.removeChatCodes(lore[0]);
+        if (lore.size() == 1 || stringUtils.removeChatCodes(lore.get(1)).isEmpty()) {
+            return stringUtils.removeChatCodes(lore.get(0));
         }
         return null;
     }
@@ -43,7 +44,7 @@ public class SimpleItemReader implements ItemReader {
             return 0;
         }
 
-        String[] lore = item.tooltip();
+        List<String> lore = item.getTooltip();
         for (String line : lore) {
             if (line.contains(attribute.getName())) {
                 String rawLine = stringUtils.removeChatCodes(line);

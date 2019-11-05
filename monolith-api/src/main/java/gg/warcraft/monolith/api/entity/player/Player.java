@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.entity.player;
 
 import gg.warcraft.monolith.api.entity.Entity;
-import gg.warcraft.monolith.api.item.Inventory;
+import gg.warcraft.monolith.api.world.item.Inventory;
 
 /**
  * A Player is a human actor on the server.
