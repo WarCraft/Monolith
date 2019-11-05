@@ -10,6 +10,9 @@ import java.util.*;
 @Singleton
 public class InMemoryPersistenceService implements PersistenceService {
     private final PersistenceCache persistenceCache;
+    private final Map<String, Map<String, String>> maps = new HashMap<>();
+    private final Map<String, List<String>> lists = new HashMap<>();
+    private final Map<String, Set<String>> sets = new HashMap<>();
 
     @Inject
     public InMemoryPersistenceService(PersistenceCache persistenceCache) {
@@ -33,44 +36,53 @@ public class InMemoryPersistenceService implements PersistenceService {
 
     @Override
     public List<String> getList(String key) {
-        return new ArrayList<>();
+        return lists.getOrDefault(key, new ArrayList<>());
     }
 
     @Override
     public void setList(String key, List<String> values) {
-
+        lists.put(key, values);
     }
 
     @Override
     public void pushList(String key, String value) {
+        List list = lists.getOrDefault(key, new ArrayList<>());
+        list.add(value);
+        lists.put(key, list);
     }
 
     @Override
     public Map<String, String> getMap(String key) {
-        return new HashMap<>();
+        return maps.getOrDefault(key, new HashMap<>());
     }
 
     @Override
     public void setMap(String key, Map<String, String> values) {
+        maps.put(key, values);
     }
 
     @Override
     public void removeMap(String key, List<String> fields) {
-
+        maps.remove(key);
     }
 
     @Override
     public Set<String> getSet(String key) {
-        return new HashSet<>();
+        return sets.getOrDefault(key, new HashSet<>());
     }
 
     @Override
     public void addSet(String key, List<String> values) {
+        Set set = sets.getOrDefault(key, new HashSet<>());
+        set.addAll(values);
+        sets.put(key, set);
     }
 
     @Override
     public void removeSet(String key, List<String> values) {
-
+        Set set = sets.getOrDefault(key, new HashSet<>());
+        set.removeAll(values);
+        sets.put(key, set);
     }
 
     @Override
