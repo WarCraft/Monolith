@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.math
 
 import org.scalactic.TolerantNumerics
-import org.scalatest.{Outcome, fixture}
+import org.scalatest.{fixture, Outcome}
 
 class Vector3fSpec extends fixture.FunSpec {
   private implicit val _ = TolerantNumerics.tolerantFloatEquality(1e-6f)
@@ -18,9 +18,7 @@ class Vector3fSpec extends fixture.FunSpec {
   }
 
   describe("Vector3f") {
-
     describe(".lengthSquared") {
-
       it("contains the squared length") { fixture =>
         // Given
         val expectedLengthSquared = 56f
@@ -34,7 +32,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe(".length") {
-
       it("contains the length") { fixture =>
         // Given
         val expectedLength = Math.sqrt(56f).toFloat
@@ -48,7 +45,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe(".inverseLength") {
-
       it("contains the inverse length") { fixture =>
         // Given
         val expectedInverseLength = 1f / Math.sqrt(56f).toFloat
@@ -62,7 +58,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::this(Float, Float)") {
-
       it("accepts the lower bound pitch edge case") { _ =>
         Vector3f(-90, 0)
       }
@@ -293,7 +288,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::add(Float, Float, Float)") {
-
       it("creates a copy of itself with the coordinates added") { fixture =>
         // Given
         val x = 2
@@ -312,7 +306,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::add(Vector3f)") {
-
       it("creates a copy of itself with the vector added") { fixture =>
         // Given
         val vector = Vector3f(2, 4, 6)
@@ -329,7 +322,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(Float, Float, Float)") {
-
       it("creates a copy of itself with the coordinates subtracted") { fixture =>
         // Given
         val x = 6
@@ -348,7 +340,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(Vector3f)") {
-
       it("creates a copy of itself with the vector subtracted") { fixture =>
         // Given
         val vector = Vector3f(6, 4, 2)
@@ -365,7 +356,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::multiply(Float)") {
-
       it("creates a copy of itself multiplied by the scalar") { fixture =>
         // Given
         val scalar = 2
@@ -382,24 +372,23 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::multiply(Vector3f)") {
+      it("creates a copy of itself multiplied by the individual scalars") {
+        fixture =>
+          // Given
+          val scalars = Vector3f(2, 4, 6)
 
-      it("creates a copy of itself multiplied by the individual scalars") { fixture =>
-        // Given
-        val scalars = Vector3f(2, 4, 6)
+          val expectedCopy = Vector3f(4, 16, 36)
 
-        val expectedCopy = Vector3f(4, 16, 36)
+          // When
+          val copy = fixture.multiply(scalars)
 
-        // When
-        val copy = fixture.multiply(scalars)
-
-        // Then
-        assert(!copy.eq(expectedCopy))
-        assert(copy == expectedCopy)
+          // Then
+          assert(!copy.eq(expectedCopy))
+          assert(copy == expectedCopy)
       }
     }
 
     describe("::distanceTo(Vector3f)") {
-
       it("calculates the distance between this and that") { fixture =>
         // Given
         val that = Vector3f(6, 4, 2)
@@ -415,7 +404,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::toPitchYaw") {
-
       it("calculate up pitch yaw") { _ =>
         // Given
         val direction = Vector3f(0, 1, 0)
@@ -628,7 +616,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::toVector3i") {
-
       it("creates a copy of itself as a Vector3i") { fixture =>
         // Given
         val expectedVector = Vector3i(2, 4, 6)
@@ -644,7 +631,6 @@ class Vector3fSpec extends fixture.FunSpec {
     /* Java interop */
 
     describe("::withX") {
-
       it("creates a copy of itself with the new x coordinate") { fixture =>
         // Given
         val x = 8
@@ -661,7 +647,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::withY") {
-
       it("creates a copy of itself with the new y coordinate") { fixture =>
         // Given
         val y = 8
@@ -678,7 +663,6 @@ class Vector3fSpec extends fixture.FunSpec {
     }
 
     describe("::withZ") {
-
       it("creates a copy of itself with the new z coordinate") { fixture =>
         // Given
         val z = 8

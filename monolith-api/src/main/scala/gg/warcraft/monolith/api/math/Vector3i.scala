@@ -5,7 +5,6 @@ case class Vector3i(
     y: Int = 0,
     z: Int = 0
 ) {
-
   def add(x: Int, y: Int, z: Int): Vector3i =
     copy(x = this.x + x, y = this.y + y, z = this.z + z)
 

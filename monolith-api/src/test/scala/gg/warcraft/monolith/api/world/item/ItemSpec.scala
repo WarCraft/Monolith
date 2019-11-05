@@ -1,27 +1,26 @@
 package gg.warcraft.monolith.api.world.item
 
-import gg.warcraft.monolith.api.world.block.BlockColor
-import org.scalatest.{ fixture, Outcome }
+import gg.warcraft.monolith.api.world.block.variant.BedVariant
+import org.scalatest.{fixture, Outcome}
 
 class ItemSpec extends fixture.FunSpec {
   type FixtureParam = Bed
 
   override def withFixture(test: OneArgTest): Outcome = {
-    val fixture = Bed(BlockColor.RED, ItemData(BlockColor.RED, "Bed"))
+    val fixture = Bed(BedVariant.RED, "Bed", Array(), 1, Set.empty, false)
     try test(fixture)
     finally {}
   }
 
   describe("Bed") {
-
     describe("::withName(String)") {
-
       it("creates a copy of itself with the new name") { fixture =>
         // Given
-        val expectedCopy = Bed(BlockColor.RED, ItemData("Super Bed"))
+        val expectedCopy =
+          Bed(BedVariant.RED, "Better Bed", Array(), 1, Set.empty, false)
 
         // When
-        val copy = fixture.withName("Super Bed")
+        val copy = fixture.withName("Better Bed")
 
         // Then
         assert(copy.name == expectedCopy.name)
