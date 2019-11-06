@@ -4,22 +4,16 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.{
-  BlockLocation,
-  Location,
-  Sound,
-  SoundCategory,
-  World,
-  WorldService
+  Location, Sound, SoundCategory, World, WorldService
 }
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.item.Item
 import gg.warcraft.monolith.spigot.world.block.{
-  SpigotBlock,
-  SpigotBlockMapper,
-  SpigotBlockTypeMapper
+  SpigotBlock, SpigotBlockMapper, SpigotBlockStateMapper, SpigotBlockTypeMapper,
+  SpigotBlockVariantMapper
 }
 import gg.warcraft.monolith.spigot.SpigotWorldMapper
-import org.bukkit.Server
+import org.bukkit.{Material, Server}
 
 import scala.annotation.varargs
 
@@ -28,9 +22,16 @@ class SpigotWorldService(
     private implicit val worldMapper: SpigotWorldMapper,
     private implicit val locationMapper: SpigotLocationMapper,
     private implicit val blockTypeMapper: SpigotBlockTypeMapper,
+    private implicit val blockVariantMapper: SpigotBlockVariantMapper,
+    private implicit val blockStateMapper: SpigotBlockStateMapper,
     private implicit val blockMapper: SpigotBlockMapper,
     private implicit val soundMapper: SpigotSoundMapper
 ) extends WorldService {
+  private final val blockVariantPackage =
+    "gg.warcraft.monolith.api.world.block.variant"
+  private final val blockStatePackage =
+    "gg.warcraft.monolith.api.world.block.state"
+
   private var spoofBlock: SpigotBlock = _ // TODO initialize
 
   override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
@@ -39,17 +40,11 @@ class SpigotWorldService(
     blockMapper.map(spigotBlock)
   }
 
-  override def getBlock(location: BlockLocation): Block =
-    getBlock(location.world, location.x, location.y, location.z)
-
   override def getHighestBlock(world: World, x: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getHighestBlockAt(x, z)
     blockMapper.map(spigotBlock)
   }
-
-  override def getHighestBlock(location: BlockLocation): Block =
-    getHighestBlock(location.world, location.x, location.z)
 
   private def update(spigotBlock: SpigotBlock, to: Block): Unit = {
     val spigotBlockState = spigotBlock.getState
@@ -65,19 +60,64 @@ class SpigotWorldService(
     newSpigotBlockState.update( /* force */ true, /* physics */ false)
   }
 
-  override def setBlock(location: BlockLocation, block: Block): Unit = {
-    val spigotLocation = locationMapper.map(block.location)
+  override def setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Unit = {
+    val spigotWorld = worldMapper.map(world)
+    val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     update(spigotLocation.getBlock, block)
   }
 
-  override def setBlockType(location: BlockLocation, `type`: BlockType): Unit = {
-    val spigotLocation = locationMapper.map(location)
+  override def setBlockType(
+      world: World,
+      x: Int,
+      y: Int,
+      z: Int,
+      `type`: BlockType
+  ): Unit = {
+    val spigotWorld = worldMapper.map(world)
+    val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
+    val spigotBlock = spigotLocation.getBlock
     val spigotType = blockTypeMapper.map(`type`)
-    spigotLocation.getBlock.setType(spigotType)
+    spigotBlock.setType(Material.AIR)
+    spigotBlock.setType(spigotType)
   }
 
-  override def updateBlock(block: Block): Unit =
-    setBlock(block.location, block)
+  override def setBlockData(
+      world: World,
+      x: Int,
+      y: Int,
+      z: Int,
+      data: String
+  ): Unit = {
+    val spigotWorld = worldMapper.map(world)
+    val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
+    val spigotBlock = spigotLocation.getBlock
+    if (data.contains("Variant:")) {
+      val Array(variantClass, variantValue) = data.split(':')
+      val enum = Class.forName(s"$blockVariantPackage.$variantClass")
+      val valueOf = enum.getMethod("valueOf", classOf[String])
+      val variant = valueOf.invoke(null, variantValue).asInstanceOf[BlockVariant]
+      val material = blockVariantMapper.map(variant)
+      // TODO this doesnt set all variants due to block state
+      spigotBlock.setType(Material.AIR)
+      spigotBlock.setType(material)
+    } else if (data.contains("State:")) {
+      val Array(stateClass, stateValue) = data.split(':')
+      val enum = Class.forName(s"$blockStatePackage.$stateClass")
+      val valueOf = enum.getMethod("valueOf", classOf[String])
+      val state = valueOf.invoke(null, stateValue).asInstanceOf[BlockState]
+      val material = blockStateMapper.map(state)
+      spigotBlock.setType(Material.AIR)
+      spigotBlock.setType(material)
+      val blockData = spigotBlock.getBlockData
+      blockStateMapper.map(state, blockData)
+      spigotBlock.setBlockData(blockData)
+    } else {
+      val `type` = BlockType.valueOf(data)
+      val material = blockTypeMapper.map(`type`)
+      spigotBlock.setType(Material.AIR)
+      spigotBlock.setType(material)
+    }
+  }
 
   override def spoofBlock(block: Block, playerId: UUID): Unit = {
     val spigotPlayer = server.getPlayer(playerId)
