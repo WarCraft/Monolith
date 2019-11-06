@@ -1,11 +1,10 @@
 package gg.warcraft.monolith.spigot.world
 
-import org.bukkit.block.{ Block, BlockState, Sign }
-import org.bukkit.block.data.{ BlockData, Rail }
+import org.bukkit.block.{Block, BlockState, Sign}
+import org.bukkit.block.data.{BlockData, Rail}
 import org.bukkit.block.data.`type`._
 
 package object block {
-
   // Block meta types
   type SpigotBlock = Block
   type SpigotBlockData = BlockData

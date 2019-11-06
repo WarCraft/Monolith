@@ -4,7 +4,7 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.PluginLogger
-import gg.warcraft.monolith.api.world.block.backup.{ BlockBackup, BlockBackupService }
+import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import gg.warcraft.monolith.spigot.Implicits

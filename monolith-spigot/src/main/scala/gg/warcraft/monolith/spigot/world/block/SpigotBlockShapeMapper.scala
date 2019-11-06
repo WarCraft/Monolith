@@ -2,12 +2,11 @@ package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.core.Extensions._
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
-import org.bukkit.block.data.Rail.{ Shape => SpigotRailsShape }
-import org.bukkit.block.data.`type`.Stairs.{ Shape => SpigotStairsShape }
+import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
+import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}
+import org.bukkit.block.data.`type`.Stairs.{Shape => SpigotStairsShape}
 
 class SpigotBlockShapeMapper {
-
   def map(block: SpigotBlock): BlockShape = {
     val data: SpigotBlockData = block.getState.getBlockData
 

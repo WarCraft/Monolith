@@ -1,10 +1,9 @@
 package gg.warcraft.monolith.spigot.world.block
 
 import gg.warcraft.monolith.api.world.block.BlockRotation
-import org.bukkit.block.{ BlockFace => SpigotBlockFace }
+import org.bukkit.block.{BlockFace => SpigotBlockFace}
 
 class SpigotBlockRotationMapper {
-
   def map(rotation: SpigotBlockFace): BlockRotation = rotation match {
     case SpigotBlockFace.NORTH            => BlockRotation.NORTH
     case SpigotBlockFace.NORTH_NORTH_EAST => BlockRotation.NORTH_NORTH_EAST

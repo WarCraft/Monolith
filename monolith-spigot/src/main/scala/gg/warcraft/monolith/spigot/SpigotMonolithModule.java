@@ -40,7 +40,6 @@ import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
-import gg.warcraft.monolith.spigot.world.item.SpigotItemService;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 

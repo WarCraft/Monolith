@@ -935,7 +935,7 @@ object Extensions {
 
     private final val stone = util.EnumSet.of(
       Material.STONE,
-      Material.SMOOTH_STONE,
+      Material.SMOOTH_STONE
     )
 
     private final val stoneBrick = util.EnumSet.of(

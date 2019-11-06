@@ -7,15 +7,12 @@ import gg.warcraft.monolith.api.world.{
   Location, Sound, SoundCategory, World, WorldService
 }
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.item.Item
 import gg.warcraft.monolith.spigot.world.block.{
   SpigotBlock, SpigotBlockMapper, SpigotBlockStateMapper, SpigotBlockTypeMapper,
   SpigotBlockVariantMapper
 }
 import gg.warcraft.monolith.spigot.SpigotWorldMapper
 import org.bukkit.{Material, Server}
-
-import scala.annotation.varargs
 
 class SpigotWorldService(
     private implicit val server: Server,

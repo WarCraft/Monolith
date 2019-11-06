@@ -4,7 +4,6 @@ import gg.warcraft.monolith.api.world.block.BlockAttachment
 import org.bukkit.block.data.`type`.Switch
 
 class SpigotBlockAttachmentMapper {
-
   def map(switch: Switch): BlockAttachment = switch.getFace match {
     case Switch.Face.CEILING => BlockAttachment.CEILING
     case Switch.Face.FLOOR   => BlockAttachment.FLOOR
