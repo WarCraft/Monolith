@@ -30,7 +30,7 @@ public class SpigotItemEventMapper implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityPickupItemEvent(EntityPickupItemEvent event) {
         UUID itemId = event.getItem().getUniqueId();
-        Item item = itemMapper.map(event.getItem().getItemStack()).get(); // TODO use Option
+        Item item = itemMapper.map(event.getItem().getItemStack()).getOrElse(() -> null); // TODO use Option
 
         UUID entityId = event.getEntity().getUniqueId();
         EntityType entityType = EntityType.valueOf(event.getEntity().getType().name());
@@ -44,7 +44,7 @@ public class SpigotItemEventMapper implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityPickupItemEventMonitor(EntityPickupItemEvent event) {
         UUID itemId = event.getItem().getUniqueId();
-        Item item = itemMapper.map(event.getItem().getItemStack()).get(); // TODO use Option
+        Item item = itemMapper.map(event.getItem().getItemStack()).getOrElse(() -> null); // TODO use Option
 
         UUID entityId = event.getEntity().getUniqueId();
         EntityType entityType = EntityType.valueOf(event.getEntity().getType().name());

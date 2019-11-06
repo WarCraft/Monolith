@@ -86,12 +86,12 @@ public class SpigotEntityData implements EntityServerData {
     public Equipment getEquipment() {
         // TODO how do we want to check this state, is null legal?
 
-        Item helmet = itemMapper.map(entity.getEquipment().getHelmet()).get(); // TODO pass options through
-        Item chest = itemMapper.map(entity.getEquipment().getChestplate()).get();
-        Item legs = itemMapper.map(entity.getEquipment().getLeggings()).get();
-        Item feet = itemMapper.map(entity.getEquipment().getBoots()).get();
-        Item mainHand = itemMapper.map(entity.getEquipment().getItemInMainHand()).get();
-        Item offHand = itemMapper.map(entity.getEquipment().getItemInOffHand()).get();
+        Item helmet = itemMapper.map(entity.getEquipment().getHelmet()).getOrElse(() -> null); // TODO pass options through
+        Item chest = itemMapper.map(entity.getEquipment().getChestplate()).getOrElse(() -> null);
+        Item legs = itemMapper.map(entity.getEquipment().getLeggings()).getOrElse(() -> null);
+        Item feet = itemMapper.map(entity.getEquipment().getBoots()).getOrElse(() -> null);
+        Item mainHand = itemMapper.map(entity.getEquipment().getItemInMainHand()).getOrElse(() -> null);
+        Item offHand = itemMapper.map(entity.getEquipment().getItemInOffHand()).getOrElse(() -> null);
         return new SimpleEquipment(helmet, chest, legs, feet, mainHand, offHand);
     }
 

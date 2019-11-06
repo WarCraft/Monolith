@@ -105,8 +105,8 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = EntityType.valueOf(event.getRightClicked().getType().name());
         UUID playerId = player.getUniqueId();
         Item itemInClickHand = event.getHand() == EquipmentSlot.HAND
-                ? itemMapper.map(player.getEquipment().getItemInMainHand()).get() // TODO use Option
-                : itemMapper.map(player.getEquipment().getItemInOffHand()).get();
+                ? itemMapper.map(player.getEquipment().getItemInMainHand()).getOrElse(() -> null) // TODO use Option
+                : itemMapper.map(player.getEquipment().getItemInOffHand()).getOrElse(() -> null);
         Location interactLocation = locationMapper.map(event.getClickedPosition().toLocation(player.getWorld()));
         EntityPreInteractEvent entityPreInteractEvent = new SimpleEntityPreInteractEvent(entityId, entityType, playerId,
                 itemInClickHand, interactLocation, event.isCancelled());
@@ -127,8 +127,8 @@ public class SpigotEntityEventMapper implements Listener {
         EntityType entityType = EntityType.valueOf(event.getRightClicked().getType().name());
         UUID playerId = player.getUniqueId();
         Item itemInClickHand = event.getHand() == EquipmentSlot.HAND
-                ? itemMapper.map(player.getEquipment().getItemInMainHand()).get() // TODO use Option
-                : itemMapper.map(player.getEquipment().getItemInOffHand()).get();
+                ? itemMapper.map(player.getEquipment().getItemInMainHand()).getOrElse(() -> null) // TODO use Option
+                : itemMapper.map(player.getEquipment().getItemInOffHand()).getOrElse(() -> null);
         Location interactLocation = locationMapper.map(event.getClickedPosition().toLocation(player.getWorld()));
         EntityInteractEvent entityInteractEvent =
                 new SimpleEntityInteractEvent(entityId, entityType, playerId, itemInClickHand, interactLocation);
@@ -330,7 +330,7 @@ public class SpigotEntityEventMapper implements Listener {
         Status entityStatus = statusQueryService.getStatus(entityId);
         List<Item> drops = event.getDrops().stream()
                 .map(itemMapper::map)
-                .map(it -> it.get()) // TODO use Option
+                .map(it -> it.getOrElse(() -> (Item) null)) // TODO use Option
                 .collect(Collectors.toList());
         EntityDeathEvent entityDeathEvent = new SimpleEntityDeathEvent(entityId, entityType, drops);
         eventService.publish(entityDeathEvent);

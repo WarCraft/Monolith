@@ -142,10 +142,14 @@ public class SpigotWorldEventMapper implements Listener {
     }
 
     private void onBlockPreInteractEvent(PlayerInteractEvent event) {
-        Block block = blockMapper.map(event.getClickedBlock());
-        BlockFace clickedFace = blockFaceMapper.map(event.getBlockFace());
+        Block block = null;
+        BlockFace clickedFace = null;
+        if(event.getClickedBlock() != null) {
+            block = blockMapper.map(event.getClickedBlock());
+            clickedFace = blockFaceMapper.map(event.getBlockFace());
+        }
         BlockInteraction interaction = BlockInteraction.valueOf(event.getAction().name());
-        Item itemInClickHand = itemMapper.map(event.getItem()).get(); // TODO use Option
+        Item itemInClickHand = itemMapper.map(event.getItem()).getOrElse(() -> null); // TODO use Option
         UUID playerId = event.getPlayer().getUniqueId();
         boolean wasCancelled = event.isCancelled();
         BlockPreInteractEvent blockPreInteractEvent = new SimpleBlockPreInteractEvent(block, interaction, clickedFace,
@@ -190,10 +194,14 @@ public class SpigotWorldEventMapper implements Listener {
     }
 
     private void onBlockInteractEvent(PlayerInteractEvent event) {
-        Block block = blockMapper.map(event.getClickedBlock());
-        BlockFace clickedFace = blockFaceMapper.map(event.getBlockFace());
+        Block block = null;
+        BlockFace clickedFace = null;
+        if(event.getClickedBlock() != null) {
+            block = blockMapper.map(event.getClickedBlock());
+            clickedFace = blockFaceMapper.map(event.getBlockFace());
+        }
         BlockInteraction interaction = BlockInteraction.valueOf(event.getAction().name());
-        Item itemInClickHand = itemMapper.map(event.getItem()).get(); // TODO use Option
+        Item itemInClickHand = itemMapper.map(event.getItem()).getOrElse(() -> null); // TODO use Option
         UUID playerId = event.getPlayer().getUniqueId();
         BlockInteractEvent blockInteractEvent = new SimpleBlockInteractEvent(block, interaction, clickedFace,
                 itemInClickHand, playerId);
