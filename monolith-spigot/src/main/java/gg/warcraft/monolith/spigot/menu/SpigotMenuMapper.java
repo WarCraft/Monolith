@@ -3,7 +3,10 @@ package gg.warcraft.monolith.spigot.menu;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.menu.Button;
 import gg.warcraft.monolith.api.menu.Menu;
+import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.world.item.ItemService;
 import gg.warcraft.monolith.app.menu.SkullButton;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.SkullType;
@@ -11,17 +14,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.UUID;
 
 public class SpigotMenuMapper {
     private final Server server;
+    private final ItemService itemService;
+    private final SpigotItemMapper itemMapper;
 
     @Inject
-    public SpigotMenuMapper(Server server) {
+    public SpigotMenuMapper(Server server, ItemService itemService, SpigotItemMapper itemMapper) {
         this.server = server;
+        this.itemService = itemService;
+        this.itemMapper = itemMapper;
     }
 
     public Inventory map(Menu menu, UUID viewerId) {
@@ -51,13 +57,11 @@ public class SpigotMenuMapper {
             return mapSkull((SkullButton) button);
         }
 
-        // MaterialData iconData = null; // TODO itemTypeMapper.map(button.getIcon());
-        ItemStack item = new ItemStack(Material.BARRIER, 1, (short) 0, (byte)0); // TODO This will render everything as Barriers
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(button.getTitle());
-        meta.setLore(button.getTooltip());
-        meta.addItemFlags(ItemFlag.values());
-        item.setItemMeta(meta);
-        return item;
+        Item item = itemService.create(button.getIcon())
+                .withName(button.getTitle())
+                .withTooltip(button.getTooltip().toArray(new String[0]))
+                .withHideAttributes(true);
+
+        return itemMapper.map(item);
     }
 }

@@ -2,6 +2,7 @@ package gg.warcraft.monolith.api.menu;
 
 import gg.warcraft.monolith.api.menu.service.MenuCommandService;
 import gg.warcraft.monolith.api.world.item.ItemType;
+import gg.warcraft.monolith.api.world.item.ItemTypeOrVariant;
 
 import java.util.UUID;
 import java.util.function.Function;
@@ -31,7 +32,7 @@ public abstract class AbstractMenuFactory {
         return menuBuilderFactory.createMenuBuilder(title, size);
     }
 
-    protected ButtonBuilder createSimpleButtonBuilder(ItemType icon, String title) {
+    protected ButtonBuilder createSimpleButtonBuilder(ItemTypeOrVariant icon, String title) {
         return buttonBuilderFactory.createSimpleButtonBuilder(icon, title);
     }
 
