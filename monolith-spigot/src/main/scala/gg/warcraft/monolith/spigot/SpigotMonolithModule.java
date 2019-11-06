@@ -18,6 +18,7 @@ import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
+import gg.warcraft.monolith.api.world.item.ItemService;
 import gg.warcraft.monolith.app.AbstractMonolithModule;
 import gg.warcraft.monolith.app.effect.particle.MultiParticle;
 import gg.warcraft.monolith.spigot.command.SpigotCommandAdapter;
@@ -39,6 +40,7 @@ import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemService;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
@@ -142,6 +144,8 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         expose(SpigotItemMapper.class);
         bind(SpigotBlockMapper.class).toProvider(Implicits::blockMapper);
         expose(SpigotBlockMapper.class);
+        bind(ItemService.class).toProvider(Implicits::itemService);
+        expose(ItemService.class);
     }
 
     private void configureMapper() {
