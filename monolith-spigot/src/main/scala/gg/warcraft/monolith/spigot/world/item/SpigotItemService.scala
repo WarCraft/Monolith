@@ -50,16 +50,12 @@ class SpigotItemService(
     itemMapper.map(item).get.asInstanceOf[VariableItem[T]]
   }
 
-  override def create(data: Any): Item = {
-    val parsedData = data match {
-      case it: String => parseData(it)
-      case _          => data
-    }
-
-    parsedData match {
-      case it: ItemType    => create(it)
-      case it: ItemVariant => create(it)
-    }
+  override def create(data: Any): Item = (data match {
+    case it: String => parseData(it)
+    case _          => data
+  }) match {
+    case it: ItemType    => create(it)
+    case it: ItemVariant => create(it)
   }
 
   private def getInventory(playerId: UUID): Option[Inventory] = {
@@ -107,21 +103,22 @@ class SpigotItemService(
     false // TODO
   }
 
-  override def takeFrom(playerId: UUID, `type`: ItemType, count: Int): Boolean = {
-    val material = typeMapper.map(`type`)
-    false
-  }
+  override def takeFrom(playerId: UUID, `type`: ItemType, count: Int): Boolean = ???
 
   override def takeFrom(playerId: UUID, variant: ItemVariant, count: Int): Boolean =
     ???
 
   override def takeFrom(playerId: UUID, items: Item*): Boolean = ???
 
-  @varargs override def dropItems(location: Location, items: Item*): Unit = {
+  @varargs override def dropItems(location: Location, items: Item*): Array[UUID] = {
     val spigotLocation = locationMapper.map(location)
-    items.foreach(item => {
-      val spigotItem = itemMapper.map(item)
-      spigotLocation.getWorld.dropItemNaturally(spigotLocation, spigotItem)
-    })
+    val spigotWorld = spigotLocation.getWorld
+    items
+      .map(item => {
+        val spigotItem = itemMapper.map(item)
+        val droppedItem = spigotWorld.dropItemNaturally(spigotLocation, spigotItem)
+        droppedItem.getUniqueId
+      })
+      .toArray
   }
 }

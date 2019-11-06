@@ -21,5 +21,5 @@ trait ItemService {
   def takeFrom(playerId: UUID, variant: ItemVariant, count: Int): Boolean
   @varargs def takeFrom(playerId: UUID, items: Item*): Boolean
 
-  @varargs def dropItems(location: Location, items: Item*)
+  @varargs def dropItems(location: Location, items: Item*): Array[UUID]
 }
