@@ -9,6 +9,8 @@ import gg.warcraft.monolith.api.world.item.Item
 import scala.annotation.varargs
 
 trait WorldService {
+  def parseData(data: String): Any
+
   def getBlock(world: World, x: Int, y: Int, z: Int): Block
   def getBlock(world: World, translation: Vector3i): Block =
     getBlock(world, translation.x, translation.y, translation.z)
@@ -33,18 +35,16 @@ trait WorldService {
   def setBlockType(location: BlockLocation, `type`: BlockType): Unit =
     setBlockType(location.world, location.x, location.y, location.z, `type`)
 
-  def setBlockData(world: World, x: Int, y: Int, z: Int, data: String): Unit
-  def setBlockData(world: World, translation: Vector3i, data: String): Unit =
+  def setBlockData(world: World, x: Int, y: Int, z: Int, data: Any): Unit
+  def setBlockData(world: World, translation: Vector3i, data: Any): Unit =
     setBlockData(world, translation.x, translation.y, translation.z, data)
-  def setBlockData(location: BlockLocation, data: String): Unit =
+  def setBlockData(location: BlockLocation, data: Any): Unit =
     setBlockData(location.world, location.x, location.y, location.z, data)
 
   def updateBlock(block: Block): Unit =
     setBlock(block.location, block)
 
   def spoofBlock(block: Block, playerId: UUID): Unit
-
-  @varargs def dropItems(location: Location, items: Item*)
 
   def playSound(
       location: Location,

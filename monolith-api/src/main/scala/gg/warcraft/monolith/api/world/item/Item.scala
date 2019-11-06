@@ -39,6 +39,7 @@ trait Item extends CaseClass {
     copyWith("hideAttributes", hideAttributes)
 
   def isVariant(variant: ItemVariant): Boolean = false
+  def hasData(data: Any): Boolean = this.`type` == data
 }
 
 trait DurableItem extends Item {
@@ -90,6 +91,6 @@ trait VariableItem[T <: ItemVariant] extends Item {
   def withVariant(variant: T): this.type =
     copyWith("variant", variant)
 
-  override def isVariant(variant: ItemVariant): Boolean =
-    this.variant == variant
+  override def isVariant(variant: ItemVariant): Boolean = this.variant == variant
+  override def hasData(data: Any): Boolean = this.variant == data
 }

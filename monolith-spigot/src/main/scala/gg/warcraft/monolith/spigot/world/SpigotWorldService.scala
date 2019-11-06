@@ -34,6 +34,22 @@ class SpigotWorldService(
 
   private var spoofBlock: SpigotBlock = _ // TODO initialize
 
+  override def parseData(data: String): Any = {
+    if (data.contains("Variant:")) {
+      val Array(enum, value) = data.split(':')
+      val clazz = Class.forName(s"$blockVariantPackage.$enum")
+      val valueOf = clazz.getMethod("valueOf", classOf[String])
+      valueOf.invoke(null, value)
+    } else if (data.contains("State:")) {
+      val Array(enum, value) = data.split(':')
+      val clazz = Class.forName(s"$blockStatePackage.$enum")
+      val valueOf = clazz.getMethod("valueOf", classOf[String])
+      valueOf.invoke(null, value)
+    } else {
+      BlockType.valueOf(data)
+    }
+  }
+
   override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
@@ -86,36 +102,33 @@ class SpigotWorldService(
       x: Int,
       y: Int,
       z: Int,
-      data: String
+      data: Any
   ): Unit = {
+    val parsedData = data match {
+      case it: String => parseData(it)
+      case _          => data
+    }
+
     val spigotWorld = worldMapper.map(world)
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     val spigotBlock = spigotLocation.getBlock
-    if (data.contains("Variant:")) {
-      val Array(variantClass, variantValue) = data.split(':')
-      val enum = Class.forName(s"$blockVariantPackage.$variantClass")
-      val valueOf = enum.getMethod("valueOf", classOf[String])
-      val variant = valueOf.invoke(null, variantValue).asInstanceOf[BlockVariant]
-      val material = blockVariantMapper.map(variant)
-      // TODO this doesnt set all variants due to block state
-      spigotBlock.setType(Material.AIR)
-      spigotBlock.setType(material)
-    } else if (data.contains("State:")) {
-      val Array(stateClass, stateValue) = data.split(':')
-      val enum = Class.forName(s"$blockStatePackage.$stateClass")
-      val valueOf = enum.getMethod("valueOf", classOf[String])
-      val state = valueOf.invoke(null, stateValue).asInstanceOf[BlockState]
-      val material = blockStateMapper.map(state)
-      spigotBlock.setType(Material.AIR)
-      spigotBlock.setType(material)
-      val blockData = spigotBlock.getBlockData
-      blockStateMapper.map(state, blockData)
-      spigotBlock.setBlockData(blockData)
-    } else {
-      val `type` = BlockType.valueOf(data)
-      val material = blockTypeMapper.map(`type`)
-      spigotBlock.setType(Material.AIR)
-      spigotBlock.setType(material)
+    parsedData match {
+      case it: BlockType =>
+        val material = blockTypeMapper.map(it)
+        spigotBlock.setType(Material.AIR)
+        spigotBlock.setType(material)
+      case it: BlockVariant =>
+        // TODO this doesnt set all variants due to block state
+        val material = blockVariantMapper.map(it)
+        spigotBlock.setType(Material.AIR)
+        spigotBlock.setType(material)
+      case it: BlockState =>
+        val material = blockStateMapper.map(it)
+        spigotBlock.setType(Material.AIR)
+        spigotBlock.setType(material)
+        val blockData = spigotBlock.getBlockData
+        blockStateMapper.map(it, blockData)
+        spigotBlock.setBlockData(blockData)
     }
   }
 
@@ -126,10 +139,6 @@ class SpigotWorldService(
       update(spoofBlock, block)
       spigotPlayer.sendBlockChange(spigotLocation, spoofBlock.getBlockData)
     }
-  }
-
-  @varargs override def dropItems(location: Location, items: Item*): Unit = {
-    throw new IllegalArgumentException // TODO
   }
 
   override def playSound(

@@ -18,6 +18,7 @@ import gg.warcraft.monolith.api.world.chunk.event.ChunkLoadedEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkPreUnloadEvent;
 import gg.warcraft.monolith.api.world.chunk.event.ChunkUnloadedEvent;
 import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.world.item.ItemService;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityDespawnEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreDespawnEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityPreRespawnEvent;
@@ -49,6 +50,7 @@ public class SpigotWorldEventMapper implements Listener {
     private final SpigotBlockFaceMapper blockFaceMapper;
     private final SpigotItemMapper itemMapper;
     private final WorldService worldService;
+    private final ItemService itemService;
     private final SpigotLocationMapper locationMapper;
 
     private final Map<Event, List<Item>> alternativeDropsByEvent;
@@ -57,13 +59,14 @@ public class SpigotWorldEventMapper implements Listener {
     public SpigotWorldEventMapper(EventService eventService, SpigotBlockMapper blockMapper,
                                   SpigotBlockFaceMapper blockFaceMapper, SpigotItemMapper itemMapper,
                                   SpigotLocationMapper locationMapper,
-                                  WorldService worldService) {
+                                  WorldService worldService, ItemService itemService) {
         this.eventService = eventService;
         this.blockMapper = blockMapper;
         this.blockFaceMapper = blockFaceMapper;
         this.itemMapper = itemMapper;
         this.worldService = worldService;
         this.locationMapper = locationMapper;
+        this.itemService = itemService;
         this.alternativeDropsByEvent = new HashMap<>();
     }
 
@@ -109,7 +112,7 @@ public class SpigotWorldEventMapper implements Listener {
             BlockLocation blockLocation = block.location();
             Location dropLocation = new Location(blockLocation.world(),
                     blockLocation.translation().toVector3f().add(0.5f, 0.5f, 0.5f), new Vector3f());
-            worldService.dropItems(dropLocation,alternativeDrops.toArray(new Item[0]));
+            itemService.dropItems(dropLocation,alternativeDrops.toArray(new Item[0]));
         }
     }
 
