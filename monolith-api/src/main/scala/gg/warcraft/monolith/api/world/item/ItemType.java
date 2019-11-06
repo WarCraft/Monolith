@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.item;
 
-public enum ItemType {
+public enum ItemType implements ItemTypeOrVariant {
     ANDESITE,
     ANVIL,
     APPLE,

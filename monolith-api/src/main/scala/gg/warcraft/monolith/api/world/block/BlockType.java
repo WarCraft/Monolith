@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block;
 
-public enum BlockType {
+public enum BlockType implements BlockTypeVariantOrState {
     AIR,
     ANDESITE,
     ANVIL,

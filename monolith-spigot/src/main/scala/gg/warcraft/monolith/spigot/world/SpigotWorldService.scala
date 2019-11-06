@@ -31,17 +31,17 @@ class SpigotWorldService(
 
   private var spoofBlock: SpigotBlock = _ // TODO initialize
 
-  override def parseData(data: String): Any = {
+  override def parseData(data: String): BlockTypeVariantOrState = {
     if (data.contains("Variant:")) {
       val Array(enum, value) = data.split(':')
       val clazz = Class.forName(s"$blockVariantPackage.$enum")
       val valueOf = clazz.getMethod("valueOf", classOf[String])
-      valueOf.invoke(null, value)
+      valueOf.invoke(null, value).asInstanceOf[BlockVariant]
     } else if (data.contains("State:")) {
       val Array(enum, value) = data.split(':')
       val clazz = Class.forName(s"$blockStatePackage.$enum")
       val valueOf = clazz.getMethod("valueOf", classOf[String])
-      valueOf.invoke(null, value)
+      valueOf.invoke(null, value).asInstanceOf[BlockState]
     } else {
       BlockType.valueOf(data)
     }
@@ -73,43 +73,11 @@ class SpigotWorldService(
     newSpigotBlockState.update( /* force */ true, /* physics */ false)
   }
 
-  override def setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Unit = {
-    val spigotWorld = worldMapper.map(world)
-    val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
-    update(spigotLocation.getBlock, block)
-  }
-
-  override def setBlockType(
-      world: World,
-      x: Int,
-      y: Int,
-      z: Int,
-      `type`: BlockType
-  ): Unit = {
+  override def setBlock(world: World, x: Int, y: Int, z: Int, data: Data): Unit = {
     val spigotWorld = worldMapper.map(world)
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     val spigotBlock = spigotLocation.getBlock
-    val spigotType = blockTypeMapper.map(`type`)
-    spigotBlock.setType(Material.AIR)
-    spigotBlock.setType(spigotType)
-  }
-
-  override def setBlockData(
-      world: World,
-      x: Int,
-      y: Int,
-      z: Int,
-      data: Any
-  ): Unit = {
-    val parsedData = data match {
-      case it: String => parseData(it)
-      case _          => data
-    }
-
-    val spigotWorld = worldMapper.map(world)
-    val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
-    val spigotBlock = spigotLocation.getBlock
-    parsedData match {
+    data match {
       case it: BlockType =>
         val material = blockTypeMapper.map(it)
         spigotBlock.setType(Material.AIR)
@@ -127,6 +95,12 @@ class SpigotWorldService(
         blockStateMapper.map(it, blockData)
         spigotBlock.setBlockData(blockData)
     }
+  }
+
+  override def setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Unit = {
+    val spigotWorld = worldMapper.map(world)
+    val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
+    update(spigotLocation.getBlock, block)
   }
 
   override def spoofBlock(block: Block, playerId: UUID): Unit = {
