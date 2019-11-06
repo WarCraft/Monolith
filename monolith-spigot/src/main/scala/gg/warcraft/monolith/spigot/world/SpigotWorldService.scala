@@ -31,7 +31,7 @@ class SpigotWorldService(
 
   private var spoofBlock: SpigotBlock = _ // TODO initialize
 
-  override def parseData(data: String): BlockTypeVariantOrState = {
+  override def parseData(data: String): Data = {
     if (data.contains("Variant:")) {
       val Array(enum, value) = data.split(':')
       val clazz = Class.forName(s"$blockVariantPackage.$enum")
