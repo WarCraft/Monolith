@@ -8,6 +8,8 @@ import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.Damageable
 
+import scala.jdk.CollectionConverters._
+
 class SpigotItemMapper(
     private implicit val typeMapper: SpigotItemTypeMapper,
     private implicit val variantMapper: SpigotItemVariantMapper
@@ -394,7 +396,12 @@ class SpigotItemMapper(
 
     val spigotItem = new SpigotItemStack(material)
 
-    // TODO set item values
+    val meta = spigotItem.getItemMeta
+    meta.setDisplayName(item.name)
+    meta.setLore(item.tooltip.asJava)
+    if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+    spigotItem.setItemMeta(meta)
+
     // TODO map skull meta
 
     spigotItem
