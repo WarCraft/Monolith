@@ -5,8 +5,7 @@ import gg.warcraft.monolith.spigot.world.{
 }
 import gg.warcraft.monolith.spigot.world.block._
 import gg.warcraft.monolith.spigot.world.item.{
-  JSpigotItemVariantMapper, SpigotItemMapper, SpigotItemService,
-  SpigotItemTypeMapper, SpigotItemVariantMapper
+  SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper
 }
 import org.bukkit.Server
 
@@ -19,7 +18,7 @@ object Implicits {
   implicit lazy val blockTypeMapper: SpigotBlockTypeMapper =
     new SpigotBlockTypeMapper
   implicit lazy val blockVariantMapper: SpigotBlockVariantMapper =
-    new JSpigotBlockVariantMapper // TODO replace /w scala impl when switch table works
+    new SpigotBlockVariantMapper
   implicit lazy val blockStateMapper: SpigotBlockStateMapper =
     new SpigotBlockStateMapper
   implicit lazy val blockAttachmentMapper: SpigotBlockAttachmentMapper =
@@ -39,7 +38,7 @@ object Implicits {
   implicit lazy val itemTypeMapper: SpigotItemTypeMapper =
     new SpigotItemTypeMapper
   implicit lazy val itemVariantMapper: SpigotItemVariantMapper =
-    new JSpigotItemVariantMapper(blockVariantMapper) // TODO replace /w scala impl when switch table works
+    new SpigotItemVariantMapper(blockVariantMapper)
   implicit lazy val itemMapper: SpigotItemMapper = new SpigotItemMapper
 
   // TODO rewrite to scala class
