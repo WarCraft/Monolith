@@ -3,8 +3,10 @@ package gg.warcraft.monolith.spigot.world.block
 import gg.warcraft.monolith.api.world.block.BlockType
 import org.bukkit.Material
 
+import scala.annotation.switch
+
 class SpigotBlockTypeMapper {
-  def map(`type`: BlockType): Material = `type` match {
+  def map(`type`: BlockType): Material = (`type`: @switch) match {
     case BlockType.BRICK_BLOCK     => Material.BRICKS
     case BlockType.CLAY_BLOCK      => Material.CLAY
     case BlockType.COCOA_POD       => Material.COCOA

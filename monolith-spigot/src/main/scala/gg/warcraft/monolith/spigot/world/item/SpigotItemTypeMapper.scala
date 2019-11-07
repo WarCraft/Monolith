@@ -3,8 +3,10 @@ package gg.warcraft.monolith.spigot.world.item
 import gg.warcraft.monolith.api.world.item.ItemType
 import org.bukkit.Material
 
+import scala.annotation.switch
+
 class SpigotItemTypeMapper {
-  def map(`type`: ItemType): Material = `type` match {
+  def map(`type`: ItemType): Material = (`type`: @switch) match {
     case ItemType.BOTTLE_OF_ENCHANTING => Material.EXPERIENCE_BOTTLE
     case ItemType.BRICK_BLOCK          => Material.BRICKS
     case ItemType.CLAY                 => Material.CLAY_BALL

@@ -237,7 +237,7 @@ class SpigotItemMapper(
       case Material.TROPICAL_FISH          => TropicalFish.tupled(params)
       case Material.TURTLE_EGG             => TurtleEgg.tupled(params)
       case Material.TURTLE_HELMET          => TurtleHelmet.tupled(durableParams)
-      case Material.VINE                   => Vine.tupled(params)
+      case Material.VINE                   => Vines.tupled(params)
       case Material.WHEAT                  => Wheat.tupled(params)
       case Material.WRITABLE_BOOK          => BookAndQuill.tupled(singleParams)
       case Material.WRITTEN_BOOK           => WrittenBook.tupled(params)

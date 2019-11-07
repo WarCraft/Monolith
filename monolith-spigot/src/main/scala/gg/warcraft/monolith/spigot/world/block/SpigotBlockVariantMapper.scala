@@ -8,8 +8,10 @@ import org.bukkit.block.data.`type`.Comparator.{Mode => SpigotComparatorMode}
 import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureBlockMode}
 import org.bukkit.block.data.`type`.TechnicalPiston.{Type => SpigotPistonType}
 
+import scala.annotation.switch
+
 class SpigotBlockVariantMapper {
-  def map(material: Material): BlockVariant = material match {
+  def map(material: Material): BlockVariant = (material: @switch) match {
     // AIR
     case Material.AIR      => AirVariant.NORMAL
     case Material.CAVE_AIR => AirVariant.CAVE
@@ -739,7 +741,7 @@ class SpigotBlockVariantMapper {
   def map(block: SpigotBlock): BlockVariant = {
     lazy val data: SpigotBlockData = block.getState.getBlockData
 
-    block.getType match {
+    (block.getType: @switch) match {
       case Material.BAMBOO_SAPLING => BambooVariant.SAPLING
       case Material.BAMBOO =>
         data.asInstanceOf[SpigotBamboo].getLeaves match {
@@ -792,7 +794,7 @@ class SpigotBlockVariantMapper {
     }
   }
 
-  def map(variant: BlockVariant): Material = variant match {
+  def map(variant: BlockVariant): Material = (variant: @switch) match {
     // AIR
     case AirVariant.NORMAL => Material.AIR
     case AirVariant.CAVE   => Material.CAVE_AIR

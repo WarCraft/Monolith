@@ -177,7 +177,7 @@ class SpigotBlockMapper(
       case Material.STONECUTTER         => Stonecutter(loc, dir)
       case Material.SUGAR_CANE          => SugarCane(loc, s[SugarCaneState])
       case Material.TURTLE_EGG          => TurtleEgg(loc, s[TurtleEggState])
-      case Material.VINE                => Vine(loc, extensions)
+      case Material.VINE                => Vines(loc, extensions)
       case Material.WATER               => Water(loc, s[WaterState])
       case Material.WHEAT               => Wheat(loc, s[WheatState])
 

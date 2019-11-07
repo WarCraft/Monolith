@@ -6,10 +6,12 @@ import gg.warcraft.monolith.api.world.item.variant._
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockVariantMapper
 import org.bukkit.Material
 
+import scala.annotation.switch
+
 class SpigotItemVariantMapper(
     private implicit val blockMapper: SpigotBlockVariantMapper
 ) {
-  def map(material: Material): ItemVariant = material match {
+  def map(material: Material): ItemVariant = (material: @switch) match {
     // ARROW
     case Material.ARROW          => ArrowVariant.NORMAL
     case Material.SPECTRAL_ARROW => ArrowVariant.SPECTRAL
@@ -287,7 +289,7 @@ class SpigotItemVariantMapper(
     case it: SpigotItemStack => map(it.getType)
   }
 
-  def map(variant: ItemVariant): Material = variant match {
+  def map(variant: ItemVariant): Material = (variant: @switch) match {
     // ARROW
     case ArrowVariant.NORMAL   => Material.ARROW
     case ArrowVariant.SPECTRAL => Material.SPECTRAL_ARROW
