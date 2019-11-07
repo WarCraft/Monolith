@@ -3,8 +3,8 @@ package gg.warcraft.monolith.spigot.world.block.backup
 import java.util.UUID
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.core.PluginLogger
-import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
+import gg.warcraft.monolith.api.core.{ PersistenceService, PluginLogger }
+import gg.warcraft.monolith.api.world.block.backup.{ BlockBackup, BlockBackupService }
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import gg.warcraft.monolith.spigot.Implicits
@@ -15,9 +15,11 @@ import org.bukkit.Bukkit
 
 class SpigotBlockBackupService @Inject() (
     plugin: Plugin,
+    persistenceService: PersistenceService,
     @PluginLogger pluginLogger: Logger
 ) extends BlockBackupService {
   private final val metaDataKey = getClass.getCanonicalName
+  private final val persistenceKey = "blockbackup"
 
   val locationMapper: SpigotLocationMapper = Implicits.locationMapper // TODO undo
 
@@ -75,6 +77,7 @@ class SpigotBlockBackupService @Inject() (
   }
   override def restoreBackups(): Unit = {
     // TODO get from persistence
+    SpigotBlockBackupService.backups.keys.foreach(restoreBackup)
   }
 }
 

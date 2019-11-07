@@ -48,13 +48,13 @@ class SpigotWorldService(
   }
 
   override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
-    val spigotWorld = worldMapper.map(world)
+    val spigotWorld = worldMapper.map(world).get
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
     blockMapper.map(spigotBlock)
   }
 
   override def getHighestBlock(world: World, x: Int, z: Int): Block = {
-    val spigotWorld = worldMapper.map(world)
+    val spigotWorld = worldMapper.map(world).get
     val spigotBlock = spigotWorld.getHighestBlockAt(x, z)
     blockMapper.map(spigotBlock)
   }
@@ -74,7 +74,7 @@ class SpigotWorldService(
   }
 
   override def setBlock(world: World, x: Int, y: Int, z: Int, data: Data): Unit = {
-    val spigotWorld = worldMapper.map(world)
+    val spigotWorld = worldMapper.map(world).get
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     val spigotBlock = spigotLocation.getBlock
     data match {
@@ -98,7 +98,7 @@ class SpigotWorldService(
   }
 
   override def setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Unit = {
-    val spigotWorld = worldMapper.map(world)
+    val spigotWorld = worldMapper.map(world).get
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     update(spigotLocation.getBlock, block)
   }

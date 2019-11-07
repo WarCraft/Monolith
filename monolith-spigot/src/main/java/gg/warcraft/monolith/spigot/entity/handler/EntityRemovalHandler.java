@@ -26,9 +26,9 @@ public class EntityRemovalHandler implements Runnable {
     public EntityRemovalHandler(EntityCommandService entityCommandService, EntityRepository entityRepository) {
         this.entityCommandService = entityCommandService;
         this.entityRepository = entityRepository;
-        this.overworld = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.OVERWORLD); // TODO remove
-        this.theNether = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.THE_NETHER);
-        this.theEnd = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.THE_END);
+        this.overworld = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.OVERWORLD).get(); // TODO remove
+        this.theNether = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.THE_NETHER).getOrElse(() -> null);
+        this.theEnd = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.THE_END).getOrElse(() -> null);
     }
 
     private void purgeWorld(World world, Set<UUID> markedForRemoval) {

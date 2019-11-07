@@ -13,10 +13,10 @@ class SpigotWorldMapper(
     server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NORMAL).get
 
   private val theNether =
-    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NETHER).get
+    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NETHER)
 
   private val theEnd =
-    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.THE_END).get
+    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.THE_END)
 
   def map(world: SpigotWorld): World = world.getEnvironment match {
     case SpigotWorldType.NORMAL  => World.OVERWORLD
@@ -24,8 +24,8 @@ class SpigotWorldMapper(
     case SpigotWorldType.THE_END => World.THE_END
   }
 
-  def map(world: World): SpigotWorld = world match {
-    case World.OVERWORLD  => overworld
+  def map(world: World): Option[SpigotWorld] = world match {
+    case World.OVERWORLD  => Some(overworld)
     case World.THE_NETHER => theNether
     case World.THE_END    => theEnd
   }

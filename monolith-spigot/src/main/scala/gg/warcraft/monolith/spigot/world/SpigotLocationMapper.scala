@@ -10,19 +10,19 @@ class SpigotLocationMapper(
     private implicit val worldMapper: SpigotWorldMapper
 ) {
   def map(loc: BlockLocation): SpigotLocation = {
-    val world = worldMapper.map(loc.world)
+    val world = worldMapper.map(loc.world).get
     val Vector3i(x, y, z) = loc.translation
     new SpigotLocation(world, x, y, z)
   }
 
   def map(loc: Location): SpigotLocation = {
-    val world = worldMapper.map(loc.world)
+    val world = worldMapper.map(loc.world).get
     val Vector3f(x, y, z) = loc.translation
     new SpigotLocation(world, x, y, z)
   }
 
   def map(loc: Location, pitchYaw: (Float, Float)): SpigotLocation = {
-    val world = worldMapper.map(loc.world)
+    val world = worldMapper.map(loc.world).get
     val Vector3f(x, y, z) = loc.translation
     val (pitch, yaw) = pitchYaw
     new SpigotLocation(world, x, y, z, yaw, pitch)

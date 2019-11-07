@@ -158,16 +158,9 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
             nextSign = blockUtils.getRelative(nextSign, BlockFace.EAST);
         }
 
-        String[] extraLines = extraSigns.stream()
-                .map(Sign::lines)
-                .flatMap(Stream::of)
-                .toArray(String[]::new); // TODO FIX
-
-        String[] allLines = Stream.of(sign.lines(), extraLines)
-                .flatMap(Stream::of)
-                .toArray(String[]::new); // TODO FIX
-
-        return new SimpleBlockBuild(type, model, allLines, boundingBox);
+        List<String> allLines = new ArrayList<>(sign.getLines());
+        extraSigns.forEach(s -> allLines.addAll(s.getLines()));
+        return new SimpleBlockBuild(type, model, allLines.toArray(new String[0]), boundingBox);
     }
 
     void logInitializedBuilds(List<BlockBuild> builds) {
