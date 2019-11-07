@@ -1,17 +1,74 @@
 package gg.warcraft.monolith.spigot.world.block
 
+import java.util
+
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.variant._
 import org.bukkit.{Material, Instrument => SpigotInstrument}
 import org.bukkit.block.data.`type`.Bamboo.{Leaves => SpigotBambooLeaves}
 import org.bukkit.block.data.`type`.Comparator.{Mode => SpigotComparatorMode}
-import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureBlockMode}
+import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureMode}
 import org.bukkit.block.data.`type`.TechnicalPiston.{Type => SpigotPistonType}
 
-import scala.annotation.switch
+object SpigotBlockVariantMapper {
+  private final val materialCache: util.EnumMap[Material, BlockVariant] =
+    new util.EnumMap(classOf[Material])
+
+  private final val variantCache: util.HashMap[BlockVariant, Material] =
+    new util.HashMap()
+}
 
 class SpigotBlockVariantMapper {
-  def map(material: Material): BlockVariant = (material: @switch) match {
+  def map(material: Material): BlockVariant =
+    SpigotBlockVariantMapper.materialCache.computeIfAbsent(material, compute)
+
+  def map(block: SpigotBlock): BlockVariant = {
+    def dataAs[T]: T = block.getBlockData.asInstanceOf[T]
+    block.getType match {
+      case Material.BAMBOO          => map(dataAs[SpigotBamboo].getLeaves)
+      case Material.COMPARATOR      => map(dataAs[SpigotComparator].getMode)
+      case Material.NOTE_BLOCK      => map(dataAs[SpigotNoteBlock].getInstrument)
+      case Material.PISTON_HEAD     => map(dataAs[SpigotPistonHead].getType)
+      case Material.STRUCTURE_BLOCK => map(dataAs[SpigotStructureBlock].getMode)
+
+      case it => map(it)
+    }
+  }
+
+  def map(variant: BlockVariant): Material =
+    SpigotBlockVariantMapper.variantCache.computeIfAbsent(variant, compute)
+
+  def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
+    case _: Comparator => Material.COMPARATOR
+    case _: NoteBlock  => Material.NOTE_BLOCK
+
+    case Bamboo(_, BambooVariant.SAPLING, _, _) => Material.BAMBOO_SAPLING
+    case _: Bamboo                              => Material.BAMBOO
+
+    case Banner(_, variant, _, Some(_))        => mapWall(variant)
+    case CoralFan(_, variant, Some(_), _)      => mapWall(variant)
+    case MobHead(_, variant, Some(_), _)       => mapWall(variant)
+    case Sign(_, variant, Some(_), _, _, _, _) => mapWall(variant)
+
+    case it: VariableBlock[_] => map(it.variant)
+  }
+
+  def map(block: VariableBlock[_], data: SpigotBlockData): Unit = {
+    def dataAs[T]: T = data.asInstanceOf[T]
+    block.variant match {
+      case BambooVariant.SAPLING => ()
+      case it: BambooVariant     => dataAs[SpigotBamboo].setLeaves(map(it))
+
+      case it: ComparatorVariant => dataAs[SpigotComparator].setMode(map(it))
+      case it: NoteBlockVariant  => dataAs[SpigotNoteBlock].setInstrument(map(it))
+      case it: PistonHeadVariant => dataAs[SpigotPistonHead].setType(map(it))
+
+      case StructureBlockVariant.VOID => ()
+      case it: StructureBlockVariant  => dataAs[SpigotStructureBlock].setMode(map(it))
+    }
+  }
+
+  private def compute(material: Material): BlockVariant = material match {
     // AIR
     case Material.AIR      => AirVariant.NORMAL
     case Material.CAVE_AIR => AirVariant.CAVE
@@ -25,6 +82,9 @@ class SpigotBlockVariantMapper {
     case Material.ANVIL         => AnvilVariant.NORMAL
     case Material.CHIPPED_ANVIL => AnvilVariant.CHIPPED
     case Material.DAMAGED_ANVIL => AnvilVariant.DAMAGED
+
+    // BAMBOO
+    case Material.BAMBOO_SAPLING => BambooVariant.SAPLING
 
     // BANNER
     case Material.BLACK_BANNER      => BannerVariant.BLACK
@@ -738,63 +798,7 @@ class SpigotBlockVariantMapper {
     case _ => throw new IllegalArgumentException(s"$material")
   }
 
-  def map(block: SpigotBlock): BlockVariant = {
-    lazy val data: SpigotBlockData = block.getState.getBlockData
-
-    (block.getType: @switch) match {
-      case Material.BAMBOO_SAPLING => BambooVariant.SAPLING
-      case Material.BAMBOO =>
-        data.asInstanceOf[SpigotBamboo].getLeaves match {
-          case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
-          case SpigotBambooLeaves.SMALL => BambooVariant.SMALL_LEAVES
-          case SpigotBambooLeaves.LARGE => BambooVariant.LARGE_LEAVES
-        }
-
-      case Material.COMPARATOR =>
-        data.asInstanceOf[SpigotComparator].getMode match {
-          case SpigotComparatorMode.COMPARE  => ComparatorVariant.COMPARE
-          case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
-        }
-
-      case Material.NOTE_BLOCK =>
-        data.asInstanceOf[SpigotNoteBlock].getInstrument match {
-          case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
-          case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
-          case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
-          case SpigotInstrument.BELL           => NoteBlockVariant.BELL
-          case SpigotInstrument.BIT            => NoteBlockVariant.BIT
-          case SpigotInstrument.CHIME          => NoteBlockVariant.CHIME
-          case SpigotInstrument.COW_BELL       => NoteBlockVariant.COW_BELL
-          case SpigotInstrument.DIDGERIDOO     => NoteBlockVariant.DIDGERIDOO
-          case SpigotInstrument.FLUTE          => NoteBlockVariant.FLUTE
-          case SpigotInstrument.GUITAR         => NoteBlockVariant.GUITAR
-          case SpigotInstrument.IRON_XYLOPHONE => NoteBlockVariant.IRON_XYLOPHONE
-          case SpigotInstrument.PIANO          => NoteBlockVariant.HAT
-          case SpigotInstrument.PLING          => NoteBlockVariant.PLING
-          case SpigotInstrument.SNARE_DRUM     => NoteBlockVariant.SNARE_DRUM
-          case SpigotInstrument.STICKS         => NoteBlockVariant.HARP
-          case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
-        }
-
-      case Material.PISTON_HEAD =>
-        data.asInstanceOf[SpigotPistonHead].getType match {
-          case SpigotPistonType.NORMAL => PistonHeadVariant.NORMAL
-          case SpigotPistonType.STICKY => PistonHeadVariant.STICKY
-        }
-
-      case Material.STRUCTURE_BLOCK =>
-        data.asInstanceOf[SpigotStructureBlock].getMode match {
-          case SpigotStructureBlockMode.CORNER => StructureBlockVariant.CORNER
-          case SpigotStructureBlockMode.DATA   => StructureBlockVariant.DATA
-          case SpigotStructureBlockMode.LOAD   => StructureBlockVariant.LOAD
-          case SpigotStructureBlockMode.SAVE   => StructureBlockVariant.SAVE
-        }
-
-      case it => map(it)
-    }
-  }
-
-  def map(variant: BlockVariant): Material = (variant: @switch) match {
+  private def compute(variant: BlockVariant): Material = variant match {
     // AIR
     case AirVariant.NORMAL => Material.AIR
     case AirVariant.CAVE   => Material.CAVE_AIR
@@ -1481,128 +1485,138 @@ class SpigotBlockVariantMapper {
     case WoolVariant.YELLOW     => Material.YELLOW_WOOL
   }
 
-  def map(block: VariableBlock[_ <: BlockVariant]): Material = block match {
-    case _: Comparator => Material.COMPARATOR
-    case _: NoteBlock  => Material.NOTE_BLOCK
-
-    case Bamboo(_, BambooVariant.SAPLING, _, _) => Material.BAMBOO_SAPLING
-    case _: Bamboo                              => Material.BAMBOO
-
-    case Banner(_, variant, None, _) =>
-      variant match {
-        case BannerVariant.BLACK      => Material.BLACK_WALL_BANNER
-        case BannerVariant.BLUE       => Material.BLUE_WALL_BANNER
-        case BannerVariant.BROWN      => Material.BROWN_WALL_BANNER
-        case BannerVariant.CYAN       => Material.CYAN_WALL_BANNER
-        case BannerVariant.GRAY       => Material.GRAY_WALL_BANNER
-        case BannerVariant.GREEN      => Material.GREEN_WALL_BANNER
-        case BannerVariant.LIGHT_BLUE => Material.LIGHT_BLUE_WALL_BANNER
-        case BannerVariant.LIGHT_GRAY => Material.LIGHT_GRAY_WALL_BANNER
-        case BannerVariant.LIME       => Material.LIME_WALL_BANNER
-        case BannerVariant.MAGENTA    => Material.MAGENTA_WALL_BANNER
-        case BannerVariant.ORANGE     => Material.ORANGE_WALL_BANNER
-        case BannerVariant.PINK       => Material.PINK_WALL_BANNER
-        case BannerVariant.PURPLE     => Material.PURPLE_WALL_BANNER
-        case BannerVariant.RED        => Material.RED_WALL_BANNER
-        case BannerVariant.WHITE      => Material.WHITE_WALL_BANNER
-        case BannerVariant.YELLOW     => Material.YELLOW_WALL_BANNER
-      }
-
-    case CoralFan(_, variant, Some(_), _) =>
-      variant match {
-        case CoralFanVariant.BRAIN  => Material.BRAIN_CORAL_WALL_FAN
-        case CoralFanVariant.BUBBLE => Material.BUBBLE_CORAL_WALL_FAN
-        case CoralFanVariant.FIRE   => Material.FIRE_CORAL_WALL_FAN
-        case CoralFanVariant.HORN   => Material.HORN_CORAL_WALL_FAN
-        case CoralFanVariant.TUBE   => Material.TUBE_CORAL_WALL_FAN
-
-        case CoralFanVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_WALL_FAN
-        case CoralFanVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_WALL_FAN
-        case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_WALL_FAN
-        case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_WALL_FAN
-        case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_WALL_FAN
-      }
-
-    case MobHead(_, variant, Some(_), _) =>
-      variant match {
-        case MobHeadVariant.CREEPER         => Material.CREEPER_WALL_HEAD
-        case MobHeadVariant.DRAGON          => Material.DRAGON_WALL_HEAD
-        case MobHeadVariant.PLAYER          => Material.PLAYER_WALL_HEAD
-        case MobHeadVariant.SKELETON        => Material.SKELETON_WALL_SKULL
-        case MobHeadVariant.WITHER_SKELETON => Material.WITHER_SKELETON_WALL_SKULL
-        case MobHeadVariant.ZOMBIE          => Material.ZOMBIE_WALL_HEAD
-      }
-
-    case Sign(_, variant, Some(_), _, _, _, _) =>
-      variant match {
-        case SignVariant.ACACIA   => Material.ACACIA_WALL_SIGN
-        case SignVariant.BIRCH    => Material.BIRCH_WALL_SIGN
-        case SignVariant.DARK_OAK => Material.DARK_OAK_WALL_SIGN
-        case SignVariant.JUNGLE   => Material.JUNGLE_WALL_SIGN
-        case SignVariant.OAK      => Material.OAK_WALL_SIGN
-        case SignVariant.SPRUCE   => Material.SPRUCE_WALL_SIGN
-      }
-
-    case it: VariableBlock[_] => map(it.variant)
+  private def map(leaves: SpigotBambooLeaves): BambooVariant = leaves match {
+    case SpigotBambooLeaves.NONE  => BambooVariant.NO_LEAVES
+    case SpigotBambooLeaves.SMALL => BambooVariant.SMALL_LEAVES
+    case SpigotBambooLeaves.LARGE => BambooVariant.LARGE_LEAVES
   }
 
-  def map(block: VariableBlock[_], data: SpigotBlockData): Unit = block match {
-    case Bamboo(_, variant, _, _) =>
-      if (variant != BambooVariant.SAPLING) {
-        val leaves = variant match {
-          case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
-          case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
-          case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
-          case BambooVariant.SAPLING      => null
-        }
-        data.asInstanceOf[SpigotBamboo].setLeaves(leaves)
-      }
+  private def map(variant: BambooVariant): SpigotBambooLeaves = variant match {
+    case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
+    case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
+    case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+  }
 
-    case Comparator(_, variant, _, _) =>
-      val mode = variant match {
-        case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
-        case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
-      }
-      data.asInstanceOf[SpigotComparator].setMode(mode)
+  private def map(mode: SpigotComparatorMode): ComparatorVariant = mode match {
+    case SpigotComparatorMode.COMPARE  => ComparatorVariant.COMPARE
+    case SpigotComparatorMode.SUBTRACT => ComparatorVariant.SUBTRACT
+  }
 
-    case NoteBlock(_, variant, _, _) =>
-      val instrument = variant match {
-        case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
-        case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
-        case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
-        case NoteBlockVariant.BELL           => SpigotInstrument.BELL
-        case NoteBlockVariant.BIT            => SpigotInstrument.BIT
-        case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
-        case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
-        case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
-        case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
-        case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
-        case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
-        case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
-        case NoteBlockVariant.PLING          => SpigotInstrument.PLING
-        case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
-        case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
-        case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
-      }
-      data.asInstanceOf[SpigotNoteBlock].setInstrument(instrument)
+  private def map(variant: ComparatorVariant): SpigotComparatorMode = variant match {
+    case ComparatorVariant.COMPARE  => SpigotComparatorMode.COMPARE
+    case ComparatorVariant.SUBTRACT => SpigotComparatorMode.SUBTRACT
+  }
 
-    case PistonHead(_, variant, _, _) =>
-      val `type` = variant match {
-        case PistonHeadVariant.NORMAL => SpigotPistonType.NORMAL
-        case PistonHeadVariant.STICKY => SpigotPistonType.STICKY
-      }
-      data.asInstanceOf[SpigotPistonHead].setType(`type`)
+  private def map(variant: SpigotInstrument): NoteBlockVariant = variant match {
+    case SpigotInstrument.BANJO          => NoteBlockVariant.BANJO
+    case SpigotInstrument.BASS_DRUM      => NoteBlockVariant.BASS_DRUM
+    case SpigotInstrument.BASS_GUITAR    => NoteBlockVariant.BASS_GUITAR
+    case SpigotInstrument.BELL           => NoteBlockVariant.BELL
+    case SpigotInstrument.BIT            => NoteBlockVariant.BIT
+    case SpigotInstrument.CHIME          => NoteBlockVariant.CHIME
+    case SpigotInstrument.COW_BELL       => NoteBlockVariant.COW_BELL
+    case SpigotInstrument.DIDGERIDOO     => NoteBlockVariant.DIDGERIDOO
+    case SpigotInstrument.FLUTE          => NoteBlockVariant.FLUTE
+    case SpigotInstrument.GUITAR         => NoteBlockVariant.GUITAR
+    case SpigotInstrument.IRON_XYLOPHONE => NoteBlockVariant.IRON_XYLOPHONE
+    case SpigotInstrument.PIANO          => NoteBlockVariant.HAT
+    case SpigotInstrument.PLING          => NoteBlockVariant.PLING
+    case SpigotInstrument.SNARE_DRUM     => NoteBlockVariant.SNARE_DRUM
+    case SpigotInstrument.STICKS         => NoteBlockVariant.HARP
+    case SpigotInstrument.XYLOPHONE      => NoteBlockVariant.XYLOPHONE
+  }
 
-    case StructureBlock(_, variant) =>
-      if (variant != StructureBlockVariant.VOID) {
-        val mode = variant match {
-          case StructureBlockVariant.CORNER => SpigotStructureBlockMode.CORNER
-          case StructureBlockVariant.DATA   => SpigotStructureBlockMode.DATA
-          case StructureBlockVariant.LOAD   => SpigotStructureBlockMode.LOAD
-          case StructureBlockVariant.SAVE   => SpigotStructureBlockMode.SAVE
-          case StructureBlockVariant.VOID   => null
-        }
-        data.asInstanceOf[SpigotStructureBlock].setMode(mode)
-      }
+  private def map(variant: NoteBlockVariant): SpigotInstrument = variant match {
+    case NoteBlockVariant.BANJO          => SpigotInstrument.BANJO
+    case NoteBlockVariant.BASS_DRUM      => SpigotInstrument.BASS_DRUM
+    case NoteBlockVariant.BASS_GUITAR    => SpigotInstrument.BASS_GUITAR
+    case NoteBlockVariant.BELL           => SpigotInstrument.BELL
+    case NoteBlockVariant.BIT            => SpigotInstrument.BIT
+    case NoteBlockVariant.CHIME          => SpigotInstrument.CHIME
+    case NoteBlockVariant.COW_BELL       => SpigotInstrument.COW_BELL
+    case NoteBlockVariant.DIDGERIDOO     => SpigotInstrument.DIDGERIDOO
+    case NoteBlockVariant.FLUTE          => SpigotInstrument.FLUTE
+    case NoteBlockVariant.GUITAR         => SpigotInstrument.GUITAR
+    case NoteBlockVariant.IRON_XYLOPHONE => SpigotInstrument.IRON_XYLOPHONE
+    case NoteBlockVariant.HAT            => SpigotInstrument.PIANO
+    case NoteBlockVariant.PLING          => SpigotInstrument.PLING
+    case NoteBlockVariant.SNARE_DRUM     => SpigotInstrument.SNARE_DRUM
+    case NoteBlockVariant.HARP           => SpigotInstrument.STICKS
+    case NoteBlockVariant.XYLOPHONE      => SpigotInstrument.XYLOPHONE
+  }
+
+  private def map(`type`: SpigotPistonType): PistonHeadVariant = `type` match {
+    case SpigotPistonType.NORMAL => PistonHeadVariant.NORMAL
+    case SpigotPistonType.STICKY => PistonHeadVariant.STICKY
+  }
+
+  private def map(variant: PistonHeadVariant): SpigotPistonType = variant match {
+    case PistonHeadVariant.NORMAL => SpigotPistonType.NORMAL
+    case PistonHeadVariant.STICKY => SpigotPistonType.STICKY
+  }
+
+  private def map(mode: SpigotStructureMode): StructureBlockVariant = mode match {
+    case SpigotStructureMode.CORNER => StructureBlockVariant.CORNER
+    case SpigotStructureMode.DATA   => StructureBlockVariant.DATA
+    case SpigotStructureMode.LOAD   => StructureBlockVariant.LOAD
+    case SpigotStructureMode.SAVE   => StructureBlockVariant.SAVE
+  }
+
+  private def map(mode: StructureBlockVariant): SpigotStructureMode = mode match {
+    case StructureBlockVariant.CORNER => SpigotStructureMode.CORNER
+    case StructureBlockVariant.DATA   => SpigotStructureMode.DATA
+    case StructureBlockVariant.LOAD   => SpigotStructureMode.LOAD
+    case StructureBlockVariant.SAVE   => SpigotStructureMode.SAVE
+  }
+
+  private def mapWall(variant: BannerVariant): Material = variant match {
+    case BannerVariant.BLACK      => Material.BLACK_WALL_BANNER
+    case BannerVariant.BLUE       => Material.BLUE_WALL_BANNER
+    case BannerVariant.BROWN      => Material.BROWN_WALL_BANNER
+    case BannerVariant.CYAN       => Material.CYAN_WALL_BANNER
+    case BannerVariant.GRAY       => Material.GRAY_WALL_BANNER
+    case BannerVariant.GREEN      => Material.GREEN_WALL_BANNER
+    case BannerVariant.LIGHT_BLUE => Material.LIGHT_BLUE_WALL_BANNER
+    case BannerVariant.LIGHT_GRAY => Material.LIGHT_GRAY_WALL_BANNER
+    case BannerVariant.LIME       => Material.LIME_WALL_BANNER
+    case BannerVariant.MAGENTA    => Material.MAGENTA_WALL_BANNER
+    case BannerVariant.ORANGE     => Material.ORANGE_WALL_BANNER
+    case BannerVariant.PINK       => Material.PINK_WALL_BANNER
+    case BannerVariant.PURPLE     => Material.PURPLE_WALL_BANNER
+    case BannerVariant.RED        => Material.RED_WALL_BANNER
+    case BannerVariant.WHITE      => Material.WHITE_WALL_BANNER
+    case BannerVariant.YELLOW     => Material.YELLOW_WALL_BANNER
+  }
+
+  private def mapWall(variant: CoralFanVariant): Material = variant match {
+    case CoralFanVariant.BRAIN  => Material.BRAIN_CORAL_WALL_FAN
+    case CoralFanVariant.BUBBLE => Material.BUBBLE_CORAL_WALL_FAN
+    case CoralFanVariant.FIRE   => Material.FIRE_CORAL_WALL_FAN
+    case CoralFanVariant.HORN   => Material.HORN_CORAL_WALL_FAN
+    case CoralFanVariant.TUBE   => Material.TUBE_CORAL_WALL_FAN
+
+    case CoralFanVariant.DEAD_BRAIN  => Material.DEAD_BRAIN_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_BUBBLE => Material.DEAD_BUBBLE_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_FIRE   => Material.DEAD_FIRE_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_HORN   => Material.DEAD_HORN_CORAL_WALL_FAN
+    case CoralFanVariant.DEAD_TUBE   => Material.DEAD_TUBE_CORAL_WALL_FAN
+  }
+
+  private def mapWall(variant: MobHeadVariant): Material = variant match {
+    case MobHeadVariant.CREEPER         => Material.CREEPER_WALL_HEAD
+    case MobHeadVariant.DRAGON          => Material.DRAGON_WALL_HEAD
+    case MobHeadVariant.PLAYER          => Material.PLAYER_WALL_HEAD
+    case MobHeadVariant.SKELETON        => Material.SKELETON_WALL_SKULL
+    case MobHeadVariant.WITHER_SKELETON => Material.WITHER_SKELETON_WALL_SKULL
+    case MobHeadVariant.ZOMBIE          => Material.ZOMBIE_WALL_HEAD
+  }
+
+  private def mapWall(variant: SignVariant): Material = variant match {
+    case SignVariant.ACACIA   => Material.ACACIA_WALL_SIGN
+    case SignVariant.BIRCH    => Material.BIRCH_WALL_SIGN
+    case SignVariant.DARK_OAK => Material.DARK_OAK_WALL_SIGN
+    case SignVariant.JUNGLE   => Material.JUNGLE_WALL_SIGN
+    case SignVariant.OAK      => Material.OAK_WALL_SIGN
+    case SignVariant.SPRUCE   => Material.SPRUCE_WALL_SIGN
   }
 }

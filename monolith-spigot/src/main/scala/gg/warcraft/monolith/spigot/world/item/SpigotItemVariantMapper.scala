@@ -1,17 +1,37 @@
 package gg.warcraft.monolith.spigot.world.item
 
+import java.util
+
 import gg.warcraft.monolith.api.world.block.BlockVariant
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant._
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockVariantMapper
 import org.bukkit.Material
 
-import scala.annotation.switch
+object SpigotItemVariantMapper {
+  private final val materialCache: util.EnumMap[Material, ItemVariant] =
+    new util.EnumMap(classOf[Material])
+
+  private final val variantCache: util.HashMap[ItemVariant, Material] =
+    new util.HashMap()
+}
 
 class SpigotItemVariantMapper(
     private implicit val blockMapper: SpigotBlockVariantMapper
 ) {
-  def map(material: Material): ItemVariant = (material: @switch) match {
+  def map(material: Material): ItemVariant =
+    SpigotItemVariantMapper.materialCache.computeIfAbsent(material, compute)
+
+  def map(item: SpigotItemStack): ItemVariant =
+    map(item.getType)
+
+  def map(variant: ItemVariant): Material =
+    SpigotItemVariantMapper.variantCache.computeIfAbsent(variant, compute)
+
+  def map(item: VariableItem[_ <: ItemVariant]): Material =
+    map(item.variant)
+
+  private def compute(material: Material): ItemVariant = material match {
     // ARROW
     case Material.ARROW          => ArrowVariant.NORMAL
     case Material.SPECTRAL_ARROW => ArrowVariant.SPECTRAL
@@ -283,13 +303,7 @@ class SpigotItemVariantMapper(
     case it: Material => blockMapper.map(it).asInstanceOf[ItemVariant]
   }
 
-  def map(item: SpigotItemStack): ItemVariant = item match {
-    // TODO map item specifics
-
-    case it: SpigotItemStack => map(it.getType)
-  }
-
-  def map(variant: ItemVariant): Material = (variant: @switch) match {
+  private def compute(variant: ItemVariant): Material = variant match {
     // ARROW
     case ArrowVariant.NORMAL   => Material.ARROW
     case ArrowVariant.SPECTRAL => Material.SPECTRAL_ARROW
@@ -577,11 +591,5 @@ class SpigotItemVariantMapper(
     case SwordVariant.DIAMOND => Material.DIAMOND_SWORD
 
     case it: BlockVariant => blockMapper.map(it)
-  }
-
-  def map(item: VariableItem[_ <: ItemVariant]): Material = item match {
-    // TODO map item specifics
-
-    case it => map(it.variant)
   }
 }

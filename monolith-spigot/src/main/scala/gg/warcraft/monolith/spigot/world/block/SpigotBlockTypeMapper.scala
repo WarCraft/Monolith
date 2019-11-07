@@ -5,6 +5,11 @@ import java.util
 import gg.warcraft.monolith.api.world.block.BlockType
 import org.bukkit.Material
 
+object SpigotBlockTypeMapper {
+  private final val cache: util.EnumMap[BlockType, Material] =
+    new util.EnumMap(classOf[BlockType])
+}
+
 class SpigotBlockTypeMapper {
   def map(`type`: BlockType): Material =
     SpigotBlockTypeMapper.cache.computeIfAbsent(`type`, compute)
@@ -57,9 +62,4 @@ class SpigotBlockTypeMapper {
 
     case it => Material.valueOf(it.name)
   }
-}
-
-object SpigotBlockTypeMapper {
-  private final val cache: util.EnumMap[BlockType, Material] =
-    new util.EnumMap(classOf[BlockType])
 }
