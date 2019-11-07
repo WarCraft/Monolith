@@ -15,6 +15,8 @@ class SpigotItemMapper(
     private implicit val variantMapper: SpigotItemVariantMapper
 ) {
   def map(item: SpigotItemStack): Option[Item] = {
+    if(item == null) return None
+
     // return None if Air
     val material = item.getType
     if (material.name.endsWith("AIR")) return None
