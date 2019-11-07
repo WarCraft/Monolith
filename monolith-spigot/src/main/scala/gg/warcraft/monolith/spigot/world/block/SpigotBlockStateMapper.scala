@@ -59,9 +59,8 @@ class SpigotBlockStateMapper {
   def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
     block match {
       case it: Bamboo =>
-        if (it.variant != BambooVariant.SAPLING) {
+        if (it.variant != BambooVariant.SAPLING)
           data.asInstanceOf[SpigotBamboo].setStage(it.state.toInt)
-        }
 
       case it => map(it.state, data)
     }
