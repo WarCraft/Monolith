@@ -1,12 +1,15 @@
 package gg.warcraft.monolith.spigot.world.item
 
+import java.util
+
 import gg.warcraft.monolith.api.world.item.ItemType
 import org.bukkit.Material
 
-import scala.annotation.switch
-
 class SpigotItemTypeMapper {
-  def map(`type`: ItemType): Material = (`type`: @switch) match {
+  def map(`type`: ItemType): Material =
+    SpigotItemTypeMapper.cache.computeIfAbsent(`type`, compute)
+
+  private def compute(`type`: ItemType): Material = `type` match {
     case ItemType.BOTTLE_OF_ENCHANTING => Material.EXPERIENCE_BOTTLE
     case ItemType.BRICK_BLOCK          => Material.BRICKS
     case ItemType.CLAY                 => Material.CLAY_BALL
@@ -74,4 +77,9 @@ class SpigotItemTypeMapper {
 
     case it => Material.valueOf(it.name)
   }
+}
+
+object SpigotItemTypeMapper {
+  private final val cache: util.EnumMap[ItemType, Material] =
+    new util.EnumMap(classOf[ItemType])
 }

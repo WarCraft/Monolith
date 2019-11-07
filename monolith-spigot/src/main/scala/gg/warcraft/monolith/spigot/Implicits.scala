@@ -1,8 +1,13 @@
 package gg.warcraft.monolith.spigot
 
-import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotSoundMapper, SpigotWorldService }
+import gg.warcraft.monolith.spigot.world.{
+  SpigotLocationMapper, SpigotSoundMapper, SpigotWorldService
+}
 import gg.warcraft.monolith.spigot.world.block._
-import gg.warcraft.monolith.spigot.world.item.{ JSpigotItemTypeMapper, JSpigotItemVariantMapper, SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper }
+import gg.warcraft.monolith.spigot.world.item.{
+  JSpigotItemVariantMapper, SpigotItemMapper, SpigotItemService,
+  SpigotItemTypeMapper, SpigotItemVariantMapper
+}
 import org.bukkit.Server
 
 object Implicits {
@@ -12,7 +17,7 @@ object Implicits {
   implicit lazy val locationMapper: SpigotLocationMapper = new SpigotLocationMapper
 
   implicit lazy val blockTypeMapper: SpigotBlockTypeMapper =
-    new JSpigotBlockTypeMapper // TODO replace /w scala impl when switch table works
+    new SpigotBlockTypeMapper
   implicit lazy val blockVariantMapper: SpigotBlockVariantMapper =
     new JSpigotBlockVariantMapper // TODO replace /w scala impl when switch table works
   implicit lazy val blockStateMapper: SpigotBlockStateMapper =
@@ -32,7 +37,7 @@ object Implicits {
   implicit lazy val blockMapper: SpigotBlockMapper = new SpigotBlockMapper
 
   implicit lazy val itemTypeMapper: SpigotItemTypeMapper =
-    new JSpigotItemTypeMapper // TODO replace /w scala impl when switch table works
+    new SpigotItemTypeMapper
   implicit lazy val itemVariantMapper: SpigotItemVariantMapper =
     new JSpigotItemVariantMapper(blockVariantMapper) // TODO replace /w scala impl when switch table works
   implicit lazy val itemMapper: SpigotItemMapper = new SpigotItemMapper
