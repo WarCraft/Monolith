@@ -25,6 +25,48 @@ class SpigotBlockStateMapper {
   def map(state: BlockState): Material =
     SpigotBlockStateMapper.stateCache.computeIfAbsent(state, compute)
 
+  def map(state: BlockState, data: SpigotBlockData): Unit = state match {
+    case it: CakeState =>
+      data.asInstanceOf[SpigotCake].setBites(it.toInt)
+
+    case it: NoteBlockState =>
+      val note = new SpigotNote(it.toInt)
+      data.asInstanceOf[SpigotNoteBlock].setNote(note)
+
+    case it: RepeaterState =>
+      data.asInstanceOf[SpigotRepeater].setDelay(it.toInt)
+
+    case it: SaplingState =>
+      data.asInstanceOf[SpigotSapling].setStage(it.toInt)
+
+    case it: SeaPickleState =>
+      data.asInstanceOf[SpigotSeaPickle].setPickles(it.toInt)
+
+    case it: TurtleEggState =>
+      val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
+      turtleEggData.setHatch(it.age.toInt)
+      turtleEggData.setEggs(it.count.toInt)
+
+    case _ =>
+      if (data.isInstanceOf[Ageable])
+        data.asInstanceOf[Ageable].setAge(state.toInt)
+      if (data.isInstanceOf[Levelled])
+        data.asInstanceOf[Levelled].setLevel(state.toInt)
+      if (data.isInstanceOf[AnaloguePowerable])
+        data.asInstanceOf[AnaloguePowerable].setPower(state.toInt)
+  }
+
+  def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
+    block match {
+      case it: Bamboo =>
+        if (it.variant != BambooVariant.SAPLING) {
+          data.asInstanceOf[SpigotBamboo].setStage(it.state.toInt)
+        }
+
+      case it => map(it.state, data)
+    }
+  }
+
   private def compute(material: Material): SpigotBlockData => BlockState = {
     def age(d: SpigotBlockData): Int = d.asInstanceOf[Ageable].getAge
     def level(d: SpigotBlockData): Int = d.asInstanceOf[Levelled].getLevel
@@ -144,53 +186,5 @@ class SpigotBlockStateMapper {
 
     // NOTE BambooState can not be mapped due to its compound nature, and Saplings &
     // WeightedPressurePlates can not be mapped as they also need a variant
-  }
-
-  def map(state: BlockState, data: SpigotBlockData): Unit = state match {
-    case it: CakeState =>
-      val cakeData = data.asInstanceOf[SpigotCake]
-      cakeData.setBites(it.toInt)
-
-    case it: NoteBlockState =>
-      val note = new SpigotNote(it.toInt)
-      val noteBlockData = data.asInstanceOf[SpigotNoteBlock]
-      noteBlockData.setNote(note)
-
-    case it: RepeaterState =>
-      val repeaterData = data.asInstanceOf[SpigotRepeater]
-      repeaterData.setDelay(it.toInt)
-
-    case it: SaplingState =>
-      val saplingData = data.asInstanceOf[SpigotSapling]
-      saplingData.setStage(it.toInt)
-
-    case it: SeaPickleState =>
-      val seaPickleData = data.asInstanceOf[SpigotSeaPickle]
-      seaPickleData.setPickles(it.toInt)
-
-    case it: TurtleEggState =>
-      val turtleEggData = data.asInstanceOf[SpigotTurtleEgg]
-      turtleEggData.setHatch(it.age.toInt)
-      turtleEggData.setEggs(it.count.toInt)
-
-    case _ =>
-      if (data.isInstanceOf[Ageable])
-        data.asInstanceOf[Ageable].setAge(state.toInt)
-      if (data.isInstanceOf[Levelled])
-        data.asInstanceOf[Levelled].setLevel(state.toInt)
-      if (data.isInstanceOf[AnaloguePowerable])
-        data.asInstanceOf[AnaloguePowerable].setPower(state.toInt)
-  }
-
-  def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
-    block match {
-      case it: Bamboo =>
-        if (it.variant != BambooVariant.SAPLING) {
-          val bambooData = data.asInstanceOf[SpigotBamboo]
-          bambooData.setStage(it.state.toInt)
-        }
-
-      case it => map(it.state, data)
-    }
   }
 }
