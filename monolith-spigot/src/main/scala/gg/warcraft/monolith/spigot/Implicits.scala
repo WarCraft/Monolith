@@ -1,12 +1,8 @@
 package gg.warcraft.monolith.spigot
 
-import gg.warcraft.monolith.spigot.world.{
-  SpigotLocationMapper, SpigotSoundMapper, SpigotWorldService
-}
+import gg.warcraft.monolith.spigot.world.{ SpigotLocationMapper, SpigotSoundMapper, SpigotWorldService }
 import gg.warcraft.monolith.spigot.world.block._
-import gg.warcraft.monolith.spigot.world.item.{
-  SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper
-}
+import gg.warcraft.monolith.spigot.world.item.{ JSpigotItemTypeMapper, JSpigotItemVariantMapper, SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper }
 import org.bukkit.Server
 
 object Implicits {
@@ -16,9 +12,9 @@ object Implicits {
   implicit lazy val locationMapper: SpigotLocationMapper = new SpigotLocationMapper
 
   implicit lazy val blockTypeMapper: SpigotBlockTypeMapper =
-    new SpigotBlockTypeMapper
+    new JSpigotBlockTypeMapper // TODO replace /w scala impl when switch table works
   implicit lazy val blockVariantMapper: SpigotBlockVariantMapper =
-    new SpigotBlockVariantMapper
+    new JSpigotBlockVariantMapper // TODO replace /w scala impl when switch table works
   implicit lazy val blockStateMapper: SpigotBlockStateMapper =
     new SpigotBlockStateMapper
   implicit lazy val blockAttachmentMapper: SpigotBlockAttachmentMapper =
@@ -35,9 +31,10 @@ object Implicits {
     new SpigotBlockShapeMapper
   implicit lazy val blockMapper: SpigotBlockMapper = new SpigotBlockMapper
 
-  implicit lazy val itemTypeMapper: SpigotItemTypeMapper = new SpigotItemTypeMapper
+  implicit lazy val itemTypeMapper: SpigotItemTypeMapper =
+    new JSpigotItemTypeMapper // TODO replace /w scala impl when switch table works
   implicit lazy val itemVariantMapper: SpigotItemVariantMapper =
-    new SpigotItemVariantMapper
+    new JSpigotItemVariantMapper(blockVariantMapper) // TODO replace /w scala impl when switch table works
   implicit lazy val itemMapper: SpigotItemMapper = new SpigotItemMapper
 
   // TODO rewrite to scala class

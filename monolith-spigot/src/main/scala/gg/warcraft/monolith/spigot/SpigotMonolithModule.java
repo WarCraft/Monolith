@@ -138,13 +138,13 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         bind(WorldService.class).toProvider(Implicits::worldService);
         expose(WorldService.class); // TODO remove when app no longer depends on it
         bind(SpigotLocationMapper.class).toProvider(Implicits::locationMapper);
-        expose(SpigotLocationMapper.class);
+        expose(SpigotLocationMapper.class); // TODO remove when app no longer depends on it
         bind(SpigotItemMapper.class).toProvider(Implicits::itemMapper);
-        expose(SpigotItemMapper.class);
+        expose(SpigotItemMapper.class); // TODO remove when app no longer depends on it
         bind(SpigotBlockMapper.class).toProvider(Implicits::blockMapper);
-        expose(SpigotBlockMapper.class);
+        expose(SpigotBlockMapper.class); // TODO remove when app no longer depends on it
         bind(ItemService.class).toProvider(Implicits::itemService);
-        expose(ItemService.class);
+        expose(ItemService.class); // TODO remove when app no longer depends on it
     }
 
     private void configureMapper() {
