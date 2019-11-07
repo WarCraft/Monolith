@@ -7,7 +7,7 @@ class ItemSpec extends fixture.FunSpec {
   type FixtureParam = Bed
 
   override def withFixture(test: OneArgTest): Outcome = {
-    val fixture = Bed(BedVariant.RED, "Bed", Array(), 1, Set.empty, false)
+    val fixture = Bed(BedVariant.RED, "Bed", List.empty, 1, Set.empty, false)
     try test(fixture)
     finally {}
   }
@@ -17,7 +17,7 @@ class ItemSpec extends fixture.FunSpec {
       it("creates a copy of itself with the new name") { fixture =>
         // Given
         val expectedCopy =
-          Bed(BedVariant.RED, "Better Bed", Array(), 1, Set.empty, false)
+          Bed(BedVariant.RED, "Better Bed", List.empty, 1, Set.empty, false)
 
         // When
         val copy = fixture.withName("Better Bed")
