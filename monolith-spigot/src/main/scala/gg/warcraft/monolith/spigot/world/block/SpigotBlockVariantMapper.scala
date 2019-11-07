@@ -10,7 +10,7 @@ import org.bukkit.block.data.`type`.Comparator.{Mode => SpigotComparatorMode}
 import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureMode}
 import org.bukkit.block.data.`type`.TechnicalPiston.{Type => SpigotPistonType}
 
-object SpigotBlockVariantMapper {
+private object SpigotBlockVariantMapper {
   private final val materialCache: util.EnumMap[Material, BlockVariant] =
     new util.EnumMap(classOf[Material])
 

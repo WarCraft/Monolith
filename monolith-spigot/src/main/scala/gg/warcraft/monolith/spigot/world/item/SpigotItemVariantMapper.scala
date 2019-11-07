@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.world.item.variant._
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockVariantMapper
 import org.bukkit.Material
 
-object SpigotItemVariantMapper {
+private object SpigotItemVariantMapper {
   private final val materialCache: util.EnumMap[Material, ItemVariant] =
     new util.EnumMap(classOf[Material])
 

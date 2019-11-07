@@ -5,7 +5,7 @@ import java.util
 import gg.warcraft.monolith.api.world.item.ItemType
 import org.bukkit.Material
 
-object SpigotItemTypeMapper {
+private object SpigotItemTypeMapper {
   private final val cache: util.EnumMap[ItemType, Material] =
     new util.EnumMap(classOf[ItemType])
 }

@@ -9,7 +9,7 @@ import org.bukkit.{Material, Note => SpigotNote}
 import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
 
 // TODO finish cached state mapper impl
-object SpigotBlockStateMapper {
+private object SpigotBlockStateMapper {
   private final val materialCache: util.EnumMap[Material, () => BlockState] =
     new util.EnumMap(classOf[Material])
 
