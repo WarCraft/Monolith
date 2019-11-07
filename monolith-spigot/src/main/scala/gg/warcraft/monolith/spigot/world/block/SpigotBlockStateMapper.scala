@@ -65,9 +65,9 @@ class SpigotBlockStateMapper {
   }
 
   private def compute(material: Material): SpigotBlockData => BlockState = {
-    def age(d: SpigotBlockData): Int = d.asInstanceOf[Ageable].getAge
-    def level(d: SpigotBlockData): Int = d.asInstanceOf[Levelled].getLevel
-    def power(d: SpigotBlockData): Int = d.asInstanceOf[AnaloguePowerable].getPower
+    val age = (data: SpigotBlockData) => data.asInstanceOf[Ageable].getAge
+    val level = (data: SpigotBlockData) => data.asInstanceOf[Levelled].getLevel
+    val power = (d: SpigotBlockData) => d.asInstanceOf[AnaloguePowerable].getPower
     material match {
       case Material.BEETROOTS        => (data => BeetrootState.valueOf(age(data)))
       case Material.CACTUS           => (data => CactusState.valueOf(age(data)))
