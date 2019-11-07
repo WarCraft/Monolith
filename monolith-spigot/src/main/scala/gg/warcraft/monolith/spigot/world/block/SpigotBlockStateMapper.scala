@@ -56,14 +56,12 @@ class SpigotBlockStateMapper {
         data.asInstanceOf[AnaloguePowerable].setPower(state.toInt)
   }
 
-  def map(block: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = {
-    block match {
-      case it: Bamboo =>
-        if (it.variant != BambooVariant.SAPLING)
-          data.asInstanceOf[SpigotBamboo].setStage(it.state.toInt)
+  def map(b: StatefulBlock[_ <: BlockState], data: SpigotBlockData): Unit = b match {
+    case it: Bamboo =>
+      if (it.variant != BambooVariant.SAPLING)
+        data.asInstanceOf[SpigotBamboo].setStage(it.state.toInt)
 
-      case it => map(it.state, data)
-    }
+    case it => map(it.state, data)
   }
 
   private def compute(material: Material): SpigotBlockData => BlockState = {
