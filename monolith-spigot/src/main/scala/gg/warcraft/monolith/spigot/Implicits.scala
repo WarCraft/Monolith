@@ -38,7 +38,7 @@ object Implicits {
   implicit lazy val itemTypeMapper: SpigotItemTypeMapper =
     new SpigotItemTypeMapper
   implicit lazy val itemVariantMapper: SpigotItemVariantMapper =
-    new SpigotItemVariantMapper(blockVariantMapper)
+    new SpigotItemVariantMapper
   implicit lazy val itemMapper: SpigotItemMapper = new SpigotItemMapper
 
   // TODO rewrite to scala class

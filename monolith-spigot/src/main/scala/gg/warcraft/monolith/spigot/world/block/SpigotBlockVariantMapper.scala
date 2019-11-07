@@ -1495,6 +1495,7 @@ class SpigotBlockVariantMapper {
     case BambooVariant.NO_LEAVES    => SpigotBambooLeaves.NONE
     case BambooVariant.SMALL_LEAVES => SpigotBambooLeaves.SMALL
     case BambooVariant.LARGE_LEAVES => SpigotBambooLeaves.LARGE
+    case BambooVariant.SAPLING      => null
   }
 
   private def map(mode: SpigotComparatorMode): ComparatorVariant = mode match {
@@ -1567,6 +1568,7 @@ class SpigotBlockVariantMapper {
     case StructureBlockVariant.DATA   => SpigotStructureMode.DATA
     case StructureBlockVariant.LOAD   => SpigotStructureMode.LOAD
     case StructureBlockVariant.SAVE   => SpigotStructureMode.SAVE
+    case StructureBlockVariant.VOID   => null
   }
 
   private def mapWall(variant: BannerVariant): Material = variant match {
