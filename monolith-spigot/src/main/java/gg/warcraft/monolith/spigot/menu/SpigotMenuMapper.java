@@ -42,7 +42,7 @@ public class SpigotMenuMapper {
     }
 
     public ItemStack mapSkull(SkullButton button) {
-        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD, 1);
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
         itemMeta.setDisplayName(button.getTitle());
         itemMeta.setLore(button.getTooltip());
