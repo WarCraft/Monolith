@@ -283,7 +283,7 @@ public enum ItemType implements ItemTypeOrVariant {
     TROPICAL_FISH,
     TURTLE_EGG,
     TURTLE_HELMET,
-    VINE,
+    VINES,
     WALL,
     WEIGHTED_PRESSURE_PLATE,
     WHEAT,

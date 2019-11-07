@@ -179,7 +179,7 @@ public enum BlockType implements BlockTypeVariantOrState {
     TRIPWIRE,
     TRIPWIRE_HOOK,
     TURTLE_EGG,
-    VINE,
+    VINES,
     WALL,
     WATER,
     WEIGHTED_PRESSURE_PLATE,

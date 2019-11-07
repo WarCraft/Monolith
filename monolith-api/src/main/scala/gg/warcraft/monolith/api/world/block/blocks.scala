@@ -1465,11 +1465,11 @@ final case class TurtleEgg(
   override val solid: Boolean = false
 }
 
-final case class Vine(
+final case class Vines(
     location: BlockLocation,
     extensions: Set[BlockFace]
 ) extends ExtendableBlock {
-  override val `type` = BlockType.VINE
+  override val `type` = BlockType.VINES
   override val solid: Boolean = false
 }
 

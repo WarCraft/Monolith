@@ -3144,14 +3144,14 @@ case class TurtleHelmet(
   override def maxDurability = 275
 }
 
-case class Vine(
+case class Vines(
     name: String,
     tooltip: List[String],
     count: Int,
     attributes: Set[String],
     hideAttributes: Boolean
 ) extends StackableItem {
-  val `type` = ItemType.VINE
+  val `type` = ItemType.VINES
 }
 
 case class Wall(

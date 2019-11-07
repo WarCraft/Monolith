@@ -70,7 +70,7 @@ public class SimpleBoundingBlockBoxReaderTest {
         when(mockBlock31.location()).thenReturn(mockBlock31Location);
 
         mockBlock33 = mock(Block.class);
-        when(mockBlock33.type()).thenReturn(BlockType.VINE);
+        when(mockBlock33.type()).thenReturn(BlockType.VINES);
         BlockLocation mockBlock33Location = mock(BlockLocation.class);
         when(mockBlock33Location.x()).thenReturn(3);
         when(mockBlock33Location.y()).thenReturn(0);
