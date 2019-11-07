@@ -1,10 +1,21 @@
 package gg.warcraft.monolith.spigot.world.block
 
+import java.util
+
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant.BambooVariant
 import org.bukkit.{Material, Note => SpigotNote}
 import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
+
+// TODO finish cached state mapper impl
+object SpigotBlockStateMapper {
+  private final val materialCache: util.EnumMap[Material, () => BlockState] =
+    new util.EnumMap(classOf[Material])
+
+  private final val stateCache: util.HashMap[BlockState, Material] =
+    new util.HashMap()
+}
 
 class SpigotBlockStateMapper {
   def map(block: SpigotBlock): BlockState = {
