@@ -266,93 +266,93 @@ class SpigotBlockMapper(
       // LECTERN
       case Material.LECTERN =>
         block =>
-          val book = data[SpigotLectern].hasBook
-          Lectern(loc, dir, powered, book)
+          val book = data[SpigotLectern](block).hasBook
+          Lectern(loc(block), dir(block), powered(block), book)
 
       // MELON_STEM
       case Material.MELON_STEM =>
-        block => MelonStem(loc, s[MelonStemState], None)
+        (block => MelonStem(loc(block), s[MelonStemState](block), None))
 
       case Material.ATTACHED_MELON_STEM =>
-        block =>
-          MelonStem(loc, s[MelonStemState], Some(dir))
+        (block => MelonStem(loc(block), s[MelonStemState](block), Some(dir(block))))
 
-        // NOTE_BLOCK
+      // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
-        block =>
-          NoteBlock(loc, v[NoteBlockVariant], s[NoteBlockState], powered)
+        b =>
+          NoteBlock(loc(b), v[NoteBlockVariant](b), s[NoteBlockState](b), powered(b))
 
         // PISTON
       case Material.PISTON | Material.STICKY_PISTON =>
         block =>
-          val extended = data[SpigotPiston].isExtended
-          Piston(loc, v[PistonVariant], dir, extended)
+          val extended = data[SpigotPiston](block).isExtended
+          Piston(loc(block), v[PistonVariant](block), dir(block), extended)
 
       // PISTON_HEAD
       case Material.PISTON_HEAD =>
         block =>
-          val short = data[SpigotPistonHead].isShort
-          PistonHead(loc, v[PistonHeadVariant], dir, short)
+          val short = data[SpigotPistonHead](block).isShort
+          PistonHead(loc(block), v[PistonHeadVariant](block), dir(block), short)
 
       case Material.MOVING_PISTON =>
-        throw new IllegalArgumentException(s"Technical block: $block")
+        (block => throw new IllegalArgumentException(s"Technical block: $block"))
 
       // PUMPKIN
       case Material.PUMPKIN =>
-        block => Pumpkin(loc, None, lit = false, carved = false)
+        (block => Pumpkin(loc(block), None, lit = false, carved = false))
 
       case Material.CARVED_PUMPKIN =>
-        block => Pumpkin(loc, Some(dir), lit = false, carved = true)
+        (block => Pumpkin(loc(block), Some(dir(block)), lit = false, carved = true))
 
       case Material.JACK_O_LANTERN =>
-        block =>
-          Pumpkin(loc, Some(dir), lit = true, carved = true)
+        (block => Pumpkin(loc(block), Some(dir(block)), lit = true, carved = true))
 
         // PUMPKIN_STEM
       case Material.PUMPKIN_STEM =>
-        block => PumpkinStem(loc, s[PumpkinStemState], None)
+        (block => PumpkinStem(loc(block), s[PumpkinStemState](block), None))
 
       case Material.ATTACHED_PUMPKIN_STEM =>
-        block =>
-          PumpkinStem(loc, s[PumpkinStemState], Some(dir))
+        (b => PumpkinStem(loc(b), s[PumpkinStemState](b), Some(dir(b))))
 
         // REPEATER
       case Material.REPEATER =>
-        block =>
-          val locked = data[SpigotRepeater].isLocked
-          Repeater(loc, s[RepeaterState], dir, powered, locked)
+        b =>
+          val locked = data[SpigotRepeater](b).isLocked
+          Repeater(loc(b), s[RepeaterState](b), dir(b), powered(b), locked)
 
       // SEAGRASS
-      case Material.SEAGRASS      => Seagrass(loc, BlockBisection.BOTTOM, tall = false)
-      case Material.TALL_SEAGRASS => Seagrass(loc, bisection, tall = true)
+      case Material.SEAGRASS      =>
+        (block => Seagrass(loc(block), BlockBisection.BOTTOM, tall = false))
+      case Material.TALL_SEAGRASS =>
+        (block => Seagrass(loc(block), bisection(block), tall = true))
 
       // SWEET_BERRY_BUSH
       case Material.SWEET_BERRY_BUSH =>
-        block =>
-          SweetBerryBush(loc, s[SweetBerryState])
+        (block => SweetBerryBush(loc(block), s[SweetBerryState](block)))
 
         // TNT
       case Material.TNT =>
         block =>
-          val unstable = data[SpigotTNT].isUnstable
-          TNT(loc, unstable)
+          val unstable = data[SpigotTNT](block).isUnstable
+          TNT(loc(block), unstable)
 
       // TORCH
-      case Material.TORCH      => Torch(loc, BlockFace.UP, wall = false)
-      case Material.WALL_TORCH => Torch(loc, dir, wall = true)
+      case Material.TORCH      =>
+        (block => Torch(loc(block), BlockFace.UP, wall = false))
+      case Material.WALL_TORCH =>
+        (block => Torch(loc(block), dir(block), wall = true))
 
       // TRIPWIRE
       case Material.TRIPWIRE =>
-        block =>
-          val connected = data[SpigotTripwire].isAttached
-          val disarmed = data[SpigotTripwire].isDisarmed
-          Tripwire(loc, extensions, powered, connected, disarmed)
+        b =>
+          val connected = data[SpigotTripwire](b).isAttached
+          val disarmed = data[SpigotTripwire](b).isDisarmed
+          Tripwire(loc(b), extensions(b), powered(b), connected, disarmed)
 
       // TRIPWIRE_HOOK
       case Material.TRIPWIRE_HOOK =>
         block =>
-          val connected = data[SpigotTripwireHook].isAttached
-          TripwireHook(loc, dir, powered, connected)
+          val connected = data[SpigotTripwireHook](block).isAttached
+          TripwireHook(loc(block), dir(block), powered(block), connected)
 
       case it =>
         it match {
