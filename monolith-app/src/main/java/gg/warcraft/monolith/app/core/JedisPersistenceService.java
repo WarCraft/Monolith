@@ -31,7 +31,7 @@ public class JedisPersistenceService implements PersistenceService {
 
     private void retry(Consumer<Jedis> action) {
         try (Jedis jedis = pool.getResource()) {
-            jedis.select(1); // TODO remove
+            jedis.select(2); // TODO remove
             action.accept(jedis);
         } catch (Exception ex) {
             retry(action);
@@ -40,7 +40,7 @@ public class JedisPersistenceService implements PersistenceService {
 
     private <T> T retryWithResult(Function<Jedis, T> action) {
         try (Jedis jedis = pool.getResource()) {
-            jedis.select(1); // TODO remove
+            jedis.select(2); // TODO remove
             return action.apply(jedis);
         } catch (Exception ex) {
             return retryWithResult(action);
@@ -158,7 +158,7 @@ public class JedisPersistenceService implements PersistenceService {
     @Override
     public List<String> getAllKeys(String keyPrefix) {
         try (Jedis jedis = pool.getResource()) {
-            jedis.select(1); // TODO remove
+            jedis.select(2); // TODO remove
             List<String> keys = new ArrayList<>();
 
             ScanParams scanParams = new ScanParams().match(keyPrefix + "*");
