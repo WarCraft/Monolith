@@ -15,18 +15,22 @@ class SpigotItemMapper(
     private implicit val variantMapper: SpigotItemVariantMapper
 ) {
   def map(item: SpigotItemStack): Option[Item] = {
-    if(item == null) return None
+    if (item == null) return None
 
     // return None if Air
     val material = item.getType
     if (material.name.endsWith("AIR")) return None
 
-    // Set common item data
+    // Set common item data TODO map default name and item attributes
     val meta = item.getItemMeta
-    val name = meta.getDisplayName
-    val tooltip: List[String] = List.empty // TODO item.getItemMeta.getLore
-    val attr = Set.empty[String] // TODO map attributes
-    val hideAttr = meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+    val name = if (meta != null) meta.getDisplayName else ""
+    val tooltip: List[String] =
+      if (meta != null && meta.getLore != null) meta.getLore.asScala.toList
+      else List.empty
+    val attr: Set[String] = if (meta != null) Set.empty else Set.empty
+    val hideAttr =
+      if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+      else false
 
     // Lazily compute generic item data
     lazy val count = item.getAmount
