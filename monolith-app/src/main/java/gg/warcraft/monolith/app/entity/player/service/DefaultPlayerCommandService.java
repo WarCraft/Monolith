@@ -107,7 +107,7 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
             return false;
         }
 
-        if (player.isOnline() && player.getInventory().hasSpaceFor(null)) {
+        if (player.isOnline() && player.getInventory().hasSpace(1)) {
             return playerServerAdapter.giveItem(playerId, item, dropOnFullInventory);
         } else {
             if (dropOnFullInventory) {
