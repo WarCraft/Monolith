@@ -1254,7 +1254,7 @@ final case class Sign(
   override val `type` = BlockType.SIGN
   def getLines: util.List[String] = lines.asJava
   @varargs def withLines(lines: String*): Sign =
-    copyWith("lines", lines.slice(0, 4))
+    copyWith("lines", lines.slice(0, 4).toList)
   def withEditable(editable: Boolean): Sign =
     copyWith("editable", editable)
 }

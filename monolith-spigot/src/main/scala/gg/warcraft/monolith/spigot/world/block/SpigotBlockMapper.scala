@@ -686,15 +686,13 @@ class SpigotBlockMapper(
     data
   }
 
-  def map(block: Block, spigotState: SpigotBlockState): Unit = {
-    def stateAs[T <: SpigotBlockState]: T = spigotState.asInstanceOf[T]
+  def map(block: Block, state: SpigotBlockState): Unit = block match {
+    case Sign(_, _, _, _, _, lines, editable) =>
+      val sign = state.asInstanceOf[SpigotSign]
+      lines.zipWithIndex foreach { case (line, i) => sign.setLine(i, line) }
+      sign.setEditable(editable)
 
-    block match {
-      case Sign(_, _, _, _, _, lines, editable) =>
-        val sign = stateAs[SpigotSign]
-        lines.zipWithIndex foreach { case (line, i) => sign.setLine(i, line) }
-        sign.setEditable(editable)
-    }
+    case _ => ()
   }
 
   def mapBedPart(part: SpigotBedPart): BlockBisection = part match {
