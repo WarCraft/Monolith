@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.spigot
 
 import gg.warcraft.monolith.spigot.world.{
-  SpigotLocationMapper, SpigotSoundMapper, SpigotWorldService
+  SpigotLocationMapper, SpigotSoundMapper, SpigotWorldMapper, SpigotWorldService
 }
 import gg.warcraft.monolith.spigot.world.block._
 import gg.warcraft.monolith.spigot.world.item.{

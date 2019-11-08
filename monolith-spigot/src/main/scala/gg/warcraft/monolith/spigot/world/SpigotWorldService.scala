@@ -11,7 +11,6 @@ import gg.warcraft.monolith.spigot.world.block.{
   SpigotBlock, SpigotBlockMapper, SpigotBlockStateMapper, SpigotBlockTypeMapper,
   SpigotBlockVariantMapper
 }
-import gg.warcraft.monolith.spigot.SpigotWorldMapper
 import org.bukkit.{Material, Server}
 
 class SpigotWorldService(
