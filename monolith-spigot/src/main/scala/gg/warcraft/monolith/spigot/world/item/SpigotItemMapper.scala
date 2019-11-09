@@ -402,6 +402,13 @@ class SpigotItemMapper(
 
     val spigotItem = new SpigotItemStack(material)
 
+    // Update stack size
+    item match {
+      case it: StackableItem => spigotItem.setAmount(it.count)
+      case _                 => ()
+    }
+
+    // Update item meta
     val meta = spigotItem.getItemMeta
     meta.setDisplayName(item.name)
     meta.setLore(item.tooltip.asJava)
