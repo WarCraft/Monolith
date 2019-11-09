@@ -12,6 +12,7 @@ import gg.warcraft.monolith.spigot.world.block.{
   SpigotBlockVariantMapper
 }
 import org.bukkit.{Material, Server}
+import org.bukkit.block.{BlockFace => SpigotBlockFace}
 
 class SpigotWorldService(
     private implicit val server: Server,
@@ -54,7 +55,13 @@ class SpigotWorldService(
 
   override def getHighestBlock(world: World, x: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world).get
-    val spigotBlock = spigotWorld.getHighestBlockAt(x, z)
+    var spigotBlock = spigotWorld.getHighestBlockAt(x, z)
+    do {
+      spigotBlock = spigotBlock.getRelative(SpigotBlockFace.UP)
+    } while (!spigotBlock.isEmpty)
+    do {
+      spigotBlock = spigotBlock.getRelative(SpigotBlockFace.DOWN)
+    } while (spigotBlock.isEmpty)
     blockMapper.map(spigotBlock)
   }
 
