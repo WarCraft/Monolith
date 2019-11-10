@@ -78,7 +78,7 @@ public class SpigotProjectileEventMapper implements Listener {
             shooterId = ((Entity) shooter).getUniqueId();
         }
 
-        Block block = blockMapper.map(event.getHitBlock());
+        Block block = blockMapper.map(event.getHitBlock()).getOrElse(() -> null);
         UUID entityId = null;
         if (event.getHitEntity() instanceof LivingEntity) {
             entityId = event.getHitEntity().getUniqueId();
@@ -110,7 +110,7 @@ public class SpigotProjectileEventMapper implements Listener {
             shooterId = ((Entity) shooter).getUniqueId();
         }
 
-        Block block = blockMapper.map(event.getHitBlock());
+        Block block = blockMapper.map(event.getHitBlock()).getOrElse(() -> null);
         UUID entityId = null;
         if (event.getHitEntity() instanceof LivingEntity) {
             entityId = event.getHitEntity().getUniqueId();

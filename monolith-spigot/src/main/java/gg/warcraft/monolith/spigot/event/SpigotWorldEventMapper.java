@@ -72,7 +72,7 @@ public class SpigotWorldEventMapper implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPreBreakEvent(org.bukkit.event.block.BlockBreakEvent event) {
-        Block block = blockMapper.map(event.getBlock());
+        Block block = blockMapper.map(event.getBlock()).getOrElse(() -> null);
         List<Item> alternativeDrops = event.isDropItems() ? null : new ArrayList<>();
         UUID playerId = event.getPlayer().getUniqueId();
         boolean cancelled = event.isCancelled();
@@ -103,7 +103,7 @@ public class SpigotWorldEventMapper implements Listener {
             return;
         }
 
-        Block block = blockMapper.map(event.getBlock());
+        Block block = blockMapper.map(event.getBlock()).getOrElse(() -> null);
         UUID playerId = event.getPlayer().getUniqueId();
         BlockBreakEvent blockBreakEvent = new SimpleBlockBreakEvent(block, alternativeDrops, playerId);
         eventService.publish(blockBreakEvent);
@@ -118,9 +118,9 @@ public class SpigotWorldEventMapper implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPrePlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
-        Block block = blockMapper.map(event.getBlock());
-        Block placedBlock = blockMapper.map(event.getBlockPlaced());
-        Block placedAgainst = blockMapper.map(event.getBlockAgainst());
+        Block block = blockMapper.map(event.getBlock()).getOrElse(() -> null);
+        Block placedBlock = blockMapper.map(event.getBlockPlaced()).getOrElse(() -> null);
+        Block placedAgainst = blockMapper.map(event.getBlockAgainst()).getOrElse(() -> null);
         UUID playerId = event.getPlayer().getUniqueId();
         boolean cancelled = event.isCancelled();
         BlockPrePlaceEvent blockPrePlaceEvent =
@@ -136,9 +136,9 @@ public class SpigotWorldEventMapper implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
-        Block block = blockMapper.map(event.getBlock());
-        Block placedBlock = blockMapper.map(event.getBlockPlaced());
-        Block placedAgainst = blockMapper.map(event.getBlockAgainst());
+        Block block = blockMapper.map(event.getBlock()).getOrElse(() -> null);
+        Block placedBlock = blockMapper.map(event.getBlockPlaced()).getOrElse(() -> null);
+        Block placedAgainst = blockMapper.map(event.getBlockAgainst()).getOrElse(() -> null);
         UUID playerId = event.getPlayer().getUniqueId();
         BlockPlaceEvent blockPlaceEvent = new SimpleBlockPlaceEvent(block, placedBlock, placedAgainst, playerId);
         eventService.publish(blockPlaceEvent);
@@ -148,7 +148,7 @@ public class SpigotWorldEventMapper implements Listener {
         Block block = null;
         BlockFace clickedFace = null;
         if(event.getClickedBlock() != null) {
-            block = blockMapper.map(event.getClickedBlock());
+            block = blockMapper.map(event.getClickedBlock()).getOrElse(() -> null);
             clickedFace = blockFaceMapper.map(event.getBlockFace());
         }
         BlockInteraction interaction = BlockInteraction.valueOf(event.getAction().name());
@@ -168,7 +168,7 @@ public class SpigotWorldEventMapper implements Listener {
     }
 
     private void onBlockPreTriggerEvent(PlayerInteractEvent event) {
-        Block block = blockMapper.map(event.getClickedBlock());
+        Block block = blockMapper.map(event.getClickedBlock()).getOrElse(() -> null);
         UUID playerId = event.getPlayer().getUniqueId();
         boolean wasCancelled = event.isCancelled();
         BlockPreTriggerEvent blockPreTriggerEvent = new SimpleBlockPreTriggerEvent(block, playerId, wasCancelled);
@@ -200,7 +200,7 @@ public class SpigotWorldEventMapper implements Listener {
         Block block = null;
         BlockFace clickedFace = null;
         if(event.getClickedBlock() != null) {
-            block = blockMapper.map(event.getClickedBlock());
+            block = blockMapper.map(event.getClickedBlock()).getOrElse(() -> null);
             clickedFace = blockFaceMapper.map(event.getBlockFace());
         }
         BlockInteraction interaction = BlockInteraction.valueOf(event.getAction().name());
@@ -212,7 +212,7 @@ public class SpigotWorldEventMapper implements Listener {
     }
 
     private void onBlockTriggerEvent(PlayerInteractEvent event) {
-        Block block = blockMapper.map(event.getClickedBlock());
+        Block block = blockMapper.map(event.getClickedBlock()).getOrElse(() -> null);
         UUID playerId = event.getPlayer().getUniqueId();
         BlockTriggerEvent blockTriggerEvent = new SimpleBlockTriggerEvent(block, playerId);
         eventService.publish(blockTriggerEvent);

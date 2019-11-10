@@ -19,7 +19,7 @@ import org.bukkit.block.data.`type`.Slab.{Type => SpigotSlabType}
 import org.bukkit.block.data.`type`.Switch
 
 private object SpigotBlockMapper {
-  private final val materialCache: util.EnumMap[Material, SpigotBlock => Block] =
+  private final val cache: util.EnumMap[Material, SpigotBlock => Block] =
     new util.EnumMap(classOf[Material])
 }
 
@@ -35,10 +35,11 @@ class SpigotBlockMapper(
     private implicit val stateMapper: SpigotBlockStateMapper,
     private implicit val variantMapper: SpigotBlockVariantMapper
 ) {
-  def map(block: SpigotBlock): Block =
-    SpigotBlockMapper.materialCache
-      .computeIfAbsent(block.getType, compute)
-      .apply(block)
+  def map(block: SpigotBlock): Option[Block] = {
+    if (block == null) return None
+    val builder = SpigotBlockMapper.cache.computeIfAbsent(block.getType, compute)
+    Some(builder.apply(block))
+  }
 
   def compute(material: Material): SpigotBlock => Block = {
     def data[T](block: SpigotBlock): T = block.getBlockData.asInstanceOf[T]

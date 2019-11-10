@@ -50,7 +50,7 @@ class SpigotWorldService(
   override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
     val spigotWorld = worldMapper.map(world).get
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
-    blockMapper.map(spigotBlock)
+    blockMapper.map(spigotBlock).get
   }
 
   override def getHighestBlock(world: World, x: Int, z: Int): Block = {
@@ -62,7 +62,7 @@ class SpigotWorldService(
     do {
       spigotBlock = spigotBlock.getRelative(SpigotBlockFace.DOWN)
     } while (spigotBlock.isEmpty)
-    blockMapper.map(spigotBlock)
+    blockMapper.map(spigotBlock).get
   }
 
   private def update(spigotBlock: SpigotBlock, to: Block): Unit = {
