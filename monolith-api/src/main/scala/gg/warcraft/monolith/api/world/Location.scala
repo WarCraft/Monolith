@@ -1,12 +1,13 @@
 package gg.warcraft.monolith.api.world
 
 import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
+import io.getquill.Embedded
 
 case class Location(
     world: World,
     translation: Vector3f,
     rotation: Vector3f = Vector3f.ZERO_PITCH_YAW
-) {
+) extends Embedded {
   val x: Float = translation.x
   val y: Float = translation.y
   val z: Float = translation.z

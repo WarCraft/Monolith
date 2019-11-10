@@ -1,10 +1,12 @@
 package gg.warcraft.monolith.api.math
 
+import io.getquill.Embedded
+
 case class Vector3i(
     x: Int = 0,
     y: Int = 0,
     z: Int = 0
-) {
+) extends Embedded {
   def add(x: Int, y: Int, z: Int): Vector3i =
     copy(x = this.x + x, y = this.y + y, z = this.z + z)
 

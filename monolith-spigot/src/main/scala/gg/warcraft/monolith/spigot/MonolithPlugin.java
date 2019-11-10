@@ -115,7 +115,7 @@ public class MonolithPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        new ImplicitsJavaHack().doTheThing(getServer());
+        new ImplicitsJavaHack().doTheThing(getServer(), this);
 
         saveDefaultConfig();
         FileConfiguration localConfig = getConfig();
@@ -195,7 +195,7 @@ public class MonolithPlugin extends JavaPlugin {
         blockBuildCommandService.initializeBuilds();
 
         // restore any outstanding block backups
-        BlockBackupService blockBackupService = injector.getInstance(BlockBackupService.class);
+        // BlockBackupService blockBackupService = injector.getInstance(BlockBackupService.class);
         // TODO blockBackupService.restoreAll();
     }
 

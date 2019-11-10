@@ -1,10 +1,12 @@
 package gg.warcraft.monolith.api.math
 
+import io.getquill.Embedded
+
 case class Vector3f(
     x: Float = 0,
     y: Float = 0,
     z: Float = 0
-) {
+) extends Embedded {
   lazy val lengthSquared: Float = x * x + y * y + z * z
   lazy val length: Float = Math.sqrt(lengthSquared).toFloat
   lazy val inverseLength: Float = 1f / length

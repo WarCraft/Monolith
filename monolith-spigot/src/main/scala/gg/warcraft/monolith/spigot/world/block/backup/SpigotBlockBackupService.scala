@@ -3,25 +3,37 @@ package gg.warcraft.monolith.spigot.world.block.backup
 import java.util.UUID
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.core.{ PersistenceService, PluginLogger }
-import gg.warcraft.monolith.api.world.block.backup.{ BlockBackup, BlockBackupService }
-import gg.warcraft.monolith.api.world.BlockLocation
+import com.typesafe.config.Config
+import gg.warcraft.monolith.api.core.Encoders
+import gg.warcraft.monolith.api.world.{BlockLocation, World}
+import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import gg.warcraft.monolith.spigot.Implicits
-import javax.inject.Inject
+import io.getquill.{MappedEncoding, SnakeCase, SqliteJdbcContext}
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
 import org.bukkit.Bukkit
 
-class SpigotBlockBackupService @Inject() (
-    plugin: Plugin,
-    persistenceService: PersistenceService,
-    @PluginLogger pluginLogger: Logger
-) extends BlockBackupService {
-  private final val metaDataKey = getClass.getCanonicalName
-  private final val persistenceKey = "blockbackup"
+import scala.concurrent.{ExecutionContext, Future}
 
-  val locationMapper: SpigotLocationMapper = Implicits.locationMapper // TODO undo
+private object SpigotBlockBackupService {
+  private var backups: Map[UUID, BlockBackup] = Map.empty
+}
+
+class SpigotBlockBackupService(
+    private implicit val plugin: Plugin,
+    private implicit val logger: Logger,
+    private implicit val databaseConfig: Config,
+    private implicit val locationMapper: SpigotLocationMapper
+) extends BlockBackupService {
+  private implicit val asyncCtx: ExecutionContext = ExecutionContext.global
+  private implicit val worldEnc: MappedEncoding[World, String] = Encoders.worldEnc
+  private implicit val worldDec: MappedEncoding[String, World] = Encoders.worldDec
+
+  private val db = new SqliteJdbcContext(SnakeCase, databaseConfig)
+  private val metaDataKey = getClass.getCanonicalName
+
+  import SpigotBlockBackupService.backups
+  import db.{MappedEncoding => _, _}
 
   override def createBackup(location: BlockLocation): UUID = {
     val block = locationMapper.map(location).getBlock
@@ -43,18 +55,13 @@ class SpigotBlockBackupService @Inject() (
     block.setMetadata(metaDataKey, metaDataValue)
 
     // save backup
-    SpigotBlockBackupService.backups += (id -> backup)
-    // TODO persist
+    Future { db.run(query[BlockBackup].insert(lift(backup))) }
+    backups += (id -> backup)
+
     id
   }
 
-  override def restoreBackup(id: UUID): Boolean = {
-    val backup: BlockBackup = SpigotBlockBackupService.backups(id)
-    if (backup == null) {
-      println(s"Attempted to restore nonexistent block backup $id")
-      return false
-    }
-
+  private def restoreBackup(backup: BlockBackup): Boolean = {
     // check it equals existing backup
     val block = locationMapper.map(backup.location).getBlock
     val metaData = block.getMetadata(metaDataKey)
@@ -71,16 +78,24 @@ class SpigotBlockBackupService @Inject() (
 
     // delete backup
     block.removeMetadata(metaDataKey, plugin)
-    SpigotBlockBackupService.backups -= id
-    // TODO delete from persistence
+    Future { db.run(query[BlockBackup].filter(_.id == lift(backup.id)).delete) }
+    backups -= backup.id
+
     true
   }
-  override def restoreBackups(): Unit = {
-    // TODO get from persistence
-    SpigotBlockBackupService.backups.keys.foreach(restoreBackup)
-  }
-}
 
-private object SpigotBlockBackupService {
-  private final var backups = Map[UUID, BlockBackup]()
+  override def restoreBackup(id: UUID): Boolean = {
+    val backup: BlockBackup = backups(id)
+    if (backup == null) {
+      println(s"Attempted to restore nonexistent block backup $id")
+      return false
+    }
+
+    restoreBackup(backup)
+  }
+
+  override def restoreBackups(): Unit = {
+    db.run(query[BlockBackup]).foreach(restoreBackup)
+    backups = Map.empty
+  }
 }

@@ -1,15 +1,39 @@
 package gg.warcraft.monolith.spigot
 
+import java.io.File
+import java.util.logging.Logger
+import java.util.Properties
+
+import com.typesafe.config.{Config, ConfigFactory}
 import gg.warcraft.monolith.spigot.world.{
   SpigotLocationMapper, SpigotSoundMapper, SpigotWorldMapper, SpigotWorldService
 }
 import gg.warcraft.monolith.spigot.world.block._
+import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService
 import gg.warcraft.monolith.spigot.world.item.{
   SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper
 }
 import org.bukkit.Server
+import org.bukkit.plugin.Plugin
 
 object Implicits {
+  private implicit var plugin: Plugin = _
+  def setPlugin(plugin: Plugin): Unit = this.plugin = plugin
+
+  private implicit var logger: Logger = _
+  def setLogger(logger: Logger): Unit = this.logger = logger
+
+  private implicit var dbConfig: Config = _
+  def setDatabaseConfig(dataFolderPath: String): Unit = {
+    val props = new Properties()
+    props.setProperty("driverClassName", "org.sqlite.JDBC")
+    props.setProperty(
+      "jdbcUrl",
+      "jdbc:sqlite:" + dataFolderPath + File.separator + "db.sqlite"
+    )
+    dbConfig = ConfigFactory.parseProperties(props)
+  }
+
   implicit var server: Server = _
 
   implicit lazy val worldMapper: SpigotWorldMapper = new SpigotWorldMapper
@@ -46,4 +70,7 @@ object Implicits {
 
   implicit lazy val worldService: SpigotWorldService = new SpigotWorldService
   implicit lazy val itemService: SpigotItemService = new SpigotItemService
+
+  implicit lazy val blockBackupService: SpigotBlockBackupService =
+    new SpigotBlockBackupService
 }

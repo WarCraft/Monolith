@@ -132,7 +132,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
     }
 
     private void configureWorld() {
-        bind(BlockBackupService.class).to(SpigotBlockBackupService.class);
+        bind(BlockBackupService.class).toProvider(Implicits::blockBackupService);
         expose(BlockBackupService.class);
 
         bind(WorldService.class).toProvider(Implicits::worldService);

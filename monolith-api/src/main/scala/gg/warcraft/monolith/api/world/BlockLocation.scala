@@ -1,11 +1,12 @@
 package gg.warcraft.monolith.api.world
 
 import gg.warcraft.monolith.api.math.Vector3i
+import io.getquill.Embedded
 
 case class BlockLocation(
     world: World,
     translation: Vector3i
-) {
+) extends Embedded {
   val x: Int = translation.x
   val y: Int = translation.y
   val z: Int = translation.z
