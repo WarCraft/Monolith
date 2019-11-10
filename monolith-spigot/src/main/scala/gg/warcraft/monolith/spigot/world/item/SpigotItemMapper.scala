@@ -21,13 +21,14 @@ class SpigotItemMapper(
     private implicit val typeMapper: SpigotItemTypeMapper,
     private implicit val variantMapper: SpigotItemVariantMapper
 ) {
-  def map(item: SpigotItemStack): Option[Item] =
-    SpigotItemMapper.cache
-      .computeIfAbsent(item.getType, compute)
-      .apply(item)
+  def map(item: SpigotItemStack): Option[Item] = {
+    if (item == null) return None
+    val builder = SpigotItemMapper.cache.computeIfAbsent(item.getType, compute)
+    builder.apply(item)
+  }
 
   private def compute(material: Material): SpigotItemStack => Option[Item] = {
-    if (material == null || material.name.endsWith("AIR")) return _ => None
+    if (material.name.endsWith("AIR")) return _ => None
 
     // Compute common item data TODO map default name and item attributes
     val name = (item: SpigotItemStack) => {
@@ -434,6 +435,8 @@ class SpigotItemMapper(
   }
 
   def map(item: Item): SpigotItemStack = {
+    if (item == null) return new SpigotItemStack(Material.AIR)
+
     val material = item match {
       case it: VariableItem[_] => variantMapper.map(it)
 
