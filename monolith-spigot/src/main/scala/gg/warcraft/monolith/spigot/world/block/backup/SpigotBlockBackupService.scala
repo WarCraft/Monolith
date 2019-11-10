@@ -16,7 +16,7 @@ import org.bukkit.Bukkit
 import scala.concurrent.{ExecutionContext, Future}
 
 private object SpigotBlockBackupService {
-  private var backups: Map[UUID, BlockBackup] = Map.empty
+  private var cache: Map[UUID, BlockBackup] = Map.empty
 }
 
 class SpigotBlockBackupService(
@@ -32,7 +32,7 @@ class SpigotBlockBackupService(
   private val db = new SqliteJdbcContext(SnakeCase, databaseConfig)
   private val metaDataKey = getClass.getCanonicalName
 
-  import SpigotBlockBackupService.backups
+  import SpigotBlockBackupService.cache
   import db.{MappedEncoding => _, _}
 
   override def createBackup(location: BlockLocation): UUID = {
@@ -56,7 +56,7 @@ class SpigotBlockBackupService(
 
     // save backup
     Future { db.run(query[BlockBackup].insert(lift(backup))) }
-    backups += (id -> backup)
+    cache += (id -> backup)
 
     id
   }
@@ -79,13 +79,13 @@ class SpigotBlockBackupService(
     // delete backup
     block.removeMetadata(metaDataKey, plugin)
     Future { db.run(query[BlockBackup].filter(_.id == lift(backup.id)).delete) }
-    backups -= backup.id
+    cache -= backup.id
 
     true
   }
 
   override def restoreBackup(id: UUID): Boolean = {
-    val backup: BlockBackup = backups(id)
+    val backup: BlockBackup = cache(id)
     if (backup == null) {
       println(s"Attempted to restore nonexistent block backup $id")
       return false
@@ -96,6 +96,6 @@ class SpigotBlockBackupService(
 
   override def restoreBackups(): Unit = {
     db.run(query[BlockBackup]).foreach(restoreBackup)
-    backups = Map.empty
+    cache = Map.empty
   }
 }
