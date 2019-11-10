@@ -33,7 +33,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.flywaydb.core.Flyway;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -117,6 +119,16 @@ public class MonolithPlugin extends JavaPlugin {
 
         saveDefaultConfig();
         FileConfiguration localConfig = getConfig();
+
+
+        Flyway flyway = Flyway
+                .configure(getClassLoader())
+                .dataSource("jdbc:sqlite:" + getDataFolder().getAbsolutePath() + File.separator + "db.sqlite",
+                        null, null)
+                .load();
+        int migrations = flyway.migrate();
+        System.out.println("Applied " + migrations + " new data schema migrations");
+
 
         String configurationService = localConfig.getString("configurationService");
         String gitHubAccount = localConfig.getString("gitHubAccount");
