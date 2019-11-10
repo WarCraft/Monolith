@@ -91,6 +91,8 @@ trait VariableItem[T <: ItemVariant] extends Item {
   def withVariant(variant: T): this.type =
     copyWith("variant", variant)
 
-  override def isVariant(variant: ItemVariant): Boolean = this.variant == variant
-  override def hasData(data: ItemTypeOrVariant): Boolean = this.variant == data
+  override def isVariant(variant: ItemVariant): Boolean =
+    this.variant == variant
+  override def hasData(data: ItemTypeOrVariant): Boolean =
+    this.variant == data || super.hasData(data)
 }

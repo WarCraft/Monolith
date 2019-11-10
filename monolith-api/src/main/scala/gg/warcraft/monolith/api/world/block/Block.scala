@@ -107,8 +107,10 @@ trait StatefulBlock[T <: BlockState] extends Block {
   def withState(state: T): this.type =
     copyWith("state", state)
 
-  override def hasState(state: BlockState): Boolean = this.state == state
-  override def hasData(data: BlockTypeVariantOrState): Boolean = this.state == data
+  override def hasState(state: BlockState): Boolean =
+    this.state == state
+  override def hasData(data: BlockTypeVariantOrState): Boolean =
+    this.state == data || super.hasData(data)
 }
 
 trait VariableBlock[T <: BlockVariant] extends Block {
@@ -116,6 +118,8 @@ trait VariableBlock[T <: BlockVariant] extends Block {
   def withVariant(variant: T): this.type =
     copyWith("variant", variant)
 
-  override def isVariant(variant: BlockVariant): Boolean = this.variant == variant
-  override def hasData(data: BlockTypeVariantOrState): Boolean = this.variant == data
+  override def isVariant(variant: BlockVariant): Boolean =
+    this.variant == variant
+  override def hasData(data: BlockTypeVariantOrState): Boolean =
+    this.variant == data || super.hasData(data)
 }
