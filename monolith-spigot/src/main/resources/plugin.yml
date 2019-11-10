@@ -7,3 +7,4 @@ website: http://warcraft.gg
 api-version: "1.14"
 main: gg.warcraft.monolith.spigot.MonolithPlugin
 depend: [EffectLib]
+loadbefore: [EssentialsX]
