@@ -29,8 +29,6 @@ class SpigotWorldService(
   private final val blockStatePackage =
     "gg.warcraft.monolith.api.world.block.state"
 
-  private var spoofBlock: SpigotBlock = _ // TODO initialize
-
   override def parseData(data: String): Data = {
     if (data.contains("Variant:")) {
       val Array(enum, value) = data.split(':')
@@ -113,8 +111,8 @@ class SpigotWorldService(
     val spigotPlayer = server.getPlayer(playerId)
     if (spigotPlayer != null) {
       val spigotLocation = locationMapper.map(block.location)
-      update(spoofBlock, block)
-      spigotPlayer.sendBlockChange(spigotLocation, spoofBlock.getBlockData)
+      val spigotBlockData = blockMapper.map(block)
+      spigotPlayer.sendBlockChange(spigotLocation, spigotBlockData)
     }
   }
 
