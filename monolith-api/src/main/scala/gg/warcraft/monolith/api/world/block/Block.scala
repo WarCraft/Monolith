@@ -1,7 +1,12 @@
 package gg.warcraft.monolith.api.world.block
 
+import java.util
+
 import gg.warcraft.monolith.api.core.CaseClass
 import gg.warcraft.monolith.api.world.BlockLocation
+
+import scala.annotation.varargs
+import scala.jdk.CollectionConverters._
 
 trait Block extends CaseClass {
   val `type`: BlockType
@@ -43,8 +48,9 @@ trait DirectableBlock extends Block {
 
 trait ExtendableBlock extends Block {
   val extensions: Set[BlockFace]
-  def withExtensions(extensions: Set[BlockFace]): this.type =
-    copyWith("extensions", extensions)
+  def getExtensions: util.Set[BlockFace] = extensions.asJava
+  @varargs def withExtensions(extensions: BlockFace*): this.type =
+    copyWith("extensions", extensions.toSet)
 }
 
 trait FloodableBlock extends Block {
