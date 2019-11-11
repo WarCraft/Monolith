@@ -57,7 +57,7 @@ class SpigotItemService(
     val inventory = new SpigotInventory(spigotInventory)
     create(data) match {
       case it: StackableItem =>
-        val requiredSpace = (count / it.maxCount).ceil.toInt
+        val requiredSpace = (count / it.maxCount.toFloat).ceil.toInt
         if (inventory.hasSpace(requiredSpace)) {
           val spigotItem = itemMapper.map(it)
           // TODO give multiple items for count > maxCount
