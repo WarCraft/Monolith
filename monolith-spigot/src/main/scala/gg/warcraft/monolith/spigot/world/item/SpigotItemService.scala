@@ -4,11 +4,10 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.world.{Location, WorldService}
 import gg.warcraft.monolith.api.world.item.{
-  Inventory, Item, ItemService, ItemType, ItemVariant, VariableItem
+  Item, ItemService, ItemType, ItemVariant, StackableItem, VariableItem
 }
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Material, Server}
-import org.bukkit.inventory.ItemStack
+import org.bukkit.Server
 
 import scala.annotation.varargs
 
@@ -37,62 +36,83 @@ class SpigotItemService(
       worldService.parseData(data).asInstanceOf[Data]
   }
 
-  override def create(data: Data): Item = data match {
-    case it: ItemType =>
-      val material = typeMapper.map(it)
-      val item = new SpigotItemStack(material)
-      itemMapper.map(item).get
-    case it: ItemVariant =>
-      val material = variantMapper.map(it)
-      val item = new SpigotItemStack(material)
-      itemMapper.map(item).get
+  // TODO this method is sometimes used for its material mapping
+  override def create(data: Data): Item = {
+    val material = data match {
+      case it: ItemType    => typeMapper.map(it)
+      case it: ItemVariant => variantMapper.map(it)
+    }
+    val item = new SpigotItemStack(material)
+    itemMapper.map(item).get
   }
 
   override def create[T <: ItemVariant](variant: T): VariableItem[T] =
     create(variant).asInstanceOf[VariableItem[T]]
 
-  private def getInventory(playerId: UUID): Option[Inventory] = {
-    server.getPlayer(playerId) match {
-      case null => None
-      case it =>
-        val inventory = new SpigotInventory(it.getInventory)
-        Some(inventory)
-    }
-  }
+  override def giveTo(playerId: UUID, data: Data, count: Int): Boolean = {
+    val player = server.getPlayer(playerId)
+    if (player == null) return false
 
-  private def giveTo2(playerId: UUID, items: ItemStack*): Boolean = {
-    val inventory = getInventory(playerId)
-    inventory match {
-      case None => false
-      case Some(inventory) =>
-        if (inventory.hasSpace(items.length)) {
-          // TODO items.foreach(player.getInventory.addItem(_))
+    val spigotInventory = player.getInventory
+    val inventory = new SpigotInventory(spigotInventory)
+    create(data) match {
+      case it: StackableItem =>
+        val requiredSpace = (count / it.maxCount).ceil.toInt
+        if (inventory.hasSpace(requiredSpace)) {
+          val spigotItem = itemMapper.map(it)
+          // TODO give multiple items for count > maxCount
+          spigotItem.setAmount(count.max(it.maxCount))
+          spigotInventory.addItem(spigotItem)
+          true
+        } else false
+      case it =>
+        if (inventory.hasSpace(count)) {
+          val spigotItem = itemMapper.map(it)
+          for (_ <- 1 to count) spigotInventory.addItem(spigotItem)
           true
         } else false
     }
   }
 
-  // TODO safeguard against counts > 64
-  override def giveTo(playerId: UUID, data: Data, count: Int): Boolean = {
-    // TODO
-    false
-  }
-
-  override def giveTo(playerId: UUID, items: Item*): Boolean =
-    giveTo2(playerId, items.map(itemMapper.map): _*)
-
-  private def takeFrom(playerId: UUID, material: Material): Boolean = {
+  override def giveTo(playerId: UUID, items: Item*): Boolean = {
     val player = server.getPlayer(playerId)
     if (player == null) return false
 
-    val inventory = null
-    false // TODO
+    val spigotInventory = player.getInventory
+    val inventory = new SpigotInventory(spigotInventory)
+    // TODO apply more advanced space logic for mergeable items
+    if (!inventory.hasSpace(items.length)) return false
+
+    items.map(itemMapper.map).foreach(spigotInventory.addItem(_))
+    true
   }
 
-  override def takeFrom(playerId: UUID, data: Data, count: Int): Boolean =
-    ???
+  override def takeFrom(playerId: UUID, data: Data, count: Int): Boolean = {
+    val player = server.getPlayer(playerId)
+    if (player == null) return false
 
-  override def takeFrom(playerId: UUID, items: Item*): Boolean = ???
+    val spigotInventory = player.getInventory
+    val item = create(data)
+    val spigotItem = itemMapper.map(item)
+    if (spigotInventory.containsAtLeast(spigotItem, count)) {
+      spigotItem.setAmount(count)
+      spigotInventory.removeItem(spigotItem)
+      true
+    } else false
+  }
+
+  override def takeFrom(playerId: UUID, items: Item*): Boolean = {
+    val player = server.getPlayer(playerId)
+    if (player == null) return false
+
+    val spigotInventory = player.getInventory
+    val spigotItems = items.map(itemMapper.map)
+    // TODO merge counts of identical items before performing this check
+    if (spigotItems.forall(it => spigotInventory.containsAtLeast(it, it.getAmount))) {
+      spigotInventory.removeItem(spigotItems: _*)
+      true
+    } else false
+  }
 
   @varargs override def dropItems(location: Location, items: Item*): Array[UUID] = {
     val spigotLocation = locationMapper.map(location)
