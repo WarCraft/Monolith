@@ -6,9 +6,11 @@ import gg.warcraft.monolith.api.world.block.variant._
 import gg.warcraft.monolith.api.world.item._
 import gg.warcraft.monolith.api.world.item.variant.{StructureBlockVariant, _}
 import gg.warcraft.monolith.spigot.Extensions._
-import org.bukkit.Material
+import org.bukkit.{Material, NamespacedKey}
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.Damageable
+import org.bukkit.persistence.PersistentDataType
+import org.bukkit.plugin.Plugin
 
 import scala.jdk.CollectionConverters._
 
@@ -18,9 +20,12 @@ private object SpigotItemMapper {
 }
 
 class SpigotItemMapper(
+    private implicit val plugin: Plugin,
     private implicit val typeMapper: SpigotItemTypeMapper,
     private implicit val variantMapper: SpigotItemVariantMapper
 ) {
+  private val itemNameKey = new NamespacedKey(plugin, "canonicalDisplayName")
+
   def map(item: SpigotItemStack): Option[Item] = {
     if (item == null) return None
     val builder = SpigotItemMapper.cache.computeIfAbsent(item.getType, compute)
@@ -33,7 +38,12 @@ class SpigotItemMapper(
     // Compute common item data TODO map default name and item attributes
     val name = (item: SpigotItemStack) => {
       val meta = item.getItemMeta
-      if (meta != null) meta.getDisplayName else ""
+      if (meta != null) {
+        val data = meta.getPersistentDataContainer
+        if (data.has(itemNameKey, PersistentDataType.STRING)) {
+          data.get(itemNameKey, PersistentDataType.STRING)
+        } else meta.getDisplayName
+      } else ""
     }
     val tt: SpigotItemStack => List[String] = (item: SpigotItemStack) => {
       val meta = item.getItemMeta
@@ -465,7 +475,11 @@ class SpigotItemMapper(
 
     // Update item meta
     val meta = spigotItem.getItemMeta
-    meta.setDisplayName(item.name)
+    if (item.name.contains("§")) {
+      val data = meta.getPersistentDataContainer
+      data.set(itemNameKey, PersistentDataType.STRING, item.name)
+      meta.setDisplayName(item.name)
+    } else meta.setDisplayName(item.name)
     meta.setLore(item.tooltip.asJava)
     if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
     spigotItem.setItemMeta(meta)
