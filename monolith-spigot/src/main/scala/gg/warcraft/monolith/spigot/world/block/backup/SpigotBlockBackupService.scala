@@ -13,10 +13,11 @@ import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
 import org.bukkit.Bukkit
 
+import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 private object SpigotBlockBackupService {
-  private var cache: Map[UUID, BlockBackup] = Map.empty
+  private val cache: mutable.Map[UUID, BlockBackup] = mutable.Map.empty
 }
 
 class SpigotBlockBackupService(
@@ -56,7 +57,7 @@ class SpigotBlockBackupService(
 
     // save backup
     Future { db.run(query[BlockBackup].insert(lift(backup))) }
-    cache += (id -> backup)
+    cache.put(id, backup)
 
     id
   }
@@ -79,23 +80,19 @@ class SpigotBlockBackupService(
     // delete backup
     block.removeMetadata(metaDataKey, plugin)
     Future { db.run(query[BlockBackup].filter(_.id == lift(backup.id)).delete) }
-    cache -= backup.id
+    cache.remove(backup.id)
 
     true
   }
 
   override def restoreBackup(id: UUID): Boolean = {
     val backup: BlockBackup = cache(id)
-    if (backup == null) {
-      println(s"Attempted to restore nonexistent block backup $id")
-      return false
-    }
-
-    restoreBackup(backup)
+    if (backup != null) restoreBackup(backup)
+    else false
   }
 
   override def restoreBackups(): Unit = {
     db.run(query[BlockBackup]).foreach(restoreBackup)
-    cache = Map.empty
+    cache.clear
   }
 }
