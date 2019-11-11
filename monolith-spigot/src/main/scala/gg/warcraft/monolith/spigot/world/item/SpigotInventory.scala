@@ -13,7 +13,7 @@ class SpigotInventory(
     inventory.getContents.map(itemMapper.map).filter(_.isDefined).map(_.get).toList
 
   override def hasSpace(count: Int): Boolean =
-    count <= inventory.getSize - inventory.getContents.count(_ != null)
+    count <= inventory.getStorageContents.count(_ == null)
 
   // TODO add more elaborate checks for merge-able items
   override def hasSpaceFor(items: Item*): Boolean =
