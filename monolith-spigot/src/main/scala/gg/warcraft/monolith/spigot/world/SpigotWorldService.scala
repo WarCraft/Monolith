@@ -13,6 +13,8 @@ import gg.warcraft.monolith.spigot.world.block.{
 }
 import org.bukkit.{Material, Server}
 import org.bukkit.block.{BlockFace => SpigotBlockFace}
+import org.bukkit.projectiles.ProjectileSource
+import org.bukkit.util.Vector
 
 class SpigotWorldService(
     private implicit val server: Server,
@@ -161,21 +163,16 @@ class SpigotWorldService(
       speed: Float,
       spread: Float
   ): UUID = {
-    val spigotLocation = locationMapper.map(location)
-    val spigotWorld = spigotLocation.getWorld
+    val spigotLoc = locationMapper.map(location)
+    val spigotWorld = spigotLoc.getWorld
+    val spigotDir = new Vector(direction.x, direction.y, direction.z)
+    val arrow = spigotWorld.spawnArrow(spigotLoc, spigotDir, speed, spread)
 
-    throw new IllegalStateException()
-    /*
-    org.bukkit.Location spigotLocation = locationMapper.map(location);
-        org.bukkit.World spigotWorld = spigotLocation.getWorld();
-        Vector spigotDirection = new Vector(direction.x(), direction.y(), direction.z());
-        Arrow arrow = spigotWorld.spawnArrow(spigotLocation, spigotDirection, speed, spread);
-
-        Entity shooter = server.getEntity(shooterId);
-        if (shooter instanceof ProjectileSource) {
-            arrow.setShooter((ProjectileSource) shooter);
-        }
-        return arrow.getUniqueId();
-   */
+    val shooter = server.getEntity(shooterId)
+    shooter match {
+      case it: ProjectileSource => arrow.setShooter(it)
+      case _                    => ()
+    }
+    arrow.getUniqueId
   }
 }
