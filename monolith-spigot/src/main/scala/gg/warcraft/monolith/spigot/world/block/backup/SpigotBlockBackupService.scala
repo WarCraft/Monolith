@@ -85,10 +85,9 @@ class SpigotBlockBackupService(
     true
   }
 
-  override def restoreBackup(id: UUID): Boolean = {
-    val backup: BlockBackup = cache(id)
-    if (backup != null) restoreBackup(backup)
-    else false
+  override def restoreBackup(id: UUID): Boolean = cache.get(id) match {
+    case Some(it) => restoreBackup(it)
+    case None     => false
   }
 
   override def restoreBackups(): Unit = {
