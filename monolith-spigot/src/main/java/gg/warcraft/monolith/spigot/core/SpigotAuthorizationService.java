@@ -54,4 +54,14 @@ public class SpigotAuthorizationService implements AuthorizationService {
         Material offhandMaterial = player.getInventory().getItemInOffHand().getType();
         return player.hasPermission(MOD_PERMISSION_STRING) && offhandMaterial == Material.FLINT;
     }
+
+    @Override
+    public boolean isDebugging(UUID playerId) {
+        Player player = server.getPlayer(playerId);
+        if (player == null) {
+            return false;
+        }
+        Material offhandMaterial = player.getInventory().getItemInOffHand().getType();
+        return player.hasPermission(DEV_PERMISSION_STRING) && offhandMaterial == Material.DEBUG_STICK;
+    }
 }

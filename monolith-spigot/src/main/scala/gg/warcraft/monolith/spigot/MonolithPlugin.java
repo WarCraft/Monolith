@@ -17,6 +17,7 @@ import gg.warcraft.monolith.app.command.event.SimpleCommandExecutedEvent;
 import gg.warcraft.monolith.app.command.handler.CommandExecutedHandler;
 import gg.warcraft.monolith.app.core.event.SimpleServerShutdownEvent;
 import gg.warcraft.monolith.app.core.handler.DailyTickHandler;
+import gg.warcraft.monolith.app.core.handler.DebugStickHandler;
 import gg.warcraft.monolith.app.entity.attribute.handler.AttributesInitializationHandler;
 import gg.warcraft.monolith.app.entity.handler.EntityProfileInitializationHandler;
 import gg.warcraft.monolith.app.entity.player.handler.PlayerProfileInitializationHandler;
@@ -88,6 +89,9 @@ public class MonolithPlugin extends JavaPlugin {
 
         DailyTickHandler dailyTickHandler = injector.getInstance(DailyTickHandler.class);
         taskService.runTask(dailyTickHandler, timeUtils.createDurationInMillis(1900), timeUtils.createDurationInMillis(1900));
+
+        DebugStickHandler debugStickHandler = injector.getInstance(DebugStickHandler.class);
+        eventService.subscribe(debugStickHandler);
     }
 
     void initializeSpigotEventMappers() {
