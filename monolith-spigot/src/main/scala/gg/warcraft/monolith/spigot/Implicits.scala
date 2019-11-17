@@ -5,7 +5,7 @@ import java.util.logging.Logger
 import java.util.Properties
 
 import com.typesafe.config.{Config, ConfigFactory}
-import gg.warcraft.monolith.api.core.EventService
+import gg.warcraft.monolith.api.Implicits._
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.world.{
   SpigotLocationMapper, SpigotSoundMapper, SpigotWorldMapper, SpigotWorldService
@@ -38,9 +38,6 @@ object Implicits {
   }
 
   implicit var server: Server = _
-
-  // Core services
-  implicit lazy val eventService: EventService = new EventService
 
   // World mappers
   implicit lazy val worldMapper: SpigotWorldMapper =
