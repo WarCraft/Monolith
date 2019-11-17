@@ -5,13 +5,16 @@ import java.util.logging.Logger
 import java.util.Properties
 
 import com.typesafe.config.{Config, ConfigFactory}
+import gg.warcraft.monolith.api.core.EventService
+import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.world.{
   SpigotLocationMapper, SpigotSoundMapper, SpigotWorldMapper, SpigotWorldService
 }
 import gg.warcraft.monolith.spigot.world.block._
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService
 import gg.warcraft.monolith.spigot.world.item.{
-  SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper
+  SpigotItemEventMapper, SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper,
+  SpigotItemVariantMapper
 }
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
@@ -36,9 +39,18 @@ object Implicits {
 
   implicit var server: Server = _
 
-  implicit lazy val worldMapper: SpigotWorldMapper = new SpigotWorldMapper
-  implicit lazy val locationMapper: SpigotLocationMapper = new SpigotLocationMapper
+  // Core services
+  implicit lazy val eventService: EventService = new EventService
 
+  // World mappers
+  implicit lazy val worldMapper: SpigotWorldMapper =
+    new SpigotWorldMapper
+  implicit lazy val locationMapper: SpigotLocationMapper =
+    new SpigotLocationMapper
+  implicit lazy val soundMapper: SpigotSoundMapper =
+    new SpigotSoundMapper // TODO rewrite to scala class
+
+  // Block mappers
   implicit lazy val blockTypeMapper: SpigotBlockTypeMapper =
     new SpigotBlockTypeMapper
   implicit lazy val blockVariantMapper: SpigotBlockVariantMapper =
@@ -57,20 +69,30 @@ object Implicits {
     new SpigotBlockRotationMapper
   implicit lazy val blockShapeMapper: SpigotBlockShapeMapper =
     new SpigotBlockShapeMapper
-  implicit lazy val blockMapper: SpigotBlockMapper = new SpigotBlockMapper
+  implicit lazy val blockMapper: SpigotBlockMapper =
+    new SpigotBlockMapper
+  implicit lazy val blockEventMapper: SpigotBlockEventMapper =
+    new SpigotBlockEventMapper
 
+  // Combat mappers
+  implicit lazy val combatEventMapper: SpigotCombatEventMapper =
+    new SpigotCombatEventMapper
+
+  // Item mappers
   implicit lazy val itemTypeMapper: SpigotItemTypeMapper =
     new SpigotItemTypeMapper
   implicit lazy val itemVariantMapper: SpigotItemVariantMapper =
     new SpigotItemVariantMapper
-  implicit lazy val itemMapper: SpigotItemMapper = new SpigotItemMapper
+  implicit lazy val itemMapper: SpigotItemMapper =
+    new SpigotItemMapper
+  implicit lazy val itemEventMapper: SpigotItemEventMapper =
+    new SpigotItemEventMapper
 
-  // TODO rewrite to scala class
-  implicit lazy val soundMapper: SpigotSoundMapper = new SpigotSoundMapper
-
-  implicit lazy val worldService: SpigotWorldService = new SpigotWorldService
-  implicit lazy val itemService: SpigotItemService = new SpigotItemService
-
+  // Services
   implicit lazy val blockBackupService: SpigotBlockBackupService =
     new SpigotBlockBackupService
+  implicit lazy val itemService: SpigotItemService =
+    new SpigotItemService
+  implicit lazy val worldService: SpigotWorldService =
+    new SpigotWorldService
 }

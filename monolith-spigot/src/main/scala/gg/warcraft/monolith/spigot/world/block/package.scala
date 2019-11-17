@@ -3,6 +3,9 @@ package gg.warcraft.monolith.spigot.world
 import org.bukkit.block.{Block, BlockState, Sign}
 import org.bukkit.block.data.{BlockData, Rail}
 import org.bukkit.block.data.`type`._
+import org.bukkit.event.block.{BlockBreakEvent, BlockPlaceEvent}
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.Event
 
 package object block {
   // Block meta types
@@ -41,4 +44,10 @@ package object block {
   type SpigotTripwire = Tripwire
   type SpigotTripwireHook = TripwireHook
   type SpigotTurtleEgg = TurtleEgg
+
+  // Block event types
+  type SpigotEvent = Event
+  type SpigotBlockBreakEvent = BlockBreakEvent
+  type SpigotBlockPlaceEvent = BlockPlaceEvent
+  type SpigotPlayerInteractEvent = PlayerInteractEvent
 }

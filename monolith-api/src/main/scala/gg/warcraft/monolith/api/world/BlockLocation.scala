@@ -31,6 +31,9 @@ case class BlockLocation(
 
   def toLocation: Location = Location(world, translation.toVector3f)
 
+  def toSafeLocation: Location =
+    Location(world, translation.toVector3f.add(.5f, 1f, .5f))
+
   /* Java interop */
 
   def withWorld(world: World): BlockLocation = copy(world = world)

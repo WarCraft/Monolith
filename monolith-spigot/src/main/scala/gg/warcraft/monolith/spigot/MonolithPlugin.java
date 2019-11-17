@@ -5,8 +5,8 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import gg.warcraft.monolith.api.Monolith;
 import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.ServerShutdownEvent;
 import gg.warcraft.monolith.api.core.TaskService;
-import gg.warcraft.monolith.api.core.event.ServerShutdownEvent;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
@@ -15,7 +15,6 @@ import gg.warcraft.monolith.app.command.ConsoleCommandSender;
 import gg.warcraft.monolith.app.command.PlayerCommandSender;
 import gg.warcraft.monolith.app.command.event.SimpleCommandExecutedEvent;
 import gg.warcraft.monolith.app.command.handler.CommandExecutedHandler;
-import gg.warcraft.monolith.app.core.event.SimpleServerShutdownEvent;
 import gg.warcraft.monolith.app.core.handler.DailyTickHandler;
 import gg.warcraft.monolith.app.core.handler.DebugStickHandler;
 import gg.warcraft.monolith.app.entity.attribute.handler.AttributesInitializationHandler;
@@ -27,6 +26,7 @@ import gg.warcraft.monolith.app.entity.status.handler.StatusEffectHandler;
 import gg.warcraft.monolith.app.world.portal.handler.PortalEntryTaskHandler;
 import gg.warcraft.monolith.spigot.entity.handler.EntityRemovalHandler;
 import gg.warcraft.monolith.spigot.event.*;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemEventMapper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -204,7 +204,7 @@ public class MonolithPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        ServerShutdownEvent shutdownEvent = new SimpleServerShutdownEvent();
+        ServerShutdownEvent shutdownEvent = new ServerShutdownEvent();
         eventService.publish(shutdownEvent);
     }
 

@@ -1,9 +1,6 @@
 package gg.warcraft.monolith.api.combat;
 
 import com.google.inject.name.Named;
-import gg.warcraft.monolith.api.combat.value.CombatValue;
-import gg.warcraft.monolith.api.combat.value.CombatValueModifier;
-import gg.warcraft.monolith.api.combat.value.CombatValueModifierType;
 import gg.warcraft.monolith.api.util.Duration;
 
 import java.util.List;

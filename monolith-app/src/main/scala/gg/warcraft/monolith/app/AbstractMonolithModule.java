@@ -10,12 +10,8 @@ import com.google.inject.PrivateModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import gg.warcraft.monolith.api.MonolithPluginUtils;
-import gg.warcraft.monolith.api.combat.CombatFactory;
-import gg.warcraft.monolith.api.combat.CombatSource;
-import gg.warcraft.monolith.api.combat.PotionEffect;
-import gg.warcraft.monolith.api.combat.PotionEffectTypeUtils;
-import gg.warcraft.monolith.api.combat.value.CombatValue;
-import gg.warcraft.monolith.api.combat.value.CombatValueModifier;
+import gg.warcraft.monolith.api.Implicits;
+import gg.warcraft.monolith.api.combat.*;
 import gg.warcraft.monolith.api.command.CommandSender;
 import gg.warcraft.monolith.api.command.Console;
 import gg.warcraft.monolith.api.command.service.CommandCommandService;
@@ -93,8 +89,6 @@ import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
 import gg.warcraft.monolith.app.combat.SimpleCombatSource;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.combat.VisiblePotionEffect;
-import gg.warcraft.monolith.app.combat.value.LazyCombatValue;
-import gg.warcraft.monolith.app.combat.value.SimpleCombatValueModifier;
 import gg.warcraft.monolith.app.command.ConsoleCommandSender;
 import gg.warcraft.monolith.app.command.service.DefaultCommandCommandService;
 import gg.warcraft.monolith.app.command.service.DefaultCommandQueryService;
@@ -104,7 +98,6 @@ import gg.warcraft.monolith.app.config.service.DefaultConfigurationQueryService;
 import gg.warcraft.monolith.app.config.service.DefaultConfigurationRepository;
 import gg.warcraft.monolith.app.config.service.GitHubConfigurationCommandService;
 import gg.warcraft.monolith.app.config.service.LocalConfigurationCommandService;
-import gg.warcraft.monolith.app.core.GuavaEventService;
 import gg.warcraft.monolith.app.core.InMemoryPersistenceCache;
 import gg.warcraft.monolith.app.core.InMemoryPersistenceService;
 import gg.warcraft.monolith.app.core.JedisPersistenceService;
@@ -222,8 +215,8 @@ public class AbstractMonolithModule extends PrivateModule {
                 .implement(PotionEffect.class, Names.named("visiblePotionEffect"), VisiblePotionEffect.class)
                 .implement(PotionEffect.class, Names.named("ambientPotionEffect"), AmbientPotionEffect.class)
                 .implement(CombatSource.class, Names.named("source"), SimpleCombatSource.class)
-                .implement(CombatValue.class, Names.named("value"), LazyCombatValue.class)
-                .implement(CombatValueModifier.class, Names.named("modifier"), SimpleCombatValueModifier.class)
+                .implement(CombatValue.class, Names.named("value"), CombatValue.class)
+                .implement(CombatValueModifier.class, Names.named("modifier"), CombatValueModifier.class)
                 .build(CombatFactory.class));
         expose(CombatFactory.class);
     }
@@ -279,7 +272,7 @@ public class AbstractMonolithModule extends PrivateModule {
         bind(MonolithPluginUtils.class).to(DefaultMonolithPluginUtils.class);
         expose(MonolithPluginUtils.class);
 
-        bind(EventService.class).to(GuavaEventService.class);
+        bind(EventService.class).toProvider(Implicits::eventService);
         expose(EventService.class);
 
         SimpleModule monolithMapperModule = new MonolithMapperModule();
