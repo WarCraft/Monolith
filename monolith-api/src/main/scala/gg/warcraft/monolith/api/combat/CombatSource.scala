@@ -4,5 +4,5 @@ import java.util.UUID
 
 case class CombatSource(
     name: String,
-    entityId: UUID
+    entityId: Option[UUID]
 )
