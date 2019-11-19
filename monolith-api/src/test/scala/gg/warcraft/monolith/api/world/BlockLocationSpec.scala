@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world
 
 import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
-import org.scalatest.{Outcome, fixture}
+import org.scalatest.{fixture, Outcome}
 
 class BlockLocationSpec extends fixture.FunSpec {
   type FixtureParam = BlockLocation
@@ -14,9 +14,7 @@ class BlockLocationSpec extends fixture.FunSpec {
   }
 
   describe("BlockLocation") {
-
     describe("::add(Int, Int, Int)") {
-
       it("creates a copy of itself with the coordinates added") { fixture =>
         // Given
         val x = 2
@@ -36,7 +34,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::add(Vector3i)") {
-
       it("creates a copy of itself with the vector added") { fixture =>
         // Given
         val vector = Vector3i(2, 4, 6)
@@ -54,7 +51,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::add(BlockLocation)") {
-
       it("creates a copy of itself with the location added") { fixture =>
         // Given
         val translation = Vector3i(2, 4, 6)
@@ -73,7 +69,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(Int, Int, Int)") {
-
       it("creates a copy of itself with the coordinates subtracted") { fixture =>
         // Given
         val x = 6
@@ -93,7 +88,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(Vector3i)") {
-
       it("creates a copy of itself with the vector subtracted") { fixture =>
         // Given
         val vector = Vector3i(6, 4, 2)
@@ -111,7 +105,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(BlockLocation)") {
-
       it("creates a copy of itself with the location subtracted") { fixture =>
         // Given
         val translation = Vector3i(6, 4, 2)
@@ -130,7 +123,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::toLocation") {
-
       it("creates a copy of itself as a Location") { fixture =>
         // Given
         val expectedTranslation = Vector3f(2, 4, 6)
@@ -147,7 +139,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     /* Java interop */
 
     describe("::withWorld") {
-
       it("creates a copy of itself with the new world") { fixture =>
         // Given
         val world = World.THE_NETHER
@@ -165,7 +156,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::withTranslation") {
-
       it("creates a copy of itself with the new translation") { fixture =>
         // Given
         val translation = Vector3i(6, 4, 2)
@@ -183,7 +173,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::withX") {
-
       it("creates a copy of itself with the new x coordinate") { fixture =>
         // Given
         val x = 8
@@ -201,7 +190,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::withY") {
-
       it("creates a copy of itself with the new y coordinate") { fixture =>
         // Given
         val y = 8
@@ -219,7 +207,6 @@ class BlockLocationSpec extends fixture.FunSpec {
     }
 
     describe("::withZ") {
-
       it("creates a copy of itself with the new z coordinate") { fixture =>
         // Given
         val z = 8

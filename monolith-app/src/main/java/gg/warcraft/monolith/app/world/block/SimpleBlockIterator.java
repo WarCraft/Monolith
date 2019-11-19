@@ -5,12 +5,12 @@ import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 
 public class SimpleBlockIterator implements BlockIterator {
-    private final WorldQueryService worldQueryService;
+    private final WorldService worldService;
     private final Location origin;
     private final float maxDistance;
     private final Vector3f direction;
@@ -21,9 +21,9 @@ public class SimpleBlockIterator implements BlockIterator {
     private BlockLocation nextBlockLocation;
 
     @Inject
-    public SimpleBlockIterator(WorldQueryService worldQueryService,
+    public SimpleBlockIterator(WorldService worldService,
                                @Assisted("origin") Location origin, @Assisted("target") Location target) {
-        this.worldQueryService = worldQueryService;
+        this.worldService = worldService;
         this.origin = origin;
         this.maxDistance = origin.translation().distanceTo(target.translation());
         this.direction = target.subtract(origin).translation().normalize();
@@ -82,7 +82,7 @@ public class SimpleBlockIterator implements BlockIterator {
     public Block next() {
         currentBlockLocation = nextBlockLocation;
         nextBlockLocation = calculateNext();
-        Block block = worldQueryService.getBlockAt(currentBlockLocation);
+        Block block = worldService.getBlock(currentBlockLocation);
         return block;
     }
 }

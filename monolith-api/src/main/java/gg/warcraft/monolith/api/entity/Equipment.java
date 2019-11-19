@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.entity;
 
-import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.world.item.Item;
 
 public interface Equipment {
 

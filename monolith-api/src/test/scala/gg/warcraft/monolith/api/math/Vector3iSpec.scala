@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.math
 
-import org.scalatest.{Outcome, fixture}
+import org.scalatest.{fixture, Outcome}
 
 class Vector3iSpec extends fixture.FunSpec {
   type FixtureParam = Vector3i
@@ -11,10 +11,8 @@ class Vector3iSpec extends fixture.FunSpec {
     finally {}
   }
 
-  describe("BlockLocation") {
-
+  describe("Vector3i") {
     describe("::add(Int, Int, Int)") {
-
       it("creates a copy of itself with the coordinates added") { fixture =>
         // Given
         val x = 2
@@ -33,7 +31,6 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::add(Vector3i)") {
-
       it("creates a copy of itself with the vector added") { fixture =>
         // Given
         val vector = Vector3i(2, 4, 6)
@@ -50,7 +47,6 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(Int, Int, Int)") {
-
       it("creates a copy of itself with the coordinates subtracted") { fixture =>
         // Given
         val x = 6
@@ -69,7 +65,6 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::subtract(Vector3i)") {
-
       it("creates a copy of itself with the vector subtracted") { fixture =>
         // Given
         val vector = Vector3i(6, 4, 2)
@@ -86,7 +81,6 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::multiply(Int)") {
-
       it("creates a copy of itself multiplied by the scalar") { fixture =>
         // Given
         val scalar = 2
@@ -103,24 +97,23 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::multiply(Vector3i)") {
+      it("creates a copy of itself multiplied by the individual scalars") {
+        fixture =>
+          // Given
+          val scalars = Vector3i(2, 4, 6)
 
-      it("creates a copy of itself multiplied by the individual scalars") { fixture =>
-        // Given
-        val scalars = Vector3i(2, 4, 6)
+          val expectedCopy = Vector3i(4, 16, 36)
 
-        val expectedCopy = Vector3i(4, 16, 36)
+          // When
+          val copy = fixture.multiply(scalars)
 
-        // When
-        val copy = fixture.multiply(scalars)
-
-        // Then
-        assert(!copy.eq(expectedCopy))
-        assert(copy == expectedCopy)
+          // Then
+          assert(!copy.eq(expectedCopy))
+          assert(copy == expectedCopy)
       }
     }
 
     describe("::toVector3f") {
-
       it("creates a copy of itself as a Vector3f") { fixture =>
         // Given
         val expectedVector = Vector3f(2, 4, 6)
@@ -136,7 +129,6 @@ class Vector3iSpec extends fixture.FunSpec {
     /* Java interop */
 
     describe("::withX") {
-
       it("creates a copy of itself with the new x coordinate") { fixture =>
         // Given
         val x = 8
@@ -153,7 +145,6 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::withY") {
-
       it("creates a copy of itself with the new y coordinate") { fixture =>
         // Given
         val y = 8
@@ -170,7 +161,6 @@ class Vector3iSpec extends fixture.FunSpec {
     }
 
     describe("::withZ") {
-
       it("creates a copy of itself with the new z coordinate") { fixture =>
         // Given
         val z = 8

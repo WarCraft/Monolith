@@ -9,7 +9,6 @@ import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.block.BlockIntersection;
-import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
 import org.joml.AABBf;
 import org.joml.Intersectionf;
@@ -23,14 +22,11 @@ import java.util.function.Predicate;
 public class DefaultEntityUtils implements EntityUtils {
     private final EntityQueryService entityQueryService;
     private final BlockUtils blockUtils;
-    private final BlockTypeUtils blockTypeUtils;
 
     @Inject
-    public DefaultEntityUtils(EntityQueryService entityQueryService,
-                              BlockUtils blockUtils, BlockTypeUtils blockTypeUtils) {
+    public DefaultEntityUtils(EntityQueryService entityQueryService, BlockUtils blockUtils) {
         this.entityQueryService = entityQueryService;
         this.blockUtils = blockUtils;
-        this.blockTypeUtils = blockTypeUtils;
     }
 
     @Override
@@ -88,7 +84,7 @@ public class DefaultEntityUtils implements EntityUtils {
         Vector3f direction = entity.getEyeLocation().rotation();
         Location target = origin.add(direction.multiply(range));
 
-        BlockIntersection blockIntersection = blockUtils.intersectBlock(origin, target, blockTypeUtils.getNonSolids());
+        BlockIntersection blockIntersection = blockUtils.intersectBlock(origin, target, block -> !block.solid());
 
         Location correctedTarget = blockIntersection != null && blockIntersection.getLocation() != null
                 ? blockIntersection.getLocation()

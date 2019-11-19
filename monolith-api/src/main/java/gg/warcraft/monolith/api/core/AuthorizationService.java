@@ -55,4 +55,6 @@ public interface AuthorizationService {
      * offhand, false otherwise.
      */
     boolean isModerating(UUID playerId);
+
+    boolean isDebugging(UUID playerId);
 }

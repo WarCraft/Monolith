@@ -1,6 +1,7 @@
 package gg.warcraft.monolith.spigot
 
+import org.bukkit.Location
+
 package object world {
-  type SpigotLocation = org.bukkit.Location
-  type SpigotBlock = org.bukkit.block.Block
+  type SpigotLocation = Location
 }

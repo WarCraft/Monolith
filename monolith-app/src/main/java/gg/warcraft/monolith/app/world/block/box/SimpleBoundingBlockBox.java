@@ -7,11 +7,11 @@ import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.World;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxReader;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SimpleBoundingBlockBox implements BoundingBlockBox {
-    private final WorldQueryService worldQueryService;
+    private final WorldService worldService;
     private final World world;
     private final BlockLocation minimumCorner;
     private final BlockLocation maximumCorner;
@@ -33,11 +33,11 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     private final int maxZ;
 
     @Inject
-    public SimpleBoundingBlockBox(WorldQueryService worldQueryService,
+    public SimpleBoundingBlockBox(WorldService worldService,
                                   @Assisted World world, @Assisted("minimum") Vector3i minimumCorner,
                                   @Assisted("maximum") Vector3i maximumCorner) {
-        this.worldQueryService = worldQueryService;
-        this.world = worldQueryService.getWorld(world);
+        this.worldService = worldService;
+        this.world = world;
         this.minimumCorner = new BlockLocation(world, minimumCorner);
         this.maximumCorner = new BlockLocation(world, maximumCorner);
         this.minX = Math.min(minimumCorner.x(), maximumCorner.x());
@@ -111,13 +111,13 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     public List<Block> getBlocksOfType(BlockType... type) {
         Set<BlockType> types = new HashSet<>(Arrays.asList(type));
         return stream()
-                .filter(block -> types.contains(block.getType()))
+                .filter(block -> types.contains(block.type()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public BoundingBlockBoxReader getReader(Direction readDirection) {
-        return new SimpleBoundingBlockBoxReader(worldQueryService, this, readDirection);
+        return new SimpleBoundingBlockBoxReader(worldService, this, readDirection);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         pivotX + deltaNorthBoundary,
                         getUpperBoundary(),
                         pivotZ + deltaEastBoundary);
-                return new SimpleBoundingBlockBox(worldQueryService, world,
+                return new SimpleBoundingBlockBox(worldService, world,
                         newMinimumCorner90, newMaximumCorner90);
             case 2:
                 Vector3i newMinimumCorner180 = new Vector3i(
@@ -165,7 +165,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         pivotX + deltaWestBoundary,
                         getUpperBoundary(),
                         pivotZ + deltaNorthBoundary);
-                return new SimpleBoundingBlockBox(worldQueryService, world,
+                return new SimpleBoundingBlockBox(worldService, world,
                         newMinimumCorner180, newMaximumCorner180);
             case 3:
                 Vector3i newMinimumCorner270 = new Vector3i(
@@ -176,7 +176,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         pivotX + deltaSouthBoundary,
                         getUpperBoundary(),
                         pivotZ + deltaWestBoundary);
-                return new SimpleBoundingBlockBox(worldQueryService, world,
+                return new SimpleBoundingBlockBox(worldService, world,
                         newMinimumCorner270, newMaximumCorner270);
             default:
                 throw new IllegalArgumentException("Failed to rotate bounding block box for illegal rotation of " + degrees);
@@ -187,7 +187,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
     public BoundingBlockBox translate(Vector3i vector) {
         Vector3i newMinimumCorner = minimumCorner.translation().add(vector);
         Vector3i newMaximumCorner = maximumCorner.translation().add(vector);
-        return new SimpleBoundingBlockBox(worldQueryService, world,
+        return new SimpleBoundingBlockBox(worldService, world,
                 newMinimumCorner, newMaximumCorner);
     }
 
@@ -202,7 +202,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                         .flatMap(y -> Stream
                                 .iterate(minZ, currentZ -> currentZ + 1)
                                 .limit(maxZ - minZ + 1)
-                                .map(z -> worldQueryService.getBlockAt(getWorld(), x, y, z))));
+                                .map(z -> worldService.getBlock(getWorld(), x, y, z))));
     }
 
     @Override
@@ -213,7 +213,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                 .flatMap(y -> Stream
                         .iterate(minZ, currentZ -> currentZ + 1)
                         .limit(maxZ - minZ + 1)
-                        .map(z -> worldQueryService.getBlockAt(getWorld(), x, y, z)));
+                        .map(z -> worldService.getBlock(getWorld(), x, y, z)));
     }
 
     @Override
@@ -224,7 +224,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                 .flatMap(x -> Stream
                         .iterate(minZ, currentZ -> currentZ + 1)
                         .limit(maxZ - minZ + 1)
-                        .map(z -> worldQueryService.getBlockAt(getWorld(), x, y, z)));
+                        .map(z -> worldService.getBlock(getWorld(), x, y, z)));
     }
 
     @Override
@@ -235,7 +235,7 @@ public class SimpleBoundingBlockBox implements BoundingBlockBox {
                 .flatMap(x -> Stream
                         .iterate(minY, currentY -> currentY + 1)
                         .limit(maxY - minY + 1)
-                        .map(y -> worldQueryService.getBlockAt(getWorld(), x, y, z)));
+                        .map(y -> worldService.getBlock(getWorld(), x, y, z)));
     }
 
     @Override

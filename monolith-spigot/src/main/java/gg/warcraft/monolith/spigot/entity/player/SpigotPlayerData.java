@@ -5,12 +5,12 @@ import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.player.GameMode;
 import gg.warcraft.monolith.api.entity.player.PlayerServerData;
-import gg.warcraft.monolith.api.item.Inventory;
+import gg.warcraft.monolith.api.world.item.Inventory;
+import gg.warcraft.monolith.spigot.Implicits;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityData;
-import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper;
-import gg.warcraft.monolith.spigot.item.SpigotInventory;
-import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotInventory;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.entity.Player;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -21,9 +21,9 @@ public class SpigotPlayerData extends SpigotEntityData implements PlayerServerDa
     private final Player player;
 
     @Inject
-    public SpigotPlayerData(SpigotEntityTypeMapper entityTypeMapper, SpigotLocationMapper locationMapper,
+    public SpigotPlayerData(SpigotLocationMapper locationMapper,
                             SpigotItemMapper itemMapper, SpigotGameModeMapper gameModeMapper, @Assisted Player player) {
-        super(entityTypeMapper, locationMapper, itemMapper, player);
+        super(locationMapper, itemMapper, player);
         this.itemMapper = itemMapper;
         this.gameModeMapper = gameModeMapper;
         this.player = player;
@@ -43,7 +43,10 @@ public class SpigotPlayerData extends SpigotEntityData implements PlayerServerDa
 
     @Override
     public Inventory getInventory() {
-        return new SpigotInventory(itemMapper, player.getInventory());
+        return new SpigotInventory(player.getInventory(),
+                Implicits.itemTypeMapper(),
+                Implicits.itemVariantMapper(),
+                Implicits.itemMapper()); // TODO remove
     }
 
     @Override

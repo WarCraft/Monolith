@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.spigot;
 
-import com.google.inject.Key;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import gg.warcraft.monolith.api.command.service.CommandServerAdapter;
@@ -17,8 +16,9 @@ import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
-import gg.warcraft.monolith.api.world.service.WorldServerAdapter;
+import gg.warcraft.monolith.api.world.WorldService;
+import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
+import gg.warcraft.monolith.api.world.item.ItemService;
 import gg.warcraft.monolith.app.AbstractMonolithModule;
 import gg.warcraft.monolith.app.effect.particle.MultiParticle;
 import gg.warcraft.monolith.spigot.command.SpigotCommandAdapter;
@@ -36,11 +36,10 @@ import gg.warcraft.monolith.spigot.entity.player.service.SpigotPlayerAdapter;
 import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
 import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.menu.service.SpigotMenuAdapter;
-import gg.warcraft.monolith.spigot.world.Overworld;
-import gg.warcraft.monolith.spigot.world.TheEnd;
-import gg.warcraft.monolith.spigot.world.TheNether;
-import gg.warcraft.monolith.spigot.world.block.backup.service.SpigotBlockBackupCommandService;
-import gg.warcraft.monolith.spigot.world.service.SpigotWorldAdapter;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
+import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
@@ -48,21 +47,15 @@ import java.util.logging.Logger;
 
 public class SpigotMonolithModule extends AbstractMonolithModule {
     private final Plugin plugin;
-    private final String overworldName;
-    private final String theNetherName;
-    private final String theEndName;
 
     public SpigotMonolithModule(String configurationService, String gitHubAccount, String gitHubRepository,
                                 String persistenceService, String redisHost, int redisPort,
                                 float baseHealth, World buildRepositoryWorld,
                                 Vector3i buildRepositoryMinimumCorner, Vector3i buildRepositoryMaximumCorner,
-                                Plugin plugin, String overworldName, String theNetherName, String theEndName) {
+                                Plugin plugin) {
         super(configurationService, gitHubAccount, gitHubRepository, persistenceService, redisHost, redisPort,
                 baseHealth, buildRepositoryWorld, buildRepositoryMinimumCorner, buildRepositoryMaximumCorner);
         this.plugin = plugin;
-        this.overworldName = overworldName;
-        this.theNetherName = theNetherName;
-        this.theEndName = theEndName;
     }
 
     @Override
@@ -85,16 +78,6 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
         bind(Server.class).toProvider(plugin::getServer);
         expose(Server.class);
-
-        // Bukkit world bindings
-        bind(org.bukkit.World.class).annotatedWith(Overworld.class).toProvider(() -> plugin.getServer().getWorld(overworldName));
-        expose(Key.get(org.bukkit.World.class, Overworld.class));
-
-        bind(org.bukkit.World.class).annotatedWith(TheNether.class).toProvider(() -> plugin.getServer().getWorld(theNetherName));
-        expose(Key.get(org.bukkit.World.class, TheNether.class));
-
-        bind(org.bukkit.World.class).annotatedWith(TheEnd.class).toProvider(() -> plugin.getServer().getWorld(theEndName));
-        expose(Key.get(org.bukkit.World.class, TheEnd.class));
     }
 
     private void configureCommand() {
@@ -149,11 +132,19 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
     }
 
     private void configureWorld() {
-        bind(BlockBackupCommandService.class).to(SpigotBlockBackupCommandService.class);
-        expose(BlockBackupCommandService.class);
+        bind(BlockBackupService.class).toProvider(Implicits::blockBackupService);
+        expose(BlockBackupService.class);
 
-        bind(WorldServerAdapter.class).to(SpigotWorldAdapter.class);
-        expose(WorldServerAdapter.class);
+        bind(WorldService.class).toProvider(Implicits::worldService);
+        expose(WorldService.class); // TODO remove when app no longer depends on it
+        bind(SpigotLocationMapper.class).toProvider(Implicits::locationMapper);
+        expose(SpigotLocationMapper.class); // TODO remove when app no longer depends on it
+        bind(SpigotItemMapper.class).toProvider(Implicits::itemMapper);
+        expose(SpigotItemMapper.class); // TODO remove when app no longer depends on it
+        bind(SpigotBlockMapper.class).toProvider(Implicits::blockMapper);
+        expose(SpigotBlockMapper.class); // TODO remove when app no longer depends on it
+        bind(ItemService.class).toProvider(Implicits::itemService);
+        expose(ItemService.class); // TODO remove when app no longer depends on it
     }
 
     private void configureMapper() {

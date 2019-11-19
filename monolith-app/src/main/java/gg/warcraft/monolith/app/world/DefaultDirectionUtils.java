@@ -3,6 +3,7 @@ package gg.warcraft.monolith.app.world;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.DirectionUtils;
+import gg.warcraft.monolith.api.world.block.BlockFace;
 
 public class DefaultDirectionUtils implements DirectionUtils {
 
@@ -27,6 +28,11 @@ public class DefaultDirectionUtils implements DirectionUtils {
     }
 
     @Override
+    public Direction getOpposite(BlockFace direction) {
+        return getOpposite(Direction.valueOf(direction.name()));
+    }
+
+    @Override
     public int getRotation(Direction from, Direction to) {
         if (from == Direction.UP || from == Direction.DOWN ||
                 to == Direction.UP || to == Direction.DOWN) {
@@ -39,6 +45,12 @@ public class DefaultDirectionUtils implements DirectionUtils {
             ordinalDiff += 4;
         }
         return ordinalDiff * 90;
+    }
+
+    @Override
+    public int getRotation(BlockFace from, BlockFace to) {
+        return getRotation(Direction.valueOf(from.name()),
+                Direction.valueOf(to.name()));
     }
 
     @Override
@@ -58,6 +70,11 @@ public class DefaultDirectionUtils implements DirectionUtils {
         int targetOrdinal = startingOrdinal + ordinalDifference;
         int adjustedOrdinal = targetOrdinal % 4;
         return Direction.values()[adjustedOrdinal];
+    }
+
+    @Override
+    public Direction rotate(BlockFace direction, int rotation) {
+        return rotate(Direction.valueOf(direction.name()), rotation);
     }
 
     @Override
@@ -104,5 +121,10 @@ public class DefaultDirectionUtils implements DirectionUtils {
             default:
                 throw new IllegalArgumentException("Failed to return vector for " + direction);
         }
+    }
+
+    @Override
+    public Vector3f toVector(BlockFace direction) {
+        return toVector(Direction.valueOf(direction.name()));
     }
 }

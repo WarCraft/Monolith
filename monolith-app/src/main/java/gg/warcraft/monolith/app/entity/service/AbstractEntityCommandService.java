@@ -20,11 +20,10 @@ import gg.warcraft.monolith.api.util.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
-import gg.warcraft.monolith.api.world.block.BlockTypeUtils;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealEvent;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityHealthChangedEvent;
@@ -40,10 +39,9 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     private final EntityServerAdapter entityServerAdapter;
     private final EntityRepository entityRepository;
     private final EntityProfileRepository entityProfileRepository;
-    private final WorldQueryService worldQueryService;
+    private final WorldService worldService;
     private final EventService eventService;
     private final BlockUtils blockUtils;
-    private final BlockTypeUtils blockTypeUtils;
     private final TimeUtils timeUtils;
 
     final Map<Float, Float> knockbackStrength;
@@ -52,16 +50,15 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
 
     public AbstractEntityCommandService(EntityQueryService entityQueryService, EntityServerAdapter entityServerAdapter,
                                         EntityRepository entityRepository, EntityProfileRepository entityProfileRepository,
-                                        WorldQueryService worldQueryService, EventService eventService,
-                                        BlockUtils blockUtils, BlockTypeUtils blockTypeUtils, TimeUtils timeUtils) {
+                                        WorldService worldService, EventService eventService,
+                                        BlockUtils blockUtils, TimeUtils timeUtils) {
         this.entityQueryService = entityQueryService;
         this.entityServerAdapter = entityServerAdapter;
         this.entityRepository = entityRepository;
         this.entityProfileRepository = entityProfileRepository;
-        this.worldQueryService = worldQueryService;
+        this.worldService = worldService;
         this.eventService = eventService;
         this.blockUtils = blockUtils;
-        this.blockTypeUtils = blockTypeUtils;
         this.timeUtils = timeUtils;
         this.knockbackStrength = new HashMap<>();
         this.knockupStrength = new HashMap<>();
@@ -169,7 +166,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
         }
 
         Block targetBlock = findBlockUnderFeet(entity);
-        int safeY = targetBlock.getLocation().y() + 1;
+        int safeY = targetBlock.location().y() + 1;
         Location safeLocation = entity.getLocation().withY(safeY);
         this.setVelocity(entityId, new Vector3f());
         this.teleport(entityId, safeLocation);
@@ -189,9 +186,8 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     }
 
     private Block findBlockUnderFeet(Entity entity) {
-        Block current = worldQueryService.getBlockAt(entity.getLocation());
-        while (blockTypeUtils.getNonSolids().contains(current.getType())
-                && current.getLocation().y() >= 0) {
+        Block current = worldService.getBlock(entity.getLocation().toBlockLocation());
+        while (!current.solid() && current.location().y() >= 0) {
             current = blockUtils.getRelative(current, BlockFace.DOWN);
         }
         return current;

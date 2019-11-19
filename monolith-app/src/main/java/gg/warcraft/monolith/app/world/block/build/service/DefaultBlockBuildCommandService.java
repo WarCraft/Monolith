@@ -5,28 +5,22 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.math.Vector3i;
+import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.World;
+import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.BlockType;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
-import gg.warcraft.monolith.api.world.block.Sign;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
 import gg.warcraft.monolith.api.world.block.build.BlockBuild;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
-import gg.warcraft.monolith.api.world.service.WorldCommandService;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
+import gg.warcraft.monolith.api.world.block.Sign;
 import gg.warcraft.monolith.app.world.block.build.SimpleBlockBuild;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -34,8 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DefaultBlockBuildCommandService implements BlockBuildCommandService {
-    private final WorldQueryService worldQueryService;
-    private final WorldCommandService worldCommandService;
+    private final WorldService worldService;
     private final BlockBuildRepository buildRepository;
     private final BlockUtils blockUtils;
     private final Logger logger;
@@ -43,14 +36,13 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     private final BoundingBlockBox buildRepositoryBoundingBox;
 
     @Inject
-    public DefaultBlockBuildCommandService(WorldQueryService worldQueryService, WorldCommandService worldCommandService,
+    public DefaultBlockBuildCommandService(WorldService worldService,
                                            BlockBuildRepository buildRepository,
                                            BlockUtils blockUtils, BoundingBlockBoxFactory blockBoxFactory,
                                            @PluginLogger Logger logger, @Named("BuildRepositoryWorld") World world,
                                            @Named("BuildRepositoryMinimumCorner") Vector3i minimumCorner,
                                            @Named("BuildRepositoryMaximumCorner") Vector3i maximumCorner) {
-        this.worldQueryService = worldQueryService;
-        this.worldCommandService = worldCommandService;
+        this.worldService = worldService;
         this.buildRepository = buildRepository;
         this.blockUtils = blockUtils;
         this.logger = logger;
@@ -66,8 +58,27 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     }
 
     Set<Block> searchGlassFoundation(Sign sign) {
-        Block attachedTo = sign.getAttachedTo();
-        if (attachedTo.getType() != BlockType.GLASS) {
+        Block attachedTo;
+        switch (sign.direction().get()) {
+            case NORTH:
+                BlockLocation attachedLocation = sign.location().add(0, 0, 1);
+                attachedTo = worldService.getBlock(attachedLocation);
+                break;
+            case EAST:
+                BlockLocation attachedLocation2 = sign.location().add(-1, 0, 0);
+                attachedTo = worldService.getBlock(attachedLocation2);
+                break;
+            case WEST:
+                BlockLocation attachedLocation4 = sign.location().add(1, 0, 0);
+                attachedTo = worldService.getBlock(attachedLocation4);
+                break;
+            case SOUTH:
+            default:
+                BlockLocation attachedLocation3 = sign.location().add(0, 0, -1);
+                attachedTo = worldService.getBlock(attachedLocation3);
+                break;
+        }
+        if (attachedTo.type() != BlockType.GLASS) {
             return new HashSet<>();
         }
 
@@ -85,7 +96,7 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
             searchedBlocks.addAll(currentBlocks);
 
             newGlassBlocks = currentBlocks.stream()
-                    .filter(block -> block.getType() == BlockType.GLASS)
+                    .filter(block -> block.type() == BlockType.GLASS)
                     .filter(block -> !glassBlocks.contains(block))
                     .collect(Collectors.toSet());
             if (newGlassBlocks.isEmpty()) {
@@ -103,15 +114,15 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
         }
 
         World world = buildRepositoryBoundingBox.getWorld();
-        int minX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().x(), Integer::min);
-        int maxX = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().x(), Integer::max);
-        int minZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().z(), Integer::min);
-        int maxZ = findMinMaxCoordinate(glassBlocks, block -> block.getLocation().z(), Integer::max);
+        int minX = findMinMaxCoordinate(glassBlocks, block -> block.location().x(), Integer::min);
+        int maxX = findMinMaxCoordinate(glassBlocks, block -> block.location().x(), Integer::max);
+        int minZ = findMinMaxCoordinate(glassBlocks, block -> block.location().z(), Integer::min);
+        int maxZ = findMinMaxCoordinate(glassBlocks, block -> block.location().z(), Integer::max);
 
-        int minY = sign.getLocation().y() + 1;
+        int minY = sign.location().y() + 1;
         int maxY = findMinMaxCoordinate(glassBlocks, block -> {
-            Block highestBlock = worldQueryService.getHighestBlockAt(block.getLocation());
-            return highestBlock.getLocation().y();
+            Block highestBlock = worldService.getHighestBlock(block.location());
+            return highestBlock.location().y();
         }, Integer::max);
 
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
@@ -120,17 +131,17 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     }
 
     BlockBuild initializeBuild(Sign sign) {
-        String[] lines = sign.getLines();
-        if (lines[0].isEmpty()) {
+        String firstLine = sign.lines().head();
+        if (firstLine.isEmpty()) {
             // sign is extra data for other build
             return null;
         }
 
-        Preconditions.checkArgument(lines[0].contains(":"), "Encountered build sign with illegal type and model. " +
+        Preconditions.checkArgument(firstLine.contains(":"), "Encountered build sign with illegal type and model. " +
                 "All bottom level wall mounted signs in the build repository need to have the build type and model " +
                 "specified on the first sign line as type:model.");
 
-        String[] typeAndModel = lines[0].split(":");
+        String[] typeAndModel = firstLine.split(":");
         String type = typeAndModel[0];
         String model = typeAndModel[1];
 
@@ -141,21 +152,15 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
 
         List<Sign> extraSigns = new ArrayList<>();
         Block nextSign = blockUtils.getRelative(sign, BlockFace.EAST);
-        while (nextSign.getType() == BlockType.WALL_MOUNTED_SIGN) {
+        while (nextSign.type() == BlockType.SIGN &&
+                ((Sign) nextSign).direction().isDefined()) {
             extraSigns.add((Sign) nextSign);
             nextSign = blockUtils.getRelative(nextSign, BlockFace.EAST);
         }
 
-        String[] extraLines = extraSigns.stream()
-                .map(Sign::getLines)
-                .flatMap(Stream::of)
-                .toArray(String[]::new);
-
-        String[] allLines = Stream.of(lines, extraLines)
-                .flatMap(Stream::of)
-                .toArray(String[]::new);
-
-        return new SimpleBlockBuild(type, model, allLines, boundingBox);
+        List<String> allLines = new ArrayList<>(sign.getLines());
+        extraSigns.forEach(s -> allLines.addAll(s.getLines()));
+        return new SimpleBlockBuild(type, model, allLines.toArray(new String[0]), boundingBox);
     }
 
     void logInitializedBuilds(List<BlockBuild> builds) {
@@ -175,8 +180,9 @@ public class DefaultBlockBuildCommandService implements BlockBuildCommandService
     public void initializeBuilds() {
         Stream<Block> floor = buildRepositoryBoundingBox.sliceY(buildRepositoryBoundingBox.getLowerBoundary());
         List<BlockBuild> builds = floor
-                .filter(block -> block.getType() == BlockType.WALL_MOUNTED_SIGN)
+                .filter(block -> block.type() == BlockType.SIGN)
                 .map(block -> (Sign) block)
+                .filter(sign -> sign.direction().isDefined())
                 .map(this::initializeBuild)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

@@ -5,14 +5,14 @@ import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.Equipment;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.app.entity.SimpleEquipment;
-import gg.warcraft.monolith.spigot.item.SpigotItemMapper;
-import gg.warcraft.monolith.spigot.world.location.SpigotLocationMapper;
-import net.minecraft.server.v1_12_R1.AxisAlignedBB;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
+import net.minecraft.server.v1_14_R1.AxisAlignedBB;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 import org.joml.AABBf;
@@ -23,15 +23,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 public class SpigotEntityData implements EntityServerData {
-    private final SpigotEntityTypeMapper entityTypeMapper;
     private final SpigotLocationMapper locationMapper;
     private final SpigotItemMapper itemMapper;
     private final LivingEntity entity;
 
     @Inject
-    public SpigotEntityData(SpigotEntityTypeMapper entityTypeMapper, SpigotLocationMapper locationMapper,
+    public SpigotEntityData(SpigotLocationMapper locationMapper,
                             SpigotItemMapper itemMapper, @Assisted LivingEntity entity) {
-        this.entityTypeMapper = entityTypeMapper;
         this.locationMapper = locationMapper;
         this.itemMapper = itemMapper;
         this.entity = entity;
@@ -45,7 +43,7 @@ public class SpigotEntityData implements EntityServerData {
 
     @Override
     public EntityType getType() {
-        EntityType type = entityTypeMapper.map(entity.getType());
+        EntityType type = EntityType.valueOf(entity.getType().name());
         return checkNotNull(type);
     }
 
@@ -88,20 +86,20 @@ public class SpigotEntityData implements EntityServerData {
     public Equipment getEquipment() {
         // TODO how do we want to check this state, is null legal?
 
-        Item helmet = itemMapper.map(entity.getEquipment().getHelmet());
-        Item chest = itemMapper.map(entity.getEquipment().getChestplate());
-        Item legs = itemMapper.map(entity.getEquipment().getLeggings());
-        Item feet = itemMapper.map(entity.getEquipment().getBoots());
-        Item mainHand = itemMapper.map(entity.getEquipment().getItemInMainHand());
-        Item offHand = itemMapper.map(entity.getEquipment().getItemInOffHand());
+        Item helmet = itemMapper.map(entity.getEquipment().getHelmet()).getOrElse(() -> null); // TODO pass options through
+        Item chest = itemMapper.map(entity.getEquipment().getChestplate()).getOrElse(() -> null);
+        Item legs = itemMapper.map(entity.getEquipment().getLeggings()).getOrElse(() -> null);
+        Item feet = itemMapper.map(entity.getEquipment().getBoots()).getOrElse(() -> null);
+        Item mainHand = itemMapper.map(entity.getEquipment().getItemInMainHand()).getOrElse(() -> null);
+        Item offHand = itemMapper.map(entity.getEquipment().getItemInOffHand()).getOrElse(() -> null);
         return new SimpleEquipment(helmet, chest, legs, feet, mainHand, offHand);
     }
 
     @Override
     public AABBf getBoundingBox() {
         AxisAlignedBB boundingBox = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
-        return new AABBf((float) boundingBox.a, (float) boundingBox.b, (float) boundingBox.c,
-                (float) boundingBox.d, (float) boundingBox.e, (float) boundingBox.f);
+        return new AABBf((float) boundingBox.minX, (float) boundingBox.minY, (float) boundingBox.minZ,
+                (float) boundingBox.maxX, (float) boundingBox.maxY, (float) boundingBox.maxZ);
     }
 
     @Override

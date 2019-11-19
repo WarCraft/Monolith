@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.menu;
 
-import gg.warcraft.monolith.api.item.ItemType;
+import gg.warcraft.monolith.api.world.item.ItemTypeOrVariant;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -10,7 +10,7 @@ public interface Button {
     /**
      * @return The item type this button will appear as in the menu. Never null.
      */
-    ItemType getIcon();
+    ItemTypeOrVariant getIcon();
 
     /**
      * @return The title of this button. Never null or empty.

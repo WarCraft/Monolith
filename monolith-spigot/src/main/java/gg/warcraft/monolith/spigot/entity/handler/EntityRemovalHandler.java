@@ -5,9 +5,7 @@ import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 import gg.warcraft.monolith.api.entity.service.EntityRepository;
-import gg.warcraft.monolith.spigot.world.Overworld;
-import gg.warcraft.monolith.spigot.world.TheEnd;
-import gg.warcraft.monolith.spigot.world.TheNether;
+import gg.warcraft.monolith.spigot.Implicits;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -25,14 +23,12 @@ public class EntityRemovalHandler implements Runnable {
     private final World theEnd;
 
     @Inject
-    public EntityRemovalHandler(EntityCommandService entityCommandService, EntityRepository entityRepository,
-                                @Overworld World overworld, @Nullable @TheNether World theNether,
-                                @Nullable @TheEnd World theEnd) {
+    public EntityRemovalHandler(EntityCommandService entityCommandService, EntityRepository entityRepository) {
         this.entityCommandService = entityCommandService;
         this.entityRepository = entityRepository;
-        this.overworld = overworld;
-        this.theNether = theNether;
-        this.theEnd = theEnd;
+        this.overworld = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.OVERWORLD).get(); // TODO remove
+        this.theNether = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.THE_NETHER).getOrElse(() -> null);
+        this.theEnd = Implicits.worldMapper().map(gg.warcraft.monolith.api.world.World.THE_END).getOrElse(() -> null);
     }
 
     private void purgeWorld(World world, Set<UUID> markedForRemoval) {

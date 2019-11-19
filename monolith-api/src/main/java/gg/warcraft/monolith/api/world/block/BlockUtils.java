@@ -6,6 +6,7 @@ import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * This utility is injectable.
@@ -92,5 +93,5 @@ public interface BlockUtils {
      * @return The closest block the ray starting at origin towards target intersected who's type is not in ignore.
      * Can be null.
      */
-    BlockIntersection intersectBlock(Location origin, Location target, Set<BlockType> ignore);
+    BlockIntersection intersectBlock(Location origin, Location target, Predicate<Block> ignore);
 }

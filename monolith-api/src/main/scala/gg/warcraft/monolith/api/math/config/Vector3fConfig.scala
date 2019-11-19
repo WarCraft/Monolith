@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.math.config
 
-import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
+import com.fasterxml.jackson.annotation.{ JsonCreator, JsonProperty }
 import gg.warcraft.monolith.api.math.Vector3f
 
 @JsonCreator

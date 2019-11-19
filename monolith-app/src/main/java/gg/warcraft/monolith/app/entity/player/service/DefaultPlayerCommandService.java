@@ -21,9 +21,9 @@ import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
-import gg.warcraft.monolith.api.item.Item;
-import gg.warcraft.monolith.api.item.service.ItemStorageCommandService;
 import gg.warcraft.monolith.api.util.ColorCode;
+import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.world.item.storage.ItemStorageService;
 import gg.warcraft.monolith.app.entity.event.SimpleEntityTeamChangedEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyGainedEvent;
 import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyLostEvent;
@@ -34,7 +34,7 @@ import java.util.UUID;
 
 public class DefaultPlayerCommandService implements PlayerCommandService {
     private final PlayerQueryService playerQueryService;
-    private final ItemStorageCommandService itemStorageCommandService;
+    private final ItemStorageService itemStorageService;
     private final PlayerProfileRepository playerProfileRepository;
     private final PlayerServerAdapter playerServerAdapter;
     private final TeamCommandService teamCommandService;
@@ -42,13 +42,13 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
 
     @Inject
     public DefaultPlayerCommandService(PlayerQueryService playerQueryService,
-                                       ItemStorageCommandService itemStorageCommandService,
+                                       ItemStorageService itemStorageService,
                                        PlayerProfileRepository playerProfileRepository,
                                        TeamCommandService teamCommandService,
                                        PlayerServerAdapter playerServerAdapter,
                                        EventService eventService) {
         this.playerQueryService = playerQueryService;
-        this.itemStorageCommandService = itemStorageCommandService;
+        this.itemStorageService = itemStorageService;
         this.playerProfileRepository = playerProfileRepository;
         this.teamCommandService = teamCommandService;
         this.playerServerAdapter = playerServerAdapter;
@@ -107,13 +107,13 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
             return false;
         }
 
-        if (player.isOnline() && player.getInventory().getSpace() > 0) {
+        if (player.isOnline() && player.getInventory().hasSpace(1)) {
             return playerServerAdapter.giveItem(playerId, item, dropOnFullInventory);
         } else {
             if (dropOnFullInventory) {
                 return playerServerAdapter.giveItem(playerId, item, dropOnFullInventory);
             } else {
-                itemStorageCommandService.storeItem(item, playerId);
+                itemStorageService.store(item, playerId);
                 return true;
             }
         }

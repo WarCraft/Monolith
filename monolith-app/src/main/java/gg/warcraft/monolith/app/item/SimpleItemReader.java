@@ -3,9 +3,9 @@ package gg.warcraft.monolith.app.item;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.attribute.Attribute;
-import gg.warcraft.monolith.api.item.Item;
 import gg.warcraft.monolith.api.item.ItemReader;
 import gg.warcraft.monolith.api.util.StringUtils;
+import gg.warcraft.monolith.api.world.item.Item;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -27,8 +27,8 @@ public class SimpleItemReader implements ItemReader {
             return null;
         }
 
-        List<String> lore = item.getLore();
-        if (lore.isEmpty()) {
+        List<String> lore = item.getTooltip();
+        if (lore.size() == 0) {
             return null;
         }
 
@@ -44,7 +44,7 @@ public class SimpleItemReader implements ItemReader {
             return 0;
         }
 
-        List<String> lore = item.getLore();
+        List<String> lore = item.getTooltip();
         for (String line : lore) {
             if (line.contains(attribute.getName())) {
                 String rawLine = stringUtils.removeChatCodes(line);

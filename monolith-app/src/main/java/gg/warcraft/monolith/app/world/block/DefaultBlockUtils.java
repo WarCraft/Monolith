@@ -5,37 +5,28 @@ import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockFace;
-import gg.warcraft.monolith.api.world.block.BlockIntersection;
-import gg.warcraft.monolith.api.world.block.BlockIterator;
-import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
-import gg.warcraft.monolith.api.world.block.BlockType;
-import gg.warcraft.monolith.api.world.block.BlockUtils;
+import gg.warcraft.monolith.api.world.WorldService;
+import gg.warcraft.monolith.api.world.block.*;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
-import gg.warcraft.monolith.api.world.service.WorldQueryService;
-import org.joml.AABBf;
-import org.joml.Intersectionf;
-import org.joml.Spheref;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import org.joml.*;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class DefaultBlockUtils implements BlockUtils {
-    private final WorldQueryService worldQueryService;
+    private final WorldService worldService;
     private final BlockIteratorFactory blockIteratorFactory;
     private final BoundingBlockBoxFactory boundingBlockBoxFactory;
 
     @Inject
-    public DefaultBlockUtils(WorldQueryService worldQueryService, BlockIteratorFactory blockIteratorFactory,
+    public DefaultBlockUtils(WorldService worldService, BlockIteratorFactory blockIteratorFactory,
                              BoundingBlockBoxFactory boundingBlockBoxFactory) {
-        this.worldQueryService = worldQueryService;
+        this.worldService = worldService;
         this.blockIteratorFactory = blockIteratorFactory;
         this.boundingBlockBoxFactory = boundingBlockBoxFactory;
     }
@@ -52,22 +43,22 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Set<Block> getAdjacentBlocks(Block block, BlockType type) {
         return getAdjacentBlocks(block).stream()
-                .filter(adjacentBlock -> adjacentBlock.getType() == type)
+                .filter(adjacentBlock -> adjacentBlock.type() == type)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<Block> getAdjacentBlocksX(Block block) {
         Set<Block> blocks = new HashSet<>();
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentX = location.x();
 
         BlockLocation leftNeighbourLocation = location.withX(currentX - 1);
-        Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
+        Block leftNeighbour = worldService.getBlock(leftNeighbourLocation);
         blocks.add(leftNeighbour);
 
         BlockLocation rightNeighbourLocation = location.withX(currentX + 1);
-        Block rightNeighbour = worldQueryService.getBlockAt(rightNeighbourLocation);
+        Block rightNeighbour = worldService.getBlock(rightNeighbourLocation);
         blocks.add(rightNeighbour);
 
         return blocks;
@@ -76,15 +67,15 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Set<Block> getAdjacentBlocksY(Block block) {
         Set<Block> blocks = new HashSet<>();
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentY = location.y();
 
         BlockLocation leftNeighbourLocation = location.withY(currentY - 1);
-        Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
+        Block leftNeighbour = worldService.getBlock(leftNeighbourLocation);
         blocks.add(leftNeighbour);
 
         BlockLocation rightNeighbourLocation = location.withY(currentY + 1);
-        Block rightNeighbour = worldQueryService.getBlockAt(rightNeighbourLocation);
+        Block rightNeighbour = worldService.getBlock(rightNeighbourLocation);
         blocks.add(rightNeighbour);
 
         return blocks;
@@ -93,15 +84,15 @@ public class DefaultBlockUtils implements BlockUtils {
     @Override
     public Set<Block> getAdjacentBlocksZ(Block block) {
         Set<Block> blocks = new HashSet<>();
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentZ = location.z();
 
         BlockLocation leftNeighbourLocation = location.withZ(currentZ - 1);
-        Block leftNeighbour = worldQueryService.getBlockAt(leftNeighbourLocation);
+        Block leftNeighbour = worldService.getBlock(leftNeighbourLocation);
         blocks.add(leftNeighbour);
 
         BlockLocation rightNeighbourLocation = location.withZ(currentZ + 1);
-        Block rightNeighbour = worldQueryService.getBlockAt(rightNeighbourLocation);
+        Block rightNeighbour = worldService.getBlock(rightNeighbourLocation);
         blocks.add(rightNeighbour);
 
         return blocks;
@@ -133,29 +124,29 @@ public class DefaultBlockUtils implements BlockUtils {
 
     @Override
     public Block getRelative(Block block, BlockFace at) {
-        BlockLocation location = block.getLocation();
+        BlockLocation location = block.location();
         int currentX = location.x();
         int currentY = location.y();
         int currentZ = location.z();
         switch (at) {
             case NORTH:
                 BlockLocation northLocation = location.withZ(currentZ - 1);
-                return worldQueryService.getBlockAt(northLocation);
+                return worldService.getBlock(northLocation);
             case EAST:
                 BlockLocation eastLocation = location.withX(currentX + 1);
-                return worldQueryService.getBlockAt(eastLocation);
+                return worldService.getBlock(eastLocation);
             case SOUTH:
                 BlockLocation southLocation = location.withZ(currentZ + 1);
-                return worldQueryService.getBlockAt(southLocation);
+                return worldService.getBlock(southLocation);
             case WEST:
                 BlockLocation westLocation = location.withX(currentX - 1);
-                return worldQueryService.getBlockAt(westLocation);
+                return worldService.getBlock(westLocation);
             case UP:
                 BlockLocation upLocation = location.withY(currentY + 1);
-                return worldQueryService.getBlockAt(upLocation);
+                return worldService.getBlock(upLocation);
             case DOWN:
                 BlockLocation downLocation = location.withY(currentY - 1);
-                return worldQueryService.getBlockAt(downLocation);
+                return worldService.getBlock(downLocation);
             default:
                 throw new IllegalArgumentException("Failed to get relative block for illegal block face " + at);
         }
@@ -174,7 +165,7 @@ public class DefaultBlockUtils implements BlockUtils {
         int minZ = Integer.MAX_VALUE;
         int maxZ = Integer.MIN_VALUE;
         for (Block block : blocks) {
-            BlockLocation location = block.getLocation();
+            BlockLocation location = block.location();
             if (location.x() < minX) {
                 minX = location.x();
             }
@@ -195,7 +186,7 @@ public class DefaultBlockUtils implements BlockUtils {
             }
         }
 
-        World world = blocks.iterator().next().getLocation().world();
+        World world = blocks.iterator().next().location().world();
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
         Vector3i maximumCorner = new Vector3i(maxX, maxY, maxZ);
         return boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
@@ -214,7 +205,7 @@ public class DefaultBlockUtils implements BlockUtils {
         Spheref sphere = new Spheref(location.x(), location.y(), location.z(), radius);
         return box.stream()
                 .filter(block -> {
-                    Location blockLocation = block.getLocation().toLocation();
+                    Location blockLocation = block.location().toLocation();
                     Vector3fc jomlMinCorner = new Vector3f(blockLocation.x(), blockLocation.y(), blockLocation.z());
                     AABBf blockBox = new AABBf(jomlMinCorner, jomlMinCorner.add(1, 1, 1, new Vector3f()));
                     return Intersectionf.testAabSphere(blockBox, sphere);
@@ -223,11 +214,11 @@ public class DefaultBlockUtils implements BlockUtils {
     }
 
     @Override
-    public BlockIntersection intersectBlock(Location origin, Location target, Set<BlockType> ignore) {
+    public BlockIntersection intersectBlock(Location origin, Location target, Predicate<Block> ignore) {
         BlockIterator blockIterator = blockIteratorFactory.createBlockIterator(origin, target);
         while (blockIterator.hasNext()) {
             Block currentBlock = blockIterator.next();
-            if (!ignore.contains(currentBlock.getType())) {
+            if (!ignore.test(currentBlock)) {
                 Location intersection = blockIterator.calculateIntersection();
                 return new SimpleBlockIntersection(currentBlock, null, intersection);
             }

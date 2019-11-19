@@ -29,17 +29,16 @@ public class SimpleBoundingBlockBoxTest {
     @Before
     public void beforeEach() {
         World world = World.OVERWORLD;
-        when(mockWorldQueryService.getWorld(world)).thenReturn(world);
 
-        when(mockBlockLocation.getWorld()).thenReturn(world);
+        when(mockBlockLocation.world()).thenReturn(world);
 
         Vector3i minimumCorner = new Vector3i(0, 0, 0);
         Vector3i maximumCorner = new Vector3i(9, 9, 9);
 
         BlockLocation mockBlockMinimumCorner = mock(BlockLocation.class);
-        when(mockBlockMinimumCorner.getTranslation()).thenReturn(minimumCorner);
+        when(mockBlockMinimumCorner.translation()).thenReturn(minimumCorner);
         BlockLocation mockBlockMaximumCorner = mock(BlockLocation.class);
-        when(mockBlockMaximumCorner.getTranslation()).thenReturn(maximumCorner);
+        when(mockBlockMaximumCorner.translation()).thenReturn(maximumCorner);
         when(new BlockLocation(world, new Vector3i())).thenReturn(mockBlockMinimumCorner);
         when(new BlockLocation(world, new Vector3i(9, 9, 9))).thenReturn(mockBlockMaximumCorner);
 
@@ -55,9 +54,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void test_shouldAcceptBlockInsideBoundary() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         boolean result = simpleBoundingBlockBox.test(mockBlockLocation);
@@ -69,9 +68,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void test_shouldAcceptBlockOnBoundary() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(0);
-        when(mockBlockLocation.getY()).thenReturn(0);
-        when(mockBlockLocation.getZ()).thenReturn(0);
+        when(mockBlockLocation.x()).thenReturn(0);
+        when(mockBlockLocation.y()).thenReturn(0);
+        when(mockBlockLocation.z()).thenReturn(0);
 
         // When
         boolean result = simpleBoundingBlockBox.test(mockBlockLocation);
@@ -83,9 +82,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void test_shouldRejectBlockOutsideBoundary() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(20);
-        when(mockBlockLocation.getY()).thenReturn(20);
-        when(mockBlockLocation.getZ()).thenReturn(20);
+        when(mockBlockLocation.x()).thenReturn(20);
+        when(mockBlockLocation.y()).thenReturn(20);
+        when(mockBlockLocation.z()).thenReturn(20);
 
         // When
         boolean result = simpleBoundingBlockBox.test(mockBlockLocation);
@@ -114,9 +113,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotate0DegreesAroundPivot() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, 0);
@@ -133,9 +132,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotate90DegreesAroundPivot() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, 90);
@@ -152,9 +151,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotate180DegreesAroundPivot() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, 180);
@@ -171,9 +170,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotate270DegreesAroundPivot() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, 270);
@@ -190,9 +189,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotateLargeRotation() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, 2700);
@@ -209,9 +208,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotateNegativeRotation() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, -90);
@@ -228,9 +227,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test
     public void rotate_shouldCorrectlyRotateLargeNegativeRotation() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         BoundingBlockBox result = simpleBoundingBlockBox.rotateY(mockBlockLocation, -2070);
@@ -247,9 +246,9 @@ public class SimpleBoundingBlockBoxTest {
     @Test(expected = IllegalArgumentException.class)
     public void rotate_shouldThrowOnOddRotation() {
         // Given
-        when(mockBlockLocation.getX()).thenReturn(1);
-        when(mockBlockLocation.getY()).thenReturn(1);
-        when(mockBlockLocation.getZ()).thenReturn(1);
+        when(mockBlockLocation.x()).thenReturn(1);
+        when(mockBlockLocation.y()).thenReturn(1);
+        when(mockBlockLocation.z()).thenReturn(1);
 
         // When
         simpleBoundingBlockBox.rotateY(mockBlockLocation, 60);

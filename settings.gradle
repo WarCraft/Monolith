@@ -1,2 +1,0 @@
-rootProject.name = 'Monolith'
-include 'monolith-api', 'monolith-app', 'monolith-spigot'

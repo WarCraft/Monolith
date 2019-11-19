@@ -5,21 +5,18 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import gg.warcraft.monolith.api.Monolith;
 import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.ServerShutdownEvent;
 import gg.warcraft.monolith.api.core.TaskService;
-import gg.warcraft.monolith.api.core.event.ServerShutdownEvent;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.backup.BlockBackup;
-import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupCommandService;
-import gg.warcraft.monolith.api.world.block.backup.service.BlockBackupQueryService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.app.command.ConsoleCommandSender;
 import gg.warcraft.monolith.app.command.PlayerCommandSender;
 import gg.warcraft.monolith.app.command.event.SimpleCommandExecutedEvent;
 import gg.warcraft.monolith.app.command.handler.CommandExecutedHandler;
-import gg.warcraft.monolith.app.core.event.SimpleServerShutdownEvent;
 import gg.warcraft.monolith.app.core.handler.DailyTickHandler;
+import gg.warcraft.monolith.app.core.handler.DebugStickHandler;
 import gg.warcraft.monolith.app.entity.attribute.handler.AttributesInitializationHandler;
 import gg.warcraft.monolith.app.entity.handler.EntityProfileInitializationHandler;
 import gg.warcraft.monolith.app.entity.player.handler.PlayerProfileInitializationHandler;
@@ -28,19 +25,17 @@ import gg.warcraft.monolith.app.entity.player.hiding.handler.PlayerHidingHandler
 import gg.warcraft.monolith.app.entity.status.handler.StatusEffectHandler;
 import gg.warcraft.monolith.app.world.portal.handler.PortalEntryTaskHandler;
 import gg.warcraft.monolith.spigot.entity.handler.EntityRemovalHandler;
-import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotInventoryEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotItemEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotPlayerEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotProjectileEventMapper;
-import gg.warcraft.monolith.spigot.event.SpigotWorldEventMapper;
+import gg.warcraft.monolith.spigot.event.*;
+import gg.warcraft.monolith.spigot.world.item.SpigotItemEventMapper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.flywaydb.core.Flyway;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,6 +89,9 @@ public class MonolithPlugin extends JavaPlugin {
 
         DailyTickHandler dailyTickHandler = injector.getInstance(DailyTickHandler.class);
         taskService.runTask(dailyTickHandler, timeUtils.createDurationInMillis(1900), timeUtils.createDurationInMillis(1900));
+
+        DebugStickHandler debugStickHandler = injector.getInstance(DebugStickHandler.class);
+        eventService.subscribe(debugStickHandler);
     }
 
     void initializeSpigotEventMappers() {
@@ -120,8 +118,20 @@ public class MonolithPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        new ImplicitsJavaHack().doTheThing(getServer(), this);
+
         saveDefaultConfig();
         FileConfiguration localConfig = getConfig();
+
+
+        Flyway flyway = Flyway
+                .configure(getClassLoader())
+                .dataSource("jdbc:sqlite:" + getDataFolder().getAbsolutePath() + File.separator + "db.sqlite",
+                        null, null)
+                .load();
+        int migrations = flyway.migrate();
+        System.out.println("Applied " + migrations + " new data schema migrations");
+
 
         String configurationService = localConfig.getString("configurationService");
         String gitHubAccount = localConfig.getString("gitHubAccount");
@@ -144,6 +154,7 @@ public class MonolithPlugin extends JavaPlugin {
                 localConfig.getInt("buildRepository.maximumCorner.y"),
                 localConfig.getInt("buildRepository.maximumCorner.z"));
 
+        // TODO remove
         String overworldName = localConfig.getString("worldDirectoryName");
         String netherName = localConfig.getString("netherDirectoryName");
         String theEndName = localConfig.getString("endDirectoryName");
@@ -153,7 +164,7 @@ public class MonolithPlugin extends JavaPlugin {
                 persistenceService, redisHost, redisPort,
                 baseHealth, buildRepositoryWorld,
                 buildRepositoryMinimumCorner, buildRepositoryMaximumCorner,
-                this, overworldName, netherName, theEndName);
+                this);
         Monolith.registerModule(spigotMonolithModule);
     }
 
@@ -187,16 +198,13 @@ public class MonolithPlugin extends JavaPlugin {
         blockBuildCommandService.initializeBuilds();
 
         // restore any outstanding block backups
-        BlockBackupQueryService blockBackupQueryService = injector.getInstance(BlockBackupQueryService.class);
-        BlockBackupCommandService blockBackupCommandService = injector.getInstance(BlockBackupCommandService.class);
-        blockBackupQueryService.getAllBlockBackups().stream()
-                .map(BlockBackup::getId)
-                .forEach(blockBackupCommandService::restoreBlockBackup);
+        // BlockBackupService blockBackupService = injector.getInstance(BlockBackupService.class);
+        // TODO blockBackupService.restoreAll();
     }
 
     @Override
     public void onDisable() {
-        ServerShutdownEvent shutdownEvent = new SimpleServerShutdownEvent();
+        ServerShutdownEvent shutdownEvent = new ServerShutdownEvent();
         eventService.publish(shutdownEvent);
     }
 

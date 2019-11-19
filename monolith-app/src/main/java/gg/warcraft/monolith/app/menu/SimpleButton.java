@@ -1,20 +1,22 @@
 package gg.warcraft.monolith.app.menu;
 
-import gg.warcraft.monolith.api.item.ItemType;
 import gg.warcraft.monolith.api.menu.Button;
 import gg.warcraft.monolith.api.menu.Click;
+import gg.warcraft.monolith.api.world.block.BlockTypeVariantOrState;
+import gg.warcraft.monolith.api.world.item.ItemType;
+import gg.warcraft.monolith.api.world.item.ItemTypeOrVariant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class SimpleButton implements Button {
-    private final ItemType icon;
+    private final ItemTypeOrVariant icon;
     private final String title;
     private final List<String> tooltip;
     private final Consumer<Click> action;
 
-    public SimpleButton(ItemType icon, String title, List<String> tooltip, Consumer<Click> action) {
+    public SimpleButton(ItemTypeOrVariant icon, String title, List<String> tooltip, Consumer<Click> action) {
         this.icon = icon;
         this.title = title;
         this.tooltip = tooltip;
@@ -22,7 +24,7 @@ public class SimpleButton implements Button {
     }
 
     @Override
-    public ItemType getIcon() {
+    public ItemTypeOrVariant getIcon() {
         return icon;
     }
 

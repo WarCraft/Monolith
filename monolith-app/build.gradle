@@ -1,8 +1,0 @@
-dependencies {
-    compile project(':monolith-api')
-
-    compile 'com.fasterxml.jackson.core:jackson-core:2.9.6'
-    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.6'
-    compile 'org.kohsuke:github-api:1.93'
-    compile 'redis.clients:jedis:2.9.0'
-}
