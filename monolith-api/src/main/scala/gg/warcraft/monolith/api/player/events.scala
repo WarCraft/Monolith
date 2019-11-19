@@ -2,20 +2,25 @@ package gg.warcraft.monolith.api.player
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.{Event, PreEvent}
+import gg.warcraft.monolith.api.core.{CancellableEvent, Event, PreEvent}
 import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.entity.player.Statistic
 import gg.warcraft.monolith.api.world.Location
+import gg.warcraft.monolith.api.world.item.Item
+
+trait PlayerEvent
 
 // CONNECT
 case class PlayerPreConnectEvent(
     playerId: UUID,
     name: String
-) extends Event
+) extends PlayerEvent
+    with Event
 
 case class PlayerConnectEvent(
     playerId: UUID
-) extends Event
+) extends PlayerEvent
+    with Event
 
 /**
   * A PlayerDisconnectEvent is fired whenever a Player disconnects from the server.
@@ -26,7 +31,8 @@ case class PlayerConnectEvent(
   */
 case class PlayerDisconnectEvent(
     playerId: UUID
-) extends Event
+) extends PlayerEvent
+    with Event
 
 // CURRENCY
 case class PlayerCurrencyGainedEvent(
@@ -35,37 +41,81 @@ case class PlayerCurrencyGainedEvent(
     amount: Int,
     newCurrent: Int,
     newLifeTime: Int
-) extends Event
+) extends PlayerEvent
+    with Event
 
 case class PlayerCurrencyLostEvent(
     playerId: UUID,
     currency: String,
     amount: Int,
     newCurrent: Int
-) extends Event
+) extends PlayerEvent
+    with Event
+
+// INTERACT
+case class PlayerPreInteractEvent(
+    playerId: UUID,
+    sneaking: Boolean,
+    mainHand: Option[Item],
+    offHand: Option[Item],
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
+) extends PlayerEvent
+    with CancellableEvent
+
+case class PlayerInteractEvent(
+    playerId: UUID,
+    sneaking: Boolean,
+    mainHand: Option[Item],
+    offHand: Option[Item]
+) extends PlayerEvent
+    with Event
 
 // INVENTORY
 case class PlayerEquipmentChangedEvent(
     playerId: UUID,
     equipment: Equipment
-) extends Event
+) extends PlayerEvent
+    with Event
 
 // PERMISSIONS
 case class PlayerPermissionsChangedEvent(
     playerId: UUID,
     permissions: Map[String, Boolean]
-) extends Event
+) extends PlayerEvent
+    with Event
+
+// PUNCH
+case class PlayerPrePunchEvent(
+    playerId: UUID,
+    sneaking: Boolean,
+    mainHand: Option[Item],
+    offHand: Option[Item],
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
+) extends PlayerEvent
+    with CancellableEvent
+
+case class PlayerPunchEvent(
+    playerId: UUID,
+    sneaking: Boolean,
+    mainHand: Option[Item],
+    offHand: Option[Item]
+) extends PlayerEvent
+    with Event
 
 // SPAWN
 case class PlayerPreRespawnEvent(
     playerId: UUID,
     location: Location
-) extends PreEvent
+) extends PlayerEvent
+    with PreEvent
 
 case class PlayerRespawnEvent(
     playerId: UUID,
     location: Location
-) extends Event
+) extends PlayerEvent
+    with Event
 
 // STATISTICS
 case class PlayerStatisticsChangedEvent(
@@ -73,4 +123,5 @@ case class PlayerStatisticsChangedEvent(
     statistic: Statistic,
     amount: Int,
     newCurrent: Int
-)
+) extends PlayerEvent
+    with Event

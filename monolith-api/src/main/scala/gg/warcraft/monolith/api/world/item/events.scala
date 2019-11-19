@@ -5,6 +5,8 @@ import java.util.UUID
 import gg.warcraft.monolith.api.core.{CancellableEvent, Event}
 import gg.warcraft.monolith.api.entity.EntityType
 
+trait ItemEvent
+
 case class ItemPrePickupEvent(
     item: Item,
     itemId: UUID,
@@ -12,11 +14,13 @@ case class ItemPrePickupEvent(
     entityType: EntityType,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends CancellableEvent
+) extends ItemEvent
+    with CancellableEvent
 
 case class ItemPickupEvent(
     item: Item,
     itemId: UUID,
     entityId: UUID,
     entityType: EntityType
-) extends Event
+) extends ItemEvent
+    with Event

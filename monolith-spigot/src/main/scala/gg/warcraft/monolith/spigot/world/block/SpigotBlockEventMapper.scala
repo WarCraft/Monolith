@@ -94,7 +94,7 @@ class SpigotBlockEventMapper(
   }
 
   private def prePunch(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock)
+    val block = blockMapper.map(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val playerId = event.getPlayer.getUniqueId
     val sneaking = event.getPlayer.isSneaking
@@ -119,7 +119,7 @@ class SpigotBlockEventMapper(
   }
 
   private def preInteract(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock)
+    val block = blockMapper.map(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val playerId = event.getPlayer.getUniqueId
     val sneaking = event.getPlayer.isSneaking
@@ -152,7 +152,7 @@ class SpigotBlockEventMapper(
 
   @EventHandler(priority = EventPriority.HIGH)
   def prePunchInteractOrTrigger(event: SpigotPlayerInteractEvent): Unit = {
-    if (event.getHand == EquipmentSlot.OFF_HAND) return
+    if (!event.hasBlock || event.getHand == EquipmentSlot.OFF_HAND) return
     event.getAction match {
       case Action.LEFT_CLICK_BLOCK | Action.LEFT_CLICK_AIR   => prePunch(event)
       case Action.RIGHT_CLICK_BLOCK | Action.RIGHT_CLICK_AIR => preInteract(event)
@@ -161,7 +161,7 @@ class SpigotBlockEventMapper(
   }
 
   private def onPunch(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock)
+    val block = blockMapper.map(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val playerId = event.getPlayer.getUniqueId
     val sneaking = event.getPlayer.isSneaking
@@ -180,7 +180,7 @@ class SpigotBlockEventMapper(
   }
 
   private def onInteract(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock)
+    val block = blockMapper.map(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val playerId = event.getPlayer.getUniqueId
     val sneaking = event.getPlayer.isSneaking
@@ -208,7 +208,7 @@ class SpigotBlockEventMapper(
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onPunchInteractOrTrigger(event: SpigotPlayerInteractEvent): Unit = {
-    if (event.getHand == EquipmentSlot.OFF_HAND) return
+    if (!event.hasBlock || event.getHand == EquipmentSlot.OFF_HAND) return
     event.getAction match {
       case Action.LEFT_CLICK_BLOCK | Action.LEFT_CLICK_AIR   => onPunch(event)
       case Action.RIGHT_CLICK_BLOCK | Action.RIGHT_CLICK_AIR => onInteract(event)

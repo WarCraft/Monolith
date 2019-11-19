@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.api.combat
 
 case class CombatValue(
+    source: CombatSource,
     base: Float,
-    modifiers: List[CombatValueModifier],
-    source: CombatSource
+    modifiers: List[CombatValueModifier] = List.empty
 ) {
   lazy val modified: Float = {
     val overrideMods = modifiers.filter(_.`type` == CombatValueModifierType.OVERRIDE)

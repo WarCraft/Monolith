@@ -5,6 +5,8 @@ import java.util.UUID
 import gg.warcraft.monolith.api.core.{CancellableEvent, Event}
 import gg.warcraft.monolith.api.world.item.Item
 
+trait BlockEvent
+
 // BREAK
 case class BlockPreBreakEvent(
     block: Block,
@@ -12,17 +14,19 @@ case class BlockPreBreakEvent(
     alternativeDrops: Option[List[Item]],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends CancellableEvent
+) extends BlockEvent
+    with CancellableEvent
 
 case class BlockBreakEvent(
     block: Block,
     playerId: UUID,
     alternativeDrops: Option[List[Item]]
-) extends Event
+) extends BlockEvent
+    with Event
 
 // INTERACT
 case class BlockPreInteractEvent(
-    block: Option[Block],
+    block: Block,
     blockFace: BlockFace,
     playerId: UUID,
     sneaking: Boolean,
@@ -30,16 +34,18 @@ case class BlockPreInteractEvent(
     offHand: Option[Item],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends CancellableEvent
+) extends BlockEvent
+    with CancellableEvent
 
 case class BlockInteractEvent(
-    block: Option[Block],
+    block: Block,
     blockFace: BlockFace,
     playerId: UUID,
     sneaking: Boolean,
     mainHand: Option[Item],
     offHand: Option[Item]
-) extends Event
+) extends BlockEvent
+    with Event
 
 // PLACE
 case class BlockPrePlaceEvent(
@@ -49,18 +55,20 @@ case class BlockPrePlaceEvent(
     playerId: UUID,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends CancellableEvent
+) extends BlockEvent
+    with CancellableEvent
 
 case class BlockPlaceEvent(
     block: Block,
     againstBlock: Block,
     againstBlockFace: BlockFace,
     playerId: UUID
-) extends Event
+) extends BlockEvent
+    with Event
 
 // PUNCH
 case class BlockPrePunchEvent(
-    block: Option[Block],
+    block: Block,
     blockFace: BlockFace,
     playerId: UUID,
     sneaking: Boolean,
@@ -68,16 +76,18 @@ case class BlockPrePunchEvent(
     offHand: Option[Item],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends CancellableEvent
+) extends BlockEvent
+    with CancellableEvent
 
 case class BlockPunchEvent(
-    block: Option[Block],
+    block: Block,
     blockFace: BlockFace,
     playerId: UUID,
     sneaking: Boolean,
     mainHand: Option[Item],
     offHand: Option[Item]
-) extends Event
+) extends BlockEvent
+    with Event
 
 // TRIGGER
 case class BlockPreTriggerEvent(
@@ -85,9 +95,11 @@ case class BlockPreTriggerEvent(
     playerId: UUID,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends CancellableEvent
+) extends BlockEvent
+    with CancellableEvent
 
 case class BlockTriggerEvent(
     block: Block,
     playerId: UUID
-) extends Event
+) extends BlockEvent
+    with Event
