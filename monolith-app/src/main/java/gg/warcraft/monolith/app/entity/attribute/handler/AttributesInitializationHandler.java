@@ -8,10 +8,10 @@ import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
 import gg.warcraft.monolith.api.entity.attribute.service.AttributeCommandService;
 import gg.warcraft.monolith.api.entity.attribute.service.AttributeRepository;
-import gg.warcraft.monolith.api.entity.event.EntityDeathEvent;
-import gg.warcraft.monolith.api.entity.event.EntitySpawnEvent;
-import gg.warcraft.monolith.api.entity.player.event.PlayerConnectEvent;
-import gg.warcraft.monolith.api.entity.player.event.PlayerDisconnectEvent;
+import gg.warcraft.monolith.api.entity.EntityDeathEvent;
+import gg.warcraft.monolith.api.entity.EntitySpawnEvent;
+import gg.warcraft.monolith.api.player.PlayerConnectEvent;
+import gg.warcraft.monolith.api.player.PlayerDisconnectEvent;
 import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.item.ItemReaderFactory;
@@ -40,7 +40,7 @@ public class AttributesInitializationHandler {
 
     @Subscribe
     public void onPlayerConnectEvent(PlayerConnectEvent event) {
-        UUID playerId = event.getPlayerId();
+        UUID playerId = event.playerId();
         Attributes attributes = attributeRepository.getAttributes(playerId);
         if (attributes == null) {
             attributes = new LazyAttributes(attributeCommandService, entityServerAdapter, playerId, new HashMap<>());
@@ -51,22 +51,22 @@ public class AttributesInitializationHandler {
 
     @Subscribe
     public void onPlayerDisconnectEvent(PlayerDisconnectEvent event) {
-        attributeRepository.delete(event.getPlayerId());
+        attributeRepository.delete(event.playerId());
     }
 
     @Subscribe
     public void onEntitySpawnEvent(EntitySpawnEvent event) {
-        if (event.getEntityType() != EntityType.PLAYER) {
+        if (event.entityType() != EntityType.PLAYER) {
             Attributes attributes = new LazyAttributes(attributeCommandService, entityServerAdapter,
-                    event.getEntityId(), new HashMap<>());
+                    event.entityId(), new HashMap<>());
             attributeRepository.save(attributes);
         }
     }
 
     @Subscribe
     public void onEntityDeathEvent(EntityDeathEvent event) {
-        if (event.getEntityType() != EntityType.PLAYER) {
-            attributeRepository.delete(event.getEntityId());
+        if (event.entityType() != EntityType.PLAYER) {
+            attributeRepository.delete(event.entityId());
         }
     }
 }

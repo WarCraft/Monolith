@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.entity.service;
 
+import gg.warcraft.monolith.api.combat.CombatValue;
 import gg.warcraft.monolith.api.combat.PotionEffect;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
-import gg.warcraft.monolith.api.combat.value.CombatValue;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.math.Vector3f;

@@ -10,7 +10,7 @@ import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
-import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
+import gg.warcraft.monolith.api.entity.status.StatusService;
 import gg.warcraft.monolith.api.world.Location;
 
 import java.util.List;
@@ -20,19 +20,19 @@ import java.util.stream.Collectors;
 public class DefaultEntityQueryService implements EntityQueryService {
     private final EntityProfileRepository entityProfileRepository;
     private final AttributeQueryService attributeQueryService;
-    private final StatusQueryService statusQueryService;
+    private final StatusService statusService;
     private final EntityServerAdapter entityServerAdapter;
     private final PlayerQueryService playerQueryService;
     private final EntityFactory entityFactory;
 
     @Inject
     public DefaultEntityQueryService(EntityProfileRepository entityProfileRepository,
-                                     AttributeQueryService attributeQueryService, StatusQueryService statusQueryService,
+                                     AttributeQueryService attributeQueryService, StatusService statusService,
                                      EntityServerAdapter entityServerAdapter, PlayerQueryService playerQueryService,
                                      EntityFactory entityFactory) {
         this.entityProfileRepository = entityProfileRepository;
         this.attributeQueryService = attributeQueryService;
-        this.statusQueryService = statusQueryService;
+        this.statusService = statusService;
         this.entityServerAdapter = entityServerAdapter;
         this.playerQueryService = playerQueryService;
         this.entityFactory = entityFactory;
@@ -48,7 +48,7 @@ public class DefaultEntityQueryService implements EntityQueryService {
                 () -> entityProfileRepository.get(entityId),
                 () -> serverData,
                 () -> attributeQueryService.getAttributes(entityId),
-                () -> statusQueryService.getStatus(entityId));
+                () -> statusService.getStatus(entityId));
     }
 
     @Override

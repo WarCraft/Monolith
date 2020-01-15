@@ -141,7 +141,7 @@ class SpigotEntityEventMapper(
     val projectileId =
       if (attackerId != attacker.getUniqueId) Some(attacker.getUniqueId)
       else None
-    val combatSource = CombatSource(attacker.getName, attackerId)
+    val combatSource = CombatSource(attacker.getName, Option(attackerId))
     val damage = CombatValue(combatSource, event.getDamage.toFloat)
     val cancelled = event.isCancelled
     val preAttackEvent = EntityPreAttackEvent(

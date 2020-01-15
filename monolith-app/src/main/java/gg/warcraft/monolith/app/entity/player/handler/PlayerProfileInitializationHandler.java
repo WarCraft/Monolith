@@ -4,7 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
-import gg.warcraft.monolith.api.entity.player.event.PlayerPreConnectEvent;
+import gg.warcraft.monolith.api.player.PlayerPreConnectEvent;
 import gg.warcraft.monolith.api.entity.player.service.PlayerProfileRepository;
 import gg.warcraft.monolith.app.entity.player.SimplePlayerProfile;
 
@@ -22,7 +22,7 @@ public class PlayerProfileInitializationHandler {
 
     @Subscribe
     public void onPlayerPreConnect(PlayerPreConnectEvent event) {
-        UUID playerId = event.getPlayerId();
+        UUID playerId = event.playerId();
         int now = (int) (System.currentTimeMillis() / 1000);
         PlayerProfile profile = playerProfileRepository.get(playerId);
         Map<String, String> data = new HashMap<>();

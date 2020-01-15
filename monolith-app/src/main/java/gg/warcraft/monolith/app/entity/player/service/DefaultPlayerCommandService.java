@@ -5,16 +5,16 @@ import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.MonolithEntityData;
-import gg.warcraft.monolith.api.entity.event.EntityTeamChangedEvent;
+import gg.warcraft.monolith.api.entity.EntityTeamChangedEvent;
 import gg.warcraft.monolith.api.entity.player.Currency;
 import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
 import gg.warcraft.monolith.api.entity.player.MonolithStatistic;
 import gg.warcraft.monolith.api.entity.player.Player;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
 import gg.warcraft.monolith.api.entity.player.Statistic;
-import gg.warcraft.monolith.api.entity.player.event.PlayerCurrencyGainedEvent;
-import gg.warcraft.monolith.api.entity.player.event.PlayerCurrencyLostEvent;
-import gg.warcraft.monolith.api.entity.player.event.PlayerStatisticChangedEvent;
+import gg.warcraft.monolith.api.player.PlayerCurrencyGainedEvent;
+import gg.warcraft.monolith.api.player.PlayerCurrencyLostEvent;
+import gg.warcraft.monolith.api.player.PlayerStatisticsChangedEvent;
 import gg.warcraft.monolith.api.entity.player.service.PlayerCommandService;
 import gg.warcraft.monolith.api.entity.player.service.PlayerProfileRepository;
 import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
@@ -24,10 +24,7 @@ import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
 import gg.warcraft.monolith.api.util.ColorCode;
 import gg.warcraft.monolith.api.world.item.Item;
 import gg.warcraft.monolith.api.world.item.storage.ItemStorageService;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityTeamChangedEvent;
-import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyGainedEvent;
-import gg.warcraft.monolith.app.entity.player.event.SimplePlayerCurrencyLostEvent;
-import gg.warcraft.monolith.app.entity.player.event.SimplePlayerStatisticChangedEvent;
+import scala.Option;
 
 import java.util.Map;
 import java.util.UUID;
@@ -73,8 +70,8 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
                 .copy();
         playerProfileRepository.save(newProfile);
 
-        EntityTeamChangedEvent entityTeamChangedEvent = new SimpleEntityTeamChangedEvent(
-                playerId, EntityType.PLAYER, previousTeam, team);
+        EntityTeamChangedEvent entityTeamChangedEvent = new EntityTeamChangedEvent(
+                playerId, EntityType.PLAYER, Option.apply(previousTeam), Option.apply(team));
         eventService.publish(entityTeamChangedEvent);
     }
 
@@ -143,7 +140,7 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
                 .copy();
         playerProfileRepository.save(newProfile);
 
-        PlayerCurrencyGainedEvent event = new SimplePlayerCurrencyGainedEvent(playerId, currencyName, amount,
+        PlayerCurrencyGainedEvent event = new PlayerCurrencyGainedEvent(playerId, currencyName, amount,
                 newCurrentAmount, newLifetimeAmount);
         eventService.publish(event);
     }
@@ -170,7 +167,7 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
                 .copy();
         playerProfileRepository.save(newProfile);
 
-        PlayerCurrencyLostEvent event = new SimplePlayerCurrencyLostEvent(playerId, currencyName, amount,
+        PlayerCurrencyLostEvent event = new PlayerCurrencyLostEvent(playerId, currencyName, amount,
                 newCurrentAmount);
         eventService.publish(event);
     }
@@ -225,8 +222,8 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
 
         for (Statistic statistic : statistics) {
             int newCurrentValue = newStatistics.getOrDefault(statistic.getKey(), 0);
-            PlayerStatisticChangedEvent event =
-                    new SimplePlayerStatisticChangedEvent(playerId, statistic, amount, newCurrentValue);
+            PlayerStatisticsChangedEvent event =
+                    new PlayerStatisticsChangedEvent(playerId, statistic, amount, newCurrentValue);
             eventService.publish(event);
         }
     }
@@ -252,8 +249,8 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
 
         for (Statistic statistic : statistics) {
             int oldValue = oldStatistics.getOrDefault(statistic.getKey(), 0);
-            PlayerStatisticChangedEvent event =
-                    new SimplePlayerStatisticChangedEvent(playerId, statistic, -oldValue, 0);
+            PlayerStatisticsChangedEvent event =
+                    new PlayerStatisticsChangedEvent(playerId, statistic, -oldValue, 0);
             eventService.publish(event);
         }
     }
@@ -296,8 +293,8 @@ public class DefaultPlayerCommandService implements PlayerCommandService {
         playerProfileRepository.save(newProfile);
 
         int deltaTimePlayed = newTimePlayed - oldTimePlayed;
-        PlayerStatisticChangedEvent event =
-                new SimplePlayerStatisticChangedEvent(playerId, MonolithStatistic.TIME_PLAYED, deltaTimePlayed, newTimePlayed);
+        PlayerStatisticsChangedEvent event =
+                new PlayerStatisticsChangedEvent(playerId, MonolithStatistic.TIME_PLAYED, deltaTimePlayed, newTimePlayed);
         eventService.publish(event);
     }
 

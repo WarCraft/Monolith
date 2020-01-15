@@ -14,7 +14,7 @@ import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingServerAdapter;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.math.Vector3i;
-import gg.warcraft.monolith.api.menu.service.MenuServerAdapter;
+import gg.warcraft.monolith.api.menu.MenuService;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
@@ -34,8 +34,8 @@ import gg.warcraft.monolith.spigot.entity.player.SpigotPlayerDataFactory;
 import gg.warcraft.monolith.spigot.entity.player.hiding.SpigotPlayerHidingAdapter;
 import gg.warcraft.monolith.spigot.entity.player.service.SpigotPlayerAdapter;
 import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
-import gg.warcraft.monolith.spigot.event.SpigotEntityEventMapper;
-import gg.warcraft.monolith.spigot.menu.service.SpigotMenuAdapter;
+import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper;
+import gg.warcraft.monolith.spigot.menu.SpigotMenuService;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
@@ -127,8 +127,8 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
     }
 
     private void configureMenu() {
-        bind(MenuServerAdapter.class).to(SpigotMenuAdapter.class);
-        expose(MenuServerAdapter.class);
+        bind(MenuService.class).to(SpigotMenuService.class);
+        expose(MenuService.class);
     }
 
     private void configureWorld() {

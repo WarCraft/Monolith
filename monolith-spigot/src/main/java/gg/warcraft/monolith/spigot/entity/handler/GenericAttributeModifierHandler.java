@@ -2,7 +2,7 @@ package gg.warcraft.monolith.spigot.entity.handler;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.entity.player.event.PlayerConnectEvent;
+import gg.warcraft.monolith.api.player.PlayerConnectEvent;
 import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -18,7 +18,7 @@ public class GenericAttributeModifierHandler {
 
     @Subscribe
     public void onPlayerConnectEvent(PlayerConnectEvent event) {
-        Player player = server.getPlayer(event.getPlayerId());
+        Player player = server.getPlayer(event.playerId());
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         // TODO attribute
     }

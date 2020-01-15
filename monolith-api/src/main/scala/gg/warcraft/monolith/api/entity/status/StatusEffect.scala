@@ -9,5 +9,4 @@ trait StatusEffect extends EventHandler {
   val name: String
   val group: String
   val duration: Option[Duration]
-  val callback: () => () = () => ()
 }

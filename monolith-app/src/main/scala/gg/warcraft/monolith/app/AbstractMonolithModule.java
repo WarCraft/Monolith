@@ -48,9 +48,6 @@ import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityRepository;
-import gg.warcraft.monolith.api.entity.status.service.StatusCommandService;
-import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
-import gg.warcraft.monolith.api.entity.status.service.StatusRepository;
 import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
 import gg.warcraft.monolith.api.entity.team.service.TeamQueryService;
 import gg.warcraft.monolith.api.entity.team.service.TeamRepository;
@@ -61,9 +58,6 @@ import gg.warcraft.monolith.api.menu.ButtonBuilder;
 import gg.warcraft.monolith.api.menu.ButtonBuilderFactory;
 import gg.warcraft.monolith.api.menu.MenuBuilder;
 import gg.warcraft.monolith.api.menu.MenuBuilderFactory;
-import gg.warcraft.monolith.api.menu.service.MenuCommandService;
-import gg.warcraft.monolith.api.menu.service.MenuQueryService;
-import gg.warcraft.monolith.api.menu.service.MenuRepository;
 import gg.warcraft.monolith.api.util.ColorCodeUtils;
 import gg.warcraft.monolith.api.util.MathUtils;
 import gg.warcraft.monolith.api.util.StringUtils;
@@ -86,7 +80,6 @@ import gg.warcraft.monolith.api.world.portal.service.PortalQueryService;
 import gg.warcraft.monolith.api.world.portal.service.PortalRepository;
 import gg.warcraft.monolith.app.combat.AmbientPotionEffect;
 import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
-import gg.warcraft.monolith.app.combat.SimpleCombatSource;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.combat.VisiblePotionEffect;
 import gg.warcraft.monolith.app.command.ConsoleCommandSender;
@@ -130,9 +123,6 @@ import gg.warcraft.monolith.app.entity.service.DefaultEntityCommandService;
 import gg.warcraft.monolith.app.entity.service.DefaultEntityProfileRepository;
 import gg.warcraft.monolith.app.entity.service.DefaultEntityQueryService;
 import gg.warcraft.monolith.app.entity.service.DefaultEntityRepository;
-import gg.warcraft.monolith.app.entity.status.service.DefaultStatusCommandService;
-import gg.warcraft.monolith.app.entity.status.service.DefaultStatusQueryService;
-import gg.warcraft.monolith.app.entity.status.service.DefaultStatusRepository;
 import gg.warcraft.monolith.app.entity.team.service.DefaultTeamCommandService;
 import gg.warcraft.monolith.app.entity.team.service.DefaultTeamQueryService;
 import gg.warcraft.monolith.app.entity.team.service.DefaultTeamRepository;
@@ -140,9 +130,6 @@ import gg.warcraft.monolith.app.item.SimpleItemReader;
 import gg.warcraft.monolith.app.menu.SimpleButtonBuilder;
 import gg.warcraft.monolith.app.menu.SimpleMenuBuilder;
 import gg.warcraft.monolith.app.menu.SkullButtonBuilder;
-import gg.warcraft.monolith.app.menu.service.DefaultMenuCommandService;
-import gg.warcraft.monolith.app.menu.service.DefaultMenuQueryService;
-import gg.warcraft.monolith.app.menu.service.DefaultMenuRepository;
 import gg.warcraft.monolith.app.util.DefaultColorCodeUtils;
 import gg.warcraft.monolith.app.util.DefaultMathUtils;
 import gg.warcraft.monolith.app.util.DefaultStringUtils;
@@ -214,7 +201,6 @@ public class AbstractMonolithModule extends PrivateModule {
                 .implement(PotionEffect.class, Names.named("potionEffect"), SimplePotionEffect.class)
                 .implement(PotionEffect.class, Names.named("visiblePotionEffect"), VisiblePotionEffect.class)
                 .implement(PotionEffect.class, Names.named("ambientPotionEffect"), AmbientPotionEffect.class)
-                .implement(CombatSource.class, Names.named("source"), SimpleCombatSource.class)
                 .implement(CombatValue.class, Names.named("value"), CombatValue.class)
                 .implement(CombatValueModifier.class, Names.named("modifier"), CombatValueModifier.class)
                 .build(CombatFactory.class));
@@ -354,16 +340,6 @@ public class AbstractMonolithModule extends PrivateModule {
         bind(AttributeRepository.class).to(DefaultAttributeRepository.class);
         expose(AttributeRepository.class);
 
-        // Status bindings
-        bind(StatusCommandService.class).to(DefaultStatusCommandService.class);
-        expose(StatusCommandService.class);
-
-        bind(StatusQueryService.class).to(DefaultStatusQueryService.class);
-        expose(StatusQueryService.class);
-
-        bind(StatusRepository.class).to(DefaultStatusRepository.class);
-        expose(StatusRepository.class);
-
         // Team bindings
         bind(TeamCommandService.class).to(DefaultTeamCommandService.class);
         expose(TeamCommandService.class);
@@ -407,15 +383,6 @@ public class AbstractMonolithModule extends PrivateModule {
     }
 
     private void configureMenu() {
-        bind(MenuCommandService.class).to(DefaultMenuCommandService.class);
-        expose(MenuCommandService.class);
-
-        bind(MenuQueryService.class).to(DefaultMenuQueryService.class);
-        expose(MenuQueryService.class);
-
-        bind(MenuRepository.class).to(DefaultMenuRepository.class);
-        expose(MenuRepository.class);
-
         install(new FactoryModuleBuilder()
                 .implement(ButtonBuilder.class, Names.named("simple"), SimpleButtonBuilder.class)
                 .implement(ButtonBuilder.class, Names.named("skull"), SkullButtonBuilder.class)

@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.Event;
 import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.core.PersistenceService;
-import gg.warcraft.monolith.app.core.event.SimpleDailyTickEvent;
+import gg.warcraft.monolith.api.core.DailyTickEvent;
 
 import java.time.LocalDateTime;
 
@@ -31,7 +31,7 @@ public class DailyTickHandler implements Runnable {
         int currentNewYorkDay = currentNewYorkTime.getDayOfMonth();
 
         if (lastDailyTickDay != currentNewYorkDay) {
-            Event event = new SimpleDailyTickEvent();
+            Event event = new DailyTickEvent();
             eventService.publish(event);
 
             persistenceService.set(LAST_DAILY_TICK_KEY, "" + currentNewYorkDay);

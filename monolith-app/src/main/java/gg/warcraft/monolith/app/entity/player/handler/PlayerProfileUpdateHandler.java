@@ -4,8 +4,8 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.entity.player.Player;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
-import gg.warcraft.monolith.api.entity.player.event.PlayerConnectEvent;
-import gg.warcraft.monolith.api.entity.player.event.PlayerDisconnectEvent;
+import gg.warcraft.monolith.api.player.PlayerConnectEvent;
+import gg.warcraft.monolith.api.player.PlayerDisconnectEvent;
 import gg.warcraft.monolith.api.entity.player.service.PlayerCommandService;
 import gg.warcraft.monolith.api.entity.player.service.PlayerProfileRepository;
 import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
@@ -53,7 +53,7 @@ public class PlayerProfileUpdateHandler implements Runnable {
 
     @Subscribe
     public void onPlayerConnectEvent(PlayerConnectEvent event) {
-        UUID playerId = event.getPlayerId();
+        UUID playerId = event.playerId();
         PlayerProfile profile = playerProfileRepository.get(playerId);
         if (profile == null) {
             throw new IllegalArgumentException("Failed to update profile for player with id " + playerId +
@@ -69,6 +69,6 @@ public class PlayerProfileUpdateHandler implements Runnable {
 
     @Subscribe
     public void onPlayerDisconnectEvent(PlayerDisconnectEvent event) {
-        playerCommandService.update(event.getPlayerId(), true);
+        playerCommandService.update(event.playerId(), true);
     }
 }

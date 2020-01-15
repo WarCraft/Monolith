@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot.entity.service;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.combat.PotionEffect;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
-import gg.warcraft.monolith.api.combat.value.CombatValue;
+import gg.warcraft.monolith.api.combat.CombatValue;
 import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.AttributeModifier;
@@ -187,7 +187,7 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
             LivingEntity livingEntity = (LivingEntity) entity;
             MetadataValue amountMetadata = new FixedMetadataValue(plugin, amount);
             livingEntity.setMetadata(CombatValue.class.getCanonicalName(), amountMetadata);
-            livingEntity.damage(amount.getModifiedValue());
+            livingEntity.damage(amount.modified());
         }
     }
 

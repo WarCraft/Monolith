@@ -23,9 +23,9 @@ class StatusService(
     val status = getStatus(entityId)
     effects.foreach(effect => {
       if (status.effects.add(effect)) {
-        if (effect.duration.isDefined) taskService.runLater(() => {
-          removeEffect(entityId, effect)
-        }, effect.duration)
+        effect.duration.foreach(it => {
+          taskService.runLater(() => removeEffect(entityId, effect), it)
+        })
 
         val event = StatusEffectGainedEvent(entityId, effect)
         eventService.publish(event)
@@ -37,8 +37,6 @@ class StatusService(
     val status = getStatus(entityId)
     effects.foreach(effect => {
       if (status.effects.remove(effect)) {
-        effect.callback()
-
         val event = StatusEffectLostEvent(entityId, effect)
         eventService.publish(event)
       }
@@ -49,4 +47,6 @@ class StatusService(
     case it: PlayerConnectEvent    => statuses.put(it.playerId, new Status)
     case it: PlayerDisconnectEvent => statuses.remove(it.playerId)
   }
+
+  // TODO create/delete statuses for non-player Entities
 }

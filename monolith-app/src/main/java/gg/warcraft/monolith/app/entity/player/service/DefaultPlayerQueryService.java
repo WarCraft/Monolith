@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.entity.player.PlayerServerData;
 import gg.warcraft.monolith.api.entity.player.service.PlayerProfileRepository;
 import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
-import gg.warcraft.monolith.api.entity.status.service.StatusQueryService;
+import gg.warcraft.monolith.api.entity.status.StatusService;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,17 +17,17 @@ import java.util.stream.Collectors;
 public class DefaultPlayerQueryService implements PlayerQueryService {
     private final PlayerProfileRepository playerProfileRepository;
     private final AttributeQueryService attributeQueryService;
-    private final StatusQueryService statusQueryService;
+    private final StatusService statusService;
     private final EntityFactory entityFactory;
     private final PlayerServerAdapter playerServerAdapter;
 
     @Inject
     public DefaultPlayerQueryService(PlayerProfileRepository playerProfileRepository,
-                                     AttributeQueryService attributeQueryService, StatusQueryService statusQueryService,
+                                     AttributeQueryService attributeQueryService, StatusService statusService,
                                      EntityFactory entityFactory, PlayerServerAdapter playerServerAdapter) {
         this.playerProfileRepository = playerProfileRepository;
         this.attributeQueryService = attributeQueryService;
-        this.statusQueryService = statusQueryService;
+        this.statusService = statusService;
         this.entityFactory = entityFactory;
         this.playerServerAdapter = playerServerAdapter;
     }
@@ -40,7 +40,7 @@ public class DefaultPlayerQueryService implements PlayerQueryService {
                     () -> playerProfileRepository.get(playerId),
                     () -> serverData,
                     () -> attributeQueryService.getAttributes(playerId),
-                    () -> statusQueryService.getStatus(playerId));
+                    () -> statusService.getStatus(playerId));
         }
 
         return null;

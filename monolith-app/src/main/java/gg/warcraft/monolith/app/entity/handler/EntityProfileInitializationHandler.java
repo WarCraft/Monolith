@@ -4,8 +4,8 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.entity.EntityProfile;
 import gg.warcraft.monolith.api.entity.EntityType;
-import gg.warcraft.monolith.api.entity.event.EntityDeathEvent;
-import gg.warcraft.monolith.api.entity.event.EntitySpawnEvent;
+import gg.warcraft.monolith.api.entity.EntityDeathEvent;
+import gg.warcraft.monolith.api.entity.EntitySpawnEvent;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.app.entity.SimpleEntityProfile;
 
@@ -22,9 +22,9 @@ public class EntityProfileInitializationHandler {
 
     @Subscribe
     public void onEntitySpawn(EntitySpawnEvent event) {
-        EntityType entityType = event.getEntityType();
+        EntityType entityType = event.entityType();
         if (entityType != EntityType.PLAYER && entityType != EntityType.ARMOR_STAND) {
-            UUID entityId = event.getEntityId();
+            UUID entityId = event.entityId();
             EntityProfile profile = entityProfileRepository.get(entityId);
             if (profile == null) {
                 EntityProfile newProfile = new SimpleEntityProfile(entityId, new HashMap<>());
@@ -35,9 +35,9 @@ public class EntityProfileInitializationHandler {
 
     @Subscribe
     public void onEntityDeathEvent(EntityDeathEvent event) {
-        EntityType entityType = event.getEntityType();
+        EntityType entityType = event.entityType();
         if (entityType != EntityType.PLAYER) {
-            entityProfileRepository.delete(event.getEntityId());
+            entityProfileRepository.delete(event.entityId());
         }
     }
 }

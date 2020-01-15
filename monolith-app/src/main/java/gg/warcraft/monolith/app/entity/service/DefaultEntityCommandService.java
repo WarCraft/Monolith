@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityProfile;
 import gg.warcraft.monolith.api.entity.MonolithEntityData;
-import gg.warcraft.monolith.api.entity.event.EntityTeamChangedEvent;
+import gg.warcraft.monolith.api.entity.EntityTeamChangedEvent;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityRepository;
@@ -16,7 +16,7 @@ import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
 import gg.warcraft.monolith.app.entity.SimpleEntityProfile;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityTeamChangedEvent;
+import scala.Option;
 
 import java.util.Map;
 import java.util.UUID;
@@ -54,8 +54,8 @@ public class DefaultEntityCommandService extends AbstractEntityCommandService {
         EntityProfile newProfile = new SimpleEntityProfile(profile.getEntityId(), newData);
         entityProfileRepository.save(newProfile);
 
-        EntityTeamChangedEvent entityTeamChangedEvent = new SimpleEntityTeamChangedEvent(
-                entityId, entity.getType(), previousTeam, team);
+        EntityTeamChangedEvent entityTeamChangedEvent = new EntityTeamChangedEvent(
+                entityId, entity.getType(), Option.apply(previousTeam), Option.apply(team));
         eventService.publish(entityTeamChangedEvent);
     }
 

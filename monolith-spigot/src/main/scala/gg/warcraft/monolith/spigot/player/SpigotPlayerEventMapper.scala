@@ -60,22 +60,22 @@ class SpigotPlayerEventMapper(
   private def getEquipment(player: Player): Equipment = {
     val head: Item = itemMapper
       .map(player.getInventory.getHelmet)
-      .getOrElse(() => null)
+      .orNull
     val chest: Item = itemMapper
       .map(player.getInventory.getChestplate)
-      .getOrElse(() => null)
+      .orNull
     val legs: Item = itemMapper
       .map(player.getInventory.getLeggings)
-      .getOrElse(() => null)
+      .orNull
     val feet: Item = itemMapper
       .map(player.getInventory.getBoots)
-      .getOrElse(() => null)
+      .orNull
     val mainHand: Item = itemMapper
       .map(player.getInventory.getItemInMainHand)
-      .getOrElse(() => null)
+      .orNull
     val offHand: Item = itemMapper
       .map(player.getInventory.getItemInOffHand)
-      .getOrElse(() => null)
+      .orNull
     new SimpleEquipment(head, chest, legs, feet, mainHand, offHand)
   }
 

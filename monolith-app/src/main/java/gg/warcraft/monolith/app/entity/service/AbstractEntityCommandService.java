@@ -2,14 +2,14 @@ package gg.warcraft.monolith.app.entity.service;
 
 import gg.warcraft.monolith.api.combat.PotionEffect;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
-import gg.warcraft.monolith.api.combat.value.CombatValue;
+import gg.warcraft.monolith.api.combat.CombatValue;
 import gg.warcraft.monolith.api.core.EventService;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
-import gg.warcraft.monolith.api.entity.event.EntityHealEvent;
-import gg.warcraft.monolith.api.entity.event.EntityHealthChangedEvent;
-import gg.warcraft.monolith.api.entity.event.EntityPreHealEvent;
+import gg.warcraft.monolith.api.entity.EntityHealEvent;
+import gg.warcraft.monolith.api.entity.EntityHealthChangedEvent;
+import gg.warcraft.monolith.api.entity.EntityPreHealEvent;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 import gg.warcraft.monolith.api.entity.service.EntityProfileRepository;
 import gg.warcraft.monolith.api.entity.service.EntityQueryService;
@@ -25,9 +25,6 @@ import gg.warcraft.monolith.api.world.block.Block;
 import gg.warcraft.monolith.api.world.block.BlockFace;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityHealEvent;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityHealthChangedEvent;
-import gg.warcraft.monolith.app.entity.event.SimpleEntityPreHealEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -116,7 +113,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
             float maxHealth = newEntity.getAttributes().getValue(GenericAttribute.MAX_HEALTH);
             float previousPercentHealth = previousHealth / maxHealth;
             float newPercentHealth = newHealth / maxHealth;
-            EntityHealthChangedEvent entityHealthChangedEvent = new SimpleEntityHealthChangedEvent(entityId, entityType,
+            EntityHealthChangedEvent entityHealthChangedEvent = new EntityHealthChangedEvent(entityId, entityType,
                     previousHealth, previousPercentHealth, newHealth, newPercentHealth);
             eventService.publish(entityHealthChangedEvent);
         }
@@ -136,18 +133,18 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     public void heal(UUID entityId, CombatValue amount) {
         Entity entity = entityQueryService.getEntity(entityId);
         EntityType entityType = entity.getType();
-        EntityPreHealEvent entityPreHealEvent = new SimpleEntityPreHealEvent(entityId, entityType, amount, false);
+        EntityPreHealEvent entityPreHealEvent = new EntityPreHealEvent(entityId, entityType, amount, false, false);
         eventService.publish(entityPreHealEvent);
-        if (!entityPreHealEvent.isAllowed()) {
+        if (!entityPreHealEvent.allowed()) {
             return;
         }
 
         float previousHealth = entity.getHealth();
 
-        CombatValue heal = entityPreHealEvent.getHeal();
-        entityServerAdapter.heal(entityId, heal.getModifiedValue());
+        CombatValue heal = entityPreHealEvent.heal();
+        entityServerAdapter.heal(entityId, heal.modified());
 
-        EntityHealEvent entityHealEvent = new SimpleEntityHealEvent(entityId, entityType, heal);
+        EntityHealEvent entityHealEvent = new EntityHealEvent(entityId, entityType, heal);
         eventService.publish(entityHealEvent);
 
         publishHealthChangedEvent(entityId, entityType, previousHealth);
