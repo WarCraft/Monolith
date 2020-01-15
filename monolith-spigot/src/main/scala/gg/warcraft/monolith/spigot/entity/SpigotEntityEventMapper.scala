@@ -6,6 +6,7 @@ import gg.warcraft.monolith.api.combat.{
   CombatSource, CombatValue, CombatValueModifier, CombatValueModifierType
 }
 import gg.warcraft.monolith.api.core.{EventService, TaskService}
+import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.entity.{
   EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
   EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
@@ -20,6 +21,7 @@ import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.Server
 import org.bukkit.attribute.Attribute
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause
+import org.bukkit.plugin.Plugin
 
 import scala.collection.mutable
 import scala.jdk.CollectionConverters._
@@ -31,8 +33,10 @@ private object SpigotEntityEventMapper {
 
 class SpigotEntityEventMapper(
     private implicit val server: Server,
+    private implicit val plugin: Plugin,
     private implicit val eventService: EventService,
     private implicit val taskService: TaskService,
+    private implicit val statusService: StatusService,
     private implicit val locationMapper: SpigotLocationMapper,
     private implicit val itemMapper: SpigotItemMapper
 ) {
@@ -117,13 +121,13 @@ class SpigotEntityEventMapper(
     eventService.publish(interactEvent)
   }
 
-  private def getAttackerId(attacker: SpigotEntity): UUID = {
-    if (attacker.getType.name == "ARROW") {
-      attacker.asInstanceOf[SpigotArrow].getShooter match {
-        case it: LivingEntity => it.getUniqueId
-        case _                => attacker.getUniqueId
+  private def getAttackerId(attacker: SpigotEntity): UUID = attacker match {
+    case arrow: SpigotArrow =>
+      arrow.getShooter match {
+        case shooter: LivingEntity => shooter.getUniqueId
+        case _                     => arrow.getUniqueId
       }
-    } else attacker.getUniqueId
+    case _ => attacker.getUniqueId
   }
 
   private def preAttack(event: SpigotEntityDamageByEntityEvent): CombatValue = {
@@ -196,7 +200,7 @@ class SpigotEntityEventMapper(
 
     val entityId = entity.getUniqueId
     val entityType = EntityType.valueOf(entity.getType.name)
-    val entityStatus = statusQueryService.getStatus(entityId)
+    val entityStatus = statusService.getStatus(entityId)
     val damage = combatValues.get(event) match {
       case Some(it) => it
       case None =>
@@ -221,25 +225,25 @@ class SpigotEntityEventMapper(
       cancelled
     )
 
-    val reducedPreDamageEvent = eventService.publish(preDamageEvent)
+    var reducedPreDamageEvent = eventService.publish(preDamageEvent)
+    if (reducedPreDamageEvent.allowed) {
+      reducedPreDamageEvent = entityStatus.reduce(reducedPreDamageEvent)
+    }
     if (!reducedPreDamageEvent.allowed) {
       event.setCancelled(true)
       return
     }
-
-    entityStatus.effects.foreach(_.preDamageEvent(reducedPreDamageEvent)) // TODO reduce event sent to status
 
     combatValues.put(event, reducedPreDamageEvent.damage)
 
     if (damage.modified >= entity.getHealth) {
       val preFatalDamageEvent =
         EntityPreFatalDamageEvent(entityId, entityType, damage)
-      val reducedPreFatalDamageEvent = eventService.publish(preFatalDamageEvent)
-      if (reducedPreFatalDamageEvent.allowed)
-        entityStatus.effects.foreach(
-          _.preFatalDamageEvent(reducedPreFatalDamageEvent)
-        ) // TODO reduce event sent to status
-      else {
+      var reducedPreFatalDamageEvent = eventService.publish(preFatalDamageEvent)
+      if (reducedPreFatalDamageEvent.allowed) {
+        reducedPreFatalDamageEvent = entityStatus.reduce(reducedPreFatalDamageEvent)
+      }
+      if (!reducedPreFatalDamageEvent.allowed) {
         val adjustedDamage = entity.getHealth.toFloat - 1
         val damageOverride = CombatValueModifier(
           CombatValueModifierType.OVERRIDE,
@@ -267,7 +271,7 @@ class SpigotEntityEventMapper(
 
     val entityId = entity.getUniqueId
     val entityType = EntityType.valueOf(entity.getType.name)
-    val entityStatus = statusQueryService.getStatus(entityId)
+    val entityStatus = statusService.getStatus(entityId)
     val damage = combatValue match {
       case Some(it) => it
       case None =>
@@ -277,8 +281,7 @@ class SpigotEntityEventMapper(
 
     val damageEvent = EntityDamageEvent(entityId, entityType, damage)
     eventService.publish(damageEvent)
-
-    entityStatus.effects.forEach() // TODO publish event
+    entityStatus.handle(damageEvent)
 
     if (damage.modified >= entity.getHealth) {
       val fatalDamageEvent = EntityFatalDamageEvent(entityId, entityType, damage)
@@ -305,7 +308,7 @@ class SpigotEntityEventMapper(
         currentPercentHealth
       )
       eventService.publish(healthChangedEvent)
-      entityStatus.effects.forEach() // TODO publish event
+      entityStatus.handle(healthChangedEvent)
     })
   }
 
