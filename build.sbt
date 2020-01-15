@@ -6,8 +6,7 @@ lazy val commonSettings = Seq(
     // additional scalac options go here
   ),
   resolvers ++= Seq(
-    Resolver.mavenLocal,
-    "PaperMC" at "https://papermc.io/repo/repository/maven-public/",
+    Resolver.mavenLocal
   )
 )
 
@@ -61,9 +60,12 @@ lazy val spigot = (project in file("monolith-spigot"))
     name := "monolith-spigot",
     commonSettings,
     assemblySettings,
+    resolvers ++= Seq(
+      "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
+    ),
     libraryDependencies ++= commonDependencies ++ Seq(
       "com.destroystokyo.paper" % "paper-api" % "1.14.4-R0.1-SNAPSHOT" % Provided,
-      "de.slikey" % "EffectLib" % "6.2-SNAPSHOT" % Provided
+      "de.slikey" % "EffectLib" % "6.3-SNAPSHOT" % Provided
     )
   )
   .dependsOn(app)
