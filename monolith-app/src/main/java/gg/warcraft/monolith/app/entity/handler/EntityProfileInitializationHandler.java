@@ -1,7 +1,8 @@
 package gg.warcraft.monolith.app.entity.handler;
 
-import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.core.Event;
+import gg.warcraft.monolith.api.core.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityProfile;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.EntityDeathEvent;
@@ -12,7 +13,7 @@ import gg.warcraft.monolith.app.entity.SimpleEntityProfile;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EntityProfileInitializationHandler {
+public class EntityProfileInitializationHandler implements EventHandler {
     private final EntityProfileRepository entityProfileRepository;
 
     @Inject
@@ -20,7 +21,15 @@ public class EntityProfileInitializationHandler {
         this.entityProfileRepository = entityProfileRepository;
     }
 
-    @Subscribe
+    @Override
+    public void handle(Event event) {
+        if (event instanceof EntitySpawnEvent) {
+            onEntitySpawn((EntitySpawnEvent) event);
+        } else if (event instanceof EntityDeathEvent) {
+            onEntityDeathEvent((EntityDeathEvent) event);
+        }
+    }
+
     public void onEntitySpawn(EntitySpawnEvent event) {
         EntityType entityType = event.entityType();
         if (entityType != EntityType.PLAYER && entityType != EntityType.ARMOR_STAND) {
@@ -33,7 +42,6 @@ public class EntityProfileInitializationHandler {
         }
     }
 
-    @Subscribe
     public void onEntityDeathEvent(EntityDeathEvent event) {
         EntityType entityType = event.entityType();
         if (entityType != EntityType.PLAYER) {

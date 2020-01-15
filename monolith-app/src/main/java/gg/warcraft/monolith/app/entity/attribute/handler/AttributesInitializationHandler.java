@@ -3,6 +3,8 @@ package gg.warcraft.monolith.app.entity.attribute.handler;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import gg.warcraft.monolith.api.core.Event;
+import gg.warcraft.monolith.api.core.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
@@ -20,7 +22,7 @@ import gg.warcraft.monolith.app.entity.attribute.LazyAttributes;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class AttributesInitializationHandler {
+public class AttributesInitializationHandler implements EventHandler {
     private final AttributeCommandService attributeCommandService;
     private final AttributeRepository attributeRepository;
     private final EntityServerAdapter entityServerAdapter;
@@ -38,7 +40,19 @@ public class AttributesInitializationHandler {
         this.baseHealth = baseHealth;
     }
 
-    @Subscribe
+    @Override
+    public void handle(Event event) {
+        if (event instanceof PlayerConnectEvent) {
+            onPlayerConnectEvent((PlayerConnectEvent) event);
+        } else if (event instanceof PlayerDisconnectEvent) {
+            onPlayerDisconnectEvent((PlayerDisconnectEvent) event);
+        } else if (event instanceof EntitySpawnEvent) {
+            onEntitySpawnEvent((EntitySpawnEvent) event);
+        } else if (event instanceof EntityDeathEvent) {
+            onEntityDeathEvent((EntityDeathEvent) event);
+        }
+    }
+
     public void onPlayerConnectEvent(PlayerConnectEvent event) {
         UUID playerId = event.playerId();
         Attributes attributes = attributeRepository.getAttributes(playerId);
@@ -49,12 +63,10 @@ public class AttributesInitializationHandler {
         attributeCommandService.addAttributeModifier(playerId, GenericAttribute.MAX_HEALTH, baseHealth);
     }
 
-    @Subscribe
     public void onPlayerDisconnectEvent(PlayerDisconnectEvent event) {
         attributeRepository.delete(event.playerId());
     }
 
-    @Subscribe
     public void onEntitySpawnEvent(EntitySpawnEvent event) {
         if (event.entityType() != EntityType.PLAYER) {
             Attributes attributes = new LazyAttributes(attributeCommandService, entityServerAdapter,
@@ -63,7 +75,6 @@ public class AttributesInitializationHandler {
         }
     }
 
-    @Subscribe
     public void onEntityDeathEvent(EntityDeathEvent event) {
         if (event.entityType() != EntityType.PLAYER) {
             attributeRepository.delete(event.entityId());

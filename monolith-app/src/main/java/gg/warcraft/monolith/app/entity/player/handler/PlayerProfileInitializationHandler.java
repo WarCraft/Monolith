@@ -1,7 +1,8 @@
 package gg.warcraft.monolith.app.entity.player.handler;
 
-import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.core.Event;
+import gg.warcraft.monolith.api.core.EventHandler;
 import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
 import gg.warcraft.monolith.api.player.PlayerPreConnectEvent;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerProfileInitializationHandler {
+public class PlayerProfileInitializationHandler implements EventHandler {
     private final PlayerProfileRepository playerProfileRepository;
 
     @Inject
@@ -20,7 +21,13 @@ public class PlayerProfileInitializationHandler {
         this.playerProfileRepository = playerProfileRepository;
     }
 
-    @Subscribe
+    @Override
+    public void handle(Event event) {
+        if (event instanceof PlayerPreConnectEvent) {
+            onPlayerPreConnect((PlayerPreConnectEvent) event);
+        }
+    }
+
     public void onPlayerPreConnect(PlayerPreConnectEvent event) {
         UUID playerId = event.playerId();
         int now = (int) (System.currentTimeMillis() / 1000);

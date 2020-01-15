@@ -4,15 +4,13 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.core.EventService
 import gg.warcraft.monolith.api.entity.EntityType
-import gg.warcraft.monolith.api.world.item.{
-  Item, ItemPickupEvent, ItemPrePickupEvent
-}
-import org.bukkit.event.{EventHandler, EventPriority}
+import gg.warcraft.monolith.api.world.item.{Item, ItemPickupEvent, ItemPrePickupEvent}
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotItemEventMapper(
     implicit private val eventService: EventService,
     implicit private val itemMapper: SpigotItemMapper
-) {
+) extends Listener {
   private def parse(
       item: SpigotItem,
       entity: SpigotEntity

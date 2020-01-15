@@ -1,12 +1,13 @@
 package gg.warcraft.monolith.app.command.handler;
 
-import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.command.Command;
 import gg.warcraft.monolith.api.command.event.CommandExecutedEvent;
 import gg.warcraft.monolith.api.command.service.CommandQueryService;
+import gg.warcraft.monolith.api.core.Event;
+import gg.warcraft.monolith.api.core.EventHandler;
 
-public class CommandExecutedHandler {
+public class CommandExecutedHandler implements EventHandler {
     private final CommandQueryService queryService;
 
     @Inject
@@ -14,7 +15,13 @@ public class CommandExecutedHandler {
         this.queryService = queryService;
     }
 
-    @Subscribe
+    @Override
+    public void handle(Event event) {
+        if (event instanceof CommandExecutedEvent) {
+            onCommandExecuted((CommandExecutedEvent) event);
+        }
+    }
+
     public void onCommandExecuted(CommandExecutedEvent event) {
         Command command = queryService.getCommand(event.getCommand());
         if (command != null) {

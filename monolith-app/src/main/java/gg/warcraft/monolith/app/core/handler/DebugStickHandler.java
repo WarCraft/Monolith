@@ -1,13 +1,14 @@
 package gg.warcraft.monolith.app.core.handler;
 
-import com.google.common.eventbus.Subscribe;
 import gg.warcraft.monolith.api.core.AuthorizationService;
+import gg.warcraft.monolith.api.core.Event;
+import gg.warcraft.monolith.api.core.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityInteractEvent;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 
 import javax.inject.Inject;
 
-public class DebugStickHandler {
+public class DebugStickHandler implements EventHandler {
     private final AuthorizationService authorizationService;
     private final EntityCommandService entityCommandService;
 
@@ -18,7 +19,13 @@ public class DebugStickHandler {
         this.entityCommandService = entityCommandService;
     }
 
-    @Subscribe
+    @Override
+    public void handle(Event event) {
+        if (event instanceof EntityInteractEvent) {
+            onInteractEvent((EntityInteractEvent) event);
+        }
+    }
+
     public void onInteractEvent(EntityInteractEvent event) {
         if (authorizationService.isDebugging(event.playerId())) {
             entityCommandService.removeEntity(event.entityId());

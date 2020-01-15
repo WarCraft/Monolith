@@ -1,7 +1,8 @@
 package gg.warcraft.monolith.app.entity.player.hiding.handler;
 
-import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
+import gg.warcraft.monolith.api.core.Event;
+import gg.warcraft.monolith.api.core.EventHandler;
 import gg.warcraft.monolith.api.player.PlayerConnectEvent;
 import gg.warcraft.monolith.api.player.PlayerDisconnectEvent;
 import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingRepository;
@@ -10,7 +11,7 @@ import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingServerAdapter;
 import java.util.Set;
 import java.util.UUID;
 
-public class PlayerHidingHandler {
+public class PlayerHidingHandler implements EventHandler {
     private final PlayerHidingRepository playerHidingRepository;
     private final PlayerHidingServerAdapter playerHidingServerAdapter;
 
@@ -21,7 +22,15 @@ public class PlayerHidingHandler {
         this.playerHidingServerAdapter = playerHidingServerAdapter;
     }
 
-    @Subscribe
+    @Override
+    public void handle(Event event) {
+        if (event instanceof PlayerConnectEvent) {
+            onPlayerConnectEvent((PlayerConnectEvent) event);
+        } else if (event instanceof PlayerDisconnectEvent) {
+            onPlayerDisconnectEvent((PlayerDisconnectEvent) event);
+        }
+    }
+
     public void onPlayerConnectEvent(PlayerConnectEvent event) {
         UUID playerId = event.playerId();
         Set<UUID> hiddenPlayers = playerHidingRepository.getHiddenPlayers();
@@ -34,7 +43,6 @@ public class PlayerHidingHandler {
         });
     }
 
-    @Subscribe
     public void onPlayerDisconnectEvent(PlayerDisconnectEvent event) {
         UUID playerId = event.playerId();
         Set<UUID> hiddenPlayers = playerHidingRepository.getHiddenPlayers();
