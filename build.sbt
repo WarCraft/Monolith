@@ -1,6 +1,6 @@
 lazy val commonSettings = Seq(
   organization := "gg.warcraft",
-  version := "14.0.0-SNAPSHOT",
+  version := "15.0.0-SNAPSHOT",
   scalaVersion := "2.13.1",
   scalacOptions ++= Seq(
     // additional scalac options go here
