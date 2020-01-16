@@ -11,10 +11,6 @@ import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
-import gg.warcraft.monolith.app.command.ConsoleCommandSender;
-import gg.warcraft.monolith.app.command.PlayerCommandSender;
-import gg.warcraft.monolith.app.command.event.SimpleCommandExecutedEvent;
-import gg.warcraft.monolith.app.command.handler.CommandExecutedHandler;
 import gg.warcraft.monolith.app.core.handler.DailyTickHandler;
 import gg.warcraft.monolith.app.core.handler.DebugStickHandler;
 import gg.warcraft.monolith.app.entity.attribute.handler.AttributesInitializationHandler;
@@ -59,9 +55,6 @@ public class MonolithPlugin extends JavaPlugin {
     }
 
     void initializeMonolithHandlers() {
-        CommandExecutedHandler commandExecutedHandler = injector.getInstance(CommandExecutedHandler.class);
-        eventService.subscribe(commandExecutedHandler);
-
         AttributesInitializationHandler attributesInitializationHandler =
                 injector.getInstance(AttributesInitializationHandler.class);
         eventService.subscribe(attributesInitializationHandler);
@@ -209,13 +202,7 @@ public class MonolithPlugin extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        eventService.publish(new SimpleCommandExecutedEvent(
-                (sender instanceof Player)
-                        ? new PlayerCommandSender(sender.getName(), ((Player) sender).getUniqueId())
-                        : new ConsoleCommandSender(),
-                command.getName(),
-                label,
-                Arrays.asList(args)));
+        // TODO initialize command handlers here
         return true;
     }
 }

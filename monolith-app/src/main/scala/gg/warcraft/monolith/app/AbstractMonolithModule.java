@@ -12,11 +12,6 @@ import com.google.inject.name.Names;
 import gg.warcraft.monolith.api.MonolithPluginUtils;
 import gg.warcraft.monolith.api.Implicits;
 import gg.warcraft.monolith.api.combat.*;
-import gg.warcraft.monolith.api.command.CommandSender;
-import gg.warcraft.monolith.api.command.Console;
-import gg.warcraft.monolith.api.command.service.CommandCommandService;
-import gg.warcraft.monolith.api.command.service.CommandQueryService;
-import gg.warcraft.monolith.api.command.service.CommandRepository;
 import gg.warcraft.monolith.api.config.service.ConfigurationCommandService;
 import gg.warcraft.monolith.api.config.service.ConfigurationQueryService;
 import gg.warcraft.monolith.api.config.service.ConfigurationRepository;
@@ -82,10 +77,6 @@ import gg.warcraft.monolith.app.combat.AmbientPotionEffect;
 import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.combat.VisiblePotionEffect;
-import gg.warcraft.monolith.app.command.ConsoleCommandSender;
-import gg.warcraft.monolith.app.command.service.DefaultCommandCommandService;
-import gg.warcraft.monolith.app.command.service.DefaultCommandQueryService;
-import gg.warcraft.monolith.app.command.service.DefaultCommandRepository;
 import gg.warcraft.monolith.app.config.MonolithMapperModule;
 import gg.warcraft.monolith.app.config.service.DefaultConfigurationQueryService;
 import gg.warcraft.monolith.app.config.service.DefaultConfigurationRepository;
@@ -181,7 +172,6 @@ public class AbstractMonolithModule extends PrivateModule {
     @Override
     protected void configure() {
         configureCombat();
-        configureCommand();
         configureConfiguration();
         configureCore();
         configureEffect();
@@ -205,20 +195,6 @@ public class AbstractMonolithModule extends PrivateModule {
                 .implement(CombatValueModifier.class, Names.named("modifier"), CombatValueModifier.class)
                 .build(CombatFactory.class));
         expose(CombatFactory.class);
-    }
-
-    private void configureCommand() {
-        bind(CommandCommandService.class).to(DefaultCommandCommandService.class);
-        expose(CommandCommandService.class);
-
-        bind(CommandQueryService.class).to(DefaultCommandQueryService.class);
-        expose(CommandQueryService.class);
-
-        bind(CommandRepository.class).to(DefaultCommandRepository.class);
-        expose(CommandRepository.class);
-
-        bind(CommandSender.class).annotatedWith(Console.class).to(ConsoleCommandSender.class);
-        expose(Key.get(CommandSender.class, Console.class));
     }
 
     private void configureConfiguration() {
