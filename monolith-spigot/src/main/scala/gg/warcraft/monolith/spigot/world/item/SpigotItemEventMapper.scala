@@ -2,7 +2,7 @@ package gg.warcraft.monolith.spigot.world.item
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.EventService
+import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.EntityType
 import gg.warcraft.monolith.api.world.item.{Item, ItemPickupEvent, ItemPrePickupEvent}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}

@@ -4,8 +4,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import gg.warcraft.monolith.api.Monolith;
-import gg.warcraft.monolith.api.core.EventService;
-import gg.warcraft.monolith.api.core.ServerShutdownEvent;
+import gg.warcraft.monolith.api.core.event.EventService;
+import gg.warcraft.monolith.api.core.event.ServerShutdownEvent;
 import gg.warcraft.monolith.api.core.TaskService;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
@@ -29,13 +29,11 @@ import gg.warcraft.monolith.spigot.world.item.SpigotItemEventMapper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.flywaydb.core.Flyway;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.app.entity.player.service;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.MonolithEntityData;

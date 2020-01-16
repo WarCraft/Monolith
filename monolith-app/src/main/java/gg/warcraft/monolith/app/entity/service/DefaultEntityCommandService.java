@@ -2,7 +2,7 @@ package gg.warcraft.monolith.app.entity.service;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityProfile;
 import gg.warcraft.monolith.api.entity.MonolithEntityData;

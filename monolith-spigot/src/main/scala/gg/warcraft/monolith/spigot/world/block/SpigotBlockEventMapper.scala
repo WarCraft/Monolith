@@ -1,11 +1,7 @@
 package gg.warcraft.monolith.spigot.world.block
 
-import gg.warcraft.monolith.api.core.EventService
-import gg.warcraft.monolith.api.world.block.{
-  BlockBreakEvent, BlockInteractEvent, BlockPlaceEvent, BlockPreBreakEvent,
-  BlockPreInteractEvent, BlockPrePlaceEvent, BlockPrePunchEvent,
-  BlockPreTriggerEvent, BlockPunchEvent, BlockTriggerEvent
-}
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.world.block.{BlockBreakEvent, BlockInteractEvent, BlockPlaceEvent, BlockPreBreakEvent, BlockPreInteractEvent, BlockPrePlaceEvent, BlockPrePunchEvent, BlockPreTriggerEvent, BlockPunchEvent, BlockTriggerEvent}
 import gg.warcraft.monolith.api.world.item.{Item, ItemService}
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper
 import org.bukkit.event.{EventHandler, EventPriority}

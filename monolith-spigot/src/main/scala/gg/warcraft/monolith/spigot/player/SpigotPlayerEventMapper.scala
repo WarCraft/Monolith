@@ -1,6 +1,7 @@
 package gg.warcraft.monolith.spigot.player
 
-import gg.warcraft.monolith.api.core.{EventService, TaskService}
+import gg.warcraft.monolith.api.core.TaskService
+import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.player.{PlayerConnectEvent, PlayerDisconnectEvent, PlayerEquipmentChangedEvent, PlayerInteractEvent, PlayerPreConnectEvent, PlayerPreInteractEvent, PlayerPrePunchEvent, PlayerPreRespawnEvent, PlayerPunchEvent, PlayerRespawnEvent}
 import gg.warcraft.monolith.api.world.item.Item

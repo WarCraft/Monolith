@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.app.entity.player.hiding.handler;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.core.Event;
-import gg.warcraft.monolith.api.core.EventHandler;
+import gg.warcraft.monolith.api.core.event.Event;
+import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.player.PlayerConnectEvent;
 import gg.warcraft.monolith.api.player.PlayerDisconnectEvent;
 import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingRepository;

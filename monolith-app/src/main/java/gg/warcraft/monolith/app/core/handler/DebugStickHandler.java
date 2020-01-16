@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.app.core.handler;
 
 import gg.warcraft.monolith.api.core.AuthorizationService;
-import gg.warcraft.monolith.api.core.Event;
-import gg.warcraft.monolith.api.core.EventHandler;
+import gg.warcraft.monolith.api.core.event.Event;
+import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityInteractEvent;
 import gg.warcraft.monolith.api.entity.service.EntityCommandService;
 

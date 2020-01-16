@@ -2,7 +2,8 @@ package gg.warcraft.monolith.api.player
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.{CancellableEvent, Event, PreEvent}
+import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event, PreEvent}
+import gg.warcraft.monolith.api.core.{CancellableEvent, PreEvent}
 import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.entity.player.Statistic
 import gg.warcraft.monolith.api.world.Location

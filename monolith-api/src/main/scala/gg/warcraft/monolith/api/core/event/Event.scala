@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.api.core
+package gg.warcraft.monolith.api.core.event
 
 /** Event is a utility trait that prevents accidental passing of objects to the
   * EventService that were not meant to be used as an event. */

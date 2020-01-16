@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.entity.service;
 import gg.warcraft.monolith.api.combat.PotionEffect;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
 import gg.warcraft.monolith.api.combat.CombatValue;
-import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.entity.Entity;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;

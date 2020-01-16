@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.app.entity.player.handler;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.core.Event;
-import gg.warcraft.monolith.api.core.EventHandler;
+import gg.warcraft.monolith.api.core.event.Event;
+import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
 import gg.warcraft.monolith.api.player.PlayerPreConnectEvent;

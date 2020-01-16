@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.spigot.world
 
-import gg.warcraft.monolith.api.core.EventService
+import gg.warcraft.monolith.api.core.event.EventService
 import org.bukkit.event.Listener
 
 class SpigotWorldEventMapper(

@@ -1,10 +1,10 @@
 package gg.warcraft.monolith.app.core.handler;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.core.Event;
-import gg.warcraft.monolith.api.core.EventService;
+import gg.warcraft.monolith.api.core.event.Event;
+import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.core.PersistenceService;
-import gg.warcraft.monolith.api.core.DailyTickEvent;
+import gg.warcraft.monolith.api.core.event.DailyTickEvent;
 
 import java.time.LocalDateTime;
 

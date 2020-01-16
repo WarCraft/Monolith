@@ -1,10 +1,9 @@
 package gg.warcraft.monolith.app.entity.attribute.handler;
 
-import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import gg.warcraft.monolith.api.core.Event;
-import gg.warcraft.monolith.api.core.EventHandler;
+import gg.warcraft.monolith.api.core.event.Event;
+import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;

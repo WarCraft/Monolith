@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.spigot.combat
 
-import gg.warcraft.monolith.api.core.EventService
+import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper
 import org.bukkit.event.Listener
 

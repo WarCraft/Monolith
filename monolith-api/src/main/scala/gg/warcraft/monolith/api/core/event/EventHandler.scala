@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.api.core
+package gg.warcraft.monolith.api.core.event
 
 trait EventHandler {
   def handle(event: Event): Unit = ()

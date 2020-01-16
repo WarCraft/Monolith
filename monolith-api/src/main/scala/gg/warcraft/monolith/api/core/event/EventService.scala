@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.api.core
+package gg.warcraft.monolith.api.core.event
 
 import scala.collection.mutable
 
