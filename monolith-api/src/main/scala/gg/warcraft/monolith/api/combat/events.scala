@@ -5,13 +5,7 @@ import java.util.UUID
 import gg.warcraft.monolith.api.core.{Event, PreEvent}
 import gg.warcraft.monolith.api.world.block.{Block, BlockFace}
 
-trait ProjectileEvent extends Event {
-  val projectileId: UUID
-  val projectileType: ProjectileType
-  val shooterId: UUID
-}
-
-trait ProjectilePreEvent extends ProjectileEvent with PreEvent
+trait ProjectileEvent
 
 // HIT
 case class ProjectilePreHitEvent(
@@ -21,7 +15,7 @@ case class ProjectilePreHitEvent(
     block: Option[Block],
     blockFace: Option[BlockFace],
     entityId: Option[UUID]
-) extends ProjectilePreEvent
+) extends ProjectileEvent
 
 case class ProjectileHitEvent(
     projectileId: UUID,
@@ -37,7 +31,7 @@ case class ProjectilePreLaunchEvent(
     projectileId: UUID,
     projectileType: ProjectileType,
     shooterId: UUID
-) extends ProjectilePreEvent
+) extends ProjectileEvent
 
 case class ProjectileLaunchEvent(
     projectileId: UUID,
@@ -51,7 +45,7 @@ case class ProjectilePrePickupEvent(
     projectileType: ProjectileType,
     shooterId: UUID,
     entityId: UUID
-) extends ProjectilePreEvent
+) extends ProjectileEvent
 
 case class ProjectilePickupEvent(
     projectileId: UUID,
