@@ -2,7 +2,6 @@ package gg.warcraft.monolith.api.world.block
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.CancellableEvent
 import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event}
 import gg.warcraft.monolith.api.world.item.Item
 

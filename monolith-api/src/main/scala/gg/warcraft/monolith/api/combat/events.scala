@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.combat
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.PreEvent
+import gg.warcraft.monolith.api.core.event.CancellableEvent
 import gg.warcraft.monolith.api.world.block.{Block, BlockFace}
 
 trait ProjectileEvent
@@ -14,8 +14,11 @@ case class ProjectilePreHitEvent(
     shooterId: UUID,
     block: Option[Block],
     blockFace: Option[BlockFace],
-    entityId: Option[UUID]
+    entityId: Option[UUID],
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
 ) extends ProjectileEvent
+    with CancellableEvent
 
 case class ProjectileHitEvent(
     projectileId: UUID,
@@ -30,8 +33,11 @@ case class ProjectileHitEvent(
 case class ProjectilePreLaunchEvent(
     projectileId: UUID,
     projectileType: ProjectileType,
-    shooterId: UUID
+    shooterId: UUID,
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
 ) extends ProjectileEvent
+    with CancellableEvent
 
 case class ProjectileLaunchEvent(
     projectileId: UUID,
@@ -44,8 +50,11 @@ case class ProjectilePrePickupEvent(
     projectileId: UUID,
     projectileType: ProjectileType,
     shooterId: UUID,
-    entityId: UUID
+    entityId: UUID,
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
 ) extends ProjectileEvent
+    with CancellableEvent
 
 case class ProjectilePickupEvent(
     projectileId: UUID,

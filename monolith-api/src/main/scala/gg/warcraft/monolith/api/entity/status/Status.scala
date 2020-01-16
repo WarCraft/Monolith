@@ -1,7 +1,6 @@
 package gg.warcraft.monolith.api.entity.status
 
 import gg.warcraft.monolith.api.core.event.{Event, EventHandler, PreEvent}
-import gg.warcraft.monolith.api.core.{EventHandler, PreEvent}
 
 import scala.collection.mutable
 
