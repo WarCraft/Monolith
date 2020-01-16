@@ -4,7 +4,7 @@ author: fishb6nes
 authors: [fishb6nes, cbngu]
 website: http://warcraft.gg
 
-api-version: "1.14"
+api-version: "1.15"
 main: gg.warcraft.monolith.spigot.MonolithPlugin
 depend: [EffectLib]
 loadbefore: [EssentialsX]
