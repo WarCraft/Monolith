@@ -23,8 +23,12 @@ import gg.warcraft.monolith.app.entity.player.handler.PlayerProfileInitializatio
 import gg.warcraft.monolith.app.entity.player.handler.PlayerProfileUpdateHandler;
 import gg.warcraft.monolith.app.entity.player.hiding.handler.PlayerHidingHandler;
 import gg.warcraft.monolith.app.world.portal.handler.PortalEntryTaskHandler;
+import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper;
+import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.entity.handler.EntityRemovalHandler;
-import gg.warcraft.monolith.spigot.event.*;
+import gg.warcraft.monolith.spigot.menu.SpigotMenuEventMapper;
+import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper;
+import gg.warcraft.monolith.spigot.world.SpigotWorldEventMapper;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemEventMapper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -93,23 +97,23 @@ public class MonolithPlugin extends JavaPlugin {
     void initializeSpigotEventMappers() {
         PluginManager pluginManager = getServer().getPluginManager();
 
+        SpigotCombatEventMapper combatEventMapper = injector.getInstance(SpigotCombatEventMapper.class);
+        pluginManager.registerEvents(combatEventMapper, this);
+
         SpigotEntityEventMapper entityEventMapper = injector.getInstance(SpigotEntityEventMapper.class);
         pluginManager.registerEvents(entityEventMapper, this);
 
-        SpigotInventoryEventMapper inventoryEventMapper = injector.getInstance(SpigotInventoryEventMapper.class);
-        pluginManager.registerEvents(inventoryEventMapper, this);
+        SpigotMenuEventMapper menuEventMapper = injector.getInstance(SpigotMenuEventMapper.class);
+        pluginManager.registerEvents(menuEventMapper, this);
 
         SpigotPlayerEventMapper playerEventMapper = injector.getInstance(SpigotPlayerEventMapper.class);
         pluginManager.registerEvents(playerEventMapper, this);
 
-        SpigotProjectileEventMapper projectileEventMapper = injector.getInstance(SpigotProjectileEventMapper.class);
-        pluginManager.registerEvents(projectileEventMapper, this);
+        SpigotItemEventMapper itemEventMapper = injector.getInstance(SpigotItemEventMapper.class);
+        pluginManager.registerEvents(itemEventMapper, this);
 
         SpigotWorldEventMapper worldEventMapper = injector.getInstance(SpigotWorldEventMapper.class);
         pluginManager.registerEvents(worldEventMapper, this);
-
-        SpigotItemEventMapper itemEventMapper = injector.getInstance(SpigotItemEventMapper.class);
-        pluginManager.registerEvents(itemEventMapper, this);
     }
 
     @Override
@@ -118,7 +122,6 @@ public class MonolithPlugin extends JavaPlugin {
 
         saveDefaultConfig();
         FileConfiguration localConfig = getConfig();
-
 
         Flyway flyway = Flyway
                 .configure(getClassLoader())

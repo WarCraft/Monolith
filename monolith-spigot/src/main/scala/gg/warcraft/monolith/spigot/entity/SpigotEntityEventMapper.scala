@@ -2,21 +2,14 @@ package gg.warcraft.monolith.spigot.entity
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.combat.{
-  CombatSource, CombatValue, CombatValueModifier, CombatValueModifierType
-}
+import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue, CombatValueModifier, CombatValueModifierType}
 import gg.warcraft.monolith.api.core.{EventService, TaskService}
 import gg.warcraft.monolith.api.entity.status.StatusService
-import gg.warcraft.monolith.api.entity.{
-  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
-  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
-  EntityPreDamageEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent,
-  EntityPreSpawnEvent, EntitySpawnEvent, EntityType
-}
+import gg.warcraft.monolith.api.entity.{EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent, EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent, EntityPreDamageEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent, EntityPreSpawnEvent, EntitySpawnEvent, EntityType}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper
 import org.bukkit.entity.LivingEntity
-import org.bukkit.event.{EventHandler, EventPriority}
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.Server
 import org.bukkit.attribute.Attribute
@@ -39,7 +32,7 @@ class SpigotEntityEventMapper(
     private implicit val statusService: StatusService,
     private implicit val locationMapper: SpigotLocationMapper,
     private implicit val itemMapper: SpigotItemMapper
-) {
+) extends Listener {
   import SpigotEntityEventMapper._
 
   @EventHandler(priority = EventPriority.HIGH)
