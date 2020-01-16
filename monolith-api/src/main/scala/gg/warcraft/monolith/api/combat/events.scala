@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.combat
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.{Event, PreEvent}
+import gg.warcraft.monolith.api.core.PreEvent
 import gg.warcraft.monolith.api.world.block.{Block, BlockFace}
 
 trait ProjectileEvent
