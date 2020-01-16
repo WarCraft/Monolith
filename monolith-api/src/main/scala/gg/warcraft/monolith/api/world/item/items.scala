@@ -167,6 +167,16 @@ case class Bedrock(
   val `type` = ItemType.BEDROCK
 }
 
+case class BeeNest(
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.BEE_NEST
+}
+
 case class Beef(
     variant: BeefVariant,
     name: String,
@@ -178,6 +188,16 @@ case class Beef(
     with StackableItem {
   val `type` = ItemType.BEEF
   override val edible = true
+}
+
+case class Beehive(
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.BEEHIVE
 }
 
 case class Beetroot(
@@ -1351,7 +1371,7 @@ case class Glass(
   val `type` = ItemType.GLASS
 }
 
-case class GlassBottle(
+case class GlassBottle( // TODO add empty, honey, water, dragon's breath variant
     name: String,
     tooltip: List[String],
     count: Int,
@@ -1615,6 +1635,36 @@ case class Hoe(
     case HoeVariant.GOLD    => 32
     case HoeVariant.DIAMOND => 1561
   }
+}
+
+case class HoneyBlock(
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.HONEY_BLOCK
+}
+
+case class Honeycomb(
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.HONEYCOMB
+}
+
+case class HoneycombBlock(
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.HONEYCOMB_BLOCK
 }
 
 case class Hopper(

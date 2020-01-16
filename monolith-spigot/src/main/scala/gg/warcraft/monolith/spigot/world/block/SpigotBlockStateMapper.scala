@@ -69,6 +69,8 @@ class SpigotBlockStateMapper {
     val level = (data: SpigotBlockData) => data.asInstanceOf[Levelled].getLevel
     val power = (d: SpigotBlockData) => d.asInstanceOf[AnaloguePowerable].getPower
     material match {
+      case Material.BEE_NEST         => (data => BeeNestState.valueOf(level(data)))
+      case Material.BEEHIVE          => (data => BeehiveState.valueOf(level(data)))
       case Material.BEETROOTS        => (data => BeetrootState.valueOf(age(data)))
       case Material.CACTUS           => (data => CactusState.valueOf(age(data)))
       case Material.CARROTS          => (data => CarrotState.valueOf(age(data)))
@@ -153,6 +155,8 @@ class SpigotBlockStateMapper {
 
   def compute(state: BlockState): Material = state match {
     case _: BambooState       => Material.BAMBOO
+    case _: BeeNestState      => Material.BEE_NEST
+    case _: BeehiveState      => Material.BEEHIVE
     case _: BeetrootState     => Material.BEETROOTS
     case _: CactusState       => Material.CACTUS
     case _: CakeState         => Material.CAKE

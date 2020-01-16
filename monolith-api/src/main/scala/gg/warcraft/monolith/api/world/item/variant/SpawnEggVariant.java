@@ -4,6 +4,7 @@ import gg.warcraft.monolith.api.world.item.ItemVariant;
 
 public enum SpawnEggVariant implements ItemVariant {
     BAT,
+    BEE,
     BLAZE,
     CAT,
     CAVE_SPIDER,

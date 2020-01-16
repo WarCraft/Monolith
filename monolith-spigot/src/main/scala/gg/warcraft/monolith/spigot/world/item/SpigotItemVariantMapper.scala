@@ -221,6 +221,7 @@ class SpigotItemVariantMapper(
 
     // SPAWN_EGG
     case Material.BAT_SPAWN_EGG              => SpawnEggVariant.BAT
+    case Material.BEE_SPAWN_EGG              => SpawnEggVariant.BEE
     case Material.BLAZE_SPAWN_EGG            => SpawnEggVariant.BLAZE
     case Material.CAT_SPAWN_EGG              => SpawnEggVariant.CAT
     case Material.CAVE_SPIDER_SPAWN_EGG      => SpawnEggVariant.CAVE_SPIDER
@@ -511,6 +512,7 @@ class SpigotItemVariantMapper(
 
     // SPAWN_EGG
     case SpawnEggVariant.BAT              => Material.BAT_SPAWN_EGG
+    case SpawnEggVariant.BEE              => Material.BEE_SPAWN_EGG
     case SpawnEggVariant.BLAZE            => Material.BLAZE_SPAWN_EGG
     case SpawnEggVariant.CAT              => Material.CAT_SPAWN_EGG
     case SpawnEggVariant.CAVE_SPIDER      => Material.CAVE_SPIDER_SPAWN_EGG

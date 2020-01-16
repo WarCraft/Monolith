@@ -96,6 +96,24 @@ final case class Bedrock(
   override val `type` = BlockType.BEDROCK
 }
 
+final case class BeeNest(
+    location: BlockLocation,
+    state: BeeNestState,
+    direction: BlockFace
+) extends StatefulBlock[BeeNestState]
+    with DirectedBlock {
+  override val `type` = BlockType.BEE_NEST
+}
+
+final case class Beehive(
+    location: BlockLocation,
+    state: BeehiveState,
+    direction: BlockFace
+) extends StatefulBlock[BeehiveState]
+    with DirectedBlock {
+  override val `type` = BlockType.BEEHIVE
+}
+
 final case class Beetroots(
     location: BlockLocation,
     state: BeetrootState
@@ -712,6 +730,18 @@ final case class HayBale(
     orientation: BlockOrientation
 ) extends OrientedBlock {
   override val `type` = BlockType.HAY_BALE
+}
+
+final case class HoneyBlock(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.HONEY_BLOCK
+}
+
+final case class HoneycombBlock(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.HONEYCOMB_BLOCK
 }
 
 final case class Hopper(
