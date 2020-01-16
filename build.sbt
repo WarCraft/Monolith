@@ -64,7 +64,7 @@ lazy val spigot = (project in file("monolith-spigot"))
       "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
     ),
     libraryDependencies ++= commonDependencies ++ Seq(
-      "com.destroystokyo.paper" % "paper-api" % "1.14.4-R0.1-SNAPSHOT" % Provided,
+      "com.destroystokyo.paper" % "paper-api" % "1.15.1-R0.1-SNAPSHOT" % Provided,
       "de.slikey" % "EffectLib" % "6.3-SNAPSHOT" % Provided
     )
   )
