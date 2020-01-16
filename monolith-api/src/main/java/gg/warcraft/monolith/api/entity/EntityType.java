@@ -108,4 +108,5 @@ public enum EntityType {
     FISHING_HOOK,
     LIGHTNING,
     PLAYER,
+    BEE,
 }
