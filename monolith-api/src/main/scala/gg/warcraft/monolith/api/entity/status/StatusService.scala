@@ -19,7 +19,7 @@ class StatusService(
   import StatusService._
 
   def getStatus(entityId: UUID): Status =
-    statuses.getOrElse(entityId, new Status)
+    statuses.getOrElseUpdate(entityId, new Status)
 
   def addEffect(entityId: UUID, effects: StatusEffect*): Unit = {
     val status = getStatus(entityId)
