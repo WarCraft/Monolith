@@ -2,7 +2,6 @@ package gg.warcraft.monolith.spigot;
 
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
-import gg.warcraft.monolith.api.command.service.CommandServerAdapter;
 import gg.warcraft.monolith.api.core.AuthorizationService;
 import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.core.TaskService;
@@ -21,7 +20,6 @@ import gg.warcraft.monolith.api.world.block.backup.BlockBackupService;
 import gg.warcraft.monolith.api.world.item.ItemService;
 import gg.warcraft.monolith.app.AbstractMonolithModule;
 import gg.warcraft.monolith.app.effect.particle.MultiParticle;
-import gg.warcraft.monolith.spigot.command.SpigotCommandAdapter;
 import gg.warcraft.monolith.spigot.core.SpigotAuthorizationService;
 import gg.warcraft.monolith.spigot.core.SpigotTaskService;
 import gg.warcraft.monolith.spigot.effect.particle.ColorParticle;
@@ -62,7 +60,6 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
     protected void configure() {
         super.configure();
         configureBukkit();
-        configureCommand();
         configureCore();
         configureEffect();
         configureEntity();
@@ -78,11 +75,6 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
 
         bind(Server.class).toProvider(plugin::getServer);
         expose(Server.class);
-    }
-
-    private void configureCommand() {
-        bind(CommandServerAdapter.class).to(SpigotCommandAdapter.class);
-        expose(CommandServerAdapter.class);
     }
 
     private void configureCore() {
