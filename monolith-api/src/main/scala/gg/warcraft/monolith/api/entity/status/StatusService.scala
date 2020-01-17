@@ -18,7 +18,8 @@ class StatusService(
 ) extends EventHandler {
   import StatusService._
 
-  def getStatus(entityId: UUID): Status = statuses(entityId)
+  def getStatus(entityId: UUID): Status =
+    statuses.getOrElse(entityId, new Status)
 
   def addEffect(entityId: UUID, effects: StatusEffect*): Unit = {
     val status = getStatus(entityId)
