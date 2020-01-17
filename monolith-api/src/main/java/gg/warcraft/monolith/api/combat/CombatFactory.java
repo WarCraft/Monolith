@@ -16,13 +16,4 @@ public interface CombatFactory {
 
     @Named("ambientPotionEffect")
     PotionEffect createAmbientPotionEffect(PotionEffectType type, int level, Duration duration);
-
-    @Named("source")
-    CombatSource createCombatSource(String name, UUID entityId);
-
-    @Named("value")
-    CombatValue createCombatValue(float baseValue, List<CombatValueModifier> modifiers, CombatSource source);
-
-    @Named("modifier")
-    CombatValueModifier createCombatValueModifier(CombatValueModifierType type, float modifier, CombatSource source);
 }

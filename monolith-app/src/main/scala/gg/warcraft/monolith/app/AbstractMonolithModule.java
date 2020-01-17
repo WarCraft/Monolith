@@ -191,8 +191,6 @@ public class AbstractMonolithModule extends PrivateModule {
                 .implement(PotionEffect.class, Names.named("potionEffect"), SimplePotionEffect.class)
                 .implement(PotionEffect.class, Names.named("visiblePotionEffect"), VisiblePotionEffect.class)
                 .implement(PotionEffect.class, Names.named("ambientPotionEffect"), AmbientPotionEffect.class)
-                .implement(CombatValue.class, Names.named("value"), CombatValue.class)
-                .implement(CombatValueModifier.class, Names.named("modifier"), CombatValueModifier.class)
                 .build(CombatFactory.class));
         expose(CombatFactory.class);
     }

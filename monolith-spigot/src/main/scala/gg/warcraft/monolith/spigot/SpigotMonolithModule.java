@@ -12,6 +12,7 @@ import gg.warcraft.monolith.api.entity.player.PlayerServerData;
 import gg.warcraft.monolith.api.entity.player.hiding.PlayerHidingServerAdapter;
 import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
+import gg.warcraft.monolith.api.entity.status.StatusService;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.menu.MenuService;
 import gg.warcraft.monolith.api.world.World;
@@ -32,11 +33,9 @@ import gg.warcraft.monolith.spigot.entity.player.SpigotPlayerDataFactory;
 import gg.warcraft.monolith.spigot.entity.player.hiding.SpigotPlayerHidingAdapter;
 import gg.warcraft.monolith.spigot.entity.player.service.SpigotPlayerAdapter;
 import gg.warcraft.monolith.spigot.entity.service.SpigotEntityAdapter;
-import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper;
 import gg.warcraft.monolith.spigot.menu.SpigotMenuService;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import gg.warcraft.monolith.spigot.world.block.SpigotBlockMapper;
-import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService;
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -64,7 +63,7 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         configureEffect();
         configureEntity();
         configureMenu();
-        configureWorld();
+        configureImplicits();
         configureMapper();
     }
 
@@ -123,27 +122,27 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         expose(MenuService.class);
     }
 
-    private void configureWorld() {
+    // TODO remove implicits hack when app layer no longer depends on it
+    private void configureImplicits() {
         bind(BlockBackupService.class).toProvider(Implicits::blockBackupService);
         expose(BlockBackupService.class);
 
         bind(WorldService.class).toProvider(Implicits::worldService);
-        expose(WorldService.class); // TODO remove when app no longer depends on it
+        expose(WorldService.class);
         bind(SpigotLocationMapper.class).toProvider(Implicits::locationMapper);
-        expose(SpigotLocationMapper.class); // TODO remove when app no longer depends on it
+        expose(SpigotLocationMapper.class);
         bind(SpigotItemMapper.class).toProvider(Implicits::itemMapper);
-        expose(SpigotItemMapper.class); // TODO remove when app no longer depends on it
+        expose(SpigotItemMapper.class);
         bind(SpigotBlockMapper.class).toProvider(Implicits::blockMapper);
-        expose(SpigotBlockMapper.class); // TODO remove when app no longer depends on it
+        expose(SpigotBlockMapper.class);
         bind(ItemService.class).toProvider(Implicits::itemService);
-        expose(ItemService.class); // TODO remove when app no longer depends on it
+        expose(ItemService.class);
+        bind(StatusService.class).toProvider(Implicits::statusService);
+        expose(StatusService.class);
     }
 
     private void configureMapper() {
         bind(SpigotEntityAdapter.class);
         expose(SpigotEntityAdapter.class);
-
-        bind(SpigotEntityEventMapper.class);
-        expose(SpigotEntityEventMapper.class);
     }
 }

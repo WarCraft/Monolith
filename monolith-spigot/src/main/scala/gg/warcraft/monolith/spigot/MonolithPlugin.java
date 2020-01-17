@@ -88,23 +88,12 @@ public class MonolithPlugin extends JavaPlugin {
     void initializeSpigotEventMappers() {
         PluginManager pluginManager = getServer().getPluginManager();
 
-        SpigotCombatEventMapper combatEventMapper = injector.getInstance(SpigotCombatEventMapper.class);
-        pluginManager.registerEvents(combatEventMapper, this);
-
-        SpigotEntityEventMapper entityEventMapper = injector.getInstance(SpigotEntityEventMapper.class);
-        pluginManager.registerEvents(entityEventMapper, this);
-
-        SpigotMenuEventMapper menuEventMapper = injector.getInstance(SpigotMenuEventMapper.class);
-        pluginManager.registerEvents(menuEventMapper, this);
-
-        SpigotPlayerEventMapper playerEventMapper = injector.getInstance(SpigotPlayerEventMapper.class);
-        pluginManager.registerEvents(playerEventMapper, this);
-
-        SpigotItemEventMapper itemEventMapper = injector.getInstance(SpigotItemEventMapper.class);
-        pluginManager.registerEvents(itemEventMapper, this);
-
-        SpigotWorldEventMapper worldEventMapper = injector.getInstance(SpigotWorldEventMapper.class);
-        pluginManager.registerEvents(worldEventMapper, this);
+        pluginManager.registerEvents(Implicits.combatEventMapper(), this);
+        pluginManager.registerEvents(Implicits.entityEventMapper(), this);
+        pluginManager.registerEvents(Implicits.itemEventMapper(), this);
+        pluginManager.registerEvents(Implicits.menuEventMapper(), this);
+        pluginManager.registerEvents(Implicits.playerEventMapper(), this);
+        pluginManager.registerEvents(Implicits.worldEventMapper(), this);
     }
 
     @Override
