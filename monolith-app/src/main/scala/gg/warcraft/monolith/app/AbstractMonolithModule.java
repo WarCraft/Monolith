@@ -376,7 +376,7 @@ public class AbstractMonolithModule extends PrivateModule {
         expose(PersistenceCache.class);
 
         switch (persistenceService) {
-            case "INMEMORY":
+            case "MEMORY":
                 bind(PersistenceService.class).to(InMemoryPersistenceService.class);
                 expose(PersistenceService.class);
                 break;

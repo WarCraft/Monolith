@@ -55,14 +55,14 @@ gitHubRepository: RepositoryName
 
 
 # PERSISTENCE SERVICE
-# Options: [REDIS, CUSTOM]
+# Options: [REDIS, MEMORY, CUSTOM]
 # ------------------------------------------------------------
 # If REDIS you are required to have an unauthenticated Redis
 # server running at the provided host and port.
 # A local file store is on the to-do list, but low priority.
 # If you need an alternative implementation right now please
 # consider opening a pull request.
-persistenceService: REDIS
+persistenceService: MEMORY
 
 # The following values only matter if you are configuring a
 # REDIS persistence service and will be ignored otherwise.
