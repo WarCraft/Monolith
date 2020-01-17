@@ -9,7 +9,7 @@ class SpigotWorldEventMapper(
     implicit private val eventService: EventService
 ) extends Listener {
   @EventHandler(priority = EventPriority.HIGH)
-  def preChunkLoad(event: ChunkLoadEvent): Unit = {
+  def preLoad(event: ChunkLoadEvent): Unit = {
     val chunk = event.getChunk
     val preLoadEvent = ChunkPreLoadEvent()
     eventService.publish(preLoadEvent)
@@ -46,12 +46,12 @@ class SpigotWorldEventMapper(
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
-  def onChunkLoad(event: ChunkLoadEvent): Unit = {
+  def onLoad(event: ChunkLoadEvent): Unit = {
 
   }
 
   @EventHandler(priority = EventPriority.HIGH)
-  def preChunkUnload(event: ChunkUnloadEvent): Unit = {
+  def preUnload(event: ChunkUnloadEvent): Unit = {
     /*
       Chunk chunk = event.getChunk();
       ChunkPreUnloadEvent preUnloadEvent = new ChunkPreUnloadEvent(chunk.getX(), chunk.getZ(), false);
@@ -82,7 +82,7 @@ class SpigotWorldEventMapper(
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
-  def onChunkUnload(event: ChunkUnloadEvent): Unit = {
+  def onUnload(event: ChunkUnloadEvent): Unit = {
     /*
       Chunk chunk = event.getChunk();
       ChunkUnloadedEvent unloadedEvent = new ChunkUnloadedEvent(chunk.getX(), chunk.getZ());
