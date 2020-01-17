@@ -55,7 +55,7 @@ gitHubRepository: RepositoryName
 
 
 # PERSISTENCE SERVICE
-# Options: [REDIS, MEMORY, CUSTOM]
+# Options: [MEMORY, REDIS, CUSTOM]
 # ------------------------------------------------------------
 # If REDIS you are required to have an unauthenticated Redis
 # server running at the provided host and port.
