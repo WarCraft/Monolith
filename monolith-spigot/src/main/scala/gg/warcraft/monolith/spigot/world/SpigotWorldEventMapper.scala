@@ -1,52 +1,61 @@
 package gg.warcraft.monolith.spigot.world
 
 import gg.warcraft.monolith.api.core.event.EventService
-import org.bukkit.event.Listener
+import gg.warcraft.monolith.api.world.ChunkPreLoadEvent
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
+import org.bukkit.event.world.{ChunkLoadEvent, ChunkUnloadEvent}
 
 class SpigotWorldEventMapper(
     implicit private val eventService: EventService
 ) extends Listener {
+  @EventHandler(priority = EventPriority.HIGH)
+  def preChunkLoad(event: ChunkLoadEvent): Unit = {
+    val chunk = event.getChunk
+    val preLoadEvent = ChunkPreLoadEvent()
+    eventService.publish(preLoadEvent)
 
-}
 
-/*
-private final Map<Event, List<Item>> alternativeDropsByEvent;
+    /*
+      Chunk chunk = event.getChunk();
+      ChunkLoadedEvent chunkLoadedEvent = new ChunkLoadedEvent(chunk.getX(), chunk.getZ());
+      eventService.publish(chunkLoadedEvent);
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onChunkLoadEvent(ChunkLoadEvent event) {
-        Chunk chunk = event.getChunk();
-        ChunkLoadedEvent chunkLoadedEvent = new ChunkLoadedEvent(chunk.getX(), chunk.getZ());
-        eventService.publish(chunkLoadedEvent);
+      Set<Entity> allowedRespawns = new HashSet<>();
+      for (Entity entity : chunk.getEntities()) {
+          UUID entityId = entity.getUniqueId();
+          EntityType entityType = EntityType.valueOf(entity.getType().name());
+          Location entityLocation = locationMapper.map(entity.getLocation());
+          EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, entityLocation, false);
+          eventService.publish(preRespawnEvent);
+          // TODO if the spawn location is changed on the pre event nothing actually happens
+          if (!preRespawnEvent.isCancelled() || preRespawnEvent.isExplicitlyAllowed()) {
+              allowedRespawns.add(entity);
+          } else {
+              entity.remove(); // TODO should this be called on the next tick instead?
+          }
+      }
 
-        Set<Entity> allowedRespawns = new HashSet<>();
-        for (Entity entity : chunk.getEntities()) {
-            UUID entityId = entity.getUniqueId();
-            EntityType entityType = EntityType.valueOf(entity.getType().name());
-            Location entityLocation = locationMapper.map(entity.getLocation());
-            EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, entityLocation, false);
-            eventService.publish(preRespawnEvent);
-            // TODO if the spawn location is changed on the pre event nothing actually happens
-            if (!preRespawnEvent.isCancelled() || preRespawnEvent.isExplicitlyAllowed()) {
-                allowedRespawns.add(entity);
-            } else {
-                entity.remove(); // TODO should this be called on the next tick instead?
-            }
-        }
+      for (Entity entity : allowedRespawns) {
+          UUID entityId = entity.getUniqueId();
+          EntityType entityType = EntityType.valueOf(entity.getType().name());
+          Location entityLocation = locationMapper.map(entity.getLocation());
+          EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType, entityLocation);
+          eventService.publish(respawnEvent);
+      }
+     */
+  }
 
-        for (Entity entity : allowedRespawns) {
-            UUID entityId = entity.getUniqueId();
-            EntityType entityType = EntityType.valueOf(entity.getType().name());
-            Location entityLocation = locationMapper.map(entity.getLocation());
-            EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType, entityLocation);
-            eventService.publish(respawnEvent);
-        }
-    }
+  @EventHandler(priority = EventPriority.MONITOR)
+  def onChunkLoad(event: ChunkLoadEvent): Unit = {
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onChunkUnloadEvent(ChunkUnloadEvent event) { // TODO chunk events can no longer be cancelled
-        Chunk chunk = event.getChunk();
-        ChunkPreUnloadEvent preUnloadEvent = new ChunkPreUnloadEvent(chunk.getX(), chunk.getZ(), false);
-        eventService.publish(preUnloadEvent);
+  }
+
+  @EventHandler(priority = EventPriority.HIGH)
+  def preChunkUnload(event: ChunkUnloadEvent): Unit = {
+    /*
+      Chunk chunk = event.getChunk();
+      ChunkPreUnloadEvent preUnloadEvent = new ChunkPreUnloadEvent(chunk.getX(), chunk.getZ(), false);
+      eventService.publish(preUnloadEvent);
 //        if (preUnloadEvent.isExplicitlyAllowed()) {
 //            event.setCancelled(false);
 //            return;
@@ -55,33 +64,36 @@ private final Map<Event, List<Item>> alternativeDropsByEvent;
 //            return;
 //        }
 
-        boolean cancelled = false;
-        for (Entity entity : chunk.getEntities()) {
-            UUID entityId = entity.getUniqueId();
-            EntityType entityType = EntityType.valueOf(entity.getType().name());
-            EntityPreDespawnEvent preDespawnEvent = new SimpleEntityPreDespawnEvent(entityId, entityType, false);
-            eventService.publish(preDespawnEvent);
-            if (preDespawnEvent.isCancelled() && !preDespawnEvent.isExplicitlyAllowed()) {
-                cancelled = true;
-                break;
-            }
-        }
+      boolean cancelled = false;
+      for (Entity entity : chunk.getEntities()) {
+          UUID entityId = entity.getUniqueId();
+          EntityType entityType = EntityType.valueOf(entity.getType().name());
+          EntityPreDespawnEvent preDespawnEvent = new SimpleEntityPreDespawnEvent(entityId, entityType, false);
+          eventService.publish(preDespawnEvent);
+          if (preDespawnEvent.isCancelled() && !preDespawnEvent.isExplicitlyAllowed()) {
+              cancelled = true;
+              break;
+          }
+      }
 //        if (cancelled) {
 //            event.setCancelled(true);
 //        }
-    }
+     */
+  }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onChunkUnloadEventMonitor(ChunkUnloadEvent event) {
-        Chunk chunk = event.getChunk();
-        ChunkUnloadedEvent unloadedEvent = new ChunkUnloadedEvent(chunk.getX(), chunk.getZ());
-        eventService.publish(unloadedEvent);
+  @EventHandler(priority = EventPriority.MONITOR)
+  def onChunkUnload(event: ChunkUnloadEvent): Unit = {
+    /*
+      Chunk chunk = event.getChunk();
+      ChunkUnloadedEvent unloadedEvent = new ChunkUnloadedEvent(chunk.getX(), chunk.getZ());
+      eventService.publish(unloadedEvent);
 
-        for (Entity entity : chunk.getEntities()) {
-            UUID entityId = entity.getUniqueId();
-            EntityType entityType = EntityType.valueOf(entity.getType().name());
-            EntityDespawnEvent despawnEvent = new SimpleEntityDespawnEvent(entityId, entityType);
-            eventService.publish(despawnEvent);
-        }
-    }
- */
+      for (Entity entity : chunk.getEntities()) {
+          UUID entityId = entity.getUniqueId();
+          EntityType entityType = EntityType.valueOf(entity.getType().name());
+          EntityDespawnEvent despawnEvent = new SimpleEntityDespawnEvent(entityId, entityType);
+          eventService.publish(despawnEvent);
+      }
+     */
+  }
+}
