@@ -10,21 +10,14 @@ import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.app.util.DefaultTimeUtils
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.core.SpigotTaskService
+import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
-import gg.warcraft.monolith.spigot.menu.{
-  SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService
-}
+import gg.warcraft.monolith.spigot.menu.{SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService}
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
-import gg.warcraft.monolith.spigot.world.{
-  SpigotLocationMapper, SpigotSoundMapper, SpigotWorldEventMapper, SpigotWorldMapper,
-  SpigotWorldService
-}
+import gg.warcraft.monolith.spigot.world.{SpigotLocationMapper, SpigotSoundMapper, SpigotWorldEventMapper, SpigotWorldMapper, SpigotWorldService}
 import gg.warcraft.monolith.spigot.world.block._
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService
-import gg.warcraft.monolith.spigot.world.item.{
-  SpigotItemEventMapper, SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper,
-  SpigotItemVariantMapper
-}
+import gg.warcraft.monolith.spigot.world.item.{SpigotItemEventMapper, SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper}
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
@@ -103,6 +96,8 @@ object Implicits {
     new SpigotItemEventMapper
 
   // Services
+  implicit lazy val commandService: SpigotCommandService =
+    new SpigotCommandService
   implicit lazy val taskService: SpigotTaskService =
     new SpigotTaskService(plugin, new DefaultTimeUtils) // TODO cleanup
   implicit lazy val blockBackupService: SpigotBlockBackupService =

@@ -5,6 +5,7 @@ import com.google.inject.name.Names;
 import gg.warcraft.monolith.api.core.AuthorizationService;
 import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.core.TaskService;
+import gg.warcraft.monolith.api.core.command.CommandService;
 import gg.warcraft.monolith.api.effect.Particle;
 import gg.warcraft.monolith.api.effect.ParticleFactory;
 import gg.warcraft.monolith.api.entity.EntityServerData;
@@ -127,6 +128,8 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         bind(BlockBackupService.class).toProvider(Implicits::blockBackupService);
         expose(BlockBackupService.class);
 
+        bind(CommandService.class).toProvider(Implicits::commandService);
+        expose(CommandService.class);
         bind(WorldService.class).toProvider(Implicits::worldService);
         expose(WorldService.class);
         bind(SpigotLocationMapper.class).toProvider(Implicits::locationMapper);
