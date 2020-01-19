@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.app.util;
 
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

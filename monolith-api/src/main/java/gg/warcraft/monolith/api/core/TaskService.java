@@ -1,7 +1,5 @@
 package gg.warcraft.monolith.api.core;
 
-import gg.warcraft.monolith.api.util.Duration;
-
 /**
  * This service is injectable.
  * <p>

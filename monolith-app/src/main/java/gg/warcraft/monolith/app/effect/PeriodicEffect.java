@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.core.Task;
 import gg.warcraft.monolith.api.core.TaskService;
 import gg.warcraft.monolith.api.effect.Effect;
 import gg.warcraft.monolith.api.effect.EffectRenderer;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.Location;
 
@@ -26,7 +26,7 @@ public class PeriodicEffect implements Effect {
         this.taskService = taskService;
         this.location = location;
         this.renderers = new ArrayList<>();
-        this.task = taskService.runTask(this, timeUtils.immediately(), period);
+        this.task = taskService.runTask(this, Duration.immediately(), period);
     }
 
     public Location getLocation() {

@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.entity.EntityServerData;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
 import gg.warcraft.monolith.api.math.Vector3f;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.Location;
 

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot.core;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.Task;
 import gg.warcraft.monolith.api.core.TaskService;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -72,11 +72,11 @@ public class SpigotTaskService implements TaskService {
 
     @Override
     public Task runEachTick(Runnable runnable) {
-        return runTask(runnable, timeUtils.createDurationInTicks(1), timeUtils.createDurationInTicks(1));
+        return runTask(runnable, Duration.oneTick(), Duration.oneTick());
     }
 
     @Override
     public Task runEachTickAsync(Runnable runnable) {
-        return runTaskAsync(runnable, timeUtils.createDurationInTicks(1), timeUtils.createDurationInTicks(1));
+        return runTaskAsync(runnable, Duration.oneTick(), Duration.oneTick());
     }
 }

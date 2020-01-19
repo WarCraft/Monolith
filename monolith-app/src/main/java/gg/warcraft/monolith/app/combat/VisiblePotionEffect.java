@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.combat;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.combat.PotionEffectType;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 
 public class VisiblePotionEffect extends SimplePotionEffect {
 

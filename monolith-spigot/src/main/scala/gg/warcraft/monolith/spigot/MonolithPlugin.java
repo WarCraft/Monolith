@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import gg.warcraft.monolith.api.Monolith;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.core.event.ServerShutdownEvent;
 import gg.warcraft.monolith.api.core.TaskService;
@@ -67,19 +68,19 @@ public class MonolithPlugin extends JavaPlugin {
 
         TimeUtils timeUtils = injector.getInstance(TimeUtils.class);
         EntityRemovalHandler entityRemovalHandler = injector.getInstance(EntityRemovalHandler.class);
-        taskService.runTask(entityRemovalHandler, timeUtils.createDurationInSeconds(10), timeUtils.createDurationInSeconds(10));
+        taskService.runTask(entityRemovalHandler, Duration.ofSeconds(10), Duration.ofSeconds(10));
 
         PlayerProfileUpdateHandler playerProfileUpdateHandler = injector.getInstance(PlayerProfileUpdateHandler.class);
-        taskService.runTask(playerProfileUpdateHandler, timeUtils.oneTick(), timeUtils.createDurationInTicks(1));
+        taskService.runTask(playerProfileUpdateHandler, Duration.oneTick(), Duration.oneTick());
 
         PlayerHidingHandler playerHidingHandler = injector.getInstance(PlayerHidingHandler.class);
         eventService.subscribe(playerHidingHandler);
 
         PortalEntryTaskHandler portalEntryTaskHandler = injector.getInstance(PortalEntryTaskHandler.class);
-        taskService.runTask(portalEntryTaskHandler, timeUtils.createDurationInMillis(250), timeUtils.createDurationInMillis(250));
+        taskService.runTask(portalEntryTaskHandler, Duration.ofMillis(250), Duration.ofMillis(250));
 
         DailyTickHandler dailyTickHandler = injector.getInstance(DailyTickHandler.class);
-        taskService.runTask(dailyTickHandler, timeUtils.createDurationInMillis(1900), timeUtils.createDurationInMillis(1900));
+        taskService.runTask(dailyTickHandler, Duration.ofMillis(1900), Duration.ofMillis(1900));
 
         DebugStickHandler debugStickHandler = injector.getInstance(DebugStickHandler.class);
         eventService.subscribe(debugStickHandler);

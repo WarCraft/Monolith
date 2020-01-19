@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.effect;
 
 import gg.warcraft.monolith.api.util.Cancellable;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 
 /**
  * An effect is a collection of particle renderers that runs repeatedly until cancelled.

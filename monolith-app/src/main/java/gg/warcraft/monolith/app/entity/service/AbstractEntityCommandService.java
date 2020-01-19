@@ -16,7 +16,7 @@ import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.entity.service.EntityRepository;
 import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.math.Vector3f;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.Location;
@@ -325,7 +325,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
             throw new IllegalArgumentException("Failed to apply vacuum to null entity with id " + entityId);
         }
 
-        this.heavy(entityId, timeUtils.oneSecond());
+        this.heavy(entityId, Duration.oneSecond());
         Vector3f direction = source.subtract(entity.getLocation()).translation();
         direction.normalize().multiply(0.05f * strength);
         Vector3f newVelocity = entity.getVelocity()

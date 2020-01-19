@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.app.util;
 
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.combat;
 
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 
 /**
  * A PotionEffect is a Minecraft status effect.

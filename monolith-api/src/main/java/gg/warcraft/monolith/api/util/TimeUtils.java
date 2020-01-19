@@ -1,5 +1,7 @@
 package gg.warcraft.monolith.api.util;
 
+import gg.warcraft.monolith.api.core.Duration;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -58,42 +60,4 @@ public interface TimeUtils {
      * @return A formatted string representing the duration as seen on digital displays. Never null or empty.
      */
     String getDigitalDisplay(Duration duration);
-
-    /**
-     * @param millis The duration in milliseconds.
-     * @return A new {@code Duration} for the specified milliseconds. Never null.
-     */
-    Duration createDurationInMillis(int millis);
-
-    /**
-     * @param ticks The duration in ticks.
-     * @return A new {@code Duration} for the specified ticks. Never null.
-     */
-    Duration createDurationInTicks(int ticks);
-
-    /**
-     * @param seconds The duration in seconds.
-     * @return A new {@code Duration} for the specified seconds. Never null.
-     */
-    Duration createDurationInSeconds(int seconds);
-
-    /**
-     * @return A {@code Duration} of 0. Never null.
-     */
-    Duration immediately();
-
-    /**
-     * @return A {@code Duration} of one millisecond. Never null.
-     */
-    Duration oneMilli();
-
-    /**
-     * @return A {@code Duration} of one tick. Never null.
-     */
-    Duration oneTick();
-
-    /**
-     * @return A {@code Duration} of one second. Never null.
-     */
-    Duration oneSecond();
 }

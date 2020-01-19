@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.effect;
 
 import com.google.inject.name.Named;
-import gg.warcraft.monolith.api.util.Duration;
+import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.world.Location;
 
 import java.util.function.Supplier;
