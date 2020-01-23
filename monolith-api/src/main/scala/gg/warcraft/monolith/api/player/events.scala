@@ -18,7 +18,8 @@ case class PlayerPreConnectEvent(
     with Event
 
 case class PlayerConnectEvent(
-    playerId: UUID
+    playerId: UUID,
+    name: String
 ) extends PlayerEvent
     with Event
 
@@ -30,7 +31,8 @@ case class PlayerConnectEvent(
   * cancelled as it can represent a non-cancellable PlayerQuitEvent.
   */
 case class PlayerDisconnectEvent(
-    playerId: UUID
+    playerId: UUID,
+    name: String
 ) extends PlayerEvent
     with Event
 

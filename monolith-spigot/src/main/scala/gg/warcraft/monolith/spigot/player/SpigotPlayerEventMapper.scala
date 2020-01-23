@@ -32,21 +32,24 @@ class SpigotPlayerEventMapper(
   @EventHandler
   def onConnect(event: PlayerJoinEvent): Unit = {
     val playerId = event.getPlayer.getUniqueId
-    val connectEvent = PlayerConnectEvent(playerId)
+    val name = event.getPlayer.getName
+    val connectEvent = PlayerConnectEvent(playerId, name)
     eventService.publish(connectEvent)
   }
 
   @EventHandler
   def onDisconnect(event: PlayerKickEvent): Unit = {
     val playerId = event.getPlayer.getUniqueId
-    val disconnectEvent = PlayerDisconnectEvent(playerId)
+    val name = event.getPlayer.getName
+    val disconnectEvent = PlayerDisconnectEvent(playerId, name)
     eventService.publish(disconnectEvent)
   }
 
   @EventHandler
   def onDisconnect(event: PlayerQuitEvent): Unit = {
     val playerId = event.getPlayer.getUniqueId
-    val disconnectEvent = PlayerDisconnectEvent(playerId)
+    val name = event.getPlayer.getName
+    val disconnectEvent = PlayerDisconnectEvent(playerId, name)
     eventService.publish(disconnectEvent)
   }
 
