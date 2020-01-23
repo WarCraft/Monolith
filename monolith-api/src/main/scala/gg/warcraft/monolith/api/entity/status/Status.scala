@@ -11,6 +11,6 @@ class Status extends EventHandler {
   override def handle(event: Event): Unit =
     effects.foreach(_.handle(event))
 
-  override def reduce[T >: PreEvent](event: T): T =
+  override def reduce[T <: PreEvent](event: T): T =
     effects.foldLeft(event)((it, effect) => effect.reduce(it))
 }
