@@ -11,12 +11,10 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class SpigotTaskService implements TaskService {
     private final Plugin plugin;
-    private final TimeUtils timeUtils;
 
     @Inject
-    public SpigotTaskService(Plugin plugin, TimeUtils timeUtils) {
+    public SpigotTaskService(Plugin plugin) {
         this.plugin = plugin;
-        this.timeUtils = timeUtils;
     }
 
     private BukkitRunnable wrapBukkitRunnable(Runnable runnable) {

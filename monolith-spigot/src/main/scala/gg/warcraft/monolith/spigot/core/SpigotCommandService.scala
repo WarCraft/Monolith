@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.spigot.core.command
+package gg.warcraft.monolith.spigot.core
 
 import java.util.UUID
 

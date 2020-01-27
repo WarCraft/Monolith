@@ -1,23 +1,31 @@
 package gg.warcraft.monolith.spigot
 
 import java.io.File
-import java.util.logging.Logger
 import java.util.Properties
+import java.util.logging.Logger
 
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.typesafe.config.{Config, ConfigFactory}
-import gg.warcraft.monolith.api.Implicits._
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.core.{
+  AuthorizationService, JsonMapper2, TaskService, YamlMapper2
+}
 import gg.warcraft.monolith.api.entity.status.StatusService
-import gg.warcraft.monolith.app.util.DefaultTimeUtils
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
-import gg.warcraft.monolith.spigot.core.SpigotTaskService
-import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
+import gg.warcraft.monolith.spigot.core.{
+  SpigotAuthorizationService, SpigotCommandService, SpigotTaskService
+}
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
-import gg.warcraft.monolith.spigot.menu.{SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService}
+import gg.warcraft.monolith.spigot.menu.{
+  SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService
+}
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
-import gg.warcraft.monolith.spigot.world.{SpigotLocationMapper, SpigotSoundMapper, SpigotWorldEventMapper, SpigotWorldMapper, SpigotWorldService}
+import gg.warcraft.monolith.spigot.world._
 import gg.warcraft.monolith.spigot.world.block._
 import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService
-import gg.warcraft.monolith.spigot.world.item.{SpigotItemEventMapper, SpigotItemMapper, SpigotItemService, SpigotItemTypeMapper, SpigotItemVariantMapper}
+import gg.warcraft.monolith.spigot.world.item._
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
@@ -28,7 +36,7 @@ object Implicits {
   private implicit var logger: Logger = _
   def setLogger(logger: Logger): Unit = this.logger = logger
 
-  private implicit var dbConfig: Config = _
+  implicit var dbConfig: Config = _
   def setDatabaseConfig(dataFolderPath: String): Unit = {
     val props = new Properties()
     props.setProperty("driverClassName", "org.sqlite.JDBC")
@@ -40,6 +48,24 @@ object Implicits {
   }
 
   implicit var server: Server = _
+
+  implicit lazy val jsonMapper: JsonMapper2 = {
+    val mapper = new ObjectMapper(new JsonFactory) with JsonMapper2
+    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    mapper
+  }
+  implicit lazy val yamlMapper: YamlMapper2 = {
+    val mapper = new ObjectMapper(new YAMLFactory) with YamlMapper2
+    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    mapper
+  }
+
+  implicit lazy val authService: AuthorizationService =
+    new SpigotAuthorizationService(server)
+  implicit lazy val eventService: EventService =
+    new EventService
+  implicit lazy val taskService: TaskService =
+    new SpigotTaskService(plugin)
 
   // World mappers
   implicit lazy val worldMapper: SpigotWorldMapper =
@@ -95,11 +121,9 @@ object Implicits {
   implicit lazy val itemEventMapper: SpigotItemEventMapper =
     new SpigotItemEventMapper
 
-  // Services
+  // Other services
   implicit lazy val commandService: SpigotCommandService =
     new SpigotCommandService
-  implicit lazy val taskService: SpigotTaskService =
-    new SpigotTaskService(plugin, new DefaultTimeUtils) // TODO cleanup
   implicit lazy val blockBackupService: SpigotBlockBackupService =
     new SpigotBlockBackupService
   implicit lazy val itemService: SpigotItemService =

@@ -10,7 +10,6 @@ import com.google.inject.PrivateModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import gg.warcraft.monolith.api.MonolithPluginUtils;
-import gg.warcraft.monolith.api.Implicits;
 import gg.warcraft.monolith.api.combat.*;
 import gg.warcraft.monolith.api.config.service.ConfigurationCommandService;
 import gg.warcraft.monolith.api.config.service.ConfigurationQueryService;
@@ -231,9 +230,6 @@ public class AbstractMonolithModule extends PrivateModule {
     private void configureCore() {
         bind(MonolithPluginUtils.class).to(DefaultMonolithPluginUtils.class);
         expose(MonolithPluginUtils.class);
-
-        bind(EventService.class).toProvider(Implicits::eventService);
-        expose(EventService.class);
 
         SimpleModule monolithMapperModule = new MonolithMapperModule();
 

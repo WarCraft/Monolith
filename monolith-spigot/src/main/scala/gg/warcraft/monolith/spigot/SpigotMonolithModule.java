@@ -6,6 +6,7 @@ import gg.warcraft.monolith.api.core.AuthorizationService;
 import gg.warcraft.monolith.api.core.PluginLogger;
 import gg.warcraft.monolith.api.core.TaskService;
 import gg.warcraft.monolith.api.core.command.CommandService;
+import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.effect.Particle;
 import gg.warcraft.monolith.api.effect.ParticleFactory;
 import gg.warcraft.monolith.api.entity.EntityServerData;
@@ -81,7 +82,10 @@ public class SpigotMonolithModule extends AbstractMonolithModule {
         bind(AuthorizationService.class).to(SpigotAuthorizationService.class);
         expose(AuthorizationService.class);
 
-        bind(TaskService.class).to(SpigotTaskService.class);
+        bind(EventService.class).toProvider(Implicits::eventService);
+        expose(EventService.class);
+
+        bind(TaskService.class).toProvider(Implicits::taskService);
         expose(TaskService.class);
     }
 
