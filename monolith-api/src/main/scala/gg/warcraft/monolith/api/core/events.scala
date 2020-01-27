@@ -1,4 +1,6 @@
-package gg.warcraft.monolith.api.core.event
+package gg.warcraft.monolith.api.core
+
+import gg.warcraft.monolith.api.core.event.Event
 
 /** A DailyTickEvent is fired exactly once every day on the first server tick of that
   * day. It's purpose is to provide a simple mechanism to listen to to kick off tasks
