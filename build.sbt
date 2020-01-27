@@ -35,6 +35,7 @@ lazy val api = (project in file("monolith-api"))
       "io.circe" %% "circe-core" % "0.12.3",
       "io.circe" %% "circe-generic" % "0.12.3",
       "io.circe" %% "circe-parser" % "0.12.3",
+      "io.circe" %% "circe-yaml" % "0.12.0",
       "org.xerial" % "sqlite-jdbc" % "3.28.0",
       "org.flywaydb" % "flyway-core" % "6.0.8",
       "io.getquill" %% "quill-jdbc" % "3.4.10",
