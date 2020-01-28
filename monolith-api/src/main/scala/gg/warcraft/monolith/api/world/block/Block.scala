@@ -2,13 +2,13 @@ package gg.warcraft.monolith.api.world.block
 
 import java.util
 
-import gg.warcraft.monolith.api.core.CaseClass
+import gg.warcraft.monolith.api.core.CaseTrait
 import gg.warcraft.monolith.api.world.BlockLocation
 
 import scala.annotation.varargs
 import scala.jdk.CollectionConverters._
 
-trait Block extends CaseClass {
+trait Block extends CaseTrait {
   val `type`: BlockType
   val solid: Boolean = true
   val liquid: Boolean = false

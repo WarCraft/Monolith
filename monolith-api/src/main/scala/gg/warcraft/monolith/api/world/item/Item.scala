@@ -2,13 +2,13 @@ package gg.warcraft.monolith.api.world.item
 
 import java.util
 
-import gg.warcraft.monolith.api.core.CaseClass
+import gg.warcraft.monolith.api.core.CaseTrait
 
 import scala.annotation.varargs
 import scala.collection.immutable.Map
 import scala.jdk.CollectionConverters._
 
-trait Item extends CaseClass {
+trait Item extends CaseTrait {
   val `type`: ItemType
   val edible: Boolean = false
 

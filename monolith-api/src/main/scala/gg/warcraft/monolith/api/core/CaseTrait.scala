@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.core
 
-trait CaseClass extends Product {
+trait CaseTrait extends Product {
   for ((elem, i) <- productIterator.zipWithIndex) require(elem != null, {
     val product = getClass.getDeclaredFields()(i).toString.split('.').last
     s"$product is null, must be != null"
