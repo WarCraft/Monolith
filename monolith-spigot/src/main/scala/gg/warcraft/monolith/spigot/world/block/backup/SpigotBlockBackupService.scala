@@ -4,14 +4,14 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Encoders
-import gg.warcraft.monolith.api.world.{BlockLocation, World}
+import gg.warcraft.monolith.api.core.Codecs.Quill
 import gg.warcraft.monolith.api.world.block.backup.{BlockBackup, BlockBackupService}
+import gg.warcraft.monolith.api.world.{BlockLocation, World}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import io.getquill.{MappedEncoding, SnakeCase, SqliteJdbcContext}
+import org.bukkit.Bukkit
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
-import org.bukkit.Bukkit
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
@@ -27,8 +27,8 @@ class SpigotBlockBackupService(
     private implicit val locationMapper: SpigotLocationMapper
 ) extends BlockBackupService {
   private implicit val asyncCtx: ExecutionContext = ExecutionContext.global
-  private implicit val worldEnc: MappedEncoding[World, String] = Encoders.worldEnc
-  private implicit val worldDec: MappedEncoding[String, World] = Encoders.worldDec
+  private implicit val worldDec: MappedEncoding[String, World] = Quill.worldDec
+  private implicit val worldEnc: MappedEncoding[World, String] = Quill.worldEnc
 
   private val db = new SqliteJdbcContext(SnakeCase, databaseConfig)
   private val metaDataKey = getClass.getCanonicalName
