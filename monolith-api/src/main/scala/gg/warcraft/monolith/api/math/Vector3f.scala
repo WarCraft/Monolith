@@ -30,6 +30,10 @@ object Vector3f {
     Vector3f(x.toFloat, z.toFloat, y.toFloat)
   }
 
+  implicit def fromFloats(floats: (Float, Float, Float)): Vector3f =
+    Vector3f(floats._1, floats._2, floats._3)
+  implicit def toFloats(vec: Vector3f): (Float, Float, Float) =
+    (vec.x, vec.y, vec.z)
   implicit def toVector3i(vec: Vector3f): Vector3i =
     Vector3i(vec.x.toInt, vec.y.toInt, vec.z.toInt)
 }
