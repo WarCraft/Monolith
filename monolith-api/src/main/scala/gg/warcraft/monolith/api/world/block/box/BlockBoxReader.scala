@@ -4,6 +4,18 @@ import gg.warcraft.monolith.api.math.Vector3i
 import gg.warcraft.monolith.api.world.block.{Block, BlockDirection, BlockType}
 import gg.warcraft.monolith.api.world.WorldService
 
+object BlockOffset {
+  implicit def toVector3i(offset: BlockOffset): Vector3i =
+    Vector3i(offset.horizontal, offset.vertical, offset.depth)
+}
+
+case class BlockOffset(
+    direction: BlockDirection,
+    horizontal: Int,
+    vertical: Int,
+    depth: Int
+)
+
 trait BlockBoxReader {
   val box: BlockBox
   val direction: BlockDirection
@@ -27,19 +39,19 @@ trait BlockBoxReader {
         worldService.getBlock(world, east - d, lower + v, south - h)
   }
 
-  private val readOffset: Block => (Int, Int, Int) = direction match {
+  private val readOffset: Block => BlockOffset = direction match {
     case BlockDirection.NORTH =>
-      b => (b.location.x - west, b.location.y - lower, south - b.location.z)
+      b => BlockOffset(direction, b.x - west, b.y - lower, south - b.z)
     case BlockDirection.EAST =>
-      b => (b.location.z - north, b.location.y - lower, b.location.x - west)
+      b => BlockOffset(direction, b.z - north, b.y - lower, b.x - west)
     case BlockDirection.SOUTH =>
-      b => (east - b.location.x, b.location.y - lower, b.location.z - north)
+      b => BlockOffset(direction, east - b.x, b.y - lower, b.z - north)
     case BlockDirection.WEST =>
-      b => (south - b.location.z, b.location.y - lower, east - b.location.x)
+      b => BlockOffset(direction, south - b.z, b.y - lower, east - b.x)
   }
 
   def getBlock(offset: Vector3i): Block = readBlock.tupled(offset)
-  def getOffset(block: Block): Vector3i = readOffset(block)
+  def getOffset(block: Block): BlockOffset = readOffset(block)
 
   def getBlocks: LazyList[Block] = {}
 

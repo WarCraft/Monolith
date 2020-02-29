@@ -17,6 +17,10 @@ trait Block extends CaseTrait {
   def withLocation(location: BlockLocation): this.type =
     copyWith("location", location)
 
+  val x: Int = location.x
+  val y: Int = location.y
+  val z: Int = location.z
+
   def isVariant(variant: BlockVariant): Boolean = false
   def hasState(state: BlockState): Boolean = false
   def hasData(data: BlockTypeVariantOrState): Boolean = this.`type` == data
