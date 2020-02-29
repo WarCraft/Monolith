@@ -56,6 +56,14 @@ lazy val app = (project in file("monolith-app"))
   )
   .dependsOn(api)
 
+lazy val java = (project in file("monolith-java"))
+  .settings(
+    name := "monolith-java",
+    commonSettings,
+    assemblySettings
+  )
+  .dependsOn(api)
+
 lazy val spigot = (project in file("monolith-spigot"))
   .settings(
     name := "monolith-spigot",
