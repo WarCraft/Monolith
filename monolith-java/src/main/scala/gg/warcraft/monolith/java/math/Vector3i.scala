@@ -1,11 +1,13 @@
 package gg.warcraft.monolith.java.math
 
 object Vector3i {
-  private[math] implicit def fromScala(vec: ScalaVector3i): Vector3i =
+  private[java] implicit def fromScala(vec: ScalaVector3i): Vector3i =
     new Vector3i(vec)
+  private[java] implicit def toScala(vec: Vector3i): ScalaVector3i =
+    vec.asScala
 }
 
-class Vector3i private (val asScala: ScalaVector3i) {
+class Vector3i private[java] (private[java] val asScala: ScalaVector3i) {
   val x: Int = asScala.x
   val y: Int = asScala.y
   val z: Int = asScala.z

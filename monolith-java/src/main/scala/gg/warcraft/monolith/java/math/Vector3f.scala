@@ -4,16 +4,16 @@ object Vector3f {
   val ZERO_PITCH_YAW: Vector3f =
     gg.warcraft.monolith.api.math.Vector3f.ZERO_PITCH_YAW
 
-  private[math] implicit def fromScala(vec: ScalaVector3f): Vector3f =
+  private[java] implicit def fromScala(vec: ScalaVector3f): Vector3f =
     new Vector3f(vec)
-  private[math] implicit def toScala(vec: Vector3f): ScalaVector3f =
+  private[java] implicit def toScala(vec: Vector3f): ScalaVector3f =
     vec.asScala
 
   def fromPitchYaw(pitch: Float, yaw: Float): Vector3f =
     gg.warcraft.monolith.api.math.Vector3f.apply(pitch, yaw)
 }
 
-class Vector3f private (val asScala: ScalaVector3f) {
+class Vector3f private[java] (private[java] val asScala: ScalaVector3f) {
   val x: Float = asScala.x
   val y: Float = asScala.y
   val z: Float = asScala.z

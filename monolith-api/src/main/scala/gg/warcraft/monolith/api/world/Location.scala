@@ -3,6 +3,16 @@ package gg.warcraft.monolith.api.world
 import gg.warcraft.monolith.api.math.{Vector3f, Vector3i}
 import io.getquill.Embedded
 
+object Location {
+  implicit def toWorld(loc: Location): World = loc.world
+  implicit def toVector3i(loc: Location): Vector3f = loc.translation
+  implicit def toBlockLocation(loc: Location): BlockLocation = {
+    val floor = (x: Float) => Math.floor(x).toInt
+    val translation = Vector3i(floor(loc.x), floor(loc.y), floor(loc.z))
+    BlockLocation(loc.world, translation)
+  }
+}
+
 case class Location(
     world: World,
     translation: Vector3f,
@@ -12,10 +22,7 @@ case class Location(
   val y: Float = translation.y
   val z: Float = translation.z
 
-  private lazy val pitchYaw: (Float, Float) = rotation.toPitchYaw
-
-  lazy val pitch: Float = pitchYaw._1
-  lazy val yaw: Float = pitchYaw._2
+  lazy val (pitch, yaw): (Float, Float) = rotation.toPitchYaw
 
   def this(world: World, x: Float, y: Float, z: Float) =
     this(world, Vector3f(x, y, z), Vector3f.ZERO_PITCH_YAW)
@@ -36,32 +43,4 @@ case class Location(
 
   def distanceTo(target: Location): Float =
     translation.distanceTo(target.translation)
-
-  def toBlockLocation: BlockLocation = {
-    val floor = (x: Float) => Math.floor(x).toInt
-    val translation = Vector3i(floor(x), floor(y), floor(z))
-    BlockLocation(world, translation)
-  }
-
-  /* Java interop */
-
-  def this(world: World, translation: Vector3f) =
-    this(world, translation, Vector3f.ZERO_PITCH_YAW)
-
-  def withWorld(world: World): Location = copy(world = world)
-
-  def withTranslation(translation: Vector3f): Location =
-    copy(translation = translation)
-
-  def withRotation(rotation: Vector3f): Location = copy(rotation = rotation)
-
-  def withX(x: Float): Location = copy(translation = translation.withX(x))
-  def withY(y: Float): Location = copy(translation = translation.withY(y))
-  def withZ(z: Float): Location = copy(translation = translation.withZ(z))
-
-  def withPitch(pitch: Float): Location =
-    copy(rotation = Vector3f.apply(pitch, yaw))
-
-  def withYaw(yaw: Float): Location =
-    copy(rotation = Vector3f.apply(pitch, yaw))
 }

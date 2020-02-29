@@ -3,6 +3,13 @@ package gg.warcraft.monolith.api.world
 import gg.warcraft.monolith.api.math.Vector3i
 import io.getquill.Embedded
 
+object BlockLocation {
+  implicit def toWorld(loc: BlockLocation): World = loc.world
+  implicit def toVector3i(loc: BlockLocation): Vector3i = loc.translation
+  implicit def toLocation(loc: BlockLocation): Location =
+    Location(loc.world, loc.translation)
+}
+
 case class BlockLocation(
     world: World,
     translation: Vector3i
@@ -28,20 +35,4 @@ case class BlockLocation(
 
   def subtract(loc: BlockLocation): BlockLocation =
     subtract(loc.x, loc.y, loc.z)
-
-  def toLocation: Location = Location(world, translation.toVector3f)
-
-  def toSafeLocation: Location =
-    Location(world, translation.toVector3f.add(.5f, 1f, .5f))
-
-  /* Java interop */
-
-  def withWorld(world: World): BlockLocation = copy(world = world)
-
-  def withTranslation(translation: Vector3i): BlockLocation =
-    copy(translation = translation)
-
-  def withX(x: Int): BlockLocation = copy(translation = translation.withX(x))
-  def withY(y: Int): BlockLocation = copy(translation = translation.withY(y))
-  def withZ(z: Int): BlockLocation = copy(translation = translation.withZ(z))
 }
