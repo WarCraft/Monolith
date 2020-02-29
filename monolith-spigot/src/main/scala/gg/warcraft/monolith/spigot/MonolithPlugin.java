@@ -5,9 +5,13 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import gg.warcraft.monolith.api.Monolith;
 import gg.warcraft.monolith.api.core.Duration;
-import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.core.ServerShutdownEvent;
 import gg.warcraft.monolith.api.core.TaskService;
+import gg.warcraft.monolith.api.core.event.EventService;
+import gg.warcraft.monolith.api.entity.player.service.PlayerCommandService;
+import gg.warcraft.monolith.api.entity.player.service.PlayerQueryService;
+import gg.warcraft.monolith.api.entity.service.EntityCommandService;
+import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
@@ -163,6 +167,13 @@ public class MonolithPlugin extends JavaPlugin {
         injector = Monolith.getInstance().getInjector();
         eventService = injector.getInstance(EventService.class);
         taskService = injector.getInstance(TaskService.class);
+
+        new ImplicitsJavaHack().doTheOtherThing(
+                injector.getInstance(EntityQueryService.class),
+                injector.getInstance(EntityCommandService.class),
+                injector.getInstance(PlayerQueryService.class),
+                injector.getInstance(PlayerCommandService.class)
+        );
 
         initializeMonolithHandlers();
         initializeSpigotEventMappers();

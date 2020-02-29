@@ -8,9 +8,15 @@ import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.typesafe.config.{Config, ConfigFactory}
-import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.{
   AuthorizationService, JsonMapper2, TaskService, YamlMapper2
+}
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.entity.player.service.{
+  PlayerCommandService, PlayerQueryService
+}
+import gg.warcraft.monolith.api.entity.service.{
+  EntityCommandService, EntityQueryService
 }
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
@@ -46,6 +52,20 @@ object Implicits {
     )
     dbConfig = ConfigFactory.parseProperties(props)
   }
+
+  // TODO remove
+  implicit var entityQueryService: EntityQueryService = _
+  def setEntityQueryService(service: EntityQueryService): Unit =
+    this.entityQueryService = service
+  implicit var entityCommandService: EntityCommandService = _
+  def setEntityCommandService(service: EntityCommandService): Unit =
+    this.entityCommandService = service
+  implicit var playerQueryService: PlayerQueryService = _
+  def setPlayerQueryService(service: PlayerQueryService): Unit =
+    this.playerQueryService = service
+  implicit var playerCommandService: PlayerCommandService = _
+  def setPlayerCommandService(service: PlayerCommandService): Unit =
+    this.playerCommandService = service
 
   implicit var server: Server = _
 

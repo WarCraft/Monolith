@@ -1,9 +1,10 @@
-package gg.warcraft.monolith.api.core
+package gg.warcraft.monolith.spigot
 
 import gg.warcraft.monolith.api.util.ColorCode
 import gg.warcraft.monolith.api.world.World
 import gg.warcraft.monolith.api.world.block.BlockTypeVariantOrState
 import gg.warcraft.monolith.api.world.item.ItemTypeOrVariant
+import gg.warcraft.monolith.spigot.Implicits._
 import io.circe.{Decoder, Encoder}
 import io.getquill.MappedEncoding
 
@@ -17,12 +18,12 @@ object Codecs {
       Encoder.encodeString.contramap[ColorCode](_.toString)
 
     implicit val blockDataDec: Decoder[BlockTypeVariantOrState] =
-      Decoder.decodeString.emapTry(it => { Try(worldService.parse(it)) })
+      Decoder.decodeString.emapTry(it => { Try(worldService.parseData(it)) })
     implicit val blockDataEnc: Encoder[BlockTypeVariantOrState] =
       Encoder.encodeString.contramap[BlockTypeVariantOrState](_.toString)
-
+//
     implicit val itemDataDec: Decoder[ItemTypeOrVariant] =
-      Decoder.decodeString.emapTry(it => { Try(itemService.parse(it)) })
+      Decoder.decodeString.emapTry(it => { Try(itemService.parseData(it)) })
     implicit val itemDataEnc: Encoder[ItemTypeOrVariant] =
       Encoder.encodeString.contramap[ItemTypeOrVariant](_.toString)
   }
