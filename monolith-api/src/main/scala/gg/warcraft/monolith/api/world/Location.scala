@@ -6,6 +6,7 @@ import io.getquill.Embedded
 object Location {
   implicit def toWorld(loc: Location): World = loc.world
   implicit def toVector3i(loc: Location): Vector3f = loc.translation
+  implicit def toPitchYaw(loc: Location): (Float, Float) = (loc.pitch, loc.yaw)
   implicit def toBlockLocation(loc: Location): BlockLocation = {
     val floor = (x: Float) => Math.floor(x).toInt
     val translation = Vector3i(floor(loc.x), floor(loc.y), floor(loc.z))
