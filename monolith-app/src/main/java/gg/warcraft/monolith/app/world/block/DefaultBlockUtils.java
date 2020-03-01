@@ -7,9 +7,10 @@ import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.WorldService;
 import gg.warcraft.monolith.api.world.block.*;
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
+import gg.warcraft.monolith.api.world.block.box.BlockBox;
+import gg.warcraft.monolith.api.world.block.box.BlockBoxReader;
 import org.joml.*;
+import scala.jdk.javaapi.CollectionConverters;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,14 +22,11 @@ import java.util.stream.Collectors;
 public class DefaultBlockUtils implements BlockUtils {
     private final WorldService worldService;
     private final BlockIteratorFactory blockIteratorFactory;
-    private final BoundingBlockBoxFactory boundingBlockBoxFactory;
 
     @Inject
-    public DefaultBlockUtils(WorldService worldService, BlockIteratorFactory blockIteratorFactory,
-                             BoundingBlockBoxFactory boundingBlockBoxFactory) {
+    public DefaultBlockUtils(WorldService worldService, BlockIteratorFactory blockIteratorFactory) {
         this.worldService = worldService;
         this.blockIteratorFactory = blockIteratorFactory;
-        this.boundingBlockBoxFactory = boundingBlockBoxFactory;
     }
 
     @Override
@@ -153,7 +151,7 @@ public class DefaultBlockUtils implements BlockUtils {
     }
 
     @Override
-    public BoundingBlockBox getBoundingBox(Collection<Block> blocks) {
+    public BlockBox getBoundingBox(Collection<Block> blocks) {
         if (blocks == null || blocks.isEmpty()) {
             return null;
         }
@@ -189,28 +187,28 @@ public class DefaultBlockUtils implements BlockUtils {
         World world = blocks.iterator().next().location().world();
         Vector3i minimumCorner = new Vector3i(minX, minY, minZ);
         Vector3i maximumCorner = new Vector3i(maxX, maxY, maxZ);
-        return boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
+        return new BlockBox(world, minimumCorner, maximumCorner);
     }
 
     @Override
     public List<Block> getWithinRadius(Location location, float radius) {
         World world = location.world();
-        Vector3i minimumCorner = location.subtract(radius, radius, radius)
-                .toBlockLocation()
-                .translation();
-        Vector3i maximumCorner = location.add(1 + radius, 1 + radius, 1 + radius)
-                .toBlockLocation()
-                .translation();
-        BoundingBlockBox box = boundingBlockBoxFactory.createBoundingBlockBox(world, minimumCorner, maximumCorner);
+        Vector3i minimumCorner =
+                Location.toBlockLocation(location.subtract(radius, radius, radius))
+                        .translation();
+        Vector3i maximumCorner =
+                Location.toBlockLocation(location.add(1 + radius, 1 + radius, 1 + radius))
+                        .translation();
+        BlockBox box = new BlockBox(world, minimumCorner, maximumCorner);
         Spheref sphere = new Spheref(location.x(), location.y(), location.z(), radius);
-        return box.stream()
+        BlockBoxReader reader = new BlockBoxReader(box, BlockDirection.NORTH, worldService);
+        return CollectionConverters.asJava(reader.getBlocks()
                 .filter(block -> {
-                    Location blockLocation = block.location().toLocation();
+                    Location blockLocation = BlockLocation.toLocation(block.location());
                     Vector3fc jomlMinCorner = new Vector3f(blockLocation.x(), blockLocation.y(), blockLocation.z());
                     AABBf blockBox = new AABBf(jomlMinCorner, jomlMinCorner.add(1, 1, 1, new Vector3f()));
                     return Intersectionf.testAabSphere(blockBox, sphere);
-                })
-                .collect(Collectors.toList());
+                }));
     }
 
     @Override

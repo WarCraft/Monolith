@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block.build;
 
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
+import gg.warcraft.monolith.api.world.block.box.BlockBox;
 
 import java.util.Arrays;
 
@@ -8,9 +8,9 @@ public abstract class AbstractBlockBuild implements BlockBuild {
     private final String type;
     private final String model;
     private final String[] data;
-    private final BoundingBlockBox boundingBox;
+    private final BlockBox boundingBox;
 
-    public AbstractBlockBuild(String type, String model, String[] data, BoundingBlockBox boundingBox) {
+    public AbstractBlockBuild(String type, String model, String[] data, BlockBox boundingBox) {
         this.type = type;
         this.model = model;
         this.data = data;
@@ -38,7 +38,7 @@ public abstract class AbstractBlockBuild implements BlockBuild {
     }
 
     @Override
-    public BoundingBlockBox getBoundingBox() {
+    public BlockBox getBoundingBox() {
         return boundingBox;
     }
 }

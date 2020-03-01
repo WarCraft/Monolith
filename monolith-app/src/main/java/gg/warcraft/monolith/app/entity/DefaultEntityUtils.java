@@ -48,7 +48,7 @@ public class DefaultEntityUtils implements EntityUtils {
         float centerY = boundingBox.minY + deltaY;
         float centerZ = boundingBox.minZ + deltaZ;
 
-        Location center = new Location(origin.world(), new Vector3f(centerX, centerY, centerZ), new Vector3f());
+        Location center = new Location(origin.world(), new Vector3f(centerX, centerY, centerZ), new Vector3f(0, 0, 0));
         LineSegmentf intersectionLine = new LineSegmentf(jomlOriginVec, jomlTargetVec);
         List<Entity> nearbyEntities = entityQueryService.getNearbyEntities(center, deltaX, deltaY, deltaZ);
         float closestIntersectionScalar = Float.MAX_VALUE;
@@ -71,7 +71,7 @@ public class DefaultEntityUtils implements EntityUtils {
         if (closestIntersectedEntity != null) {
             Vector3f distanceAlongRay = targetVector.subtract(originVector).multiply(closestIntersectionScalar);
             Vector3f intersection = originVector.add(distanceAlongRay);
-            Location intersectionLocation = new Location(origin.world(), intersection, new Vector3f());
+            Location intersectionLocation = new Location(origin.world(), intersection, new Vector3f(0, 0, 0));
             return new SimpleEntityIntersection(closestIntersectedEntity, intersectionLocation);
         }
         return null;

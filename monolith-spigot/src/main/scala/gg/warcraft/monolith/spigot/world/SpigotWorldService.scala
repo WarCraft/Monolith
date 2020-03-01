@@ -4,7 +4,7 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.{
-  Location, Sound, SoundCategory, World, WorldService
+  BlockLocation, Location, Sound, SoundCategory, WorldService
 }
 import gg.warcraft.monolith.api.world.block._
 import gg.warcraft.monolith.spigot.world.block.{
@@ -47,13 +47,27 @@ class SpigotWorldService(
     }
   }
 
-  override def getBlock(world: World, x: Int, y: Int, z: Int): Block = {
+  override def getBlock(loc: BlockLocation): Block = {
+    import loc._
     val spigotWorld = worldMapper.map(world).get
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
     blockMapper.map(spigotBlock).get
   }
 
-  override def getHighestBlock(world: World, x: Int, z: Int): Block = {
+  override def getBlockIfType(
+      loc: BlockLocation,
+      types: BlockType*
+  ): Option[Block] = {
+    import loc._
+    val spigotTypes = types.map(blockTypeMapper.map).toSet
+    val spigotWorld = worldMapper.map(world).get
+    val spigotBlock = spigotWorld.getBlockAt(x, y, z)
+    if (!spigotTypes.contains(spigotBlock.getType)) None
+    else Some(blockMapper.map(spigotBlock).get)
+  }
+
+  override def getHighestBlock(loc: BlockLocation): Block = {
+    import loc._
     val spigotWorld = worldMapper.map(world).get
     var spigotBlock = spigotWorld.getHighestBlockAt(x, z)
     do {
@@ -79,7 +93,8 @@ class SpigotWorldService(
     newSpigotBlockState.update( /* force */ true, /* physics */ false)
   }
 
-  override def setBlock(world: World, x: Int, y: Int, z: Int, data: Data): Unit = {
+  override def setBlock(loc: BlockLocation, data: Data): Unit = {
+    import loc._
     val spigotWorld = worldMapper.map(world).get
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     val spigotBlock = spigotLocation.getBlock
@@ -103,7 +118,8 @@ class SpigotWorldService(
     }
   }
 
-  override def setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Unit = {
+  override def setBlock(loc: BlockLocation, block: Block): Unit = {
+    import loc._
     val spigotWorld = worldMapper.map(world).get
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     update(spigotLocation.getBlock, block)

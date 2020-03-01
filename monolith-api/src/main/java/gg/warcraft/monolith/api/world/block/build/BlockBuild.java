@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.world.block.build;
 
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
+import gg.warcraft.monolith.api.world.block.box.BlockBox;
 
 /**
  * A BlockBuild represents a specifically arranged collection of blocks on the server. It is basically a {@code
@@ -32,5 +32,5 @@ public interface BlockBuild {
     /**
      * @return The bounding box of this build. Never null.
      */
-    BoundingBlockBox getBoundingBox();
+    BlockBox getBoundingBox();
 }

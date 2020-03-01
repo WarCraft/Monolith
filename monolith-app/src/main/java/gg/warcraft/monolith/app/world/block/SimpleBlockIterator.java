@@ -29,7 +29,7 @@ public class SimpleBlockIterator implements BlockIterator {
         this.direction = target.subtract(origin).translation().normalize();
         this.scanLocation = origin;
         this.currentBlockLocation = null;
-        this.nextBlockLocation = origin.toBlockLocation();
+        this.nextBlockLocation = Location.toBlockLocation(origin);
     }
 
     BlockLocation calculateNext() {
@@ -39,25 +39,25 @@ public class SimpleBlockIterator implements BlockIterator {
             distance += 1;
 
             scanLocation = scanLocation.add(delta);
-            if (scanLocation.toBlockLocation().equals(currentBlockLocation)) {
+            if (Location.toBlockLocation(scanLocation).equals(currentBlockLocation)) {
                 return calculateNext();
             }
-            return scanLocation.toBlockLocation();
+            return Location.toBlockLocation(scanLocation);
         } else {
             delta = direction.multiply(maxDistance - distance);
             distance = maxDistance;
 
             scanLocation = scanLocation.add(delta);
-            if (scanLocation.toBlockLocation().equals(currentBlockLocation)) {
+            if (Location.toBlockLocation(scanLocation).equals(currentBlockLocation)) {
                 return null;
             }
-            return scanLocation.toBlockLocation();
+            return Location.toBlockLocation(scanLocation);
         }
     }
 
     @Override
     public Location calculateIntersection() {
-        return currentBlockLocation.toLocation().add(0.5f, 0.5f, 0.5f);
+        return BlockLocation.toLocation(currentBlockLocation).add(0.5f, 0.5f, 0.5f);
         // FIXME
 //        System.out.println("DEBUG Calculating intersection for " + currentBlockLocation);
 //        Vector3f blockMinimumCorner = currentBlockLocation.toLocation().toVector();

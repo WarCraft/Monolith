@@ -5,6 +5,7 @@ import io.getquill.Embedded
 object Vector3i {
   implicit def fromInts(ints: (Int, Int, Int)): Vector3i =
     Vector3i(ints._1, ints._2, ints._3)
+
   implicit def toInts(vec: Vector3i): (Int, Int, Int) =
     (vec.x, vec.y, vec.z)
   implicit def toVector3f(vec: Vector3i): Vector3f =
@@ -28,4 +29,9 @@ case class Vector3i(
     copy(x = x * scalar, y = y * scalar, z = z * scalar)
   def multiply(vec: Vector3i): Vector3i =
     copy(x = x * vec.x, y = y * vec.y, z = z * vec.z)
+
+  // TODO remove after entire project is converted to Scala
+  def withX(x: Int): Vector3i = copy(x = x)
+  def withY(y: Int): Vector3i = copy(y = y)
+  def withZ(z: Int): Vector3i = copy(z = z)
 }

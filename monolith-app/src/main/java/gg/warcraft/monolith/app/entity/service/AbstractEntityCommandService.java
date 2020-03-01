@@ -165,7 +165,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
         Block targetBlock = findBlockUnderFeet(entity);
         int safeY = targetBlock.location().y() + 1;
         Location safeLocation = entity.getLocation().withY(safeY);
-        this.setVelocity(entityId, new Vector3f());
+        this.setVelocity(entityId, new Vector3f(0, 0, 0));
         this.teleport(entityId, safeLocation);
 
         this.removePotionEffect(entityId, PotionEffectType.JUMP);
@@ -183,7 +183,7 @@ public abstract class AbstractEntityCommandService implements EntityCommandServi
     }
 
     private Block findBlockUnderFeet(Entity entity) {
-        Block current = worldService.getBlock(entity.getLocation().toBlockLocation());
+        Block current = worldService.getBlock(Location.toBlockLocation(entity.getLocation()));
         while (!current.solid() && current.location().y() >= 0) {
             current = blockUtils.getRelative(current, BlockFace.DOWN);
         }

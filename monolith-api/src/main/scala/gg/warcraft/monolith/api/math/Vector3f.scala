@@ -32,6 +32,7 @@ object Vector3f {
 
   implicit def fromFloats(floats: (Float, Float, Float)): Vector3f =
     Vector3f(floats._1, floats._2, floats._3)
+
   implicit def toFloats(vec: Vector3f): (Float, Float, Float) =
     (vec.x, vec.y, vec.z)
   implicit def toVector3i(vec: Vector3f): Vector3i =
@@ -75,4 +76,9 @@ case class Vector3f(
     val yaw = if (unboundYaw == 180f) -180f else unboundYaw
     (pitch.toFloat, yaw.toFloat)
   }
+
+  // TODO remove after entire project is converted to Scala
+  def withX(x: Float): Vector3f = copy(x = x)
+  def withY(y: Float): Vector3f = copy(y = y)
+  def withZ(z: Float): Vector3f = copy(z = z)
 }

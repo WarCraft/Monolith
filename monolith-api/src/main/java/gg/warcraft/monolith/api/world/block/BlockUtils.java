@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.world.block;
 
 import gg.warcraft.monolith.api.world.Location;
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
+import gg.warcraft.monolith.api.world.block.box.BlockBox;
 
 import java.util.Collection;
 import java.util.List;
@@ -76,7 +76,7 @@ public interface BlockUtils {
      * @param blocks The collection of blocks. Can not be null or empty.
      * @return A block box representing the bounds of the collection of blocks. Never null.
      */
-    BoundingBlockBox getBoundingBox(Collection<Block> blocks);
+    BlockBox getBoundingBox(Collection<Block> blocks);
 
     /**
      * @param location The location. Can not be null.

@@ -53,8 +53,7 @@ class SpigotBlockEventMapper(
     eventService.publish(breakEvent)
     alternativeDrops match {
       case Some(drops) if drops.nonEmpty =>
-        val dropLocation = block.location.toSafeLocation
-        itemService.dropItems(dropLocation, drops: _*)
+        itemService.dropItems(block.location, drops: _*)
       case _ => ()
     }
   }

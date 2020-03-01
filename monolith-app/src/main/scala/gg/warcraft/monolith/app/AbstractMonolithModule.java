@@ -14,7 +14,6 @@ import gg.warcraft.monolith.api.combat.*;
 import gg.warcraft.monolith.api.config.service.ConfigurationCommandService;
 import gg.warcraft.monolith.api.config.service.ConfigurationQueryService;
 import gg.warcraft.monolith.api.config.service.ConfigurationRepository;
-import gg.warcraft.monolith.api.core.event.EventService;
 import gg.warcraft.monolith.api.core.JsonMapper;
 import gg.warcraft.monolith.api.core.PersistenceCache;
 import gg.warcraft.monolith.api.core.PersistenceService;
@@ -61,8 +60,6 @@ import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
 import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
 import gg.warcraft.monolith.api.world.block.BlockUtils;
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBoxFactory;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildQueryService;
 import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
@@ -127,7 +124,6 @@ import gg.warcraft.monolith.app.util.DefaultTimeUtils;
 import gg.warcraft.monolith.app.world.DefaultDirectionUtils;
 import gg.warcraft.monolith.app.world.block.DefaultBlockUtils;
 import gg.warcraft.monolith.app.world.block.SimpleBlockIterator;
-import gg.warcraft.monolith.app.world.block.box.SimpleBoundingBlockBox;
 import gg.warcraft.monolith.app.world.block.build.service.DefaultBlockBuildCommandService;
 import gg.warcraft.monolith.app.world.block.build.service.DefaultBlockBuildQueryService;
 import gg.warcraft.monolith.app.world.block.build.service.DefaultBlockBuildRepository;
@@ -412,11 +408,6 @@ public class AbstractMonolithModule extends PrivateModule {
         // Block bindings
         bind(BlockUtils.class).to(DefaultBlockUtils.class);
         expose(BlockUtils.class);
-
-        install(new FactoryModuleBuilder()
-                .implement(BoundingBlockBox.class, Names.named("simple"), SimpleBoundingBlockBox.class)
-                .build(BoundingBlockBoxFactory.class));
-        expose(BoundingBlockBoxFactory.class);
 
         install(new FactoryModuleBuilder()
                 .implement(BlockIterator.class, SimpleBlockIterator.class)

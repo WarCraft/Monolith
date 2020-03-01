@@ -3,19 +3,17 @@ package gg.warcraft.monolith.spigot.world.block
 import java.util
 
 import gg.warcraft.monolith.api.world.block._
-import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
+import gg.warcraft.monolith.api.world.block.shape.{ RailsShape, StairsShape }
 import gg.warcraft.monolith.api.world.block.state._
 import gg.warcraft.monolith.api.world.block.variant._
+import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.Extensions._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Bukkit, Material}
-import org.bukkit.block.data.{
-  Bisected, Directional, Lightable, MultipleFacing, Openable, Orientable, Powerable,
-  Rotatable, Snowable, Waterlogged
-}
-import org.bukkit.block.data.`type`.Bed.{Part => SpigotBedPart}
-import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
-import org.bukkit.block.data.`type`.Slab.{Type => SpigotSlabType}
+import org.bukkit.{ Bukkit, Material }
+import org.bukkit.block.data.{ Bisected, Directional, Lightable, MultipleFacing, Openable, Orientable, Powerable, Rotatable, Snowable, Waterlogged }
+import org.bukkit.block.data.`type`.Bed.{ Part => SpigotBedPart }
+import org.bukkit.block.data.`type`.Door.{ Hinge => SpigotDoorHinge }
+import org.bukkit.block.data.`type`.Slab.{ Type => SpigotSlabType }
 import org.bukkit.block.data.`type`.Switch
 
 private object SpigotBlockMapper {
@@ -44,8 +42,8 @@ class SpigotBlockMapper(
   def compute(material: Material): SpigotBlock => Block = {
     def data[T](block: SpigotBlock): T = block.getBlockData.asInstanceOf[T]
 
-    val loc = (block: SpigotBlock) =>
-      locationMapper.map(block.getLocation).toBlockLocation
+    val loc: SpigotBlock => BlockLocation = (block: SpigotBlock) =>
+      locationMapper.map(block.getLocation)
 
     // Lazily compute generic block data
     val flooded = (block: SpigotBlock) => data[Waterlogged](block).isWaterlogged
