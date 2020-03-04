@@ -35,6 +35,7 @@ class BlockBoxReader(
   }
 
   def getBlock(offset: Vector3i): Block = readBlock(offset)
+
   def getOffset(block: Block): Vector3i = readOffset(block)
 
   def getBlocks: LazyList[Block] = getBlocks(locationGenerator)
