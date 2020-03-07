@@ -36,24 +36,16 @@ class BootstrapPlugin extends JavaPlugin {
     loaders -= plugin
   }
 
-  private def reload(plugin: String): Unit = {
-    disable(plugin)
-    enable(plugin)
-  }
-
   private def enableAll(): Unit = config foreach enable
-
   private def disableAll(): Unit = config.reverse foreach disable
 
-  private def reloadAll(): Unit = {
-    disableAll()
-    enableAll()
-  }
+  private def reload(plugin: String): Unit = { disable(plugin); enable(plugin) }
+  private def reloadAll(): Unit = { disableAll(); enableAll() }
 
   private def reloadConfig(): Unit = {
     super.reloadConfig()
     config = parser.parse(getConfig.saveToString()) match {
-      case Left(err)   => getLogger severe err.getMessage; Nil
+      case Left(err) => getLogger severe err.getMessage; Nil
       case Right(json) =>
         json.as[List[String]] match {
           case Left(err)     => getLogger severe err.getMessage; Nil
@@ -63,11 +55,7 @@ class BootstrapPlugin extends JavaPlugin {
   }
 
   override def onLoad(): Unit = saveDefaultConfig()
-
-  override def onEnable(): Unit = {
-    reloadConfig()
-    enableAll()
-  }
+  override def onEnable(): Unit = { reloadConfig(); enableAll() }
 
   override def onCommand(
       sender: CommandSender,
