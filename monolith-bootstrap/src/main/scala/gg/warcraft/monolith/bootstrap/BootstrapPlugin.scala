@@ -16,8 +16,8 @@ class BootstrapPlugin extends JavaPlugin {
   private var instances: Map[String, MonolithPlugin] = Map()
 
   private def enable(plugin: String): Unit = {
-    val hotreload = getDataFolder.toPath.resolve("hotreload")
-    val jar = hotreload.toFile.listFiles((_, name) => name.startsWith(plugin))(0)
+    val libs = getDataFolder.toPath.resolve("lib")
+    val jar = libs.toFile.listFiles((_, name) => name.startsWith(plugin))(0)
     val url = jar.toPath.toUri.toURL
     val loader = new URLClassLoader(Array(url), getClass.getClassLoader)
     loaders += (plugin -> loader)
