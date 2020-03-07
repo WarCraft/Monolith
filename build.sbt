@@ -78,3 +78,19 @@ lazy val spigot = (project in file("monolith-spigot"))
     )
   )
   .dependsOn(app)
+
+lazy val bootstrap = (project in file("monolith-bootstrap"))
+  .settings(
+    name := "monolith-bootstrap",
+    commonSettings,
+    resolvers ++= Seq(
+      "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
+    ),
+    libraryDependencies ++= commonDependencies ++ Seq(
+      "com.destroystokyo.paper" % "paper-api" % "1.15.2-R0.1-SNAPSHOT" % Provided,
+      "io.circe" %% "circe-core" % "0.12.3",
+      "io.circe" %% "circe-generic" % "0.12.3",
+      "io.circe" %% "circe-parser" % "0.12.3",
+      "io.circe" %% "circe-yaml" % "0.12.0"
+    )
+  )
