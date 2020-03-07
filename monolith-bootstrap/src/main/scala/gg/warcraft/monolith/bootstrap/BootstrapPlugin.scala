@@ -2,18 +2,18 @@ package gg.warcraft.monolith.bootstrap
 
 import java.net.URLClassLoader
 
-import io.circe.generic.auto._
-import io.circe.parser._
+import gg.warcraft.monolith.MonolithPlugin
+import io.circe.yaml.parser
 import org.bukkit.command.{Command, CommandSender, ConsoleCommandSender}
 import org.bukkit.plugin.java.JavaPlugin
 
-class Plugin extends JavaPlugin {
+class BootstrapPlugin extends JavaPlugin {
   private final val CMD_RELOAD_MISSING_ARGS = ""
   private final val CMD_RELOAD_MALFORMED_ARGS = ""
 
-  private var config: Config = _
+  private var config: List[String] = Nil
   private var loaders: Map[String, URLClassLoader] = Map()
-  private var instances: Map[String, Object] = Map()
+  private var instances: Map[String, MonolithPlugin] = Map()
 
   private def enable(plugin: String): Unit = {
     val hotreload = getDataFolder.toPath.resolve("hotreload")
@@ -23,14 +23,13 @@ class Plugin extends JavaPlugin {
     loaders += (plugin -> loader)
 
     val main = s"gg.warcraft.$plugin.spigot.${plugin.capitalize}Plugin"
-    val instance = loader.loadClass(main).newInstance()
-    instance.getClass.getMethod("enable").invoke(instance)
+    val instance = loader.loadClass(main).newInstance().asInstanceOf[MonolithPlugin]
+    instance.enable()
     instances += (plugin -> instance)
   }
 
   private def disable(plugin: String): Unit = {
-    val instance = instances(plugin)
-    instance.getClass.getMethod("disable").invoke(instance)
+    instances(plugin).disable()
     instances -= plugin
 
     loaders(plugin).close()
@@ -42,9 +41,9 @@ class Plugin extends JavaPlugin {
     enable(plugin)
   }
 
-  private def enableAll(): Unit = config.plugins foreach enable
+  private def enableAll(): Unit = config foreach enable
 
-  private def disableAll(): Unit = config.plugins.reverse foreach disable
+  private def disableAll(): Unit = config.reverse foreach disable
 
   private def reloadAll(): Unit = {
     disableAll()
@@ -53,11 +52,13 @@ class Plugin extends JavaPlugin {
 
   private def reloadConfig(): Unit = {
     super.reloadConfig()
-    config = decode[Config](getConfig.saveToString()) match {
-      case Left(err) =>
-        getLogger severe s"Failed to parse config: ${err.getMessage}"
-        Config(Nil)
-      case Right(config) => config
+    config = parser.parse(getConfig.saveToString()) match {
+      case Left(err)   => getLogger severe err.getMessage; Nil
+      case Right(json) =>
+        json.as[List[String]] match {
+          case Left(err)     => getLogger severe err.getMessage; Nil
+          case Right(config) => config
+        }
     }
   }
 
@@ -85,11 +86,11 @@ class Plugin extends JavaPlugin {
   private def onReloadCommand(args: List[String])(
       implicit sender: CommandSender
   ): Unit = args match {
-    case "--all" :: Nil | "-a" :: Nil     => reloadAll()
-    case "--config" :: Nil | "-c" :: Nil  => reloadConfig()
+    case "--all" :: Nil | "-a" :: Nil       => reloadAll()
+    case "--config" :: Nil | "-c" :: Nil    => reloadConfig()
     case it :: Nil if instances contains it => reload(it)
-    case Nil                              => sender sendMessage CMD_RELOAD_MISSING_ARGS
-    case _                                => sender sendMessage CMD_RELOAD_MALFORMED_ARGS
+    case Nil                                => sender sendMessage CMD_RELOAD_MISSING_ARGS
+    case _                                  => sender sendMessage CMD_RELOAD_MALFORMED_ARGS
   }
 
   private implicit def isConsole(implicit sender: CommandSender): Boolean =
