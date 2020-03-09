@@ -129,7 +129,7 @@ class BlockLocationSpec extends fixture.FunSpec {
         val expectedLocation = Location(World.OVERWORLD, expectedTranslation)
 
         // When
-        val location = fixture.toLocation
+        val location: Location = fixture
 
         // Then
         assert(location == expectedLocation)

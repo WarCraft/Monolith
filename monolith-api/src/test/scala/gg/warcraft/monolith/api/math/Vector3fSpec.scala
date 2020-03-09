@@ -622,7 +622,7 @@ class Vector3fSpec extends fixture.FunSpec {
         val expectedVector = Vector3i(2, 4, 6)
 
         // When
-        val location = fixture.toVector3i
+        val location: Vector3i = fixture
 
         // Then
         assert(location == expectedVector)
