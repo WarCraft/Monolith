@@ -1,23 +1,23 @@
 package gg.warcraft.monolith.api.core.event
 
-import scala.collection.mutable
-
 private object EventService {
-  private val handlers = mutable.ListBuffer.empty[EventHandler]
+  private var handlers: List[EventHandler] = Nil
 }
 
 class EventService {
   import EventService.handlers
 
   def publish(event: Event): Unit =
-    handlers.foreach(_.handle(event))
+    handlers foreach { _.handle(event) }
 
   def publish[T <: PreEvent](event: T): T =
-    handlers.foldLeft(event)((it, handler) => handler.reduce(it))
+    handlers.foldLeft(event) { (it, handler) =>
+      handler.reduce(it)
+    }
 
   def subscribe(handler: EventHandler): Unit =
-    handlers.addOne(handler)
+    handlers ::= handler
 
   def unsubscribe(handler: EventHandler): Unit =
-    handlers.subtractOne(handler)
+    handlers = handlers filter { _ != handler }
 }
