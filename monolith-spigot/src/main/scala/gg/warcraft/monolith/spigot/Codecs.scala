@@ -1,5 +1,6 @@
 package gg.warcraft.monolith.spigot
 
+import gg.warcraft.monolith.api.entity.EntityType
 import gg.warcraft.monolith.api.util.ColorCode
 import gg.warcraft.monolith.api.world.World
 import gg.warcraft.monolith.api.world.block.BlockTypeVariantOrState
@@ -16,6 +17,11 @@ object Codecs {
       Decoder.decodeString.emapTry(it => { Try(ColorCode.valueOf(it)) })
     implicit val colorEnc: Encoder[ColorCode] =
       Encoder.encodeString.contramap[ColorCode](_.toString)
+
+    implicit val entityDec: Decoder[EntityType] =
+      Decoder.decodeString.emapTry(it => { Try(EntityType.valueOf(it)) })
+    implicit val entityEnc: Encoder[EntityType] =
+      Encoder.encodeString.contramap[EntityType](_.toString)
 
     implicit val blockDataDec: Decoder[BlockTypeVariantOrState] =
       Decoder.decodeString.emapTry(it => { Try(worldService.parseData(it)) })
