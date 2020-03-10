@@ -42,7 +42,7 @@ object Implicits {
   private implicit var logger: Logger = _
   def setLogger(logger: Logger): Unit = this.logger = logger
 
-  implicit var dbConfig: Config = _
+  private implicit var dbConfig: Config = _
   def setDatabaseConfig(dataFolderPath: String): Unit = {
     val props = new Properties()
     props.setProperty("driverClassName", "org.sqlite.JDBC")
