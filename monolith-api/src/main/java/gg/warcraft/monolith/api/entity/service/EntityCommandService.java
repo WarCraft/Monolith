@@ -7,8 +7,8 @@ import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.core.Duration;
-import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.Location;
+import gg.warcraft.monolith.api.world.block.BlockRotation;
 
 import java.util.UUID;
 
@@ -75,7 +75,7 @@ public interface EntityCommandService {
      * @param location    The location to teleport the entity to. Can not be null.
      * @param orientation The new orientation of the entity. Can not be null.
      */
-    void teleport(UUID entityId, Location location, Direction orientation);
+    void teleport(UUID entityId, Location location, BlockRotation orientation);
 
     /**
      * @param entityId The id of the entity. Can not be null.
