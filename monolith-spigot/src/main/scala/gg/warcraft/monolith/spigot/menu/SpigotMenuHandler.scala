@@ -1,13 +1,10 @@
 package gg.warcraft.monolith.spigot.menu
 
 import gg.warcraft.monolith.api.menu.{Menu, MenuService}
-import gg.warcraft.monolith.app.menu.SimpleClick
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.inventory.InventoryClickEvent
 
-class SpigotMenuEventMapper(
-    implicit private val menuService: MenuService
-) extends Listener {
+class SpigotMenuHandler(implicit menuService: MenuService) extends Listener {
   private def onClick(event: InventoryClickEvent, menu: Menu): Unit = {
     if (event.isLeftClick || event.isRightClick) {
       val button = menu.getButtons.get(event.getRawSlot)
