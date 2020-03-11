@@ -3,7 +3,6 @@ package gg.warcraft.monolith.app.entity.attribute.handler;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gg.warcraft.monolith.api.core.event.Event;
-import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.attribute.Attributes;
 import gg.warcraft.monolith.api.entity.attribute.GenericAttribute;
@@ -21,7 +20,7 @@ import gg.warcraft.monolith.app.entity.attribute.LazyAttributes;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class AttributesInitializationHandler implements EventHandler {
+public class AttributesInitializationHandler implements Event.Handler {
     private final AttributeCommandService attributeCommandService;
     private final AttributeRepository attributeRepository;
     private final EntityServerAdapter entityServerAdapter;

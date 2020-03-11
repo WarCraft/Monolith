@@ -2,7 +2,6 @@ package gg.warcraft.monolith.app.entity.player.handler;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.event.Event;
-import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.entity.player.MonolithPlayerData;
 import gg.warcraft.monolith.api.entity.player.PlayerProfile;
 import gg.warcraft.monolith.api.player.PlayerPreConnectEvent;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerProfileInitializationHandler implements EventHandler {
+public class PlayerProfileInitializationHandler implements Event.Handler {
     private final PlayerProfileRepository playerProfileRepository;
 
     @Inject

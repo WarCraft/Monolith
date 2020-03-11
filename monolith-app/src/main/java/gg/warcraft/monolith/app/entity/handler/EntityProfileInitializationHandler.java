@@ -2,7 +2,6 @@ package gg.warcraft.monolith.app.entity.handler;
 
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.core.event.Event;
-import gg.warcraft.monolith.api.core.event.EventHandler;
 import gg.warcraft.monolith.api.entity.EntityProfile;
 import gg.warcraft.monolith.api.entity.EntityType;
 import gg.warcraft.monolith.api.entity.EntityDeathEvent;
@@ -13,7 +12,7 @@ import gg.warcraft.monolith.app.entity.SimpleEntityProfile;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EntityProfileInitializationHandler implements EventHandler {
+public class EntityProfileInitializationHandler implements Event.Handler {
     private final EntityProfileRepository entityProfileRepository;
 
     @Inject

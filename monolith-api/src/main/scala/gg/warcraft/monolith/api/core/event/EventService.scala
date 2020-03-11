@@ -1,11 +1,7 @@
 package gg.warcraft.monolith.api.core.event
 
-private object EventService {
-  private var handlers: List[EventHandler] = Nil
-}
-
 class EventService {
-  import EventService.handlers
+  private var handlers: List[Event.Handler] = Nil
 
   def publish(event: Event): Unit =
     handlers foreach { _.handle(event) }
@@ -15,9 +11,9 @@ class EventService {
       handler.reduce(it)
     }
 
-  def subscribe(handler: EventHandler): Unit =
+  def subscribe(handler: Event.Handler): Unit =
     handlers ::= handler
 
-  def unsubscribe(handler: EventHandler): Unit =
+  def unsubscribe(handler: Event.Handler): Unit =
     handlers = handlers filter { _ != handler }
 }

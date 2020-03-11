@@ -1,10 +1,10 @@
 package gg.warcraft.monolith.api.entity.status
 
-import gg.warcraft.monolith.api.core.event.{Event, EventHandler, PreEvent}
+import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
 
 import scala.collection.mutable
 
-class Status extends EventHandler {
+class Status extends Event.Handler {
   private[status] val effects: mutable.Set[StatusEffect] =
     new mutable.HashSet[StatusEffect]
 

@@ -1,5 +1,12 @@
 package gg.warcraft.monolith.api.core.event
 
+object Event {
+  trait Handler {
+    def handle(event: Event): Unit = ()
+    def reduce[T <: PreEvent](event: T): T = event
+  }
+}
+
 /** Event is a utility trait that prevents accidental passing of objects to the
   * EventService that were not meant to be used as an event. */
 trait Event

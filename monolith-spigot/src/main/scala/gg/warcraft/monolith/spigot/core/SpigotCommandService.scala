@@ -3,18 +3,18 @@ package gg.warcraft.monolith.spigot.core
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.command.CommandService
+import gg.warcraft.monolith.api.core.event.EventService
 import org.bukkit.Server
 
 class SpigotCommandService(
-    implicit server: Server
+    implicit server: Server,
+    eventService: EventService
 ) extends CommandService {
-  private val consoleSender = server.getConsoleSender
-
-  override def dispatchCommand(playerId: UUID, cmd: String, args: String*): Unit = {
+  override def executeCommand(playerId: UUID, label: String, args: String*): Unit = {
     val player = server.getPlayer(playerId)
-    if (player != null) player.performCommand(s"$cmd ${args.mkString(" ")}")
+    if (player != null) {
+      val command = s"$label ${args.mkString(" ")}"
+      server.dispatchCommand(player, command)
+    }
   }
-
-  override def dispatchConsoleCommand(cmd: String, args: String*): Unit =
-    server.dispatchCommand(consoleSender, s"${cmd} ${args.mkString(" ")}")
 }
