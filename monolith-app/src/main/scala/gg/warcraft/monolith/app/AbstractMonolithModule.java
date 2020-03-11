@@ -1,10 +1,5 @@
 package gg.warcraft.monolith.app;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -14,10 +9,6 @@ import gg.warcraft.monolith.api.combat.*;
 import gg.warcraft.monolith.api.config.service.ConfigurationCommandService;
 import gg.warcraft.monolith.api.config.service.ConfigurationQueryService;
 import gg.warcraft.monolith.api.config.service.ConfigurationRepository;
-import gg.warcraft.monolith.api.core.JsonMapper;
-import gg.warcraft.monolith.api.core.PersistenceCache;
-import gg.warcraft.monolith.api.core.PersistenceService;
-import gg.warcraft.monolith.api.core.YamlMapper;
 import gg.warcraft.monolith.api.effect.Effect;
 import gg.warcraft.monolith.api.effect.EffectFactory;
 import gg.warcraft.monolith.api.effect.EffectRenderer;
@@ -73,14 +64,10 @@ import gg.warcraft.monolith.app.combat.AmbientPotionEffect;
 import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 import gg.warcraft.monolith.app.combat.VisiblePotionEffect;
-import gg.warcraft.monolith.app.config.MonolithMapperModule;
 import gg.warcraft.monolith.app.config.service.DefaultConfigurationQueryService;
 import gg.warcraft.monolith.app.config.service.DefaultConfigurationRepository;
 import gg.warcraft.monolith.app.config.service.GitHubConfigurationCommandService;
 import gg.warcraft.monolith.app.config.service.LocalConfigurationCommandService;
-import gg.warcraft.monolith.app.core.InMemoryPersistenceCache;
-import gg.warcraft.monolith.app.core.InMemoryPersistenceService;
-import gg.warcraft.monolith.app.core.JedisPersistenceService;
 import gg.warcraft.monolith.app.effect.DynamicEffect;
 import gg.warcraft.monolith.app.effect.PeriodicDynamicEffect;
 import gg.warcraft.monolith.app.effect.PeriodicEffect;
@@ -133,8 +120,6 @@ import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingReposit
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalCommandService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalQueryService;
 import gg.warcraft.monolith.app.world.portal.service.DefaultPortalRepository;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 public class AbstractMonolithModule extends PrivateModule {
     private final String persistenceService;
@@ -173,7 +158,6 @@ public class AbstractMonolithModule extends PrivateModule {
         configureEntity();
         configureItem();
         configureMenu();
-        configurePersistence();
         configureUtil();
         configureWorld();
     }
@@ -226,20 +210,6 @@ public class AbstractMonolithModule extends PrivateModule {
     private void configureCore() {
         bind(MonolithPluginUtils.class).to(DefaultMonolithPluginUtils.class);
         expose(MonolithPluginUtils.class);
-
-        SimpleModule monolithMapperModule = new MonolithMapperModule();
-
-        ObjectMapper jsonMapper = new ObjectMapper(new JsonFactory());
-        jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        jsonMapper.registerModule(monolithMapperModule);
-        bind(ObjectMapper.class).annotatedWith(JsonMapper.class).toProvider(jsonMapper::copy);
-        expose(Key.get(ObjectMapper.class, JsonMapper.class));
-
-        ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
-        yamlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        yamlMapper.registerModule(monolithMapperModule);
-        bind(ObjectMapper.class).annotatedWith(YamlMapper.class).toProvider(yamlMapper::copy);
-        expose(Key.get(ObjectMapper.class, YamlMapper.class));
     }
 
     private void configureEffect() {
@@ -359,32 +329,6 @@ public class AbstractMonolithModule extends PrivateModule {
                 .implement(MenuBuilder.class, SimpleMenuBuilder.class)
                 .build(MenuBuilderFactory.class));
         expose(MenuBuilderFactory.class);
-    }
-
-    private void configurePersistence() {
-        bind(PersistenceCache.class).to(InMemoryPersistenceCache.class);
-        expose(PersistenceCache.class);
-
-        switch (persistenceService) {
-            case "MEMORY":
-                bind(PersistenceService.class).to(InMemoryPersistenceService.class);
-                expose(PersistenceService.class);
-                break;
-            case "REDIS":
-                JedisPoolConfig jedisConfiguration = new JedisPoolConfig();
-                jedisConfiguration.setBlockWhenExhausted(false);
-                JedisPool jedisPool = new JedisPool(jedisConfiguration, redisHost, redisPort, 10);
-
-                bind(JedisPool.class).toInstance(jedisPool);
-                bind(PersistenceService.class).to(JedisPersistenceService.class);
-                expose(PersistenceService.class);
-                break;
-            case "CUSTOM":
-                // do nothing, the implementing server should provide bindings
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal persistence service in Monolith configuration: " + persistenceService);
-        }
     }
 
     private void configureUtil() {
