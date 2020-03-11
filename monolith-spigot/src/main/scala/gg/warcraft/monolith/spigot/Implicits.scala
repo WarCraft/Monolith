@@ -15,7 +15,7 @@ import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
 import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
-import gg.warcraft.monolith.spigot.menu.{ SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService }
+import gg.warcraft.monolith.spigot.menu.{SpigotMenuHandler, SpigotMenuMapper, SpigotMenuService}
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world._
 import gg.warcraft.monolith.spigot.world.block._
@@ -136,6 +136,6 @@ object Implicits {
     new SpigotMenuMapper(server, itemService, itemMapper) // TODO cleanup
   implicit lazy val menuService: SpigotMenuService =
     new SpigotMenuService(server, taskService, menuMapper) // TODO cleanup
-  implicit lazy val menuEventMapper: SpigotMenuEventMapper =
-    new SpigotMenuEventMapper
+  implicit lazy val menuEventMapper: SpigotMenuHandler =
+    new SpigotMenuHandler
 }

@@ -4,11 +4,7 @@ import com.google.inject.Key;
 import com.google.inject.PrivateModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
-import gg.warcraft.monolith.api.MonolithPluginUtils;
 import gg.warcraft.monolith.api.combat.*;
-import gg.warcraft.monolith.api.config.service.ConfigurationCommandService;
-import gg.warcraft.monolith.api.config.service.ConfigurationQueryService;
-import gg.warcraft.monolith.api.config.service.ConfigurationRepository;
 import gg.warcraft.monolith.api.effect.Effect;
 import gg.warcraft.monolith.api.effect.EffectFactory;
 import gg.warcraft.monolith.api.effect.EffectRenderer;
@@ -38,15 +34,10 @@ import gg.warcraft.monolith.api.entity.team.service.TeamRepository;
 import gg.warcraft.monolith.api.item.ItemReader;
 import gg.warcraft.monolith.api.item.ItemReaderFactory;
 import gg.warcraft.monolith.api.math.Vector3i;
-import gg.warcraft.monolith.api.menu.ButtonBuilder;
-import gg.warcraft.monolith.api.menu.ButtonBuilderFactory;
-import gg.warcraft.monolith.api.menu.MenuBuilder;
-import gg.warcraft.monolith.api.menu.MenuBuilderFactory;
 import gg.warcraft.monolith.api.util.ColorCodeUtils;
 import gg.warcraft.monolith.api.util.MathUtils;
 import gg.warcraft.monolith.api.util.StringUtils;
 import gg.warcraft.monolith.api.util.TimeUtils;
-import gg.warcraft.monolith.api.world.DirectionUtils;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.block.BlockIterator;
 import gg.warcraft.monolith.api.world.block.BlockIteratorFactory;
@@ -57,17 +48,6 @@ import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingCommandService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingQueryService;
 import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingRepository;
-import gg.warcraft.monolith.api.world.portal.service.PortalCommandService;
-import gg.warcraft.monolith.api.world.portal.service.PortalQueryService;
-import gg.warcraft.monolith.api.world.portal.service.PortalRepository;
-import gg.warcraft.monolith.app.combat.AmbientPotionEffect;
-import gg.warcraft.monolith.app.combat.DefaultPotionEffectTypeUtils;
-import gg.warcraft.monolith.app.combat.SimplePotionEffect;
-import gg.warcraft.monolith.app.combat.VisiblePotionEffect;
-import gg.warcraft.monolith.app.config.service.DefaultConfigurationQueryService;
-import gg.warcraft.monolith.app.config.service.DefaultConfigurationRepository;
-import gg.warcraft.monolith.app.config.service.GitHubConfigurationCommandService;
-import gg.warcraft.monolith.app.config.service.LocalConfigurationCommandService;
 import gg.warcraft.monolith.app.effect.DynamicEffect;
 import gg.warcraft.monolith.app.effect.PeriodicDynamicEffect;
 import gg.warcraft.monolith.app.effect.PeriodicEffect;
@@ -101,14 +81,10 @@ import gg.warcraft.monolith.app.entity.team.service.DefaultTeamCommandService;
 import gg.warcraft.monolith.app.entity.team.service.DefaultTeamQueryService;
 import gg.warcraft.monolith.app.entity.team.service.DefaultTeamRepository;
 import gg.warcraft.monolith.app.item.SimpleItemReader;
-import gg.warcraft.monolith.app.menu.SimpleButtonBuilder;
-import gg.warcraft.monolith.app.menu.SimpleMenuBuilder;
-import gg.warcraft.monolith.app.menu.SkullButtonBuilder;
 import gg.warcraft.monolith.app.util.DefaultColorCodeUtils;
 import gg.warcraft.monolith.app.util.DefaultMathUtils;
 import gg.warcraft.monolith.app.util.DefaultStringUtils;
 import gg.warcraft.monolith.app.util.DefaultTimeUtils;
-import gg.warcraft.monolith.app.world.DefaultDirectionUtils;
 import gg.warcraft.monolith.app.world.block.DefaultBlockUtils;
 import gg.warcraft.monolith.app.world.block.SimpleBlockIterator;
 import gg.warcraft.monolith.app.world.block.build.service.DefaultBlockBuildCommandService;
@@ -117,9 +93,6 @@ import gg.warcraft.monolith.app.world.block.build.service.DefaultBlockBuildRepos
 import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingCommandService;
 import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingQueryService;
 import gg.warcraft.monolith.app.world.block.spoofing.DefaultBlockSpoofingRepository;
-import gg.warcraft.monolith.app.world.portal.service.DefaultPortalCommandService;
-import gg.warcraft.monolith.app.world.portal.service.DefaultPortalQueryService;
-import gg.warcraft.monolith.app.world.portal.service.DefaultPortalRepository;
 
 public class AbstractMonolithModule extends PrivateModule {
     private final String persistenceService;
@@ -151,65 +124,11 @@ public class AbstractMonolithModule extends PrivateModule {
 
     @Override
     protected void configure() {
-        configureCombat();
-        configureConfiguration();
-        configureCore();
         configureEffect();
         configureEntity();
         configureItem();
-        configureMenu();
         configureUtil();
         configureWorld();
-    }
-
-    private void configureCombat() {
-        bind(PotionEffectTypeUtils.class).to(DefaultPotionEffectTypeUtils.class);
-        expose(PotionEffectTypeUtils.class);
-
-        install(new FactoryModuleBuilder()
-                .implement(PotionEffect.class, Names.named("potionEffect"), SimplePotionEffect.class)
-                .implement(PotionEffect.class, Names.named("visiblePotionEffect"), VisiblePotionEffect.class)
-                .implement(PotionEffect.class, Names.named("ambientPotionEffect"), AmbientPotionEffect.class)
-                .build(CombatFactory.class));
-        expose(CombatFactory.class);
-    }
-
-    private void configureConfiguration() {
-        switch (configurationService) {
-            case "LOCAL":
-                bind(ConfigurationCommandService.class).to(LocalConfigurationCommandService.class);
-                expose(ConfigurationCommandService.class);
-
-                bind(ConfigurationQueryService.class).to(DefaultConfigurationQueryService.class);
-                expose(ConfigurationQueryService.class);
-
-                bind(ConfigurationRepository.class).to(DefaultConfigurationRepository.class);
-                expose(ConfigurationRepository.class);
-                break;
-            case "GITHUB":
-                bind(String.class).annotatedWith(Names.named("GitHubAccount")).toInstance(gitHubAccount);
-                bind(String.class).annotatedWith(Names.named("GitHubRepository")).toInstance(gitHubRepository);
-
-                bind(ConfigurationCommandService.class).to(GitHubConfigurationCommandService.class);
-                expose(ConfigurationCommandService.class);
-
-                bind(ConfigurationQueryService.class).to(DefaultConfigurationQueryService.class);
-                expose(ConfigurationQueryService.class);
-
-                bind(ConfigurationRepository.class).to(DefaultConfigurationRepository.class);
-                expose(ConfigurationRepository.class);
-                break;
-            case "CUSTOM":
-                // do nothing, the implementing server should provide bindings
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal configuration service in Monolith configuration: " + configurationService);
-        }
-    }
-
-    private void configureCore() {
-        bind(MonolithPluginUtils.class).to(DefaultMonolithPluginUtils.class);
-        expose(MonolithPluginUtils.class);
     }
 
     private void configureEffect() {
@@ -318,19 +237,6 @@ public class AbstractMonolithModule extends PrivateModule {
         expose(ItemReaderFactory.class);
     }
 
-    private void configureMenu() {
-        install(new FactoryModuleBuilder()
-                .implement(ButtonBuilder.class, Names.named("simple"), SimpleButtonBuilder.class)
-                .implement(ButtonBuilder.class, Names.named("skull"), SkullButtonBuilder.class)
-                .build(ButtonBuilderFactory.class));
-        expose(ButtonBuilderFactory.class);
-
-        install(new FactoryModuleBuilder()
-                .implement(MenuBuilder.class, SimpleMenuBuilder.class)
-                .build(MenuBuilderFactory.class));
-        expose(MenuBuilderFactory.class);
-    }
-
     private void configureUtil() {
         bind(MathUtils.class).to(DefaultMathUtils.class);
         expose(MathUtils.class);
@@ -346,9 +252,6 @@ public class AbstractMonolithModule extends PrivateModule {
     }
 
     private void configureWorld() {
-        bind(DirectionUtils.class).to(DefaultDirectionUtils.class);
-        expose(DirectionUtils.class);
-
         // Block bindings
         bind(BlockUtils.class).to(DefaultBlockUtils.class);
         expose(BlockUtils.class);
@@ -377,16 +280,6 @@ public class AbstractMonolithModule extends PrivateModule {
 
         bind(BlockSpoofingRepository.class).to(DefaultBlockSpoofingRepository.class);
         expose(BlockSpoofingRepository.class);
-
-        // Portal bindings
-        bind(PortalCommandService.class).to(DefaultPortalCommandService.class);
-        expose(PortalCommandService.class);
-
-        bind(PortalQueryService.class).to(DefaultPortalQueryService.class);
-        expose(PortalQueryService.class);
-
-        bind(PortalRepository.class).to(DefaultPortalRepository.class);
-        expose(PortalRepository.class);
 
         // Misc world bindings
         bind(World.class).annotatedWith(Names.named("BuildRepositoryWorld"))
