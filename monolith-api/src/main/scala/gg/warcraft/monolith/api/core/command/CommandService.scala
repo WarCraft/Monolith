@@ -49,8 +49,8 @@ abstract class CommandService(implicit eventService: EventService) {
       result match {
         case Command.success           =>
         case Command.success(messages) => messages foreach principal.sendMessage
-        case Command.consoleOnly       => principal.sendMessage(ERR_COMMAND_CONSOLE_ONLY)
-        case Command.playersOnly       => principal.sendMessage(ERR_COMMAND_PLAYERS_ONLY)
+        case Command.consoleOnly       => principal sendMessage ERR_COMMAND_CONSOLE_ONLY
+        case Command.playersOnly       => principal sendMessage ERR_COMMAND_PLAYERS_ONLY
         case Command.invalid           => command.usage foreach { principal.sendMessage }
       }
       val event = CommandExecuteEvent(principal, command, args.toList, result)
