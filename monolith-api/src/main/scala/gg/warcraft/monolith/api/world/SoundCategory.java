@@ -1,14 +1,14 @@
 package gg.warcraft.monolith.api.world;
 
 public enum SoundCategory {
-    MASTER,
-    MUSIC,
-    RECORDS,
-    WEATHER,
+    AMBIENT,
     BLOCKS,
     HOSTILE,
+    MASTER,
+    MUSIC,
     NEUTRAL,
     PLAYERS,
-    AMBIENT,
-    VOICE
+    RECORDS,
+    VOICE,
+    WEATHER
 }
