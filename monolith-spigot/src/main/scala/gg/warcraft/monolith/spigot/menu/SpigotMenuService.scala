@@ -4,40 +4,33 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.menu.{Menu, MenuService}
-import javax.inject.Inject
 import org.bukkit.Server
 
-import scala.collection.mutable
-
-private object SpigotMenuService {
-  private val menus = mutable.Map.empty[UUID, Menu]
-}
-
-class SpigotMenuService @Inject() (
-    private val server: Server,
-    private val taskService: TaskService,
-    private val menuMapper: SpigotMenuMapper
+class SpigotMenuService(
+    implicit server: Server,
+    taskService: TaskService,
+    menuMapper: SpigotMenuMapper
 ) extends MenuService {
-  import SpigotMenuService.menus
+  private var menus: Map[UUID, Menu] = Map.empty
 
   override def getMenu(viewerId: UUID): Option[Menu] =
     menus.get(viewerId)
 
   override def showMenu(viewerId: UUID, menu: Menu): Unit = {
-    val inventory = menuMapper.map(menu, viewerId)
+    val inventory = menuMapper map (menu, viewerId)
     taskService.runNextTick(() => {
-      val player = server.getPlayer(viewerId)
-      if (player != null) player.openInventory(inventory)
-      else menus.remove(viewerId)
+      val player = server getPlayer viewerId
+      if (player != null) player openInventory inventory
+      else menus -= viewerId
     })
-    menus.put(viewerId, menu)
+    menus += (viewerId -> menu)
   }
 
   override def closeMenu(viewerId: UUID): Unit = {
     taskService.runNextTick(() => {
-      val player = server.getPlayer(viewerId)
+      val player = server getPlayer viewerId
       if (player != null) player.closeInventory()
     })
-    menus.remove(viewerId)
+    menus -= viewerId
   }
 }
