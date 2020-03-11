@@ -15,8 +15,8 @@ object CombatValue {
 
 case class CombatValue(
     source: CombatSource,
-    modifiers: List[CombatValue.Modifier] = Nil,
-    base: Float
+    base: Float,
+    modifiers: List[CombatValue.Modifier] = Nil
 ) {
   lazy val modified: Float = {
     val overrideMods = modifiers filter { _.typed == CombatValue.Modifier.OVERRIDE }

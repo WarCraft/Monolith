@@ -2,11 +2,16 @@ package gg.warcraft.monolith.spigot.entity
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue, CombatValueModifier, CombatValueModifierType}
-import gg.warcraft.monolith.api.core.TaskService
+import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
 import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.entity.{
+  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
+  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
+  EntityPreDamageEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent,
+  EntityPreSpawnEvent, EntitySpawnEvent, EntityType
+}
 import gg.warcraft.monolith.api.entity.status.StatusService
-import gg.warcraft.monolith.api.entity.{EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent, EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent, EntityPreDamageEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent, EntityPreSpawnEvent, EntitySpawnEvent, EntityType}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper
 import org.bukkit.entity.LivingEntity
@@ -239,10 +244,10 @@ class SpigotEntityEventMapper(
       }
       if (!reducedPreFatalDamageEvent.allowed) {
         val adjustedDamage = entity.getHealth.toFloat - 1
-        val damageOverride = CombatValueModifier(
-          CombatValueModifierType.OVERRIDE,
-          adjustedDamage,
-          damage.source
+        val damageOverride = CombatValue.Modifier(
+          damage.source,
+          CombatValue.Modifier.OVERRIDE,
+          adjustedDamage
         )
         val newDamageMods = damageOverride :: damage.modifiers
         val clippedDamage = damage.copy(modifiers = newDamageMods)
