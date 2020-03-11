@@ -2,7 +2,7 @@ package gg.warcraft.monolith.spigot.menu
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.TaskService
+import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.menu.{Menu, MenuService}
 import javax.inject.Inject
 import org.bukkit.Server

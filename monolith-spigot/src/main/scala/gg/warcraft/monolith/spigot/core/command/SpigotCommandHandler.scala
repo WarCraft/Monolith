@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.spigot.core
+package gg.warcraft.monolith.spigot.core.command
 
 import gg.warcraft.monolith.api.core.command.CommandService
 import org.bukkit.event.{EventHandler, Listener}

@@ -17,8 +17,9 @@ object Command {
     def handle(executor: Principal, command: Command, args: String*): Command.Result
   }
 
-  def apply(name: String, aliases: List[String], usage: Option[String]): Command = {
-    Command(name, aliases, usage.map(Message.server))
+  def apply(name: String, aliases: List[String], usage: String): Command = {
+    val usageMessage = Message.server(usage)
+    Command(name, aliases, Some(usageMessage))
   }
 }
 

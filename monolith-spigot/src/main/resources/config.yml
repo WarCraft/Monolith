@@ -34,6 +34,14 @@ firstTimeSetup: true
 maintenance: false
 maintenancePermission: monolith.staff
 
+devPermission: monolith.dev
+debuggingItem: DEBUG_STICK
+
+staffPermission: monolith.staff
+modPermission: monolith.mod
+adminPermission: monolith.admin
+moderatingItem: FLINT
+
 
 # CONFIGURATION SERVICE
 # Options: [LOCAL, GITHUB, CUSTOM]

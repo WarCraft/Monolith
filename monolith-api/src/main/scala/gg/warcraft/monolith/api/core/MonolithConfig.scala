@@ -4,9 +4,9 @@ import gg.warcraft.monolith.api.world.item.ItemType
 
 case class MonolithConfig(
     devPermission: String,
+    debuggingItem: ItemType,
     staffPermission: String,
     modPermission: String,
     adminPermission: String,
-    debuggingItem: ItemType,
     moderatingItem: ItemType
 )

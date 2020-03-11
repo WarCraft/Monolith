@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.entity.status
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.TaskService
+import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.core.event.{Event, EventService}
 import gg.warcraft.monolith.api.player.{PlayerConnectEvent, PlayerDisconnectEvent}
 
@@ -26,7 +26,7 @@ class StatusService(
     effects.foreach(effect => {
       if (status.effects.add(effect)) {
         effect.duration.foreach(it => {
-          taskService.runLater(() => removeEffect(entityId, effect), it)
+          taskService.runLater(it, () => removeEffect(entityId, effect))
         })
 
         val event = StatusEffectGainedEvent(entityId, effect)

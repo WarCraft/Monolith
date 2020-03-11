@@ -4,29 +4,18 @@ import java.io.File
 import java.util.Properties
 import java.util.logging.Logger
 
-import com.fasterxml.jackson.core.JsonFactory
-import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.typesafe.config.{Config, ConfigFactory}
-import gg.warcraft.monolith.api.core.{
-  AuthorizationService, JsonMapper2, TaskService, YamlMapper2
-}
+import com.typesafe.config.{ Config, ConfigFactory }
+import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.player.service.{
-  PlayerCommandService, PlayerQueryService
-}
-import gg.warcraft.monolith.api.entity.service.{
-  EntityCommandService, EntityQueryService
-}
+import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.entity.player.service.{ PlayerCommandService, PlayerQueryService }
+import gg.warcraft.monolith.api.entity.service.{ EntityCommandService, EntityQueryService }
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
-import gg.warcraft.monolith.spigot.core.{
-  SpigotAuthorizationService, SpigotCommandService, SpigotTaskService
-}
+import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
+import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
-import gg.warcraft.monolith.spigot.menu.{
-  SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService
-}
+import gg.warcraft.monolith.spigot.menu.{ SpigotMenuEventMapper, SpigotMenuMapper, SpigotMenuService }
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world._
 import gg.warcraft.monolith.spigot.world.block._
@@ -69,12 +58,12 @@ object Implicits {
 
   implicit var server: Server = _
 
-  implicit lazy val authService: AuthorizationService =
-    new SpigotAuthorizationService(server)
+  implicit lazy val authService: AuthService   =
+    new AuthService
   implicit lazy val eventService: EventService =
     new EventService
-  implicit lazy val taskService: TaskService =
-    new SpigotTaskService(plugin)
+  private implicit lazy val taskService: TaskService =
+    new SpigotTaskService()(plugin)
 
   // World mappers
   implicit lazy val worldMapper: SpigotWorldMapper =
