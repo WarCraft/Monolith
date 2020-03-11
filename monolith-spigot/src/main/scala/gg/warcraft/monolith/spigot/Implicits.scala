@@ -69,17 +69,6 @@ object Implicits {
 
   implicit var server: Server = _
 
-  implicit lazy val jsonMapper: JsonMapper2 = {
-    val mapper = new ObjectMapper(new JsonFactory) with JsonMapper2
-    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-    mapper
-  }
-  implicit lazy val yamlMapper: YamlMapper2 = {
-    val mapper = new ObjectMapper(new YAMLFactory) with YamlMapper2
-    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-    mapper
-  }
-
   implicit lazy val authService: AuthorizationService =
     new SpigotAuthorizationService(server)
   implicit lazy val eventService: EventService =
