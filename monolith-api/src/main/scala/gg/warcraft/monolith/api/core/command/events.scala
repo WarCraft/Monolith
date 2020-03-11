@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.core.command
 
+import gg.warcraft.monolith.api.core.auth.Principal
 import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event}
-import gg.warcraft.monolith.api.core.Principal
 
 case class CommandPreExecuteEvent(
     principal: Principal,

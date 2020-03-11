@@ -1,6 +1,7 @@
 package gg.warcraft.monolith.api.core.command
 
-import gg.warcraft.monolith.api.core.{Message, Principal}
+import gg.warcraft.monolith.api.core.Message
+import gg.warcraft.monolith.api.core.auth.Principal
 
 object Command {
   sealed trait Result

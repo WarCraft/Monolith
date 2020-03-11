@@ -2,7 +2,8 @@ package gg.warcraft.monolith.api.core.command
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.{Message, Principal}
+import gg.warcraft.monolith.api.core.Message
+import gg.warcraft.monolith.api.core.auth.Principal
 import gg.warcraft.monolith.api.core.event.EventService
 
 abstract class CommandService(implicit eventService: EventService) {
