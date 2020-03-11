@@ -21,19 +21,19 @@ trait MonolithPlugin {
 
   protected implicit val context: ExecutionContext = ExecutionContext.global
 
-  protected def parseConfig[A: Decoder](config: String, retry: Boolean = true)(
+  protected def parseConfig[A: Decoder](config: String, fallback: Boolean = true)(
       implicit logger: Logger
   ): A = {
     def onError(err: io.circe.Error): A = {
       logger severe err.getMessage
       logger severe WARN_DEFAULT_CONFIG
       val defaultConfig = Source.fromResource("config.yml")
-      if (retry) parseConfig(defaultConfig.mkString, retry = false)
+      if (fallback) parseConfig(defaultConfig.mkString, fallback = false)
       else throw new IllegalStateException(ERR_CONFIG_FAILED)
     }
 
     parser.parse(config) match {
-      case Left(err) => onError(err)
+      case Left(err)   => onError(err)
       case Right(json) =>
         json.as[A] match {
           case Left(err)     => onError(err)

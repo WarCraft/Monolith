@@ -7,10 +7,10 @@ object Duration {
   private val MILLIS_PER_SECOND_RECIPROCAL = 1f / TimeUtils.MILLIS_PER_SECOND
   private val TICKS_PER_SECOND_RECIPROCAL = 1f / TimeUtils.TICKS_PER_SECOND
 
-  val immediately = Duration.ofTicks(0)
-  val oneTick = Duration.ofTicks(1)
-  val oneMilli = Duration.ofMillis(1)
-  val oneSecond = Duration.ofSeconds(1)
+  val immediately: Duration = Duration.ofTicks(0)
+  val oneTick: Duration = Duration.ofTicks(1)
+  val oneMilli: Duration = Duration.ofMillis(1)
+  val oneSecond: Duration = Duration.ofSeconds(1)
 
   def ofMillis(millis: Int): Duration = {
     val clippedMillis = Math.max(0, millis)
