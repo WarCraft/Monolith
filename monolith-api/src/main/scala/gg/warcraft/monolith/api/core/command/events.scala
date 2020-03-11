@@ -14,5 +14,6 @@ case class CommandPreExecuteEvent(
 case class CommandExecuteEvent(
     principal: Principal,
     command: Command,
-    args: List[String]
+    args: List[String],
+    result: Command.Result
 ) extends Event

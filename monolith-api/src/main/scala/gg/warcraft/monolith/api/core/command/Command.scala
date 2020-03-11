@@ -15,10 +15,14 @@ object Command {
   trait Handler {
     def handle(executor: Principal, command: Command, args: String*): Command.Result
   }
+
+  def apply(name: String, aliases: List[String], usage: Option[String]): Command = {
+    Command(name, aliases, usage.map(Message.server))
+  }
 }
 
 case class Command(
     name: String,
-    aliases: List[String]
-    // NOTE option to add usage information
+    aliases: List[String],
+    usage: Option[Message] = None
 )
