@@ -6,6 +6,16 @@ import gg.warcraft.monolith.api.world.block.shape.{RailsShape, StairsShape}
 import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}
 import org.bukkit.block.data.`type`.Stairs.{Shape => SpigotStairsShape}
 
+object SpigotBlockShapeMapper {
+  // TODO remove
+  private implicit class Regex(context: StringContext) {
+    def r = new util.matching.Regex(
+      context.parts.mkString,
+      context.parts.tail.map(_ => "x"): _*
+    )
+  }
+}
+
 class SpigotBlockShapeMapper {
   def map(block: SpigotBlock): BlockShape = {
     val data: SpigotBlockData = block.getState.getBlockData
