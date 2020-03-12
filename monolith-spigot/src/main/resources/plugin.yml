@@ -3,9 +3,7 @@ version: "15.0.0-SNAPSHOT"
 api-version: "1.15"
 
 author: fishb6nes
-authors: [fishb6nes, cbngu]
 website: http://warcraft.gg
 
 main: gg.warcraft.monolith.spigot.MonolithPlugin
-depend: [EffectLib]
 loadbefore: [EssentialsX]
