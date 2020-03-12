@@ -4,6 +4,7 @@ import gg.warcraft.monolith.api.world.Location
 
 trait ParticleAdapter {
   protected final val DEFAULT_RANGE: Float = 64
+  protected final val DEFAULT_HALF_RANGE: Float = DEFAULT_RANGE / 2
 
   def display(particle: Particle.Type, location: Location): Unit
 
