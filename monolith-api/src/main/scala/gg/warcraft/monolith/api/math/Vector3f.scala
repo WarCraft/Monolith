@@ -61,6 +61,11 @@ case class Vector3f(
   def multiply(vec: Vector3f): Vector3f =
     copy(x = x * vec.x, y = y * vec.y, z = z * vec.z)
 
+  def divide(scalar: Float): Vector3f =
+    copy(x = x / scalar, y = y / scalar, z = z / scalar)
+  def divide(vec: Vector3f): Vector3f =
+    copy(x = x / vec.x, y = y / vec.y, z = z / vec.z)
+
   def distanceTo(target: Vector3f): Float = target.subtract(this).length
 
   def normalize: Vector3f =
