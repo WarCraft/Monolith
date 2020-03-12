@@ -11,9 +11,9 @@ object Particle extends Enumeration {
   protected case class Val() extends super.Val with Particle {
     override def display(location: Location): Unit =
       Particle.adapter.display(this, location)
-    def withColor(color: ParticleColor): Particle =
+    def color(color: ParticleColor): Particle =
       new ColorParticle(this, color)
-    def withSpeed(speed: Float, amount: Int): Particle =
+    def speed(speed: Float, amount: Int): Particle =
       new SpeedParticle(this, speed, amount)
   }
 
@@ -33,7 +33,7 @@ object Particle extends Enumeration {
 
 sealed trait Particle {
   def display(location: Location): Unit
-  def multiWith(particles: Particle*): Particle = new MultiParticle(particles: _*)
+  def multi(particles: Particle*): Particle = new MultiParticle(particles: _*)
 }
 
 private class ColorParticle(
