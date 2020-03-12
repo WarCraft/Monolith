@@ -1,14 +1,10 @@
-package gg.warcraft.monolith.app.core.handler;
+package gg.warcraft.monolith.api.core.handler
 
-import com.google.inject.Inject;
-import gg.warcraft.monolith.api.core.event.Event;
-import gg.warcraft.monolith.api.core.event.EventService;
-import gg.warcraft.monolith.api.core.PersistenceService;
-import gg.warcraft.monolith.api.core.DailyTickEvent;
+class DailyTickHandler {
 
-import java.time.LocalDateTime;
+}
 
-public class DailyTickHandler implements Runnable {
+/*
     private static final String LAST_DAILY_TICK_KEY = "lastdailytick";
 
     private final PersistenceService persistenceService;
@@ -37,4 +33,4 @@ public class DailyTickHandler implements Runnable {
             persistenceService.set(LAST_DAILY_TICK_KEY, "" + currentNewYorkDay);
         }
     }
-}
+ */
