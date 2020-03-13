@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.world.portal
 
+import gg.warcraft.monolith.api.core.Cancellable
 import gg.warcraft.monolith.api.entity.Entity
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.util.Cancellable
 import gg.warcraft.monolith.api.world.Location
 
 case class Portal(

@@ -2,8 +2,6 @@ package gg.warcraft.monolith.api.core
 
 import java.time.{LocalDateTime, LocalTime}
 
-import gg.warcraft.monolith.api.util.ColorCode
-
 object Message {
   def apply(text: String): Message = Message(text, text)
 

@@ -13,7 +13,7 @@ object Menu {
     val FIVE_ROWS = Val(45)
     val SIX_ROWS = Val(54)
 
-    def fromRows(rows: Int): Size = {
+    def fromRows(rows: Int): Size = rows match {
       case 2 => TWO_ROWS
       case 3 => THREE_ROWS
       case 4 => FOUR_ROWS

@@ -1,11 +1,11 @@
 package gg.warcraft.monolith.api.world.portal
 
+import gg.warcraft.monolith.api.core.Cancellable
 import gg.warcraft.monolith.api.entity.{Entity, EntityType}
 import gg.warcraft.monolith.api.entity.service.{
   EntityCommandService, EntityQueryService
 }
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.util.Cancellable
 import gg.warcraft.monolith.api.world.Location
 
 import scala.jdk.CollectionConverters._
@@ -49,7 +49,8 @@ class PortalService(
       .filter { _.getType == EntityType.PLAYER }
       .filter { predicate.apply }
       .foreach { it =>
-        if (exitOrientation == null) entityCommandService.teleport(it.getId, exitLocation)
+        if (exitOrientation == null)
+          entityCommandService.teleport(it.getId, exitLocation)
         else entityCommandService.teleport(it.getId, exitLocation, exitOrientation)
       }
   }

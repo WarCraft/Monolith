@@ -10,7 +10,7 @@ trait ProjectileEvent
 // LAUNCH
 case class ProjectilePreLaunchEvent(
     projectileId: UUID,
-    projectileType: ProjectileType,
+    projectileType: Projectile.Type,
     shooterId: Option[UUID],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
@@ -19,7 +19,7 @@ case class ProjectilePreLaunchEvent(
 
 case class ProjectileLaunchEvent(
     projectileId: UUID,
-    projectileType: ProjectileType,
+    projectileType: Projectile.Type,
     shooterId: Option[UUID]
 ) extends ProjectileEvent
     with Event
@@ -27,7 +27,7 @@ case class ProjectileLaunchEvent(
 // HIT
 case class ProjectilePreHitEvent(
     projectileId: UUID,
-    projectileType: ProjectileType,
+    projectileType: Projectile.Type,
     shooterId: Option[UUID],
     block: Option[Block],
     blockFace: Option[BlockFace],
@@ -39,7 +39,7 @@ case class ProjectilePreHitEvent(
 
 case class ProjectileHitEvent(
     projectileId: UUID,
-    projectileType: ProjectileType,
+    projectileType: Projectile.Type,
     shooterId: Option[UUID],
     block: Option[Block],
     blockFace: Option[BlockFace],
@@ -50,7 +50,7 @@ case class ProjectileHitEvent(
 // PICKUP
 case class ProjectilePrePickupEvent(
     projectileId: UUID,
-    projectileType: ProjectileType,
+    projectileType: Projectile.Type,
     shooterId: Option[UUID],
     entityId: UUID,
     cancelled: Boolean = false,
@@ -60,7 +60,7 @@ case class ProjectilePrePickupEvent(
 
 case class ProjectilePickupEvent(
     projectileId: UUID,
-    projectileType: ProjectileType,
+    projectileType: Projectile.Type,
     shooterId: Option[UUID],
     entityId: UUID
 ) extends ProjectileEvent

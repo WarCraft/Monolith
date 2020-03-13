@@ -31,7 +31,7 @@ object EffectVectors {
 
   def ring(radius: Float, count: Int): EffectVectors = {
     var angle = 0f
-    val delta = 2 * Math.PI / count
+    val delta = 2 * Math.PI.toFloat / count
     val vectors = (0 to count) map { _ =>
       val x = Math.cos(angle) * radius
       val z = Math.sin(angle) * radius
