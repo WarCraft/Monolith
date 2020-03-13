@@ -1,8 +1,6 @@
 package gg.warcraft.monolith.api.core.handler
 
-class DailyTickHandler {
-
-}
+class DailyTickHandler {}
 
 /*
     private static final String LAST_DAILY_TICK_KEY = "lastdailytick";

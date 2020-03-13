@@ -1,13 +1,13 @@
 package gg.warcraft.monolith.api.world.config
 
-import com.fasterxml.jackson.annotation.{ JsonCreator, JsonProperty }
+import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
 import gg.warcraft.monolith.api.math.config.Vector3iConfig
-import gg.warcraft.monolith.api.world.{ BlockLocation, World }
+import gg.warcraft.monolith.api.world.{BlockLocation, World}
 
 @JsonCreator
 case class BlockLocationConfig(
-  @JsonProperty("world") world: World,
-  @JsonProperty("translation") translation: Vector3iConfig
+    @JsonProperty("world") world: World,
+    @JsonProperty("translation") translation: Vector3iConfig
 ) {
   def toBlockLocation: BlockLocation = BlockLocation(world, translation.toVector3i)
 }

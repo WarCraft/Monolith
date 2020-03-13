@@ -2,10 +2,10 @@ package gg.warcraft.monolith.api.block
 
 import java.util
 
-import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.api.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.block.state._
 import gg.warcraft.monolith.api.block.variant._
+import gg.warcraft.monolith.api.world.BlockLocation
 
 import scala.annotation.varargs
 import scala.jdk.CollectionConverters._

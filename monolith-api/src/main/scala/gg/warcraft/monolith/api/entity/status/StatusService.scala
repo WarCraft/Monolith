@@ -2,8 +2,8 @@ package gg.warcraft.monolith.api.entity.status
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.core.event.{Event, EventService}
+import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.player.{PlayerConnectEvent, PlayerDisconnectEvent}
 
 import scala.collection.mutable

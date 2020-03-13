@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.block.box
 
-import gg.warcraft.monolith.api.math.Vector3i
 import gg.warcraft.monolith.api.block.{Block, BlockDirection, BlockType}
+import gg.warcraft.monolith.api.math.Vector3i
 import gg.warcraft.monolith.api.world.WorldService
 
 class BlockBoxReader(

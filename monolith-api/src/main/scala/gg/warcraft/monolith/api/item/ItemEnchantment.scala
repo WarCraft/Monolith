@@ -30,9 +30,9 @@ trait LeggingsEnchantment extends ItemEnchantment
 
 trait ArmorEnchantment
     extends BootsEnchantment
-        with ChestplateEnchantment
-        with HelmetEnchantment
-        with LeggingsEnchantment
+    with ChestplateEnchantment
+    with HelmetEnchantment
+    with LeggingsEnchantment
 
 // TOOLS
 
@@ -48,7 +48,7 @@ trait SwordEnchantment extends ItemEnchantment
 
 trait ToolEnchantment
     extends AxeEnchantment
-        with HoeEnchantment
-        with PickaxeEnchantment
-        with ShovelEnchantment
-        with SwordEnchantment
+    with HoeEnchantment
+    with PickaxeEnchantment
+    with ShovelEnchantment
+    with SwordEnchantment
