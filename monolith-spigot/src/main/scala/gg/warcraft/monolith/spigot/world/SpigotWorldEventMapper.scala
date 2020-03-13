@@ -13,8 +13,6 @@ class SpigotWorldEventMapper(
     val chunk = event.getChunk
     val preLoadEvent = ChunkPreLoadEvent()
     eventService.publish(preLoadEvent)
-
-
     /*
       Chunk chunk = event.getChunk();
       ChunkLoadedEvent chunkLoadedEvent = new ChunkLoadedEvent(chunk.getX(), chunk.getZ());
@@ -42,13 +40,11 @@ class SpigotWorldEventMapper(
           EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType, entityLocation);
           eventService.publish(respawnEvent);
       }
-     */
+   */
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
-  def onLoad(event: ChunkLoadEvent): Unit = {
-
-  }
+  def onLoad(event: ChunkLoadEvent): Unit = {}
 
   @EventHandler(priority = EventPriority.HIGH)
   def preUnload(event: ChunkUnloadEvent): Unit = {
@@ -78,7 +74,7 @@ class SpigotWorldEventMapper(
 //        if (cancelled) {
 //            event.setCancelled(true);
 //        }
-     */
+   */
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -94,6 +90,6 @@ class SpigotWorldEventMapper(
           EntityDespawnEvent despawnEvent = new SimpleEntityDespawnEvent(entityId, entityType);
           eventService.publish(despawnEvent);
       }
-     */
+   */
   }
 }

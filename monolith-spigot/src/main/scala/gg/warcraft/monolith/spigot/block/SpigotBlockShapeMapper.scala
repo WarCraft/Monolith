@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.spigot.block
 
-import gg.warcraft.monolith.api.core.Extensions._
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.block.shape.{RailsShape, StairsShape}
 import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}

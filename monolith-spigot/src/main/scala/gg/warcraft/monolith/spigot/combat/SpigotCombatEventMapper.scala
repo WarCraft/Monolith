@@ -3,14 +3,11 @@ package gg.warcraft.monolith.spigot.combat
 import java.util.UUID
 
 import gg.warcraft.monolith.api.combat.{
-  ProjectileHitEvent, ProjectileLaunchEvent, ProjectilePickupEvent,
-  ProjectilePreHitEvent, ProjectilePreLaunchEvent, ProjectilePrePickupEvent,
-  ProjectileType
+  Projectile, ProjectileHitEvent, ProjectileLaunchEvent, ProjectilePickupEvent,
+  ProjectilePreHitEvent, ProjectilePreLaunchEvent, ProjectilePrePickupEvent
 }
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.spigot.block.{
-  SpigotBlockFaceMapper, SpigotBlockMapper
-}
+import gg.warcraft.monolith.spigot.block.{SpigotBlockFaceMapper, SpigotBlockMapper}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotCombatEventMapper(
@@ -31,7 +28,7 @@ class SpigotCombatEventMapper(
 
     var preLaunchEvent = ProjectilePreLaunchEvent(
       projectile.getUniqueId,
-      ProjectileType.ARROW,
+      Projectile.ARROW,
       shooterId,
       event.isCancelled
     )
@@ -47,7 +44,7 @@ class SpigotCombatEventMapper(
 
     val launchEvent = ProjectileLaunchEvent(
       projectile.getUniqueId,
-      ProjectileType.ARROW,
+      Projectile.ARROW,
       shooterId
     )
     eventService.publish(launchEvent)
@@ -70,7 +67,7 @@ class SpigotCombatEventMapper(
 
     var preHitEvent = ProjectilePreHitEvent(
       projectile.getUniqueId,
-      ProjectileType.ARROW,
+      Projectile.ARROW,
       shooterId,
       block,
       blockFace,
@@ -104,7 +101,7 @@ class SpigotCombatEventMapper(
 
     val hitEvent = ProjectileHitEvent(
       projectile.getUniqueId,
-      ProjectileType.ARROW,
+      Projectile.ARROW,
       shooterId,
       block,
       blockFace,
@@ -122,7 +119,7 @@ class SpigotCombatEventMapper(
 
     var prePickupEvent = ProjectilePrePickupEvent(
       projectile.getUniqueId,
-      ProjectileType.ARROW,
+      Projectile.ARROW,
       shooterId,
       pickupEntityId,
       event.isCancelled
@@ -140,7 +137,7 @@ class SpigotCombatEventMapper(
 
     val pickupEvent = ProjectilePickupEvent(
       projectile.getUniqueId,
-      ProjectileType.ARROW,
+      Projectile.ARROW,
       shooterId,
       pickupEntityId
     )

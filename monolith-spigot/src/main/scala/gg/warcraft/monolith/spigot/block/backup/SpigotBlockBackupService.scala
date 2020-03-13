@@ -4,9 +4,9 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.spigot.Codecs.Quill
 import gg.warcraft.monolith.api.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.api.world.{BlockLocation, World}
+import gg.warcraft.monolith.spigot.Codecs.Quill
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import io.getquill.{MappedEncoding, SnakeCase, SqliteJdbcContext}
 import org.bukkit.Bukkit

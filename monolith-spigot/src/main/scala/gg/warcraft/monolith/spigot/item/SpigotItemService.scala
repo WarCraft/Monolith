@@ -2,10 +2,10 @@ package gg.warcraft.monolith.spigot.item
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.world.{Location, WorldService}
 import gg.warcraft.monolith.api.item.{
   Item, ItemService, ItemType, ItemVariant, StackableItem, VariableItem
 }
+import gg.warcraft.monolith.api.world.{Location, WorldService}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Server
 

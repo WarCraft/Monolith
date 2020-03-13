@@ -4,23 +4,29 @@ import java.io.File
 import java.util.Properties
 import java.util.logging.Logger
 
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{Config, ConfigFactory}
 import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.entity.player.service.{ PlayerCommandService, PlayerQueryService }
-import gg.warcraft.monolith.api.entity.service.{ EntityCommandService, EntityQueryService }
+import gg.warcraft.monolith.api.entity.player.service.{
+  PlayerCommandService, PlayerQueryService
+}
+import gg.warcraft.monolith.api.entity.service.{
+  EntityCommandService, EntityQueryService
+}
 import gg.warcraft.monolith.api.entity.status.StatusService
+import gg.warcraft.monolith.spigot.block._
+import gg.warcraft.monolith.spigot.block.backup.SpigotBlockBackupService
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
 import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
-import gg.warcraft.monolith.spigot.menu.{SpigotMenuHandler, SpigotMenuMapper, SpigotMenuService}
+import gg.warcraft.monolith.spigot.item._
+import gg.warcraft.monolith.spigot.menu.{
+  SpigotMenuHandler, SpigotMenuMapper, SpigotMenuService
+}
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world._
-import gg.warcraft.monolith.spigot.block._
-import gg.warcraft.monolith.spigot.block.backup.SpigotBlockBackupService
-import gg.warcraft.monolith.spigot.item._
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
@@ -58,7 +64,7 @@ object Implicits {
 
   implicit var server: Server = _
 
-  implicit lazy val authService: AuthService   =
+  implicit lazy val authService: AuthService =
     new AuthService
   implicit lazy val eventService: EventService =
     new EventService

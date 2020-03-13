@@ -1,10 +1,10 @@
 package gg.warcraft.monolith.spigot
 
-import gg.warcraft.monolith.api.entity.EntityType
-import gg.warcraft.monolith.api.util.ColorCode
-import gg.warcraft.monolith.api.world.World
 import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
+import gg.warcraft.monolith.api.core.ColorCode
+import gg.warcraft.monolith.api.entity.EntityType
 import gg.warcraft.monolith.api.item.ItemTypeOrVariant
+import gg.warcraft.monolith.api.world.World
 import gg.warcraft.monolith.spigot.Implicits._
 import io.circe.{Decoder, Encoder}
 import io.getquill.MappedEncoding
@@ -13,10 +13,10 @@ import scala.util.Try
 
 object Codecs {
   object Circe {
-    implicit val colorDec: Decoder[ColorCode] =
-      Decoder.decodeString.emapTry(it => { Try(ColorCode.valueOf(it)) })
-    implicit val colorEnc: Encoder[ColorCode] =
-      Encoder.encodeString.contramap[ColorCode](_.toString)
+    implicit val colorDec: Decoder[ColorCode.Type] =
+      Decoder.decodeString.emapTry(it => { Try(ColorCode.withName(it)) })
+    implicit val colorEnc: Encoder[ColorCode.Type] =
+      Encoder.encodeString.contramap[ColorCode.Type](_.toString)
 
     implicit val entityDec: Decoder[EntityType] =
       Decoder.decodeString.emapTry(it => { Try(EntityType.valueOf(it)) })
@@ -27,7 +27,7 @@ object Codecs {
       Decoder.decodeString.emapTry(it => { Try(worldService.parseData(it)) })
     implicit val blockDataEnc: Encoder[BlockTypeVariantOrState] =
       Encoder.encodeString.contramap[BlockTypeVariantOrState](_.toString)
-//
+
     implicit val itemDataDec: Decoder[ItemTypeOrVariant] =
       Decoder.decodeString.emapTry(it => { Try(itemService.parseData(it)) })
     implicit val itemDataEnc: Encoder[ItemTypeOrVariant] =

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.spigot
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.MonolithPlugin
-import gg.warcraft.monolith.api.core.event.{EventService, PluginEventService}
+import gg.warcraft.monolith.api.core.event.EventService
 import org.bukkit.event.{HandlerList, Listener}
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.Server
