@@ -66,6 +66,24 @@ case class Vector3f(
   def divide(vec: Vector3f): Vector3f =
     copy(x = x / vec.x, y = y / vec.y, z = z / vec.z)
 
+  def rotateX(angle: Float): Vector3f = {
+    val sin = Math.sin(angle).toFloat
+    val cos = FastMath.cosFromSin(sin, angle)
+    copy(x = x, y = y * cos - z * sin, z = y * sin + z * cos)
+  }
+
+  def rotateY(angle: Float): Vector3f = {
+    val sin = Math.sin(angle).toFloat
+    val cos = FastMath.cosFromSin(sin, angle)
+    copy(x = x * cos + z * sin, y = y, z = -x * sin + z * cos)
+  }
+
+  def rotateZ(angle: Float): Vector3f = {
+    val sin = Math.sin(angle).toFloat
+    val cos = FastMath.cosFromSin(sin, angle)
+    copy(x = x * cos - y * sin, y = x * sin + y * cos, z = z)
+  }
+
   def distanceTo(target: Vector3f): Float = target.subtract(this).length
 
   def normalize: Vector3f =
