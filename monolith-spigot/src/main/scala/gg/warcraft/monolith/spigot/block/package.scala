@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.spigot.world
+package gg.warcraft.monolith.spigot
 
 import org.bukkit.block.{Block, BlockState, Sign}
 import org.bukkit.block.data.{BlockData, Rail}

@@ -1,4 +1,4 @@
-package gg.warcraft.monolith.spigot.world
+package gg.warcraft.monolith.spigot
 
 import org.bukkit.entity.{Entity, Item}
 import org.bukkit.event.entity.EntityPickupItemEvent

@@ -3,17 +3,20 @@ package gg.warcraft.monolith.spigot.block
 import java.util
 
 import gg.warcraft.monolith.api.block._
-import gg.warcraft.monolith.api.block.shape.{ RailsShape, StairsShape }
+import gg.warcraft.monolith.api.block.shape.{RailsShape, StairsShape}
 import gg.warcraft.monolith.api.block.state._
 import gg.warcraft.monolith.api.block.variant._
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.Extensions._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{ Bukkit, Material }
-import org.bukkit.block.data.{ Bisected, Directional, Lightable, MultipleFacing, Openable, Orientable, Powerable, Rotatable, Snowable, Waterlogged }
-import org.bukkit.block.data.`type`.Bed.{ Part => SpigotBedPart }
-import org.bukkit.block.data.`type`.Door.{ Hinge => SpigotDoorHinge }
-import org.bukkit.block.data.`type`.Slab.{ Type => SpigotSlabType }
+import org.bukkit.{Bukkit, Material}
+import org.bukkit.block.data.{
+  Bisected, Directional, Lightable, MultipleFacing, Openable, Orientable, Powerable,
+  Rotatable, Snowable, Waterlogged
+}
+import org.bukkit.block.data.`type`.Bed.{Part => SpigotBedPart}
+import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
+import org.bukkit.block.data.`type`.Slab.{Type => SpigotSlabType}
 import org.bukkit.block.data.`type`.Switch
 
 private object SpigotBlockMapper {
