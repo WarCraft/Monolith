@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.core.auth
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.Message
-import gg.warcraft.monolith.api.world.item.ItemType
+import gg.warcraft.monolith.api.item.ItemType
 
 trait Principal {
   val name: String

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.combat
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event}
-import gg.warcraft.monolith.api.world.block.{Block, BlockFace}
+import gg.warcraft.monolith.api.block.{Block, BlockFace}
 
 trait ProjectileEvent
 

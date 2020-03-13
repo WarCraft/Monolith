@@ -15,7 +15,7 @@ import gg.warcraft.monolith.api.entity.service.EntityQueryService;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.build.service.BlockBuildCommandService;
+import gg.warcraft.monolith.api.block.build.service.BlockBuildCommandService;
 import gg.warcraft.monolith.app.core.handler.DailyTickHandler;
 import gg.warcraft.monolith.app.core.handler.DebugStickHandler;
 import gg.warcraft.monolith.app.entity.attribute.handler.AttributesInitializationHandler;

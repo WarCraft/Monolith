@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.entity.player.GameMode;
 import gg.warcraft.monolith.api.entity.player.PlayerServerData;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
-import gg.warcraft.monolith.api.world.item.Inventory;
+import gg.warcraft.monolith.api.item.Inventory;
 import org.bukkit.OfflinePlayer;
 import org.joml.AABBf;
 

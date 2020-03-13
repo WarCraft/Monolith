@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.combat.{
   ProjectileType
 }
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.spigot.world.block.{
+import gg.warcraft.monolith.spigot.block.{
   SpigotBlockFaceMapper, SpigotBlockMapper
 }
 import org.bukkit.event.{EventHandler, EventPriority, Listener}

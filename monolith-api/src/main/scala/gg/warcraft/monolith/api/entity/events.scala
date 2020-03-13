@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.combat.CombatValue
 import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event}
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.world.Location
-import gg.warcraft.monolith.api.world.item.Item
+import gg.warcraft.monolith.api.item.Item
 
 trait EntityEvent
 

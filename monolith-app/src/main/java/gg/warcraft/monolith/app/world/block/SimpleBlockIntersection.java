@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.app.world.block;
 
 import gg.warcraft.monolith.api.world.Location;
-import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockFace;
-import gg.warcraft.monolith.api.world.block.BlockIntersection;
+import gg.warcraft.monolith.api.block.Block;
+import gg.warcraft.monolith.api.block.BlockFace;
+import gg.warcraft.monolith.api.block.BlockIntersection;
 
 public class SimpleBlockIntersection implements BlockIntersection {
     private final Block block;

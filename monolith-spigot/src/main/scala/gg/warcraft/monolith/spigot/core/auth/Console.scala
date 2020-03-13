@@ -4,7 +4,7 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.core.auth.Principal
 import gg.warcraft.monolith.api.core.Message
-import gg.warcraft.monolith.api.world.item.ItemType
+import gg.warcraft.monolith.api.item.ItemType
 
 case object Console extends Principal {
   override val name: String = "Console"

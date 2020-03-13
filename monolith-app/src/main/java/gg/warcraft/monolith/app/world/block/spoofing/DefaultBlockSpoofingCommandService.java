@@ -3,9 +3,9 @@ package gg.warcraft.monolith.app.world.block.spoofing;
 import com.google.inject.Inject;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.WorldService;
-import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingCommandService;
-import gg.warcraft.monolith.api.world.block.spoofing.BlockSpoofingRepository;
+import gg.warcraft.monolith.api.block.Block;
+import gg.warcraft.monolith.api.block.spoofing.BlockSpoofingCommandService;
+import gg.warcraft.monolith.api.block.spoofing.BlockSpoofingRepository;
 
 import java.util.Arrays;
 import java.util.HashMap;

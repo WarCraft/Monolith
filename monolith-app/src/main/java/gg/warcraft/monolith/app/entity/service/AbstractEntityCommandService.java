@@ -21,9 +21,9 @@ import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.Direction;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.WorldService;
-import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockFace;
-import gg.warcraft.monolith.api.world.block.BlockUtils;
+import gg.warcraft.monolith.api.block.Block;
+import gg.warcraft.monolith.api.block.BlockFace;
+import gg.warcraft.monolith.api.block.BlockUtils;
 import gg.warcraft.monolith.app.combat.SimplePotionEffect;
 
 import java.util.HashMap;

@@ -13,7 +13,7 @@ import gg.warcraft.monolith.api.entity.{
 }
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper
+import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.inventory.EquipmentSlot

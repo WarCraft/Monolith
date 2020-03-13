@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.core.auth
 
 import gg.warcraft.monolith.api.core.MonolithConfig
-import gg.warcraft.monolith.api.world.item.ItemType
+import gg.warcraft.monolith.api.item.ItemType
 
 class AuthService {
   var devPermission: String = _

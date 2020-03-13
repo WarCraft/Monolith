@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.entity;
 
-import gg.warcraft.monolith.api.world.block.BlockIntersection;
+import gg.warcraft.monolith.api.block.BlockIntersection;
 
 /**
  * An {@code EntityTarget} represents the block and or entity that are currently being targeted by a principal entity

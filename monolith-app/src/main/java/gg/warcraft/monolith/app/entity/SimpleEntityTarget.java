@@ -2,7 +2,7 @@ package gg.warcraft.monolith.app.entity;
 
 import gg.warcraft.monolith.api.entity.EntityIntersection;
 import gg.warcraft.monolith.api.entity.EntityTarget;
-import gg.warcraft.monolith.api.world.block.BlockIntersection;
+import gg.warcraft.monolith.api.block.BlockIntersection;
 
 public class SimpleEntityTarget implements EntityTarget {
     private final BlockIntersection blockIntersection;

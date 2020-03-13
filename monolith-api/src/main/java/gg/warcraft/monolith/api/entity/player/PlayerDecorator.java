@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.entity.status.Status;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.Location;
-import gg.warcraft.monolith.api.world.item.Inventory;
+import gg.warcraft.monolith.api.item.Inventory;
 import org.joml.AABBf;
 
 import java.util.UUID;

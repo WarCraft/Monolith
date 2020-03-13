@@ -22,8 +22,8 @@ import gg.warcraft.monolith.api.entity.player.service.PlayerServerAdapter;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.entity.team.service.TeamCommandService;
 import gg.warcraft.monolith.api.util.ColorCode;
-import gg.warcraft.monolith.api.world.item.Item;
-import gg.warcraft.monolith.api.world.item.storage.ItemStorageService;
+import gg.warcraft.monolith.api.item.Item;
+import gg.warcraft.monolith.api.item.storage.ItemStorageService;
 import scala.Option;
 
 import java.util.Map;

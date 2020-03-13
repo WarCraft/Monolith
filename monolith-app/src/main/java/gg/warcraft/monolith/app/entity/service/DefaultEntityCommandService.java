@@ -14,7 +14,7 @@ import gg.warcraft.monolith.api.entity.service.EntityServerAdapter;
 import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.util.TimeUtils;
 import gg.warcraft.monolith.api.world.WorldService;
-import gg.warcraft.monolith.api.world.block.BlockUtils;
+import gg.warcraft.monolith.api.block.BlockUtils;
 import gg.warcraft.monolith.app.entity.SimpleEntityProfile;
 import scala.Option;
 

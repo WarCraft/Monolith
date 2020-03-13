@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.entity.player;
 
 import gg.warcraft.monolith.api.entity.EntityServerData;
-import gg.warcraft.monolith.api.world.item.Inventory;
+import gg.warcraft.monolith.api.item.Inventory;
 
 public interface PlayerServerData extends EntityServerData {
 

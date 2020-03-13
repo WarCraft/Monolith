@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.world
 import java.util.UUID
 
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.block.{
+import gg.warcraft.monolith.api.block.{
   Block, BlockType, BlockTypeVariantOrState
 }
 

@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 import gg.warcraft.monolith.api.entity.attribute.Attribute;
 import gg.warcraft.monolith.api.item.ItemReader;
 import gg.warcraft.monolith.api.util.StringUtils;
-import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.item.Item;
 
 import javax.annotation.Nullable;
 import java.util.List;

@@ -6,9 +6,9 @@ import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.World;
 import gg.warcraft.monolith.api.world.WorldService;
-import gg.warcraft.monolith.api.world.block.*;
-import gg.warcraft.monolith.api.world.block.box.BlockBox;
-import gg.warcraft.monolith.api.world.block.box.BlockBoxReader;
+import gg.warcraft.monolith.api.block.*;
+import gg.warcraft.monolith.api.block.box.BlockBox;
+import gg.warcraft.monolith.api.block.box.BlockBoxReader;
 import org.joml.*;
 import scala.jdk.javaapi.CollectionConverters;
 

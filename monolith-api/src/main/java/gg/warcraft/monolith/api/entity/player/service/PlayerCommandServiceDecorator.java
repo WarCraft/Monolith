@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.entity.player.service;
 import gg.warcraft.monolith.api.entity.EquipmentSlot;
 import gg.warcraft.monolith.api.entity.player.Currency;
 import gg.warcraft.monolith.api.entity.player.Statistic;
-import gg.warcraft.monolith.api.world.item.Item;
+import gg.warcraft.monolith.api.item.Item;
 
 import java.util.UUID;
 

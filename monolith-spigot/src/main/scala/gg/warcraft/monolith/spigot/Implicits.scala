@@ -18,9 +18,9 @@ import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
 import gg.warcraft.monolith.spigot.menu.{SpigotMenuHandler, SpigotMenuMapper, SpigotMenuService}
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world._
-import gg.warcraft.monolith.spigot.world.block._
-import gg.warcraft.monolith.spigot.world.block.backup.SpigotBlockBackupService
-import gg.warcraft.monolith.spigot.world.item._
+import gg.warcraft.monolith.spigot.block._
+import gg.warcraft.monolith.spigot.block.backup.SpigotBlockBackupService
+import gg.warcraft.monolith.spigot.item._
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 

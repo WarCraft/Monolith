@@ -6,8 +6,8 @@ import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.api.world.WorldService;
-import gg.warcraft.monolith.api.world.block.Block;
-import gg.warcraft.monolith.api.world.block.BlockIterator;
+import gg.warcraft.monolith.api.block.Block;
+import gg.warcraft.monolith.api.block.BlockIterator;
 
 public class SimpleBlockIterator implements BlockIterator {
     private final WorldService worldService;

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.app.world.block.box;
 import gg.warcraft.monolith.api.math.Vector3i;
 import gg.warcraft.monolith.api.world.BlockLocation;
 import gg.warcraft.monolith.api.world.World;
-import gg.warcraft.monolith.api.world.block.box.BoundingBlockBox;
+import gg.warcraft.monolith.api.block.box.BoundingBlockBox;
 import gg.warcraft.monolith.api.world.service.WorldQueryService;
 import org.junit.After;
 import org.junit.Assert;

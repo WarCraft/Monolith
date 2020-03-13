@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.core
 
-import gg.warcraft.monolith.api.world.item.ItemType
+import gg.warcraft.monolith.api.item.ItemType
 
 case class MonolithConfig(
     devPermission: String,

@@ -2,8 +2,8 @@ package gg.warcraft.monolith.app.world.block.build.service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import gg.warcraft.monolith.api.world.block.build.BlockBuild;
-import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
+import gg.warcraft.monolith.api.block.build.BlockBuild;
+import gg.warcraft.monolith.api.block.build.service.BlockBuildRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.menu
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.ColorCode._
-import gg.warcraft.monolith.api.world.item.{ItemType, ItemTypeOrVariant}
+import gg.warcraft.monolith.api.item.{ItemType, ItemTypeOrVariant}
 
 sealed trait SkullButton {
   this: Button =>

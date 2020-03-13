@@ -6,7 +6,7 @@ import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event, PreEvent}
 import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.entity.player.Statistic
 import gg.warcraft.monolith.api.world.Location
-import gg.warcraft.monolith.api.world.item.Item
+import gg.warcraft.monolith.api.item.Item
 
 trait PlayerEvent
 

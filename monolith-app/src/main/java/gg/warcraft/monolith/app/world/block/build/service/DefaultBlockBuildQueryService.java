@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.app.world.block.build.service;
 
 import com.google.inject.Inject;
-import gg.warcraft.monolith.api.world.block.build.BlockBuild;
-import gg.warcraft.monolith.api.world.block.build.service.BlockBuildQueryService;
-import gg.warcraft.monolith.api.world.block.build.service.BlockBuildRepository;
+import gg.warcraft.monolith.api.block.build.BlockBuild;
+import gg.warcraft.monolith.api.block.build.service.BlockBuildQueryService;
+import gg.warcraft.monolith.api.block.build.service.BlockBuildRepository;
 
 import java.util.List;
 

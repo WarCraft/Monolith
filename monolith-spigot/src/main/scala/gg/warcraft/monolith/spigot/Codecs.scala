@@ -3,8 +3,8 @@ package gg.warcraft.monolith.spigot
 import gg.warcraft.monolith.api.entity.EntityType
 import gg.warcraft.monolith.api.util.ColorCode
 import gg.warcraft.monolith.api.world.World
-import gg.warcraft.monolith.api.world.block.BlockTypeVariantOrState
-import gg.warcraft.monolith.api.world.item.ItemTypeOrVariant
+import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
+import gg.warcraft.monolith.api.item.ItemTypeOrVariant
 import gg.warcraft.monolith.spigot.Implicits._
 import io.circe.{Decoder, Encoder}
 import io.getquill.MappedEncoding

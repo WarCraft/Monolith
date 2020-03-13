@@ -4,10 +4,10 @@ import gg.warcraft.monolith.api.core.TaskService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.player.{PlayerConnectEvent, PlayerDisconnectEvent, PlayerEquipmentChangedEvent, PlayerInteractEvent, PlayerPreConnectEvent, PlayerPreInteractEvent, PlayerPrePunchEvent, PlayerPreRespawnEvent, PlayerPunchEvent, PlayerRespawnEvent}
-import gg.warcraft.monolith.api.world.item.Item
+import gg.warcraft.monolith.api.item.Item
 import gg.warcraft.monolith.app.entity.SimpleEquipment
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper
+import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import org.bukkit.entity.Player
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.block.Action

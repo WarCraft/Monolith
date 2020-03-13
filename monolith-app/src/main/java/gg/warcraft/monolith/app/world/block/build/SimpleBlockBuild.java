@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.app.world.block.build;
 
-import gg.warcraft.monolith.api.world.block.box.BlockBox;
-import gg.warcraft.monolith.api.world.block.build.AbstractBlockBuild;
+import gg.warcraft.monolith.api.block.box.BlockBox;
+import gg.warcraft.monolith.api.block.build.AbstractBlockBuild;
 
 public class SimpleBlockBuild extends AbstractBlockBuild {
 

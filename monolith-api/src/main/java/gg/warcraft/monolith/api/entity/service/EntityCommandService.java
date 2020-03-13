@@ -8,7 +8,7 @@ import gg.warcraft.monolith.api.entity.team.Team;
 import gg.warcraft.monolith.api.math.Vector3f;
 import gg.warcraft.monolith.api.core.Duration;
 import gg.warcraft.monolith.api.world.Location;
-import gg.warcraft.monolith.api.world.block.BlockRotation;
+import gg.warcraft.monolith.api.block.BlockRotation;
 
 import java.util.UUID;
 

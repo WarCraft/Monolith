@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.spigot.menu
 
 import gg.warcraft.monolith.api.menu.{Button, SkullButton}
-import gg.warcraft.monolith.api.world.item.ItemService
-import gg.warcraft.monolith.spigot.world.item.SpigotItemMapper
+import gg.warcraft.monolith.api.item.ItemService
+import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import org.bukkit.inventory.{ItemFlag, ItemStack}
 import org.bukkit.Material
 import org.bukkit.inventory.meta.SkullMeta
