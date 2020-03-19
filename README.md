@@ -17,3 +17,9 @@ If you run into a concept or snippet that you feel could be improved please do g
 
 ## Plugins
 Modules that have use cases as standalone plugins will eventually be provided as simple downloads. Other, more niche, implementations will have to be provided on the class path or fat compiled into your own plugins. We're looking into getting our artifacts on Maven Central.
+
+## Accessing plugin data
+#### In-memory data
+Many plugin services keep their data in memory only and as such return concrete data types. These services guarantee they have all necessary data ready and will never block the main thread.
+#### Persistent data
+On the other hand there are plenty services working with persistent data. These services will _always_ expose their data as a Future and it should _never_ be assumed that these services are able to return the requested data immediately. While it is often the case that this can be done for online players to improve the player's experience, again; it should _never_ be assumed. All consumers of persistent data services should expect to not be able to complete their computation during the current tick and deal with the Future accordingly. To improve the developer experience using this approach an `immediatelyOrOnComplete` extension method for Futures has been made available in the `gg.warcraft.monolith.api.util.Ops` object. This method runs the onComplete function on the calling thread if the result was available immediately, but runs it asynchronously wrapped in a call to the task service to run on the next synchronous server tick if not.
