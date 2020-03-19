@@ -85,8 +85,8 @@ class StatisticService(
           query[Statistic]
             .filter(it => it.playerId == lift(playerId) && it.statistic == statistic)
             .insert(updated(statistic))
-            .onConflictUpdate(_.playerId, _.statistic)(
-              (it, _) => it.value -> (it.value + lift(amount))
+            .onConflictUpdate(_.playerId, _.statistic)((it, _) =>
+              it.value -> (it.value + lift(amount))
             )
         }
       }
