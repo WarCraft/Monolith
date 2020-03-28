@@ -2,8 +2,38 @@ package gg.warcraft.monolith.api.block.box
 
 import java.util.function.Predicate
 
+import gg.warcraft.monolith.api.block.Block
 import gg.warcraft.monolith.api.math.Vector3i
 import gg.warcraft.monolith.api.world.{BlockLocation, World}
+
+import scala.util.chaining._
+
+object BlockBox {
+  def apply(blocks: Iterable[Block]): BlockBox = {
+    if (blocks.nonEmpty) {
+      blocks
+        .foldLeft((null: World, 0, 0, 0, 0, 0, 0)) { (boundingBox, block) =>
+          import block.location._
+          (
+            if (boundingBox._1 == null || boundingBox._1 == world) world
+            else throw new IllegalArgumentException("all block worlds must _ == _"),
+            Math min (boundingBox._2, x),
+            Math min (boundingBox._3, y),
+            Math min (boundingBox._4, z),
+            Math max (boundingBox._5, x),
+            Math max (boundingBox._6, y),
+            Math max (boundingBox._7, z)
+          )
+        }
+        .pipe { boundingBox =>
+          import boundingBox._
+          val min = Vector3i(_2, _3, _4)
+          val max = Vector3i(_5, _6, _7)
+          BlockBox(_1, min, max)
+        }
+    } else throw new IllegalArgumentException("blocks must be nonEmpty")
+  }
+}
 
 case class BlockBox(
     world: World,
@@ -22,12 +52,11 @@ case class BlockBox(
   val lower: Int = min.y
 
   override def test(loc: BlockLocation): Boolean = {
-    if (loc.world != world) false
-    else {
+    if (loc.world == world) {
       loc.x >= min.x && loc.x <= max.x &&
       loc.y >= min.y && loc.y <= max.y &&
       loc.z >= min.z && loc.z <= max.z
-    }
+    } else false
   }
 
   def translate(vec: Vector3i): BlockBox =
