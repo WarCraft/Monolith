@@ -11,7 +11,7 @@ import scala.jdk.CollectionConverters._
 object Block {
   case class Intersection(
       block: Block,
-      face: BlockFace,
+      // TODO face: BlockFace,
       location: Location
   )
 

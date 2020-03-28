@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class DefaultBlockUtils implements BlockUtils {
 
     @Override
-    public List<Block> getWithinRadius(Location location, float radius) {
+    public List<Block> getWithinRadius(Location location, float radius) { // TODO move to BlockService
         World world = location.world();
         Vector3i minimumCorner =
                 Location.toBlockLocation(location.subtract(radius, radius, radius))
@@ -40,18 +40,5 @@ public class DefaultBlockUtils implements BlockUtils {
                     AABBf blockBox = new AABBf(jomlMinCorner, jomlMinCorner.add(1, 1, 1, new Vector3f()));
                     return Intersectionf.testAabSphere(blockBox, sphere);
                 }));
-    }
-
-    @Override
-    public BlockIntersection intersectBlock(Location origin, Location target, Predicate<Block> ignore) {
-        BlockIterator blockIterator = blockIteratorFactory.createBlockIterator(origin, target);
-        while (blockIterator.hasNext()) {
-            Block currentBlock = blockIterator.next();
-            if (!ignore.test(currentBlock)) {
-                Location intersection = blockIterator.calculateIntersection();
-                return new SimpleBlockIntersection(currentBlock, null, intersection);
-            }
-        }
-        return null;
     }
 }
