@@ -125,15 +125,6 @@ class SpigotWorldService(
     update(spigotLocation.getBlock, block)
   }
 
-  override def spoofBlock(block: Block, playerId: UUID): Unit = {
-    val spigotPlayer = server.getPlayer(playerId)
-    if (spigotPlayer != null) {
-      val spigotLocation = locationMapper.map(block.location)
-      val spigotBlockData = blockMapper.map(block)
-      spigotPlayer.sendBlockChange(spigotLocation, spigotBlockData)
-    }
-  }
-
   override def playSound(
       location: Location,
       sound: Sound,

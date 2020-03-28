@@ -18,8 +18,6 @@ trait WorldService {
   def setBlock(loc: BlockLocation, block: Block): Unit
   def updateBlock(block: Block): Unit = setBlock(block.location, block)
 
-  def spoofBlock(block: Block, playerId: UUID): Unit
-
   def playSound(
       location: Location,
       sound: Sound,
