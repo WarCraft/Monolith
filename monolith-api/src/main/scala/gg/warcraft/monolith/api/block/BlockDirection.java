@@ -1,5 +1,6 @@
 package gg.warcraft.monolith.api.block;
 
+// TODO rewrite into world.CardinalDirection?
 public enum BlockDirection {
     NORTH,
     EAST,
@@ -19,21 +20,21 @@ public enum BlockDirection {
         }
     }
 
-    int getRotation(BlockDirection from, BlockDirection to) {
-        int fromOrdinal = from.ordinal();
+    int getRotation(BlockDirection to) {
+        int fromOrdinal = ordinal();
         int toOrdinal = to.ordinal();
         int ordinalDiff = toOrdinal - fromOrdinal;
         while (ordinalDiff < 0) ordinalDiff += 4;
         return ordinalDiff * 90;
     }
 
-    BlockDirection rotate(BlockDirection direction, int rotation) {
+    BlockDirection rotate(int rotation) {
         if (rotation % 90 != 0) {
             throw new IllegalArgumentException("Illegal rotation of " + rotation + ", needs to be a multiple of 90");
         }
         int adjustedRotation = rotation % 360;
         int ordinalDifference = adjustedRotation / 90;
-        int startingOrdinal = direction.ordinal();
+        int startingOrdinal = ordinal();
         int targetOrdinal = startingOrdinal + ordinalDifference;
         int adjustedOrdinal = targetOrdinal % 4;
         return BlockDirection.values()[adjustedOrdinal];

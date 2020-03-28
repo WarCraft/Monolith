@@ -6,13 +6,13 @@ import gg.warcraft.monolith.api.world.WorldService
 
 class BlockBoxReader(
     val box: BlockBox,
-    val direction: BlockDirection
+    val orientation: BlockDirection
 )(
     private implicit val worldService: WorldService
 ) {
   import box._
 
-  private val readBlock: Vector3i => Block = direction match {
+  private val readBlock: Vector3i => Block = orientation match {
     case BlockDirection.NORTH =>
       vec => worldService.getBlock(world, west + vec.x, lower + vec.y, south - vec.z)
     case BlockDirection.EAST =>
@@ -23,7 +23,7 @@ class BlockBoxReader(
       vec => worldService.getBlock(world, east - vec.z, lower + vec.y, south - vec.x)
   }
 
-  private val readOffset: Block => Vector3i = direction match {
+  private val readOffset: Block => Vector3i = orientation match {
     case BlockDirection.NORTH =>
       block => Vector3i(block.x - west, block.y - lower, south - block.z)
     case BlockDirection.EAST =>
