@@ -3,10 +3,31 @@ package gg.warcraft.monolith.api.block
 import java.util
 
 import gg.warcraft.monolith.api.core.CaseTrait
-import gg.warcraft.monolith.api.world.BlockLocation
+import gg.warcraft.monolith.api.world.{BlockLocation, Location, WorldService}
 
 import scala.annotation.varargs
 import scala.jdk.CollectionConverters._
+
+object Block {
+  case class Intersection(
+      block: Block,
+      face: BlockFace,
+      location: Location
+  )
+
+  @inline final implicit class Extensions(block: Block)(
+      implicit worldService: WorldService
+  ) {
+    def getRelative(directions: BlockFace*): List[Block] = directions.map {
+      case BlockFace.NORTH => worldService getBlock block.location.add(0, 0, -1)
+      case BlockFace.EAST  => worldService getBlock block.location.add(1, 0, 0)
+      case BlockFace.SOUTH => worldService getBlock block.location.add(0, 0, 1)
+      case BlockFace.WEST  => worldService getBlock block.location.add(-1, 0, 0)
+      case BlockFace.UP    => worldService getBlock block.location.add(0, 1, 0)
+      case BlockFace.DOWN  => worldService getBlock block.location.add(0, -1, 0)
+    }.toList
+  }
+}
 
 trait Block extends CaseTrait {
   val `type`: BlockType
