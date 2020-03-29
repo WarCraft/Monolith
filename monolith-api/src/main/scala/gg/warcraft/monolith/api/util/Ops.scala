@@ -12,7 +12,7 @@ object Ops {
 
   @inline implicit final class NullableOps[A](private val self: A) extends AnyVal {
     def ??[B](f: A => B): B = if (self != null) self |> f else null.asInstanceOf[B]
-    def :?(f: => A): A = if (self == null) f else self
+    def ?:(f: => A): A = if (self == null) f else self
   }
 
   @inline implicit final class FutureOps[T](
