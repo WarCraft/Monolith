@@ -1,16 +1,23 @@
 package gg.warcraft.monolith.api.entity.status
 
+import gg.warcraft.monolith.api.combat.CombatSource
 import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
+import gg.warcraft.monolith.api.core.Duration
+import gg.warcraft.monolith.api.util.Ops._
 
-import scala.collection.mutable
+object Status {
+  trait Effect extends Event.Handler {
+    val source: CombatSource
+    val name: String
+    val group: String
+    val duration: Option[Duration]
+  }
+}
 
-class Status extends Event.Handler {
-  private[status] val effects: mutable.Set[StatusEffect] =
-    new mutable.HashSet[StatusEffect]
-
+case class Status(effects: Set[Status.Effect] = Set.empty) extends Event.Handler {
   override def handle(event: Event): Unit =
-    effects.foreach(_.handle(event))
+    effects foreach { _.handle(event) }
 
   override def reduce[T <: PreEvent](event: T): T =
-    effects.foldLeft(event)((it, effect) => effect.reduce(it))
+    effects.foldLeft(event) { _ |> _.reduce }
 }

@@ -2,52 +2,61 @@ package gg.warcraft.monolith.api.entity.status
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.event.{Event, EventService}
+import gg.warcraft.monolith.api.core.event.{Event, EventService, PreEvent}
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.player.{PlayerConnectEvent, PlayerDisconnectEvent}
+import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectEvent}
 
 import scala.collection.mutable
 
-private object StatusService {
-  private val statuses = mutable.Map.empty[UUID, Status]
-}
-
 class StatusService(
-    private implicit val eventService: EventService,
-    private implicit val taskService: TaskService
+    implicit eventService: EventService,
+    taskService: TaskService
 ) extends Event.Handler {
-  import StatusService._
+  private val statuses = mutable.Map[UUID, Status]()
 
   def getStatus(entityId: UUID): Status =
     statuses.getOrElseUpdate(entityId, new Status)
 
-  def addEffect(entityId: UUID, effects: StatusEffect*): Unit = {
+  def addEffect(entityId: UUID, effects: Status.Effect*): Unit = {
     val status = getStatus(entityId)
-    effects.foreach(effect => {
-      if (status.effects.add(effect)) {
-        effect.duration.foreach(it => {
-          taskService.runLater(it, () => removeEffect(entityId, effect))
-        })
+    effects.foreach { effect =>
+      if (!status.effects.contains(effect)) {
+        val newStatus = status.copy(effects = status.effects + effect)
+        statuses.put(entityId, newStatus)
+
+        effect.duration.foreach {
+          taskService.runLater(_, removeEffect(entityId, effect))
+        }
 
         val event = StatusEffectGainedEvent(entityId, effect)
         eventService.publish(event)
       }
-    })
+    }
   }
 
-  def removeEffect(entityId: UUID, effects: StatusEffect*): Unit = {
+  def removeEffect(entityId: UUID, effects: Status.Effect*): Unit = {
     val status = getStatus(entityId)
-    effects.foreach(effect => {
-      if (status.effects.remove(effect)) {
+    effects.foreach { effect =>
+      if (status.effects contains effect) {
+        val newStatus = status.copy(effects = status.effects - effect)
+        statuses.put(entityId, newStatus)
+
         val event = StatusEffectLostEvent(entityId, effect)
         eventService.publish(event)
       }
-    })
+    }
   }
 
   override def handle(event: Event): Unit = event match {
-    case it: PlayerConnectEvent    => statuses.put(it.playerId, new Status)
     case it: PlayerDisconnectEvent => statuses.remove(it.playerId)
+    case _                         =>
+  }
+
+  override def reduce[T <: PreEvent](event: T): T = {
+    case it: PlayerPreConnectEvent =>
+      statuses.put(it.playerId, new Status)
+      event
+    case _ =>
   }
 
   // TODO create/delete statuses for non-player Entities
