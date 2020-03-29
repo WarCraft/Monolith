@@ -1,26 +1,25 @@
-package gg.warcraft.monolith.api.block;
+package gg.warcraft.monolith.api.world;
 
-// TODO rewrite into world.CardinalDirection?
-public enum BlockDirection {
+public enum Direction {
     NORTH,
     EAST,
     SOUTH,
     WEST;
 
-    public static BlockDirection fromYaw(float yaw) {
+    public static Direction fromYaw(float yaw) {
         if (yaw > 180) yaw -= 360;
         if (yaw < -180) yaw += 360;
         if (yaw >= -45) {
-            if (yaw <= 45) return BlockDirection.SOUTH;
-            else if (yaw <= 135) return BlockDirection.WEST;
-            else return BlockDirection.NORTH;
+            if (yaw <= 45) return Direction.SOUTH;
+            else if (yaw <= 135) return Direction.WEST;
+            else return Direction.NORTH;
         } else {
-            if (yaw >= -135) return BlockDirection.EAST;
-            else return BlockDirection.NORTH;
+            if (yaw >= -135) return Direction.EAST;
+            else return Direction.NORTH;
         }
     }
 
-    int getRotation(BlockDirection to) {
+    int getRotation(Direction to) {
         int fromOrdinal = ordinal();
         int toOrdinal = to.ordinal();
         int ordinalDiff = toOrdinal - fromOrdinal;
@@ -28,7 +27,7 @@ public enum BlockDirection {
         return ordinalDiff * 90;
     }
 
-    BlockDirection rotate(int rotation) {
+    Direction rotate(int rotation) {
         if (rotation % 90 != 0) {
             throw new IllegalArgumentException("Illegal rotation of " + rotation + ", needs to be a multiple of 90");
         }
@@ -37,6 +36,6 @@ public enum BlockDirection {
         int startingOrdinal = ordinal();
         int targetOrdinal = startingOrdinal + ordinalDifference;
         int adjustedOrdinal = targetOrdinal % 4;
-        return BlockDirection.values()[adjustedOrdinal];
+        return Direction.values()[adjustedOrdinal];
     }
 }

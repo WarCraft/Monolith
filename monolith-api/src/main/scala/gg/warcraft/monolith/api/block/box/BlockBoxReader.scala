@@ -1,36 +1,36 @@
 package gg.warcraft.monolith.api.block.box
 
-import gg.warcraft.monolith.api.block.{Block, BlockDirection, BlockType}
+import gg.warcraft.monolith.api.block.{Block, BlockType}
 import gg.warcraft.monolith.api.math.Vector3i
-import gg.warcraft.monolith.api.world.WorldService
+import gg.warcraft.monolith.api.world.{Direction, WorldService}
 
 class BlockBoxReader(
     val box: BlockBox,
-    val orientation: BlockDirection
+    val orientation: Direction
 )(
     private implicit val worldService: WorldService
 ) {
   import box._
 
   private val readBlock: Vector3i => Block = orientation match {
-    case BlockDirection.NORTH =>
+    case Direction.NORTH =>
       vec => worldService.getBlock(world, west + vec.x, lower + vec.y, south - vec.z)
-    case BlockDirection.EAST =>
+    case Direction.EAST =>
       vec => worldService.getBlock(world, west + vec.z, lower + vec.y, north + vec.x)
-    case BlockDirection.SOUTH =>
+    case Direction.SOUTH =>
       vec => worldService.getBlock(world, east - vec.x, lower + vec.y, north + vec.z)
-    case BlockDirection.WEST =>
+    case Direction.WEST =>
       vec => worldService.getBlock(world, east - vec.z, lower + vec.y, south - vec.x)
   }
 
   private val readOffset: Block => Vector3i = orientation match {
-    case BlockDirection.NORTH =>
+    case Direction.NORTH =>
       block => Vector3i(block.x - west, block.y - lower, south - block.z)
-    case BlockDirection.EAST =>
+    case Direction.EAST =>
       block => Vector3i(block.z - north, block.y - lower, block.x - west)
-    case BlockDirection.SOUTH =>
+    case Direction.SOUTH =>
       block => Vector3i(east - block.x, block.y - lower, block.z - north)
-    case BlockDirection.WEST =>
+    case Direction.WEST =>
       block => Vector3i(south - block.z, block.y - lower, east - block.x)
   }
 

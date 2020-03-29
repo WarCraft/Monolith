@@ -1,8 +1,10 @@
 package gg.warcraft.monolith.spigot.block
 
-import gg.warcraft.monolith.api.block.{Block, BlockDirection, BlockService}
+import gg.warcraft.monolith.api.block.{Block, BlockService}
 import gg.warcraft.monolith.api.block.box.{BlockBox, BlockBoxReader}
-import gg.warcraft.monolith.api.world.{BlockLocation, Location, WorldService}
+import gg.warcraft.monolith.api.world.{
+  BlockLocation, Direction, Location, WorldService
+}
 
 class SpigotBlockService(
     implicit worldService: WorldService
@@ -13,7 +15,7 @@ class SpigotBlockService(
     val min: BlockLocation = location subtract (radius, radius, radius)
     val max: BlockLocation = location subtract (radius, radius, radius)
     val boundingBox = BlockBox(location.world, min, max)
-    val reader = new BlockBoxReader(boundingBox, BlockDirection.NORTH)
+    val reader = new BlockBoxReader(boundingBox, Direction.NORTH)
     reader.getBlocks.filter { block =>
       val center = BlockLocation.toLocation(block.location).add(.5f, .5f, .5f)
       (location distanceTo center) <= radius

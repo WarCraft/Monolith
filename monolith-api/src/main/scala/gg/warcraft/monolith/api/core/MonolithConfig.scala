@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.core
 
 import gg.warcraft.monolith.api.block.box.BlockBox
-import gg.warcraft.monolith.api.block.BlockDirection
 import gg.warcraft.monolith.api.item.ItemType
+import gg.warcraft.monolith.api.world.Direction
 
 case class MonolithConfig(
     devPermission: String,
@@ -12,5 +12,5 @@ case class MonolithConfig(
     adminPermission: String,
     moderatingItem: ItemType,
     buildRepositoryBox: BlockBox,
-    buildRepositoryOrientation: BlockDirection
+    buildRepositoryOrientation: Direction
 )
