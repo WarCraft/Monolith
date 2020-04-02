@@ -18,7 +18,7 @@ import gg.warcraft.monolith.api.world.DirectionUtils;
 import gg.warcraft.monolith.api.world.Location;
 import gg.warcraft.monolith.spigot.Implicits;
 import gg.warcraft.monolith.spigot.combat.SpigotPotionEffectTypeMapper;
-import gg.warcraft.monolith.spigot.entity.GenericAttributeMapper;
+import gg.warcraft.monolith.spigot.entity.SpigotAttributeMapper;
 import gg.warcraft.monolith.spigot.entity.SpigotEntityDataFactory;
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper;
 import org.bukkit.GameMode;
@@ -38,44 +38,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SpigotEntityAdapter implements EntityServerAdapter {
-    private final Server server;
-    private final Plugin plugin;
-    private final AttributeQueryService attributeQueryService;
-    private final DirectionUtils directionUtils;
-    private final SpigotLocationMapper locationMapper;
-    private final SpigotEntityDataFactory entityDataFactory;
-    private final SpigotPotionEffectTypeMapper potionEffectTypeMapper;
-    private final GenericAttributeMapper genericAttributeMapper;
-
-    @Inject
-    public SpigotEntityAdapter(Server server, Plugin plugin,
-                               AttributeQueryService attributeQueryService,
-                               DirectionUtils directionUtils,
-                               SpigotEntityDataFactory entityDataFactory,
-                               SpigotPotionEffectTypeMapper potionEffectTypeMapper,
-                               GenericAttributeMapper genericAttributeMapper) {
-        this.server = server;
-        this.plugin = plugin;
-        this.attributeQueryService = attributeQueryService;
-        this.directionUtils = directionUtils;
-        this.locationMapper = Implicits.locationMapper(); // TODO undo
-        this.entityDataFactory = entityDataFactory;
-        this.potionEffectTypeMapper = potionEffectTypeMapper;
-        this.genericAttributeMapper = genericAttributeMapper;
-    }
-
-    EntityServerData createEntityServerData(LivingEntity entity) {
-        return entityDataFactory.create(entity);
-    }
-
-    @Override
-    public EntityServerData getEntityServerData(UUID entityId) {
-        Entity entity = server.getEntity(entityId);
-        if (entity instanceof LivingEntity) {
-            return createEntityServerData((LivingEntity) entity);
-        }
-        return null;
-    }
 
     @Override
     public List<EntityServerData> getNearbyEntitiesServerData(Location location, float deltaX, float deltaY, float deltaZ) {
@@ -88,38 +50,6 @@ public class SpigotEntityAdapter implements EntityServerAdapter {
                 .map(entity -> (LivingEntity) entity)
                 .map(this::createEntityServerData)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void setVelocity(UUID entityId, Vector3f velocity) {
-        Entity entity = server.getEntity(entityId);
-        if (entity != null) {
-            Vector newVelocity = new Vector(velocity.x(), velocity.y(), velocity.z());
-            entity.setVelocity(newVelocity);
-        }
-    }
-
-    @Override
-    public void addPotionEffect(UUID entityId, PotionEffect effect) {
-        Entity entity = server.getEntity(entityId);
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            org.bukkit.potion.PotionEffectType spigotPotionEffectType = potionEffectTypeMapper.map(effect.getType());
-            org.bukkit.potion.PotionEffect spigotPotionEffect = new org.bukkit.potion.PotionEffect(
-                    spigotPotionEffectType, effect.getDuration().inTicks(), effect.getLevel() - 1,
-                    effect.isAmbient(), effect.hasParticles());
-            livingEntity.addPotionEffect(spigotPotionEffect);
-        }
-    }
-
-    @Override
-    public void removePotionEffect(UUID entityId, PotionEffectType type) {
-        Entity entity = server.getEntity(entityId);
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            org.bukkit.potion.PotionEffectType spigotPotionEffectType = potionEffectTypeMapper.map(type);
-            livingEntity.removePotionEffect(spigotPotionEffectType);
-        }
     }
 
     @Override

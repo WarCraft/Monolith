@@ -6,10 +6,10 @@ import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.{
-  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
-  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
-  EntityPreDamageEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent,
-  EntityPreSpawnEvent, EntitySpawnEvent, EntityType
+  Entity, EntityAttackEvent, EntityDamageEvent, EntityDeathEvent,
+  EntityFatalDamageEvent, EntityHealthChangedEvent, EntityInteractEvent,
+  EntityPreAttackEvent, EntityPreDamageEvent, EntityPreFatalDamageEvent,
+  EntityPreInteractEvent, EntityPreSpawnEvent, EntitySpawnEvent
 }
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
@@ -25,11 +25,6 @@ import org.bukkit.plugin.Plugin
 import scala.collection.mutable
 import scala.jdk.CollectionConverters._
 
-private object SpigotEntityEventMapper {
-  private val combatValues = mutable.Map.empty[SpigotEvent, CombatValue]
-  private val combatValueMetadataKey = classOf[CombatValue].getCanonicalName
-}
-
 class SpigotEntityEventMapper(
     private implicit val server: Server,
     private implicit val plugin: Plugin,
@@ -39,13 +34,14 @@ class SpigotEntityEventMapper(
     private implicit val locationMapper: SpigotLocationMapper,
     private implicit val itemMapper: SpigotItemMapper
 ) extends Listener {
-  import SpigotEntityEventMapper._
+  private val combatValues = mutable.Map.empty[SpigotEvent, CombatValue]
+  private val combatValueMetadataKey = classOf[CombatValue].getCanonicalName
 
   @EventHandler(priority = EventPriority.HIGH)
   def preSpawn(event: SpigotEntitySpawnEvent): Unit = {
     val entity = event.getEntity
     val entityId = entity.getUniqueId
-    val entityType = EntityType.valueOf(event.getEntityType.name)
+    val entityType = Entity.Type.withName(event.getEntityType.name)
     val location = locationMapper.map(entity.getLocation)
     val preSpawnEvent = EntityPreSpawnEvent(entityId, entityType, location)
 
@@ -61,7 +57,7 @@ class SpigotEntityEventMapper(
   def onSpawn(event: SpigotEntitySpawnEvent): Unit = {
     val entity = event.getEntity
     val entityId = entity.getUniqueId
-    val entityType = EntityType.valueOf(event.getEntityType.name)
+    val entityType = Entity.Type.withName(event.getEntityType.name)
     val location = locationMapper.map(entity.getLocation)
     val spawnEvent = EntitySpawnEvent(entityId, entityType, location)
 
@@ -73,7 +69,7 @@ class SpigotEntityEventMapper(
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
     val entityId = event.getRightClicked.getUniqueId
-    val entityType = EntityType.valueOf(event.getRightClicked.getType.name)
+    val entityType = Entity.Type.withName(event.getRightClicked.getType.name)
     val player = event.getPlayer
     val playerId = player.getUniqueId
     val mainHand = itemMapper.map(player.getInventory.getItemInMainHand)
@@ -101,7 +97,7 @@ class SpigotEntityEventMapper(
 
     // TODO does Monolith only want this for LivingEntities?
     val entityId = event.getRightClicked.getUniqueId
-    val entityType = EntityType.valueOf(event.getRightClicked.getType.name)
+    val entityType = Entity.Type.withName(event.getRightClicked.getType.name)
     val player = event.getPlayer
     val playerId = player.getUniqueId
     val mainHand = itemMapper.map(player.getInventory.getItemInMainHand)
@@ -132,7 +128,7 @@ class SpigotEntityEventMapper(
   private def preAttack(event: SpigotEntityDamageByEntityEvent): CombatValue = {
     val entity = event.getEntity
     val entityId = entity.getUniqueId
-    val entityType = EntityType.valueOf(entity.getType.name)
+    val entityType = Entity.Type.withName(entity.getType.name)
     val attacker = event.getDamager
     val attackerId = getAttackerId(attacker)
     // TODO this used to return early if attackerId returned null for
@@ -164,8 +160,8 @@ class SpigotEntityEventMapper(
       case Some(it) =>
         val entity = event.getEntity
         val entityId = entity.getUniqueId
-        val entityType = EntityType.valueOf(entity.getType.name)
-        val attacker = event.getDamager
+        val entityType = Entity.Type.withName(entity.getType.name)
+        val attacker = event.getDamager // TODO cast to SpigotEntity, and deny pre events of all kinds for non living entities
         val attackerId = getAttackerId(attacker)
         // TODO this used to return early if attackerId returned null for
         //  Server::getPlayer and Server::getEntity
@@ -198,7 +194,7 @@ class SpigotEntityEventMapper(
     }
 
     val entityId = entity.getUniqueId
-    val entityType = EntityType.valueOf(entity.getType.name)
+    val entityType = Entity.Type.withName(entity.getType.name)
     val entityStatus = statusService.getStatus(entityId)
     val damage = combatValues.get(event) match {
       case Some(it) => it
@@ -269,7 +265,7 @@ class SpigotEntityEventMapper(
       onAttack(event.asInstanceOf[SpigotEntityDamageByEntityEvent])
 
     val entityId = entity.getUniqueId
-    val entityType = EntityType.valueOf(entity.getType.name)
+    val entityType = Entity.Type.withName(entity.getType.name)
     val entityStatus = statusService.getStatus(entityId)
     val damage = combatValue match {
       case Some(it) => it
@@ -314,7 +310,7 @@ class SpigotEntityEventMapper(
   @EventHandler(priority = EventPriority.HIGH)
   def onDeath(event: SpigotEntityDeathEvent): Unit = {
     val entityId = event.getEntity.getUniqueId
-    val entityType = EntityType.valueOf(event.getEntityType.name)
+    val entityType = Entity.Type.withName(event.getEntityType.name)
     val entityStatus = null // TODO get from statusQueryService
     val drops = event.getDrops.asScala
       .map(itemMapper.map)
@@ -330,7 +326,7 @@ class SpigotEntityEventMapper(
      @EventHandler
     public void onEntityDeathEvent(org.bukkit.event.entity.EntityDeathEvent event) {
         UUID entityId = event.getEntity().getUniqueId();
-        EntityType entityType = EntityType.valueOf(event.getEntityType().name());
+        EntityType entityType = Entity.Type.withName(event.getEntityType().name());
         Status entityStatus = statusQueryService.getStatus(entityId);
         List<Item> drops = event.getDrops().stream()
                 .map(itemMapper::map)

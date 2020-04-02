@@ -4,7 +4,6 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event, PreEvent}
 import gg.warcraft.monolith.api.entity.Equipment
-import gg.warcraft.monolith.api.entity.player.Statistic
 import gg.warcraft.monolith.api.item.Item
 import gg.warcraft.monolith.api.world.Location
 
@@ -15,7 +14,7 @@ case class PlayerPreConnectEvent(
     playerId: UUID,
     name: String
 ) extends PlayerEvent
-    with Event
+    with PreEvent
 
 case class PlayerConnectEvent(
     playerId: UUID,
@@ -122,7 +121,7 @@ case class PlayerRespawnEvent(
 // STATISTICS
 case class PlayerStatisticsChangedEvent(
     playerId: UUID,
-    statistic: Statistic,
+    statistic: Statistic, // TODO make Currency and Statistic publicly available?
     amount: Int,
     newCurrent: Int
 ) extends PlayerEvent

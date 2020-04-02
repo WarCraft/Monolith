@@ -13,7 +13,7 @@ trait EntityEvent
 // ATTACK
 case class EntityPreAttackEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     attackerId: UUID,
     projectileId: Option[UUID],
     damage: CombatValue,
@@ -24,7 +24,7 @@ case class EntityPreAttackEvent(
 
 case class EntityAttackEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     attackerId: UUID,
     projectileId: Option[UUID],
     damage: CombatValue
@@ -34,7 +34,7 @@ case class EntityAttackEvent(
 // DAMAGE
 case class EntityPreDamageEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     damage: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
@@ -43,14 +43,14 @@ case class EntityPreDamageEvent(
 
 case class EntityDamageEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     damage: CombatValue
 ) extends EntityEvent
     with Event
 
 case class EntityPreFatalDamageEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     damage: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
@@ -59,7 +59,7 @@ case class EntityPreFatalDamageEvent(
 
 case class EntityFatalDamageEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     damage: CombatValue
 ) extends EntityEvent
     with Event
@@ -67,7 +67,7 @@ case class EntityFatalDamageEvent(
 // DEATH
 case class EntityDeathEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     drops: List[Item]
 ) extends EntityEvent
     with Event
@@ -75,7 +75,7 @@ case class EntityDeathEvent(
 // HEAL
 case class EntityPreHealEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     heal: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
@@ -84,7 +84,7 @@ case class EntityPreHealEvent(
 
 case class EntityHealEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     heal: CombatValue
 ) extends EntityEvent
     with Event
@@ -92,7 +92,7 @@ case class EntityHealEvent(
 // HEALTH
 case class EntityHealthChangedEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     previousHealth: Float,
     previousPercentHealth: Float,
     newHealth: Float,
@@ -103,7 +103,7 @@ case class EntityHealthChangedEvent(
 // INTERACT
 case class EntityPreInteractEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     playerId: UUID,
     mainHand: Option[Item],
     offHand: Option[Item],
@@ -115,7 +115,7 @@ case class EntityPreInteractEvent(
 
 case class EntityInteractEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     playerId: UUID,
     mainHand: Option[Item],
     offHand: Option[Item],
@@ -126,7 +126,7 @@ case class EntityInteractEvent(
 // TEAM
 case class EntityTeamChangedEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     previousTeam: Option[Team],
     newTeam: Option[Team]
 ) extends EntityEvent
@@ -135,7 +135,7 @@ case class EntityTeamChangedEvent(
 // PATHFIND
 case class EntityPrePathfindEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     targetLocation: Option[Location],
     targetEntity: Option[UUID],
     cancelled: Boolean = false,
@@ -145,7 +145,7 @@ case class EntityPrePathfindEvent(
 
 case class EntityPathfindEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     targetLocation: Option[Location],
     targetEntity: Option[UUID]
 ) extends EntityEvent
@@ -154,7 +154,7 @@ case class EntityPathfindEvent(
 // SPAWN
 case class EntityPreSpawnEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
@@ -163,28 +163,28 @@ case class EntityPreSpawnEvent(
 
 case class EntitySpawnEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     location: Location
 ) extends EntityEvent
     with Event
 
 case class EntityPreDespawnEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     location: Location
 ) extends EntityEvent
     with Event
 
 case class EntityDespawnEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     location: Location
 ) extends EntityEvent
     with Event
 
 case class EntityPreRespawnEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
@@ -193,7 +193,7 @@ case class EntityPreRespawnEvent(
 
 case class EntityRespawnEvent(
     entityId: UUID,
-    entityType: EntityType,
+    entityType: Entity.Type,
     location: Location
 ) extends EntityEvent
     with Event
