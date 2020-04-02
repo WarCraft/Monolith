@@ -48,6 +48,7 @@ class PlayerDataService(
           )
       }
     }
+    // TODO if team has changed fire event
   }
 
   def updatePlayerData(id: UUID): Unit = {
