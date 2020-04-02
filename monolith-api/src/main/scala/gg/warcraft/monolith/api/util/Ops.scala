@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.util
 import gg.warcraft.monolith.api.core.task.TaskService
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 object Ops {
   @inline implicit final class ChainingOps[A](private val self: A) extends AnyVal {
@@ -24,6 +24,15 @@ object Ops {
     ): Unit = self.value match {
       case Some(result) => result |> f
       case _            => self onComplete (it => taskService runNextTick (it |> f))
+    }
+
+    def getOrThrow: T = self.value match {
+      case Some(result) =>
+        result match {
+          case Success(value)     => value
+          case Failure(exception) => throw exception
+        }
+      case None => throw new IllegalStateException
     }
   }
 }
