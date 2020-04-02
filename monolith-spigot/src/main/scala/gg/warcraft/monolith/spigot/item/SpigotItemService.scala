@@ -42,7 +42,7 @@ class SpigotItemService(
       case it: ItemType    => typeMapper.map(it)
       case it: ItemVariant => variantMapper.map(it)
     }
-    val item = new SpigotItemStack(material)
+    val item = new SpigotItem(material)
     itemMapper.map(item).get
   }
 

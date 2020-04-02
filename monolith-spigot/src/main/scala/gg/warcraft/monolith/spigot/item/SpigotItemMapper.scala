@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin
 import scala.jdk.CollectionConverters._
 
 private object SpigotItemMapper {
-  private final val cache: util.EnumMap[Material, SpigotItemStack => Option[Item]] =
+  private final val cache: util.EnumMap[Material, SpigotItem => Option[Item]] =
     new util.EnumMap(classOf[Material])
 }
 
@@ -26,17 +26,17 @@ class SpigotItemMapper(
 ) {
   private val itemNameKey = new NamespacedKey(plugin, "canonicalDisplayName")
 
-  def map(item: SpigotItemStack): Option[Item] = {
+  def map(item: SpigotItem): Option[Item] = {
     if (item == null) return None
     val builder = SpigotItemMapper.cache.computeIfAbsent(item.getType, compute)
     builder.apply(item)
   }
 
-  private def compute(material: Material): SpigotItemStack => Option[Item] = {
+  private def compute(material: Material): SpigotItem => Option[Item] = {
     if (material.name.endsWith("AIR")) return _ => None
 
     // Compute common item data TODO map default name and item attributes
-    val name = (item: SpigotItemStack) => {
+    val name                            = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) {
         val data = meta.getPersistentDataContainer
@@ -45,52 +45,52 @@ class SpigotItemMapper(
         } else meta.getDisplayName
       } else ""
     }
-    val tt: SpigotItemStack => List[String] = (item: SpigotItemStack) => {
+    val tt: SpigotItem => List[String]  = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null && meta.getLore != null) meta.getLore.asScala.toList
       else List.empty
     }
-    val attr: SpigotItemStack => Set[String] = (item: SpigotItemStack) => {
+    val attr: SpigotItem => Set[String] = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) Set.empty else Set.empty
     }
-    val hAttr = (item: SpigotItemStack) => {
+    val hAttr                           = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES) else false
     }
 
     // Lazily compute generic item data
-    lazy val count = (item: SpigotItemStack) => item.getAmount
-    lazy val dura = (item: SpigotItemStack) => {
+    lazy val count = (item: SpigotItem) => item.getAmount
+    lazy val dura = (item: SpigotItem) => {
       val meta = item.getItemMeta
       val damage = if (meta != null) meta.asInstanceOf[Damageable].getDamage else 0
       item.getType.getMaxDurability - damage
     }
-    lazy val unbr = (item: SpigotItemStack) => {
+    lazy val unbr = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) meta.isUnbreakable else false
     }
-    lazy val hUnbr = (item: SpigotItemStack) => {
+    lazy val hUnbr = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_UNBREAKABLE) else false
     }
-    def variant[T <: ItemVariant](item: SpigotItemStack): T =
+    def variant[T <: ItemVariant](item: SpigotItem): T =
       variantMapper.map(item.getType).asInstanceOf[T]
 
     // Lazily construct tuples for all the different types of parameter sets
-    lazy val p = (item: SpigotItemStack) => // default params tuple builder
+    lazy val p = (item: SpigotItem) => // default params tuple builder
       (name(item), tt(item), count(item), attr(item), hAttr(item))
-    lazy val s = (item: SpigotItemStack) => // singleton params tuple builder
+    lazy val s = (item: SpigotItem) => // singleton params tuple builder
       (name(item), tt(item), attr(item), hAttr(item))
-    lazy val d = (i: SpigotItemStack) => // durable params tuple builder
+    lazy val d = (i: SpigotItem) => // durable params tuple builder
       (name(i), tt(i), attr(i), hAttr(i), dura(i), unbr(i), hUnbr(i))
-    def v[T <: ItemVariant](i: SpigotItemStack) = // variable params tuple builder
+    def v[T <: ItemVariant](i: SpigotItem) = // variable params tuple builder
     (variant[T](i), name(i), tt(i), count(i), attr(i), hAttr(i))
-    def e[T <: ItemVariant](i: SpigotItemStack) = // equipment params tuple builder
+    def e[T <: ItemVariant](i: SpigotItem) = // equipment params tuple builder
     (variant[T](i), name(i), tt(i), attr(i), hAttr(i), dura(i), unbr(i), hUnbr(i))
 
     // Map item builder
-    val builder: SpigotItemStack => Item = material match {
+    val builder: SpigotItem => Item = material match {
       case Material.APPLE                  => (i => Apple.tupled(p(i)))
       case Material.ARMOR_STAND            => (i => ArmorStand.tupled(p(i)))
       case Material.BAMBOO                 => (i => Bamboo.tupled(p(i)))
@@ -446,11 +446,11 @@ class SpigotItemMapper(
         (item => WeightedPressurePlate.tupled(v[WeightedPressurePlateVariant](item)))
     }
 
-    (item: SpigotItemStack) => Option(builder.apply(item))
+    (item: SpigotItem) => Option(builder.apply(item))
   }
 
-  def map(item: Item): SpigotItemStack = {
-    if (item == null) return new SpigotItemStack(Material.AIR)
+  def map(item: Item): SpigotItem = {
+    if (item == null) return new SpigotItem(Material.AIR)
 
     val material = item match {
       case it: VariableItem[_] => variantMapper.map(it)
@@ -470,7 +470,7 @@ class SpigotItemMapper(
       case it => typeMapper.map(it.`type`)
     }
 
-    val spigotItem = new SpigotItemStack(material)
+    val spigotItem = new SpigotItem(material)
 
     // Update stack size
     item match {

@@ -7,8 +7,8 @@ import org.bukkit.inventory.{Inventory, ItemStack}
 package object item {
   type SpigotEntity = Entity
 
-  type SpigotItem = Item
-  type SpigotItemStack = ItemStack
+  type SpigotDrop = Item
+  type SpigotItem = ItemStack
   type SpigotItemInventory = Inventory
   type SpigotItemPickupEvent = EntityPickupItemEvent
 }

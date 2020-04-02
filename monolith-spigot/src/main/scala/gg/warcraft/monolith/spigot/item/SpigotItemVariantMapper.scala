@@ -22,7 +22,7 @@ class SpigotItemVariantMapper(
   def map(material: Material): ItemVariant =
     SpigotItemVariantMapper.materialCache.computeIfAbsent(material, compute)
 
-  def map(item: SpigotItemStack): ItemVariant =
+  def map(item: SpigotItem): ItemVariant =
     map(item.getType)
 
   def map(variant: ItemVariant): Material =

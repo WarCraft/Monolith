@@ -3,8 +3,8 @@ package gg.warcraft.monolith.spigot.item
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.EntityType
-import gg.warcraft.monolith.api.item.{Item, ItemPickupEvent, ItemPrePickupEvent}
+import gg.warcraft.monolith.api.entity.Entity
+import gg.warcraft.monolith.api.item.Item
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotItemEventMapper(
@@ -12,13 +12,13 @@ class SpigotItemEventMapper(
     implicit private val itemMapper: SpigotItemMapper
 ) extends Listener {
   private def parse(
-      item: SpigotItem,
+      item: SpigotDrop,
       entity: SpigotEntity
-  ): (UUID, Item, UUID, EntityType) = (
+  ): (UUID, Item, UUID, Entity.Type) = (
     item.getUniqueId,
     itemMapper.map(item.getItemStack).get,
     entity.getUniqueId,
-    EntityType.valueOf(entity.getType.name)
+    Entity.Type.withName(entity.getType.name)
   )
 
   @EventHandler(priority = EventPriority.HIGH)
