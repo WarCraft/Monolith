@@ -101,6 +101,9 @@ class SpigotEntityService(
   override def healEntity(id: UUID, amount: CombatValue): Unit = {}
 
   override def burnEntity(id: UUID, duration: Duration): Unit = {
-    (server getEntity id) ?? { _ setFireTicks duration.inTicks }
+    (server getEntity id) ?? { it =>
+      val updatedFireTicks = it.getFireTicks + duration.inTicks
+      it setFireTicks updatedFireTicks
+    }
   }
 }
