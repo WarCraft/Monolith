@@ -3,13 +3,12 @@ package gg.warcraft.monolith.api.core.auth
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.Message
-import gg.warcraft.monolith.api.item.ItemType
+import gg.warcraft.monolith.api.entity.Equipment
 
 trait Principal {
-  val name: String
-  val playerId: Option[UUID]
-  val offhand: Option[ItemType]
-  def isConsole: Boolean
+  val principalId: Option[UUID]
+  def name: String
+  def equipment: Equipment
   def hasPermission(permission: String): Boolean
   def sendMessage(message: Message): Unit
 }
