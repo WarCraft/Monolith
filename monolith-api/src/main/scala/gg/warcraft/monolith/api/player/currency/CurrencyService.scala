@@ -114,7 +114,7 @@ class CurrencyService(
           s"""Failed to add $amount ${currency mkString ", "} to $playerId
              |${exception.getMessage}""".stripMargin
         }
-      case _ =>
+      case _ => // TODO fire currency events
     }
   }
 
@@ -128,7 +128,7 @@ class CurrencyService(
           s"""Failed to remove $amount ${currency mkString ", "} from $playerId
              |${exception.getMessage}""".stripMargin
         }
-      case _ =>
+      case _ => // TODO fire currency events
     }
   }
 
@@ -142,7 +142,7 @@ class CurrencyService(
           s"""Failed to revoke $amount ${currency mkString ", "} from $playerId
              |${exception.getMessage}""".stripMargin
         }
-      case _ =>
+      case _ => // TODO fire currency events
     }
   }
 }

@@ -5,7 +5,7 @@ import java.util.UUID
 private case class Statistic(
     playerId: UUID,
     statistic: String,
-    value: Int = 0
+    value: Long = 0
 ) {
-  def increase(amount: Int): Statistic = copy(value = value + amount)
+  def increase(amount: Long): Statistic = copy(value = value + amount)
 }

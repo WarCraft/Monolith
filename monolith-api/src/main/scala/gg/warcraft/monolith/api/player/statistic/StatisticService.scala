@@ -52,7 +52,7 @@ class StatisticService(
   private def updateStatistics(
       playerId: UUID,
       currencies: Map[String, Statistic],
-      amount: Int,
+      amount: Long,
       currency: String*
   ): Map[String, Statistic] = currency.map { it =>
     it -> (currencies get it match {
@@ -64,7 +64,7 @@ class StatisticService(
   /** Increases a player's statistic by amount. Statistics are permanent, for daily
     * or weekly statistics that need to be reset append the statistic's name with a
     * unique identifier. */
-  def increaseStatistic(playerId: UUID, amount: Int, statistic: String*): Unit = {
+  def increaseStatistic(playerId: UUID, amount: Long, statistic: String*): Unit = {
     var updated: Map[String, Statistic] = Map.empty
 
     statistics.updateWith(playerId) {
@@ -91,5 +91,7 @@ class StatisticService(
         }
       }
     }
+
+    // TODO fire statistic events
   }
 }
