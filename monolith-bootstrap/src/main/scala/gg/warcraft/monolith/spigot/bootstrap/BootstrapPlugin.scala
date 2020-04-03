@@ -17,14 +17,14 @@ class BootstrapPlugin extends JavaPlugin with Listener {
   private var config: List[String] = Nil
 
   private def enable(plugin: String): Unit = {
-    val libs = getDataFolder.toPath.resolve("lib") // TODO fix
-    val jar = libs.toFile.listFiles((_, name) => name.startsWith(plugin))(0)
+    val libs = getDataFolder.toPath resolve "lib" // TODO fix
+    val jar = libs.toFile.listFiles((_, name) => name startsWith plugin).head
     manager.loadPlugin(jar)
   }
 
   private def disable(plugin: String): Unit = {
-    val instance = manager.getPlugin(plugin)
-    manager.disablePlugin(instance, true)
+    val instance = manager getPlugin plugin
+    manager disablePlugin (instance, true)
   }
 
   private def enableAll(): Unit = {
@@ -50,7 +50,7 @@ class BootstrapPlugin extends JavaPlugin with Listener {
 
   override def reloadConfig(): Unit = {
     super.reloadConfig()
-    config = parser.parse(getConfig.saveToString()) match {
+    config = parser parse getConfig.saveToString() match {
       case Left(err) => getLogger severe err.getMessage; Nil
       case Right(json) =>
         json.as[List[String]] match {
@@ -62,11 +62,11 @@ class BootstrapPlugin extends JavaPlugin with Listener {
 
   override def onLoad(): Unit = {
     saveDefaultConfig()
-    getServer.getPluginManager.registerEvents(this, this)
+    getServer.getPluginManager registerEvents (this, this)
     new BukkitRunnable {
       override def run(): Unit =
-        HandlerList.unregisterAll(this.asInstanceOf[Listener])
-    }.runTaskLater(this, 1)
+        HandlerList unregisterAll this.asInstanceOf[Listener]
+    } runTaskLater (this, 1)
   }
 
   override def onEnable(): Unit = {
