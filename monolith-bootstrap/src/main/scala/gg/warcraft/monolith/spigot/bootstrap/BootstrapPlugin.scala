@@ -2,9 +2,12 @@ package gg.warcraft.monolith.spigot.bootstrap
 
 import io.circe.yaml.parser
 import org.bukkit.command.{Command, CommandSender, ConsoleCommandSender}
+import org.bukkit.event.{EventHandler, EventPriority, HandlerList, Listener}
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitRunnable
 
-class BootstrapPlugin extends JavaPlugin {
+class BootstrapPlugin extends JavaPlugin with Listener {
   private final val MONOLITH = "monolith"
   private final val CMD_RELOAD_MISSING_ARGS = ""
   private final val CMD_RELOAD_MALFORMED_ARGS = ""
@@ -57,11 +60,18 @@ class BootstrapPlugin extends JavaPlugin {
     }
   }
 
-  override def onLoad(): Unit = saveDefaultConfig()
+  override def onLoad(): Unit = {
+    saveDefaultConfig()
+    getServer.getPluginManager.registerEvents(this, this)
+    new BukkitRunnable {
+      override def run(): Unit =
+        HandlerList.unregisterAll(this.asInstanceOf[Listener])
+    }.runTaskLater(this, 1)
+  }
 
   override def onEnable(): Unit = {
     reloadConfig()
-    enableAll()
+    enableAll() // TODO is this necessary on startup?
   }
 
   override def onCommand(
@@ -85,5 +95,10 @@ class BootstrapPlugin extends JavaPlugin {
     case it :: Nil if config contains it => reload(it)
     case Nil                             => sender sendMessage CMD_RELOAD_MISSING_ARGS
     case _                               => sender sendMessage CMD_RELOAD_MALFORMED_ARGS
+  }
+
+  @EventHandler(priority = EventPriority.LOWEST)
+  def onPlayerPreConnect(event: AsyncPlayerPreLoginEvent): Unit = {
+    event disallow (AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "The server is still starting...")
   }
 }

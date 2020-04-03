@@ -1,0 +1,9 @@
+name: "WarCraft_Bootstrap"
+version: "15.0.0-SNAPSHOT"
+api-version: "1.15"
+
+author: fishb6nes
+website: http://warcraft.gg
+
+main: gg.warcraft.monolith.spigot.bootstrap.BootstrapPlugin
+load: STARTUP
