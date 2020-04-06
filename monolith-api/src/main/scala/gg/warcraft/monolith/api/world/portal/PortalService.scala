@@ -1,18 +1,12 @@
 package gg.warcraft.monolith.api.world.portal
 
 import gg.warcraft.monolith.api.core.Cancellable
-import gg.warcraft.monolith.api.entity.{Entity, EntityType}
-import gg.warcraft.monolith.api.entity.service.{
-  EntityCommandService, EntityQueryService
-}
+import gg.warcraft.monolith.api.entity.{Entity, EntityService}
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.Location
 
-import scala.jdk.CollectionConverters._
-
 class PortalService(
-    implicit entityQueryService: EntityQueryService,
-    entityCommandService: EntityCommandService
+    implicit entityService: EntityService
 ) {
   private final val TELEPORT_RADIUS = 1
 
@@ -43,15 +37,14 @@ class PortalService(
 
   private[portal] def tick(portal: Portal): Unit = {
     import portal._
-    entityQueryService
+    entityService
       .getNearbyEntities(entryLocation, TELEPORT_RADIUS)
-      .asScala
-      .filter { _.getType == EntityType.PLAYER }
+      .filter { _.typed == Entity.Type.PLAYER }
       .filter { predicate.apply }
       .foreach { it =>
         if (exitOrientation == null)
-          entityCommandService.teleport(it.getId, exitLocation)
-        else entityCommandService.teleport(it.getId, exitLocation, exitOrientation)
+          entityService teleportEntity (it.id, exitLocation)
+        else entityService teleportEntity (it.id, exitLocation, exitOrientation)
       }
   }
 }

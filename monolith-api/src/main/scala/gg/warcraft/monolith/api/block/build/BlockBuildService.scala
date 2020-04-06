@@ -74,7 +74,7 @@ class BlockBuildService(
       // FIXME
       var nextSign = sign getRelative BlockFace.valueOf(nextDirection.name())
       while (nextSign.head.`type` == BlockType.SIGN) {
-        extraSigns ::= nextSign.head
+        extraSigns ::= nextSign.head.asInstanceOf[Sign]
         // FIXME
         nextSign = nextSign.head getRelative BlockFace.valueOf(nextDirection.name())
       }

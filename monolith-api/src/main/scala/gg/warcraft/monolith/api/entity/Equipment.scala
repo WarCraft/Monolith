@@ -20,7 +20,7 @@ case class Equipment(
       .filter { _.isDefined }
       .map { _.get }
 
-  def get(slot: Equipment.Slot): Option[Item] = {
+  def get(slot: Equipment.Slot): Option[Item] = slot match {
     case Equipment.HEAD      => head
     case Equipment.CHEST     => chest
     case Equipment.LEGS      => legs

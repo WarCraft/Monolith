@@ -11,11 +11,17 @@ class AuthService {
   var debuggingItem: ItemType = _
   var moderatingItem: ItemType = _
 
+  private def hasOffHand(principal: Principal, offHand: ItemType): Boolean =
+    principal.equipment.offHand match {
+      case Some(item) => item.`type` == offHand
+      case None       => false
+    }
+
   def isDev(principal: Principal): Boolean =
     principal hasPermission devPermission
 
   def isDebugging(principal: Principal): Boolean =
-    isDev(principal) && (principal.offhand contains debuggingItem)
+    isDev(principal) && hasOffHand(principal, debuggingItem)
 
   def isStaff(principal: Principal): Boolean =
     principal hasPermission staffPermission
@@ -27,7 +33,7 @@ class AuthService {
     principal hasPermission adminPermission
 
   def isModerating(principal: Principal): Boolean =
-    isMod(principal) && (principal.offhand contains moderatingItem)
+    isMod(principal) && hasOffHand(principal, moderatingItem)
 
   def readConfig(config: MonolithConfig): Unit = {
     devPermission = config.devPermission

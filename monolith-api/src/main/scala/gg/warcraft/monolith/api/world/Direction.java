@@ -19,7 +19,7 @@ public enum Direction {
         }
     }
 
-    int getRotation(Direction to) {
+    public int getRotation(Direction to) {
         int fromOrdinal = ordinal();
         int toOrdinal = to.ordinal();
         int ordinalDiff = toOrdinal - fromOrdinal;
@@ -27,7 +27,7 @@ public enum Direction {
         return ordinalDiff * 90;
     }
 
-    Direction rotate(int rotation) {
+    public Direction rotate(int rotation) {
         if (rotation % 90 != 0) {
             throw new IllegalArgumentException("Illegal rotation of " + rotation + ", needs to be a multiple of 90");
         }

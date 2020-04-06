@@ -8,10 +8,10 @@ class DebuggingHandler(
     authService: AuthService,
     entityService: EntityService
 ) extends Event.Handler {
-  override def handle(event: Event): Unit = {
+  override def handle(event: Event): Unit = event match {
     case event: EntityInteractEvent =>
-      if (authService.isDebugging(event.player))
-        entityService.removeEntity(event.entity)
+      if (authService.isDebugging(event.playerId))
+        entityService.removeEntity(event.entityId)
     case _ =>
   }
 }
