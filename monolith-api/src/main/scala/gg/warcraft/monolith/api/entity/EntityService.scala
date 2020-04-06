@@ -28,18 +28,22 @@ trait EntityService {
       typed: Entity.Type,
       location: Location,
       team: Option[Team] = None
-  ): Unit
+  ): UUID
   def removeEntity(id: UUID): Unit
   def killEntity(id: UUID): Unit
 
   def burnEntity(id: UUID, duration: Duration): Unit
   def damageEntity(id: UUID, amount: CombatValue): Unit
   def healEntity(id: UUID, amount: CombatValue): Unit
-  def teleportEntity(id: UUID, location: Location, dir: Vector3f = Vector3f()): Unit
+  def teleportEntity(
+      id: UUID,
+      location: Location,
+      direction: Vector3f = null
+  ): Unit
 
   def heavyEntity(id: UUID, duration: Duration): Unit = {
     getEntity(id) match {
-        /*
+      /*
         private Block findBlockUnderFeet(Entity entity) {
         Block current = worldService.getBlock(Location.toBlockLocation(entity.getLocation()));
         while (!current.solid() && current.location().y() >= 0) {
@@ -47,7 +51,7 @@ trait EntityService {
         }
         return current;
     }
-         */
+       */
       case Some(entity) =>
 //        Block targetBlock = findBlockUnderFeet(entity);
 //        int safeY = targetBlock.location().y() + 1;
