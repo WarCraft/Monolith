@@ -3,59 +3,88 @@ package gg.warcraft.monolith.api.effect
 import gg.warcraft.monolith.api.world.Location
 
 object Particle extends Enumeration {
-  private[monolith] var adapter: ParticleAdapter = _
-
   type Type = Value
+
   implicit def toVal(v: Value): Val = v.asInstanceOf[Val]
   implicit def toParticle(v: Value): Particle = v.asInstanceOf[Particle]
+
   protected case class Val() extends super.Val with Particle {
-    override def display(location: Location): Unit =
-      Particle.adapter.display(this, location)
-    def color(color: ParticleColor): Particle =
-      new ColorParticle(this, color)
-    def speed(speed: Float, amount: Int): Particle =
-      new SpeedParticle(this, speed, amount)
+    override def display(location: Location)(
+        implicit adapter: ParticleAdapter
+    ): Unit = adapter.display(this, location)
+
+    def color(color: Particle.Color)(
+        implicit adapter: ParticleAdapter
+    ): Particle = new ColorParticle(this, color)
+
+    def speed(speed: Float, amount: Int)(
+        implicit adapter: ParticleAdapter
+    ): Particle = new SpeedParticle(this, speed, amount)
   }
 
   val BARRIER, BLOCK_CRACK, BLOCK_DUST, BUBBLE_COLUMN_UP, BUBBLE_POP,
-  CAMPFIRE_COSY_SMOKE, CAMPFIRE_SIGNAL_SMOKE, CLOUD, COMPOSTER, CRIT, CRIT_MAGIC,
-  CURRENT_DOWN, DAMAGE_INDICATOR, DOLPHIN, DRAGON_BREATH, DRIP_LAVA, DRIP_WATER,
-  DRIPPING_HONEY, ENCHANTMENT_TABLE, END_ROD, EXPLOSION_HUGE, EXPLOSION_LARGE,
-  EXPLOSION_NORMAL, FALLING_DUST, FALLING_HONEY, FALLING_LAVA, FALLING_NECTAR,
-  FALLING_WATER, FIREWORKS_SPARK, FLAME, FLASH, HEART, ITEM_CRACK, LANDING_HONEY,
-  LANDING_LAVA, LAVA, LEGACY_BLOCK_CRACK, LEGACY_BLOCK_DUST, LEGACY_FALLING_DUST,
-  MOB_APPEARANCE, NAUTILUS, NOTE, PORTAL, REDSTONE, SLIME, SMOKE_LARGE,
-  SMOKE_NORMAL, SNEEZE, SNOW_SHOVEL, SNOWBALL, SPELL, SPELL_INSTANT, SPELL_MOB,
-  SPELL_MOB_AMBIENT, SPELL_WITCH, SPIT, SQUID_INK, SUSPENDED, SUSPENDED_DEPTH,
-  SWEEP_ATTACK, TOTEM, TOWN_AURA, VILLAGER_ANGRY, VILLAGER_HAPPY, WATER_BUBBLE,
-  WATER_DROP, WATER_SPLASH, WATER_WAKE = Val
+      CAMPFIRE_COSY_SMOKE, CAMPFIRE_SIGNAL_SMOKE, CLOUD, COMPOSTER, CRIT, CRIT_MAGIC,
+      CURRENT_DOWN, DAMAGE_INDICATOR, DOLPHIN, DRAGON_BREATH, DRIP_LAVA, DRIP_WATER,
+      DRIPPING_HONEY, ENCHANTMENT_TABLE, END_ROD, EXPLOSION_HUGE, EXPLOSION_LARGE,
+      EXPLOSION_NORMAL, FALLING_DUST, FALLING_HONEY, FALLING_LAVA, FALLING_NECTAR,
+      FALLING_WATER, FIREWORKS_SPARK, FLAME, FLASH, HEART, ITEM_CRACK, LANDING_HONEY,
+      LANDING_LAVA, LAVA, LEGACY_BLOCK_CRACK, LEGACY_BLOCK_DUST, LEGACY_FALLING_DUST,
+      MOB_APPEARANCE, NAUTILUS, NOTE, PORTAL, REDSTONE, SLIME, SMOKE_LARGE,
+      SMOKE_NORMAL, SNEEZE, SNOW_SHOVEL, SNOWBALL, SPELL, SPELL_INSTANT, SPELL_MOB,
+      SPELL_MOB_AMBIENT, SPELL_WITCH, SPIT, SQUID_INK, SUSPENDED, SUSPENDED_DEPTH,
+      SWEEP_ATTACK, TOTEM, TOWN_AURA, VILLAGER_ANGRY, VILLAGER_HAPPY, WATER_BUBBLE,
+      WATER_DROP, WATER_SPLASH, WATER_WAKE = Val
+
+  type Color = Color.Value
+  object Color extends Enumeration {
+    val AQUA, BLACK, BLUE, FUCHSIA, GRAY, GREEN, LIME, MAROON, NAVY, OLIVE, ORANGE,
+        PURPLE, RED, SILVER, TEAL, WHITE, YELLOW = Value
+  }
 }
 
 sealed trait Particle {
-  def display(location: Location): Unit
-  def multi(particles: Particle*): Particle = new MultiParticle(particles: _*)
+  def display(location: Location)(
+      implicit adapter: ParticleAdapter
+  ): Unit
+
+  def multi(particles: Particle*)(
+      implicit adapter: ParticleAdapter
+  ): Particle = new MultiParticle(particles: _*)
 }
 
 private class ColorParticle(
     particle: Particle.Type,
-    color: ParticleColor
+    color: Particle.Color
+)(
+    implicit adapter: ParticleAdapter
 ) extends Particle {
-  override def display(location: Location): Unit =
-    Particle.adapter.display(particle, location, color)
+  override def display(location: Location)(
+      implicit adapter: ParticleAdapter
+  ): Unit =
+    adapter.display(particle, location, color)
 }
 
 private class SpeedParticle(
     particle: Particle.Type,
     speed: Float,
     amount: Int
+)(
+    implicit adapter: ParticleAdapter
 ) extends Particle {
-  override def display(location: Location): Unit =
-    Particle.adapter.display(particle, location, speed, amount)
+  override def display(location: Location)(
+      implicit adapter: ParticleAdapter
+  ): Unit =
+    adapter.display(particle, location, speed, amount)
 }
 
-private class MultiParticle(particles: Particle*) extends Particle {
+private class MultiParticle(particles: Particle*)(
+    implicit adapter: ParticleAdapter
+) extends Particle {
   private var iterator = particles.iterator
-  override def display(location: Location): Unit = {
+
+  override def display(location: Location)(
+      implicit adapter: ParticleAdapter
+  ): Unit = {
     if (!iterator.hasNext) iterator = particles.iterator
     if (iterator.hasNext) iterator.next display location
   }

@@ -11,7 +11,7 @@ trait ParticleAdapter {
   def display(
       particle: Particle.Type,
       location: Location,
-      color: ParticleColor
+      color: Particle.Color
   ): Unit
 
   def display(

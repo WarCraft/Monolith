@@ -1,10 +1,9 @@
 package gg.warcraft.monolith.spigot.effect
 
-import gg.warcraft.monolith.api.effect.{ParticleAdapter, ParticleColor}
-import gg.warcraft.monolith.api.effect.Particle.Type
+import gg.warcraft.monolith.api.effect.{Particle, ParticleAdapter}
 import gg.warcraft.monolith.api.world.Location
+import gg.warcraft.monolith.spigot.player.SpigotPlayer
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import gg.warcraft.monolith.spigot.SpigotPlayer
 import org.bukkit.Server
 
 import scala.jdk.CollectionConverters._
@@ -17,7 +16,7 @@ class SpigotParticleAdapter(
   private final val playerType = classOf[SpigotPlayer]
   private final val zeroOffset = 0.0
 
-  override def display(particle: Type, location: Location): Unit = {
+  override def display(particle: Particle.Type, location: Location): Unit = {
     val spigotLocation = locationMapper map location
     val spigotParticle = particleMapper map particle
     spigotLocation
@@ -27,9 +26,9 @@ class SpigotParticleAdapter(
   }
 
   override def display(
-      particle: Type,
+      particle: Particle.Type,
       location: Location,
-      color: ParticleColor
+      color: Particle.Color
   ): Unit = {
     val spigotLocation = locationMapper map location
     val spigotParticle = particleMapper map particle
@@ -41,7 +40,7 @@ class SpigotParticleAdapter(
   }
 
   override def display(
-      particle: Type,
+      particle: Particle.Type,
       location: Location,
       speed: Float,
       amount: Int
