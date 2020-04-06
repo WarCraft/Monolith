@@ -44,19 +44,6 @@ lazy val api = (project in file("monolith-api"))
     )
   )
 
-lazy val app = (project in file("monolith-app"))
-  .settings(
-    name := "monolith-app",
-    commonSettings,
-    libraryDependencies ++= commonDependencies ++ Seq(
-      "com.fasterxml.jackson.core" % "jackson-core" % "2.10.0",
-      "com.fasterxml.jackson.dataformat" % "jackson-dataformat-yaml" % "2.10.0",
-      "org.kohsuke" % "github-api" % "1.95",
-      "redis.clients" % "jedis" % "3.1.0"
-    )
-  )
-  .dependsOn(api)
-
 lazy val java = (project in file("monolith-java"))
   .settings(
     name := "monolith-java",
@@ -77,7 +64,7 @@ lazy val spigot = (project in file("monolith-spigot"))
       "com.destroystokyo.paper" % "paper-api" % "1.15.2-R0.1-SNAPSHOT" % Provided
     )
   )
-  .dependsOn(app)
+  .dependsOn(api)
 
 lazy val bootstrap = (project in file("monolith-bootstrap"))
   .settings(
