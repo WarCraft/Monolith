@@ -46,7 +46,7 @@ class CurrencyService(
             .iterator
             .map(it => it.currency -> it)
             .toMap
-            .pipe { Currencies.apply }
+            .pipe { new Currencies(_) }
         }
     }
   }
@@ -75,9 +75,7 @@ class CurrencyService(
       case Some(currencies) =>
         current = currencies.currencies
         updated = updateCurrencies(playerId, current, f, currency: _*)
-        currencies
-          .copy(currencies = currencies.currencies ++ updated)
-          .pipe { Some.apply }
+        new Currencies(currencies.currencies ++ updated) |> Some.apply
       case None =>
         updated = updateCurrencies(playerId, Map.empty, f, currency: _*)
         None

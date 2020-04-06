@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.util.Ops._
 import io.getquill.context.jdbc.JdbcContext
 
 import scala.collection.concurrent.{Map => ConcurrentMap}
@@ -44,18 +45,18 @@ class StatisticService(
             .iterator
             .map(it => it.statistic -> it)
             .toMap
-            .pipe { Statistics.apply }
+            .pipe { new Statistics(_) }
         }
     }
   }
 
   private def updateStatistics(
       playerId: UUID,
-      currencies: Map[String, Statistic],
+      statistics: Map[String, Statistic],
       amount: Long,
-      currency: String*
-  ): Map[String, Statistic] = currency.map { it =>
-    it -> (currencies get it match {
+      statistic: String*
+  ): Map[String, Statistic] = statistic.map { it =>
+    it -> (statistics get it match {
       case Some(it) => it increase amount
       case None     => Statistic(playerId, it) increase amount
     })
@@ -71,9 +72,7 @@ class StatisticService(
       case Some(statistics) =>
         val current = statistics.statistics
         updated = updateStatistics(playerId, current, amount, statistic: _*)
-        statistics
-          .copy(statistics = statistics.statistics ++ updated)
-          .pipe { Some.apply }
+        new Statistics(statistics.statistics ++ updated) |> Some.apply
       case None =>
         updated = updateStatistics(playerId, Map.empty, amount, statistic: _*)
         None
