@@ -3,12 +3,12 @@ package gg.warcraft.monolith.spigot.block.backup
 import java.util.UUID
 import java.util.logging.Logger
 
-import com.typesafe.config.Config
 import gg.warcraft.monolith.api.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.api.world.{BlockLocation, World}
 import gg.warcraft.monolith.spigot.Codecs.Quill
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import io.getquill.{MappedEncoding, SnakeCase, SqliteJdbcContext}
+import io.getquill.MappedEncoding
+import io.getquill.context.jdbc.JdbcContext
 import org.bukkit.Bukkit
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
@@ -23,18 +23,17 @@ private object SpigotBlockBackupService {
 class SpigotBlockBackupService(
     private implicit val plugin: Plugin,
     private implicit val logger: Logger,
-    private implicit val databaseConfig: Config,
+    private implicit val database: JdbcContext[_, _],
     private implicit val locationMapper: SpigotLocationMapper
 ) extends BlockBackupService {
   private implicit val asyncCtx: ExecutionContext = ExecutionContext.global
   private implicit val worldDec: MappedEncoding[String, World] = Quill.worldDec
   private implicit val worldEnc: MappedEncoding[World, String] = Quill.worldEnc
 
-  private val db = new SqliteJdbcContext(SnakeCase, databaseConfig)
   private val metaDataKey = getClass.getCanonicalName
 
   import SpigotBlockBackupService.cache
-  import db.{MappedEncoding => _, _}
+  import database.{MappedEncoding => _, _}
 
   override def createBackup(location: BlockLocation): UUID = {
     val block = locationMapper.map(location).getBlock
@@ -56,7 +55,7 @@ class SpigotBlockBackupService(
     block.setMetadata(metaDataKey, metaDataValue)
 
     // save backup
-    Future { db.run(query[BlockBackup].insert(lift(backup))) }
+    Future { database.run(query[BlockBackup].insert(lift(backup))) }
     cache.put(id, backup)
 
     id
@@ -79,7 +78,9 @@ class SpigotBlockBackupService(
 
     // delete backup
     block.removeMetadata(metaDataKey, plugin)
-    Future { db.run(query[BlockBackup].filter(_.id == lift(backup.id)).delete) }
+    Future {
+      database.run(query[BlockBackup].filter(_.id == lift(backup.id)).delete)
+    }
     cache.remove(backup.id)
 
     true
@@ -91,7 +92,7 @@ class SpigotBlockBackupService(
   }
 
   override def restoreBackups(): Unit = {
-    db.run(query[BlockBackup]).foreach(restoreBackup)
+    database.run(query[BlockBackup]).foreach(restoreBackup)
     cache.clear
   }
 }

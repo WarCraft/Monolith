@@ -9,6 +9,7 @@ import io.circe.yaml.parser
 import io.circe.Decoder
 import io.getquill.{SnakeCase, SqliteJdbcContext}
 import io.getquill.context.jdbc.JdbcContext
+import org.flywaydb.core.Flyway
 
 import scala.concurrent.ExecutionContext
 import scala.io.Source
@@ -21,19 +22,20 @@ trait MonolithPlugin {
 
   protected implicit val context: ExecutionContext = ExecutionContext.global
 
-  protected def parseConfig[A: Decoder](config: String, fallback: Boolean = true)(
+  protected def parseConfig[A: Decoder](config: String, fallback: Boolean = false)(
       implicit logger: Logger
   ): A = {
     def onError(err: io.circe.Error): A = {
       logger severe err.getMessage
       logger severe WARN_DEFAULT_CONFIG
-      val defaultConfig = Source.fromResource("config.yml")
-      if (fallback) parseConfig(defaultConfig.mkString, fallback = false)
-      else throw new IllegalStateException(ERR_CONFIG_FAILED)
+      if (fallback) {
+        val defaultConfig = Source.fromResource("config.yml")
+        parseConfig(defaultConfig.mkString)
+      } else throw new IllegalStateException(ERR_CONFIG_FAILED)
     }
 
     parser.parse(config) match {
-      case Left(err)   => onError(err)
+      case Left(err) => onError(err)
       case Right(json) =>
         json.as[A] match {
           case Left(err)     => onError(err)
@@ -51,5 +53,19 @@ trait MonolithPlugin {
     val database = new SqliteJdbcContext(SnakeCase, databaseConfig)
     databases ::= database
     database
+  }
+
+  protected def upgradeDatabase(dataFolder: File, classLoader: ClassLoader)(
+      implicit logger: Logger
+  ): Unit = {
+    val databasePath = s"${dataFolder.getAbsolutePath}database.sqlite"
+    if (new File(databasePath).exists) {
+      val flyway = Flyway
+        .configure(classLoader)
+        .dataSource(s"jdbc:sqlite:${databasePath}", null, null)
+        .load
+      val migrations = flyway.migrate()
+      logger info s"Applied $migrations new database schema migrations."
+    } else logger warning s"Failed to migrate $databasePath, it's missing."
   }
 }

@@ -4,7 +4,7 @@ import java.util.UUID
 
 import scala.collection.mutable
 
-class AttributeService {
+abstract class AttributeService {
   private final val emptyAttributes = Attributes(Set.empty)
 
   private val attributes = mutable.Map[UUID, Attributes]()

@@ -7,19 +7,21 @@ import gg.warcraft.monolith.api.core.event.EventService
 import org.bukkit.event.{HandlerList, Listener}
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.Server
+import org.bukkit.plugin.Plugin
 
-class SpigotMonolithPlugin extends JavaPlugin with MonolithPlugin {
-  protected implicit val implicitServer: Server = getServer
-  protected implicit val implicitLogger: Logger = getLogger
+abstract class SpigotMonolithPlugin extends JavaPlugin with MonolithPlugin {
+  protected implicit val server: Server = getServer
+  protected implicit val plugin: Plugin = this
+  protected implicit val logger: Logger = getLogger
 
   protected implicit val eventService: EventService =
-    new PluginEventService(Implicits.eventService)
+    new EventService.Wrapper(Implicits.eventService)
 
   override def onLoad(): Unit = saveDefaultConfig()
 
   override def onDisable(): Unit = {
     HandlerList unregisterAll this
-    eventService.asInstanceOf[PluginEventService].unsubscribeAll()
+    eventService.asInstanceOf[EventService.Wrapper].unsubscribeAll()
     databases foreach { _.close() }
   }
 

@@ -1,7 +1,6 @@
 package gg.warcraft.monolith.spigot.world
 
 import gg.warcraft.monolith.api.world.World
-import gg.warcraft.monolith.spigot.SpigotWorld
 import org.bukkit.Server
 import org.bukkit.World.{Environment => SpigotWorldType}
 

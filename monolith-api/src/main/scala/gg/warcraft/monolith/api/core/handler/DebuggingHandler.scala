@@ -2,17 +2,16 @@ package gg.warcraft.monolith.api.core.handler
 
 import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.event.Event
-import gg.warcraft.monolith.api.entity.service.EntityCommandService
-import gg.warcraft.monolith.api.entity.EntityInteractEvent
+import gg.warcraft.monolith.api.entity.{EntityInteractEvent, EntityService}
 
 class DebuggingHandler(
-    implicit authService: AuthService,
-    entityCommandService: EntityCommandService
+    authService: AuthService,
+    entityService: EntityService
 ) extends Event.Handler {
   override def handle(event: Event): Unit = {
     case event: EntityInteractEvent =>
       if (authService.isDebugging(event.player))
-        entityCommandService.removeEntity(event.entity)
+        entityService.removeEntity(event.entity)
     case _ =>
   }
 }
