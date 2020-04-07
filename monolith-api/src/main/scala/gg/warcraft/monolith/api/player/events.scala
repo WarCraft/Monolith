@@ -121,7 +121,7 @@ case class PlayerRespawnEvent(
 // STATISTICS
 case class PlayerStatisticsChangedEvent(
     playerId: UUID,
-    statistic: Statistic, // TODO make Currency and Statistic publicly available?
+    statistic: String,
     amount: Int,
     newCurrent: Int
 ) extends PlayerEvent

@@ -52,11 +52,9 @@ class StatusService(
     case _                         =>
   }
 
-  override def reduce[T <: PreEvent](event: T): T = {
-    case it: PlayerPreConnectEvent =>
-      statuses.put(it.playerId, new Status)
-      event
-    case _ =>
+  override def reduce[T <: PreEvent](event: T): T = event match {
+    case it: PlayerPreConnectEvent => statuses.put(it.playerId, new Status); event
+    case _                         => event
   }
 
   // TODO create/delete statuses for non-player Entities
