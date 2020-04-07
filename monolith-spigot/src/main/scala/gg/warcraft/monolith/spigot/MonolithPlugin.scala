@@ -56,7 +56,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService subscribe new PlayerHidingHandler(playerHidingService)
     eventService subscribe new SpigotMenuHandler(menuService)
 
-    /*
+    /* TODO
      AttributesInitializationHandler attributesInitializationHandler =
                 injector.getInstance(AttributesInitializationHandler.class);
         eventService.subscribe(attributesInitializationHandler);
