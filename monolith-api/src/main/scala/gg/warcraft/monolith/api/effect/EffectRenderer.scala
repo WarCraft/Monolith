@@ -14,7 +14,7 @@ class EffectRenderer private[effect] (particle: Particle, vectors: EffectVectors
   def render(location: Location): Unit = {
     vectors.iterator foreach { vector =>
       val translation = location add vector
-      particle.display(translation)
+      particle display translation
     }
   }
 }
@@ -27,7 +27,7 @@ private class IterativeEffectRenderer private[effect] (
 
   override def render(location: Location): Unit = {
     if (!iterator.hasNext) iterator = vectors.iterator
-    val translation = location.add(iterator.next)
-    particle.display(translation)
+    val translation = location add iterator.next
+    particle display translation
   }
 }

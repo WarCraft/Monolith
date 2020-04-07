@@ -11,7 +11,7 @@ object Particle extends Enumeration {
   protected case class Val() extends super.Val with Particle {
     override def display(location: Location)(
         implicit adapter: ParticleAdapter
-    ): Unit = adapter.display(this, location)
+    ): Unit = adapter display (this, location)
 
     def color(color: Particle.Color)(
         implicit adapter: ParticleAdapter
@@ -61,7 +61,7 @@ private class ColorParticle(
   override def display(location: Location)(
       implicit adapter: ParticleAdapter
   ): Unit =
-    adapter.display(particle, location, color)
+    adapter display (particle, location, color)
 }
 
 private class SpeedParticle(
@@ -74,7 +74,7 @@ private class SpeedParticle(
   override def display(location: Location)(
       implicit adapter: ParticleAdapter
   ): Unit =
-    adapter.display(particle, location, speed, amount)
+    adapter display (particle, location, speed, amount)
 }
 
 private class MultiParticle(particles: Particle*)(
