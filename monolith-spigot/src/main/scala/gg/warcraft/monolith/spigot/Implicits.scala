@@ -37,6 +37,7 @@ import gg.warcraft.monolith.spigot.player.{
 }
 import gg.warcraft.monolith.spigot.player.hiding.SpigotPlayerHidingService
 import gg.warcraft.monolith.spigot.world._
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
@@ -45,7 +46,7 @@ object Implicits {
   implicit var server: Server = _
   private[spigot] implicit var plugin: Plugin = _
   private[spigot] implicit var logger: Logger = _
-  private[spigot] implicit var database: JdbcContext[_, _] = _
+  private[spigot] implicit var database: JdbcContext[SqliteDialect, SnakeCase] = _
 
   // Core
   implicit lazy val authService: AuthService =

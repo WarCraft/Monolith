@@ -3,8 +3,11 @@ package gg.warcraft.monolith.api.player.data
 import java.util.UUID
 import java.util.logging.Logger
 
+import gg.warcraft.monolith.api.core.Codecs
+import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.player.statistic.StatisticService
 import gg.warcraft.monolith.api.util.Ops._
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -12,13 +15,20 @@ import scala.util.chaining._
 
 class PlayerDataService(
     implicit logger: Logger,
-    database: JdbcContext[_, _],
-    statisticService: StatisticService
+    database: JdbcContext[SqliteDialect, SnakeCase],
+    statisticService: StatisticService,
+    teamService: TeamService
 ) {
-  private implicit final val context: ExecutionContext = ExecutionContext.global
   import database._
 
-  private final val TIME_PLAYED = "TimePlayed"
+  private implicit val executionContext: ExecutionContext =
+    ExecutionContext.global
+  private implicit val teamDecoder: MappedEncoding[String, Option[Team]] =
+    Codecs.Quill.teamDecoder
+  private implicit val teamEncoder: MappedEncoding[Team, String] =
+    Codecs.Quill.teamEncoder
+  private implicit val dataInsertMeta: InsertMeta[PlayerData] =
+    insertMeta[PlayerData](_.id)
 
   private var _data: Map[UUID, PlayerData] = Map.empty
 
@@ -27,8 +37,10 @@ class PlayerDataService(
       case Some(playerData) => playerData |> Future.successful
       case None =>
         Future {
-          run { query[PlayerData].filter { _.id == lift(id) } }.headOption match {
-            case Some(playerData) => playerData
+          run {
+            query[PlayerData] filter { _.id == lift(id) }
+          }.headOption match {
+            case Some(playerData) => playerData.asInstanceOf[PlayerData]
             case None             => PlayerData(id)
           }
         }
@@ -40,7 +52,7 @@ class PlayerDataService(
     Future {
       run {
         query[PlayerData]
-          .insert { data }
+          .insert { lift(data) }
           .onConflictUpdate(_.id)(
             (it, _) => it.team -> it.team,
             (it, _) => it.timeConnected -> it.timeConnected,
@@ -56,7 +68,7 @@ class PlayerDataService(
     val oldLastSeen = data.timeLastSeen
     val newLastSeen = System.currentTimeMillis
 
-    statisticService increaseStatistic (id, newLastSeen - oldLastSeen, TIME_PLAYED)
+    statisticService increaseStatistic (id, newLastSeen - oldLastSeen, "TimePlayed")
     this setPlayerData data.copy(timeLastSeen = newLastSeen)
   }
 

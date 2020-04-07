@@ -6,6 +6,7 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.util.Ops._
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 
 import scala.collection.concurrent.{Map => ConcurrentMap}
@@ -15,7 +16,7 @@ import scala.jdk.CollectionConverters._
 import scala.util.chaining._
 
 class StatisticService(
-    implicit database: JdbcContext[_, _],
+    implicit database: JdbcContext[SqliteDialect, SnakeCase],
     logger: Logger,
     taskService: TaskService
 ) {
@@ -82,8 +83,7 @@ class StatisticService(
       database run {
         liftQuery(statistic.toList) foreach { statistic =>
           query[Statistic]
-            .filter(it => it.playerId == lift(playerId) && it.statistic == statistic)
-            .insert(updated(statistic))
+            .insert { lift(updated(statistic)) }
             .onConflictUpdate(_.playerId, _.statistic)((it, _) =>
               it.value -> (it.value + lift(amount))
             )

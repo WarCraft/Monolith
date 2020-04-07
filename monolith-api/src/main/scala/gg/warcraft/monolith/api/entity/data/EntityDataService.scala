@@ -3,16 +3,28 @@ package gg.warcraft.monolith.api.entity.data
 import java.util.UUID
 import java.util.logging.Logger
 
+import gg.warcraft.monolith.api.core.Codecs
+import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class EntityDataService(
     implicit logger: Logger,
-    database: JdbcContext[_, _]
+    database: JdbcContext[SqliteDialect, SnakeCase],
+    teamService: TeamService
 ) {
-  private implicit final val context: ExecutionContext = ExecutionContext.global
   import database._
+
+  private implicit val executionContext: ExecutionContext =
+    ExecutionContext.global
+  private implicit val teamDecoder: MappedEncoding[String, Option[Team]] =
+    Codecs.Quill.teamDecoder
+  private implicit val teamEncoder: MappedEncoding[Team, String] =
+    Codecs.Quill.teamEncoder
+  private implicit val dataInsertMeta: InsertMeta[EntityData] =
+    insertMeta[EntityData](_.id)
 
   private var _data: Map[UUID, EntityData] = Map.empty
 
@@ -28,7 +40,7 @@ class EntityDataService(
     Future {
       run {
         query[EntityData]
-          .insert { data }
+          .insert { lift(data) }
           .onConflictUpdate(_.id)((it, _) => it.team -> it.team)
       }
     }

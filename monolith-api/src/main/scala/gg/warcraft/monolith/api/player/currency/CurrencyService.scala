@@ -6,6 +6,7 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.util.Ops._
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 
 import scala.collection.concurrent.{Map => ConcurrentMap}
@@ -16,7 +17,7 @@ import scala.util.Failure
 import scala.util.chaining._
 
 class CurrencyService(
-    implicit database: JdbcContext[_, _],
+    implicit database: JdbcContext[SqliteDialect, SnakeCase],
     logger: Logger,
     taskService: TaskService
 ) {
@@ -92,8 +93,7 @@ class CurrencyService(
       database run {
         liftQuery(currency.toList) foreach { currency =>
           query[Currency]
-            .filter(it => it.playerId == lift(playerId) && it.currency == currency)
-            .insert(updated(currency))
+            .insert { lift(updated(currency)) }
             .onConflictUpdate(_.playerId, _.currency)(
               (it, _) => it.amount -> (it.amount + lift(diff(currency)._1)),
               (it, _) => it.lifetime -> (it.lifetime + lift(diff(currency)._2))
