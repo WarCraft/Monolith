@@ -14,6 +14,7 @@ import gg.warcraft.monolith.spigot.item.SpigotItemEventMapper
 import gg.warcraft.monolith.spigot.menu.SpigotMenuHandler
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world.SpigotWorldEventMapper
+import io.getquill.{SnakeCase, SqliteDialect}
 
 class MonolithPlugin extends SpigotMonolithPlugin {
   import gg.warcraft.monolith.spigot.Implicits._
@@ -23,7 +24,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     Implicits.plugin = plugin
     Implicits.logger = logger
 
-    initDatabase(getDataFolder)
+    initDatabase(SqliteDialect, SnakeCase, getDataFolder)
     upgradeDatabase(getDataFolder, getClassLoader)
 
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
