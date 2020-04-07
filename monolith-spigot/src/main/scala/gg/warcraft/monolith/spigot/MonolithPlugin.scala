@@ -3,6 +3,7 @@ package gg.warcraft.monolith.spigot
 import gg.warcraft.monolith.api.core.{Duration, MonolithConfig, ServerShutdownEvent}
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.entity.data.EntityDataHandler
+import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.player.data.{PlayerDataHandler, PlayerDataUpdater}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
 import gg.warcraft.monolith.api.util.Ops._
@@ -50,6 +51,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   private def enableHandlers(): Unit = {
     eventService subscribe new DebuggingHandler(authService, entityService)
     eventService subscribe new EntityDataHandler(entityDataService)
+    eventService subscribe new StatusHandler(statusService)
     eventService subscribe new PlayerDataHandler(playerDataService)
     eventService subscribe new PlayerHidingHandler(playerHidingService)
     eventService subscribe new SpigotMenuHandler(menuService)

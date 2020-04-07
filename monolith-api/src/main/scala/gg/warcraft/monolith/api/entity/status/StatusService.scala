@@ -2,9 +2,8 @@ package gg.warcraft.monolith.api.entity.status
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.event.{Event, EventService, PreEvent}
+import gg.warcraft.monolith.api.core.event.{Event, EventService}
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectEvent}
 
 import scala.collection.mutable
 
@@ -13,6 +12,12 @@ class StatusService(
     taskService: TaskService
 ) extends Event.Handler {
   private val statuses = mutable.Map[UUID, Status]()
+
+  private[status] def loadStatus(playerId: UUID): Unit =
+    statuses put (playerId, new Status)
+
+  private[status] def invalidateStatus(playerId: UUID): Unit =
+    statuses remove playerId
 
   def getStatus(entityId: UUID): Status =
     statuses.getOrElseUpdate(entityId, new Status)
@@ -45,16 +50,6 @@ class StatusService(
         eventService.publish(event)
       }
     }
-  }
-
-  override def handle(event: Event): Unit = event match {
-    case it: PlayerDisconnectEvent => statuses.remove(it.playerId)
-    case _                         =>
-  }
-
-  override def reduce[T <: PreEvent](event: T): T = event match {
-    case it: PlayerPreConnectEvent => statuses.put(it.playerId, new Status); event
-    case _                         => event
   }
 
   // TODO create/delete statuses for non-player Entities
