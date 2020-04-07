@@ -28,7 +28,7 @@ class PlayerDataService(
   private implicit val teamEncoder: MappedEncoding[Team, String] =
     Codecs.Quill.teamEncoder
   private implicit val dataInsertMeta: InsertMeta[PlayerData] =
-    insertMeta[PlayerData](_.id)
+    insertMeta[PlayerData]()
 
   private var _data: Map[UUID, PlayerData] = Map.empty
 
