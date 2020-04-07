@@ -9,28 +9,22 @@ class SpigotTaskService(implicit plugin: Plugin) extends TaskService {
   private final val immediately = Duration.immediately.inTicks
 
   private def schedule(
-      task: => Unit,
+      task: () => Unit,
       scheduler: BukkitRunnable => BukkitTask
   ): Task = {
-    val bukkitTask = scheduler(() => task)
+    val bukkitTask = scheduler(() => task())
     new SpigotTask(bukkitTask)
   }
 
-  override def runLater(delay: Duration, task: => Unit): Task =
-    schedule(task, _.runTaskLater(plugin, delay.inTicks))
+  override def evalLater(delay: Duration, task: => Unit): Task =
+    schedule(() => task, _.runTaskLater(plugin, delay.inTicks))
 
-  override def runAsync(task: => Unit): Task =
-    schedule(task, _.runTaskAsynchronously(plugin))
+  override def evalAsync(task: => Unit): Task =
+    schedule(() => task, _.runTaskAsynchronously(plugin))
 
-  override def runNextTick(task: => Unit): Unit =
-    runLater(Duration.oneTick, task)
-
-  override def runTask(period: Duration, task: => Unit): Task =
+  override def runTask(period: Duration, task: () => Unit): Task =
     schedule(task, _.runTaskTimer(plugin, immediately, period.inTicks))
 
-  override def runTaskAsync(period: Duration, task: => Unit): Task =
+  override def runTaskAsync(period: Duration, task: () => Unit): Task =
     schedule(task, _.runTaskTimerAsynchronously(plugin, immediately, period.inTicks))
-
-  override def runEachTick(task: => Unit): Task =
-    runTask(Duration.oneTick, task)
 }

@@ -12,7 +12,7 @@ class Effect(
     implicit taskService: TaskService
 ) extends Runnable
     with Cancellable {
-  private val task = taskService.runTask(period, run())
+  private val task = taskService.runTask(period, run)
 
   private var renderers: List[EffectRenderer] = Nil
 
@@ -31,5 +31,5 @@ class Effect(
     task.cancel()
 
   def cancel(delay: Duration): Unit =
-    taskService.runLater(delay, cancel())
+    taskService.runLater(delay, cancel)
 }

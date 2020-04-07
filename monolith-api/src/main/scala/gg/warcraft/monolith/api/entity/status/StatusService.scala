@@ -30,7 +30,7 @@ class StatusService(
         statuses.put(entityId, newStatus)
 
         effect.duration.foreach {
-          taskService.runLater(_, removeEffect(entityId, effect))
+          taskService.evalLater(_, removeEffect(entityId, effect))
         }
 
         val event = StatusEffectGainedEvent(entityId, effect)

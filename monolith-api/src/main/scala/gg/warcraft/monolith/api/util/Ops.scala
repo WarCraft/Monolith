@@ -23,7 +23,7 @@ object Ops {
         taskService: TaskService
     ): Unit = self.value match {
       case Some(result) => result |> f
-      case _            => self onComplete (it => taskService runNextTick (it |> f))
+      case _            => self onComplete (it => taskService evalNextTick (it |> f))
     }
 
     def getOrThrow: T = self.value match {
