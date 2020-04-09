@@ -7,5 +7,6 @@ private case class Statistic(
     statistic: String,
     value: Long = 0
 ) {
-  def increase(amount: Long): Statistic = copy(value = value + amount)
+  def increase(amount: Long): Statistic =
+    copy(value = value + amount)
 }

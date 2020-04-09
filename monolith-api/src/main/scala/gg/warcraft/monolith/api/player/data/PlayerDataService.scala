@@ -68,7 +68,7 @@ class PlayerDataService(
     val oldLastSeen = data.timeLastSeen
     val newLastSeen = System.currentTimeMillis
 
-    statisticService increaseStatistic (id, newLastSeen - oldLastSeen, "TimePlayed")
+    statisticService increaseStatistic ("TimePlayed", newLastSeen - oldLastSeen, id)
     this setPlayerData data.copy(timeLastSeen = newLastSeen)
   }
 

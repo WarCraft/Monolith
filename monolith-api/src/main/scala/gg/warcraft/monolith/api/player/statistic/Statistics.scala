@@ -1,8 +1,8 @@
 package gg.warcraft.monolith.api.player.statistic
 
-class Statistics(private[statistic] val statistics: Map[String, Statistic]) {
+class Statistics(private[statistic] val all: Map[String, Statistic]) {
   def get(statistic: String): Long =
-    statistics
+    all
       .get(statistic)
       .map { _.value }
       .getOrElse(0)

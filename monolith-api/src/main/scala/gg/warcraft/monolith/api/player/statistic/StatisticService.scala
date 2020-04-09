@@ -13,6 +13,7 @@ import scala.collection.concurrent.{Map => ConcurrentMap}
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.jdk.CollectionConverters._
+import scala.util.{Failure, Success}
 import scala.util.chaining._
 
 class StatisticService(
@@ -20,12 +21,15 @@ class StatisticService(
     logger: Logger,
     taskService: TaskService
 ) {
-  private final implicit val context: ExecutionContext = ExecutionContext.global
+  import database._
+
+  private implicit val executionContext: ExecutionContext =
+    ExecutionContext.global
+  private implicit val statisticInsertMeta: InsertMeta[Statistic] =
+    insertMeta[Statistic]()
 
   private val statistics: ConcurrentMap[UUID, Statistics] =
     new ConcurrentHashMap[UUID, Statistics]().asScala
-
-  import database._
 
   private[statistic] def loadStatistics(playerId: UUID): Unit =
     Await
@@ -44,53 +48,57 @@ class StatisticService(
           database
             .run { query[Statistic] filter { _.playerId == lift(playerId) } }
             .iterator
-            .map(it => it.statistic -> it)
+            .map { it => it.statistic -> it }
             .toMap
             .pipe { new Statistics(_) }
         }
     }
   }
 
-  private def updateStatistics(
-      playerId: UUID,
-      statistics: Map[String, Statistic],
-      amount: Long,
-      statistic: String*
-  ): Map[String, Statistic] = statistic.map { it =>
-    it -> (statistics get it match {
-      case Some(it) => it increase amount
-      case None     => Statistic(playerId, it) increase amount
-    })
-  }.toMap
-
-  /** Increases a player's statistic by amount. Statistics are permanent, for daily
-    * or weekly statistics that need to be reset append the statistic's name with a
-    * unique identifier. */
-  def increaseStatistic(playerId: UUID, amount: Long, statistic: String*): Unit = {
-    var updated: Map[String, Statistic] = Map.empty
-
-    statistics.updateWith(playerId) {
-      case Some(statistics) =>
-        val current = statistics.statistics
-        updated = updateStatistics(playerId, current, amount, statistic: _*)
-        new Statistics(statistics.statistics ++ updated) |> Some.apply
-      case None =>
-        updated = updateStatistics(playerId, Map.empty, amount, statistic: _*)
-        None
+  private def updateStatistic(
+      f: Statistic => Statistic,
+      deltaStatistic: Statistic*
+  ): Future[Unit] = {
+    deltaStatistic foreach { s =>
+      statistics.updateWith(s.playerId) {
+        case Some(statistics) =>
+          val playerStatistic = statistics.all get s.statistic match {
+            case Some(statistic) => statistic
+            case None            => Statistic(s.playerId, s.statistic)
+          }
+          val updatedStatistic = playerStatistic |> f |> { s.statistic -> _ }
+          new Statistics(statistics.all + updatedStatistic) |> Some.apply
+        case None => None // don't update cache for offline players
+      }
     }
 
     Future {
-      database run {
-        liftQuery(statistic.toList) foreach { statistic =>
+      deltaStatistic foreach { s =>
+        database run {
           query[Statistic]
-            .insert { lift(updated(statistic)) }
-            .onConflictUpdate(_.playerId, _.statistic)((it, _) =>
-              it.value -> (it.value + lift(amount))
+            .insert { lift(s) }
+            .onConflictUpdate(_.playerId, _.statistic)((_1, _2) =>
+              _1.value -> (_1.value + _2.value)
             )
         }
       }
     }
+  }
 
-    // TODO fire statistic events
+  /** Increases a player's statistic by amount. Statistics are permanent, for daily
+    * or weekly statistics that need to be reset append the statistic's name with a
+    * unique identifier. */
+  def increaseStatistic(statistic: String, amount: Long, playerId: UUID*): Unit = {
+    val deltaStatistics = playerId map { Statistic(_, statistic, amount) }
+    updateStatistic(_ increase amount, deltaStatistics: _*) immediatelyOrOnComplete {
+      case Success(_) =>
+      // TODO fire statistic events
+      case Failure(exception) =>
+        logger severe {
+          s"""Failed to increase $statistic by $amount for $playerId
+             |${exception.getMessage}""".stripMargin
+        }
+    }
   }
 }
+// TODO split the immediateOrOnComplete calls for each player

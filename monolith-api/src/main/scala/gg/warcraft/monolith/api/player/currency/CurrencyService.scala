@@ -13,7 +13,7 @@ import scala.collection.concurrent.{Map => ConcurrentMap}
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.jdk.CollectionConverters._
-import scala.util.Failure
+import scala.util.{Failure, Success}
 import scala.util.chaining._
 
 class CurrencyService(
@@ -21,12 +21,15 @@ class CurrencyService(
     logger: Logger,
     taskService: TaskService
 ) {
-  private final implicit val context: ExecutionContext = ExecutionContext.global
+  import database._
+
+  private implicit val executionContext: ExecutionContext =
+    ExecutionContext.global
+  private implicit val currencyInsertMeta: InsertMeta[Currency] =
+    insertMeta[Currency]()
 
   private val currencies: ConcurrentMap[UUID, Currencies] =
     new ConcurrentHashMap[UUID, Currencies]().asScala
-
-  import database._
 
   private[currency] def loadCurrencies(playerId: UUID): Unit =
     Await
@@ -45,58 +48,38 @@ class CurrencyService(
           database
             .run { query[Currency] filter { _.playerId == lift(playerId) } }
             .iterator
-            .map(it => it.currency -> it)
+            .map { it => it.currency -> it }
             .toMap
             .pipe { new Currencies(_) }
         }
     }
   }
 
-  private def updateCurrencies(
-      playerId: UUID,
-      currencies: Map[String, Currency],
-      f: Currency => Currency,
-      currency: String*
-  ): Map[String, Currency] = currency.map { it =>
-    it -> (currencies get it match {
-      case Some(it) => it |> f
-      case None     => Currency(playerId, it) |> f
-    })
-  }.toMap
-
   private def updateCurrency(
-      playerId: UUID,
       f: Currency => Currency,
-      currency: String*
+      deltaCurrency: Currency*
   ): Future[Unit] = {
-    var current: Map[String, Currency] = Map.empty
-    var updated: Map[String, Currency] = Map.empty
-
-    currencies.updateWith(playerId) {
-      case Some(currencies) =>
-        current = currencies.currencies
-        updated = updateCurrencies(playerId, current, f, currency: _*)
-        new Currencies(currencies.currencies ++ updated) |> Some.apply
-      case None =>
-        updated = updateCurrencies(playerId, Map.empty, f, currency: _*)
-        None
+    deltaCurrency foreach { c =>
+      currencies.updateWith(c.playerId) {
+        case Some(currencies) =>
+          val playerCurrency = currencies.all get c.currency match {
+            case Some(currency) => currency
+            case None           => Currency(c.playerId, c.currency)
+          }
+          val updatedCurrency = playerCurrency |> f |> { c.currency -> _ }
+          new Currencies(currencies.all + updatedCurrency) |> Some.apply
+        case None => None // don't update cache for offline players
+      }
     }
 
     Future {
-      val diff: Map[String, (Int, Int)] = updated map {
-        case (key, it) =>
-          val amount = it.amount - current.get(key).map(_.amount).getOrElse(0)
-          val lifetime = it.lifetime - current.get(key).map(_.lifetime).getOrElse(0)
-          key -> (amount, lifetime)
-      }
-
-      database run {
-        liftQuery(currency.toList) foreach { currency =>
+      deltaCurrency foreach { c =>
+        database run {
           query[Currency]
-            .insert { lift(updated(currency)) }
+            .insert { lift(c) }
             .onConflictUpdate(_.playerId, _.currency)(
-              (it, _) => it.amount -> (it.amount + lift(diff(currency)._1)),
-              (it, _) => it.lifetime -> (it.lifetime + lift(diff(currency)._2))
+              (_1, _2) => _1.amount -> (_1.amount + _2.amount),
+              (_1, _2) => _1.lifetime -> (_1.lifetime + _2.lifetime)
             )
         }
       }
@@ -105,42 +88,50 @@ class CurrencyService(
 
   /** Adds an amount of currency to the player. This increments both their currency
     * as well as their lifetime currency. */
-  def addCurrency(playerId: UUID, amount: Int, currency: String*): Unit = {
-    updateCurrency(playerId, _ add amount, currency: _*) immediatelyOrOnComplete {
+  def addCurrency(currency: String, amount: Int, playerId: UUID*): Unit = {
+    val deltaCurrencies = playerId map { Currency(_, currency, amount, amount) }
+    updateCurrency(_ add amount, deltaCurrencies: _*) immediatelyOrOnComplete {
+      case Success(_) =>
+      // TODO fire currency events
       case Failure(exception) =>
         logger severe {
-          s"""Failed to add $amount ${currency mkString ", "} to $playerId
+          s"""Failure while adding $amount $currency to ${playerId.size} players
              |${exception.getMessage}""".stripMargin
         }
-      case _ => // TODO fire currency events
+        playerId foreach { logger severe _.toString }
     }
   }
 
   /** Removes an amount of currency from the player, but leaves the lifetime currency
-    * in tact. Throws an IllegalStateException if the player does not have sufficient
-    * funds.*/
-  def removeCurrency(playerId: UUID, amount: Int, currency: String*): Unit = {
-    updateCurrency(playerId, _ remove amount, currency: _*) immediatelyOrOnComplete {
+    * in tact. Throws an IllegalArgumentException if the player does not have
+    * sufficient funds.*/
+  def removeCurrency(currency: String, amount: Int, playerId: UUID): Unit = {
+    currencies(playerId) // ensure player is online, will throw otherwise
+    val deltaCurrency = Currency(playerId, currency, -amount)
+    updateCurrency(_ remove amount, deltaCurrency) immediatelyOrOnComplete {
+      case Success(_) =>
+      // TODO fire currency events
       case Failure(exception) =>
         logger severe {
-          s"""Failed to remove $amount ${currency mkString ", "} from $playerId
+          s"""Failed to remove $amount $currency from $playerId
              |${exception.getMessage}""".stripMargin
         }
-      case _ => // TODO fire currency events
     }
   }
 
   /** Revokes an amount of currency from the player without regard for whether the
     * player actually has sufficient funds while also subtracting it from the
     * lifetime currency of the player */
-  def revokeCurrency(playerId: UUID, amount: Int, currency: String*): Unit = {
-    updateCurrency(playerId, _ revoke amount, currency: _*) immediatelyOrOnComplete {
+  def revokeCurrency(currency: String, amount: Int, playerId: UUID): Unit = {
+    val deltaCurrency = Currency(playerId, currency, -amount, -amount)
+    updateCurrency(_ revoke amount, deltaCurrency) immediatelyOrOnComplete {
+      case Success(_) =>
+      // TODO fire currency events
       case Failure(exception) =>
         logger severe {
-          s"""Failed to revoke $amount ${currency mkString ", "} from $playerId
+          s"""Failed to revoke $amount $currency from $playerId
              |${exception.getMessage}""".stripMargin
         }
-      case _ => // TODO fire currency events
     }
   }
 }

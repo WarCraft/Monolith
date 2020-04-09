@@ -11,8 +11,12 @@ private case class Currency(
   def add(amount: Int): Currency =
     copy(amount = this.amount + amount, lifetime = lifetime + amount)
 
-  def remove(amount: Int): Currency =
-    copy(amount = this.amount - amount)
+  def remove(amount: Int): Currency = {
+    if (this.amount < amount) {
+      val err = s"Can not remove $amount from ${this.amount} $currency for $playerId"
+      throw new IllegalArgumentException(err)
+    } else copy(amount = this.amount - amount)
+  }
 
   def revoke(amount: Int): Currency =
     copy(amount = this.amount - amount, lifetime = lifetime - amount)
