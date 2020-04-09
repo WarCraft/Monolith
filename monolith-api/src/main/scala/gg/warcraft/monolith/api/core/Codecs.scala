@@ -16,9 +16,9 @@ object Codecs {
     def enumerEncoder[T <: Enumeration]: Encoder[T] =
       Encoder.encodeString contramap [T] { _.toString }
 
-    def enumDecoder[T: Enum](f: String => T): Decoder[T] =
+    def enumDecoder[T <: Enum[T]](f: String => T): Decoder[T] =
       Decoder.decodeString emapTry { it => { Try { f apply it } } }
-    def enumEncoder[T <: Enum[_]]: Encoder[T] =
+    def enumEncoder[T <: Enum[T]]: Encoder[T] =
       Encoder.encodeString contramap [T] { _.name }
 
     def blockDataDecoder(
@@ -42,9 +42,9 @@ object Codecs {
     def enumerEncoder[T <: Enumeration]: MappedEncoding[T, String] =
       MappedEncoding { _.toString }
 
-    def enumDecoder[T: Enum](f: String => T): MappedEncoding[String, T] =
+    def enumDecoder[T <: Enum[T]](f: String => T): MappedEncoding[String, T] =
       MappedEncoding { f }
-    def enumEncoder[T <: Enum[_]]: MappedEncoding[T, String] =
+    def enumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
 
     def teamDecoder(
