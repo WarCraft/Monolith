@@ -32,11 +32,15 @@ object Vector3f {
 
   implicit def fromFloats(floats: (Float, Float, Float)): Vector3f =
     Vector3f(floats._1, floats._2, floats._3)
+  implicit def fromJomlVector3f(vec: JomlVector3fc): Vector3f =
+    Vector3f(vec.x, vec.y, vec.z)
 
   implicit def toFloats(vec: Vector3f): (Float, Float, Float) =
     (vec.x, vec.y, vec.z)
   implicit def toVector3i(vec: Vector3f): Vector3i =
     Vector3i(vec.x.toInt, vec.y.toInt, vec.z.toInt)
+  implicit def toJomlVector3f(vec: Vector3f): JomlVector3f =
+    new JomlVector3f(vec.x, vec.y, vec.z)
 }
 
 case class Vector3f(
@@ -44,6 +48,9 @@ case class Vector3f(
     y: Float = 0,
     z: Float = 0
 ) extends Embedded {
+  private lazy val jomlVector = new JomlVector3f(x, y, z)
+  private lazy val jomlOut = new JomlVector3f()
+
   lazy val lengthSquared: Float = x * x + y * y + z * z
   lazy val length: Float = Math.sqrt(lengthSquared).toFloat
   lazy val inverseLength: Float = 1f / length
@@ -67,21 +74,18 @@ case class Vector3f(
     copy(x = x / vec.x, y = y / vec.y, z = z / vec.z)
 
   def rotateX(angle: Float): Vector3f = {
-    val sin = Math.sin(angle).toFloat
-    val cos = FastMath.cosFromSin(sin, angle)
-    copy(x = x, y = y * cos - z * sin, z = y * sin + z * cos)
+    jomlVector.rotateX(angle, jomlOut)
+    jomlOut
   }
 
   def rotateY(angle: Float): Vector3f = {
-    val sin = Math.sin(angle).toFloat
-    val cos = FastMath.cosFromSin(sin, angle)
-    copy(x = x * cos + z * sin, y = y, z = -x * sin + z * cos)
+    jomlVector.rotateY(angle, jomlOut)
+    jomlOut
   }
 
   def rotateZ(angle: Float): Vector3f = {
-    val sin = Math.sin(angle).toFloat
-    val cos = FastMath.cosFromSin(sin, angle)
-    copy(x = x * cos - y * sin, y = x * sin + y * cos, z = z)
+    jomlVector.rotateZ(angle, jomlOut)
+    jomlOut
   }
 
   def distanceTo(target: Vector3f): Float = target.subtract(this).length
