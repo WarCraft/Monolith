@@ -5,14 +5,14 @@ import gg.warcraft.monolith.api.player.Player
 import org.bukkit.{GameMode => SpigotGameMode}
 
 class SpigotGameModeMapper {
-  def map(mode: SpigotGameMode): Player.Mode = {
+  def map(mode: SpigotGameMode): Player.Mode = mode match {
     case SpigotGameMode.ADVENTURE => GameMode.ADVENTURE
     case SpigotGameMode.CREATIVE  => GameMode.CREATIVE
     case SpigotGameMode.SPECTATOR => GameMode.SPECTATOR
     case SpigotGameMode.SURVIVAL  => GameMode.SURVIVAL
   }
 
-  def map(mode: Player.Mode): SpigotGameMode = {
+  def map(mode: Player.Mode): SpigotGameMode = mode match {
     case GameMode.ADVENTURE => SpigotGameMode.ADVENTURE
     case GameMode.CREATIVE  => SpigotGameMode.CREATIVE
     case GameMode.SPECTATOR => SpigotGameMode.SPECTATOR

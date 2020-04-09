@@ -1,6 +1,8 @@
 package gg.warcraft.monolith.api.core.handler
 
-class DailyTicker {}
+class DailyTicker extends Runnable {
+  override def run(): Unit = ???
+}
 
 /*
     private static final String LAST_DAILY_TICK_KEY = "lastdailytick";

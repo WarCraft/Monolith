@@ -4,10 +4,10 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.block.backup.{BlockBackup, BlockBackupService}
+import gg.warcraft.monolith.api.core.Codecs
 import gg.warcraft.monolith.api.world.{BlockLocation, World}
-import gg.warcraft.monolith.spigot.Codecs.Quill
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import io.getquill.MappedEncoding
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 import org.bukkit.Bukkit
 import org.bukkit.metadata.FixedMetadataValue
@@ -16,24 +16,25 @@ import org.bukkit.plugin.Plugin
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
-private object SpigotBlockBackupService {
-  private val cache: mutable.Map[UUID, BlockBackup] = mutable.Map.empty
-}
-
 class SpigotBlockBackupService(
     private implicit val plugin: Plugin,
     private implicit val logger: Logger,
-    private implicit val database: JdbcContext[_, _],
+    private implicit val database: JdbcContext[SqliteDialect, SnakeCase],
     private implicit val locationMapper: SpigotLocationMapper
 ) extends BlockBackupService {
-  private implicit val asyncCtx: ExecutionContext = ExecutionContext.global
-  private implicit val worldDec: MappedEncoding[String, World] = Quill.worldDec
-  private implicit val worldEnc: MappedEncoding[World, String] = Quill.worldEnc
+  import database._
 
+  private implicit val executionContext: ExecutionContext =
+    ExecutionContext.global
+  private implicit val teamDecoder: MappedEncoding[String, World] =
+    Codecs.Quill.enumDecoder(World.valueOf)
+  private implicit val teamEncoder: MappedEncoding[World, String] =
+    Codecs.Quill.enumEncoder[World]
+  private implicit val dataInsertMeta: InsertMeta[BlockBackup] =
+    insertMeta[BlockBackup]()
+
+  private val cache: mutable.Map[UUID, BlockBackup] = mutable.Map.empty
   private val metaDataKey = getClass.getCanonicalName
-
-  import SpigotBlockBackupService.cache
-  import database.{MappedEncoding => _, _}
 
   override def createBackup(location: BlockLocation): UUID = {
     val block = locationMapper.map(location).getBlock

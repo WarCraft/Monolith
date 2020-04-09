@@ -1,14 +1,13 @@
 package gg.warcraft.monolith.spigot.player
 
 import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.Equipment
-import gg.warcraft.monolith.api.item.Item
 import gg.warcraft.monolith.api.player.{
   PlayerConnectEvent, PlayerDisconnectEvent, PlayerEquipmentChangedEvent,
   PlayerInteractEvent, PlayerPreConnectEvent, PlayerPreInteractEvent,
   PlayerPrePunchEvent, PlayerPreRespawnEvent, PlayerPunchEvent, PlayerRespawnEvent
 }
-import gg.warcraft.monolith.app.entity.SimpleEquipment
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.entity.Player
@@ -22,10 +21,10 @@ import org.bukkit.event.player.{
 import org.bukkit.inventory.EquipmentSlot
 
 class SpigotPlayerEventMapper(
-    private implicit val eventService: EventService,
-    private implicit val taskService: TaskService,
-    private implicit val locationMapper: SpigotLocationMapper,
-    private implicit val itemMapper: SpigotItemMapper
+    implicit eventService: EventService,
+    taskService: TaskService,
+    locationMapper: SpigotLocationMapper,
+    itemMapper: SpigotItemMapper
 ) extends Listener {
   @EventHandler
   def preConnect(event: AsyncPlayerPreLoginEvent): Unit = {
@@ -59,27 +58,15 @@ class SpigotPlayerEventMapper(
     eventService.publish(disconnectEvent)
   }
 
-  // TODO replace with case class
   private def getEquipment(player: Player): Equipment = {
-    val head: Item = itemMapper
-      .map(player.getInventory.getHelmet)
-      .orNull
-    val chest: Item = itemMapper
-      .map(player.getInventory.getChestplate)
-      .orNull
-    val legs: Item = itemMapper
-      .map(player.getInventory.getLeggings)
-      .orNull
-    val feet: Item = itemMapper
-      .map(player.getInventory.getBoots)
-      .orNull
-    val mainHand: Item = itemMapper
-      .map(player.getInventory.getItemInMainHand)
-      .orNull
-    val offHand: Item = itemMapper
-      .map(player.getInventory.getItemInOffHand)
-      .orNull
-    new SimpleEquipment(head, chest, legs, feet, mainHand, offHand)
+    Equipment(
+      itemMapper map player.getInventory.getHelmet,
+      itemMapper map player.getInventory.getChestplate,
+      itemMapper map player.getInventory.getLeggings,
+      itemMapper map player.getInventory.getBoots,
+      itemMapper map player.getInventory.getItemInMainHand,
+      itemMapper map player.getInventory.getItemInOffHand
+    )
   }
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

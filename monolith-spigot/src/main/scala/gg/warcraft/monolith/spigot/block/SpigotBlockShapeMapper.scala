@@ -2,29 +2,20 @@ package gg.warcraft.monolith.spigot.block
 
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.block.shape.{RailsShape, StairsShape}
+import gg.warcraft.monolith.spigot.Extensions._
 import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}
 import org.bukkit.block.data.`type`.Stairs.{Shape => SpigotStairsShape}
-
-object SpigotBlockShapeMapper {
-  // TODO remove
-  private implicit class Regex(context: StringContext) {
-    def r = new util.matching.Regex(
-      context.parts.mkString,
-      context.parts.tail.map(_ => "x"): _*
-    )
-  }
-}
 
 class SpigotBlockShapeMapper {
   def map(block: SpigotBlock): BlockShape = {
     val data: SpigotBlockData = block.getState.getBlockData
 
-    block.getType.name match {
-      case r".*RAIL" =>
+    block.getType match {
+      case it if it.isRail =>
         val shape = data.asInstanceOf[SpigotRail].getShape
         map(shape)
 
-      case r".*STAIRS" =>
+      case it if it.isStairs =>
         val shape = data.asInstanceOf[SpigotStairs].getShape
         map(shape)
 

@@ -46,16 +46,18 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     it registerEvents (new SpigotEntityEventMapper, this)
     it registerEvents (new SpigotPlayerEventMapper, this)
     it registerEvents (new SpigotItemEventMapper, this)
+    it registerEvents (new SpigotMenuHandler(menuService), this)
     it registerEvents (new SpigotWorldEventMapper, this)
   }
 
   private def enableHandlers(): Unit = {
-    eventService subscribe new DebuggingHandler(authService, entityService)
+    val debuggingHandler =
+      new DebuggingHandler(authService, entityService, playerService)
+    eventService subscribe debuggingHandler
     eventService subscribe new EntityDataHandler(entityDataService)
     eventService subscribe new StatusHandler(statusService)
     eventService subscribe new PlayerDataHandler(playerDataService)
     eventService subscribe new PlayerHidingHandler(playerHidingService)
-    eventService subscribe new SpigotMenuHandler(menuService)
 
     /* TODO
      AttributesInitializationHandler attributesInitializationHandler =
@@ -66,12 +68,12 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
   private def enableTasks(): Unit = {
     val dailyTicker = new DailyTicker()
-    taskService runTask (Duration.oneSecond, dailyTicker)
+    taskService runTask (Duration.oneSecond, dailyTicker.run)
 
     val playerDataUpdater = new PlayerDataUpdater(playerService, playerDataService)
-    taskService runTask (Duration.oneTick, playerDataUpdater)
+    taskService runTask (Duration.oneTick, playerDataUpdater.run)
 
     val portalTicker = new PortalTicker(portalService)
-    taskService runTask (Duration.ofTicks(5), portalTicker)
+    taskService runTask (Duration.ofTicks(5), portalTicker.run)
   }
 }

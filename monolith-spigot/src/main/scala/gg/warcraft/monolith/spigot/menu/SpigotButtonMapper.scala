@@ -13,7 +13,7 @@ class SpigotButtonMapper(
     implicit itemService: ItemService,
     itemMapper: SpigotItemMapper
 ) {
-  def map(button: Button): ItemStack = {
+  def map(button: Button): ItemStack = button match {
     case it: SkullButton => mapSkull(it)
     case _ =>
       val item = itemService

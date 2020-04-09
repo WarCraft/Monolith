@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.entity.attribute.Attribute
 import org.bukkit.attribute.{Attribute => SpigotAttribute}
 
 class SpigotAttributeMapper {
-  def map(attribute: SpigotAttribute): Attribute.Generic = {
+  def map(attribute: SpigotAttribute): Attribute.Generic = attribute match {
     case SpigotAttribute.GENERIC_ARMOR           => Attribute.Generic.ARMOR
     case SpigotAttribute.GENERIC_ARMOR_TOUGHNESS => Attribute.Generic.ARMOR_TOUGHNESS
     case SpigotAttribute.GENERIC_ATTACK_DAMAGE   => Attribute.Generic.ATTACK_DAMAGE
@@ -22,7 +22,7 @@ class SpigotAttributeMapper {
       Attribute.Zombie.SPAWN_REINFORCEMENTS
   }
 
-  def map(attribute: Attribute.Generic): SpigotAttribute = {
+  def map(attribute: Attribute.Generic): SpigotAttribute = attribute match {
     case Attribute.Generic.ARMOR           => SpigotAttribute.GENERIC_ARMOR
     case Attribute.Generic.ARMOR_TOUGHNESS => SpigotAttribute.GENERIC_ARMOR_TOUGHNESS
     case Attribute.Generic.ATTACK_DAMAGE   => SpigotAttribute.GENERIC_ATTACK_DAMAGE
