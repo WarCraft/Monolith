@@ -74,7 +74,10 @@ class PlayerDataService(
 
   def loadPlayerData(id: UUID): Option[PlayerData] =
     run { query[PlayerData].filter { _.id == lift(id) } }.headOption
-      .tap { case Some(it) => _data += (it.id -> it) }
+      .tap {
+        case Some(it) => _data += (it.id -> it)
+        case None     =>
+      }
 
   def invalidatePlayerData(id: UUID): Unit =
     _data -= id
