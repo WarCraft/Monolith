@@ -3,14 +3,20 @@ package gg.warcraft.monolith.api.effect
 import gg.warcraft.monolith.api.world.Location
 
 object EffectRenderer {
-  def apply(particle: Particle, vectors: EffectVectors): EffectRenderer =
+  def apply(particle: Particle, vectors: EffectVectors)(
+      implicit particleAdapter: ParticleAdapter
+  ): EffectRenderer =
     new EffectRenderer(particle, vectors)
 
-  def iterative(particle: Particle, vectors: EffectVectors): EffectRenderer =
+  def iterative(particle: Particle, vectors: EffectVectors)(
+      implicit particleAdapter: ParticleAdapter
+  ): EffectRenderer =
     new IterativeEffectRenderer(particle, vectors)
 }
 
-class EffectRenderer private[effect] (particle: Particle, vectors: EffectVectors) {
+class EffectRenderer private[effect] (particle: Particle, vectors: EffectVectors)(
+    implicit particleAdapter: ParticleAdapter
+) {
   def render(location: Location): Unit = {
     vectors.iterator foreach { vector =>
       val translation = location add vector
@@ -19,9 +25,8 @@ class EffectRenderer private[effect] (particle: Particle, vectors: EffectVectors
   }
 }
 
-private class IterativeEffectRenderer private[effect] (
-    particle: Particle,
-    vectors: EffectVectors
+private class IterativeEffectRenderer(particle: Particle, vectors: EffectVectors)(
+    implicit particleAdapter: ParticleAdapter
 ) extends EffectRenderer(particle, vectors) {
   private var iterator = vectors.iterator
 

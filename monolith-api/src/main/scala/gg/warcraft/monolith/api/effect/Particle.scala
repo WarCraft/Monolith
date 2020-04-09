@@ -60,8 +60,7 @@ private class ColorParticle(
 ) extends Particle {
   override def display(location: Location)(
       implicit adapter: ParticleAdapter
-  ): Unit =
-    adapter display (particle, location, color)
+  ): Unit = adapter display (particle, location, color)
 }
 
 private class SpeedParticle(
@@ -73,8 +72,7 @@ private class SpeedParticle(
 ) extends Particle {
   override def display(location: Location)(
       implicit adapter: ParticleAdapter
-  ): Unit =
-    adapter display (particle, location, speed, amount)
+  ): Unit = adapter display (particle, location, speed, amount)
 }
 
 private class MultiParticle(particles: Particle*)(
