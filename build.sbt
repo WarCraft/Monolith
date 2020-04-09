@@ -13,9 +13,9 @@ lazy val commonSettings = Seq(
 lazy val assemblySettings = Seq(
   assemblyJarName in assembly := s"${name.value}-${version.value}-all.jar",
   assemblyMergeStrategy in assembly := {
-    case PathList("META-INF", _ @ _*) => MergeStrategy.discard
-    case "module-info.class"          => MergeStrategy.discard
-    case it                           => (assemblyMergeStrategy in assembly).value(it)
+    case PathList("META-INF", _ @_*) => MergeStrategy.discard
+    case "module-info.class"         => MergeStrategy.discard
+    case it                          => (assemblyMergeStrategy in assembly).value(it)
   }
 )
 
@@ -28,19 +28,16 @@ lazy val api = (project in file("monolith-api"))
     name := "monolith-api",
     commonSettings,
     libraryDependencies ++= commonDependencies ++ Seq(
+      "org.flywaydb" % "flyway-core" % "6.0.8",
+      "org.joml" % "joml" % "1.9.19",
+      "org.xerial" % "sqlite-jdbc" % "3.28.0",
       "io.circe" %% "circe-core" % "0.12.3",
       "io.circe" %% "circe-generic" % "0.12.3",
       "io.circe" %% "circe-parser" % "0.12.3",
       "io.circe" %% "circe-yaml" % "0.12.0",
-      "org.xerial" % "sqlite-jdbc" % "3.28.0",
-      "org.flywaydb" % "flyway-core" % "6.0.8",
       "io.getquill" %% "quill-jdbc" % "3.4.10",
-      "org.joml" % "joml" % "1.9.19",
 
-      "com.fasterxml.jackson.core" % "jackson-databind" % "2.10.0",
-      "com.google.guava" % "guava" % "28.1-jre",
-      "com.google.inject" % "guice" % "4.2.3-SNAPSHOT",
-      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.3-SNAPSHOT"
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.10.0"
     )
   )
 
