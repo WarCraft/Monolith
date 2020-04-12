@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.world.Location
 
 class Effect(
-    location: => Location,
+    location: () => Location,
     period: Duration = Duration.oneTick,
     tick: () => Unit = () => {}
 )(
@@ -30,6 +30,6 @@ class Effect(
 
   override def run(): Unit = {
     tick()
-    renderers foreach { _ render location }
+    renderers foreach { _ render location() }
   }
 }
