@@ -8,7 +8,7 @@ object PotionEffect extends Enumeration {
       DOLPHINS_GRACE, FAST_DIGGING, FIRE_RESISTANCE, GLOWING, HARM, HEAL,
       HEALTH_BOOST, HERO_OF_THE_VILLAGE, HUNGER, INCREASE_DAMAGE, INVISIBILITY, JUMP,
       LEVITATION, LUCK, NIGHT_VISION, POISON, REGENERATION, SATURATION, SLOW,
-      SLOW_DIGGING, SLOW_FALLING = Value
+      SLOW_DIGGING, SLOW_FALLING, SPEED, UNLUCK, WATER_BREATHING, WEAKNESS, WITHER = Value
 
   def ambient(
       typed: PotionEffect.Type,
@@ -22,8 +22,7 @@ object PotionEffect extends Enumeration {
       level: Int,
       duration: Duration,
       ambient: Boolean = false
-  ): PotionEffect =
-    PotionEffect(typed, level, duration, particles = true, ambient = ambient)
+  ): PotionEffect = PotionEffect(typed, level, duration, particles = true, ambient)
 }
 
 case class PotionEffect(
