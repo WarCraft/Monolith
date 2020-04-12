@@ -15,7 +15,8 @@ trait EntityService {
   private final val knockUpStrength: mutable.Map[Float, Float] = mutable.Map.empty
   private final val leapStrength: mutable.Map[Float, Float] = mutable.Map.empty
 
-  def getEntity(id: UUID): Option[Entity]
+  def getEntity(id: UUID): Entity
+  def getEntityOption(id: UUID): Option[Entity]
   def getNearbyEntities(loc: Location, radius: (Float, Float, Float)): List[Entity]
   def getNearbyEntities(loc: Location, radius: Float): List[Entity] =
     getNearbyEntities(loc, (radius, radius, radius))
@@ -42,8 +43,8 @@ trait EntityService {
   ): Unit
 
   def heavyEntity(id: UUID, duration: Duration): Unit = {
-    getEntity(id) match {
-      /*
+    val entity = getEntity(id)
+    /*
         private Block findBlockUnderFeet(Entity entity) {
         Block current = worldService.getBlock(Location.toBlockLocation(entity.getLocation()));
         while (!current.solid() && current.location().y() >= 0) {
@@ -51,8 +52,7 @@ trait EntityService {
         }
         return current;
     }
-       */
-      case Some(entity) =>
+     */
 //        Block targetBlock = findBlockUnderFeet(entity);
 //        int safeY = targetBlock.location().y() + 1;
 //        Location safeLocation = entity.getLocation().withY(safeY);
@@ -62,8 +62,6 @@ trait EntityService {
 //        this.removePotionEffect(entityId, PotionEffectType.JUMP);
 //        PotionEffect effect = new SimplePotionEffect(PotionEffectType.JUMP, 128, duration);
 //        this.addPotionEffect(entityId, effect);
-      case None =>
-    }
   }
 
   def freezeEntity(id: UUID, duration: Duration): Unit = {
@@ -110,12 +108,9 @@ trait EntityService {
   }
 
   def knockBackEntity(id: UUID, source: Location, distance: Float): Unit = {
-    getEntity(id) match {
-      case Some(entity) =>
-        val direction = source subtract entity.location
-        knockBackEntity(id, direction, distance)
-      case None =>
-    }
+    val entity = getEntity(id)
+    val direction = source subtract entity.location
+    knockBackEntity(id, direction, distance)
   }
 
   /**
@@ -145,15 +140,12 @@ trait EntityService {
   }
 
   def knockUpEntity(id: UUID, distance: Float): Unit = {
-    getEntity(id) match {
-      case Some(entity) =>
-        val strength = knockUpStrength
-          .getOrElseUpdate(distance, calcKnockUpStrength(distance))
-        val knockUp = Vector3f(y = strength)
-        val velocity = entity.velocity add knockUp
-        setVelocity(id, velocity)
-      case None =>
-    }
+    val entity = getEntity(id)
+    val strength = knockUpStrength
+      .getOrElseUpdate(distance, calcKnockUpStrength(distance))
+    val knockUp = Vector3f(y = strength)
+    val velocity = entity.velocity add knockUp
+    setVelocity(id, velocity)
   }
 
   /**
@@ -180,29 +172,23 @@ trait EntityService {
   }
 
   def leapEntity(id: UUID, direction: Vector3f, distance: Float): Unit = {
-    getEntity(id) match {
-      case Some(entity) =>
-        val strength = leapStrength
-          .getOrElseUpdate(distance, calcKnockUpStrength(distance))
-        val y = if (distance <= 10f) 0.4f else 0.25f
-        val leap = direction.withY(y).normalize
-        val velocity = leap multiply strength
-        val newVelocity = entity.velocity add velocity
-        setVelocity(id, newVelocity)
-      case None =>
-    }
+    val entity = getEntity(id)
+    val strength = leapStrength
+      .getOrElseUpdate(distance, calcKnockUpStrength(distance))
+    val y = if (distance <= 10f) 0.4f else 0.25f
+    val leap = direction.withY(y).normalize
+    val velocity = leap multiply strength
+    val newVelocity = entity.velocity add velocity
+    setVelocity(id, newVelocity)
   }
 
   def vacuumEntity(id: UUID, source: Location, strength: Float): Unit = {
-    getEntity(id) match {
-      case Some(entity) =>
-        heavyEntity(id, Duration.oneSecond)
-        val direction = source subtract entity.location.normalize
-          .multiply(0.05f * strength)
-        val velocity = entity.velocity.withX(direction.x).withZ(direction.z)
-        setVelocity(id, velocity)
-      case None =>
-    }
+    val entity = getEntity(id)
+    heavyEntity(id, Duration.oneSecond)
+    val direction = source subtract entity.location.normalize
+      .multiply(0.05f * strength)
+    val velocity = entity.velocity.withX(direction.x).withZ(direction.z)
+    setVelocity(id, velocity)
   }
 
   def intersectEntity(

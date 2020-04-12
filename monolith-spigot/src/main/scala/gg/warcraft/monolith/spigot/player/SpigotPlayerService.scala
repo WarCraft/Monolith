@@ -49,7 +49,14 @@ class SpigotPlayerService(
 ) extends PlayerService {
   private implicit val playerService: SpigotPlayerService = this
 
-  override def getPlayer(id: UUID): Option[Player] = {
+  override def getPlayer(id: UUID): Player = {
+    server getEntity id match {
+      case it: SpigotPlayer => new SpigotPlayerAdapter(it)
+      case _                => throw IllegalArgumentException
+    }
+  }
+
+  override def getPlayerOption(id: UUID): Option[Player] = {
     server getEntity id match {
       case it: SpigotPlayer => new SpigotPlayerAdapter(it) |> Some.apply
       case _                => None

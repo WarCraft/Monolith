@@ -7,7 +7,8 @@ import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.item.Item
 
 trait PlayerService {
-  def getPlayer(id: UUID): Option[Player]
+  def getPlayer(id: UUID): Player
+  def getPlayerOption(id: UUID): Option[Player]
   def getOfflinePlayer(id: UUID): OfflinePlayer
   def getOnlinePlayers: List[Player]
   def resolvePlayerId(name: String): UUID
