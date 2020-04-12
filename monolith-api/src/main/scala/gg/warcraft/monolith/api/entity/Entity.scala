@@ -58,6 +58,7 @@ trait Entity {
   def velocity: Vector3f
   def health: Float
   def equipment: Equipment
+  def isAlive: Boolean
   def isGrounded: Boolean
   // TODO val boundingBox: AABBf
 }

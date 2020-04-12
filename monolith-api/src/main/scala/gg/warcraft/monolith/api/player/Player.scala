@@ -24,6 +24,7 @@ trait Player extends Entity with Principal {
 
   def inventory: Inventory
   def mode: Player.Mode
+  def isAlive: Boolean
   def isOnline: Boolean
   def isSneaking: Boolean
 
