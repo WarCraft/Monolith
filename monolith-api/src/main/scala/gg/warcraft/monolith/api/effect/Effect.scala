@@ -6,8 +6,7 @@ import gg.warcraft.monolith.api.world.Location
 
 class Effect(
     location: () => Location,
-    period: Duration = Duration.oneTick,
-    tick: () => Unit = () => {}
+    period: Duration = Duration.oneTick
 )(
     implicit taskService: TaskService
 ) extends Runnable
@@ -16,19 +15,21 @@ class Effect(
 
   private var renderers: List[EffectRenderer] = Nil
 
-  def addRenderer(renderer: EffectRenderer): Unit =
+  def tick(): Unit = {}
+
+  final def addRenderer(renderer: EffectRenderer): Unit =
     renderers ::= renderer
 
-  def clearRenderers(): Unit =
+  final def clearRenderers(): Unit =
     renderers = Nil
 
-  def cancel(delay: Duration): Unit =
+  final def cancel(delay: Duration): Unit =
     taskService runLater (delay, cancel)
 
-  override def cancel(): Unit =
+  final override def cancel(): Unit =
     task.cancel()
 
-  override def run(): Unit = {
+  final override def run(): Unit = {
     tick()
     renderers foreach { _ render location() }
   }
