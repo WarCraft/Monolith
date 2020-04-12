@@ -34,7 +34,7 @@ class PlayerDataService(
 
   def getPlayerData(id: UUID): Future[PlayerData] = {
     _data get id match {
-      case Some(playerData) => playerData |> Future.successful
+      case Some(data) => data |> Future.successful
       case None =>
         Future {
           run {
@@ -54,9 +54,9 @@ class PlayerDataService(
         query[PlayerData]
           .insert { lift(data) }
           .onConflictUpdate(_.id)(
-            (it, _) => it.team -> it.team,
-            (it, _) => it.timeConnected -> it.timeConnected,
-            (it, _) => it.timeLastSeen -> it.timeLastSeen
+            (_1, _2) => _1.team -> _2.team,
+            (_1, _2) => _1.timeConnected -> _2.timeConnected,
+            (_1, _2) => _1.timeLastSeen -> _2.timeLastSeen
           )
       }
     }
@@ -72,13 +72,13 @@ class PlayerDataService(
     this setPlayerData data.copy(timeLastSeen = newLastSeen)
   }
 
-  def loadPlayerData(id: UUID): Option[PlayerData] =
+  private[data] def loadPlayerData(id: UUID): Option[PlayerData] =
     run { query[PlayerData].filter { _.id == lift(id) } }.headOption
       .tap {
         case Some(it) => _data += (it.id -> it)
         case None     =>
       }
 
-  def invalidatePlayerData(id: UUID): Unit =
+  private[data] def invalidatePlayerData(id: UUID): Unit =
     _data -= id
 }

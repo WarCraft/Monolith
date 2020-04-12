@@ -41,7 +41,7 @@ class EntityDataService(
       run {
         query[EntityData]
           .insert { lift(data) }
-          .onConflictUpdate(_.id)((it, _) => it.team -> it.team)
+          .onConflictUpdate(_.id)((_1, _2) => _1.team -> _2.team)
       }
     }
     // TODO if team has changed fire event
