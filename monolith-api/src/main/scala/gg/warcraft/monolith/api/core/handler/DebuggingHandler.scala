@@ -11,7 +11,7 @@ class DebuggingHandler(
     playerService: PlayerService
 ) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
-    case EntityInteractEvent(entityId, _, playerId, _, _, _) =>
+    case EntityInteractEvent(entityId, _, playerId, _, _, _, _) =>
       val player = playerService getPlayer playerId
       if (authService isDebugging player) entityService removeEntity entityId
     case _ =>

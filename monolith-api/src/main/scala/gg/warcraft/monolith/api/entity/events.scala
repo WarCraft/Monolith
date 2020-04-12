@@ -15,6 +15,7 @@ case class EntityPreAttackEvent(
     entityId: UUID,
     entityType: Entity.Type,
     attackerId: UUID,
+    sneaking: Boolean,
     projectileId: Option[UUID],
     damage: CombatValue,
     cancelled: Boolean = false,
@@ -26,6 +27,7 @@ case class EntityAttackEvent(
     entityId: UUID,
     entityType: Entity.Type,
     attackerId: UUID,
+    sneaking: Boolean,
     projectileId: Option[UUID],
     damage: CombatValue
 ) extends EntityEvent
@@ -105,6 +107,7 @@ case class EntityPreInteractEvent(
     entityId: UUID,
     entityType: Entity.Type,
     playerId: UUID,
+    sneaking: Boolean,
     mainHand: Option[Item],
     offHand: Option[Item],
     location: Location,
@@ -117,6 +120,7 @@ case class EntityInteractEvent(
     entityId: UUID,
     entityType: Entity.Type,
     playerId: UUID,
+    sneaking: Boolean,
     mainHand: Option[Item],
     offHand: Option[Item],
     location: Location
