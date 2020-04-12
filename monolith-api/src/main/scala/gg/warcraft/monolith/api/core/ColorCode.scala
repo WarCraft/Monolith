@@ -1,7 +1,7 @@
 package gg.warcraft.monolith.api.core
 
 object ColorCode extends Enumeration {
-  type Type = ColorCode.Value
+  type Type = ColorCode.Val
 
   implicit def toVal(v: Value): Val = v.asInstanceOf[Val]
   protected case class Val(code: String) extends super.Val {
