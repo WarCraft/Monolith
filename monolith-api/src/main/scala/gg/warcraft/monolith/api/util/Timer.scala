@@ -12,8 +12,8 @@ class Timer(duration: Duration, repeat: Boolean = false) {
     _minutesRemaining * SECONDS_PER_MINUTE + _secondsRemaining
 
   def reset(): Unit = {
-    _minutesRemaining = duration.inSeconds / SECONDS_PER_MINUTE
-    _secondsRemaining = duration.inSeconds - _minutesRemaining * SECONDS_PER_MINUTE
+    _minutesRemaining = duration.seconds / SECONDS_PER_MINUTE
+    _secondsRemaining = duration.seconds - _minutesRemaining * SECONDS_PER_MINUTE
   }
 
   def tick(): Unit = {

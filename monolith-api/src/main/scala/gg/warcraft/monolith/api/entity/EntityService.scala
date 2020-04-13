@@ -4,6 +4,7 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
+import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.Location
@@ -184,7 +185,7 @@ trait EntityService {
 
   def vacuumEntity(id: UUID, source: Location, strength: Float): Unit = {
     val entity = getEntity(id)
-    heavyEntity(id, Duration.oneSecond)
+    heavyEntity(id, 1.seconds)
     val direction = source subtract entity.location.normalize
       .multiply(0.05f * strength)
     val velocity = entity.velocity.withX(direction.x).withZ(direction.z)

@@ -192,7 +192,7 @@ class SpigotEntityService(
 
   override def burnEntity(id: UUID, duration: Duration): Unit = {
     getSpigotEntity(id) foreach { it =>
-      val updatedFireTicks = it.getFireTicks + duration.inTicks
+      val updatedFireTicks = it.getFireTicks + duration.ticks
       it setFireTicks updatedFireTicks
     }
   }

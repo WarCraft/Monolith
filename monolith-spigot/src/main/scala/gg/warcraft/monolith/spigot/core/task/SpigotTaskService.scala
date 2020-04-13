@@ -17,14 +17,14 @@ class SpigotTaskService(implicit plugin: Plugin) extends TaskService {
   }
 
   override def evalLater(delay: Duration, task: => Unit): Task =
-    schedule(() => task, _.runTaskLater(plugin, delay.inTicks))
+    schedule(() => task, _.runTaskLater(plugin, delay.ticks))
 
   override def evalAsync(task: => Unit): Task =
     schedule(() => task, _.runTaskAsynchronously(plugin))
 
   override def runTask(period: Duration, task: () => Unit): Task =
-    schedule(task, _.runTaskTimer(plugin, immediately, period.inTicks))
+    schedule(task, _.runTaskTimer(plugin, immediately, period.ticks))
 
   override def runTaskAsync(period: Duration, task: () => Unit): Task =
-    schedule(task, _.runTaskTimerAsynchronously(plugin, immediately, period.inTicks))
+    schedule(task, _.runTaskTimerAsynchronously(plugin, immediately, period.ticks))
 }

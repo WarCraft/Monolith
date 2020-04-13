@@ -1,12 +1,13 @@
 package gg.warcraft.monolith.api.effect
 
 import gg.warcraft.monolith.api.core.{Cancellable, Duration}
+import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.world.Location
 
 class Effect(
     location: () => Location,
-    period: Duration = Duration.oneTick
+    period: Duration = 1.ticks
 )(
     implicit taskService: TaskService
 ) extends Runnable

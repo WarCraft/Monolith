@@ -39,8 +39,8 @@ object TimeUtils {
     asReadable(unixTimestamp - System.currentTimeMillis)
 
   def asDigitalDisplay(duration: Duration): String = {
-    val hours = duration.inSeconds / SECONDS_PER_HOUR
-    val secondsMinusHours = duration.inSeconds % SECONDS_PER_HOUR
+    val hours = duration.seconds / SECONDS_PER_HOUR
+    val secondsMinusHours = duration.seconds % SECONDS_PER_HOUR
     val minutes = secondsMinusHours / SECONDS_PER_MINUTE
     val seconds = secondsMinusHours % SECONDS_PER_MINUTE
 
