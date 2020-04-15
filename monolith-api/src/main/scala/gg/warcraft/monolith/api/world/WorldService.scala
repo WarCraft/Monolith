@@ -22,11 +22,9 @@ trait WorldService {
       location: Location,
       sound: Sound,
       category: SoundCategory,
-      volume: Float,
-      pitch: Float
+      volume: Float = 1,
+      pitch: Float = 1
   ): Unit
-
-  def playSound(location: Location, sound: Sound, category: SoundCategory): Unit
 
   def strikeLightning(location: Location, ambient: Boolean): Unit
 

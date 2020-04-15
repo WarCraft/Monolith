@@ -129,8 +129,8 @@ class SpigotWorldService(
       location: Location,
       sound: Sound,
       category: SoundCategory,
-      volume: Float,
-      pitch: Float
+      volume: Float = 1,
+      pitch: Float = 1
   ): Unit = {
     val spigotLocation = locationMapper.map(location)
     val spigotWorld = spigotLocation.getWorld
@@ -142,12 +142,6 @@ class SpigotWorldService(
       pitch
     )
   }
-
-  override def playSound(
-      location: Location,
-      sound: Sound,
-      category: SoundCategory
-  ): Unit = playSound(location, sound, category, volume = 1, pitch = 1)
 
   override def strikeLightning(location: Location, ambient: Boolean): Unit = {
     val spigotLocation = locationMapper.map(location)
