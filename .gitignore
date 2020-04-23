@@ -17,6 +17,7 @@ settings.json
 
 .metals/
 .bloop/
+project/metals.sbt
 
 /bin/
 */bin/
