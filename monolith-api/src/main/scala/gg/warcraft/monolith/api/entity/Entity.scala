@@ -8,6 +8,7 @@ import gg.warcraft.monolith.api.entity.status.Status
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.Location
+import gg.warcraft.monolith.api.math.AABBf
 
 object Entity {
   type Type = Type.Value
@@ -55,10 +56,10 @@ trait Entity {
   def name: String
   def location: Location
   def eyeLocation: Location
+  def boundingBox: AABBf
   def velocity: Vector3f
   def health: Float
   def equipment: Equipment
   def isAlive: Boolean
   def isGrounded: Boolean
-  // TODO val boundingBox: AABBf
 }

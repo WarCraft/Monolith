@@ -8,10 +8,10 @@ import gg.warcraft.monolith.api.entity.Entity.Type
 import gg.warcraft.monolith.api.entity.attribute.{Attributes, AttributeService}
 import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.status.{Status, StatusService}
-import gg.warcraft.monolith.api.math.Vector3f
+import gg.warcraft.monolith.api.math.{AABBf, Vector3f}
 import gg.warcraft.monolith.api.world.Location
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
-import gg.warcraft.monolith.spigot.math.SpigotVectorMapper
+import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 
 class SpigotEntityAdapter(entity: SpigotEntity)(
@@ -19,6 +19,7 @@ class SpigotEntityAdapter(entity: SpigotEntity)(
     statusService: StatusService,
     teamService: TeamService,
     dataService: EntityDataService,
+    boundingBoxMapper: SpigotAABBfMapper,
     entityTypeMapper: SpigotEntityTypeMapper,
     vectorMapper: SpigotVectorMapper,
     locationMapper: SpigotLocationMapper,
@@ -34,8 +35,10 @@ class SpigotEntityAdapter(entity: SpigotEntity)(
   override def name: String = entity.getName
   override def location: Location = locationMapper map entity.getLocation
   override def eyeLocation: Location = locationMapper map entity.getEyeLocation
+  override def boundingBox: AABBf = boundingBoxMapper map entity.getBoundingBox
   override def velocity: Vector3f = vectorMapper map entity.getVelocity
   override def health: Float = entity.getHealth.toFloat
+  override def isAlive: Boolean = !entity.isDead
   override def isGrounded: Boolean = entity.isOnGround
   override def equipment: Equipment = Equipment(
     itemMapper map entity.getEquipment.getHelmet,
