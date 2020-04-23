@@ -72,6 +72,7 @@ class SpigotEntityEventMapper(
     val entityType = Entity.Type.withName(event.getRightClicked.getType.name)
     val player = event.getPlayer
     val playerId = player.getUniqueId
+    val sneaking = player.isSneaking
     val mainHand = itemMapper.map(player.getInventory.getItemInMainHand)
     val offHand = itemMapper.map(player.getInventory.getItemInOffHand)
     val clickPosition = event.getClickedPosition
@@ -81,6 +82,7 @@ class SpigotEntityEventMapper(
       entityId,
       entityType,
       playerId,
+      sneaking,
       mainHand,
       offHand,
       location,

@@ -4,6 +4,7 @@ import gg.warcraft.monolith.api.effect.{Particle, ParticleAdapter}
 import gg.warcraft.monolith.api.world.Location
 import gg.warcraft.monolith.spigot.player.SpigotPlayer
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
+import org.bukkit.Color
 import org.bukkit.Server
 
 import scala.jdk.CollectionConverters._
@@ -32,7 +33,7 @@ class SpigotParticleAdapter(
   ): Unit = {
     val spigotLocation = locationMapper map location
     val spigotParticle = particleMapper map particle
-    val spigotColor = colorMapper map color
+    val spigotColor = Color.RED // TODO colorMapper map color
     spigotLocation
       .getNearbyEntitiesByType(playerType, DEFAULT_RANGE)
       .asScala

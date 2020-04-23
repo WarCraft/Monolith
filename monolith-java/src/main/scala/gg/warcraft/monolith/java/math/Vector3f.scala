@@ -40,7 +40,8 @@ class Vector3f private[java] (private[java] val asScala: ScalaVector3f) {
   def distanceTo(target: Vector3f): Float = asScala.distanceTo(target)
   def normalize: Vector3f = asScala.normalize
 
-  def toPitchYaw: Array[Float] = asScala.toPitchYaw.productIterator.toArray[Float]
+  def toPitchYaw: Array[Float] =
+    asScala.toPitchYaw.productIterator.toArray.asInstanceOf[Array[Float]]
   def toVector3i: Vector3i =
     gg.warcraft.monolith.api.math.Vector3f.toVector3i(asScala)
 }
