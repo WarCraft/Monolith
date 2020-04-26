@@ -2051,7 +2051,6 @@ case class Minecart(
   val `type` = ItemType.MINECART
 }
 
-// TODO add separate playerSkull item with name String
 case class MobHead(
     variant: MobHeadVariant,
     name: String,
@@ -2253,6 +2252,17 @@ case class Plant(
 ) extends VariableItem[PlantVariant]
     with StackableItem {
   val `type` = ItemType.PLANT
+}
+
+case class PlayerHead(
+    owner: String,
+    name: String,
+    tooltip: List[String],
+    count: Int,
+    attributes: Set[String],
+    hideAttributes: Boolean
+) extends StackableItem {
+  val `type` = ItemType.MOB_HEAD
 }
 
 case class Pickaxe(
