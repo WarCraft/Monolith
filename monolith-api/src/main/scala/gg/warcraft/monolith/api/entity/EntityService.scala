@@ -103,7 +103,7 @@ trait EntityService {
   def knockBackEntity(id: UUID, direction: Vector3f, distance: Float): Unit = {
     val strength = knockBackStrength
       .getOrElseUpdate(distance, calcKnockBackStrength(distance))
-    val knockBack = direction.withY(0.1f).normalize
+    val knockBack = direction.copy(y = 0.1f).normalize
     val velocity = knockBack multiply strength
     setVelocity(id, velocity)
   }
@@ -177,7 +177,7 @@ trait EntityService {
     val strength = leapStrength
       .getOrElseUpdate(distance, calcKnockUpStrength(distance))
     val y = if (distance <= 10f) 0.4f else 0.25f
-    val leap = direction.withY(y).normalize
+    val leap = direction.copy(y = y).normalize
     val velocity = leap multiply strength
     val newVelocity = entity.velocity add velocity
     setVelocity(id, newVelocity)
@@ -188,7 +188,7 @@ trait EntityService {
     heavyEntity(id, 1.seconds)
     val direction = source subtract entity.location.normalize
       .multiply(0.05f * strength)
-    val velocity = entity.velocity.withX(direction.x).withZ(direction.z)
+    val velocity = entity.velocity.copy(x = direction.x).copy(z = direction.z)
     setVelocity(id, velocity)
   }
 

@@ -17,21 +17,14 @@ case class Vector3i(
     y: Int = 0,
     z: Int = 0
 ) extends Embedded {
-  def add(x: Int, y: Int, z: Int): Vector3i =
-    copy(x = this.x + x, y = this.y + y, z = this.z + z)
-  def add(vec: Vector3i): Vector3i = add(vec.x, vec.y, vec.z)
+  def add(xyz: (Int, Int, Int)): Vector3i =
+    copy(x = this.x + xyz._1, y = this.y + xyz._2, z = this.z + xyz._3)
 
-  def subtract(x: Int, y: Int, z: Int): Vector3i =
-    copy(x = this.x - x, y = this.y - y, z = this.z - z)
-  def subtract(vec: Vector3i): Vector3i = subtract(vec.x, vec.y, vec.z)
+  def subtract(xyz: (Int, Int, Int)): Vector3i =
+    copy(x = this.x - xyz._1, y = this.y - xyz._2, z = this.z - xyz._3)
 
   def multiply(scalar: Int): Vector3i =
     copy(x = x * scalar, y = y * scalar, z = z * scalar)
-  def multiply(vec: Vector3i): Vector3i =
-    copy(x = x * vec.x, y = y * vec.y, z = z * vec.z)
-
-  // TODO remove after entire project is converted to Scala
-  def withX(x: Int): Vector3i = copy(x = x)
-  def withY(y: Int): Vector3i = copy(y = y)
-  def withZ(z: Int): Vector3i = copy(z = z)
+  def multiply(xyz: (Int, Int, Int)): Vector3i =
+    copy(x = x * xyz._1, y = y * xyz._2, z = z * xyz._3)
 }

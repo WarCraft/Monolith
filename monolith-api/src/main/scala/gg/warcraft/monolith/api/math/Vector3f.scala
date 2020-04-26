@@ -55,23 +55,21 @@ case class Vector3f(
   lazy val length: Float = Math.sqrt(lengthSquared).toFloat
   lazy val inverseLength: Float = 1f / length
 
-  def add(x: Float, y: Float, z: Float): Vector3f =
-    copy(x = this.x + x, y = this.y + y, z = this.z + z)
-  def add(vec: Vector3f): Vector3f = add(vec.x, vec.y, vec.z)
+  def add(xyz: (Float, Float, Float)): Vector3f =
+    copy(x = this.x + xyz._1, y = this.y + xyz._2, z = this.z + xyz._3)
 
-  def subtract(x: Float, y: Float, z: Float): Vector3f =
-    copy(x = this.x - x, y = this.y - y, z = this.z - z)
-  def subtract(vec: Vector3f): Vector3f = subtract(vec.x, vec.y, vec.z)
+  def subtract(xyz: (Float, Float, Float)): Vector3f =
+    copy(x = this.x - xyz._1, y = this.y - xyz._2, z = this.z - xyz._3)
 
   def multiply(scalar: Float): Vector3f =
     copy(x = x * scalar, y = y * scalar, z = z * scalar)
-  def multiply(vec: Vector3f): Vector3f =
-    copy(x = x * vec.x, y = y * vec.y, z = z * vec.z)
+  def multiply(xyz: (Float, Float, Float)): Vector3f =
+    copy(x = x * xyz._1, y = y * xyz._2, z = z * xyz._3)
 
   def divide(scalar: Float): Vector3f =
     copy(x = x / scalar, y = y / scalar, z = z / scalar)
-  def divide(vec: Vector3f): Vector3f =
-    copy(x = x / vec.x, y = y / vec.y, z = z / vec.z)
+  def divide(xyz: (Float, Float, Float)): Vector3f =
+    copy(x = x / xyz._1, y = y / xyz._2, z = z / xyz._3)
 
   def rotateX(angle: Float): Vector3f = {
     jomlVector.rotateX(angle, jomlOut)
@@ -88,7 +86,8 @@ case class Vector3f(
     jomlOut
   }
 
-  def distanceTo(target: Vector3f): Float = target.subtract(this).length
+  def distanceTo(target: Vector3f): Float =
+    target.subtract(this).length
 
   def normalize: Vector3f =
     Vector3f(x * inverseLength, y * inverseLength, z * inverseLength)
@@ -103,9 +102,4 @@ case class Vector3f(
     val yaw = if (unboundYaw == 180f) -180f else unboundYaw
     (pitch.toFloat, yaw.toFloat)
   }
-
-  // TODO remove after entire project is converted to Scala
-  def withX(x: Float): Vector3f = copy(x = x)
-  def withY(y: Float): Vector3f = copy(y = y)
-  def withZ(z: Float): Vector3f = copy(z = z)
 }
