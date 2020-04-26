@@ -21,7 +21,7 @@ import gg.warcraft.monolith.spigot.entity.{
 import gg.warcraft.monolith.spigot.item.{
   SpigotInventory, SpigotItemMapper, SpigotItemTypeMapper, SpigotItemVariantMapper
 }
-import gg.warcraft.monolith.spigot.math.SpigotVectorMapper
+import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 
 class SpigotPlayerAdapter(player: SpigotPlayer)(
@@ -36,6 +36,7 @@ class SpigotPlayerAdapter(player: SpigotPlayer)(
     dataService: PlayerDataService,
     playerService: SpigotPlayerService,
     vectorMapper: SpigotVectorMapper,
+    boundingBoxMapper: SpigotAABBfMapper,
     itemMapper: SpigotItemMapper,
     entityTypeMapper: SpigotEntityTypeMapper,
     gameModeMapper: SpigotGameModeMapper,
@@ -55,6 +56,7 @@ class SpigotPlayerAdapter(player: SpigotPlayer)(
     (statisticService getStatistics id).getOrThrow
 
   override def mode: Mode = gameModeMapper map player.getGameMode
+  override def isOnline: Boolean = player.isOnline
   override def isSneaking: Boolean = player.isSneaking
   override def hasPermission(perm: String): Boolean = player hasPermission perm
 

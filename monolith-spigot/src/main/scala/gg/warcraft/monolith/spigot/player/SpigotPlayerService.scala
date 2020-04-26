@@ -21,7 +21,7 @@ import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper
 import gg.warcraft.monolith.spigot.item.{
   SpigotItem, SpigotItemMapper, SpigotItemTypeMapper, SpigotItemVariantMapper
 }
-import gg.warcraft.monolith.spigot.math.SpigotVectorMapper
+import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.{Material, Server}
 import org.bukkit.inventory.PlayerInventory
@@ -40,6 +40,7 @@ class SpigotPlayerService(
     entityDataService: EntityDataService,
     dataService: PlayerDataService,
     vectorMapper: SpigotVectorMapper,
+    boundingBoxMapper: SpigotAABBfMapper,
     locationMapper: SpigotLocationMapper,
     gameModeMapper: SpigotGameModeMapper,
     itemTypeMapper: SpigotItemTypeMapper,
@@ -52,7 +53,7 @@ class SpigotPlayerService(
   override def getPlayer(id: UUID): Player = {
     server getEntity id match {
       case it: SpigotPlayer => new SpigotPlayerAdapter(it)
-      case _                => throw IllegalArgumentException
+      case _                => throw new IllegalArgumentException
     }
   }
 

@@ -20,7 +20,9 @@ import gg.warcraft.monolith.api.player.hiding.PlayerHidingService
 import gg.warcraft.monolith.api.world.portal.PortalService
 import gg.warcraft.monolith.spigot.block._
 import gg.warcraft.monolith.spigot.block.backup.SpigotBlockBackupService
-import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
+import gg.warcraft.monolith.spigot.combat.{
+  SpigotCombatEventMapper, SpigotPotionMapper
+}
 import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
 import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
 import gg.warcraft.monolith.spigot.entity.{
@@ -28,7 +30,7 @@ import gg.warcraft.monolith.spigot.entity.{
 }
 import gg.warcraft.monolith.spigot.entity.attribute.SpigotAttributeService
 import gg.warcraft.monolith.spigot.item._
-import gg.warcraft.monolith.spigot.math.SpigotVectorMapper
+import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.menu.{
   SpigotButtonMapper, SpigotMenuMapper, SpigotMenuService
 }
@@ -59,6 +61,8 @@ object Implicits {
   private[spigot] implicit lazy val taskService: TaskService =
     new SpigotTaskService
 
+  implicit lazy val boundingBoxMapper: SpigotAABBfMapper =
+    new SpigotAABBfMapper
   implicit lazy val vectorMapper: SpigotVectorMapper =
     new SpigotVectorMapper
 
@@ -94,6 +98,8 @@ object Implicits {
   // Combat
   implicit lazy val combatEventMapper: SpigotCombatEventMapper =
     new SpigotCombatEventMapper
+  implicit lazy val potionMapper: SpigotPotionMapper =
+    new SpigotPotionMapper
 
   // Entity
   implicit lazy val attributeService: AttributeService =

@@ -1,6 +1,7 @@
 package gg.warcraft.monolith.spigot
 
-import gg.warcraft.monolith.api.core.{Duration, MonolithConfig, ServerShutdownEvent}
+import gg.warcraft.monolith.api.core.{MonolithConfig, ServerShutdownEvent}
+import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.entity.data.EntityDataHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
@@ -68,12 +69,12 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
   private def enableTasks(): Unit = {
     val dailyTicker = new DailyTicker()
-    taskService runTask (Duration.oneSecond, dailyTicker.run)
+    taskService runTask (1.seconds, dailyTicker.run)
 
     val playerDataUpdater = new PlayerDataUpdater(playerService, playerDataService)
-    taskService runTask (Duration.oneTick, playerDataUpdater.run)
+    taskService runTask (1.ticks, playerDataUpdater.run)
 
     val portalTicker = new PortalTicker(portalService)
-    taskService runTask (Duration.ofTicks(5), portalTicker.run)
+    taskService runTask (5.ticks, portalTicker.run)
   }
 }
