@@ -16,7 +16,7 @@ class ItemStorageService {
   def getItems(playerId: UUID): Future[Iterable[StoredItem]] =
     ??? // TODO ItemStorageService.storage.getOrElse(playerId, emptyMap).values
 
-  def storeItem[T : Item](item: T, playerId: UUID): Future[UUID] =
+  def storeItem[T <: Item](item: T, playerId: UUID): Future[UUID] =
     ???
 //  {
 //    val storedItem = StoredItem(
