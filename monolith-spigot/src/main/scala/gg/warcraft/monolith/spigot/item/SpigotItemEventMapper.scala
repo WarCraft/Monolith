@@ -4,7 +4,7 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.Entity
-import gg.warcraft.monolith.api.item.Item
+import gg.warcraft.monolith.api.item.{Item, ItemPickupEvent, ItemPrePickupEvent}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotItemEventMapper(
