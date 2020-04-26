@@ -4,15 +4,18 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.Codecs
-import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
-import io.getquill.{SnakeCase, SqliteDialect}
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.entity.team.{ Team, TeamService }
+import gg.warcraft.monolith.api.entity.EntityTeamChangedEvent
+import io.getquill.{ SnakeCase, SqliteDialect }
 import io.getquill.context.jdbc.JdbcContext
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 class EntityDataService(
     implicit logger: Logger,
     database: JdbcContext[SqliteDialect, SnakeCase],
+    eventService: EventService,
     teamService: TeamService
 ) {
   import database._
@@ -36,6 +39,8 @@ class EntityDataService(
     _data get id
 
   def setEntityData(data: EntityData): Unit = {
+    val prevData = _data.get(data.id)
+
     _data += (data.id -> data)
     Future {
       run {
@@ -44,7 +49,16 @@ class EntityDataService(
           .onConflictUpdate(_.id)((_1, _2) => _1.team -> _2.team)
       }
     }
-    // TODO if team has changed fire event
+
+    prevData match {
+      case Some(prevData) =>
+        if(prevData.team != data.team) {
+          // TODO get entity here and set type in event or send entire Entity adapter with entity events
+          val teamChanged = EntityTeamChangedEvent(data.id, null, prevData.team, data.team)
+          eventService publish teamChanged
+        }
+      case None        =>
+    }
   }
 
   def deleteEntityData(id: UUID): Unit = {
