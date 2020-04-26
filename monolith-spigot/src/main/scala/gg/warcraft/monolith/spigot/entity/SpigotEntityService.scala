@@ -15,10 +15,11 @@ import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.api.util.Ops._
 import gg.warcraft.monolith.api.world.Location
-import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import gg.warcraft.monolith.spigot.SpigotPlayer
+import gg.warcraft.monolith.spigot.combat.SpigotPotionMapper
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
-import gg.warcraft.monolith.spigot.math.SpigotVectorMapper
+import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
+import gg.warcraft.monolith.spigot.player.SpigotPlayer
+import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Server
 import org.bukkit.entity.EntityType
 import org.bukkit.metadata.FixedMetadataValue
@@ -36,8 +37,10 @@ class SpigotEntityService(
     dataService: EntityDataService,
     playerService: PlayerService,
     vectorMapper: SpigotVectorMapper,
+    boundingBoxMapper: SpigotAABBfMapper,
     locationMapper: SpigotLocationMapper,
     itemMapper: SpigotItemMapper,
+    potionMapper: SpigotPotionMapper,
     entityTypeMapper: SpigotEntityTypeMapper
 ) extends EntityService {
   private def getSpigotEntity(id: UUID): Option[SpigotEntity] = {
@@ -47,9 +50,11 @@ class SpigotEntityService(
     }
   }
 
-  override def getEntity(id: UUID): Option[Entity] = {
+  override def getEntity(id: UUID): Entity = getEntityOption(id).get
+
+  override def getEntityOption(id: UUID): Option[Entity] = {
     server getEntity id match {
-      case _: SpigotPlayer  => playerService getPlayer id
+      case _: SpigotPlayer  => (playerService getPlayer id) |> Some.apply
       case it: SpigotEntity => new SpigotEntityAdapter(it) |> Some.apply
       case _                => None
     }
@@ -76,7 +81,9 @@ class SpigotEntityService(
     }
 
   override def addPotionEffect(id: UUID, effect: PotionEffect): Unit =
-    getSpigotEntity(id) foreach { _ addPotionEffect (potionMapper map effect) }
+    getSpigotEntity(id) foreach {
+      _ addPotionEffect (potionMapper map effect)
+    }
   /*
             org.bukkit.potion.PotionEffectType spigotPotionEffectType = potionEffectTypeMapper.map(effect.getType());
             org.bukkit.potion.PotionEffect spigotPotionEffect = new org.bukkit.potion.PotionEffect(
@@ -196,4 +203,18 @@ class SpigotEntityService(
       it setFireTicks updatedFireTicks
     }
   }
+
+  // TODO
+  override def intersectEntity(
+      origin: Location,
+      target: Location,
+      ignore: Entity => Boolean
+  ): Entity.Intersection = ???
+
+  // TODO
+  override def calculateTarget(
+      id: UUID,
+      range: Float,
+      ignore: Entity => Boolean
+  ): Entity.Target = ???
 }
