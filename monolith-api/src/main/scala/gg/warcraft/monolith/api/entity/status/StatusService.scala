@@ -16,8 +16,8 @@ class StatusService(
   private[status] def loadStatus(playerId: UUID): Unit =
     statuses put (playerId, new Status)
 
-  private[status] def invalidateStatus(playerId: UUID): Unit =
-    statuses remove playerId
+  private[status] def invalidateStatus(entityId: UUID): Unit =
+    statuses remove entityId
 
   def getStatus(entityId: UUID): Status =
     statuses.getOrElseUpdate(entityId, new Status)
@@ -51,6 +51,4 @@ class StatusService(
       }
     }
   }
-
-  // TODO create/delete statuses for non-player Entities
 }
