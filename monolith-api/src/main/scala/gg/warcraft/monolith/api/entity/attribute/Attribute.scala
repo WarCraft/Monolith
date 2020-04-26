@@ -1,40 +1,30 @@
 package gg.warcraft.monolith.api.entity.attribute
 
 object Attribute {
-  type Generic = Generic.Value
-
-  object Generic extends Enumeration {
-    implicit def toVal(v: Value): Val = v.asInstanceOf[Val]
-    implicit def toAttribute(v: Value): Attribute = v.asInstanceOf[Attribute]
-
-    protected case class Val() extends super.Val with Attribute {}
-
-    val ARMOR, ARMOR_TOUGHNESS, ATTACK_DAMAGE, ATTACK_SPEED, FLYING_SPEED,
-        FOLLOW_RANGE, KNOCKBACK_RESISTANCE, LUCK, MAX_HEALTH, MOVEMENT_SPEED = Val
+  trait Type {
+    val name: String
   }
 
-  type Horse = Horse.Value
-  object Horse extends Enumeration {
-    implicit def toVal(v: Value): Val = v.asInstanceOf[Val]
-    implicit def toAttribute(v: Value): Attribute = v.asInstanceOf[Attribute]
+  sealed abstract class Generic(override val name: String) extends Type
+  case object ARMOR extends Generic("Armor")
+  case object ARMOR_TOUGHNESS extends Generic("Armor Toughness")
+  case object ATTACK_DAMAGE extends Generic("Attack Damage")
+  case object ATTACK_SPEED extends Generic("Attack Speed")
+  case object FLYING_SPEED extends Generic("Flying Speed")
+  case object FOLLOW_RANGE extends Generic("Follow Range")
+  case object KNOCKBACK_RESISTANCE extends Generic("Knockback Resistance")
+  case object LUCK extends Generic("Luck")
+  case object MAX_HEALTH extends Generic("Max Health")
+  case object MOVEMENT_SPEED extends Generic("Movement Speed")
 
-    protected case class Val() extends super.Val with Attribute {}
+  sealed abstract class Horse(override val name: String) extends Type
+  case object JUMP_STRENGTH extends Horse("Jump Strength")
 
-    val JUMP_STRENGTH = Val
-  }
-
-  type Zombie = Zombie.Value
-  object Zombie extends Enumeration {
-    implicit def toVal(v: Value): Val = v.asInstanceOf[Val]
-    implicit def toAttribute(v: Value): Attribute = v.asInstanceOf[Attribute]
-
-    protected case class Val() extends super.Val with Attribute {}
-
-    val SPAWN_REINFORCEMENTS = Val
-  }
+  sealed abstract class Zombie(override val name: String) extends Type
+  case object SPAWN_REINFORCEMENTS extends Horse("Spawn Reinforcements")
 }
 
 trait Attribute {
-  val id: Any
+  val typed: Attribute.Type
   val value: Float
 }
