@@ -3,19 +3,24 @@ package gg.warcraft.monolith.api.item.storage
 import java.util.UUID
 
 import gg.warcraft.monolith.api.item.Item
+import io.circe._
+import io.circe.generic.auto._
+import io.circe.parser._
+import io.circe.syntax._
+
+import scala.concurrent.Future
 
 class ItemStorageService {
-  private final val emptyMap = Map.empty[UUID, StoredItem]
+  private final val emptyMap: Map[UUID, StoredItem] = Map.empty
 
-  def getItems(playerId: UUID): Iterable[StoredItem] =
+  def getItems(playerId: UUID): Future[Iterable[StoredItem]] =
     ItemStorageService.storage.getOrElse(playerId, emptyMap).values
 
-  def store(item: Item, playerId: UUID): UUID = {
-    val clazz = item.getClass
+  def storeItem[T : Item](item: T, playerId: UUID): Future[UUID] = {
     val storedItem = StoredItem(
       UUID.randomUUID(),
-      "", // TODO item.asJson.noSpaces,
-      item.getClass.getCanonicalName
+      playerId,
+      item.asJson.noSpaces
     )
 
     val items = ItemStorageService.storage.getOrElse(playerId, emptyMap)
@@ -27,15 +32,11 @@ class ItemStorageService {
     storedItem.id
   }
 
-  def claim(itemId: UUID, playerId: UUID): Boolean = {
+  def claimItem(id: UUID, playerId: UUID): Future[Boolean] = {
     val json = ""
     // TODO get item from persistence
     // val item = decode[Item](json)
 
     false
   }
-}
-
-private object ItemStorageService {
-  private final var storage = Map[UUID, Map[UUID, StoredItem]]()
 }

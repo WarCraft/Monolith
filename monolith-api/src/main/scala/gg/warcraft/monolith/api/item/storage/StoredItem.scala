@@ -4,6 +4,6 @@ import java.util.UUID
 
 case class StoredItem(
     id: UUID,
-    data: String,
-    clazz: String
+    playerId: UUID,
+    data: String
 )
