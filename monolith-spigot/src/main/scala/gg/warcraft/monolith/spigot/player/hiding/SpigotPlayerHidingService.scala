@@ -2,7 +2,7 @@ package gg.warcraft.monolith.spigot.player.hiding
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.player.Player
+import gg.warcraft.monolith.api.player.{Player, PlayerService}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingService
 import gg.warcraft.monolith.spigot.player.SpigotPlayer
 import org.bukkit.Server
@@ -12,7 +12,8 @@ import scala.jdk.CollectionConverters._
 
 class SpigotPlayerHidingService(
     implicit server: Server,
-    plugin: Plugin
+    plugin: Plugin,
+    playerService: PlayerService
 ) extends PlayerHidingService {
   private var hiddenPlayers: Map[UUID, Set[UUID]] = Map.empty
   private var hidePredicates: Map[UUID, Player => Boolean] = Map.empty
@@ -36,7 +37,9 @@ class SpigotPlayerHidingService(
   }
 
   override def hideFrom(id: UUID, predicate: Player => Boolean): Unit =
-    hideFrom(id, server.getOnlinePlayers.asScala filter { predicate apply _ })
+    hideFrom(id, server.getOnlinePlayers.asScala filter { player =>
+      predicate apply (playerService getPlayer player.getUniqueId)
+    })
 
   private[player] override def hideAllFrom(id: UUID): Unit = {}
 
