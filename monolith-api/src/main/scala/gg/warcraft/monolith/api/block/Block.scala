@@ -19,12 +19,12 @@ object Block {
       implicit worldService: WorldService
   ) {
     def getRelative(directions: BlockFace*): List[Block] = directions.map {
-      case BlockFace.NORTH => worldService getBlock block.location.add(0, 0, -1)
-      case BlockFace.EAST  => worldService getBlock block.location.add(1, 0, 0)
-      case BlockFace.SOUTH => worldService getBlock block.location.add(0, 0, 1)
-      case BlockFace.WEST  => worldService getBlock block.location.add(-1, 0, 0)
-      case BlockFace.UP    => worldService getBlock block.location.add(0, 1, 0)
-      case BlockFace.DOWN  => worldService getBlock block.location.add(0, -1, 0)
+      case BlockFace.NORTH => worldService.getBlock(block.location + (0, 0, -1))
+      case BlockFace.EAST  => worldService.getBlock(block.location + (1, 0, 0))
+      case BlockFace.SOUTH => worldService.getBlock(block.location + (0, 0, 1))
+      case BlockFace.WEST  => worldService.getBlock(block.location + (-1, 0, 0))
+      case BlockFace.UP    => worldService.getBlock(block.location + (0, 1, 0))
+      case BlockFace.DOWN  => worldService.getBlock(block.location + (0, -1, 0))
     }.toList
   }
 }

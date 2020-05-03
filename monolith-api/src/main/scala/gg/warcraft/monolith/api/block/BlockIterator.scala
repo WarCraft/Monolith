@@ -9,7 +9,7 @@ class BlockIterator(origin: Location, target: Location)(
     implicit worldService: WorldService
 ) extends Iterator[Block] {
   private val maxDistance = origin.distanceTo(target)
-  private val direction = target.subtract(origin).normalize
+  private val direction = (target - origin).normalized
 
   private var distance = 0f
   private var scanLoc = origin
@@ -22,14 +22,14 @@ class BlockIterator(origin: Location, target: Location)(
       delta = direction
       distance += 1
 
-      scanLoc = scanLoc add delta
+      scanLoc = scanLoc + delta
       if (Location.toBlockLocation(scanLoc) == blockLoc) calculateNext()
       else scanLoc
     } else {
-      delta = direction multiply (maxDistance - distance)
+      delta = direction * (maxDistance - distance)
       distance = maxDistance
 
-      scanLoc = scanLoc add delta
+      scanLoc = scanLoc + delta
       // TODO add toBlockLocation method back to Location which forwards to implicit def?
       if (Location.toBlockLocation(scanLoc) == blockLoc) null
       else scanLoc
@@ -49,7 +49,7 @@ class BlockIterator(origin: Location, target: Location)(
     while (hasNext) {
       val block = next()
       if (predicate apply block) {
-        val intersection = blockLoc add (.5f, .5f, .5f)
+        val intersection = blockLoc.toLocation + (.5f, .5f, .5f)
         // FIXME
         // System.out.println("DEBUG Calculating intersection for " + currentBlockLocation);
         // Vector3f blockMinimumCorner = currentBlockLocation.toLocation().toVector();

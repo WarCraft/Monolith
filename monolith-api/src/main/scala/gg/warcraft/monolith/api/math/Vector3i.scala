@@ -17,14 +17,14 @@ case class Vector3i(
     y: Int = 0,
     z: Int = 0
 ) extends Embedded {
-  def add(xyz: (Int, Int, Int)): Vector3i =
+  def +(xyz: (Int, Int, Int)): Vector3i =
     copy(x = this.x + xyz._1, y = this.y + xyz._2, z = this.z + xyz._3)
 
-  def subtract(xyz: (Int, Int, Int)): Vector3i =
+  def -(xyz: (Int, Int, Int)): Vector3i =
     copy(x = this.x - xyz._1, y = this.y - xyz._2, z = this.z - xyz._3)
 
-  def multiply(scalar: Int): Vector3i =
+  def *(scalar: Int): Vector3i =
     copy(x = x * scalar, y = y * scalar, z = z * scalar)
-  def multiply(xyz: (Int, Int, Int)): Vector3i =
+  def *(xyz: (Int, Int, Int)): Vector3i =
     copy(x = x * xyz._1, y = y * xyz._2, z = z * xyz._3)
 }

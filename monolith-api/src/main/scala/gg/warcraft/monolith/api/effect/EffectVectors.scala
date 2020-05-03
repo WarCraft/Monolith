@@ -8,7 +8,7 @@ object EffectVectors {
 
   def circle(radius: Float, count: Int): EffectVectors = {
     val vectors = (0 to count) map { _ =>
-      (randomVector multiply radius) copy (y = 0)
+      (randomVector * radius) copy (y = 0)
     }
     new EffectVectors(vectors.toList)
   }
@@ -16,14 +16,14 @@ object EffectVectors {
   def dome(radius: Float, count: Int): EffectVectors = {
     val vectors = (0 to count) map { _ =>
       val vector = randomVector
-      (vector multiply radius) copy (y = Math abs vector.y)
+      (vector * radius) copy (y = Math abs vector.y)
     }
     new EffectVectors(vectors.toList)
   }
 
   def line(origin: Vector3f, target: Vector3f, count: Int): EffectVectors = {
-    val delta = (target subtract origin) divide count
-    val vectors = (0 to count) map { i => origin add (delta multiply i) }
+    val delta = (target - origin) / count
+    val vectors = (0 to count) map { i => origin + (delta * i) }
     new EffectVectors(vectors.toList)
   }
 
@@ -44,7 +44,7 @@ object EffectVectors {
   }
 
   def sphere(radius: Float, count: Int): EffectVectors = {
-    val vectors = (0 to count) map { _ => randomVector multiply radius }
+    val vectors = (0 to count) map { _ => randomVector * radius }
     new EffectVectors(vectors.toList)
   }
 }
@@ -53,7 +53,7 @@ class EffectVectors(vectors: List[Vector3f]) extends Iterable[Vector3f] {
   override def iterator: Iterator[Vector3f] = vectors.iterator
 
   def add(offset: Vector3f): EffectVectors = {
-    val newVectors = vectors map { _ add offset }
+    val newVectors = vectors map { _ + offset }
     new EffectVectors(newVectors)
   }
 

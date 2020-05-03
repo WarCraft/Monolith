@@ -1,5 +1,6 @@
 package gg.warcraft.monolith.api.math
 
+import gg.warcraft.monolith.api.util.Ops._
 import io.getquill.Embedded
 
 object Vector3f {
@@ -9,9 +10,7 @@ object Vector3f {
     Vector3f(x.toFloat, y.toFloat, z.toFloat)
 
   def apply(pitch: Float, yaw: Float): Vector3f = {
-    require(pitch >= -90 && pitch <= 90, {
-      s"pitch is $pitch, must be >= -90 and <= 90"
-    })
+    require(pitch >=< (-90, 90), s"pitch is $pitch, must be >= -90 and <= 90")
 
     var clampedYaw = yaw
     while (clampedYaw < -180f) clampedYaw += 360f
@@ -54,21 +53,22 @@ case class Vector3f(
   lazy val lengthSquared: Float = x * x + y * y + z * z
   lazy val length: Float = Math.sqrt(lengthSquared).toFloat
   lazy val inverseLength: Float = 1f / length
+  lazy val normalized: Vector3f = this * inverseLength
 
-  def add(xyz: (Float, Float, Float)): Vector3f =
+  def +(xyz: (Float, Float, Float)): Vector3f =
     copy(x = this.x + xyz._1, y = this.y + xyz._2, z = this.z + xyz._3)
 
-  def subtract(xyz: (Float, Float, Float)): Vector3f =
+  def -(xyz: (Float, Float, Float)): Vector3f =
     copy(x = this.x - xyz._1, y = this.y - xyz._2, z = this.z - xyz._3)
 
-  def multiply(scalar: Float): Vector3f =
+  def *(scalar: Float): Vector3f =
     copy(x = x * scalar, y = y * scalar, z = z * scalar)
-  def multiply(xyz: (Float, Float, Float)): Vector3f =
+  def *(xyz: (Float, Float, Float)): Vector3f =
     copy(x = x * xyz._1, y = y * xyz._2, z = z * xyz._3)
 
-  def divide(scalar: Float): Vector3f =
+  def /(scalar: Float): Vector3f =
     copy(x = x / scalar, y = y / scalar, z = z / scalar)
-  def divide(xyz: (Float, Float, Float)): Vector3f =
+  def /(xyz: (Float, Float, Float)): Vector3f =
     copy(x = x / xyz._1, y = y / xyz._2, z = z / xyz._3)
 
   def rotateX(angle: Float): Vector3f = {
@@ -87,13 +87,9 @@ case class Vector3f(
   }
 
   def distanceTo(target: Vector3f): Float =
-    target.subtract(this).length
-
-  def normalize: Vector3f =
-    Vector3f(x * inverseLength, y * inverseLength, z * inverseLength)
+    (target - this).length
 
   def toPitchYaw: (Float, Float) = {
-    val normalized = normalize
     val pitchRad = Math.asin(-normalized.y)
     val yawRad = Math.atan2(normalized.x, normalized.z)
 

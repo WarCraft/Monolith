@@ -41,11 +41,11 @@ case class Location(
   def this(world: World, x: Float, y: Float, z: Float) =
     this(world, Vector3f(x, y, z), Vector3f.ZERO_PITCH_YAW)
 
-  def add(xyz: (Float, Float, Float)): Location =
-    copy(translation = translation.add(xyz._1, xyz._2, xyz._3))
+  def +(xyz: (Float, Float, Float)): Location =
+    copy(translation = translation + xyz)
 
-  def subtract(xyz: (Float, Float, Float)): Location =
-    copy(translation = translation.subtract(xyz._1, xyz._2, xyz._3))
+  def -(xyz: (Float, Float, Float)): Location =
+    copy(translation = translation - xyz)
 
   def distanceTo(target: Location): Float =
     translation distanceTo target

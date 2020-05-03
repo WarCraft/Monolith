@@ -97,17 +97,17 @@ class BlockBuildService(
         .reduce { Math.max }
 
     foundationBB.copy(
-      min = foundationBB.min.add(0, 1, 0),
+      min = foundationBB.min + (0, 1, 0),
       max = foundationBB.max.copy(y = maxY)
     )
   }
 
   private def searchFoundation(sign: Sign): Set[Block] = {
     val attachedTo = sign.direction.get match {
-      case BlockFace.NORTH => worldService getBlock sign.location.add(0, 0, 1)
-      case BlockFace.EAST  => worldService getBlock sign.location.add(-1, 0, 0)
-      case BlockFace.SOUTH => worldService getBlock sign.location.add(0, 0, -1)
-      case BlockFace.WEST  => worldService getBlock sign.location.add(1, 0, 0)
+      case BlockFace.NORTH => worldService.getBlock(sign.location + (0, 0, 1))
+      case BlockFace.EAST  => worldService.getBlock(sign.location + (-1, 0, 0))
+      case BlockFace.SOUTH => worldService.getBlock(sign.location + (0, 0, -1))
+      case BlockFace.WEST  => worldService.getBlock(sign.location + (1, 0, 0))
       case _               => throw new IllegalArgumentException
     }
 

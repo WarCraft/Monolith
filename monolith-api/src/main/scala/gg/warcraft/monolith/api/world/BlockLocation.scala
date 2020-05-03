@@ -30,11 +30,11 @@ case class BlockLocation(
   def this(world: World, x: Int, y: Int, z: Int) =
     this(world, Vector3i(x, y, z))
 
-  def add(xyz: (Int, Int, Int)): BlockLocation =
-    copy(translation = translation add xyz)
+  def +(xyz: (Int, Int, Int)): BlockLocation =
+    copy(translation = translation + xyz)
 
-  def subtract(xyz: (Int, Int, Int)): BlockLocation =
-    copy(translation = translation subtract xyz)
+  def -(xyz: (Int, Int, Int)): BlockLocation =
+    copy(translation = translation - xyz)
 
   def toLocation: Location =
     BlockLocation toLocation this

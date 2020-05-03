@@ -60,7 +60,7 @@ case class BlockBox(
   }
 
   def translate(vec: Vector3i): BlockBox =
-    BlockBox(world, min.add(vec), max.add(vec))
+    BlockBox(world, min + vec, max + vec)
 
   def rotateY(pivot: BlockLocation, degrees: Int): BlockBox = {
     require(degrees % 90 == 0, s"degrees is $degrees, must be a multiple of 90")
