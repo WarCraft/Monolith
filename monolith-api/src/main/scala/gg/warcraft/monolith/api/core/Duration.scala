@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.util.TimeUtils
 
 object Duration {
-  @inline implicit final class IntOps(private val self: Int) extends AnyVal {
+  @inline implicit final class DurationOps(private val self: Int) extends AnyVal {
     def millis: Duration = {
       val clippedMillis = Math.max(0, self)
       new Duration(
