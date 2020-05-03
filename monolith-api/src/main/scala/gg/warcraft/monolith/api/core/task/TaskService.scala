@@ -4,10 +4,10 @@ import gg.warcraft.monolith.api.core.Duration
 import gg.warcraft.monolith.api.core.Duration._
 
 trait TaskService {
-  def evalLater(delay: Duration, task: => Unit): Task
-  def runLater(delay: Duration, task: () => Unit): Task = evalLater(delay, task())
-  def evalNextTick(task: => Unit): Task = evalLater(1.ticks, task)
-  def runNextTick(task: () => Unit): Task = evalLater(1.ticks, task())
+  def evalLater(delay: Duration)(task: => Unit): Task
+  def runLater(delay: Duration, task: () => Unit): Task = evalLater(delay)(task())
+  def evalNextTick(task: => Unit): Task = evalLater(1.ticks)(task)
+  def runNextTick(task: () => Unit): Task = evalLater(1.ticks)(task())
 
   def evalAsync(task: => Unit): Task
   def runAsync(task: () => Unit): Task = evalAsync(task())
