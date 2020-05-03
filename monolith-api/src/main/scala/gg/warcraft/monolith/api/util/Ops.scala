@@ -10,6 +10,18 @@ object Ops {
     def |>[B](f: A => B): B = f apply self
   }
 
+  @inline implicit final class DoubleOps(private val self: Double) extends AnyVal {
+    def >=<(bound: (Double, Double)): Boolean = self >= bound._1 && self <= bound._2
+  }
+
+  @inline implicit final class FloatOps(private val self: Float) extends AnyVal {
+    def >=<(bound: (Float, Float)): Boolean = self >= bound._1 && self <= bound._2
+  }
+
+  @inline implicit final class IntOps(private val self: Int) extends AnyVal {
+    def >=<(bound: (Int, Int)): Boolean = self >= bound._1 && self <= bound._2
+  }
+
   @inline implicit final class NullableOps[A](private val self: A) extends AnyVal {
     def ??[B](f: A => B): B = if (self != null) self |> f else null.asInstanceOf[B]
     def ?:(f: => A): A = if (self == null) f else self
