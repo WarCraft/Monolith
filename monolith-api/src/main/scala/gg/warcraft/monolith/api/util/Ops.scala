@@ -10,6 +10,12 @@ object Ops {
     def |>[B](f: A => B): B = f apply self
   }
 
+  @inline implicit final class FunctionOps[A, B](
+      private val self: A => B
+  ) extends AnyVal {
+    def <|(it: A): B = self apply it
+  }
+
   @inline implicit final class DoubleOps(private val self: Double) extends AnyVal {
     def >=<(bound: (Double, Double)): Boolean = self >= bound._1 && self <= bound._2
   }
