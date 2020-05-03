@@ -15,7 +15,7 @@ object MathUtils {
     val x = random.nextFloat() * 2f - 1f
     val y = random.nextFloat() * 2f - 1f
     val z = random.nextFloat() * 2f - 1f
-    Vector3f(x, y, z).normalize
+    Vector3f(x, y, z).normalized
   }
 
   def randomCircleVector: Vector3f = {
