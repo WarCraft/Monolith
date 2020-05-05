@@ -7,4 +7,6 @@ trait Team {
   val name: String
   val chatColor: ColorCode.Type
   val particleColor: Particle.Color
+
+  override def toString: String = name
 }
