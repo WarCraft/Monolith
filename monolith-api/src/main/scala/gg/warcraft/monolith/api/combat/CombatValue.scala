@@ -4,6 +4,15 @@ object CombatValue {
   object Modifier extends Enumeration {
     type Type = Value
     val PERCENT, FLAT, OVERRIDE = Value
+
+    def percent(source: CombatSource, value: Float): Modifier =
+      Modifier(source, PERCENT, value)
+
+    def flat(source: CombatSource, value: Float): Modifier =
+      Modifier(source, FLAT, value)
+
+    def `override`(source: CombatSource, value: Float): Modifier =
+      Modifier(source, OVERRIDE, value)
   }
 
   case class Modifier(
