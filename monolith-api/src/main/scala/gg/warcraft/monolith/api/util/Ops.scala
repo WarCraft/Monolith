@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.core.task.TaskService
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-object Ops {
+object Ops { // TODO rename chaining like scala.util.chaining
   @inline implicit final class ChainingOps[A](private val self: A) extends AnyVal {
     def |>[B](f: A => B): B = f apply self
   }
