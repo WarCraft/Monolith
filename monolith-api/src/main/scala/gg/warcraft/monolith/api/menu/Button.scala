@@ -17,8 +17,8 @@ object Button {
   def apply(
       icon: ItemTypeOrVariant,
       title: String,
-      action: Click => Unit,
-      tooltip: List[String] = Nil
+      tooltip: List[String] = Nil,
+      action: Click => Unit = _ => {}
   ): Button = {
     val formattedTitle = s"$WHITE$title"
     val formattedTooltip = tooltip map (it => s"$GRAY$it")

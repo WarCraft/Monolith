@@ -1,27 +1,24 @@
 package gg.warcraft.monolith.api.menu
 
 object Menu {
-  type Size = Size.Value
-  object Size extends Enumeration {
-    protected case class Val(slots: Int) extends super.Val
-    implicit def toVal(v: Value): Val = v.asInstanceOf[Val]
-
-    val ONE_ROW = Val(9)
-    val TWO_ROWS = Val(18)
-    val THREE_ROWS = Val(27)
-    val FOUR_ROWS = Val(36)
-    val FIVE_ROWS = Val(45)
-    val SIX_ROWS = Val(54)
-
+  object Size {
     def fromRows(rows: Int): Size = rows match {
+      case 1 => ONE_ROW
       case 2 => TWO_ROWS
       case 3 => THREE_ROWS
       case 4 => FOUR_ROWS
       case 5 => FIVE_ROWS
       case 6 => SIX_ROWS
-      case _ => ONE_ROW
     }
   }
+
+  sealed abstract class Size(val slots: Int)
+  case object ONE_ROW extends Size(9)
+  case object TWO_ROWS extends Size(18)
+  case object THREE_ROWS extends Size(27)
+  case object FOUR_ROWS extends Size(36)
+  case object FIVE_ROWS extends Size(45)
+  case object SIX_ROWS extends Size(54)
 }
 
 case class Menu(
