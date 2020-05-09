@@ -5,7 +5,8 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.chaining._
+import gg.warcraft.monolith.api.util.future._
 import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 

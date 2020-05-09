@@ -1,6 +1,6 @@
 package gg.warcraft.monolith.api.math
 
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.number._
 import io.getquill.Embedded
 
 object Vector3f {

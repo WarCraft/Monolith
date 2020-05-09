@@ -6,7 +6,7 @@ import java.util.logging.Logger
 import gg.warcraft.monolith.api.core.Codecs
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.player.statistic.StatisticService
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.chaining._
 import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 

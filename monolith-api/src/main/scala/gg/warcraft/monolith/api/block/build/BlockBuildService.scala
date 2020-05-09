@@ -5,7 +5,7 @@ import java.util.logging.Logger
 import gg.warcraft.monolith.api.block.{Block, BlockFace, BlockType, Sign}
 import gg.warcraft.monolith.api.block.box.{BlockBox, BlockBoxReader}
 import gg.warcraft.monolith.api.core.MonolithConfig
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.WorldService
 
 class BlockBuildService(
