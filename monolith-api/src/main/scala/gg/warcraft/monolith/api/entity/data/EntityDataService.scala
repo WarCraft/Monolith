@@ -39,7 +39,7 @@ class EntityDataService(
     _data get id
 
   def setEntityData(data: EntityData): Unit = {
-    val prevData = _data.get(data.id)
+    val oldData = _data.get(data.id)
 
     _data += (data.id -> data)
     Future {
@@ -50,14 +50,14 @@ class EntityDataService(
       }
     }
 
-    prevData match {
-      case Some(prevData) =>
-        if(prevData.team != data.team) {
+    oldData match {
+      case Some(oldData) =>
+        if(oldData.team != data.team) {
           // TODO get entity here and set type in event or send entire Entity adapter with entity events
-          val teamChanged = EntityTeamChangedEvent(data.id, null, prevData.team, data.team)
+          val teamChanged = EntityTeamChangedEvent(data.id, null, oldData.team, data.team)
           eventService publish teamChanged
         }
-      case None        =>
+      case None          =>
     }
   }
 

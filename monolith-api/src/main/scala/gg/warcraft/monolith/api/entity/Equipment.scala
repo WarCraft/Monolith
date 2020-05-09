@@ -2,11 +2,6 @@ package gg.warcraft.monolith.api.entity
 
 import gg.warcraft.monolith.api.item.Item
 
-object Equipment extends Enumeration {
-  type Slot = Value
-  val HEAD, CHEST, LEGS, FEET, MAIN_HAND, OFF_HAND = Value
-}
-
 case class Equipment(
     head: Option[Item] = None,
     chest: Option[Item] = None,
@@ -15,7 +10,7 @@ case class Equipment(
     mainHand: Option[Item] = None,
     offHand: Option[Item] = None
 ) {
-  def getItems: List[Item] =
+  lazy val items: List[Item] =
     (head :: chest :: legs :: feet :: mainHand :: offHand :: Nil)
       .filter { _.isDefined }
       .map { _.get }
@@ -28,4 +23,9 @@ case class Equipment(
     case Equipment.MAIN_HAND => mainHand
     case Equipment.OFF_HAND  => offHand
   }
+}
+
+object Equipment extends Enumeration {
+  type Slot = Value
+  val HEAD, CHEST, LEGS, FEET, MAIN_HAND, OFF_HAND = Value
 }

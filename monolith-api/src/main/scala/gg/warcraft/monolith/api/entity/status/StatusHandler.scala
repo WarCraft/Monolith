@@ -6,14 +6,18 @@ import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectE
 
 class StatusHandler(service: StatusService) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
-    case it: EntityDeathEvent =>
-      if (it.entityType != Entity.Type.PLAYER) service invalidateStatus it.entityId
-    case it: PlayerDisconnectEvent => service invalidateStatus it.playerId
-    case _                         =>
+    case EntityDeathEvent(entity, _) =>
+      if (entity.typed != Entity.Type.PLAYER) service.invalidateStatus(entity.id)
+    case PlayerDisconnectEvent(player, _) =>
+      service.invalidateStatus(player.id)
+    case _ =>
   }
 
-  override def reduce[T <: PreEvent](event: T): T = event match {
-    case it: PlayerPreConnectEvent => service loadStatus it.playerId; event
-    case _                         => event
+  override def reduce[T <: PreEvent](event: T): T = {
+    event match {
+      case PlayerPreConnectEvent(player, _) => service.loadStatus(player.id)
+      case _                                =>
+    }
+    event
   }
 }
