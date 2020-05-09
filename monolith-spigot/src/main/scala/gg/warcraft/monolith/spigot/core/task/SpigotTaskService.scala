@@ -2,7 +2,6 @@ package gg.warcraft.monolith.spigot.core.task
 
 import gg.warcraft.monolith.api.core.task.{Task, TaskService}
 import gg.warcraft.monolith.api.core.Duration
-import gg.warcraft.monolith.api.core.Duration._
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.{BukkitRunnable, BukkitTask}
 
