@@ -13,7 +13,7 @@ import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.player.PlayerService
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.Location
 import gg.warcraft.monolith.spigot.combat.SpigotPotionMapper
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper

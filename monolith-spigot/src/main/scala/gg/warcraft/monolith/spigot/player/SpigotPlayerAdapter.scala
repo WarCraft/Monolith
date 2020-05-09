@@ -14,7 +14,7 @@ import gg.warcraft.monolith.api.player.Player.Mode
 import gg.warcraft.monolith.api.player.currency.{Currencies, CurrencyService}
 import gg.warcraft.monolith.api.player.data.{PlayerData, PlayerDataService}
 import gg.warcraft.monolith.api.player.statistic.{Statistics, StatisticService}
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.future._
 import gg.warcraft.monolith.spigot.entity.{
   SpigotEntityAdapter, SpigotEntityTypeMapper
 }

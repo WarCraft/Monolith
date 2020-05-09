@@ -16,7 +16,7 @@ import gg.warcraft.monolith.api.player.{OfflinePlayer, Player, PlayerService}
 import gg.warcraft.monolith.api.player.currency.CurrencyService
 import gg.warcraft.monolith.api.player.data.PlayerDataService
 import gg.warcraft.monolith.api.player.statistic.StatisticService
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper
 import gg.warcraft.monolith.spigot.item.{
   SpigotItem, SpigotItemMapper, SpigotItemTypeMapper, SpigotItemVariantMapper

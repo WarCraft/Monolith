@@ -7,7 +7,7 @@ import gg.warcraft.monolith.api.entity.data.EntityDataHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.player.data.{PlayerDataHandler, PlayerDataUpdater}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
-import gg.warcraft.monolith.api.util.Ops._
+import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper

@@ -12,12 +12,12 @@ class SpigotBlockService(
   // TODO move remaining block methods from world service to block service
 
   override def getNearbyBlocks(location: Location, radius: Float): List[Block] = {
-    val min: BlockLocation = location subtract (radius, radius, radius)
-    val max: BlockLocation = location subtract (radius, radius, radius)
+    val min: BlockLocation = location - (radius, radius, radius)
+    val max: BlockLocation = location - (radius, radius, radius)
     val boundingBox = BlockBox(location.world, min, max)
     val reader = new BlockBoxReader(boundingBox, Direction.NORTH)
     reader.getBlocks.filter { block =>
-      val center = BlockLocation.toLocation(block.location).add(.5f, .5f, .5f)
+      val center = BlockLocation.toLocation(block.location) + (.5f, .5f, .5f)
       (location distanceTo center) <= radius
     }.toList
   }
