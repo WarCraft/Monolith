@@ -6,10 +6,10 @@ import gg.warcraft.monolith.api.item.variant.{StructureBlockVariant, _}
 case class Andesite(
     variant: AndesiteVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[AndesiteVariant]
     with StackableItem {
   val `type` = ItemType.ANDESITE
@@ -18,10 +18,10 @@ case class Andesite(
 case class Anvil(
     variant: AnvilVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[AnvilVariant]
     with StackableItem {
   val `type` = ItemType.ANVIL
@@ -29,10 +29,10 @@ case class Anvil(
 
 case class Apple(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.APPLE
   override val edible = true
@@ -40,10 +40,10 @@ case class Apple(
 
 case class ArmorStand(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.ARMOR_STAND
   override def maxCount = 16
@@ -52,10 +52,10 @@ case class ArmorStand(
 case class Arrow(
     variant: ArrowVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ArrowVariant]
     with StackableItem {
   val `type` = ItemType.ARROW
@@ -64,9 +64,9 @@ case class Arrow(
 case class Axe(
     variant: AxeVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -84,10 +84,10 @@ case class Axe(
 
 case class Bamboo(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BAMBOO
 }
@@ -95,10 +95,10 @@ case class Bamboo(
 case class Banner(
     variant: BannerVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BannerVariant]
     with StackableItem {
   val `type` = ItemType.BANNER
@@ -108,39 +108,39 @@ case class Banner(
 case class BannerPattern(
     variant: BannerPatternVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BannerPatternVariant] {
   val `type` = ItemType.BANNER_PATTERN
 }
 
 case class Barrel(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BARREL
 }
 
 case class Barrier(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BARRIER
 }
 
 case class Beacon(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BEACON
 }
@@ -148,10 +148,10 @@ case class Beacon(
 case class Bed(
     variant: BedVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BedVariant]
     with StackableItem {
   val `type` = ItemType.BED
@@ -159,20 +159,20 @@ case class Bed(
 
 case class Bedrock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BEDROCK
 }
 
 case class BeeNest(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BEE_NEST
 }
@@ -180,10 +180,10 @@ case class BeeNest(
 case class Beef(
     variant: BeefVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BeefVariant]
     with StackableItem {
   val `type` = ItemType.BEEF
@@ -192,20 +192,20 @@ case class Beef(
 
 case class Beehive(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BEEHIVE
 }
 
 case class Beetroot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BEETROOT
   override val edible = true
@@ -213,40 +213,40 @@ case class Beetroot(
 
 case class Bell(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BELL
 }
 
 case class BlastFurnace(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BLAST_FURNACE
 }
 
 case class BlazePowder(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BLAZE_POWDER
 }
 
 case class BlazeRod(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BLAZE_ROD
 }
@@ -254,10 +254,10 @@ case class BlazeRod(
 case class Boat(
     variant: BoatVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BoatVariant]
     with StackableItem {
   val `type` = ItemType.BOAT
@@ -265,69 +265,69 @@ case class Boat(
 
 case class Bone(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BONE
 }
 
 case class BoneBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BONE_BLOCK
 }
 
 case class BoneMeal(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BONE_MEAL
 }
 
 case class BottleOfEnchanting(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BOTTLE_OF_ENCHANTING
 }
 
 case class Book(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BOOK
 }
 
 case class BookAndQuill(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.BOOK_AND_QUILL
 }
 
 case class Bookshelf(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BOOKSHELF
 }
@@ -335,9 +335,9 @@ case class Bookshelf(
 case class Boots(
     variant: BootsVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -355,9 +355,9 @@ case class Boots(
 
 case class Bow(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -368,20 +368,20 @@ case class Bow(
 
 case class Bowl(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BOWL
 }
 
 case class Bread(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BREAD
   override val edible = true
@@ -389,10 +389,10 @@ case class Bread(
 
 case class BrewingStand(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.BREWING_STAND
 }
@@ -400,10 +400,10 @@ case class BrewingStand(
 case class Brick(
     variant: BrickVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BrickVariant]
     with StackableItem {
   val `type` = ItemType.BRICK
@@ -412,10 +412,10 @@ case class Brick(
 case class BrickBlock(
     variant: BrickBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BrickBlockVariant]
     with StackableItem {
   val `type` = ItemType.BRICK_BLOCK
@@ -424,10 +424,10 @@ case class BrickBlock(
 case class Bucket(
     variant: BucketVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[BucketVariant]
     with StackableItem {
   val `type` = ItemType.BUCKET
@@ -437,10 +437,10 @@ case class Bucket(
 case class Button(
     variant: ButtonVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ButtonVariant]
     with StackableItem {
   val `type` = ItemType.BUTTON
@@ -448,29 +448,29 @@ case class Button(
 
 case class Cactus(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CACTUS
 }
 
 case class Cake(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.CAKE
 }
 
 case class Campfire(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CAMPFIRE
 }
@@ -478,10 +478,10 @@ case class Campfire(
 case class Carpet(
     variant: CarpetVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CarpetVariant]
     with StackableItem {
   val `type` = ItemType.CARPET
@@ -489,10 +489,10 @@ case class Carpet(
 
 case class Carrot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CARROT
   override val edible = true
@@ -500,9 +500,9 @@ case class Carrot(
 
 case class CarrotOnAStick(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -513,30 +513,30 @@ case class CarrotOnAStick(
 
 case class CartographyTable(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CARTOGRAPHY_TABLE
 }
 
 case class Charcoal(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CHARCOAL
 }
 
 case class Cauldron(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CAULDRON
 }
@@ -544,10 +544,10 @@ case class Cauldron(
 case class Chest(
     variant: ChestVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ChestVariant]
     with StackableItem {
   val `type` = ItemType.CHEST
@@ -556,9 +556,9 @@ case class Chest(
 case class Chestplate(
     variant: ChestplateVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -577,10 +577,10 @@ case class Chestplate(
 case class Chicken(
     variant: ChickenVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ChickenVariant]
     with StackableItem {
   val `type` = ItemType.CHICKEN
@@ -589,10 +589,10 @@ case class Chicken(
 
 case class ChorusFlower(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CHORUS_FLOWER
 }
@@ -600,10 +600,10 @@ case class ChorusFlower(
 case class ChorusFruit(
     variant: ChorusFruitVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ChorusFruitVariant]
     with StackableItem {
   val `type` = ItemType.CHORUS_FRUIT
@@ -613,70 +613,70 @@ case class ChorusFruit(
 
 case class ChorusPlant(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CHORUS_PLANT
 }
 
 case class Clay(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CLAY
 }
 
 case class ClayBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CLAY_BLOCK
 }
 
 case class Clock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CLOCK
 }
 
 case class Coal(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COAL
 }
 
 case class CoalBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COAL_BLOCK
 }
 
 case class CoalOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COAL_ORE
 }
@@ -684,10 +684,10 @@ case class CoalOre(
 case class Cobblestone(
     variant: CobblestoneVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CobblestoneVariant]
     with StackableItem {
   val `type` = ItemType.COBBLESTONE
@@ -695,20 +695,20 @@ case class Cobblestone(
 
 case class Cobweb(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COBWEB
 }
 
 case class CocoaBeans(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COCOA_BEANS
 }
@@ -716,10 +716,10 @@ case class CocoaBeans(
 case class Cod(
     variant: CodVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CodVariant]
     with StackableItem {
   val `type` = ItemType.CHICKEN
@@ -729,10 +729,10 @@ case class Cod(
 case class CommandBlock(
     variant: CommandBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CommandBlockVariant]
     with StackableItem {
   val `type` = ItemType.COMMAND_BLOCK
@@ -740,30 +740,30 @@ case class CommandBlock(
 
 case class Comparator(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COMPARATOR
 }
 
 case class Compass(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COMPASS
 }
 
 case class Composter(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COMPOSTER
 }
@@ -771,10 +771,10 @@ case class Composter(
 case class Concrete(
     variant: ConcreteVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ConcreteVariant]
     with StackableItem {
   val `type` = ItemType.CONCRETE
@@ -783,10 +783,10 @@ case class Concrete(
 case class ConcretePowder(
     variant: ConcretePowderVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ConcretePowderVariant]
     with StackableItem {
   val `type` = ItemType.CONCRETE_POWDER
@@ -794,20 +794,20 @@ case class ConcretePowder(
 
 case class Conduit(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CONDUIT
 }
 
 case class Cookie(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.COOKIE
   override val edible = true
@@ -816,10 +816,10 @@ case class Cookie(
 case class Coral(
     variant: CoralVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CoralVariant]
     with StackableItem {
   val `type` = ItemType.CORAL
@@ -828,10 +828,10 @@ case class Coral(
 case class CoralBlock(
     variant: CoralBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CoralBlockVariant]
     with StackableItem {
   val `type` = ItemType.CORAL_BLOCK
@@ -840,10 +840,10 @@ case class CoralBlock(
 case class CoralFan(
     variant: CoralFanVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[CoralFanVariant]
     with StackableItem {
   val `type` = ItemType.CORAL_FAN
@@ -851,19 +851,19 @@ case class CoralFan(
 
 case class CraftingTable(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.CRAFTING_TABLE
 }
 
 case class Crossbow(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -874,59 +874,59 @@ case class Crossbow(
 
 case class DaylightDetector(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DAYLIGHT_DETECTOR
 }
 
 case class DeadBush(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DEAD_BUSH
 }
 
 case class DebugStick(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.DEBUG_STICK
 }
 
 case class Diamond(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DIAMOND
 }
 
 case class DiamondBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DIAMOND_BLOCK
 }
 
 case class DiamondOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DIAMOND_ORE
 }
@@ -934,10 +934,10 @@ case class DiamondOre(
 case class Diorite(
     variant: DioriteVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[DioriteVariant]
     with StackableItem {
   val `type` = ItemType.DIORITE
@@ -946,10 +946,10 @@ case class Diorite(
 case class Dirt(
     variant: DirtVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[DirtVariant]
     with StackableItem {
   val `type` = ItemType.DIRT
@@ -957,10 +957,10 @@ case class Dirt(
 
 case class Dispenser(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DISPENSER
 }
@@ -968,10 +968,10 @@ case class Dispenser(
 case class Door(
     variant: DoorVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[DoorVariant]
     with StackableItem {
   val `type` = ItemType.DOOR
@@ -979,30 +979,30 @@ case class Door(
 
 case class DragonBreath(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DRAGON_BREATH
 }
 
 case class DragonEgg(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DRAGON_EGG
 }
 
 case class DriedKelp(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DRIED_KELP
   override val edible = true
@@ -1010,20 +1010,20 @@ case class DriedKelp(
 
 case class DriedKelpBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DRIED_KELP_BLOCK
 }
 
 case class Dropper(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.DROPPER
 }
@@ -1031,10 +1031,10 @@ case class Dropper(
 case class Dye(
     variant: DyeVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[DyeVariant]
     with StackableItem {
   val `type` = ItemType.DYE
@@ -1042,19 +1042,19 @@ case class Dye(
 
 case class Egg(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.EGG
 }
 
 case class Elytra(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1065,119 +1065,119 @@ case class Elytra(
 
 case class Emerald(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.EMERALD
 }
 
 case class EmeraldBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.EMERALD_BLOCK
 }
 
 case class EmeraldOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.EMERALD_ORE
 }
 
 case class EnchantedBook(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.ENCHANTED_BOOK
 }
 
 case class EnchantingTable(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.ENCHANTING_TABLE
 }
 
 case class EndCrystal(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.END_CRYSTAL
 }
 
 case class EndPortalFrame(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.END_PORTAL_FRAME
 }
 
 case class EndRod(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.END_ROD
 }
 
 case class EndStone(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.END_STONE
 }
 
 case class EndStoneBrick(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.END_STONE
 }
 
 case class EnderEye(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.ENDER_EYE
 }
 
 case class EnderPearl(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.ENDER_PEARL
   override def maxCount = 16
@@ -1185,20 +1185,20 @@ case class EnderPearl(
 
 case class Farmland(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FARMLAND
 }
 
 case class Feather(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FEATHER
 }
@@ -1206,10 +1206,10 @@ case class Feather(
 case class Fence(
     variant: FenceVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[FenceVariant]
     with StackableItem {
   val `type` = ItemType.FENCE
@@ -1218,10 +1218,10 @@ case class Fence(
 case class Fern(
     variant: FernVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[FernVariant]
     with StackableItem {
   val `type` = ItemType.FERN
@@ -1229,20 +1229,20 @@ case class Fern(
 
 case class FireCharge(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FIRE_CHARGE
 }
 
 case class FireworkRocket(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FIREWORK_ROCKET
 }
@@ -1250,10 +1250,10 @@ case class FireworkRocket(
 case class FireworkStar(
     variant: FireworkStarVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[FireworkStarVariant]
     with StackableItem {
   val `type` = ItemType.FIREWORK_STAR
@@ -1261,9 +1261,9 @@ case class FireworkStar(
 
 case class FishingRod(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1274,29 +1274,29 @@ case class FishingRod(
 
 case class FletchingTable(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FLETCHING_TABLE
 }
 
 case class Flint(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FLINT
 }
 
 case class FlintAndSteel(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1308,10 +1308,10 @@ case class FlintAndSteel(
 case class Flower(
     variant: FlowerVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[FlowerVariant]
     with StackableItem {
   val `type` = ItemType.FLOWER
@@ -1319,20 +1319,20 @@ case class Flower(
 
 case class FlowerPot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FLOWER_POT
 }
 
 case class Furnace(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.FURNACE
 }
@@ -1340,10 +1340,10 @@ case class Furnace(
 case class FenceGate(
     variant: FenceGateVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[FenceGateVariant]
     with StackableItem {
   val `type` = ItemType.FENCE_GATE
@@ -1351,10 +1351,10 @@ case class FenceGate(
 
 case class GhastTear(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GHAST_TEAR
 }
@@ -1362,10 +1362,10 @@ case class GhastTear(
 case class Glass(
     variant: GlassVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[GlassVariant]
     with StackableItem {
   val `type` = ItemType.GLASS
@@ -1373,10 +1373,10 @@ case class Glass(
 
 case class GlassBottle( // TODO add empty, honey, water, dragon's breath variant
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GLASS_BOTTLE
 }
@@ -1384,10 +1384,10 @@ case class GlassBottle( // TODO add empty, honey, water, dragon's breath variant
 case class GlassPane(
     variant: GlassPaneVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[GlassPaneVariant]
     with StackableItem {
   val `type` = ItemType.GLASS_PANE
@@ -1396,10 +1396,10 @@ case class GlassPane(
 case class GlazedTerracotta(
     variant: GlazedTerracottaVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[GlazedTerracottaVariant]
     with StackableItem {
   val `type` = ItemType.GLAZED_TERRACOTTA
@@ -1407,60 +1407,60 @@ case class GlazedTerracotta(
 
 case class Glowstone(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GLOWSTONE
 }
 
 case class GlowstoneDust(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GLOWSTONE_DUST
 }
 
 case class GoldBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GOLD_BLOCK
 }
 
 case class GoldIngot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GOLD_INGOT
 }
 
 case class GoldNugget(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GOLD_NUGGET
 }
 
 case class GoldOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GOLD_ORE
 }
@@ -1468,10 +1468,10 @@ case class GoldOre(
 case class GoldenApple(
     enchanted: Boolean,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item
     with StackableItem {
   val `type` = ItemType.GOLDEN_APPLE
@@ -1482,10 +1482,10 @@ case class GoldenApple(
 
 case class GoldenCarrot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GOLDEN_CARROT
   override val edible = true
@@ -1493,10 +1493,10 @@ case class GoldenCarrot(
 
 case class GoldenMelonSlice(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GOLDEN_MELON_SLICE
 }
@@ -1504,10 +1504,10 @@ case class GoldenMelonSlice(
 case class Granite(
     variant: GraniteVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[GraniteVariant]
     with StackableItem {
   val `type` = ItemType.GRANITE
@@ -1516,10 +1516,10 @@ case class Granite(
 case class Grass(
     variant: GrassVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[GrassVariant]
     with StackableItem {
   val `type` = ItemType.GRASS
@@ -1527,70 +1527,70 @@ case class Grass(
 
 case class GrassBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GRASS_BLOCK
 }
 
 case class GrassPath(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GRASS_PATH
 }
 
 case class Gravel(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GRAVEL
 }
 
 case class Grindstone(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GRINDSTONE
 }
 
 case class Gunpowder(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.GUNPOWDER
 }
 
 case class HayBale(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.HAY_BALE
 }
 
 case class HeartOfTheSea(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.HEART_OF_THE_SEA
 }
@@ -1598,9 +1598,9 @@ case class HeartOfTheSea(
 case class Helmet(
     variant: HelmetVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1619,9 +1619,9 @@ case class Helmet(
 case class Hoe(
     variant: HoeVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1639,40 +1639,40 @@ case class Hoe(
 
 case class HoneyBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.HONEY_BLOCK
 }
 
 case class Honeycomb(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.HONEYCOMB
 }
 
 case class HoneycombBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.HONEYCOMB_BLOCK
 }
 
 case class Hopper(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.HOPPER
 }
@@ -1680,9 +1680,9 @@ case class Hopper(
 case class HorseArmor(
     variant: HorseArmorVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[HorseArmorVariant] {
   val `type` = ItemType.HORSE_ARMOR
 }
@@ -1690,10 +1690,10 @@ case class HorseArmor(
 case class Ice(
     variant: IceVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[IceVariant]
     with StackableItem {
   val `type` = ItemType.ICE
@@ -1702,10 +1702,10 @@ case class Ice(
 case class InfestedBlock(
     variant: InfestedBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[InfestedBlockVariant]
     with StackableItem {
   val `type` = ItemType.INFESTED_BLOCK
@@ -1713,189 +1713,189 @@ case class InfestedBlock(
 
 case class InkSac(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.INK_SAC
 }
 
 case class IronBars(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.IRON_BARS
 }
 
 case class IronBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.IRON_BLOCK
 }
 
 case class IronIngot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.IRON_INGOT
 }
 
 case class IronNugget(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.IRON_NUGGET
 }
 
 case class IronOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.IRON_ORE
 }
 
 case class ItemFrame(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.ITEM_FRAME
 }
 
 case class JackOfTheLantern(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.JACK_OF_THE_LANTERN
 }
 
 case class JigsawBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.JIGSAW_BLOCK
 }
 
 case class Jukebox(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.JUKEBOX
 }
 
 case class Kelp(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.KELP
 }
 
 case class KnowledgeBook(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.KNOWLEDGE_BOOK
 }
 
 case class Ladder(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LADDER
 }
 
 case class Lantern(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LANTERN
 }
 
 case class Lapis(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LAPIS
 }
 
 case class LapisBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LAPIS_BLOCK
 }
 
 case class LapisOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LAPIS_ORE
 }
 
 case class Lead(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LEAD
 }
 
 case class Leather(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LEATHER
 }
@@ -1903,10 +1903,10 @@ case class Leather(
 case class Leaves(
     variant: LeavesVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[LeavesVariant]
     with StackableItem {
   val `type` = ItemType.LEAVES
@@ -1914,10 +1914,10 @@ case class Leaves(
 
 case class Lectern(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LECTERN
 }
@@ -1925,9 +1925,9 @@ case class Lectern(
 case class Leggings(
     variant: LeggingsVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1945,20 +1945,20 @@ case class Leggings(
 
 case class Lever(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LEVER
 }
 
 case class LilyPad(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LILY_PAD
 }
@@ -1966,10 +1966,10 @@ case class LilyPad(
 case class Log(
     variant: LogVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[LogVariant]
     with StackableItem {
   val `type` = ItemType.LOG
@@ -1977,30 +1977,30 @@ case class Log(
 
 case class Loom(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.LOOM
 }
 
 case class MagmaBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MAGMA_BLOCK
 }
 
 case class MagmaCream(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MAGMA_CREAM
 }
@@ -2008,10 +2008,10 @@ case class MagmaCream(
 case class Map(
     filled: Boolean,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MAP
   def withFilled(filled: Boolean): Map =
@@ -2020,20 +2020,20 @@ case class Map(
 
 case class Melon(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MELON
 }
 
 case class MelonSlice(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MELON_SLICE
   override val edible = true
@@ -2042,10 +2042,10 @@ case class MelonSlice(
 case class Minecart(
     variant: MinecartVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[MinecartVariant]
     with StackableItem {
   val `type` = ItemType.MINECART
@@ -2054,10 +2054,10 @@ case class Minecart(
 case class MobHead(
     variant: MobHeadVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[MobHeadVariant]
     with StackableItem {
   val `type` = ItemType.MOB_HEAD
@@ -2066,10 +2066,10 @@ case class MobHead(
 case class Mushroom(
     variant: MushroomVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[MushroomVariant]
     with StackableItem {
   val `type` = ItemType.MUSHROOM
@@ -2078,10 +2078,10 @@ case class Mushroom(
 case class MushroomBlock(
     variant: MushroomBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[MushroomBlockVariant]
     with StackableItem {
   val `type` = ItemType.MUSHROOM_BLOCK
@@ -2090,10 +2090,10 @@ case class MushroomBlock(
 case class MusicDisc(
     variant: MusicDiscVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[MusicDiscVariant]
     with StackableItem {
   val `type` = ItemType.MUSIC_DISC
@@ -2102,10 +2102,10 @@ case class MusicDisc(
 case class Mutton(
     variant: MuttonVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[MuttonVariant]
     with StackableItem {
   val `type` = ItemType.MUTTON
@@ -2114,130 +2114,130 @@ case class Mutton(
 
 case class Mycelium(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MYCELIUM
 }
 
 case class NameTag(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NAME_TAG
 }
 
 case class NautilusShell(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NAUTILUS_SHELL
 }
 
 case class Netherrack(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NETHERRACK
 }
 
 case class NetherStar(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NETHER_STAR
 }
 
 case class NetherWart(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NETHER_WART
 }
 
 case class NetherWartBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NETHER_WART_BLOCK
 }
 
 case class NoteBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.NOTE_BLOCK
 }
 
 case class Observer(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.OBSERVER
 }
 
 case class Obsidian(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.OBSIDIAN
 }
 
 case class Painting(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PAINTING
 }
 
 case class Paper(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PAPER
 }
 
 case class PhantomMembrane(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PHANTOM_MEMBRANE
 }
@@ -2245,10 +2245,10 @@ case class PhantomMembrane(
 case class Plant(
     variant: PlantVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PlantVariant]
     with StackableItem {
   val `type` = ItemType.PLANT
@@ -2257,10 +2257,10 @@ case class Plant(
 case class PlayerHead(
     owner: String,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.MOB_HEAD
 }
@@ -2268,9 +2268,9 @@ case class PlayerHead(
 case class Pickaxe(
     variant: PickaxeVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2289,10 +2289,10 @@ case class Pickaxe(
 case class Pillar(
     variant: PillarVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PillarVariant]
     with StackableItem {
   val `type` = ItemType.PILLAR
@@ -2301,10 +2301,10 @@ case class Pillar(
 case class Piston(
     variant: PistonVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PistonVariant]
     with StackableItem {
   val `type` = ItemType.PISTON
@@ -2315,10 +2315,10 @@ case class Piston(
 case class Planks(
     variant: PlanksVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PlanksVariant]
     with StackableItem {
   val `type` = ItemType.PLANKS
@@ -2326,10 +2326,10 @@ case class Planks(
 
 case class Podzol(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PODZOL
 }
@@ -2337,10 +2337,10 @@ case class Podzol(
 case class Porkchop(
     variant: PorkchopVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PorkchopVariant]
     with StackableItem {
   val `type` = ItemType.PORKCHOP
@@ -2350,10 +2350,10 @@ case class Porkchop(
 case class Potato(
     variant: PotatoVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PotatoVariant]
     with StackableItem {
   val `type` = ItemType.POTATO
@@ -2364,9 +2364,9 @@ case class Potion(
     variant: PotionVariant,
     hideEffects: Boolean,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PotionVariant] {
   val `type` = ItemType.POTION
   def withHideEffects(hideEffects: Boolean): this.type =
@@ -2376,10 +2376,10 @@ case class Potion(
 case class PressurePlate(
     variant: PressurePlateVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PressurePlateVariant]
     with StackableItem {
   val `type` = ItemType.PRESSURE_PLATE
@@ -2388,10 +2388,10 @@ case class PressurePlate(
 case class Prismarine(
     variant: PrismarineVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[PrismarineVariant]
     with StackableItem {
   val `type` = ItemType.PRISMARINE
@@ -2399,30 +2399,30 @@ case class Prismarine(
 
 case class PrismarineCrystals(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PRISMARINE_CRYSTALS
 }
 
 case class PrismarineShard(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PRISMARINE_SHARD
 }
 
 case class Pufferfish(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PUFFERFISH
   override val edible = true
@@ -2431,20 +2431,20 @@ case class Pufferfish(
 case class Pumpkin(
     carved: Boolean,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PUMPKIN
 }
 
 case class PumpkinPie(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PUMPKIN_PIE
   override val edible = true
@@ -2452,20 +2452,20 @@ case class PumpkinPie(
 
 case class PurpurBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.PURPUR_BLOCK
 }
 
 case class Quartz(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.QUARTZ
 }
@@ -2473,10 +2473,10 @@ case class Quartz(
 case class QuartzBlock(
     variant: QuartzBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[QuartzBlockVariant]
     with StackableItem {
   val `type` = ItemType.QUARTZ_BLOCK
@@ -2484,10 +2484,10 @@ case class QuartzBlock(
 
 case class QuartzOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.QUARTZ_ORE
 }
@@ -2495,10 +2495,10 @@ case class QuartzOre(
 case class Rabbit(
     variant: RabbitVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[RabbitVariant]
     with StackableItem {
   val `type` = ItemType.RABBIT
@@ -2507,20 +2507,20 @@ case class Rabbit(
 
 case class RabbitFoot(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.RABBIT_FOOT
 }
 
 case class RabbitHide(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.RABBIT_HIDE
 }
@@ -2528,10 +2528,10 @@ case class RabbitHide(
 case class Rail(
     variant: RailVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[RailVariant]
     with StackableItem {
   val `type` = ItemType.RAIL
@@ -2539,70 +2539,70 @@ case class Rail(
 
 case class Repeater(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.REPEATER
 }
 
 case class Redstone(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE
 }
 
 case class RedstoneBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_BLOCK
 }
 
 case class RedstoneLamp(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_LAMP
 }
 
 case class RedstoneOre(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_ORE
 }
 
 case class RedstoneTorch(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_TORCH
 }
 
 case class RottenFlesh(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.ROTTEN_FLESH
   override val edible = true
@@ -2610,9 +2610,9 @@ case class RottenFlesh(
 
 case class Saddle(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.SADDLE
 }
@@ -2620,10 +2620,10 @@ case class Saddle(
 case class Salmon(
     variant: SalmonVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SalmonVariant]
     with StackableItem {
   val `type` = ItemType.SALMON
@@ -2633,10 +2633,10 @@ case class Salmon(
 case class Sand(
     variant: SandVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SandVariant]
     with StackableItem {
   val `type` = ItemType.SAND
@@ -2645,10 +2645,10 @@ case class Sand(
 case class Sandstone(
     variant: SandstoneVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SandstoneVariant]
     with StackableItem {
   val `type` = ItemType.SANDSTONE
@@ -2657,10 +2657,10 @@ case class Sandstone(
 case class Sapling(
     variant: SaplingVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SaplingVariant]
     with StackableItem {
   val `type` = ItemType.SAPLING
@@ -2668,50 +2668,50 @@ case class Sapling(
 
 case class Scaffolding(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SCAFFOLDING
 }
 
 case class Scute(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SCUTE
 }
 
 case class Seagrass(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SEAGRASS
 }
 
 case class SeaLantern(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SEA_LANTERN
 }
 
 case class SeaPickle(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SEA_PICKLE
 }
@@ -2719,10 +2719,10 @@ case class SeaPickle(
 case class Seeds(
     variant: SeedsVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SeedsVariant]
     with StackableItem {
   val `type` = ItemType.SEEDS
@@ -2730,9 +2730,9 @@ case class Seeds(
 
 case class Shears(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2743,9 +2743,9 @@ case class Shears(
 
 case class Shield(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2757,9 +2757,9 @@ case class Shield(
 case class Shovel(
     variant: ShovelVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2778,10 +2778,10 @@ case class Shovel(
 case class ShulkerBox(
     variant: ShulkerBoxVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[ShulkerBoxVariant]
     with StackableItem {
   val `type` = ItemType.SHULKER_BOX
@@ -2789,10 +2789,10 @@ case class ShulkerBox(
 
 case class ShulkerShell(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SHULKER_SHELL
 }
@@ -2800,10 +2800,10 @@ case class ShulkerShell(
 case class Sign(
     variant: SignVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SignVariant]
     with StackableItem {
   val `type` = ItemType.SIGN
@@ -2813,10 +2813,10 @@ case class Sign(
 case class Slab(
     variant: SlabVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SlabVariant]
     with StackableItem {
   val `type` = ItemType.SLAB
@@ -2824,60 +2824,60 @@ case class Slab(
 
 case class Slimeball(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SLIMEBALL
 }
 
 case class SlimeBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SLIME_BLOCK
 }
 
 case class SmithingTable(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SMITHING_TABLE
 }
 
 case class Smoker(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SMOKER
 }
 
 case class Snow(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SNOW
 }
 
 case class Snowball(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SNOWBALL
   override def maxCount = 16
@@ -2885,20 +2885,20 @@ case class Snowball(
 
 case class SnowBlock(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SNOW_BLOCK
 }
 
 case class SoulSand(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SOUL_SAND
 }
@@ -2906,10 +2906,10 @@ case class SoulSand(
 case class SpawnEgg(
     variant: SpawnEggVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SpawnEggVariant]
     with StackableItem {
   val `type` = ItemType.SPAWN_EGG
@@ -2917,10 +2917,10 @@ case class SpawnEgg(
 
 case class Spawner(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SPAWNER
 }
@@ -2928,10 +2928,10 @@ case class Spawner(
 case class SpiderEye(
     variant: SpiderEyeVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SpiderEyeVariant]
     with StackableItem {
   val `type` = ItemType.SPIDER_EYE
@@ -2942,10 +2942,10 @@ case class SpiderEye(
 case class Sponge(
     variant: SpongeVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[SpongeVariant]
     with StackableItem {
   val `type` = ItemType.SPONGE
@@ -2954,10 +2954,10 @@ case class Sponge(
 case class Stairs(
     variant: StairsVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[StairsVariant]
     with StackableItem {
   val `type` = ItemType.SLAB
@@ -2966,10 +2966,10 @@ case class Stairs(
 case class Stew(
     variant: StewVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[StewVariant]
     with StackableItem {
   val `type` = ItemType.STEW
@@ -2978,10 +2978,10 @@ case class Stew(
 
 case class Stick(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.STICK
 }
@@ -2989,10 +2989,10 @@ case class Stick(
 case class Stone(
     variant: StoneVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[StoneVariant]
     with StackableItem {
   val `type` = ItemType.STONE
@@ -3001,10 +3001,10 @@ case class Stone(
 case class StoneBrick(
     variant: StoneBrickVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[StoneBrickVariant]
     with StackableItem {
   val `type` = ItemType.STONE
@@ -3012,10 +3012,10 @@ case class StoneBrick(
 
 case class Stonecutter(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.STONECUTTER
 }
@@ -3023,10 +3023,10 @@ case class Stonecutter(
 case class StructureBlock(
     variant: StructureBlockVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[StructureBlockVariant]
     with StackableItem {
   val `type` = ItemType.STRUCTURE_BLOCK
@@ -3034,40 +3034,40 @@ case class StructureBlock(
 
 case class PieceOfString(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.STRING
 }
 
 case class Sugar(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SUGAR
 }
 
 case class SugarCane(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SUGAR_CANE
 }
 
 case class SweetBerries(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.SWEET_BERRIES
   override val edible = true
@@ -3076,9 +3076,9 @@ case class SweetBerries(
 case class Sword(
     variant: SwordVariant,
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -3097,10 +3097,10 @@ case class Sword(
 case class Terracotta(
     variant: TerracottaVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[TerracottaVariant]
     with StackableItem {
   val `type` = ItemType.TERRACOTTA
@@ -3108,29 +3108,29 @@ case class Terracotta(
 
 case class TNT(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.TNT
 }
 
 case class Torch(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.TORCH
 }
 
 case class TotemOfUndying(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends Item {
   val `type` = ItemType.TOTEM_OF_UNDYING
 }
@@ -3138,10 +3138,10 @@ case class TotemOfUndying(
 case class Trapdoor(
     variant: TrapdoorVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[TrapdoorVariant]
     with StackableItem {
   val `type` = ItemType.TRAPDOOR
@@ -3149,9 +3149,9 @@ case class Trapdoor(
 
 case class Trident(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -3162,20 +3162,20 @@ case class Trident(
 
 case class TripwireHook(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.TRIPWIRE_HOOK
 }
 
 case class TropicalFish(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.TROPICAL_FISH
   override val edible = true
@@ -3183,19 +3183,19 @@ case class TropicalFish(
 
 case class TurtleEgg(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.TURTLE_EGG
 }
 
 case class TurtleHelmet(
     name: String,
-    tooltip: List[String],
-    attributes: Set[String],
-    hideAttributes: Boolean,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -3206,10 +3206,10 @@ case class TurtleHelmet(
 
 case class Vines(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.VINES
 }
@@ -3217,10 +3217,10 @@ case class Vines(
 case class Wall(
     variant: WallVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[WallVariant]
     with StackableItem {
   val `type` = ItemType.WALL
@@ -3229,10 +3229,10 @@ case class Wall(
 case class WeightedPressurePlate(
     variant: WeightedPressurePlateVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[WeightedPressurePlateVariant]
     with StackableItem {
   val `type` = ItemType.WEIGHTED_PRESSURE_PLATE
@@ -3240,10 +3240,10 @@ case class WeightedPressurePlate(
 
 case class Wheat(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.WHEAT
 }
@@ -3251,10 +3251,10 @@ case class Wheat(
 case class Wood(
     variant: WoodVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[WoodVariant]
     with StackableItem {
   val `type` = ItemType.WOOD
@@ -3263,10 +3263,10 @@ case class Wood(
 case class Wool(
     variant: WoolVariant,
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends VariableItem[WoolVariant]
     with StackableItem {
   val `type` = ItemType.WOOL
@@ -3274,10 +3274,10 @@ case class Wool(
 
 case class WrittenBook(
     name: String,
-    tooltip: List[String],
-    count: Int,
-    attributes: Set[String],
-    hideAttributes: Boolean
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false
 ) extends StackableItem {
   val `type` = ItemType.WRITTEN_BOOK
   override def maxCount = 16
