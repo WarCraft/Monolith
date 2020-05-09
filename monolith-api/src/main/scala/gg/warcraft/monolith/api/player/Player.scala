@@ -1,7 +1,5 @@
 package gg.warcraft.monolith.api.player
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.core.{GameMode, Message}
 import gg.warcraft.monolith.api.core.auth.Principal
 import gg.warcraft.monolith.api.entity.Entity
@@ -16,7 +14,7 @@ object Player {
 
 trait Player extends Entity with Principal {
   val typed: Entity.Type = Entity.Type.PLAYER
-  val principalId: Option[UUID] = Some(id)
+  override def isPlayer: Boolean = true
 
   def data: PlayerData
   def currencies: Currencies

@@ -7,9 +7,12 @@ import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.entity.Equipment
 
 case object Console extends Principal {
+  override val id: UUID = null
   override val name: String = "Console"
-  override val principalId: Option[UUID] = None
   override val equipment: Equipment = Equipment()
+
+  override def isPlayer: Boolean = false
   override def hasPermission(permission: String): Boolean = true
-  override def sendMessage(message: Message): Unit = ???
+
+  override def sendMessage(message: Message): Unit = println(message.original)
 }
