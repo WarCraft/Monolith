@@ -52,9 +52,8 @@ class EntityDataService(
 
     oldData match {
       case Some(oldData) =>
-        if(oldData.team != data.team) {
-          // TODO get entity here and set type in event or send entire Entity adapter with entity events
-          val teamChanged = EntityTeamChangedEvent(data.id, null, oldData.team, data.team)
+        if(oldData.team != data.team) { // TODO this logic belongs in a domain service
+          val teamChanged = EntityTeamChangedEvent(data.id, oldData.team, data.team)
           eventService publish teamChanged
         }
       case None          =>

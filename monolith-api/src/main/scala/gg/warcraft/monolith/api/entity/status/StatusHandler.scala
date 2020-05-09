@@ -8,15 +8,15 @@ class StatusHandler(service: StatusService) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
     case EntityDeathEvent(entity, _) =>
       if (entity.typed != Entity.Type.PLAYER) service.invalidateStatus(entity.id)
-    case PlayerDisconnectEvent(player, _) =>
+    case PlayerDisconnectEvent(player) =>
       service.invalidateStatus(player.id)
     case _ =>
   }
 
   override def reduce[T <: PreEvent](event: T): T = {
     event match {
-      case PlayerPreConnectEvent(player, _) => service.loadStatus(player.id)
-      case _                                =>
+      case PlayerPreConnectEvent(playerId, _) => service.loadStatus(playerId)
+      case _                                  =>
     }
     event
   }
