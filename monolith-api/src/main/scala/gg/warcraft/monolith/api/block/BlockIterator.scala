@@ -30,8 +30,7 @@ class BlockIterator(origin: Location, target: Location)(
       distance = maxDistance
 
       scanLoc = scanLoc + delta
-      // TODO add toBlockLocation method back to Location which forwards to implicit def?
-      if (Location.toBlockLocation(scanLoc) == blockLoc) null
+      if (scanLoc.toBlockLocation == blockLoc) null
       else scanLoc
     }
   }
