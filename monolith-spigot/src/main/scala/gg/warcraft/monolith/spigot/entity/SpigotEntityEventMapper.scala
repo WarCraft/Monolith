@@ -6,12 +6,11 @@ import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.{
-  Entity, EntityAttackEvent, EntityDamageEvent, EntityDeathEvent,
-  EntityFatalDamageEvent, EntityHealthChangedEvent, EntityInteractEvent,
-  EntityPreAttackEvent, EntityPreDamageEvent, EntityPreFatalDamageEvent,
-  EntityPreInteractEvent, EntityPreSpawnEvent, EntitySpawnEvent
+  Entity, EntityAttackEvent, EntityInteractEvent, EntityPreAttackEvent,
+  EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent
 }
 import gg.warcraft.monolith.api.entity.status.StatusService
+import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.entity.LivingEntity
@@ -24,73 +23,56 @@ import org.bukkit.plugin.Plugin
 
 import scala.collection.mutable
 import scala.jdk.CollectionConverters._
+import scala.util.chaining._
 
-class SpigotEntityEventMapper(
-    private implicit val server: Server,
-    private implicit val plugin: Plugin,
-    private implicit val eventService: EventService,
-    private implicit val taskService: TaskService,
-    private implicit val statusService: StatusService,
-    private implicit val locationMapper: SpigotLocationMapper,
-    private implicit val itemMapper: SpigotItemMapper
+class SpigotEntityEventMapper(implicit
+    server: Server,
+    plugin: Plugin,
+    eventService: EventService,
+    taskService: TaskService,
+    entityService: EntityService,
+    playerService: PlayerService,
+    statusService: StatusService,
+    locationMapper: SpigotLocationMapper,
+    itemMapper: SpigotItemMapper
 ) extends Listener {
   private val combatValues = mutable.Map.empty[SpigotEvent, CombatValue]
   private val combatValueMetadataKey = classOf[CombatValue].getCanonicalName
 
   @EventHandler(priority = EventPriority.HIGH)
   def preSpawn(event: SpigotEntitySpawnEvent): Unit = {
-    val entity = event.getEntity
-    val entityId = entity.getUniqueId
-    val entityType = Entity.Type.withName(event.getEntityType.name)
-    val location = locationMapper.map(entity.getLocation)
-    val preSpawnEvent = EntityPreSpawnEvent(entityId, entityType, location)
-
-    val reducedEvent = eventService.publish(preSpawnEvent)
-    if (reducedEvent.location != location) {
-      val reducedLocation = locationMapper.map(reducedEvent.location)
-      taskService.runNextTick(() => ()) // TODO teleport entity
-    }
-    event.setCancelled(!reducedEvent.allowed)
+    val entity = entityService.getEntity(event.getEntity.getUniqueId)
+    val location = locationMapper.map(event.getEntity.getLocation)
+    EntityPreSpawnEvent(entity, location, event.isCancelled)
+      .pipe { eventService.publish }
+      .tap { reducedEvent =>
+        if (reducedEvent.allowed && reducedEvent.location != location)
+          taskService.evalNextTick {
+            val reducedLocation = locationMapper.map(reducedEvent.location)
+            event.getEntity.teleport(reducedLocation)
+          }
+        event.setCancelled(!reducedEvent.allowed)
+      }
   }
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onSpawn(event: SpigotEntitySpawnEvent): Unit = {
-    val entity = event.getEntity
-    val entityId = entity.getUniqueId
-    val entityType = Entity.Type.withName(event.getEntityType.name)
-    val location = locationMapper.map(entity.getLocation)
-    val spawnEvent = EntitySpawnEvent(entityId, entityType, location)
-
-    eventService.publish(spawnEvent)
+    val entity = entityService.getEntity(event.getEntity.getUniqueId)
+    val location = locationMapper.map(event.getEntity.getLocation)
+    EntitySpawnEvent(entity, location).tap { eventService.publish }
   }
 
   @EventHandler(priority = EventPriority.HIGH)
   def preInteract(event: SpigotEntityInteractEvent): Unit = {
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
-    val entityId = event.getRightClicked.getUniqueId
-    val entityType = Entity.Type.withName(event.getRightClicked.getType.name)
-    val player = event.getPlayer
-    val playerId = player.getUniqueId
-    val sneaking = player.isSneaking
-    val mainHand = itemMapper.map(player.getInventory.getItemInMainHand)
-    val offHand = itemMapper.map(player.getInventory.getItemInOffHand)
-    val clickPosition = event.getClickedPosition
-    val location = locationMapper.map(clickPosition.toLocation(player.getWorld))
-    val cancelled = event.isCancelled
-    val preInteractEvent = EntityPreInteractEvent(
-      entityId,
-      entityType,
-      playerId,
-      sneaking,
-      mainHand,
-      offHand,
-      location,
-      cancelled
-    )
-
-    val reducedEvent = eventService.publish(preInteractEvent)
-    event.setCancelled(!reducedEvent.allowed)
+    val entity = entityService.getEntity(event.getRightClicked.getUniqueId)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    val clickPosition = event.getClickedPosition.toLocation(event.getPlayer.getWorld)
+    val clickLocation = locationMapper.map(clickPosition)
+    EntityPreInteractEvent(entity, player, clickLocation, event.isCancelled)
+      .pipe { eventService.publish }
+      .tap { reducedEvent => event.setCancelled(!reducedEvent.allowed) }
   }
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -98,24 +80,11 @@ class SpigotEntityEventMapper(
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
     // TODO does Monolith only want this for LivingEntities?
-    val entityId = event.getRightClicked.getUniqueId
-    val entityType = Entity.Type.withName(event.getRightClicked.getType.name)
-    val player = event.getPlayer
-    val playerId = player.getUniqueId
-    val mainHand = itemMapper.map(player.getInventory.getItemInMainHand)
-    val offHand = itemMapper.map(player.getInventory.getItemInOffHand)
-    val clickPosition = event.getClickedPosition
-    val location = locationMapper.map(clickPosition.toLocation(player.getWorld))
-    val interactEvent = EntityInteractEvent(
-      entityId,
-      entityType,
-      playerId,
-      mainHand,
-      offHand,
-      location
-    )
-
-    eventService.publish(interactEvent)
+    val entity = entityService.getEntity(event.getRightClicked.getUniqueId)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    val clickPosition = event.getClickedPosition.toLocation(event.getPlayer.getWorld)
+    val clickLocation = locationMapper.map(clickPosition)
+    EntityInteractEvent(entity, player, clickLocation).tap { eventService.publish }
   }
 
   private def getAttackerId(attacker: SpigotEntity): UUID = attacker match {
@@ -128,65 +97,43 @@ class SpigotEntityEventMapper(
   }
 
   private def preAttack(event: SpigotEntityDamageByEntityEvent): CombatValue = {
-    val entity = event.getEntity
-    val entityId = entity.getUniqueId
-    val entityType = Entity.Type.withName(entity.getType.name)
-    val attacker = event.getDamager
-    val attackerId = getAttackerId(attacker)
+    val entity = entityService.getEntity(event.getEntity.getUniqueId)
+    val attacker = entityService.getEntity(event.getDamager.getUniqueId)
+    // TODO cast to SpigotEntity, and deny pre events of all kinds for non living entities
+    val attackerId = getAttackerId(event.getDamager)
     // TODO this used to return early if attackerId returned null for
     //  Server::getPlayer and Server::getEntity
-    val projectileId =
-      if (attackerId != attacker.getUniqueId) Some(attacker.getUniqueId)
-      else None
-    val combatSource = CombatSource(attacker.getName, Option(attackerId))
+    val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
+    val combatSource = CombatSource(attacker.name, Option(attackerId))
     val damage = CombatValue(combatSource, event.getDamage.toFloat)
-    val cancelled = event.isCancelled
-    val preAttackEvent = EntityPreAttackEvent(
-      entityId,
-      entityType,
-      attackerId,
-      projectileId,
-      damage,
-      cancelled
-    )
-
-    val reducedEvent = eventService.publish(preAttackEvent)
-    event.setDamage(reducedEvent.damage.modified)
-    event.setCancelled(!reducedEvent.allowed)
-
-    reducedEvent.damage
+    EntityPreAttackEvent(entity, attacker, projectileId, damage, event.isCancelled)
+      .pipe { eventService.publish }
+      .tap { reducedEvent =>
+        event.setDamage(reducedEvent.damage.modified)
+        event.setCancelled(!reducedEvent.allowed)
+      }
+      .pipe { _.damage }
   }
 
   private def onAttack(event: SpigotEntityDamageByEntityEvent): Unit = {
     combatValues.get(event) match {
       case Some(it) =>
-        val entity = event.getEntity
-        val entityId = entity.getUniqueId
-        val entityType = Entity.Type.withName(entity.getType.name)
-        val attacker = event.getDamager // TODO cast to SpigotEntity, and deny pre events of all kinds for non living entities
-        val attackerId = getAttackerId(attacker)
+        val entity = entityService.getEntity(event.getEntity.getUniqueId)
+        val attacker = entityService.getEntity(event.getDamager.getUniqueId)
+        val attackerId = getAttackerId(event.getDamager)
         // TODO this used to return early if attackerId returned null for
         //  Server::getPlayer and Server::getEntity
-        val projectileId =
-          if (attackerId != attacker.getUniqueId) Some(attacker.getUniqueId)
-          else None
-        val attackEvent = EntityAttackEvent(
-          entityId,
-          entityType,
-          attackerId,
-          projectileId,
-          it
-        )
-
-        eventService.publish(attackEvent)
-      case _ => ()
+        val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
+        EntityAttackEvent(entity, attacker, projectileId, it)
+          .tap { eventService.publish }
+      case _ =>
     }
   }
 
   @EventHandler(priority = EventPriority.HIGH)
   def preDamage(event: SpigotEntityDamageEvent): Unit = {
-    if (!event.getEntity.isInstanceOf[LivingEntity]) return
-    val entity = event.getEntity.asInstanceOf[LivingEntity]
+    if (!event.getEntity.isInstanceOf[SpigotEntity]) return
+    val entity = event.getEntity.asInstanceOf[SpigotEntity]
 
     var attackDamage: CombatValue = null
     val cause = event.getCause
@@ -311,6 +258,7 @@ class SpigotEntityEventMapper(
 
   @EventHandler(priority = EventPriority.HIGH)
   def onDeath(event: SpigotEntityDeathEvent): Unit = {
+
     val entityId = event.getEntity.getUniqueId
     val entityType = Entity.Type.withName(event.getEntityType.name)
     val entityStatus = null // TODO get from statusQueryService
@@ -344,6 +292,6 @@ class SpigotEntityEventMapper(
         event.getDrops().clear();
         event.getDrops().addAll(spigotDrops);
     }
-   */
+     */
   }
 }

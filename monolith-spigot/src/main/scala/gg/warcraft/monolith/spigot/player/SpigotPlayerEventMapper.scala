@@ -2,15 +2,14 @@ package gg.warcraft.monolith.spigot.player
 
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.player.{
   PlayerConnectEvent, PlayerDisconnectEvent, PlayerEquipmentChangedEvent,
   PlayerInteractEvent, PlayerPreConnectEvent, PlayerPreInteractEvent,
-  PlayerPrePunchEvent, PlayerPreRespawnEvent, PlayerPunchEvent, PlayerRespawnEvent
+  PlayerPrePunchEvent, PlayerPreRespawnEvent, PlayerPunchEvent, PlayerRespawnEvent,
+  PlayerService
 }
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.entity.Player
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.block.Action
 import org.bukkit.event.inventory.{InventoryClickEvent, InventoryType}
@@ -20,92 +19,64 @@ import org.bukkit.event.player.{
 }
 import org.bukkit.inventory.EquipmentSlot
 
-class SpigotPlayerEventMapper(
-    implicit eventService: EventService,
+import scala.util.chaining._
+
+class SpigotPlayerEventMapper(implicit
+    eventService: EventService,
     taskService: TaskService,
+    playerService: PlayerService,
     locationMapper: SpigotLocationMapper,
     itemMapper: SpigotItemMapper
 ) extends Listener {
   @EventHandler
   def preConnect(event: AsyncPlayerPreLoginEvent): Unit = {
-    val playerId = event.getUniqueId
-    val name = event.getName
-    val preConnectEvent = PlayerPreConnectEvent(playerId, name)
-    eventService.publish(preConnectEvent)
+    val reducedEvent = PlayerPreConnectEvent(event.getUniqueId, event.getName)
+      .pipe { eventService.publish }
+    if (!reducedEvent.allowed) {
+      event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER)
+      event.setKickMessage("Failed to connect to the server.")
+    }
   }
 
   @EventHandler
   def onConnect(event: PlayerJoinEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val name = event.getPlayer.getName
-    val connectEvent = PlayerConnectEvent(playerId, name)
-    eventService.publish(connectEvent)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    PlayerConnectEvent(player).tap { eventService.publish }
   }
 
   @EventHandler
   def onDisconnect(event: PlayerKickEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val name = event.getPlayer.getName
-    val disconnectEvent = PlayerDisconnectEvent(playerId, name)
-    eventService.publish(disconnectEvent)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    PlayerDisconnectEvent(player).tap { eventService.publish }
   }
 
   @EventHandler
   def onDisconnect(event: PlayerQuitEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val name = event.getPlayer.getName
-    val disconnectEvent = PlayerDisconnectEvent(playerId, name)
-    eventService.publish(disconnectEvent)
-  }
-
-  private def getEquipment(player: Player): Equipment = {
-    Equipment(
-      itemMapper map player.getInventory.getHelmet,
-      itemMapper map player.getInventory.getChestplate,
-      itemMapper map player.getInventory.getLeggings,
-      itemMapper map player.getInventory.getBoots,
-      itemMapper map player.getInventory.getItemInMainHand,
-      itemMapper map player.getInventory.getItemInOffHand
-    )
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    PlayerDisconnectEvent(player).tap { eventService.publish }
   }
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  def onEquipmentChanged(event: InventoryClickEvent): Unit = {
+  def onEquipmentChanged(event: InventoryClickEvent): Unit =
     if (event.getSlotType == InventoryType.SlotType.ARMOR) {
-      val playerId = event.getWhoClicked.getUniqueId
-      val equipment = getEquipment(event.getWhoClicked.asInstanceOf[Player])
-      taskService.runNextTick(() => {
-        val equipmentChangedEvent = PlayerEquipmentChangedEvent(playerId, equipment)
-        eventService.publish(equipmentChangedEvent)
-      })
+      val player = playerService.getPlayer(event.getWhoClicked.getUniqueId)
+      taskService.evalNextTick {
+        PlayerEquipmentChangedEvent(player).tap { eventService.publish }
+      }
     }
-  }
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onEquipmentChanged(event: PlayerItemHeldEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val equipment = getEquipment(event.getPlayer)
-    taskService.runNextTick(() => {
-      val equipmentChangedEvent = PlayerEquipmentChangedEvent(playerId, equipment)
-      eventService.publish(equipmentChangedEvent)
-    })
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    taskService.evalNextTick {
+      PlayerEquipmentChangedEvent(player).tap { eventService.publish }
+    }
   }
 
   private def prePunch(event: SpigotPlayerInteractEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val sneaking = event.getPlayer.isSneaking
-    val mainHand = itemMapper.map(event.getItem)
-    val offHand = itemMapper.map(event.getPlayer.getInventory.getItemInOffHand)
-    val cancelled = event.isCancelled
-    val prePunchEvent = PlayerPrePunchEvent(
-      playerId,
-      sneaking,
-      mainHand,
-      offHand,
-      cancelled
-    )
-
-    val reducedEvent = eventService.publish(prePunchEvent)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    val reducedEvent = PlayerPrePunchEvent(player, event.isCancelled)
+      .pipe { eventService.publish }
     // This weird logic is in place as otherwise bow shots mysteriously stop working
     // TODO investigate if this is to do with cancelling block and item use separately
     if (event.isCancelled && reducedEvent.allowed) event.setCancelled(false)
@@ -113,27 +84,16 @@ class SpigotPlayerEventMapper(
   }
 
   private def preInteract(event: SpigotPlayerInteractEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val sneaking = event.getPlayer.isSneaking
-    val mainHand = itemMapper.map(event.getItem)
-    val offHand = itemMapper.map(event.getPlayer.getInventory.getItemInOffHand)
-    val cancelled = event.isCancelled
-    val preInteractEvent = PlayerPreInteractEvent(
-      playerId,
-      sneaking,
-      mainHand,
-      offHand,
-      cancelled
-    )
-
-    val reducedEvent = eventService.publish(preInteractEvent)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    val reducedEvent = PlayerPreInteractEvent(player, event.isCancelled)
+      .pipe { eventService.publish }
     event.setCancelled(!reducedEvent.allowed)
   }
 
   @EventHandler(priority = EventPriority.HIGH)
   def prePunchOrInteract(event: SpigotPlayerInteractEvent): Unit = {
-    if (event.hasBlock || event.getHand == EquipmentSlot.OFF_HAND) return
-    event.getAction match {
+    import event._
+    if (!hasBlock && getHand != EquipmentSlot.OFF_HAND) getAction match {
       case Action.LEFT_CLICK_BLOCK | Action.LEFT_CLICK_AIR   => prePunch(event)
       case Action.RIGHT_CLICK_BLOCK | Action.RIGHT_CLICK_AIR => preInteract(event)
       case _                                                 => ()
@@ -141,27 +101,19 @@ class SpigotPlayerEventMapper(
   }
 
   private def onPunch(event: SpigotPlayerInteractEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val sneaking = event.getPlayer.isSneaking
-    val mainHand = itemMapper.map(event.getItem)
-    val offHand = itemMapper.map(event.getPlayer.getInventory.getItemInOffHand)
-    val punchEvent = PlayerPunchEvent(playerId, sneaking, mainHand, offHand)
-    eventService.publish(punchEvent)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    PlayerPunchEvent(player).tap { eventService.publish }
   }
 
   private def onInteract(event: SpigotPlayerInteractEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
-    val sneaking = event.getPlayer.isSneaking
-    val mainHand = itemMapper.map(event.getItem)
-    val offHand = itemMapper.map(event.getPlayer.getInventory.getItemInOffHand)
-    val interactEvent = PlayerInteractEvent(playerId, sneaking, mainHand, offHand)
-    eventService.publish(interactEvent)
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    PlayerInteractEvent(player).tap { eventService.publish }
   }
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onPunchOrInteract(event: SpigotPlayerInteractEvent): Unit = {
-    if (event.hasBlock || event.getHand == EquipmentSlot.OFF_HAND) return
-    event.getAction match {
+    import event._
+    if (!hasBlock && getHand != EquipmentSlot.OFF_HAND) getAction match {
       case Action.LEFT_CLICK_BLOCK | Action.LEFT_CLICK_AIR   => onPunch(event)
       case Action.RIGHT_CLICK_BLOCK | Action.RIGHT_CLICK_AIR => onInteract(event)
       case _                                                 => ()
@@ -170,20 +122,18 @@ class SpigotPlayerEventMapper(
 
   @EventHandler(priority = EventPriority.HIGH)
   def preRespawn(event: SpigotPlayerRespawnEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val location = locationMapper.map(event.getRespawnLocation)
-    val preRespawnEvent = PlayerPreRespawnEvent(playerId, location)
-
-    val reducedEvent = eventService.publish(preRespawnEvent)
+    val reducedEvent = PlayerPreRespawnEvent(player, location)
+      .pipe { eventService.publish }
     val reducedLocation = locationMapper.map(reducedEvent.location)
     event.setRespawnLocation(reducedLocation)
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
   def onRespawn(event: SpigotPlayerRespawnEvent): Unit = {
-    val playerId = event.getPlayer.getUniqueId
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val location = locationMapper.map(event.getRespawnLocation)
-    val respawnEvent = PlayerRespawnEvent(playerId, location)
-    eventService.publish(respawnEvent)
+    PlayerRespawnEvent(player, location).tap { eventService.publish }
   }
 }
