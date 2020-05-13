@@ -136,13 +136,15 @@ case class EntityPathfindEvent(
 // SPAWN
 case class EntityPreSpawnEvent(
     entity: Entity,
+    location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
 ) extends EntityEvent
     with CancellableEvent
 
 case class EntitySpawnEvent(
-    entity: Entity
+    entity: Entity,
+    location: Location,
 ) extends EntityEvent
     with Event
 
@@ -158,12 +160,14 @@ case class EntityDespawnEvent(
 
 case class EntityPreRespawnEvent(
     entity: Entity,
+    location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
 ) extends EntityEvent
     with CancellableEvent
 
 case class EntityRespawnEvent(
-    entity: Entity
+    entity: Entity,
+    location: Location
 ) extends EntityEvent
     with Event

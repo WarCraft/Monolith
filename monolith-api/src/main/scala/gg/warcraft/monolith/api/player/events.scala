@@ -10,9 +10,11 @@ trait PlayerEvent
 // CONNECT
 case class PlayerPreConnectEvent(
     playerId: UUID,
-    name: String
+    name: String,
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
 ) extends PlayerEvent
-    with PreEvent
+    with CancellableEvent
 
 case class PlayerConnectEvent(
     player: Player
