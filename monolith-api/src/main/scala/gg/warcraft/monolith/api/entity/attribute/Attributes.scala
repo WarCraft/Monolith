@@ -1,12 +1,18 @@
 package gg.warcraft.monolith.api.entity.attribute
 
-case class Attributes(attributes: Set[Attribute]) {
-  private var computed: Map[Attribute.Type, Float] = Map.empty
+case class Attributes(modifiers: Set[Attribute.Modifier]) {
+  private lazy val modifiersByGroup = modifiers.groupBy { _.typed }
 
-  def get(typed: Attribute.Type): Float =
-    if (!computed.contains(typed)) {
-      val value = attributes.foldRight(0f) { _.value + _ }
-      computed += (typed -> value)
+  private var computed: Map[Attribute, Float] = Map.empty
+
+  def get(attribute: Attribute): Float =
+    if (!computed.contains(attribute)) {
+      val flat = modifiersByGroup(Attribute.Modifier.FLAT)
+        .foldRight(0f) { _.value + _ }
+      val percent = modifiersByGroup(Attribute.Modifier.PERCENT)
+        .foldRight(0f) { _.value + _ }
+      val value = flat + (1 + percent) * flat
+      computed += (attribute -> value)
       value
-    } else computed(typed)
+    } else computed(attribute)
 }

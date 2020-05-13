@@ -1,11 +1,28 @@
 package gg.warcraft.monolith.api.entity.attribute
 
+trait Attribute {
+  val name: String
+}
+
 object Attribute {
-  trait Type {
-    val name: String
+  case class Modifier(
+      attribute: Attribute,
+      typed: Modifier.Type,
+      value: Float
+  )
+
+  object Modifier extends Enumeration {
+    type Type = Value
+    val FLAT, PERCENT = Value
+
+    def flat(attribute: Attribute, value: Float): Modifier =
+      Modifier(attribute, FLAT, value)
+
+    def percent(attribute: Attribute, value: Float): Modifier =
+      Modifier(attribute, PERCENT, value)
   }
 
-  sealed abstract class Generic(override val name: String) extends Type
+  sealed abstract class Generic(override val name: String) extends Attribute
   object Generic {
     case object ARMOR extends Generic("Armor")
     case object ARMOR_TOUGHNESS extends Generic("Armor Toughness")
@@ -19,18 +36,13 @@ object Attribute {
     case object MOVEMENT_SPEED extends Generic("Movement Speed")
   }
 
-  sealed abstract class Horse(override val name: String) extends Type
+  sealed abstract class Horse(override val name: String) extends Attribute
   object Horse {
     case object JUMP_STRENGTH extends Horse("Jump Strength")
   }
 
-  sealed abstract class Zombie(override val name: String) extends Type
+  sealed abstract class Zombie(override val name: String) extends Attribute
   object Zombie {
     case object SPAWN_REINFORCEMENTS extends Horse("Spawn Reinforcements")
   }
-}
-
-trait Attribute {
-  val typed: Attribute.Type
-  val value: Float
 }
