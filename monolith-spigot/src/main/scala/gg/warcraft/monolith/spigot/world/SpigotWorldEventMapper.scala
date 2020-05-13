@@ -5,8 +5,8 @@ import gg.warcraft.monolith.api.world.ChunkPreLoadEvent
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.world.{ChunkLoadEvent, ChunkUnloadEvent}
 
-class SpigotWorldEventMapper(
-    implicit private val eventService: EventService
+class SpigotWorldEventMapper(implicit
+    eventService: EventService
 ) extends Listener {
   @EventHandler(priority = EventPriority.HIGH)
   def preLoad(event: ChunkLoadEvent): Unit = {

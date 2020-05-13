@@ -5,6 +5,7 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
+import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.{Entity, EntityService}
 import gg.warcraft.monolith.api.entity.Entity.Type
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
@@ -27,10 +28,11 @@ import org.bukkit.plugin.Plugin
 
 import scala.jdk.CollectionConverters._
 
-class SpigotEntityService(
-    implicit server: Server,
+class SpigotEntityService(implicit
+    server: Server,
     plugin: Plugin,
     logger: Logger,
+    eventService: EventService,
     attributeService: AttributeService,
     statusService: StatusService,
     teamService: TeamService,

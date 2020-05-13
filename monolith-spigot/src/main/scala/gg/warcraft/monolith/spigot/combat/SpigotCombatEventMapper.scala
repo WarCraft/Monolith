@@ -10,10 +10,10 @@ import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.spigot.block.{SpigotBlockFaceMapper, SpigotBlockMapper}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
-class SpigotCombatEventMapper(
-    implicit private val eventService: EventService,
-    implicit private val blockMapper: SpigotBlockMapper,
-    implicit private val blockFaceMapper: SpigotBlockFaceMapper
+class SpigotCombatEventMapper(implicit
+    eventService: EventService,
+    blockMapper: SpigotBlockMapper,
+    blockFaceMapper: SpigotBlockFaceMapper
 ) extends Listener {
   private def getEntityId(shooter: Any): Option[UUID] = shooter match {
     case it: SpigotEntity => Some(it.getUniqueId)

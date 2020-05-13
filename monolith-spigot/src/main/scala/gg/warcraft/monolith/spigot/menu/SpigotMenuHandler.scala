@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.menu.{Click, Menu, MenuService}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.inventory.InventoryClickEvent
 
-class SpigotMenuHandler(menuService: MenuService) extends Listener {
+class SpigotMenuHandler(implicit menuService: MenuService) extends Listener {
   private def onClick(event: InventoryClickEvent, menu: Menu): Unit = {
     if (event.isLeftClick || event.isRightClick) {
       menu.buttons get event.getRawSlot match {

@@ -28,7 +28,9 @@ import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
 import gg.warcraft.monolith.spigot.entity.{
   SpigotEntityEventMapper, SpigotEntityService, SpigotEntityTypeMapper
 }
-import gg.warcraft.monolith.spigot.entity.attribute.SpigotAttributeService
+import gg.warcraft.monolith.spigot.entity.attribute.{
+  SpigotAttributeMapper, SpigotAttributeService
+}
 import gg.warcraft.monolith.spigot.item._
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.menu.{
@@ -44,7 +46,7 @@ import io.getquill.context.jdbc.JdbcContext
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
-object Implicits {
+object implicits {
   implicit var server: Server = _
   private[spigot] implicit var plugin: Plugin = _
   private[spigot] implicit var logger: Logger = _
@@ -113,6 +115,8 @@ object Implicits {
   implicit lazy val entityDataService: EntityDataService =
     new EntityDataService
 
+  implicit lazy val attributeMapper: SpigotAttributeMapper =
+    new SpigotAttributeMapper
   implicit lazy val entityTypeMapper: SpigotEntityTypeMapper =
     new SpigotEntityTypeMapper
   implicit lazy val entityEventMapper: SpigotEntityEventMapper =

@@ -28,7 +28,7 @@ class SpigotEntityAdapter(entity: SpigotEntity)(
   override lazy val id: UUID = entity.getUniqueId
   override lazy val typed: Type = entityTypeMapper map entity.getType
 
-  override def team: Option[Team] = (dataService getEntityData id).get.team
+  override def team: Option[Team] = dataService.data(id).team
   override def attributes: Attributes = attributeService getAttributes id
   override def status: Status = statusService getStatus id
 

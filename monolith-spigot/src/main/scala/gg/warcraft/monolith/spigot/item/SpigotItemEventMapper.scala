@@ -7,9 +7,9 @@ import gg.warcraft.monolith.api.entity.Entity
 import gg.warcraft.monolith.api.item.{Item, ItemPickupEvent, ItemPrePickupEvent}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
-class SpigotItemEventMapper(
-    implicit private val eventService: EventService,
-    implicit private val itemMapper: SpigotItemMapper
+class SpigotItemEventMapper(implicit
+    eventService: EventService,
+    itemMapper: SpigotItemMapper
 ) extends Listener {
   private def parse(
       item: SpigotDrop,
