@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.player.data
 
 import gg.warcraft.monolith.api.player.{Player, PlayerService}
 
-class PlayerDataUpdater(
+class PlayerDataUpdater(implicit
     playerService: PlayerService,
     playerDataService: PlayerDataService
 ) extends Runnable {
@@ -11,7 +11,7 @@ class PlayerDataUpdater(
     if (iterator.isEmpty) iterator = playerService.getOnlinePlayers.iterator
     if (iterator.hasNext) {
       val player = iterator.next
-      if (player.isOnline) playerDataService updatePlayerData player.id
+      if (player.isOnline) playerDataService.updatePlayerData(player.id)
     }
   }
 }

@@ -4,7 +4,7 @@ class DailyTicker extends Runnable {
   override def run(): Unit = ???
 }
 
-/*
+/* TODO
     private static final String LAST_DAILY_TICK_KEY = "lastdailytick";
 
     private final PersistenceService persistenceService;

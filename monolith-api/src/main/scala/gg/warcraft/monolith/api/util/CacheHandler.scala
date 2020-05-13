@@ -11,12 +11,12 @@ class CacheHandler(
     invalidate: UUID => Unit
 ) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
-    case it: PlayerDisconnectEvent => it.playerId |> invalidate
-    case _                         =>
+    case PlayerDisconnectEvent(player) => player.id |> invalidate
+    case _                             =>
   }
 
   override def reduce[T <: PreEvent](event: T): T = event match {
-    case it: PlayerPreConnectEvent => it.playerId |> load; event
-    case _                         => event
+    case PlayerPreConnectEvent(playerId, _) => playerId |> load; event
+    case _                                  => event
   }
 }

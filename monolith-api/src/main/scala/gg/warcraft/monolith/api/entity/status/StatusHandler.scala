@@ -4,7 +4,7 @@ import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
 import gg.warcraft.monolith.api.entity.{Entity, EntityDeathEvent}
 import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectEvent}
 
-class StatusHandler(service: StatusService) extends Event.Handler {
+class StatusHandler(implicit service: StatusService) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
     case EntityDeathEvent(entity, _) =>
       if (entity.typed != Entity.Type.PLAYER) service.invalidateStatus(entity.id)

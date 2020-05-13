@@ -47,7 +47,7 @@ class PlayerDataService(
     }
   }
 
-  def setPlayerData(data: PlayerData): Unit = {
+  private[player] def setPlayerData(data: PlayerData): Unit = {
     _data += (data.id -> data)
     Future {
       run {
@@ -63,7 +63,7 @@ class PlayerDataService(
     // TODO if team has changed fire event
   }
 
-  def updatePlayerData(id: UUID): Unit = {
+  private[data] def updatePlayerData(id: UUID): Unit = {
     val data = _data(id)
     val oldLastSeen = data.timeLastSeen
     val newLastSeen = System.currentTimeMillis
