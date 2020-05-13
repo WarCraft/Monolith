@@ -5,15 +5,14 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.Codecs
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.team.{ Team, TeamService }
-import gg.warcraft.monolith.api.entity.EntityTeamChangedEvent
-import io.getquill.{ SnakeCase, SqliteDialect }
+import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
+import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
-class EntityDataService(
-    implicit logger: Logger,
+class EntityDataService(implicit
+    logger: Logger,
     database: JdbcContext[SqliteDialect, SnakeCase],
     eventService: EventService,
     teamService: TeamService
@@ -35,12 +34,9 @@ class EntityDataService(
   // expected to not spawn often or to be short lived and not clog the data map.
   run { query[EntityData] }.foreach { it => _data += (it.id -> it) }
 
-  def getEntityData(id: UUID): Option[EntityData] =
-    _data get id
+  def data: Map[UUID, EntityData] = _data
 
-  def setEntityData(data: EntityData): Unit = {
-    val oldData = _data.get(data.id)
-
+  private[entity] def setEntityData(data: EntityData): Unit = {
     _data += (data.id -> data)
     Future {
       run {
@@ -49,18 +45,9 @@ class EntityDataService(
           .onConflictUpdate(_.id)((_1, _2) => _1.team -> _2.team)
       }
     }
-
-    oldData match {
-      case Some(oldData) =>
-        if(oldData.team != data.team) { // TODO this logic belongs in a domain service
-          val teamChanged = EntityTeamChangedEvent(data.id, oldData.team, data.team)
-          eventService publish teamChanged
-        }
-      case None          =>
-    }
   }
 
-  def deleteEntityData(id: UUID): Unit = {
+  private[entity] def deleteEntityData(id: UUID): Unit = {
     _data -= id
     Future { run { query[EntityData].filter { _.id == lift(id) }.delete } }
   }

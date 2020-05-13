@@ -5,13 +5,19 @@ import java.util.UUID
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
 import gg.warcraft.monolith.api.core.Duration._
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.Location
 
 import scala.collection.mutable
+import scala.util.chaining._
 
-trait EntityService {
+abstract class EntityService(implicit
+    eventService: EventService,
+    dataService: EntityDataService
+) {
   private final val knockBackStrength: mutable.Map[Float, Float] = mutable.Map.empty
   private final val knockUpStrength: mutable.Map[Float, Float] = mutable.Map.empty
   private final val leapStrength: mutable.Map[Float, Float] = mutable.Map.empty
@@ -21,6 +27,17 @@ trait EntityService {
   def getNearbyEntities(loc: Location, radius: (Float, Float, Float)): List[Entity]
   def getNearbyEntities(loc: Location, radius: Float): List[Entity] =
     getNearbyEntities(loc, (radius, radius, radius))
+
+  def setTeam(id: UUID, team: Option[Team]): Unit = {
+    val oldData = dataService.data(id)
+    if (oldData.team != team) {
+      val newData = oldData.copy(team = team)
+      dataService.setEntityData(newData)
+
+      EntityTeamChangedEvent(getEntity(id), oldData.team, newData.team)
+        .pipe { eventService.publish }
+    }
+  }
 
   def setVelocity(id: UUID, velocity: Vector3f): Unit
   def addPotionEffect(id: UUID, effect: PotionEffect): Unit
