@@ -1,10 +1,7 @@
 package gg.warcraft.monolith.spigot
 
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.{MonolithConfig, ServerShutdownEvent}
 import gg.warcraft.monolith.api.core.Duration._
-import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.entity.data.EntityDataHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
@@ -18,25 +15,21 @@ import gg.warcraft.monolith.spigot.menu.SpigotMenuHandler
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world.SpigotWorldEventMapper
 import io.getquill.{SnakeCase, SqliteDialect}
-import org.bukkit.plugin.Plugin
-import org.bukkit.Server
 
 class MonolithPlugin extends SpigotMonolithPlugin {
   import implicits._
 
-  private implicit val server: Server = getServer
-  private implicit val plugin: Plugin = this
-  private implicit val logger: Logger = getLogger
-  private implicit val eventService: EventService = super.eventService
+  override def onLoad(): Unit = {
+    super.onLoad()
 
-  override def onEnable(): Unit = {
-    implicits.server = server
-    implicits.plugin = plugin
-    implicits.logger = logger
-
-    initDatabase(SqliteDialect, SnakeCase, getDataFolder)
+    implicit val databaseContext: DatabaseContext =
+      initDatabase(SqliteDialect, SnakeCase, getDataFolder)
     upgradeDatabase(getDataFolder, getClassLoader)
 
+    implicits.init()
+  }
+
+  override def onEnable(): Unit = {
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
     blockBuildService.readConfig(config)
     blockBackupService.restoreBackups()
@@ -52,13 +45,12 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   private def enableEventMappers(): Unit = {
-    val pluginManager = getServer.getPluginManager
-    pluginManager.registerEvents(new SpigotCombatEventMapper, this)
-    pluginManager.registerEvents(new SpigotEntityEventMapper, this)
-    pluginManager.registerEvents(new SpigotPlayerEventMapper, this)
-    pluginManager.registerEvents(new SpigotItemEventMapper, this)
-    pluginManager.registerEvents(new SpigotMenuHandler, this)
-    pluginManager.registerEvents(new SpigotWorldEventMapper, this)
+    subscribe(new SpigotCombatEventMapper)
+    subscribe(new SpigotEntityEventMapper)
+    subscribe(new SpigotPlayerEventMapper)
+    subscribe(new SpigotItemEventMapper)
+    subscribe(new SpigotMenuHandler)
+    subscribe(new SpigotWorldEventMapper)
   }
 
   private def enableHandlers(): Unit = {

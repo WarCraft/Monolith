@@ -24,7 +24,6 @@ import gg.warcraft.monolith.spigot.combat.{
   SpigotCombatEventMapper, SpigotPotionMapper
 }
 import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
-import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
 import gg.warcraft.monolith.spigot.entity.{
   SpigotEntityEventMapper, SpigotEntityService, SpigotEntityTypeMapper
 }
@@ -47,22 +46,50 @@ import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
 object implicits {
-  implicit var server: Server = _
-  private[spigot] implicit var plugin: Plugin = _
-  private[spigot] implicit var logger: Logger = _
-  private[spigot] implicit var database: JdbcContext[SqliteDialect, SnakeCase] = _
+  private[spigot] type DatabaseContext = JdbcContext[SqliteDialect, SnakeCase]
+
+  private[spigot] var _server: Server = _
+  private[spigot] var _plugin: Plugin = _
+  private[spigot] var _logger: Logger = _
+
+  private[spigot] var _database: DatabaseContext = _
+  private[spigot] var _eventService: EventService = _
+  private[spigot] var _taskService: TaskService = _
+
+  private[spigot] def init()(implicit
+      server: Server,
+      plugin: Plugin,
+      logger: Logger,
+      database: DatabaseContext,
+      eventService: EventService,
+      taskService: TaskService
+  ): Unit = {
+    _server = server
+    _plugin = plugin
+    _logger = logger
+    _database = database
+    _eventService = eventService
+    _taskService = taskService
+  }
+
+  private[spigot] def monolithEventService: EventService = eventService
+
+  // Spigot
+  private implicit lazy val server: Server = _server
+  private implicit lazy val plugin: Plugin = _plugin
+  private implicit lazy val logger: Logger = _logger
 
   // Core
+  private implicit lazy val database: DatabaseContext = _database
+  private implicit lazy val eventService: EventService = _eventService
+  private implicit lazy val taskService: TaskService = taskService
+
   implicit lazy val authService: AuthService =
     new AuthService
   implicit lazy val commandService: SpigotCommandService =
     new SpigotCommandService
 
-  private[spigot] implicit lazy val eventService: EventService =
-    new EventService
-  private[spigot] implicit lazy val taskService: TaskService =
-    new SpigotTaskService
-
+  // Math
   implicit lazy val boundingBoxMapper: SpigotAABBfMapper =
     new SpigotAABBfMapper
   implicit lazy val vectorMapper: SpigotVectorMapper =

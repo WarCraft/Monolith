@@ -31,8 +31,8 @@ trait MonolithPlugin {
       implicit logger: Logger
   ): A = {
     def onError(err: io.circe.Error): A = {
-      logger severe err.getMessage
-      logger severe WARN_DEFAULT_CONFIG
+      logger.severe(err.getMessage)
+      logger.severe(WARN_DEFAULT_CONFIG)
       if (fallback) {
         val defaultConfig = Source.fromResource("config.yml")
         parseConfig(defaultConfig.mkString)
@@ -70,17 +70,17 @@ trait MonolithPlugin {
     database.asInstanceOf[JdbcContext[D, N]]
   }
 
-  protected def upgradeDatabase(dataFolder: File, classLoader: ClassLoader)(
-      implicit logger: Logger
+  protected def upgradeDatabase(dataFolder: File, classLoader: ClassLoader)(implicit
+      logger: Logger
   ): Unit = {
     val databasePath = s"${dataFolder.getAbsolutePath}database.sqlite"
     if (new File(databasePath).exists) {
       val flyway = Flyway
         .configure(classLoader)
-        .dataSource(s"jdbc:sqlite:${databasePath}", null, null)
+        .dataSource(s"jdbc:sqlite:$databasePath", null, null)
         .load
       val migrations = flyway.migrate()
-      logger info s"Applied $migrations new database schema migrations."
-    } else logger warning s"Failed to migrate $databasePath, it's missing."
+      logger.info(s"Applied $migrations new database schema migrations.")
+    } else logger.warning(s"Failed to migrate $databasePath, it's missing.")
   }
 }
