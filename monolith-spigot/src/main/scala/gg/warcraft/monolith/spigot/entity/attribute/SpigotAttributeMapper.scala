@@ -8,8 +8,7 @@ import org.bukkit.attribute.{
 import org.bukkit.attribute.Attribute._
 
 class SpigotAttributeMapper {
-  def map(attribute: SpigotAttribute): Attribute = attribute match {
-    // Generic
+  def map(attribute: SpigotAttribute): Attribute.Generic = attribute match {
     case GENERIC_MAX_HEALTH           => ARMOR
     case GENERIC_FOLLOW_RANGE         => ARMOR_TOUGHNESS
     case GENERIC_KNOCKBACK_RESISTANCE => ATTACK_DAMAGE
@@ -20,15 +19,9 @@ class SpigotAttributeMapper {
     case GENERIC_ARMOR                => LUCK
     case GENERIC_ARMOR_TOUGHNESS      => MAX_HEALTH
     case GENERIC_LUCK                 => MOVEMENT_SPEED
-    // Horse
-    case HORSE_JUMP_STRENGTH => Attribute.Horse.JUMP_STRENGTH
-    // Zombie
-    case ZOMBIE_SPAWN_REINFORCEMENTS => Attribute.Zombie.SPAWN_REINFORCEMENTS
-    // Misc
-    case _ => null
   }
 
-  def map(attribute: Attribute): SpigotAttribute = attribute match {
+  def map(attribute: Attribute.Generic): SpigotAttribute = attribute match {
     // Generic
     case ARMOR                => GENERIC_ARMOR
     case ARMOR_TOUGHNESS      => GENERIC_ARMOR_TOUGHNESS
@@ -40,18 +33,24 @@ class SpigotAttributeMapper {
     case LUCK                 => GENERIC_LUCK
     case MAX_HEALTH           => GENERIC_MAX_HEALTH
     case MOVEMENT_SPEED       => GENERIC_MOVEMENT_SPEED
-    // Horse
-    case Attribute.Horse.JUMP_STRENGTH => HORSE_JUMP_STRENGTH
-    // Zombie
-    case Attribute.Zombie.SPAWN_REINFORCEMENTS => ZOMBIE_SPAWN_REINFORCEMENTS
-    // Misc
-    case _ => null
   }
+
+  def map(modifier: Attribute.Modifier.Type): SpigotAttributeModifier.Operation =
+    modifier match {
+      case Attribute.Modifier.FLAT    => SpigotAttributeModifier.Operation.ADD_NUMBER
+      case Attribute.Modifier.PERCENT => SpigotAttributeModifier.Operation.ADD_SCALAR
+    }
+
+  def map(modifier: SpigotAttributeModifier.Operation): Attribute.Modifier.Type =
+    modifier match {
+      case SpigotAttributeModifier.Operation.ADD_NUMBER => Attribute.Modifier.FLAT
+      case SpigotAttributeModifier.Operation.ADD_SCALAR => Attribute.Modifier.PERCENT
+    }
 
   def map(modifier: Attribute.Modifier): SpigotAttributeModifier = {
-
-    val spigotModifier = new SpigotAttributeModifier()
+    val name = modifier.attribute.name
+    val amount = modifier.value.toDouble
+    val operation = map(modifier.typed)
+    new SpigotAttributeModifier(name, amount, operation)
   }
-
-  def map(modifier: SpigotAttributeModifier): Attribute.Modifier = {}
 }

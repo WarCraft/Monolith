@@ -21,16 +21,16 @@ class SpigotAttributeService(implicit
     super.addModifier(entityId, modifier: _*)
     server.getEntity(entityId) match {
       case spigotEntity: SpigotEntity =>
-        modifier
-          .filter { _.attribute.isInstanceOf[Attribute.Generic] }
-          .foreach { modifier =>
-            val spigotAttribute = attributeMapper.map(modifier.attribute)
+        modifier.foreach {
+          case modifier @ Attribute.Modifier(attribute: Attribute.Generic, _, _) =>
+            val spigotAttribute = attributeMapper.map(attribute)
             val spigotModifier = attributeMapper.map(modifier)
             _spigotModifiers += (modifier -> spigotModifier)
             spigotEntity
               .getAttribute(spigotAttribute)
               .addModifier(spigotModifier)
-          }
+          case _ =>
+        }
       case _ =>
     }
   }
@@ -42,10 +42,9 @@ class SpigotAttributeService(implicit
     super.removeModifier(entityId, modifier: _*)
     server.getEntity(entityId) match {
       case spigotEntity: SpigotEntity =>
-        modifier
-          .filter { _.attribute.isInstanceOf[Attribute.Generic] }
-          .foreach { modifier =>
-            val spigotAttribute = attributeMapper.map(modifier.attribute)
+        modifier.foreach {
+          case modifier @ Attribute.Modifier(attribute: Attribute.Generic, _, _) =>
+            lazy val spigotAttribute = attributeMapper.map(attribute)
             _spigotModifiers.get(modifier) match {
               case Some(spigotModifier) =>
                 _spigotModifiers -= modifier
@@ -54,7 +53,8 @@ class SpigotAttributeService(implicit
                   .removeModifier(spigotModifier)
               case None =>
             }
-          }
+          case _ =>
+        }
       case _ =>
     }
   }
