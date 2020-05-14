@@ -3,7 +3,7 @@ package gg.warcraft.monolith.api.entity
 import java.util.UUID
 
 import gg.warcraft.monolith.api.combat.CombatValue
-import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event}
+import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event, PreEvent}
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.item.Item
 import gg.warcraft.monolith.api.player.Player
@@ -60,6 +60,12 @@ case class EntityFatalDamageEvent(
     with Event
 
 // DEATH
+case class EntityPreDeathEvent(
+    entity: Entity,
+    drops: List[Item]
+) extends EntityEvent
+    with PreEvent
+
 case class EntityDeathEvent(
     entity: Entity,
     drops: List[Item]
@@ -144,7 +150,7 @@ case class EntityPreSpawnEvent(
 
 case class EntitySpawnEvent(
     entity: Entity,
-    location: Location,
+    location: Location
 ) extends EntityEvent
     with Event
 
