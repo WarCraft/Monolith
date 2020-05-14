@@ -6,7 +6,9 @@ import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.{
-  Entity, EntityAttackEvent, EntityInteractEvent, EntityPreAttackEvent,
+  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
+  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
+  EntityPreDamageEvent, EntityPreDeathEvent, EntityPreFatalDamageEvent,
   EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent
 }
 import gg.warcraft.monolith.api.entity.status.StatusService
@@ -44,7 +46,7 @@ class SpigotEntityEventMapper(implicit
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val location = locationMapper.map(event.getEntity.getLocation)
     EntityPreSpawnEvent(entity, location, event.isCancelled)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
       .tap { reducedEvent =>
         if (reducedEvent.allowed && reducedEvent.location != location)
           taskService.evalNextTick {
@@ -71,7 +73,7 @@ class SpigotEntityEventMapper(implicit
     val clickPosition = event.getClickedPosition.toLocation(event.getPlayer.getWorld)
     val clickLocation = locationMapper.map(clickPosition)
     EntityPreInteractEvent(entity, player, clickLocation, event.isCancelled)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
       .tap { reducedEvent => event.setCancelled(!reducedEvent.allowed) }
   }
 
@@ -107,7 +109,7 @@ class SpigotEntityEventMapper(implicit
     val combatSource = CombatSource(attacker.name, Option(attackerId))
     val damage = CombatValue(combatSource, event.getDamage.toFloat)
     EntityPreAttackEvent(entity, attacker, projectileId, damage, event.isCancelled)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
       .tap { reducedEvent =>
         event.setDamage(reducedEvent.damage.modified)
         event.setCancelled(!reducedEvent.allowed)
@@ -133,7 +135,7 @@ class SpigotEntityEventMapper(implicit
   @EventHandler(priority = EventPriority.HIGH)
   def preDamage(event: SpigotEntityDamageEvent): Unit = {
     if (!event.getEntity.isInstanceOf[SpigotEntity]) return
-    val entity = event.getEntity.asInstanceOf[SpigotEntity]
+    val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
 
     var attackDamage: CombatValue = null
     val cause = event.getCause
@@ -142,17 +144,16 @@ class SpigotEntityEventMapper(implicit
       if (event.isCancelled) return
     }
 
-    val entityId = entity.getUniqueId
-    val entityType = Entity.Type.withName(entity.getType.name)
-    val entityStatus = statusService.getStatus(entityId)
+    val entity = entityService.getEntity(spigotEntity.getUniqueId)
+    val entityStatus = statusService.getStatus(entity.id)
     val damage = combatValues.get(event) match {
       case Some(it) => it
       case None =>
         if (attackDamage != null) attackDamage
         else {
-          entity.getMetadata(combatValueMetadataKey) match {
+          spigotEntity.getMetadata(combatValueMetadataKey) match {
             case it if !it.isEmpty =>
-              entity.removeMetadata(combatValueMetadataKey, plugin)
+              spigotEntity.removeMetadata(combatValueMetadataKey, plugin)
               it.get(0).value.asInstanceOf[CombatValue]
             case _ =>
               val combatSource = CombatSource(event.getCause.name, None)
@@ -161,34 +162,28 @@ class SpigotEntityEventMapper(implicit
         }
     }
 
-    val cancelled = event.isCancelled
-    val preDamageEvent = EntityPreDamageEvent(
-      entityId,
-      entityType,
-      damage,
-      cancelled
-    )
-
-    var reducedPreDamageEvent = eventService.publish(preDamageEvent)
-    if (reducedPreDamageEvent.allowed) {
-      reducedPreDamageEvent = entityStatus.reduce(reducedPreDamageEvent)
-    }
-    if (!reducedPreDamageEvent.allowed) {
+    val reducedDamageEvent = EntityPreDamageEvent(entity, damage, event.isCancelled)
+      .pipe { eventService.publish(_) }
+      .pipe { reducedEvent =>
+        if (reducedEvent.allowed) entityStatus.reduce(reducedEvent)
+        else reducedEvent
+      }
+    if (!reducedDamageEvent.allowed) {
       event.setCancelled(true)
       return
     }
 
-    combatValues.put(event, reducedPreDamageEvent.damage)
+    combatValues.put(event, reducedDamageEvent.damage)
 
-    if (damage.modified >= entity.getHealth) {
-      val preFatalDamageEvent =
-        EntityPreFatalDamageEvent(entityId, entityType, damage)
-      var reducedPreFatalDamageEvent = eventService.publish(preFatalDamageEvent)
-      if (reducedPreFatalDamageEvent.allowed) {
-        reducedPreFatalDamageEvent = entityStatus.reduce(reducedPreFatalDamageEvent)
-      }
-      if (!reducedPreFatalDamageEvent.allowed) {
-        val adjustedDamage = entity.getHealth.toFloat - 1
+    if (damage.modified >= spigotEntity.getHealth) {
+      val reducedFatalEvent = EntityPreFatalDamageEvent(entity, damage)
+        .pipe { eventService.publish(_) }
+        .pipe { reducedEvent =>
+          if (reducedEvent.allowed) entityStatus.reduce(reducedEvent)
+          else reducedEvent
+        }
+      if (!reducedFatalEvent.allowed) {
+        val adjustedDamage = spigotEntity.getHealth.toFloat - 1
         val damageOverride = CombatValue.Modifier(
           damage.source,
           CombatValue.Modifier.OVERRIDE,
@@ -206,16 +201,15 @@ class SpigotEntityEventMapper(implicit
   // Don't ignore if cancelled until having removed combat value
   def onDamage(event: SpigotEntityDamageEvent): Unit = {
     val combatValue = combatValues.remove(event)
-    if (event.isCancelled || !event.getEntity.isInstanceOf[LivingEntity]) return
-    val entity = event.getEntity.asInstanceOf[LivingEntity]
+    if (event.isCancelled || !event.getEntity.isInstanceOf[SpigotEntity]) return
+    val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
 
     val cause = event.getCause
     if (cause == DamageCause.ENTITY_ATTACK || cause == DamageCause.PROJECTILE)
       onAttack(event.asInstanceOf[SpigotEntityDamageByEntityEvent])
 
-    val entityId = entity.getUniqueId
-    val entityType = Entity.Type.withName(entity.getType.name)
-    val entityStatus = statusService.getStatus(entityId)
+    val entity = entityService.getEntity(spigotEntity.getUniqueId)
+    val entityStatus = statusService.getStatus(entity.id)
     val damage = combatValue match {
       case Some(it) => it
       case None =>
@@ -223,75 +217,56 @@ class SpigotEntityEventMapper(implicit
         CombatValue(combatSource, event.getDamage.toFloat)
     }
 
-    val damageEvent = EntityDamageEvent(entityId, entityType, damage)
-    eventService.publish(damageEvent)
-    entityStatus.handle(damageEvent)
+    EntityDamageEvent(entity, damage)
+      .tap { entityStatus.handle }
+      .tap { eventService.publish }
 
-    if (damage.modified >= entity.getHealth) {
-      val fatalDamageEvent = EntityFatalDamageEvent(entityId, entityType, damage)
-      eventService.publish(fatalDamageEvent)
+    if (damage.modified >= spigotEntity.getHealth) {
+      EntityFatalDamageEvent(entity, damage)
+        .tap { entityStatus.handle }
+        .tap { eventService.publish }
     }
 
-    val previousHealth = entity.getHealth.toFloat
-    val previousPercentHealth = previousHealth / entity
+    val oldHealth = spigotEntity.getHealth.toFloat
+    val oldPercentHealth = oldHealth / spigotEntity
       .getAttribute(Attribute.GENERIC_MAX_HEALTH)
       .getValue
       .toFloat
     taskService.runNextTick(() => {
-      val currentHealth = entity.getHealth.toFloat
-      val currentPercentHealth = currentHealth / entity
+      val newHealth = spigotEntity.getHealth.toFloat
+      val newPercentHealth = newHealth / spigotEntity
         .getAttribute(Attribute.GENERIC_MAX_HEALTH)
         .getValue
         .toFloat
-      val healthChangedEvent = EntityHealthChangedEvent(
-        entityId,
-        entityType,
-        previousHealth,
-        previousPercentHealth,
-        currentHealth,
-        currentPercentHealth
-      )
-      eventService.publish(healthChangedEvent)
-      entityStatus.handle(healthChangedEvent)
+      EntityHealthChangedEvent(
+        entity,
+        oldHealth,
+        oldPercentHealth,
+        newHealth,
+        newPercentHealth
+      ).tap { entityStatus.handle }
+        .tap { eventService.publish }
     })
   }
 
   @EventHandler(priority = EventPriority.HIGH)
   def onDeath(event: SpigotEntityDeathEvent): Unit = {
-
-    val entityId = event.getEntity.getUniqueId
-    val entityType = Entity.Type.withName(event.getEntityType.name)
-    val entityStatus = null // TODO get from statusQueryService
+    val entity = entityService.getEntity(event.getEntity.getUniqueId)
+    val entityStatus = statusService.getStatus(entity.id)
     val drops = event.getDrops.asScala
-      .map(itemMapper.map)
-      .filter(_.isDefined)
-      .map(_.get)
+      .map { itemMapper.map }
+      .filter { _.isDefined }
+      .map { _.get }
       .toList
-    val deathEvent = EntityDeathEvent(entityId, entityType, drops)
-
-    // TODO entityStatus.getEffects.forEach(effect => effect.onEntityDeathEvent(deathEvent))
-    val reducedEvent = eventService.publish(deathEvent)
-
-    /*
-     @EventHandler
-    public void onEntityDeathEvent(org.bukkit.event.entity.EntityDeathEvent event) {
-        UUID entityId = event.getEntity().getUniqueId();
-        EntityType entityType = Entity.Type.withName(event.getEntityType().name());
-        Status entityStatus = statusQueryService.getStatus(entityId);
-        List<Item> drops = event.getDrops().stream()
-                .map(itemMapper::map)
-                .map(it -> it.getOrElse(() -> (Item) null)) // TODO use Option
-                .collect(Collectors.toList());
-        EntityDeathEvent entityDeathEvent = new SimpleEntityDeathEvent(entityId, entityType, drops);
-        eventService.publish(entityDeathEvent);
-        entityStatus.getEffects().forEach(effect -> effect.onEntityDeathEvent(entityDeathEvent));
-
-        List<ItemStack> spigotDrops = entityDeathEvent.getDrops().stream()
-                .map(itemMapper::map)
-                .collect(Collectors.toList());
-        event.getDrops().clear();
-        event.getDrops().addAll(spigotDrops);
-    }
-     */
+    val reducedEvent = EntityPreDeathEvent(entity, drops)
+      .tap { eventService.publish(_) }
+      .tap { entityStatus.reduce(_) }
+    val reducedDrops = reducedEvent.drops
+    val reducedSpigotDrops = reducedDrops.map { itemMapper.map }.asJava
+    event.getDrops.clear()
+    event.getDrops.addAll(reducedSpigotDrops)
+    EntityDeathEvent(entity, reducedDrops)
+      .tap { entityStatus.handle }
+      .tap { eventService.publish }
   }
 }

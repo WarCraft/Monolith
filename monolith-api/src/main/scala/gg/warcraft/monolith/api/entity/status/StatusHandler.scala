@@ -15,8 +15,8 @@ class StatusHandler(implicit service: StatusService) extends Event.Handler {
 
   override def reduce[T <: PreEvent](event: T): T = {
     event match {
-      case PlayerPreConnectEvent(playerId, _) => service.loadStatus(playerId)
-      case _                                  =>
+      case PlayerPreConnectEvent(playerId, _, _, _) => service.loadStatus(playerId)
+      case _                                        =>
     }
     event
   }

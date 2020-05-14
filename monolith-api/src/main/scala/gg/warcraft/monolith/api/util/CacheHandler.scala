@@ -16,7 +16,7 @@ class CacheHandler(
   }
 
   override def reduce[T <: PreEvent](event: T): T = event match {
-    case PlayerPreConnectEvent(playerId, _) => playerId |> load; event
-    case _                                  => event
+    case PlayerPreConnectEvent(playerId, _, _, _) => playerId |> load; event
+    case _                                        => event
   }
 }

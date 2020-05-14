@@ -31,7 +31,7 @@ class SpigotPlayerEventMapper(implicit
   @EventHandler
   def preConnect(event: AsyncPlayerPreLoginEvent): Unit = {
     val reducedEvent = PlayerPreConnectEvent(event.getUniqueId, event.getName)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
     if (!reducedEvent.allowed) {
       event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER)
       event.setKickMessage("Failed to connect to the server.")
@@ -76,7 +76,7 @@ class SpigotPlayerEventMapper(implicit
   private def prePunch(event: SpigotPlayerInteractEvent): Unit = {
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val reducedEvent = PlayerPrePunchEvent(player, event.isCancelled)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
     // This weird logic is in place as otherwise bow shots mysteriously stop working
     // TODO investigate if this is to do with cancelling block and item use separately
     if (event.isCancelled && reducedEvent.allowed) event.setCancelled(false)
@@ -86,7 +86,7 @@ class SpigotPlayerEventMapper(implicit
   private def preInteract(event: SpigotPlayerInteractEvent): Unit = {
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val reducedEvent = PlayerPreInteractEvent(player, event.isCancelled)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
     event.setCancelled(!reducedEvent.allowed)
   }
 
@@ -125,7 +125,7 @@ class SpigotPlayerEventMapper(implicit
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val location = locationMapper.map(event.getRespawnLocation)
     val reducedEvent = PlayerPreRespawnEvent(player, location)
-      .pipe { eventService.publish }
+      .pipe { eventService.publish(_) }
     val reducedLocation = locationMapper.map(reducedEvent.location)
     event.setRespawnLocation(reducedLocation)
   }

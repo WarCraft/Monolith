@@ -41,7 +41,7 @@ abstract class EntityService(implicit
 
   def setVelocity(id: UUID, velocity: Vector3f): Unit
   def addPotionEffect(id: UUID, effect: PotionEffect): Unit
-  def removePotionEffect(id: UUID, effect: PotionEffect): Unit
+  def removePotionEffect(id: UUID, effect: PotionEffect.Type): Unit
 
   def spawnEntity(
       typed: Entity.Type,

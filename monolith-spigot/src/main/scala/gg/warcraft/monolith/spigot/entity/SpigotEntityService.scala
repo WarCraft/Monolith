@@ -45,30 +45,29 @@ class SpigotEntityService(implicit
     potionMapper: SpigotPotionMapper,
     entityTypeMapper: SpigotEntityTypeMapper
 ) extends EntityService {
-  private def getSpigotEntity(id: UUID): Option[SpigotEntity] = {
-    server getEntity id match {
+  private def getSpigotEntity(id: UUID): Option[SpigotEntity] =
+    server.getEntity(id) match {
       case it: SpigotEntity => Some(it)
       case _                => None
     }
-  }
 
-  override def getEntity(id: UUID): Entity = getEntityOption(id).get
+  override def getEntity(id: UUID): Entity =
+    getEntityOption(id).get
 
-  override def getEntityOption(id: UUID): Option[Entity] = {
-    server getEntity id match {
-      case _: SpigotPlayer  => (playerService getPlayer id) |> Some.apply
+  override def getEntityOption(id: UUID): Option[Entity] =
+    server.getEntity(id) match {
+      case _: SpigotPlayer  => playerService.getPlayer(id) |> Some.apply
       case it: SpigotEntity => new SpigotEntityAdapter(it) |> Some.apply
       case _                => None
     }
-  }
 
   override def getNearbyEntities(
       location: Location,
       radius: (Float, Float, Float)
   ): List[Entity] = {
-    val spigotLoc = locationMapper map location
-    spigotLoc.getWorld
-      .getNearbyEntities(spigotLoc, radius._1, radius._2, radius._3)
+    val spigotLocation = locationMapper.map(location)
+    spigotLocation.getWorld
+      .getNearbyEntities(spigotLocation, radius._1, radius._2, radius._3)
       .asScala
       .filter { _.isInstanceOf[SpigotEntity] }
       .filter { _.getType != EntityType.ARMOR_STAND }
@@ -78,75 +77,67 @@ class SpigotEntityService(implicit
   }
 
   override def setVelocity(id: UUID, velocity: Vector3f): Unit =
-    getSpigotEntity(id) foreach {
-      _ setVelocity new SpigotVector(velocity.x, velocity.y, velocity.z)
+    getSpigotEntity(id).foreach {
+      val newVelocity = new SpigotVector(velocity.x, velocity.y, velocity.z)
+      _.setVelocity(newVelocity)
     }
 
   override def addPotionEffect(id: UUID, effect: PotionEffect): Unit =
-    getSpigotEntity(id) foreach {
-      _ addPotionEffect (potionMapper map effect)
+    getSpigotEntity(id).foreach {
+      val spigotEffect = potionMapper.map(effect)
+      _.addPotionEffect(spigotEffect)
     }
-  /*
-            org.bukkit.potion.PotionEffectType spigotPotionEffectType = potionEffectTypeMapper.map(effect.getType());
-            org.bukkit.potion.PotionEffect spigotPotionEffect = new org.bukkit.potion.PotionEffect(
-                    spigotPotionEffectType, effect.getDuration().inTicks(), effect.getLevel() - 1,
-                    effect.isAmbient(), effect.hasParticles());
-            livingEntity.addPotionEffect(spigotPotionEffect);
-   */
 
-  override def removePotionEffect(id: UUID, effect: PotionEffect): Unit = {}
-  /*
-        Entity entity = server.getEntity(entityId);
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            org.bukkit.potion.PotionEffectType spigotPotionEffectType = potionEffectTypeMapper.map(type);
-            livingEntity.removePotionEffect(spigotPotionEffectType);
-        }
-   */
+  override def removePotionEffect(id: UUID, effect: PotionEffect.Type): Unit =
+    getSpigotEntity(id).foreach {
+      val spigotEffectType = potionMapper.map(effect)
+      _.removePotionEffect(spigotEffectType)
+    }
 
   override def spawnEntity(
       typed: Type,
       location: Location,
       team: Option[Team] = None
   ): UUID = {
-    val spigotEntityType = entityTypeMapper map typed
-    val spigotLocation = locationMapper map location
+    val spigotType = entityTypeMapper.map(typed)
+    val spigotLocation = locationMapper.map(location)
     if (!spigotLocation.getChunk.isLoaded) spigotLocation.getChunk.load()
     val spigotEntity =
-      spigotLocation.getWorld spawnEntity (spigotLocation, spigotEntityType)
-    dataService setEntityData EntityData(spigotEntity.getUniqueId, team)
+      spigotLocation.getWorld.spawnEntity(spigotLocation, spigotType)
+    dataService.setEntityData(EntityData(spigotEntity.getUniqueId, team))
     spigotEntity.getUniqueId
   }
 
   override def removeEntity(id: UUID): Unit = {
-    dataService deleteEntityData id
-    getSpigotEntity(id) foreach { _.remove() }
+    dataService.deleteEntityData(id)
+    getSpigotEntity(id).foreach { _.remove() }
   }
 
   override def teleportEntity(
       id: UUID,
       location: Location,
       direction: Vector3f = null
-  ): Unit = getSpigotEntity(id) foreach { entity =>
-    val spigotLocation = locationMapper map location
+  ): Unit = getSpigotEntity(id).foreach { entity =>
+    val spigotLocation = locationMapper.map(location)
     val spigotDirection =
-      if (direction != null) vectorMapper map direction
+      if (direction != null) vectorMapper.map(direction)
       else entity.getLocation.getDirection
-    spigotLocation setDirection spigotDirection
-    entity teleport spigotLocation
+    spigotLocation.setDirection(spigotDirection)
+    entity.teleport(spigotLocation)
   }
 
   override def damageEntity(id: UUID, amount: CombatValue): Unit =
-    getSpigotEntity(id) foreach { entity =>
+    getSpigotEntity(id).foreach { entity =>
       val metaData = new FixedMetadataValue(plugin, amount)
-      entity setMetadata (classOf[CombatValue].getCanonicalName, metaData)
-      entity damage amount.modified
+      entity.setMetadata(classOf[CombatValue].getCanonicalName, metaData)
+      entity.damage(amount.modified)
     }
 
   override def killEntity(id: UUID): Unit =
-    getSpigotEntity(id) foreach { _ setHealth 0 }
+    getSpigotEntity(id).foreach { _.setHealth(0) }
 
-  override def healEntity(id: UUID, amount: CombatValue): Unit = {}
+  override def healEntity(id: UUID, amount: CombatValue): Unit =
+    getSpigotEntity(id).foreach { entity => }
 
   /*
    private void publishHealthChangedEvent(UUID entityId, EntityType entityType, float previousHealth) {
@@ -200,9 +191,9 @@ class SpigotEntityService(implicit
    */
 
   override def burnEntity(id: UUID, duration: Duration): Unit = {
-    getSpigotEntity(id) foreach { it =>
-      val updatedFireTicks = it.getFireTicks + duration.ticks
-      it setFireTicks updatedFireTicks
+    getSpigotEntity(id).foreach { entity =>
+      val updatedFireTicks = entity.getFireTicks + duration.ticks
+      entity.setFireTicks(updatedFireTicks)
     }
   }
 
