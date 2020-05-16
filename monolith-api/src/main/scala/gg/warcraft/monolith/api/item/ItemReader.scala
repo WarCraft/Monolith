@@ -1,15 +1,10 @@
-package gg.warcraft.monolith.app.item;
+package gg.warcraft.monolith.api.item
 
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import gg.warcraft.monolith.api.entity.attribute.Attribute;
-import gg.warcraft.monolith.api.item.ItemReader;
-import gg.warcraft.monolith.api.util.StringUtils;
-import gg.warcraft.monolith.api.item.Item;
+class ItemReader {
 
-import javax.annotation.Nullable;
-import java.util.List;
+}
 
+/*
 public class SimpleItemReader implements ItemReader {
     private final StringUtils stringUtils;
     private final Item item;
@@ -59,3 +54,5 @@ public class SimpleItemReader implements ItemReader {
         return 0;
     }
 }
+
+ */
