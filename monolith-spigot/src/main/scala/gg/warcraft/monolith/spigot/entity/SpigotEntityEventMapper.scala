@@ -101,8 +101,7 @@ class SpigotEntityEventMapper(implicit
   private def preAttack(event: SpigotEntityDamageByEntityEvent): CombatValue = {
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val attacker = entityService.getEntity(event.getDamager.getUniqueId)
-    // TODO cast to SpigotEntity, and deny pre events of all kinds for non living entities
-    val attackerId = getAttackerId(event.getDamager)
+    val attackerId = getAttackerId(event.getDamager.asInstanceOf[SpigotEntity])
     // TODO this used to return early if attackerId returned null for
     //  Server::getPlayer and Server::getEntity
     val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
@@ -122,7 +121,7 @@ class SpigotEntityEventMapper(implicit
       case Some(it) =>
         val entity = entityService.getEntity(event.getEntity.getUniqueId)
         val attacker = entityService.getEntity(event.getDamager.getUniqueId)
-        val attackerId = getAttackerId(event.getDamager)
+        val attackerId = getAttackerId(event.getDamager.asInstanceOf[SpigotEntity])
         // TODO this used to return early if attackerId returned null for
         //  Server::getPlayer and Server::getEntity
         val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None

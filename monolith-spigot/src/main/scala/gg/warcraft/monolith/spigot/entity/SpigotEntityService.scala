@@ -104,12 +104,12 @@ class SpigotEntityService(implicit
     if (!spigotLocation.getChunk.isLoaded) spigotLocation.getChunk.load()
     val spigotEntity =
       spigotLocation.getWorld.spawnEntity(spigotLocation, spigotType)
-    dataService.setEntityData(EntityData(spigotEntity.getUniqueId, team))
+    setEntityData(EntityData(spigotEntity.getUniqueId, team))
     spigotEntity.getUniqueId
   }
 
   override def removeEntity(id: UUID): Unit = {
-    dataService.deleteEntityData(id)
+    deleteEntityData(id)
     getSpigotEntity(id).foreach { _.remove() }
   }
 
@@ -190,24 +190,9 @@ class SpigotEntityService(implicit
     }
    */
 
-  override def burnEntity(id: UUID, duration: Duration): Unit = {
+  override def burnEntity(id: UUID, duration: Duration): Unit =
     getSpigotEntity(id).foreach { entity =>
       val updatedFireTicks = entity.getFireTicks + duration.ticks
       entity.setFireTicks(updatedFireTicks)
     }
-  }
-
-  // TODO
-  override def intersectEntity(
-      origin: Location,
-      target: Location,
-      ignore: Entity => Boolean
-  ): Entity.Intersection = ???
-
-  // TODO
-  override def calculateTarget(
-      id: UUID,
-      range: Float,
-      ignore: Entity => Boolean
-  ): Entity.Target = ???
 }
