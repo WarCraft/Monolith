@@ -17,6 +17,9 @@ case class AABBf(
   val upper: Float = maxY
   val lower: Float = minY
 
+  lazy val min: Vector3f = Vector3f(minX, minY, minZ)
+  lazy val max: Vector3f = Vector3f(maxX, maxY, maxZ)
+
   def contains(loc: Location): Boolean =
     minX <= loc.x && loc.x <= maxX &&
       minY <= loc.y && loc.y <= maxY &&
