@@ -13,9 +13,10 @@ import org.bukkit.plugin.Plugin
 import org.bukkit.Server
 
 abstract class SpigotMonolithPlugin extends JavaPlugin with MonolithPlugin {
-  protected implicit lazy val server: Server = getServer
-  protected implicit lazy val plugin: Plugin = this
-  protected implicit lazy val logger: Logger = getLogger
+  protected implicit lazy val _server: Server = getServer
+  protected implicit lazy val _plugin: Plugin = this
+  protected implicit lazy val _logger: Logger = getLogger
+
   protected implicit lazy val eventService: EventService =
     new EventService.Wrapper(implicits.monolithEventService)
   protected implicit lazy val taskService: TaskService = new SpigotTaskService
