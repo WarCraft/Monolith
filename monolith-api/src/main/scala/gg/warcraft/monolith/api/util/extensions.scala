@@ -27,8 +27,8 @@ object future {
   @inline implicit final class FutureOps[T](
       private val self: Future[T]
   ) extends AnyVal {
-    def immediatelyOrOnComplete[U](f: Try[T] => U)(
-        implicit context: ExecutionContext,
+    def immediatelyOrOnComplete[U](f: Try[T] => U)(implicit
+        context: ExecutionContext,
         taskService: TaskService
     ): Unit = self.value match {
       case Some(result) => result |> f
@@ -67,5 +67,12 @@ object string {
 
   @inline implicit final class StringOps(private val self: String) extends AnyVal {
     def stripChatCodes: String = self.replace("§", "")
+  }
+}
+
+object typing {
+  @inline implicit final class TypeOps[A](private val self: A) extends AnyVal {
+    def is[B]: Boolean = self.isInstanceOf[B]
+    def as[B]: B = self.asInstanceOf[B]
   }
 }
