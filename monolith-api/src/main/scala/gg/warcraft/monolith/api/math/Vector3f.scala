@@ -29,6 +29,15 @@ object Vector3f {
     Vector3f(x.toFloat, z.toFloat, y.toFloat)
   }
 
+  object Offset {
+    val aboveHead: Vector3f = Vector3f(y = 2f)
+    val head: Vector3f = Vector3f(y = 1.5f)
+    val chest: Vector3f = Vector3f(y = 1f)
+    val hands: Vector3f = Vector3f(y = 0.6f)
+    val legs: Vector3f = Vector3f(y = .3f)
+    val feet: Vector3f = Vector3f(y = .1f)
+  }
+
   implicit def fromFloats(floats: (Float, Float, Float)): Vector3f =
     Vector3f(floats._1, floats._2, floats._3)
   implicit def fromJomlVector3f(vec: JomlVector3fc): Vector3f =
