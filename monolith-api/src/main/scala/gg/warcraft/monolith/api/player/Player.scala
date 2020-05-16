@@ -13,7 +13,6 @@ object Player {
 }
 
 trait Player extends Entity with Principal {
-  val typed: Entity.Type = Entity.Type.PLAYER
   override def isPlayer: Boolean = true
 
   def data: PlayerData

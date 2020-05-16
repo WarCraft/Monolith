@@ -41,9 +41,9 @@ class SpigotPlayerHidingService(
       predicate apply (playerService getPlayer player.getUniqueId)
     })
 
-  private[player] override def hideAllFrom(id: UUID): Unit = {}
+  private[player] override def hideAllFrom(id: UUID): Unit = {} // TODO
 
-  private[player] override def updateHideFrom(id: UUID): Unit = {}
+  private[player] override def updateHideFrom(id: UUID): Unit = {} // TODO
 
   override def reveal(id: UUID): Unit = {
     val player = server.getPlayer(id)

@@ -10,8 +10,8 @@ import gg.warcraft.monolith.api.player.statistic.{Statistics, StatisticService}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class SpigotOfflinePlayerAdapter(player: OfflineSpigotPlayer)(
-    implicit logger: Logger,
+class SpigotOfflinePlayerAdapter(player: OfflineSpigotPlayer)(implicit
+    logger: Logger,
     dataService: PlayerDataService,
     currencyService: CurrencyService,
     statisticService: StatisticService
@@ -20,6 +20,7 @@ class SpigotOfflinePlayerAdapter(player: OfflineSpigotPlayer)(
 
   override lazy val id: UUID = player.getUniqueId
   override def name: String = player.getName
+  override def isOnline: Boolean = false
 
   override def data: Future[PlayerData] =
     dataService getPlayerData player.getUniqueId
