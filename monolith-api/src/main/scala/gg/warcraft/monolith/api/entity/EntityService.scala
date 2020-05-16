@@ -2,25 +2,32 @@ package gg.warcraft.monolith.api.entity
 
 import java.util.UUID
 
+import gg.warcraft.monolith.api.block.BlockIterator
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.data.EntityDataService
+import gg.warcraft.monolith.api.entity.data.{EntityData, EntityDataService}
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.Location
+import gg.warcraft.monolith.api.util.chaining._
+import gg.warcraft.monolith.api.world.{Location, WorldService}
+import org.joml.{AABBf, Intersectionf, LineSegmentf, Vector2f}
 
 import scala.collection.mutable
 import scala.util.chaining._
 
 abstract class EntityService(implicit
     eventService: EventService,
-    dataService: EntityDataService
+    dataService: EntityDataService,
+    worldService: WorldService
 ) {
   private final val knockBackStrength: mutable.Map[Float, Float] = mutable.Map.empty
   private final val knockUpStrength: mutable.Map[Float, Float] = mutable.Map.empty
   private final val leapStrength: mutable.Map[Float, Float] = mutable.Map.empty
+
+  protected final val setEntityData: EntityData => Unit = dataService.setEntityData
+  protected final val deleteEntityData: UUID => Unit = dataService.deleteEntityData
 
   def getEntity(id: UUID): Entity
   def getEntityOption(id: UUID): Option[Entity]
@@ -211,12 +218,68 @@ abstract class EntityService(implicit
   def intersectEntity(
       origin: Location,
       target: Location,
-      ignore: Entity => Boolean
-  ): Entity.Intersection
+      predicate: Entity => Boolean
+  ): Option[Entity.Intersection] = {
+    val boundingBox =
+      new AABBf(origin.translation, target.translation).correctBounds()
+
+    val deltaX = (boundingBox.maxX - boundingBox.minX) * .5f
+    val deltaY = (boundingBox.maxY - boundingBox.minY) * .5f
+    val deltaZ = (boundingBox.maxZ - boundingBox.minZ) * .5f
+
+    val centerX = boundingBox.minX + deltaX
+    val centerY = boundingBox.minY + deltaY
+    val centerZ = boundingBox.minZ + deltaZ
+
+    val center = Location(origin.world, Vector3f(centerX, centerY, centerZ))
+    val intersectionLine = new LineSegmentf(origin.translation, target.translation)
+    val nearbyEntities = getNearbyEntities(center, (deltaX, deltaY, deltaZ))
+
+    var closestIntersectionScalar = Float.MaxValue
+    var closestIntersectedEntity: Entity = null
+    nearbyEntities.foreach { entity =>
+      if (predicate.apply(entity)) {
+        val intersectionResult = new Vector2f()
+        val jomlBoundingBox =
+          new AABBf(entity.boundingBox.min, entity.boundingBox.max)
+        val result =
+          jomlBoundingBox.intersectLineSegment(intersectionLine, intersectionResult)
+        if (result != Intersectionf.OUTSIDE) {
+          if (intersectionResult.x < closestIntersectionScalar) {
+            closestIntersectionScalar = intersectionResult.x
+            closestIntersectedEntity = entity
+          }
+        }
+      }
+    }
+
+    if (closestIntersectedEntity != null) {
+      val distanceAlongRay = (target - origin) * closestIntersectionScalar
+      val intersection = origin + distanceAlongRay
+      val intersectionLocation = Location(origin.world, intersection)
+      Entity.Intersection(
+        closestIntersectedEntity,
+        intersectionLocation
+      ) |> Some.apply
+    } else None
+  }
 
   def calculateTarget(
       id: UUID,
       range: Float,
-      ignore: Entity => Boolean
-  ): Entity.Target
+      predicate: Entity => Boolean
+  ): Entity.Target = {
+    val entity = getEntity(id)
+    val origin = entity.eyeLocation
+    val direction = origin.rotation
+    val target = origin + (direction * range)
+
+    val blockIntersection = new BlockIterator(origin, target).intersect(_.solid)
+    val correctedTarget = blockIntersection match {
+      case Some(intersection) => intersection.location
+      case None               => target
+    }
+    val entityIntersection = intersectEntity(origin, correctedTarget, predicate)
+    Entity.Target(blockIntersection, entityIntersection)
+  }
 }
