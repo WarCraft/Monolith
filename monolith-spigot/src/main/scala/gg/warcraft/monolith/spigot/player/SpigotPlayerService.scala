@@ -28,8 +28,8 @@ import org.bukkit.inventory.PlayerInventory
 
 import scala.jdk.CollectionConverters._
 
-class SpigotPlayerService(
-    implicit server: Server,
+class SpigotPlayerService(implicit
+    server: Server,
     logger: Logger,
     taskService: TaskService,
     attributeService: AttributeService,
@@ -65,19 +65,19 @@ class SpigotPlayerService(
   }
 
   override def getOfflinePlayer(id: UUID): OfflinePlayer =
-    (server getOfflinePlayer id) |> { new SpigotOfflinePlayerAdapter(_) }
+    server.getOfflinePlayer(id) |> { new SpigotOfflinePlayerAdapter(_) }
 
   override def getOnlinePlayers: List[Player] =
     server.getOnlinePlayers.asScala.map { new SpigotPlayerAdapter(_) }.toList
 
   override def resolvePlayerId(name: String): UUID =
-    server getPlayerUniqueId name
+    server.getPlayerUniqueId(name)
 
   override def setExperience(id: UUID, progress: Float): Unit =
-    (server getPlayer id) ?? { _ setExp progress }
+    server.getPlayer(id) ?? { _.setExp(progress) }
 
   override def setLevel(id: UUID, level: Int): Unit =
-    (server getPlayer id) ?? { _ setLevel level }
+    server.getPlayer(id) ?? { _.setLevel(level) }
 
   private def getEquipActions(
       inventory: PlayerInventory,
@@ -96,18 +96,18 @@ class SpigotPlayerService(
   override def setEquipment(
       id: UUID,
       equipment: Equipment,
-      force: Boolean = false
-  ): Boolean = (server getPlayer id) ?? { player => ??? }
+      force: Boolean
+  ): Boolean = server.getPlayer(id) ?? { player => ??? }
 
   override def setEquipment(
       id: UUID,
       slot: Slot,
       item: Item,
       force: Boolean = false
-  ): Boolean = (server getPlayer id) ?? { player =>
+  ): Boolean = server.getPlayer(id) ?? { player =>
     val inventory = player.getInventory
     val (unequip, equipAction) = getEquipActions(inventory, slot)
-    val mapItemAndEquip = () => equipAction apply (itemMapper map item)
+    val mapItemAndEquip = () => equipAction.apply(itemMapper map item)
     if (unequip.getType == Material.AIR) {
       mapItemAndEquip()
       !force
@@ -126,10 +126,10 @@ class SpigotPlayerService(
   }
 
   override def giveItem(id: UUID, item: Item*): List[Item] = {
-    server getPlayer id match {
+    server.getPlayer(id) match {
       case player: SpigotPlayer =>
-        val spigotItems = item map itemMapper.map
-        val undelivered = player.getInventory addItem (spigotItems: _*)
+        val spigotItems = item.map(itemMapper.map)
+        val undelivered = player.getInventory.addItem(spigotItems: _*)
         if (!undelivered.isEmpty) {
           undelivered.values.asScala
             .map { itemMapper.map }
@@ -142,8 +142,8 @@ class SpigotPlayerService(
   }
 
   override def sendMessage(id: UUID, message: Message): Unit =
-    (server getPlayer id) ?? { _ sendMessage message.formatted }
+    server.getPlayer(id) ?? { _.sendMessage(message.formatted) }
 
   override def sendTitle(id: UUID, title: String, subTitle: String): Unit =
-    (server getPlayer id) ?? { _ sendTitle (title, subTitle) }
+    server.getPlayer(id) ?? { _.sendTitle(title, subTitle) }
 }

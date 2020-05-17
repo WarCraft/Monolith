@@ -15,7 +15,7 @@ import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.api.util.chaining._
-import gg.warcraft.monolith.api.world.Location
+import gg.warcraft.monolith.api.world.{Location, WorldService}
 import gg.warcraft.monolith.spigot.combat.SpigotPotionMapper
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
@@ -43,7 +43,8 @@ class SpigotEntityService(implicit
     locationMapper: SpigotLocationMapper,
     itemMapper: SpigotItemMapper,
     potionMapper: SpigotPotionMapper,
-    entityTypeMapper: SpigotEntityTypeMapper
+    entityTypeMapper: SpigotEntityTypeMapper,
+    worldService: WorldService
 ) extends EntityService {
   private def getSpigotEntity(id: UUID): Option[SpigotEntity] =
     server.getEntity(id) match {
