@@ -49,13 +49,13 @@ import org.bukkit.plugin.Plugin
 object implicits {
   private[spigot] type DatabaseContext = JdbcContext[SqliteDialect, SnakeCase]
 
-  private[spigot] var _server: Server = _
-  private[spigot] var _plugin: Plugin = _
-  private[spigot] var _logger: Logger = _
+  private var _server: Server = _
+  private var _plugin: Plugin = _
+  private var _logger: Logger = _
 
-  private[spigot] var _database: DatabaseContext = _
-  private[spigot] var _eventService: EventService = _
-  private[spigot] var _taskService: TaskService = _
+  private var _database: DatabaseContext = _
+  private var _eventService: EventService = _
+  private var _taskService: TaskService = _
 
   private[spigot] def init(
       eventService: EventService = new EventService
