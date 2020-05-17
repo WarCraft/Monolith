@@ -5,6 +5,7 @@ import java.util.logging.Logger
 import gg.warcraft.monolith.api.block.backup.BlockBackupService
 import gg.warcraft.monolith.api.block.build.BlockBuildService
 import gg.warcraft.monolith.api.core.auth.AuthService
+import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
@@ -89,6 +90,8 @@ object implicits {
     new AuthService
   implicit lazy val commandService: SpigotCommandService =
     new SpigotCommandService
+  implicit lazy val serverDataService: ServerDataService =
+    new ServerDataService
 
   // Math
   implicit lazy val boundingBoxMapper: SpigotAABBfMapper =
