@@ -22,6 +22,7 @@ import scala.io.Source
 trait MonolithPlugin {
   private final val WARN_DEFAULT_CONFIG = "Falling back to default config!"
   private final val ERR_CONFIG_FAILED = "Failed to parse (default) config!"
+  private final val separator = File.separator
 
   private[monolith] var databases: List[JdbcContext[_, _]] = Nil
 
@@ -56,7 +57,7 @@ trait MonolithPlugin {
   ): JdbcContext[D, N] = {
     val databaseProps = new Properties()
     databaseProps.setProperty("driverClassName", "org.sqlite.JDBC")
-    val databasePath = s"${dataFolder.getAbsolutePath}database.sqlite"
+    val databasePath = s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
     databaseProps.setProperty("jdbcUrl", s"jdbc:sqlite:$databasePath")
     val databaseConfig = ConfigFactory.parseProperties(databaseProps)
     val database = dialect match {
@@ -73,7 +74,7 @@ trait MonolithPlugin {
   protected def upgradeDatabase(dataFolder: File, classLoader: ClassLoader)(implicit
       logger: Logger
   ): Unit = {
-    val databasePath = s"${dataFolder.getAbsolutePath}database.sqlite"
+    val databasePath = s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
     if (new File(databasePath).exists) {
       val flyway = Flyway
         .configure(classLoader)
