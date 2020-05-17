@@ -9,13 +9,13 @@ import scala.jdk.CollectionConverters._
 class SpigotWorldMapper(
     private implicit val server: Server
 ) {
-  private val overworld =
+  private lazy val overworld =
     server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NORMAL).get
 
-  private val theNether =
+  private lazy val theNether =
     server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NETHER)
 
-  private val theEnd =
+  private lazy val theEnd =
     server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.THE_END)
 
   def map(world: SpigotWorld): World = world.getEnvironment match {
