@@ -56,12 +56,13 @@ object implicits {
   private[spigot] var _eventService: EventService = _
   private[spigot] var _taskService: TaskService = _
 
-  private[spigot] def init()(implicit
+  private[spigot] def init(
+      eventService: EventService = new EventService
+  )(implicit
       server: Server,
       plugin: Plugin,
       logger: Logger,
       database: DatabaseContext,
-      eventService: EventService,
       taskService: TaskService
   ): Unit = {
     _server = server
@@ -82,7 +83,7 @@ object implicits {
   // Core
   private implicit lazy val database: DatabaseContext = _database
   private implicit lazy val eventService: EventService = _eventService
-  private implicit lazy val taskService: TaskService = taskService
+  private implicit lazy val taskService: TaskService = _taskService
 
   implicit lazy val authService: AuthService =
     new AuthService
