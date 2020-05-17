@@ -68,12 +68,6 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService.subscribe(new StatusHandler)
     eventService.subscribe(new PlayerDataHandler)
     eventService.subscribe(new PlayerHidingHandler)
-
-    /* TODO
-     AttributesInitializationHandler attributesInitializationHandler =
-                injector.getInstance(AttributesInitializationHandler.class);
-        eventService.subscribe(attributesInitializationHandler);
-     */
   }
 
   private def enableTasks(): Unit = {
