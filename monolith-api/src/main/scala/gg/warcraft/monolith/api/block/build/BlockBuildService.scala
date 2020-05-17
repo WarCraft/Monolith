@@ -8,8 +8,8 @@ import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.WorldService
 
-class BlockBuildService(
-    implicit logger: Logger,
+class BlockBuildService(implicit
+    logger: Logger,
     worldService: WorldService
 ) {
   private var buildsByType: Map[String, List[BlockBuild]] = Map.empty
@@ -22,7 +22,7 @@ class BlockBuildService(
     buildsByModel.get(s"$typed:$model")
 
   def readConfig(config: MonolithConfig): Unit = {
-    logger info "Initializing build repository, this may take a while..."
+    logger.info("Initializing build repository, this may take a while...")
     val startTime = System.currentTimeMillis
 
     import config._
