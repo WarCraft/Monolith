@@ -5,7 +5,7 @@ import gg.warcraft.monolith.api.effect.Particle
 
 trait Team {
   val name: String
-  val chatColor: ColorCode.Type
+  val chatColor: ColorCode
   val particleColor: Particle.Color
 
   override def toString: String = name
