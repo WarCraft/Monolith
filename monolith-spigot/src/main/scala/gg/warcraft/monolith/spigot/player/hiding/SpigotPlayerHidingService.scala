@@ -10,8 +10,8 @@ import org.bukkit.plugin.Plugin
 
 import scala.jdk.CollectionConverters._
 
-class SpigotPlayerHidingService(
-    implicit server: Server,
+class SpigotPlayerHidingService(implicit
+    server: Server,
     plugin: Plugin,
     playerService: PlayerService
 ) extends PlayerHidingService {
@@ -24,7 +24,7 @@ class SpigotPlayerHidingService(
       val hideFromIds = from.map(_.getUniqueId).toSet
       val hiddenFrom = hiddenPlayers.getOrElse(player.getUniqueId, Set.empty)
       hiddenPlayers += (player.getUniqueId -> (hiddenFrom ++ hideFromIds))
-      from foreach { _.hidePlayer(plugin, player) }
+      from.foreach { _.hidePlayer(plugin, player) }
     }
   }
 
@@ -37,19 +37,22 @@ class SpigotPlayerHidingService(
   }
 
   override def hideFrom(id: UUID, predicate: Player => Boolean): Unit =
-    hideFrom(id, server.getOnlinePlayers.asScala filter { player =>
-      predicate apply (playerService getPlayer player.getUniqueId)
-    })
+    hideFrom(
+      id,
+      server.getOnlinePlayers.asScala.filter { player =>
+        predicate.apply(playerService.getPlayer(player.getUniqueId))
+      }
+    )
 
-  private[player] override def hideAllFrom(id: UUID): Unit = {} // TODO
+  override def hideAllFrom(id: UUID): Unit = {} // TODO fix access modifier
 
-  private[player] override def updateHideFrom(id: UUID): Unit = {} // TODO
+  override def updateHideFrom(id: UUID): Unit = {} // TODO fix access modifier
 
   override def reveal(id: UUID): Unit = {
     val player = server.getPlayer(id)
     if (player != null) {
       hiddenPlayers -= id
-      server.getOnlinePlayers.asScala foreach { _.showPlayer(plugin, player) }
+      server.getOnlinePlayers.asScala.foreach { _.showPlayer(plugin, player) }
     }
   }
 
@@ -66,12 +69,12 @@ class SpigotPlayerHidingService(
     }
   }
 
-  private[player] override def revealAllTo(id: UUID): Unit = {
+  override def revealAllTo(id: UUID): Unit = { // TODO fix access modifier
     val player = server.getPlayer(id)
     if (player != null) {
-      hiddenPlayers = hiddenPlayers transform {
+      hiddenPlayers = hiddenPlayers.transform {
         case (it, hiddenFrom) =>
-          if (hiddenFrom contains id) {
+          if (hiddenFrom.contains(id)) {
             val hiddenPlayer = server.getPlayer(it)
             if (hiddenPlayer != null) player.showPlayer(plugin, hiddenPlayer)
             hiddenFrom - id
