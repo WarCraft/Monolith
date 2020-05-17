@@ -6,7 +6,8 @@ class PlayerDataUpdater(implicit
     playerService: PlayerService,
     playerDataService: PlayerDataService
 ) extends Runnable {
-  private var iterator: Iterator[Player] = _
+  private var iterator: Iterator[Player] = Iterator.empty
+
   override def run(): Unit = {
     if (iterator.isEmpty) iterator = playerService.getOnlinePlayers.iterator
     if (iterator.hasNext) {
