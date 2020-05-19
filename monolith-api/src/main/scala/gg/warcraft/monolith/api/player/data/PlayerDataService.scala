@@ -63,9 +63,7 @@ class PlayerDataService(implicit
   private[data] def updatePlayerData(id: UUID): Unit = {
     val data = _data(id)
     val oldLastSeen = data.timeLastSeen
-    val newLastSeen =
-      System.currentTimeMillis // TODO this needs fixing with LocalDateTime
-
+    val newLastSeen = System.currentTimeMillis
     statisticService.increaseStatistic("TimePlayed", newLastSeen - oldLastSeen, id)
     setPlayerData(data.copy(timeLastSeen = newLastSeen))
   }

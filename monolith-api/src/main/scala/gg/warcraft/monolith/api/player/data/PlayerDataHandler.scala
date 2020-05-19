@@ -1,6 +1,5 @@
 package gg.warcraft.monolith.api.player.data
 
-import java.time.{Instant, ZoneOffset}
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
@@ -19,8 +18,7 @@ class PlayerDataHandler(implicit
 
   override def reduce[T <: PreEvent](event: T): T = event match {
     case PlayerPreConnectEvent(playerId, _, _, _) =>
-      val now = Instant.now().atOffset(ZoneOffset.UTC).toEpochSecond
-      // TODO convert values on PlayerData to LocalDateTime
+      val now = System.currentTimeMillis
       val newData = service.loadPlayerData(playerId) match {
         case Some(data) => data.copy(timeConnected = now, timeLastSeen = now)
         case None       => PlayerData(playerId, None, now, now)
