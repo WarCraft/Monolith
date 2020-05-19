@@ -13,15 +13,15 @@ case class BlockPreBreakEvent(
     alternativeDrops: Option[List[Item]],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends BlockEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with BlockEvent
 
 case class BlockBreakEvent(
     block: Block,
     player: Player,
     alternativeDrops: Option[List[Item]]
-) extends BlockEvent
-    with Event
+) extends Event
+    with BlockEvent
 
 // INTERACT
 case class BlockPreInteractEvent(
@@ -30,15 +30,15 @@ case class BlockPreInteractEvent(
     player: Player,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends BlockEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with BlockEvent
 
 case class BlockInteractEvent(
     block: Block,
     blockFace: BlockFace,
     player: Player
-) extends BlockEvent
-    with Event
+) extends Event
+    with BlockEvent
 
 // PLACE
 case class BlockPrePlaceEvent(
@@ -48,16 +48,16 @@ case class BlockPrePlaceEvent(
     player: Player,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends BlockEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with BlockEvent
 
 case class BlockPlaceEvent(
     block: Block,
     againstBlock: Block,
     againstBlockFace: BlockFace,
     player: Player
-) extends BlockEvent
-    with Event
+) extends Event
+    with BlockEvent
 
 // PUNCH
 case class BlockPrePunchEvent(
@@ -66,15 +66,15 @@ case class BlockPrePunchEvent(
     player: Player,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends BlockEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with BlockEvent
 
 case class BlockPunchEvent(
     block: Block,
     blockFace: BlockFace,
     player: Player
-) extends BlockEvent
-    with Event
+) extends Event
+    with BlockEvent
 
 // TRIGGER
 case class BlockPreTriggerEvent(
@@ -82,11 +82,11 @@ case class BlockPreTriggerEvent(
     player: Player,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends BlockEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with BlockEvent
 
 case class BlockTriggerEvent(
     block: Block,
     player: Player
-) extends BlockEvent
-    with Event
+) extends Event
+    with BlockEvent

@@ -13,13 +13,13 @@ case class PlayerPreConnectEvent(
     name: String,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends PlayerEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with PlayerEvent
 
 case class PlayerConnectEvent(
     player: Player
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 /**
   * A PlayerDisconnectEvent is fired whenever a Player disconnects from the server.
@@ -30,8 +30,8 @@ case class PlayerConnectEvent(
   */
 case class PlayerDisconnectEvent(
     player: Player
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // CURRENCY
 case class PlayerCurrencyGainedEvent(
@@ -40,68 +40,68 @@ case class PlayerCurrencyGainedEvent(
     amount: Int,
     newCurrent: Int,
     newLifeTime: Int
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 case class PlayerCurrencyLostEvent(
     player: Player,
     currency: String,
     amount: Int,
     newCurrent: Int
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // INTERACT TODO do these events make sense with only player data?
 case class PlayerPreInteractEvent(
     player: Player,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends PlayerEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with PlayerEvent
 
 case class PlayerInteractEvent(
     player: Player
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // INVENTORY
 case class PlayerEquipmentChangedEvent(
     player: Player
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // PERMISSIONS
 case class PlayerPermissionsChangedEvent(
     player: Player,
     permissions: Map[String, Boolean]
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // PUNCH
 case class PlayerPrePunchEvent(
     player: Player,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends PlayerEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with PlayerEvent
 
 case class PlayerPunchEvent(
     player: Player
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // SPAWN
 case class PlayerPreRespawnEvent(
     player: Player,
     location: Location
-) extends PlayerEvent
-    with PreEvent
+) extends PreEvent
+    with PlayerEvent
 
 case class PlayerRespawnEvent(
     player: Player,
     location: Location
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent
 
 // STATISTICS
 case class PlayerStatisticsChangedEvent(
@@ -109,5 +109,5 @@ case class PlayerStatisticsChangedEvent(
     statistic: String,
     amount: Int,
     newCurrent: Int
-) extends PlayerEvent
-    with Event
+) extends Event
+    with PlayerEvent

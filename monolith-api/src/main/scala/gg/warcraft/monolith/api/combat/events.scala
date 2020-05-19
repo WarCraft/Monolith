@@ -14,15 +14,15 @@ case class ProjectilePreLaunchEvent(
     shooterId: Option[UUID],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends ProjectileEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with ProjectileEvent
 
 case class ProjectileLaunchEvent(
     projectileId: UUID,
     projectileType: Projectile.Type,
     shooterId: Option[UUID]
-) extends ProjectileEvent
-    with Event
+) extends Event
+    with ProjectileEvent
 
 // HIT
 case class ProjectilePreHitEvent(
@@ -34,8 +34,8 @@ case class ProjectilePreHitEvent(
     entityId: Option[UUID],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends ProjectileEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with ProjectileEvent
 
 case class ProjectileHitEvent(
     projectileId: UUID,
@@ -44,8 +44,8 @@ case class ProjectileHitEvent(
     block: Option[Block],
     blockFace: Option[BlockFace],
     entityId: Option[UUID]
-) extends ProjectileEvent
-    with Event
+) extends Event
+    with ProjectileEvent
 
 // PICKUP
 case class ProjectilePrePickupEvent(
@@ -55,13 +55,13 @@ case class ProjectilePrePickupEvent(
     entityId: UUID,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends ProjectileEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with ProjectileEvent
 
 case class ProjectilePickupEvent(
     projectileId: UUID,
     projectileType: Projectile.Type,
     shooterId: Option[UUID],
     entityId: UUID
-) extends ProjectileEvent
-    with Event
+) extends Event
+    with ProjectileEvent

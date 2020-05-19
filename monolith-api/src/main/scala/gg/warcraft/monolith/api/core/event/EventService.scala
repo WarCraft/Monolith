@@ -15,10 +15,11 @@ object EventService {
       eventService.subscribe(handler)
     }
 
-    override def unsubscribe(handler: Event.Handler): Unit = {
-      handlers = handlers.filter { _ != handler }
-      eventService.unsubscribe(handler)
-    }
+    override def unsubscribe(handler: Event.Handler): Unit =
+      if (handlers.contains(handler)) {
+        eventService.unsubscribe(handler)
+        handlers = handlers.filter { _ != handler }
+      }
 
     def unsubscribeAll(): Unit = {
       handlers.foreach { eventService.unsubscribe }

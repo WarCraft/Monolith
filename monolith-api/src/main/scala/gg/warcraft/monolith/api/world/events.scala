@@ -6,10 +6,10 @@ trait WorldEvent
 
 trait ChunkEvent extends WorldEvent
 
-case class ChunkPreLoadEvent() extends ChunkEvent with PreEvent
+case class ChunkPreLoadEvent() extends PreEvent with ChunkEvent
 
-case class ChunkLoadEvent() extends ChunkEvent with Event
+case class ChunkLoadEvent() extends Event with ChunkEvent
 
-case class ChunkPreUnloadEvent() extends ChunkEvent with PreEvent
+case class ChunkPreUnloadEvent() extends PreEvent with ChunkEvent
 
-case class ChunkUnloadEvent() extends ChunkEvent with Event
+case class ChunkUnloadEvent() extends Event with ChunkEvent

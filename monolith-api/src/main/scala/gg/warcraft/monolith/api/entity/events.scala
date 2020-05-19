@@ -19,16 +19,16 @@ case class EntityPreAttackEvent(
     damage: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityAttackEvent(
     entity: Entity,
     attacker: Entity,
     projectileId: Option[UUID],
     damage: CombatValue
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // DAMAGE
 case class EntityPreDamageEvent(
@@ -36,41 +36,41 @@ case class EntityPreDamageEvent(
     damage: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityDamageEvent(
     entity: Entity,
     damage: CombatValue
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 case class EntityPreFatalDamageEvent(
     entity: Entity,
     damage: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityFatalDamageEvent(
     entity: Entity,
     damage: CombatValue
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // DEATH
 case class EntityPreDeathEvent(
     entity: Entity,
     drops: List[Item]
-) extends EntityEvent
-    with PreEvent
+) extends PreEvent
+    with EntityEvent
 
 case class EntityDeathEvent(
     entity: Entity,
     drops: List[Item]
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // HEAL
 case class EntityPreHealEvent(
@@ -78,14 +78,14 @@ case class EntityPreHealEvent(
     heal: CombatValue,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityHealEvent(
     entity: Entity,
     heal: CombatValue
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // HEALTH
 case class EntityHealthChangedEvent(
@@ -94,8 +94,8 @@ case class EntityHealthChangedEvent(
     oldPercentHealth: Float,
     newHealth: Float,
     newPercentHealth: Float
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // INTERACT
 case class EntityPreInteractEvent(
@@ -104,23 +104,23 @@ case class EntityPreInteractEvent(
     location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityInteractEvent(
     entity: Entity,
     player: Player,
     location: Location
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // TEAM
 case class EntityTeamChangedEvent(
     entity: Entity,
     oldTeam: Option[Team],
     newTeam: Option[Team]
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // PATHFIND
 case class EntityPrePathfindEvent(
@@ -129,15 +129,15 @@ case class EntityPrePathfindEvent(
     targetEntity: Option[UUID],
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityPathfindEvent(
     entity: Entity,
     targetLocation: Option[Location],
     targetEntity: Option[UUID]
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 // SPAWN
 case class EntityPreSpawnEvent(
@@ -145,35 +145,35 @@ case class EntityPreSpawnEvent(
     location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntitySpawnEvent(
     entity: Entity,
     location: Location
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 case class EntityPreDespawnEvent(
     entity: Entity
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 case class EntityDespawnEvent(
     entity: Entity
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent
 
 case class EntityPreRespawnEvent(
     entity: Entity,
     location: Location,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends EntityEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with EntityEvent
 
 case class EntityRespawnEvent(
     entity: Entity,
     location: Location
-) extends EntityEvent
-    with Event
+) extends Event
+    with EntityEvent

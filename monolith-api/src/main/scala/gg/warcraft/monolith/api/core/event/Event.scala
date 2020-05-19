@@ -7,9 +7,9 @@ object Event {
   }
 }
 
-/** Event is a utility trait that prevents accidental passing of objects to the
+/** Event is a utility class that prevents accidental passing of objects to the
   * EventService that were not meant to be used as an event. */
-trait Event
+abstract class Event
 
 /** Pre- and cancellable events replace the Minecraft event priority system by
   * allowing handlers to mutate, cancel, or explicitly allow a pre-event. They are
@@ -19,7 +19,7 @@ trait Event
   * whether it was also cancelled. This allows plugins to exert ownership of a
   * certain gameplay concept and overrule other plugins.
   */
-trait PreEvent
+abstract class PreEvent
 
 /** Pre- and cancellable events replace the Minecraft event priority system by
   * allowing handlers to mutate, cancel, or explicitly allow a pre-event. They are
@@ -29,7 +29,7 @@ trait PreEvent
   * whether it was also cancelled. This allows plugins to exert ownership of a
   * certain gameplay concept and overrule other plugins.
   */
-trait CancellableEvent extends PreEvent {
+abstract class CancellableEvent extends PreEvent {
   val cancelled: Boolean
   val explicitlyAllowed: Boolean
   val allowed: Boolean = explicitlyAllowed || !cancelled

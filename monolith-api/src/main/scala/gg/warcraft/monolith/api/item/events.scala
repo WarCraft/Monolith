@@ -14,13 +14,13 @@ case class ItemPrePickupEvent(
     entityType: Entity.Type,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
-) extends ItemEvent
-    with CancellableEvent
+) extends CancellableEvent
+    with ItemEvent
 
 case class ItemPickupEvent(
     item: Item,
     itemId: UUID,
     entityId: UUID,
     entityType: Entity.Type
-) extends ItemEvent
-    with Event
+) extends Event
+    with ItemEvent
