@@ -1,5 +1,5 @@
 CREATE TABLE entity_data
 (
-    id      TEXT    PRIMARY KEY,
-    team    TEXT
+    id   TEXT NOT NULL PRIMARY KEY,
+    team TEXT
 );

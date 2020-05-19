@@ -1,7 +1,7 @@
 CREATE TABLE server_data
 (
-    data            TEXT        PRIMARY KEY,
-    int_value       INTEGER     NOT NULL        DEFAULT 0,
-    float_value     REAL        NOT NULL        DEFAULT 0,
-    string_value    TEXT        NOT NULL        DEFAULT ''
+    data         TEXT NOT NULL PRIMARY KEY,
+    int_value    INTEGER,
+    float_value  REAL,
+    string_value TEXT
 );
