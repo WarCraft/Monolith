@@ -8,6 +8,7 @@ import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
 import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.status.StatusService
@@ -41,14 +42,10 @@ import gg.warcraft.monolith.spigot.player.{
 }
 import gg.warcraft.monolith.spigot.player.hiding.SpigotPlayerHidingService
 import gg.warcraft.monolith.spigot.world._
-import io.getquill.{SnakeCase, SqliteDialect}
-import io.getquill.context.jdbc.JdbcContext
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
 object implicits {
-  private[spigot] type DatabaseContext = JdbcContext[SqliteDialect, SnakeCase]
-
   private var _server: Server = _
   private var _plugin: Plugin = _
   private var _logger: Logger = _

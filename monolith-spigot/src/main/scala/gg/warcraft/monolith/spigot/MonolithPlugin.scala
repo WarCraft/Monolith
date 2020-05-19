@@ -4,6 +4,7 @@ import gg.warcraft.monolith.api.core.{MonolithConfig, ServerShutdownEvent}
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.core.Codecs.Circe._
+import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.data.EntityDataHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.item.ItemType
