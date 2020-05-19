@@ -8,8 +8,10 @@ import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.data.EntityDataHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.item.ItemType
+import gg.warcraft.monolith.api.player.currency.CurrencyCacheHandler
 import gg.warcraft.monolith.api.player.data.{PlayerDataHandler, PlayerDataUpdater}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
+import gg.warcraft.monolith.api.player.statistic.StatisticCacheHandler
 import gg.warcraft.monolith.api.world.{Direction, World}
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
@@ -66,6 +68,8 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   private def enableHandlers(): Unit = {
     eventService.subscribe(new DebuggingHandler)
     eventService.subscribe(new EntityDataHandler)
+    eventService.subscribe(new CurrencyCacheHandler)
+    eventService.subscribe(new StatisticCacheHandler)
     eventService.subscribe(new StatusHandler)
     eventService.subscribe(new PlayerDataHandler)
     eventService.subscribe(new PlayerHidingHandler)
