@@ -4,10 +4,10 @@ import java.util.UUID
 
 case class Click(
     playerId: UUID,
-    leftClick: Boolean,
-    shiftClick: Boolean
+    isLeft: Boolean,
+    isShift: Boolean
 ) {
-  lazy val rightClick: Boolean = !leftClick
-  lazy val shiftLeftClick: Boolean = leftClick && shiftClick
-  lazy val shiftRightClick: Boolean = rightClick && shiftClick
+  lazy val isRight: Boolean = !isLeft
+  lazy val isShiftLeft: Boolean = isLeft && isShift
+  lazy val isShiftRight: Boolean = isRight && isShift
 }

@@ -5,48 +5,35 @@ import java.util.UUID
 import gg.warcraft.monolith.api.core.ColorCode._
 import gg.warcraft.monolith.api.item.{ItemType, ItemTypeOrVariant}
 
-sealed trait SkullButton {
-  this: Button =>
-  val name: String
-  val title: String
-  val action: Click => Unit
-  val tooltip: List[String]
+case class Button(
+    icon: ItemTypeOrVariant,
+    title: String,
+    tooltip: List[String]
+)(action: Click => Unit = _ => {}) {
+  lazy val formattedTitle: String = s"$WHITE$title"
+  lazy val formattedTooltip: List[String] = tooltip.map { it => s"$GRAY$it" }
+}
+
+trait SkullButton {
+  val playerName: String
 }
 
 object Button {
-  def apply(
-      icon: ItemTypeOrVariant,
-      title: String,
-      tooltip: List[String] = Nil,
-      action: Click => Unit = _ => {}
-  ): Button = {
-    val formattedTitle = s"$WHITE$title"
-    val formattedTooltip = tooltip map (it => s"$GRAY$it")
-    new Button(icon, formattedTitle, action, formattedTooltip)
-  }
-
   def skull(
-      playerName: String,
+      name: String,
       title: String,
-      action: Click => Unit,
-      tooltip: List[String] = Nil
-  ): Button =
-    new Button(ItemType.MOB_HEAD, title, action, tooltip) with SkullButton {
-      override val name: String = playerName
+      tooltip: List[String]
+  )(action: Click => Unit = _ => {}): Button =
+    new Button(ItemType.MOB_HEAD, title, tooltip)(action) with SkullButton {
+      override val playerName: String = name
     }
 
-  def back(menu: UUID => Menu)(
-      implicit menuService: MenuService
+  def back(menu: UUID => Menu)(implicit
+      menuService: MenuService
   ): Button = {
-    val action = (it: Click) => menuService.showMenu(it.playerId, menu(it.playerId))
     val tooltip = "[CLICK] To go back to" :: "the previous menu" :: Nil
-    apply(ItemType.DOOR, "Back", action, tooltip)
+    Button(ItemType.DOOR, "Back", tooltip) { click =>
+      menuService.showMenu(click.playerId, menu(click.playerId))
+    }
   }
 }
-
-case class Button private (
-    icon: ItemTypeOrVariant,
-    title: String,
-    action: Click => Unit,
-    tooltip: List[String]
-)
