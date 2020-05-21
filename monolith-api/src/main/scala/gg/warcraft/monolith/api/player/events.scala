@@ -9,7 +9,7 @@ trait PlayerEvent
 
 // CONNECT
 case class PlayerPreConnectEvent(
-    playerId: UUID,
+    id: UUID,
     name: String,
     cancelled: Boolean = false,
     explicitlyAllowed: Boolean = false
