@@ -6,15 +6,13 @@ import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectE
 private[monolith] class CurrencyCacheHandler(implicit
     service: CurrencyService
 ) extends Event.Handler {
+  override def handle(event: PreEvent): Unit = event match {
+    case PlayerPreConnectEvent(id, _, _, _) => service.loadCurrencies(id)
+    case _                                  =>
+  }
+
   override def handle(event: Event): Unit = event match {
     case PlayerDisconnectEvent(player) => service.invalidateCurrencies(player.id)
     case _                             =>
-  }
-
-  override def reduce[T <: PreEvent](event: T): T = event match {
-    case PlayerPreConnectEvent(playerId, _, _, _) =>
-      service.loadCurrencies(playerId)
-      event
-    case _ => event
   }
 }
