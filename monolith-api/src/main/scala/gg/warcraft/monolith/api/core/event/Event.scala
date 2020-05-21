@@ -2,8 +2,10 @@ package gg.warcraft.monolith.api.core.event
 
 object Event {
   trait Handler {
-    def handle(event: Event): Unit = ()
+    def handle(event: Event): Unit = {}
+
     def reduce[T <: PreEvent](event: T): T = event
+    def handle(event: PreEvent): Unit = {}
   }
 }
 
