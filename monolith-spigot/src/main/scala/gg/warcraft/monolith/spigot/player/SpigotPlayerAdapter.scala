@@ -52,19 +52,19 @@ class SpigotPlayerAdapter(player: SpigotPlayer)(implicit
 
   override def team: Option[Team] = data.team
   override def data: PlayerData =
-    (dataService getPlayerData id).getOrThrow
+    dataService.getPlayerData(id).getOrThrow
   override def currencies: Currencies =
-    (currencyService getCurrencies id).getOrThrow
+    currencyService.currenciesFuture(id).getOrThrow
   override def statistics: Statistics =
-    (statisticService getStatistics id).getOrThrow
+    statisticService.statisticsFuture(id).getOrThrow
 
-  override def mode: Mode = gameModeMapper map player.getGameMode
+  override def mode: Mode = gameModeMapper.map(player.getGameMode)
   override def isOnline: Boolean = player.isOnline
   override def isSneaking: Boolean = player.isSneaking
-  override def hasPermission(perm: String): Boolean = player hasPermission perm
+  override def hasPermission(perm: String): Boolean = player.hasPermission(perm)
 
   override def sendMessage(message: Message): Unit =
-    playerService sendMessage (id, message)
+    playerService.sendMessage(id, message)
   override def sendTitle(title: String, subTitle: String): Unit =
-    playerService sendTitle (id, title, subTitle)
+    playerService.sendTitle(id, title, subTitle)
 }
