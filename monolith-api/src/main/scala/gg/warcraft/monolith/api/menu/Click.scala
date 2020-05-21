@@ -1,9 +1,9 @@
 package gg.warcraft.monolith.api.menu
 
-import java.util.UUID
+import gg.warcraft.monolith.api.player.Player
 
 case class Click(
-    playerId: UUID,
+    player: Player,
     isLeft: Boolean,
     isShift: Boolean
 ) {

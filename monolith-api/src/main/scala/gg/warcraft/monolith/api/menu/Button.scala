@@ -1,15 +1,14 @@
 package gg.warcraft.monolith.api.menu
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.core.ColorCode._
 import gg.warcraft.monolith.api.item.{ItemType, ItemTypeOrVariant}
+import gg.warcraft.monolith.api.player.Player
 
 case class Button(
     icon: ItemTypeOrVariant,
     title: String,
     tooltip: List[String]
-)(action: Click => Unit = _ => {}) {
+)(val action: Click => Unit) {
   lazy val formattedTitle: String = s"$WHITE$title"
   lazy val formattedTooltip: List[String] = tooltip.map { it => s"$GRAY$it" }
 }
@@ -23,17 +22,17 @@ object Button {
       name: String,
       title: String,
       tooltip: List[String]
-  )(action: Click => Unit = _ => {}): Button =
+  )(action: Click => Unit): Button =
     new Button(ItemType.MOB_HEAD, title, tooltip)(action) with SkullButton {
       override val playerName: String = name
     }
 
-  def back(menu: UUID => Menu)(implicit
+  def back(menu: Player => Menu)(implicit
       menuService: MenuService
   ): Button = {
     val tooltip = "[CLICK] To go back to" :: "the previous menu" :: Nil
     Button(ItemType.DOOR, "Back", tooltip) { click =>
-      menuService.showMenu(click.playerId, menu(click.playerId))
+      menuService.showMenu(click.player.id, menu(click.player))
     }
   }
 }
