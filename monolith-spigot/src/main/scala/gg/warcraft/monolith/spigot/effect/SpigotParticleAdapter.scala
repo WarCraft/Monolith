@@ -2,7 +2,6 @@ package gg.warcraft.monolith.spigot.effect
 
 import gg.warcraft.monolith.api.effect.{Particle, ParticleAdapter}
 import gg.warcraft.monolith.api.world.Location
-import gg.warcraft.monolith.spigot.combat.SpigotEntity
 import gg.warcraft.monolith.spigot.player.SpigotPlayer
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Server
@@ -23,7 +22,17 @@ class SpigotParticleAdapter(implicit
     spigotLocation
       .getNearbyEntitiesByType(playerType, DEFAULT_RANGE)
       .asScala
-      .foreach { _.spawnParticle(spigotParticle, spigotLocation, 1) }
+      .foreach {
+        _.spawnParticle(
+          spigotParticle,
+          spigotLocation,
+          1,
+          zeroOffset,
+          zeroOffset,
+          zeroOffset,
+          0
+        )
+      }
   }
 
   override def display(
@@ -38,9 +47,16 @@ class SpigotParticleAdapter(implicit
       .getNearbyEntitiesByType(playerType, DEFAULT_RANGE)
       .asScala
       .foreach {
-        case it: SpigotEntity =>
-          it.spawnParticle(spigotParticle, spigotLocation, 1, spigotColor)
-        case _ =>
+        _.spawnParticle(
+          spigotParticle,
+          spigotLocation,
+          1,
+          zeroOffset,
+          zeroOffset,
+          zeroOffset,
+          0,
+          spigotColor
+        )
       }
   }
 
@@ -53,7 +69,7 @@ class SpigotParticleAdapter(implicit
     val spigotLocation = locationMapper.map(location)
     val spigotParticle = particleMapper.map(particle)
     spigotLocation
-      .getNearbyEntitiesByType(playerType, DEFAULT_RANGE, DEFAULT_HALF_RANGE)
+      .getNearbyEntitiesByType(playerType, DEFAULT_RANGE)
       .asScala
       .foreach {
         _.spawnParticle(
