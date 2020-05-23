@@ -44,7 +44,8 @@ class PlayerDataService(implicit
         }
     }
 
-  private[player] def setPlayerData(data: PlayerData): Unit = {
+  // TODO change access level
+  private[monolith] def setPlayerData(data: PlayerData): Unit = {
     _data += (data.id -> data)
     Future {
       database.run {

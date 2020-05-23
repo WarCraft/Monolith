@@ -1,14 +1,27 @@
 package gg.warcraft.monolith.api.entity.team
 
-class TeamService {
-  private var _teams: List[Team] = Nil
+import gg.warcraft.monolith.api.core.auth.AuthService
+import gg.warcraft.monolith.api.core.command.{Command, CommandService}
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.player.data.PlayerDataService
 
-  def teams: List[Team] = _teams
+class TeamService(implicit
+    commandService: CommandService,
+    eventService: EventService,
+    authService: AuthService,
+    teamService: TeamService,
+    playerDataService: PlayerDataService
+) {
+  private final val teamCommandHandler = new TeamStaffCommandHandler()
 
-  def teamOption(name: String): Option[Team] =
-    _teams.find { _.name == name }
+  private var _teams: Map[String, Team] = Map.empty
+
+  def teams: Map[String, Team] = _teams
 
   def registerTeam(team: Team): Unit =
-    if (_teams.forall { _.name != team.name }) _teams ::= team
-    else throw new IllegalArgumentException(s"Team ${team.name} already exists!")
+    if (!_teams.contains(team.name)) {
+      _teams += team.name -> team
+      val command = Command(team.name, Nil)
+      commandService.registerCommand(command, teamCommandHandler)
+    } else throw new IllegalArgumentException(s"Team ${team.name} already exists!")
 }

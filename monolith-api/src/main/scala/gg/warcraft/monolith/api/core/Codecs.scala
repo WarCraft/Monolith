@@ -50,7 +50,7 @@ object Codecs {
     def teamDecoder(
         implicit teamService: TeamService
     ): MappedEncoding[String, Option[Team]] =
-      MappedEncoding { teamService.teamOption }
+      MappedEncoding { teamService.teams.get }
     def teamEncoder: MappedEncoding[Team, String] =
       MappedEncoding { _.name }
   }
