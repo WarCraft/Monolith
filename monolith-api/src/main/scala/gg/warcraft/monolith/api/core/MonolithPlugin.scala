@@ -33,8 +33,8 @@ trait MonolithPlugin {
   ): A = {
     def onError(err: io.circe.Error): A = {
       logger.severe(err.getMessage)
-      logger.severe(WARN_DEFAULT_CONFIG)
       if (fallback) {
+        logger.severe(WARN_DEFAULT_CONFIG)
         val defaultConfig = Source.fromResource("config.yml")
         parseConfig(defaultConfig.mkString)
       } else throw new IllegalStateException(ERR_CONFIG_FAILED)
