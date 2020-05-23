@@ -5,16 +5,20 @@ import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.core.Codecs.Circe._
 import gg.warcraft.monolith.api.core.types.DatabaseContext
-import gg.warcraft.monolith.api.entity.data.EntityDataHandler
+import gg.warcraft.monolith.api.entity.data.EntityDataCacheHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.item.ItemType
 import gg.warcraft.monolith.api.player.currency.CurrencyCacheHandler
-import gg.warcraft.monolith.api.player.data.{PlayerDataHandler, PlayerDataUpdater}
+import gg.warcraft.monolith.api.player.data.{
+  PlayerDataCacheHandler, PlayerDataTicker
+}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
 import gg.warcraft.monolith.api.player.statistic.StatisticCacheHandler
 import gg.warcraft.monolith.api.world.{Direction, World}
 import gg.warcraft.monolith.api.world.portal.PortalTicker
+import gg.warcraft.monolith.spigot.block.SpigotBlockEventMapper
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
+import gg.warcraft.monolith.spigot.core.command.SpigotCommandHandler
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
 import gg.warcraft.monolith.spigot.item.SpigotItemEventMapper
 import gg.warcraft.monolith.spigot.menu.SpigotMenuHandler
@@ -43,6 +47,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     implicit val worldDec: Decoder[World] = enumDecoder(World.valueOf)
 
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
+    authService.readConfig(config)
     blockBuildService.readConfig(config)
     blockBackupService.restoreBackups()
 
@@ -57,27 +62,30 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   private def enableEventMappers(): Unit = {
+    subscribe(new SpigotBlockEventMapper)
     subscribe(new SpigotCombatEventMapper)
     subscribe(new SpigotEntityEventMapper)
     subscribe(new SpigotPlayerEventMapper)
     subscribe(new SpigotItemEventMapper)
-    subscribe(new SpigotMenuHandler)
     subscribe(new SpigotWorldEventMapper)
+
+    subscribe(new SpigotCommandHandler)
+    subscribe(new SpigotMenuHandler)
   }
 
   private def enableHandlers(): Unit = {
     eventService.subscribe(new DebuggingHandler)
-    eventService.subscribe(new EntityDataHandler)
+    eventService.subscribe(new EntityDataCacheHandler)
     eventService.subscribe(new CurrencyCacheHandler)
     eventService.subscribe(new StatisticCacheHandler)
     eventService.subscribe(new StatusHandler)
-    eventService.subscribe(new PlayerDataHandler)
+    eventService.subscribe(new PlayerDataCacheHandler)
     eventService.subscribe(new PlayerHidingHandler)
   }
 
   private def enableTasks(): Unit = {
     taskService.runTask(1.seconds, new DailyTicker().run)
-    taskService.runTask(1.ticks, new PlayerDataUpdater().run)
+    taskService.runTask(1.ticks, new PlayerDataTicker().run)
     taskService.runTask(4.ticks, new PortalTicker().run)
   }
 }

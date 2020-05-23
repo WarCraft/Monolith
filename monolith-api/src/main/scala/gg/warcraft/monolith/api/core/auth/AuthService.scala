@@ -11,30 +11,6 @@ class AuthService {
   var debuggingItem: ItemType = _
   var moderatingItem: ItemType = _
 
-  private def hasOffHand(principal: Principal, offHand: ItemType): Boolean =
-    principal.equipment.offHand match {
-      case Some(item) => item.`type` == offHand
-      case None       => false
-    }
-
-  def isDev(principal: Principal): Boolean =
-    principal hasPermission devPermission
-
-  def isDebugging(principal: Principal): Boolean =
-    isDev(principal) && hasOffHand(principal, debuggingItem)
-
-  def isStaff(principal: Principal): Boolean =
-    principal hasPermission staffPermission
-
-  def isMod(principal: Principal): Boolean =
-    principal hasPermission modPermission
-
-  def isAdmin(principal: Principal): Boolean =
-    principal hasPermission adminPermission
-
-  def isModerating(principal: Principal): Boolean =
-    isMod(principal) && hasOffHand(principal, moderatingItem)
-
   def readConfig(config: MonolithConfig): Unit = {
     devPermission = config.devPermission
     staffPermission = config.staffPermission
@@ -43,4 +19,28 @@ class AuthService {
     debuggingItem = config.debuggingItem
     moderatingItem = config.moderatingItem
   }
+
+  private def hasOffHand(principal: Principal, offHand: ItemType): Boolean =
+    principal.equipment.offHand match {
+      case Some(item) => item.`type` == offHand
+      case None       => false
+    }
+
+  def isDev(principal: Principal): Boolean =
+    principal.hasPermission(devPermission)
+
+  def isDebugging(principal: Principal): Boolean =
+    isDev(principal) && hasOffHand(principal, debuggingItem)
+
+  def isStaff(principal: Principal): Boolean =
+    principal.hasPermission(staffPermission)
+
+  def isMod(principal: Principal): Boolean =
+    principal.hasPermission(modPermission)
+
+  def isAdmin(principal: Principal): Boolean =
+    principal.hasPermission(adminPermission)
+
+  def isModerating(principal: Principal): Boolean =
+    isMod(principal) && hasOffHand(principal, moderatingItem)
 }
