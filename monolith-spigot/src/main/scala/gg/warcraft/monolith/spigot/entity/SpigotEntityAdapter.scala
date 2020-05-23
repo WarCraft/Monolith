@@ -14,8 +14,8 @@ import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 
-class SpigotEntityAdapter(entity: SpigotEntity)(
-    implicit attributeService: AttributeService,
+class SpigotEntityAdapter(entity: SpigotEntity)(implicit
+    attributeService: AttributeService,
     statusService: StatusService,
     teamService: TeamService,
     dataService: EntityDataService,
@@ -26,26 +26,26 @@ class SpigotEntityAdapter(entity: SpigotEntity)(
     itemMapper: SpigotItemMapper
 ) extends Entity {
   override lazy val id: UUID = entity.getUniqueId
-  override lazy val typed: Type = entityTypeMapper map entity.getType
+  override lazy val typed: Type = entityTypeMapper.map(entity.getType)
 
   override def team: Option[Team] = dataService.data(id).team
-  override def attributes: Attributes = attributeService getAttributes id
-  override def status: Status = statusService getStatus id
+  override def attributes: Attributes = attributeService.getAttributes(id)
+  override def status: Status = statusService.getStatus(id)
 
   override def name: String = entity.getName
-  override def location: Location = locationMapper map entity.getLocation
-  override def eyeLocation: Location = locationMapper map entity.getEyeLocation
-  override def boundingBox: AABBf = boundingBoxMapper map entity.getBoundingBox
-  override def velocity: Vector3f = vectorMapper map entity.getVelocity
+  override def location: Location = locationMapper.map(entity.getLocation)
+  override def eyeLocation: Location = locationMapper.map(entity.getEyeLocation)
+  override def boundingBox: AABBf = boundingBoxMapper.map(entity.getBoundingBox)
+  override def velocity: Vector3f = vectorMapper.map(entity.getVelocity)
   override def health: Float = entity.getHealth.toFloat
   override def isAlive: Boolean = !entity.isDead
   override def isGrounded: Boolean = entity.isOnGround
   override def equipment: Equipment = Equipment(
-    itemMapper map entity.getEquipment.getHelmet,
-    itemMapper map entity.getEquipment.getChestplate,
-    itemMapper map entity.getEquipment.getLeggings,
-    itemMapper map entity.getEquipment.getBoots,
-    itemMapper map entity.getEquipment.getItemInMainHand,
-    itemMapper map entity.getEquipment.getItemInOffHand
+    itemMapper.map(entity.getEquipment.getHelmet),
+    itemMapper.map(entity.getEquipment.getChestplate),
+    itemMapper.map(entity.getEquipment.getLeggings),
+    itemMapper.map(entity.getEquipment.getBoots),
+    itemMapper.map(entity.getEquipment.getItemInMainHand),
+    itemMapper.map(entity.getEquipment.getItemInOffHand)
   )
 }

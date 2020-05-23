@@ -48,8 +48,8 @@ class SpigotEntityService(implicit
 ) extends EntityService {
   private def getSpigotEntity(id: UUID): Option[SpigotEntity] =
     server.getEntity(id) match {
-      case it: SpigotEntity => Some(it)
-      case _                => None
+      case it: SpigotEntity if it.getType != EntityType.ARMOR_STAND => Some(it)
+      case _                                                        => None
     }
 
   override def getEntity(id: UUID): Entity =
@@ -57,9 +57,11 @@ class SpigotEntityService(implicit
 
   override def getEntityOption(id: UUID): Option[Entity] =
     server.getEntity(id) match {
-      case _: SpigotPlayer  => playerService.getPlayer(id) |> Some.apply
-      case it: SpigotEntity => new SpigotEntityAdapter(it) |> Some.apply
-      case _                => None
+      case _: SpigotPlayer =>
+        playerService.getPlayer(id) |> Some.apply
+      case it: SpigotEntity if it.getType != EntityType.ARMOR_STAND =>
+        new SpigotEntityAdapter(it) |> Some.apply
+      case _ => None
     }
 
   override def getNearbyEntities(
@@ -69,11 +71,10 @@ class SpigotEntityService(implicit
     val spigotLocation = locationMapper.map(location)
     spigotLocation.getWorld
       .getNearbyEntities(spigotLocation, radius._1, radius._2, radius._3)
-      .asScala
-      .filter { _.isInstanceOf[SpigotEntity] }
-      .filter { _.getType != EntityType.ARMOR_STAND }
-      .map { _.asInstanceOf[SpigotEntity] }
-      .map { new SpigotEntityAdapter(_) }
+      .asScala.iterator
+      .map { it => getEntityOption(it.getUniqueId) }
+      .filter { _.isDefined }
+      .map { _.get }
       .toList
   }
 
