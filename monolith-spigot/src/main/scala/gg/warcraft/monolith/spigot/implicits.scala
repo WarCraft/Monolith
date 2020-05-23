@@ -4,11 +4,13 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.block.backup.BlockBackupService
 import gg.warcraft.monolith.api.block.build.BlockBuildService
+import gg.warcraft.monolith.api.block.spoofing.BlockSpoofingService
 import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.core.types.DatabaseContext
+import gg.warcraft.monolith.api.effect.ParticleAdapter
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
 import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.status.StatusService
@@ -22,10 +24,14 @@ import gg.warcraft.monolith.api.player.hiding.PlayerHidingService
 import gg.warcraft.monolith.api.world.portal.PortalService
 import gg.warcraft.monolith.spigot.block._
 import gg.warcraft.monolith.spigot.block.backup.SpigotBlockBackupService
+import gg.warcraft.monolith.spigot.block.spoofing.SpigotBlockSpoofingService
 import gg.warcraft.monolith.spigot.combat.{
   SpigotCombatEventMapper, SpigotPotionMapper
 }
 import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
+import gg.warcraft.monolith.spigot.effect.{
+  SpigotParticleAdapter, SpigotParticleMapper
+}
 import gg.warcraft.monolith.spigot.entity.{
   SpigotEntityEventMapper, SpigotEntityService, SpigotEntityTypeMapper
 }
@@ -45,6 +51,8 @@ import gg.warcraft.monolith.spigot.world._
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
+import scala.concurrent.ExecutionContext
+
 object implicits {
   private var _server: Server = _
   private var _plugin: Plugin = _
@@ -54,13 +62,12 @@ object implicits {
   private var _eventService: EventService = _
   private var _taskService: TaskService = _
 
-  private[spigot] def init(
-      eventService: EventService = new EventService
-  )(implicit
+  private[spigot] def init()(implicit
       server: Server,
       plugin: Plugin,
       logger: Logger,
       database: DatabaseContext,
+      eventService: EventService,
       taskService: TaskService
   ): Unit = {
     _server = server
@@ -71,7 +78,8 @@ object implicits {
     _taskService = taskService
   }
 
-  private[spigot] def monolithEventService: EventService = eventService
+  private[spigot] def monolithEventService: EventService =
+    if (_eventService != null) _eventService else new EventService
 
   // Spigot
   private implicit lazy val server: Server = _server
@@ -79,6 +87,7 @@ object implicits {
   private implicit lazy val logger: Logger = _logger
 
   // Core
+  private implicit final val context: ExecutionContext = ExecutionContext.global
   private implicit lazy val database: DatabaseContext = _database
   private implicit lazy val eventService: EventService = _eventService
   private implicit lazy val taskService: TaskService = _taskService
@@ -101,6 +110,8 @@ object implicits {
     new SpigotBlockBackupService
   implicit lazy val blockBuildService: BlockBuildService =
     new BlockBuildService
+  implicit lazy val blockSpoofingService: BlockSpoofingService =
+    new SpigotBlockSpoofingService
 
   implicit lazy val blockAttachmentMapper: SpigotBlockAttachmentMapper =
     new SpigotBlockAttachmentMapper
@@ -130,6 +141,12 @@ object implicits {
     new SpigotCombatEventMapper
   implicit lazy val potionMapper: SpigotPotionMapper =
     new SpigotPotionMapper
+
+  // Effect
+  implicit lazy val particleAdapter: ParticleAdapter =
+    new SpigotParticleAdapter
+  implicit lazy val particleMapper: SpigotParticleMapper =
+    new SpigotParticleMapper
 
   // Entity
   implicit lazy val attributeService: AttributeService =
