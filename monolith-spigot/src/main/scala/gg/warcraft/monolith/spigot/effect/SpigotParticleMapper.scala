@@ -3,78 +3,7 @@ package gg.warcraft.monolith.spigot.effect
 import gg.warcraft.monolith.api.effect.Particle
 import org.bukkit.{Color => SpigotColor, Particle => SpigotParticle}
 
-class SpigotParticleMapper {
-  def map(particle: SpigotParticle): Particle = particle match {
-    case SpigotParticle.BARRIER               => Particle.Barrier
-    case SpigotParticle.BLOCK_CRACK           => Particle.BlockCrack
-    case SpigotParticle.BLOCK_DUST            => Particle.BlockDust
-    case SpigotParticle.BUBBLE_COLUMN_UP      => Particle.BubbleColumnUp
-    case SpigotParticle.BUBBLE_POP            => Particle.BubblePop
-    case SpigotParticle.CAMPFIRE_COSY_SMOKE   => Particle.CampfireCosySmoke
-    case SpigotParticle.CAMPFIRE_SIGNAL_SMOKE => Particle.CampfireSignalSmoke
-    case SpigotParticle.CLOUD                 => Particle.Cloud
-    case SpigotParticle.COMPOSTER             => Particle.Composter
-    case SpigotParticle.CRIT                  => Particle.Crit
-    case SpigotParticle.CRIT_MAGIC            => Particle.CritMagic
-    case SpigotParticle.CURRENT_DOWN          => Particle.CurrentDown
-    case SpigotParticle.DAMAGE_INDICATOR      => Particle.DamageIndicator
-    case SpigotParticle.DOLPHIN               => Particle.Dolphin
-    case SpigotParticle.DRAGON_BREATH         => Particle.DragonBreath
-    case SpigotParticle.DRIPPING_HONEY        => Particle.DrippingHoney
-    case SpigotParticle.DRIP_LAVA             => Particle.DripLava
-    case SpigotParticle.DRIP_WATER            => Particle.DripWater
-    case SpigotParticle.ENCHANTMENT_TABLE     => Particle.EnchantmentTable
-    case SpigotParticle.END_ROD               => Particle.EndRod
-    case SpigotParticle.EXPLOSION_HUGE        => Particle.ExplosionHuge
-    case SpigotParticle.EXPLOSION_LARGE       => Particle.ExplosionLarge
-    case SpigotParticle.EXPLOSION_NORMAL      => Particle.ExplosionNormal
-    case SpigotParticle.FALLING_DUST          => Particle.FallingDust
-    case SpigotParticle.FALLING_HONEY         => Particle.FallingHoney
-    case SpigotParticle.FALLING_LAVA          => Particle.FallingLava
-    case SpigotParticle.FALLING_NECTAR        => Particle.FallingNectar
-    case SpigotParticle.FALLING_WATER         => Particle.FallingWater
-    case SpigotParticle.FIREWORKS_SPARK       => Particle.FireworksSpark
-    case SpigotParticle.FLAME                 => Particle.Flame
-    case SpigotParticle.FLASH                 => Particle.Flash
-    case SpigotParticle.HEART                 => Particle.Heart
-    case SpigotParticle.ITEM_CRACK            => Particle.ItemCrack
-    case SpigotParticle.LANDING_HONEY         => Particle.LandingHoney
-    case SpigotParticle.LANDING_LAVA          => Particle.LandingLava
-    case SpigotParticle.LAVA                  => Particle.Lava
-    case SpigotParticle.LEGACY_BLOCK_CRACK    => Particle.LegacyBlockCrack
-    case SpigotParticle.LEGACY_BLOCK_DUST     => Particle.LegacyBlockDust
-    case SpigotParticle.LEGACY_FALLING_DUST   => Particle.LegacyFallingDust
-    case SpigotParticle.MOB_APPEARANCE        => Particle.MobAppearance
-    case SpigotParticle.NAUTILUS              => Particle.Nautilus
-    case SpigotParticle.NOTE                  => Particle.Note
-    case SpigotParticle.PORTAL                => Particle.Portal
-    case SpigotParticle.REDSTONE              => Particle.Redstone
-    case SpigotParticle.SLIME                 => Particle.Slime
-    case SpigotParticle.SMOKE_LARGE           => Particle.SmokeLarge
-    case SpigotParticle.SMOKE_NORMAL          => Particle.SmokeNormal
-    case SpigotParticle.SNEEZE                => Particle.Sneeze
-    case SpigotParticle.SNOWBALL              => Particle.Snowball
-    case SpigotParticle.SNOW_SHOVEL           => Particle.SnowShovel
-    case SpigotParticle.SPELL                 => Particle.Spell
-    case SpigotParticle.SPELL_INSTANT         => Particle.SpellInstant
-    case SpigotParticle.SPELL_MOB             => Particle.SpellMob
-    case SpigotParticle.SPELL_MOB_AMBIENT     => Particle.SpellMobAmbient
-    case SpigotParticle.SPELL_WITCH           => Particle.SpellWitch
-    case SpigotParticle.SPIT                  => Particle.Spit
-    case SpigotParticle.SQUID_INK             => Particle.SquidInk
-    case SpigotParticle.SUSPENDED             => Particle.Suspended
-    case SpigotParticle.SUSPENDED_DEPTH       => Particle.SuspendedDepth
-    case SpigotParticle.SWEEP_ATTACK          => Particle.SweepAttack
-    case SpigotParticle.TOTEM                 => Particle.Totem
-    case SpigotParticle.TOWN_AURA             => Particle.TownAura
-    case SpigotParticle.VILLAGER_ANGRY        => Particle.VillagerAngry
-    case SpigotParticle.VILLAGER_HAPPY        => Particle.VillagerHappy
-    case SpigotParticle.WATER_BUBBLE          => Particle.WaterBubble
-    case SpigotParticle.WATER_DROP            => Particle.WaterDrop
-    case SpigotParticle.WATER_SPLASH          => Particle.WaterSplash
-    case SpigotParticle.WATER_WAKE            => Particle.WaterWake
-  }
-
+class SpigotParticleMapper { // TODO optimize big match statement
   def map(particle: Particle): SpigotParticle = particle match {
     case Particle.Barrier             => SpigotParticle.BARRIER
     case Particle.BlockCrack          => SpigotParticle.BLOCK_CRACK
@@ -146,27 +75,58 @@ class SpigotParticleMapper {
     case Particle.WaterWake           => SpigotParticle.WATER_WAKE
   }
 
-  def map(color: SpigotColor): Particle.Color = color match {
-    case _ => ???
-  }
+  private final val spigotAqua =
+    new SpigotParticle.DustOptions(SpigotColor.AQUA, 1)
+  private final val spigotBlack =
+    new SpigotParticle.DustOptions(SpigotColor.BLACK, 1)
+  private final val spigotBlue =
+    new SpigotParticle.DustOptions(SpigotColor.BLUE, 1)
+  private final val spigotFuchsia =
+    new SpigotParticle.DustOptions(SpigotColor.FUCHSIA, 1)
+  private final val spigotGray =
+    new SpigotParticle.DustOptions(SpigotColor.GRAY, 1)
+  private final val spigotGreen =
+    new SpigotParticle.DustOptions(SpigotColor.GREEN, 1)
+  private final val spigotLime =
+    new SpigotParticle.DustOptions(SpigotColor.LIME, 1)
+  private final val spigotMaroon =
+    new SpigotParticle.DustOptions(SpigotColor.MAROON, 1)
+  private final val spigotNavy =
+    new SpigotParticle.DustOptions(SpigotColor.NAVY, 1)
+  private final val spigotOlive =
+    new SpigotParticle.DustOptions(SpigotColor.OLIVE, 1)
+  private final val spigotOrange =
+    new SpigotParticle.DustOptions(SpigotColor.ORANGE, 1)
+  private final val spigotPurple =
+    new SpigotParticle.DustOptions(SpigotColor.PURPLE, 1)
+  private final val spigotRed =
+    new SpigotParticle.DustOptions(SpigotColor.RED, 1)
+  private final val spigotSilver =
+    new SpigotParticle.DustOptions(SpigotColor.SILVER, 1)
+  private final val spigotTeal =
+    new SpigotParticle.DustOptions(SpigotColor.TEAL, 1)
+  private final val spigotWhite =
+    new SpigotParticle.DustOptions(SpigotColor.WHITE, 1)
+  private final val spigotYellow =
+    new SpigotParticle.DustOptions(SpigotColor.YELLOW, 1)
 
-  def map(color: Particle.Color): SpigotColor = color match {
-    case Particle.Color.Aqua    => ???
-    case Particle.Color.Black   => ???
-    case Particle.Color.Blue    => ???
-    case Particle.Color.Fuchsia => ???
-    case Particle.Color.Gray    => ???
-    case Particle.Color.Green   => ???
-    case Particle.Color.Lime    => ???
-    case Particle.Color.Maroon  => ???
-    case Particle.Color.Navy    => ???
-    case Particle.Color.Olive   => ???
-    case Particle.Color.Orange  => ???
-    case Particle.Color.Purple  => ???
-    case Particle.Color.Red     => ???
-    case Particle.Color.Silver  => ???
-    case Particle.Color.Teal    => ???
-    case Particle.Color.White   => ???
-    case Particle.Color.Yellow  => ???
+  def map(color: Particle.Color): SpigotParticle.DustOptions = color match {
+    case Particle.Color.Aqua    => spigotAqua
+    case Particle.Color.Black   => spigotBlack
+    case Particle.Color.Blue    => spigotBlue
+    case Particle.Color.Fuchsia => spigotFuchsia
+    case Particle.Color.Gray    => spigotGray
+    case Particle.Color.Green   => spigotGreen
+    case Particle.Color.Lime    => spigotLime
+    case Particle.Color.Maroon  => spigotMaroon
+    case Particle.Color.Navy    => spigotNavy
+    case Particle.Color.Olive   => spigotOlive
+    case Particle.Color.Orange  => spigotOrange
+    case Particle.Color.Purple  => spigotPurple
+    case Particle.Color.Red     => spigotRed
+    case Particle.Color.Silver  => spigotSilver
+    case Particle.Color.Teal    => spigotTeal
+    case Particle.Color.White   => spigotWhite
+    case Particle.Color.Yellow  => spigotYellow
   }
 }
