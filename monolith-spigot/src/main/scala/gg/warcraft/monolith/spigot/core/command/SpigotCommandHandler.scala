@@ -11,7 +11,7 @@ class SpigotCommandHandler(implicit
 ) extends Listener {
   @EventHandler
   def onCommandPreProcess(event: PlayerCommandPreprocessEvent): Unit = {
-    val Array(label, args @ _*) = event.getMessage.split(" ")
+    val Array(label, args @ _*) = event.getMessage.substring(1).split(" ")
     if (commandService.commands.contains(label)) {
       val principal = playerService.getPlayer(event.getPlayer.getUniqueId)
       commandService.processCommand(principal, label, args: _*)
