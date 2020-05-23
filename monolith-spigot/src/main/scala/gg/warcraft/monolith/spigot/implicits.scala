@@ -87,7 +87,7 @@ object implicits {
   private implicit lazy val logger: Logger = _logger
 
   // Core
-  private implicit final val context: ExecutionContext = ExecutionContext.global
+  private implicit final val execContext: ExecutionContext = ExecutionContext.global
   private implicit lazy val database: DatabaseContext = _database
   private implicit lazy val eventService: EventService = _eventService
   private implicit lazy val taskService: TaskService = _taskService
