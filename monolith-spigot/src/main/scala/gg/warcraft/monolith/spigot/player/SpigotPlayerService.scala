@@ -4,6 +4,7 @@ import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.Message
+import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.Equipment
 import gg.warcraft.monolith.api.entity.Equipment.Slot
@@ -31,6 +32,7 @@ import scala.jdk.CollectionConverters._
 class SpigotPlayerService(implicit
     server: Server,
     logger: Logger,
+    eventService: EventService,
     taskService: TaskService,
     attributeService: AttributeService,
     statusService: StatusService,
