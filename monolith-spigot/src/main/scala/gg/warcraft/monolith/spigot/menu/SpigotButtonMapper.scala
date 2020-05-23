@@ -29,7 +29,7 @@ class SpigotButtonMapper(
     val meta = item.getItemMeta.asInstanceOf[SkullMeta]
     meta.setDisplayName(button.title)
     meta.setLore(button.tooltip.asJava)
-    meta.setOwner(button.name)
+    meta.setOwner(button.playerName)
     meta.addItemFlags(ItemFlag.values(): _*)
     item.setItemMeta(meta)
     item

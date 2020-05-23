@@ -1,12 +1,9 @@
 package gg.warcraft.monolith.api.player.data
 
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
 import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectEvent}
 
-class PlayerDataHandler(implicit
-    logger: Logger,
+class PlayerDataCacheHandler(implicit
     service: PlayerDataService
 ) extends Event.Handler {
   override def handle(event: Event): Unit = event match {

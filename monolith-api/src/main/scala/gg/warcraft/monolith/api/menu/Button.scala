@@ -14,7 +14,13 @@ case class Button(
 }
 
 trait SkullButton {
+  Button =>
+
   val playerName: String
+  val icon: ItemTypeOrVariant
+  val title: String
+  val tooltip: List[String]
+  val action: Click => Unit
 }
 
 object Button {

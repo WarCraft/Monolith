@@ -2,7 +2,7 @@ package gg.warcraft.monolith.api.player.data
 
 import gg.warcraft.monolith.api.player.{Player, PlayerService}
 
-class PlayerDataUpdater(implicit
+class PlayerDataTicker(implicit
     playerService: PlayerService,
     playerDataService: PlayerDataService
 ) extends Runnable {

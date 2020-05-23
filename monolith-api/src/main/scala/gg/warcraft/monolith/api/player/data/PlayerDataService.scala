@@ -51,9 +51,9 @@ class PlayerDataService(implicit
         query[PlayerData]
           .insert { lift(data) }
           .onConflictUpdate(_.id)(
-            (_1, _2) => _1.team -> _2.team,
-            (_1, _2) => _1.timeConnected -> _2.timeConnected,
-            (_1, _2) => _1.timeLastSeen -> _2.timeLastSeen
+            (t, e) => t.team -> e.team,
+            (t, e) => t.timeConnected -> e.timeConnected,
+            (t, e) => t.timeLastSeen -> e.timeLastSeen
           )
       }
     }
