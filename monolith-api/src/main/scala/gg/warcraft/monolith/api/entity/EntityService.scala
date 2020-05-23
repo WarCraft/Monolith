@@ -69,30 +69,18 @@ abstract class EntityService(implicit
 
   def heavyEntity(id: UUID, duration: Duration): Unit = {
     val entity = getEntity(id)
-    /*
-        private Block findBlockUnderFeet(Entity entity) {
-        Block current = worldService.getBlock(Location.toBlockLocation(entity.getLocation()));
-        while (!current.solid() && current.location().y() >= 0) {
-            current = blockUtils.getRelative(current, BlockFace.DOWN);
-        }
-        return current;
-    }
-     */
-//        Block targetBlock = findBlockUnderFeet(entity);
-//        int safeY = targetBlock.location().y() + 1;
-//        Location safeLocation = entity.getLocation().withY(safeY);
-//        setVelocity(id, Vector3f())
-//        teleportEntity(id, safeLocation)
+    val location = entity.location
 
-//        this.removePotionEffect(entityId, PotionEffectType.JUMP);
-//        PotionEffect effect = new SimplePotionEffect(PotionEffectType.JUMP, 128, duration);
-//        this.addPotionEffect(entityId, effect);
+    removePotionEffect(id, PotionEffect.JUMP)
+    addPotionEffect(id, PotionEffect(PotionEffect.JUMP, 128, duration))
+
+    setVelocity(id, Vector3f())
+    teleportEntity(id, location)
   }
 
   def freezeEntity(id: UUID, duration: Duration): Unit = {
-//    this.removePotionEffect(entityId, PotionEffectType.SLOW);
-//    PotionEffect effect = new SimplePotionEffect(PotionEffectType.SLOW, 7, duration);
-//    this.addPotionEffect(entityId, effect);
+    removePotionEffect(id, PotionEffect.SLOW)
+    addPotionEffect(id, PotionEffect(PotionEffect.SLOW, 7, duration))
     heavyEntity(id, duration)
   }
 
