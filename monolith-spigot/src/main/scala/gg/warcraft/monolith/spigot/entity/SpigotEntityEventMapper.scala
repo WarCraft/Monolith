@@ -2,21 +2,16 @@ package gg.warcraft.monolith.spigot.entity
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
+import gg.warcraft.monolith.api.combat.{ CombatSource, CombatValue }
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.entity.{
-  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
-  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
-  EntityPreDamageEvent, EntityPreDeathEvent, EntityPreFatalDamageEvent,
-  EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent
-}
+import gg.warcraft.monolith.api.entity.{ EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent, EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent, EntityPreDamageEvent, EntityPreDeathEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent }
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.entity.LivingEntity
-import org.bukkit.event.{EventHandler, EventPriority, Listener}
+import org.bukkit.entity.{ EntityType, LivingEntity }
+import org.bukkit.event.{ EventHandler, EventPriority, Listener }
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.Server
 import org.bukkit.attribute.Attribute
@@ -41,8 +36,12 @@ class SpigotEntityEventMapper(implicit
   private val combatValues = mutable.Map.empty[SpigotEvent, CombatValue]
   private val combatValueMetadataKey = classOf[CombatValue].getCanonicalName
 
+  private def isMonolithEntity(entity: org.bukkit.entity.Entity): Boolean =
+    entity.isInstanceOf[SpigotEntity] && entity.getType != EntityType.ARMOR_STAND
+
   @EventHandler(priority = EventPriority.HIGH)
   def preSpawn(event: SpigotEntitySpawnEvent): Unit = {
+    if(!isMonolithEntity(event.getEntity)) return
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val location = locationMapper.map(event.getEntity.getLocation)
     EntityPreSpawnEvent(entity, location, event.isCancelled)
@@ -59,6 +58,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onSpawn(event: SpigotEntitySpawnEvent): Unit = {
+    if(!isMonolithEntity(event.getEntity)) return
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val location = locationMapper.map(event.getEntity.getLocation)
     EntitySpawnEvent(entity, location).tap { eventService.publish }
@@ -66,6 +66,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def preInteract(event: SpigotEntityInteractEvent): Unit = {
+    if(!isMonolithEntity(event.getRightClicked)) return
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
     val entity = entityService.getEntity(event.getRightClicked.getUniqueId)
@@ -79,6 +80,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onInteract(event: SpigotEntityInteractEvent): Unit = {
+    if(!isMonolithEntity(event.getRightClicked)) return
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
     // TODO does Monolith only want this for LivingEntities?
@@ -133,7 +135,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def preDamage(event: SpigotEntityDamageEvent): Unit = {
-    if (!event.getEntity.isInstanceOf[SpigotEntity]) return
+    if(!isMonolithEntity(event.getEntity)) return
     val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
 
     var attackDamage: CombatValue = null
@@ -200,7 +202,7 @@ class SpigotEntityEventMapper(implicit
   // Don't ignore if cancelled until having removed combat value
   def onDamage(event: SpigotEntityDamageEvent): Unit = {
     val combatValue = combatValues.remove(event)
-    if (event.isCancelled || !event.getEntity.isInstanceOf[SpigotEntity]) return
+    if (event.isCancelled || !isMonolithEntity(event.getEntity)) return
     val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
 
     val cause = event.getCause
@@ -250,6 +252,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def onDeath(event: SpigotEntityDeathEvent): Unit = {
+    if(!isMonolithEntity(event.getEntity)) return
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val entityStatus = statusService.getStatus(entity.id)
     val drops = event.getDrops.asScala
