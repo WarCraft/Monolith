@@ -7,6 +7,7 @@ import gg.warcraft.monolith.api.core.Codecs.Circe._
 import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.data.EntityDataCacheHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
+import gg.warcraft.monolith.api.entity.team.TeamStaffCommandHandler
 import gg.warcraft.monolith.api.item.ItemType
 import gg.warcraft.monolith.api.player.currency.CurrencyCacheHandler
 import gg.warcraft.monolith.api.player.data.{
@@ -71,6 +72,8 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
     subscribe(new SpigotCommandHandler)
     subscribe(new SpigotMenuHandler)
+
+    subscribe(new TempCowSpawner)
   }
 
   private def enableHandlers(): Unit = {
@@ -81,6 +84,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService.subscribe(new StatusHandler)
     eventService.subscribe(new PlayerDataCacheHandler)
     eventService.subscribe(new PlayerHidingHandler)
+    eventService.subscribe(new TeamStaffCommandHandler)
   }
 
   private def enableTasks(): Unit = {

@@ -1,18 +1,20 @@
 package gg.warcraft.monolith.api.entity.team
 
 import gg.warcraft.monolith.api.core.auth.{AuthService, Principal}
-import gg.warcraft.monolith.api.core.command.Command
-import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.core.command.{Command, CommandService}
+import gg.warcraft.monolith.api.core.event.{Event, EventService}
 import gg.warcraft.monolith.api.entity.EntityTeamChangedEvent
 import gg.warcraft.monolith.api.player.Player
 import gg.warcraft.monolith.api.player.data.PlayerDataService
 
 class TeamStaffCommandHandler(implicit
     eventService: EventService,
+    commandService: CommandService,
     authService: AuthService,
     teamService: TeamService,
     playerDataService: PlayerDataService
-) extends Command.Handler {
+) extends Command.Handler
+    with Event.Handler {
   import teamService._
 
   override def handle(
@@ -43,5 +45,12 @@ class TeamStaffCommandHandler(implicit
         Command.success
       }
     case _ => Command.playersOnly
+  }
+
+  override def handle(event: Event): Unit = event match {
+    case TeamRegisteredEvent(name, _, _) =>
+      val command = Command(name, Nil)
+      commandService.registerCommand(command, this)
+    case _ =>
   }
 }
