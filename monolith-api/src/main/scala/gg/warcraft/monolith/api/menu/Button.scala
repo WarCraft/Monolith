@@ -13,14 +13,8 @@ case class Button(
   lazy val formattedTooltip: List[String] = tooltip.map { it => s"$GRAY$it" }
 }
 
-trait SkullButton {
-  Button =>
-
+trait SkullButton extends Button {
   val playerName: String
-  val icon: ItemTypeOrVariant
-  val title: String
-  val tooltip: List[String]
-  val action: Click => Unit
 }
 
 object Button {
