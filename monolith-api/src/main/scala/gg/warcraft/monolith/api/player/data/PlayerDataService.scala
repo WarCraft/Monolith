@@ -15,14 +15,13 @@ import scala.util.chaining._
 
 class PlayerDataService(implicit
     logger: Logger,
+    context: ExecutionContext,
     database: JdbcContext[SqliteDialect, SnakeCase],
     statisticService: StatisticService,
     teamService: TeamService
 ) {
   import database._
 
-  private implicit val executionContext: ExecutionContext =
-    ExecutionContext.global
   private implicit val teamDecoder: MappedEncoding[String, Option[Team]] =
     Codecs.Quill.teamDecoder
   private implicit val teamEncoder: MappedEncoding[Team, String] =
