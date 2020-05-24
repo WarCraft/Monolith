@@ -87,7 +87,10 @@ class SpigotPlayerEventMapper(implicit
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val reducedEvent = PlayerPreInteractEvent(player, event.isCancelled)
       .pipe { eventService.publish(_) }
-    event.setCancelled(!reducedEvent.allowed)
+    // This weird logic is in place as otherwise bow shots mysteriously stop working
+    // TODO investigate if this is to do with cancelling block and item use separately
+    if (event.isCancelled && reducedEvent.allowed) event.setCancelled(false)
+    else if (!event.isCancelled && !reducedEvent.allowed) event.setCancelled(true)
   }
 
   @EventHandler(priority = EventPriority.HIGH)
