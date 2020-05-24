@@ -36,13 +36,16 @@ class SpigotEntityEventMapper(implicit
   private val combatValues = mutable.Map.empty[SpigotEvent, CombatValue]
   private val combatValueMetadataKey = classOf[CombatValue].getCanonicalName
 
+  private val spigotEntityService = entityService.asInstanceOf[SpigotEntityService]
+
   private def isMonolithEntity(entity: org.bukkit.entity.Entity): Boolean =
     entity.isInstanceOf[SpigotEntity] && entity.getType != EntityType.ARMOR_STAND
 
   @EventHandler(priority = EventPriority.HIGH)
   def preSpawn(event: SpigotEntitySpawnEvent): Unit = {
     if(!isMonolithEntity(event.getEntity)) return
-    val entity = entityService.getEntity(event.getEntity.getUniqueId)
+    val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
+    val entity = spigotEntityService.getEntityAdapter(spigotEntity).get
     val location = locationMapper.map(event.getEntity.getLocation)
     EntityPreSpawnEvent(entity, location, event.isCancelled)
       .pipe { eventService.publish(_) }
@@ -59,7 +62,8 @@ class SpigotEntityEventMapper(implicit
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onSpawn(event: SpigotEntitySpawnEvent): Unit = {
     if(!isMonolithEntity(event.getEntity)) return
-    val entity = entityService.getEntity(event.getEntity.getUniqueId)
+    val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
+    val entity = spigotEntityService.getEntityAdapter(spigotEntity).get
     val location = locationMapper.map(event.getEntity.getLocation)
     EntitySpawnEvent(entity, location).tap { eventService.publish }
   }

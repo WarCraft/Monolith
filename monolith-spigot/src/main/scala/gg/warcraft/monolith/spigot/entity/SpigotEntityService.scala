@@ -64,6 +64,15 @@ class SpigotEntityService(implicit
       case _ => None
     }
 
+  def getEntityAdapter(entity: SpigotEntity): Option[Entity] =
+    entity match {
+      case it: SpigotPlayer =>
+        playerService.getPlayer(it.getUniqueId) |> Some.apply
+      case it: SpigotEntity if it.getType != EntityType.ARMOR_STAND =>
+        new SpigotEntityAdapter(it) |> Some.apply
+      case _ => None
+    }
+
   override def getNearbyEntities(
       location: Location,
       radius: (Float, Float, Float)
