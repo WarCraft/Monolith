@@ -130,3 +130,25 @@ class SpigotParticleMapper { // TODO optimize big match statement
     case Particle.Color.Yellow  => spigotYellow
   }
 }
+
+/*
+  def map(color: Particle.Color): (Double, Double, Double) = color match {
+    case Particle.Color.Aqua    => (AQUA.getRed, AQUA.getGreen, AQUA.getBlue)
+    case Particle.Color.Black   => (BLACK.getRed, BLACK.getGreen, BLACK.getBlue)
+    case Particle.Color.Blue    => (BLUE.getRed, BLUE.getGreen, BLUE.getBlue)
+    case Particle.Color.Fuchsia => (FUCHSIA.getRed, FUCHSIA.getGreen, FUCHSIA.getBlue)
+    case Particle.Color.Gray    => (GRAY.getRed, GRAY.getGreen, GRAY.getBlue)
+    case Particle.Color.Green   => (GREEN.getRed, GREEN.getGreen, GREEN.getBlue)
+    case Particle.Color.Lime    => (LIME.getRed, LIME.getGreen, LIME.getBlue)
+    case Particle.Color.Maroon  => (MAROON.getRed, MAROON.getGreen, MAROON.getBlue)
+    case Particle.Color.Navy    => (NAVY.getRed, NAVY.getGreen, NAVY.getBlue)
+    case Particle.Color.Olive   => (OLIVE.getRed, OLIVE.getGreen, OLIVE.getBlue)
+    case Particle.Color.Orange  => (ORANGE.getRed, ORANGE.getGreen, ORANGE.getBlue)
+    case Particle.Color.Purple  => (PURPLE.getRed, PURPLE.getGreen, PURPLE.getBlue)
+    case Particle.Color.Red     => (RED.getRed, RED.getGreen, RED.getBlue)
+    case Particle.Color.Silver  => (SILVER.getRed, SILVER.getGreen, SILVER.getBlue)
+    case Particle.Color.Teal    => (TEAL.getRed, TEAL.getGreen, TEAL.getBlue)
+    case Particle.Color.White   => (WHITE.getRed, WHITE.getGreen, WHITE.getBlue)
+    case Particle.Color.Yellow  => (YELLOW.getRed, YELLOW.getGreen, YELLOW.getBlue)
+  }
+ */

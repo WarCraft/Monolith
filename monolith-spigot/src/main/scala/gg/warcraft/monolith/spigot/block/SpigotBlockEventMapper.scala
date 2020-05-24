@@ -1,5 +1,7 @@
 package gg.warcraft.monolith.spigot.block
 
+import java.util.logging.Logger
+
 import gg.warcraft.monolith.api.block.{
   BlockBreakEvent, BlockInteractEvent, BlockPlaceEvent, BlockPreBreakEvent,
   BlockPreInteractEvent, BlockPrePlaceEvent, BlockPrePunchEvent,
@@ -9,7 +11,7 @@ import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.item.{Item, ItemService}
 import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
-import org.bukkit.event.{EventHandler, EventPriority}
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.block.Action
 import org.bukkit.inventory.EquipmentSlot
 
@@ -20,17 +22,19 @@ private object SpigotBlockEventMapper {
 }
 
 class SpigotBlockEventMapper(implicit
+    logger: Logger,
     eventService: EventService,
     playerService: PlayerService,
     itemService: ItemService,
     blockMapper: SpigotBlockMapper,
     blockFaceMapper: SpigotBlockFaceMapper,
     itemMapper: SpigotItemMapper
-) {
+) extends Listener {
   import SpigotBlockEventMapper.alternativeDropsByEvent
 
   @EventHandler(priority = EventPriority.HIGH)
   def preBreak(event: SpigotBlockBreakEvent): Unit = {
+    logger.info("Handling SpigotBlockBreakEvent")
     val block = blockMapper.map(event.getBlock).get
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val cancelled = event.isCancelled
@@ -49,6 +53,7 @@ class SpigotBlockEventMapper(implicit
   @EventHandler(priority = EventPriority.MONITOR)
   // Don't ignore if cancelled until having removed alternative drops
   def onBreak(event: SpigotBlockBreakEvent): Unit = {
+    logger.info("Handling SpigotBlockBreakEvent MONITOR")
     val alternativeDrops = alternativeDropsByEvent.remove(event)
     if (event.isCancelled) return
 
@@ -66,6 +71,7 @@ class SpigotBlockEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def prePlace(event: SpigotBlockPlaceEvent): Unit = {
+    logger.info("Handling SpigotBlockPlaceEvent")
     val block = blockMapper.map(event.getBlock).get
     val againstBlock = blockMapper.map(event.getBlockAgainst).get
     val againstBlockFace = null // TODO
@@ -85,6 +91,7 @@ class SpigotBlockEventMapper(implicit
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onPlace(event: SpigotBlockPlaceEvent): Unit = {
+    logger.info("Handling SpigotBlockPlaceEvent MONITOR")
     val block = blockMapper.map(event.getBlock).get
     val againstBlock = blockMapper.map(event.getBlockAgainst).get
     val blockFace = null // TODO calc from 2 blocks
@@ -131,6 +138,7 @@ class SpigotBlockEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def prePunchInteractOrTrigger(event: SpigotPlayerInteractEvent): Unit = {
+    logger.info("Handling SpigotPlayerInteractEvent")
     if (!event.hasBlock || event.getHand == EquipmentSlot.OFF_HAND) return
     event.getAction match {
       case Action.LEFT_CLICK_BLOCK | Action.LEFT_CLICK_AIR   => prePunch(event)
@@ -167,6 +175,7 @@ class SpigotBlockEventMapper(implicit
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onPunchInteractOrTrigger(event: SpigotPlayerInteractEvent): Unit = {
+    logger.info("Handling SpigotPlayerInteractEvent MONITOR")
     if (!event.hasBlock || event.getHand == EquipmentSlot.OFF_HAND) return
     event.getAction match {
       case Action.LEFT_CLICK_BLOCK | Action.LEFT_CLICK_AIR   => onPunch(event)
