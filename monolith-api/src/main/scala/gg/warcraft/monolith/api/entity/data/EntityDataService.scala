@@ -13,20 +13,17 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class EntityDataService(implicit
     logger: Logger,
+    context: ExecutionContext,
     database: JdbcContext[SqliteDialect, SnakeCase],
     eventService: EventService,
     teamService: TeamService
 ) {
   import database._
 
-  private implicit val executionContext: ExecutionContext =
-    ExecutionContext.global
   private implicit val teamDecoder: MappedEncoding[String, Option[Team]] =
     Codecs.Quill.teamDecoder
   private implicit val teamEncoder: MappedEncoding[Team, String] =
     Codecs.Quill.teamEncoder
-  private implicit val dataInsertMeta: InsertMeta[EntityData] =
-    insertMeta[EntityData]()
 
   private var _data: Map[UUID, EntityData] = Map.empty
 
