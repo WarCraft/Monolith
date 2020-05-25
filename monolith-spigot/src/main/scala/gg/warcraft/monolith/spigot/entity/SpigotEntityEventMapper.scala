@@ -2,16 +2,21 @@ package gg.warcraft.monolith.spigot.entity
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.combat.{ CombatSource, CombatValue }
+import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.entity.{ EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent, EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent, EntityPreDamageEvent, EntityPreDeathEvent, EntityPreFatalDamageEvent, EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent }
+import gg.warcraft.monolith.api.entity.{
+  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
+  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
+  EntityPreDamageEvent, EntityPreDeathEvent, EntityPreFatalDamageEvent,
+  EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent
+}
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.entity.{ EntityType, LivingEntity }
-import org.bukkit.event.{ EventHandler, EventPriority, Listener }
+import org.bukkit.entity.{EntityType, LivingEntity}
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.Server
 import org.bukkit.attribute.Attribute
@@ -43,7 +48,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def preSpawn(event: SpigotEntitySpawnEvent): Unit = {
-    if(!isMonolithEntity(event.getEntity)) return
+    if (!isMonolithEntity(event.getEntity)) return
     val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
     val entity = spigotEntityService.getEntityAdapter(spigotEntity).get
     val location = locationMapper.map(event.getEntity.getLocation)
@@ -61,7 +66,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onSpawn(event: SpigotEntitySpawnEvent): Unit = {
-    if(!isMonolithEntity(event.getEntity)) return
+    if (!isMonolithEntity(event.getEntity)) return
     val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
     val entity = spigotEntityService.getEntityAdapter(spigotEntity).get
     val location = locationMapper.map(event.getEntity.getLocation)
@@ -70,7 +75,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def preInteract(event: SpigotEntityInteractEvent): Unit = {
-    if(!isMonolithEntity(event.getRightClicked)) return
+    if (!isMonolithEntity(event.getRightClicked)) return
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
     val entity = entityService.getEntity(event.getRightClicked.getUniqueId)
@@ -84,7 +89,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onInteract(event: SpigotEntityInteractEvent): Unit = {
-    if(!isMonolithEntity(event.getRightClicked)) return
+    if (!isMonolithEntity(event.getRightClicked)) return
     if (event.getHand == EquipmentSlot.OFF_HAND) return
 
     // TODO does Monolith only want this for LivingEntities?
@@ -95,19 +100,19 @@ class SpigotEntityEventMapper(implicit
     EntityInteractEvent(entity, player, clickLocation).tap { eventService.publish }
   }
 
-  private def getAttackerId(attacker: SpigotEntity): UUID = attacker match {
+  private def getAttackerId(attacker: SpigotDoodad): UUID = attacker match {
     case arrow: SpigotArrow =>
       arrow.getShooter match {
         case shooter: LivingEntity => shooter.getUniqueId
         case _                     => arrow.getUniqueId
       }
-    case _ => attacker.getUniqueId
+    case entity: SpigotEntity => entity.getUniqueId
   }
 
   private def preAttack(event: SpigotEntityDamageByEntityEvent): CombatValue = {
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
-    val attacker = entityService.getEntity(event.getDamager.getUniqueId)
-    val attackerId = getAttackerId(event.getDamager.asInstanceOf[SpigotEntity])
+    val attackerId = getAttackerId(event.getDamager)
+    val attacker = entityService.getEntity(attackerId)
     // TODO this used to return early if attackerId returned null for
     //  Server::getPlayer and Server::getEntity
     val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
@@ -126,8 +131,8 @@ class SpigotEntityEventMapper(implicit
     combatValues.get(event) match {
       case Some(it) =>
         val entity = entityService.getEntity(event.getEntity.getUniqueId)
-        val attacker = entityService.getEntity(event.getDamager.getUniqueId)
-        val attackerId = getAttackerId(event.getDamager.asInstanceOf[SpigotEntity])
+        val attackerId = getAttackerId(event.getDamager)
+        val attacker = entityService.getEntity(attackerId)
         // TODO this used to return early if attackerId returned null for
         //  Server::getPlayer and Server::getEntity
         val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
@@ -139,7 +144,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def preDamage(event: SpigotEntityDamageEvent): Unit = {
-    if(!isMonolithEntity(event.getEntity)) return
+    if (!isMonolithEntity(event.getEntity)) return
     val spigotEntity = event.getEntity.asInstanceOf[SpigotEntity]
 
     var attackDamage: CombatValue = null
@@ -256,7 +261,7 @@ class SpigotEntityEventMapper(implicit
 
   @EventHandler(priority = EventPriority.HIGH)
   def onDeath(event: SpigotEntityDeathEvent): Unit = {
-    if(!isMonolithEntity(event.getEntity)) return
+    if (!isMonolithEntity(event.getEntity)) return
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val entityStatus = statusService.getStatus(entity.id)
     val drops = event.getDrops.asScala
