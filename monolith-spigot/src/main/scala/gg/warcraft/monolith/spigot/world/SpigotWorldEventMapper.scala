@@ -44,7 +44,11 @@ class SpigotWorldEventMapper(implicit
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
-  def onLoad(event: ChunkLoadEvent): Unit = {}
+  def onLoad(event: ChunkLoadEvent): Unit = {
+    event.getChunk.getEntities.foreach { entity =>
+      // TODO fire entity respawn events
+    }
+  }
 
   @EventHandler(priority = EventPriority.HIGH)
   def preUnload(event: ChunkUnloadEvent): Unit = {
