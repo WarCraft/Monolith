@@ -115,7 +115,9 @@ class SpigotEntityEventMapper(implicit
     val attacker = entityService.getEntity(attackerId)
     // TODO this used to return early if attackerId returned null for
     //  Server::getPlayer and Server::getEntity
-    val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
+    val projectileId =
+      if (attacker.id == event.getDamager.getUniqueId) None
+      else Some(event.getDamager.getUniqueId)
     val combatSource = CombatSource(attacker.name, Option(attackerId))
     val damage = CombatValue(combatSource, event.getDamage.toFloat)
     EntityPreAttackEvent(entity, attacker, projectileId, damage, event.isCancelled)
@@ -135,7 +137,9 @@ class SpigotEntityEventMapper(implicit
         val attacker = entityService.getEntity(attackerId)
         // TODO this used to return early if attackerId returned null for
         //  Server::getPlayer and Server::getEntity
-        val projectileId = if (attacker.id != attackerId) Some(attacker.id) else None
+        val projectileId =
+          if (attacker.id == event.getDamager.getUniqueId) None
+          else Some(event.getDamager.getUniqueId)
         EntityAttackEvent(entity, attacker, projectileId, it)
           .tap { eventService.publish }
       case _ =>
