@@ -42,7 +42,7 @@ abstract class SpigotMonolithPlugin extends JavaPlugin with MonolithPlugin {
   protected implicit lazy val _logger: Logger = getLogger
 
   protected implicit lazy val eventService: EventService =
-    new EventService.Wrapper(implicits.monolithEventService)
+    new EventService.Wrapper(implicits.monolithEventService(_logger))
   protected implicit lazy val taskService: TaskService = new SpigotTaskService
 
   override def onLoad(): Unit = saveDefaultConfig()

@@ -102,8 +102,8 @@ object implicits {
     _taskService = taskService
   }
 
-  private[spigot] def monolithEventService: EventService =
-    if (_eventService != null) _eventService else new EventService
+  private[spigot] def monolithEventService(logger: Logger): EventService =
+    if (_eventService != null) _eventService else new EventService()(logger)
 
   // Spigot
   private implicit lazy val server: Server = _server

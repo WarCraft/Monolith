@@ -24,27 +24,40 @@
 
 package gg.warcraft.monolith.api.core.event
 
-import scala.util.chaining._
+import java.util.logging.Logger
 
-class EventService {
+import scala.util.chaining._
+import scala.util.Try
+
+class EventService(implicit logger: Logger) {
   protected var handlers: List[Event.Handler] = Nil
 
   def publish(event: Event): Unit = { // TODO add << method?
-    if(!event.getClass.getSimpleName.contains("Chunk")) {
-      println(
-        s"PUBLISHING ${ event.getClass.getSimpleName } to ${ handlers.size } handlers"
-      )
+    logEvent("Publishing", event)
+    handlers.foreach { handler =>
+      Try(handler.handle(event)).toEither match {
+        case Left(throwable) => logFailure("handling", handler, event, throwable)
+        case _               =>
+      }
     }
-    handlers.foreach { _.handle(event) }
   }
 
   def publish[T <: PreEvent](event: T): T = {
-    if(!event.getClass.getSimpleName.contains("Chunk")) {
-      println(s"REDUCING ${ event.getClass.getSimpleName } to ${ handlers.size } handlers")
-    }
-    handlers.foldLeft(event) { (event, handler) => handler.reduce(event) }.tap {
-      case it: CancellableEvent if it.allowed => handlers.foreach { _.handle(it) }
-      case it                                 => handlers.foreach { _.handle(it) }
+    logEvent("Reducing", event)
+    handlers.foldLeft(event) { (event, handler) =>
+      Try(handler.reduce(event))
+        .recover(throwable => {
+          logFailure("reducing", handler, event, throwable)
+          event
+        }).get
+    }.tap {
+      case event: CancellableEvent if !event.allowed => // event is cancelled
+      case event => handlers.foreach { handler =>
+          Try(handler.handle(event)).toEither match {
+            case Left(throwable) => logFailure("handling", handler, event, throwable)
+            case _               =>
+          }
+        }
     }
   }
 
@@ -55,10 +68,28 @@ class EventService {
 
   def unsubscribe(handler: Event.Handler): Unit =
     handlers = handlers.filter { _ != handler }
+
+  private def logEvent(action: String, event: Any): Unit = {
+    val name = event.getClass.getSimpleName
+    if (!name.contains("Chunk")) logger.info(s"$action $name")
+  }
+
+  private def logFailure(
+      action: String,
+      handler: Any,
+      event: Any,
+      throwable: Throwable
+  ): Unit = {
+    val name = handler.getClass.getSimpleName
+    logger.severe(s"$name blew up $action $event!")
+    throwable.printStackTrace()
+  }
 }
 
 object EventService {
-  private[monolith] class Wrapper(eventService: EventService) extends EventService {
+  private[monolith] class Wrapper(eventService: EventService)(implicit
+      logger: Logger
+  ) extends EventService {
     override def publish(event: Event): Unit =
       eventService.publish(event)
 
