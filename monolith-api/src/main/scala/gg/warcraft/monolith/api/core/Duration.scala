@@ -27,6 +27,18 @@ package gg.warcraft.monolith.api.core
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.util.TimeUtils
 
+class Duration private (
+    val millis: Int,
+    val ticks: Int,
+    val seconds: Int
+) {
+  def +(duration: Duration): Duration =
+    (millis + duration.millis).millis
+
+  def -(duration: Duration): Duration =
+    (millis - duration.millis).millis
+}
+
 object Duration {
   @inline implicit final class DurationOps(private val self: Int) extends AnyVal {
     def millis: Duration = {
@@ -56,16 +68,4 @@ object Duration {
       )
     }
   }
-}
-
-class Duration private (
-    val millis: Int,
-    val ticks: Int,
-    val seconds: Int
-) {
-  def +(duration: Duration): Duration =
-    (millis + duration.millis).millis
-
-  def -(duration: Duration): Duration =
-    (millis - duration.millis).millis
 }
