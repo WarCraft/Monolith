@@ -40,7 +40,7 @@ object Status {
 
 case class Status(effects: Set[Status.Effect] = Set.empty) extends Event.Handler {
   override def handle(event: Event): Unit =
-    effects foreach { _.handle(event) }
+    effects.foreach { _.handle(event) }
 
   override def reduce[T <: PreEvent](event: T): T =
     effects.foldLeft(event) { _ |> _.reduce }
