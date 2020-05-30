@@ -181,7 +181,7 @@ abstract class EntityService(implicit
     val strength = knockUpStrength
       .getOrElseUpdate(distance, calcKnockUpStrength(distance))
     val knockUp = Vector3f(y = strength)
-    val velocity = entity.velocity add knockUp
+    val velocity = entity.velocity + knockUp
     setVelocity(id, velocity)
   }
 
@@ -215,7 +215,7 @@ abstract class EntityService(implicit
     val y = if (distance <= 10f) 0.4f else 0.25f
     val leap = direction.copy(y = y).normalized
     val velocity = leap * strength
-    val newVelocity = entity.velocity add velocity
+    val newVelocity = entity.velocity + velocity
     setVelocity(id, newVelocity)
   }
 
