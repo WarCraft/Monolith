@@ -69,7 +69,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   override def onEnable(): Unit = {
     implicit val itemTypeDec: Decoder[ItemType] = enumDecoder(ItemType.valueOf)
     implicit val directionDec: Decoder[Direction] = enumDecoder(Direction.valueOf)
-    implicit val worldDec: Decoder[World] = enumDecoder(World.valueOf)
+    implicit val worldDec: Decoder[World] = worldDecoder
 
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
     authService.readConfig(config)

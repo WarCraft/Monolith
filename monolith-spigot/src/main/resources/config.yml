@@ -10,7 +10,7 @@ debuggingItem: DEBUG_STICK
 
 # Build Repository
 buildRepositoryBox:
-  world: OVERWORLD
+  world: world
   min: { x: 0, y: 0, z: 0 }
   max: { x: 0, y: 0, z: 0 }
 buildRepositoryOrientation: NORTH
@@ -20,23 +20,9 @@ maintenanceMode: false
 maintenanceModePermission: monolith.staff
 
 # Miscellaneous
+baseHealth: 20
 shutdownMessage: The server is going down for maintenance.
 
 tipsPeriodInMinutes: 10
 tips:
   - Any feedback? Please let us know at discord.link.here!
-
-
-
-
-
-
-
-
-# ENTITY SERVICES
-baseHealth: 20
-
-# WORLD SERVICE
-worldDirectoryName: world
-netherDirectoryName: world_nether
-endDirectoryName: world_the_end

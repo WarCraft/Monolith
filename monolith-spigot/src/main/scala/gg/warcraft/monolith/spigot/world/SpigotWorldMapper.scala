@@ -28,29 +28,15 @@ import gg.warcraft.monolith.api.world.World
 import org.bukkit.Server
 import org.bukkit.World.{Environment => SpigotWorldType}
 
-import scala.jdk.CollectionConverters._
-
-class SpigotWorldMapper(
-    private implicit val server: Server
-) {
-  private lazy val overworld =
-    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NORMAL).get
-
-  private lazy val theNether =
-    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.NETHER)
-
-  private lazy val theEnd =
-    server.getWorlds.asScala.find(_.getEnvironment == SpigotWorldType.THE_END)
-
-  def map(world: SpigotWorld): World = world.getEnvironment match {
-    case SpigotWorldType.NORMAL  => World.OVERWORLD
-    case SpigotWorldType.NETHER  => World.THE_NETHER
-    case SpigotWorldType.THE_END => World.THE_END
+class SpigotWorldMapper(implicit server: Server) {
+  def map(world: SpigotWorld): World = {
+    val typ = world.getEnvironment match {
+      case SpigotWorldType.NORMAL  => World.Overworld
+      case SpigotWorldType.NETHER  => World.TheNether
+      case SpigotWorldType.THE_END => World.TheEnd
+    }
+    World(world.getName, typ)
   }
 
-  def map(world: World): Option[SpigotWorld] = world match {
-    case World.OVERWORLD  => Some(overworld)
-    case World.THE_NETHER => theNether
-    case World.THE_END    => theEnd
-  }
+  def map(world: World): SpigotWorld = server.getWorld(world.name)
 }

@@ -29,7 +29,7 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.block.backup.{BlockBackup, BlockBackupService}
 import gg.warcraft.monolith.api.core.Codecs
-import gg.warcraft.monolith.api.world.{BlockLocation, World}
+import gg.warcraft.monolith.api.world.{BlockLocation, World, WorldService}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
@@ -40,20 +40,21 @@ import org.bukkit.plugin.Plugin
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
-class SpigotBlockBackupService(
-    private implicit val plugin: Plugin,
-    private implicit val logger: Logger,
-    private implicit val database: JdbcContext[SqliteDialect, SnakeCase],
-    private implicit val locationMapper: SpigotLocationMapper
+class SpigotBlockBackupService(implicit
+    plugin: Plugin,
+    logger: Logger,
+    database: JdbcContext[SqliteDialect, SnakeCase],
+    locationMapper: SpigotLocationMapper,
+    worldService: WorldService
 ) extends BlockBackupService {
   import database._
 
   private implicit val executionContext: ExecutionContext =
     ExecutionContext.global
-  private implicit val teamDecoder: MappedEncoding[String, World] =
-    Codecs.Quill.enumDecoder(World.valueOf)
-  private implicit val teamEncoder: MappedEncoding[World, String] =
-    Codecs.Quill.enumEncoder[World]
+  private implicit val worldDecoder: MappedEncoding[String, World] =
+    Codecs.Quill.worldDecoder
+  private implicit val worldEncoder: MappedEncoding[World, String] =
+    Codecs.Quill.worldEncoder
   private implicit val dataInsertMeta: InsertMeta[BlockBackup] =
     insertMeta[BlockBackup]()
 

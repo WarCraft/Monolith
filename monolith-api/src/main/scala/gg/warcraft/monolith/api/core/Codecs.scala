@@ -27,7 +27,7 @@ package gg.warcraft.monolith.api.core
 import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
-import gg.warcraft.monolith.api.world.WorldService
+import gg.warcraft.monolith.api.world.{World, WorldService}
 import io.circe.{Decoder, Encoder}
 import io.getquill.MappedEncoding
 
@@ -36,28 +36,35 @@ import scala.util.Try
 object Codecs {
   object Circe {
     def enumerDecoder[T <: Enumeration](f: String => T): Decoder[T] =
-      Decoder.decodeString emapTry { it => { Try { f apply it } } }
+      Decoder.decodeString.emapTry { it => { Try { f(it) } } }
     def enumerEncoder[T <: Enumeration]: Encoder[T] =
-      Encoder.encodeString contramap [T] { _.toString }
+      Encoder.encodeString.contramap[T] { _.toString }
 
     def enumDecoder[T <: Enum[T]](f: String => T): Decoder[T] =
-      Decoder.decodeString emapTry { it => { Try { f apply it } } }
+      Decoder.decodeString.emapTry { it => { Try { f(it) } } }
     def enumEncoder[T <: Enum[T]]: Encoder[T] =
-      Encoder.encodeString contramap [T] { _.name }
+      Encoder.encodeString.contramap[T] { _.name }
 
-    def blockDataDecoder(
-        implicit worldService: WorldService
+    def blockDataDecoder(implicit
+        worldService: WorldService
     ): Decoder[BlockTypeVariantOrState] =
-      Decoder.decodeString emapTry { it => { Try { worldService parseData it } } }
+      Decoder.decodeString.emapTry { it => { Try { worldService.parseData(it) } } }
     def blockDataEncoder: Encoder[BlockTypeVariantOrState] =
-      Encoder.encodeString contramap [BlockTypeVariantOrState] { _.toString }
+      Encoder.encodeString.contramap { _.toString }
 
-    def itemDataDecoder(
-        implicit itemService: ItemService
+    def itemDataDecoder(implicit
+        itemService: ItemService
     ): Decoder[ItemTypeOrVariant] =
-      Decoder.decodeString emapTry { it => { Try { itemService parseData it } } }
+      Decoder.decodeString.emapTry { it => { Try { itemService.parseData(it) } } }
     def itemDataEncoder: Encoder[ItemTypeOrVariant] =
-      Encoder.encodeString contramap [ItemTypeOrVariant] { _.toString }
+      Encoder.encodeString.contramap { _.toString }
+
+    def worldDecoder(implicit
+        worldService: WorldService
+    ): Decoder[World] =
+      Decoder.decodeString.emapTry { it => Try { worldService.getWorld(it) } }
+    def worldEncoder: Encoder[World] =
+      Encoder.encodeString.contramap { _.name }
   }
 
   object Quill {
@@ -71,11 +78,18 @@ object Codecs {
     def enumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
 
-    def teamDecoder(
-        implicit teamService: TeamService
+    def teamDecoder(implicit
+        teamService: TeamService
     ): MappedEncoding[String, Option[Team]] =
       MappedEncoding { teamService.teams.get }
     def teamEncoder: MappedEncoding[Team, String] =
+      MappedEncoding { _.name }
+
+    def worldDecoder(implicit
+        worldService: WorldService
+    ): MappedEncoding[String, World] =
+      MappedEncoding { it => worldService.getWorld(it) }
+    def worldEncoder: MappedEncoding[World, String] =
       MappedEncoding { _.name }
   }
 }

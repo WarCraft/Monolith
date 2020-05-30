@@ -22,10 +22,16 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.world;
+package gg.warcraft.monolith.api.world
 
-public enum World {
-    OVERWORLD,
-    THE_NETHER,
-    THE_END
+case class World(
+    name: String,
+    typ: World.Type
+)
+
+object World {
+  sealed trait Type
+  case object Overworld extends Type
+  case object TheNether extends Type
+  case object TheEnd extends Type
 }

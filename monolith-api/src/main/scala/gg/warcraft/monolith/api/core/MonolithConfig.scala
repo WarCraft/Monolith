@@ -44,5 +44,6 @@ case class MonolithConfig(
     maintenanceMode: Boolean,
     maintenanceModePermission: String,
     // Miscellaneous
+    baseHealth: Int,
     shutdownMessage: String
 )

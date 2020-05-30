@@ -34,6 +34,9 @@ trait WorldService {
 
   def parseData(data: String): Data
 
+  def getWorld(name: String): World
+  def getWorlds(typ: World.Type): List[World]
+
   def getBlock(loc: BlockLocation): Block
   def getBlockIfType(loc: BlockLocation, types: BlockType*): Option[Block]
   def getHighestBlock(loc: BlockLocation): Block

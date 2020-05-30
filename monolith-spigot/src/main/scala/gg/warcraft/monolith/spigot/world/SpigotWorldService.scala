@@ -29,7 +29,7 @@ import java.util.UUID
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.{
-  BlockLocation, Location, Sound, SoundCategory, WorldService
+  BlockLocation, Location, Sound, SoundCategory, World, WorldService
 }
 import gg.warcraft.monolith.spigot.block.{
   SpigotBlock, SpigotBlockMapper, SpigotBlockStateMapper, SpigotBlockTypeMapper,
@@ -39,6 +39,8 @@ import org.bukkit.{Material, Server}
 import org.bukkit.block.{BlockFace => SpigotBlockFace}
 import org.bukkit.projectiles.ProjectileSource
 import org.bukkit.util.Vector
+
+import scala.jdk.CollectionConverters._
 
 class SpigotWorldService(
     private implicit val server: Server,
@@ -71,9 +73,15 @@ class SpigotWorldService(
     }
   }
 
+  override def getWorld(name: String): World =
+    worldMapper.map(server.getWorld(name))
+
+  override def getWorlds(typ: World.Type): List[World] =
+    server.getWorlds.asScala.map { it => getWorld(it.getName) }.toList
+
   override def getBlock(loc: BlockLocation): Block = {
     import loc._
-    val spigotWorld = worldMapper.map(world).get
+    val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
     blockMapper.map(spigotBlock).get
   }
@@ -84,7 +92,7 @@ class SpigotWorldService(
   ): Option[Block] = {
     import loc._
     val spigotTypes = types.map(blockTypeMapper.map).toSet
-    val spigotWorld = worldMapper.map(world).get
+    val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
     if (!spigotTypes.contains(spigotBlock.getType)) None
     else Some(blockMapper.map(spigotBlock).get)
@@ -92,7 +100,7 @@ class SpigotWorldService(
 
   override def getHighestBlock(loc: BlockLocation): Block = {
     import loc._
-    val spigotWorld = worldMapper.map(world).get
+    val spigotWorld = worldMapper.map(world)
     var spigotBlock = spigotWorld.getHighestBlockAt(x, z)
     do {
       spigotBlock = spigotBlock.getRelative(SpigotBlockFace.UP)
@@ -119,7 +127,7 @@ class SpigotWorldService(
 
   override def setBlock(loc: BlockLocation, data: Data): Unit = {
     import loc._
-    val spigotWorld = worldMapper.map(world).get
+    val spigotWorld = worldMapper.map(world)
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     val spigotBlock = spigotLocation.getBlock
     data match {
@@ -144,7 +152,7 @@ class SpigotWorldService(
 
   override def setBlock(loc: BlockLocation, block: Block): Unit = {
     import loc._
-    val spigotWorld = worldMapper.map(world).get
+    val spigotWorld = worldMapper.map(world)
     val spigotLocation = new SpigotLocation(spigotWorld, x, y, z)
     update(spigotLocation.getBlock, block)
   }
