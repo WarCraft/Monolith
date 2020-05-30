@@ -96,8 +96,6 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
     subscribe(new SpigotCommandHandler)
     subscribe(new SpigotMenuHandler)
-
-    subscribe(new TempCowSpawner)
   }
 
   private def enableHandlers(): Unit = {
