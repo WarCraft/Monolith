@@ -34,3 +34,7 @@ trait Team {
 
   override def toString: String = name
 }
+
+object Team {
+  implicit def toString(team: Team): String = team.toString
+}
