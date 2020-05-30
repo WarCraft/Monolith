@@ -43,7 +43,7 @@ import gg.warcraft.monolith.api.world.{Direction, World}
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.block.SpigotBlockEventMapper
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
-import gg.warcraft.monolith.spigot.core.command.SpigotCommandHandler
+import gg.warcraft.monolith.spigot.core.command.SpigotCommandEventMapper
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
 import gg.warcraft.monolith.spigot.item.SpigotItemEventMapper
 import gg.warcraft.monolith.spigot.menu.SpigotMenuHandler
@@ -88,13 +88,13 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
   private def enableEventMappers(): Unit = {
     subscribe(new SpigotBlockEventMapper)
+    subscribe(new SpigotCommandEventMapper)
     subscribe(new SpigotCombatEventMapper)
     subscribe(new SpigotEntityEventMapper)
     subscribe(new SpigotPlayerEventMapper)
     subscribe(new SpigotItemEventMapper)
     subscribe(new SpigotWorldEventMapper)
 
-    subscribe(new SpigotCommandHandler)
     subscribe(new SpigotMenuHandler)
   }
 

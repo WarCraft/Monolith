@@ -30,6 +30,7 @@ import gg.warcraft.monolith.api.block.backup.BlockBackupService
 import gg.warcraft.monolith.api.block.build.BlockBuildService
 import gg.warcraft.monolith.api.block.spoofing.BlockSpoofingService
 import gg.warcraft.monolith.api.core.auth.AuthService
+import gg.warcraft.monolith.api.core.command.CommandService
 import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
@@ -52,7 +53,6 @@ import gg.warcraft.monolith.spigot.block.spoofing.SpigotBlockSpoofingService
 import gg.warcraft.monolith.spigot.combat.{
   SpigotCombatEventMapper, SpigotPotionMapper
 }
-import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
 import gg.warcraft.monolith.spigot.effect.{
   SpigotParticleAdapter, SpigotParticleMapper
 }
@@ -83,6 +83,7 @@ object implicits {
   private var _logger: Logger = _
 
   private var _database: DatabaseContext = _
+  private var _commandService: CommandService = _
   private var _eventService: EventService = _
   private var _taskService: TaskService = _
 
@@ -91,6 +92,7 @@ object implicits {
       plugin: Plugin,
       logger: Logger,
       database: DatabaseContext,
+      commandService: CommandService,
       eventService: EventService,
       taskService: TaskService
   ): Unit = {
@@ -98,6 +100,7 @@ object implicits {
     _plugin = plugin
     _logger = logger
     _database = database
+    _commandService = commandService
     _eventService = eventService
     _taskService = taskService
   }
@@ -118,8 +121,6 @@ object implicits {
 
   implicit lazy val authService: AuthService =
     new AuthService
-  implicit lazy val commandService: SpigotCommandService =
-    new SpigotCommandService
   implicit lazy val serverDataService: ServerDataService =
     new ServerDataService
 

@@ -27,11 +27,16 @@ package gg.warcraft.monolith.spigot
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.MonolithPlugin
+import gg.warcraft.monolith.api.core.command.{ CommandExecuteEvent, CommandService }
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.player.PlayerService
+import gg.warcraft.monolith.spigot.core.auth.Console
+import gg.warcraft.monolith.spigot.core.command.SpigotCommandService
 import gg.warcraft.monolith.spigot.core.task.SpigotTaskService
-import org.bukkit.command.{Command, CommandSender}
-import org.bukkit.event.{HandlerList, Listener}
+import gg.warcraft.monolith.spigot.player.SpigotPlayer
+import org.bukkit.command.{ Command, CommandSender, ConsoleCommandSender }
+import org.bukkit.event.{ HandlerList, Listener }
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.plugin.Plugin
 import org.bukkit.Server
@@ -41,9 +46,14 @@ abstract class SpigotMonolithPlugin extends JavaPlugin with MonolithPlugin {
   protected implicit lazy val _plugin: Plugin = this
   protected implicit lazy val _logger: Logger = getLogger
 
+  protected implicit lazy val commandService: CommandService =
+    new SpigotCommandService
   protected implicit lazy val eventService: EventService =
     new EventService.Wrapper(implicits.monolithEventService(_logger))
-  protected implicit lazy val taskService: TaskService = new SpigotTaskService
+  protected implicit lazy val taskService: TaskService =
+    new SpigotTaskService
+
+  private lazy val playerService: PlayerService = implicits.playerService
 
   override def onLoad(): Unit = saveDefaultConfig()
 
@@ -58,9 +68,24 @@ abstract class SpigotMonolithPlugin extends JavaPlugin with MonolithPlugin {
       command: Command,
       label: String,
       args: Array[String]
-  ): Boolean = {
-    // TODO call command service
-    false
+  ): Boolean = sender match {
+    case spigotPlayer: SpigotPlayer =>
+      val player = playerService.getPlayer(spigotPlayer.getUniqueId)
+      if (commandService.commands.contains(label)) {
+        val result = commandService.processCommand(player, label, args.toList)
+        val command = commandService.commands(label)
+        val event = CommandExecuteEvent(player, command, args.toList, result)
+        eventService.publish(event)
+      }
+      true
+    case _: ConsoleCommandSender =>
+      if (commandService.commands.contains(label)) {
+        val result = commandService.processCommand(Console, label, args.toList)
+        val command = commandService.commands(label)
+        val event = CommandExecuteEvent(Console, command, args.toList, result)
+        eventService.publish(event)
+      }
+      true
   }
 
   protected def subscribe(listener: Listener): Unit =

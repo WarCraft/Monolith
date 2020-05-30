@@ -27,6 +27,12 @@ package gg.warcraft.monolith.api.core.command
 import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.core.auth.Principal
 
+case class Command(
+    name: String,
+    aliases: List[String],
+    usage: Option[Message] = None
+)
+
 object Command {
   sealed trait Result
 
@@ -46,9 +52,3 @@ object Command {
     Command(name, aliases, Some(usageMessage))
   }
 }
-
-case class Command(
-    name: String,
-    aliases: List[String],
-    usage: Option[Message] = None
-)

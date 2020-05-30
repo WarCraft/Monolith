@@ -28,9 +28,10 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.core.auth.Principal
-import gg.warcraft.monolith.api.core.event.EventService
 
-abstract class CommandService(implicit eventService: EventService) {
+import scala.util.chaining._
+
+abstract class CommandService {
   private final val ERR_COMMAND_CONSOLE_ONLY =
     Message.server("This command can only be executed from the console.")
   private final val ERR_COMMAND_PLAYERS_ONLY =
@@ -52,9 +53,6 @@ abstract class CommandService(implicit eventService: EventService) {
     } else throw CommandAlreadyExists(duplicates)
   }
 
-  def deregisterAlias(alias: String): Unit =
-    _commands -= alias
-
   def deregisterCommand(command: Command): Unit = {
     (command.name :: command.aliases).foreach { _commands -= _.toLowerCase }
     _handlers -= command
@@ -63,22 +61,16 @@ abstract class CommandService(implicit eventService: EventService) {
   private[monolith] def processCommand(
       principal: Principal,
       label: String,
-      args: String*
-  ): Unit = {
+      args: List[String]
+  ): Command.Result = {
     val command = _commands(label)
-    var preEvent = CommandPreExecuteEvent(principal, command, args.toList)
-    preEvent = eventService.publish(preEvent)
-    if (preEvent.allowed) {
-      val result = _handlers(command).handle(principal, command, args: _*)
-      result match {
+    _handlers(command).handle(principal, command, args: _*)
+      .tap {
         case Command.success           =>
         case Command.success(messages) => messages.foreach { principal.sendMessage }
         case Command.consoleOnly       => principal.sendMessage(ERR_COMMAND_CONSOLE_ONLY)
         case Command.playersOnly       => principal.sendMessage(ERR_COMMAND_PLAYERS_ONLY)
         case Command.invalid           => command.usage.foreach { principal.sendMessage }
       }
-      val event = CommandExecuteEvent(principal, command, args.toList, result)
-      eventService.publish(event)
-    }
   }
 }
