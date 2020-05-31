@@ -77,7 +77,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     blockBackupService.restoreBackups()
 
     enableHandlers()
-    enableTasks()
+    enableTasks(config)
     enableEventMappers()
   }
 
@@ -109,8 +109,8 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService.subscribe(new TeamStaffCommandHandler)
   }
 
-  private def enableTasks(): Unit = {
-    taskService.runTask(1.seconds, new DailyTicker().run)
+  private def enableTasks(config: MonolithConfig): Unit = {
+    taskService.runTask(1.seconds, new DailyTicker(config).run)
     taskService.runTask(1.ticks, new PlayerDataTicker().run)
     taskService.runTask(4.ticks, new PortalTicker().run)
   }

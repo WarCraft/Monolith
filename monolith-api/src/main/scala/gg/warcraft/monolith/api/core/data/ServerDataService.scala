@@ -24,40 +24,53 @@
 
 package gg.warcraft.monolith.api.core.data
 
-import java.time.{Instant, LocalDate, ZoneOffset}
+import java.time.{LocalDate, ZoneId}
+import java.util.logging.Logger
 
-import io.getquill.{SnakeCase, SqliteDialect}
-import io.getquill.context.jdbc.JdbcContext
+import gg.warcraft.monolith.api.core.types.DatabaseContext
+import gg.warcraft.monolith.api.core.MonolithConfig
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class ServerDataService(implicit
-    database: JdbcContext[SqliteDialect, SnakeCase]
+    logger: Logger,
+    context: ExecutionContext,
+    database: DatabaseContext
 ) {
   import database._
 
-  private implicit val executionContext: ExecutionContext =
-    ExecutionContext.global
-  private implicit val dataInsertMeta: InsertMeta[ServerData] =
-    insertMeta[ServerData]()
+  private final val ERR_LAST_DAILY_TICK =
+    "Failed to retrieve last daily tick from database! Falling back to today."
 
-  private val _lastDailyTick: LocalDate = {
-    val epoch = database.run {
-      query[ServerData].filter { _.data == "last_daily_tick" }
-    }.headOption.map { _.intValue }.getOrElse(0L)
-    val instant = if (epoch > 0) Instant.ofEpochMilli(epoch) else Instant.now()
-    instant.atOffset(ZoneOffset.UTC).toLocalDate
-  }
+  private var serverTimeZone: ZoneId = _
+  private var _lastDailyTick: LocalDate = _
 
   def lastDailyTick: LocalDate = _lastDailyTick
 
+  def readConfig(config: MonolithConfig): Unit = {
+    serverTimeZone = config.serverTimeZone
+
+    _lastDailyTick = {
+      val epochDay = database.run {
+        query[ServerData].filter { _.data == "last_daily_tick" }
+      }.headOption.flatMap { _.intValue }.getOrElse(-1L)
+      if (epochDay <= 0) {
+        if (epochDay < 0) logger.severe(ERR_LAST_DAILY_TICK)
+        LocalDate.now(serverTimeZone)
+      } else LocalDate.ofEpochDay(epochDay)
+    }
+  }
+
   def updateLastDailyTick(): Future[Unit] = Future {
-    val epoch = Instant.now().atOffset(ZoneOffset.UTC).toEpochSecond * 1000
-    val data = ServerData("last_daily_tick", intValue = epoch)
+    _lastDailyTick = LocalDate.now(serverTimeZone)
+    val data = ServerData(
+      "last_daily_tick",
+      intValue = Some(_lastDailyTick.toEpochDay)
+    )
     database.run {
       query[ServerData]
         .insert { lift(data) }
-        .onConflictUpdate(_.data)((_1, _2) => _1.intValue -> _2.intValue)
+        .onConflictUpdate(_.data)((_t, _e) => _t.intValue -> _e.intValue)
     }
   }
 }

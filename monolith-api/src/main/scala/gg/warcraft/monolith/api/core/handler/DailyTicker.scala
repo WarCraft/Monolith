@@ -24,26 +24,24 @@
 
 package gg.warcraft.monolith.api.core.handler
 
-import java.time.{Instant, ZoneOffset}
+import java.time.LocalDate
 
+import gg.warcraft.monolith.api.core.{DailyTickEvent, MonolithConfig}
 import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.core.DailyTickEvent
 
-import scala.util.chaining._
-
-class DailyTicker(implicit
+class DailyTicker(config: MonolithConfig)(implicit
     eventService: EventService,
     dataService: ServerDataService
 ) extends Runnable {
-
+  import config._
   import dataService._
 
   override def run(): Unit = {
-    val today = Instant.now().atOffset(ZoneOffset.UTC).toLocalDate
+    val today = LocalDate.now(serverTimeZone)
     if (lastDailyTick != today) {
       updateLastDailyTick()
-      DailyTickEvent().pipe { eventService.publish }
+      eventService publish DailyTickEvent()
     }
   }
 }

@@ -21,6 +21,7 @@ maintenanceModePermission: monolith.staff
 
 # Miscellaneous
 baseHealth: 20
+serverTimeZoneUtcOffset: "0"
 shutdownMessage: The server is going down for maintenance.
 
 tipsPeriodInMinutes: 10

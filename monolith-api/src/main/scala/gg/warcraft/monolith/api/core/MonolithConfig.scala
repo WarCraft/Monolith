@@ -24,6 +24,8 @@
 
 package gg.warcraft.monolith.api.core
 
+import java.time.{ZoneId, ZoneOffset}
+
 import gg.warcraft.monolith.api.block.box.BlockBox
 import gg.warcraft.monolith.api.item.ItemType
 import gg.warcraft.monolith.api.world.Direction
@@ -45,5 +47,11 @@ case class MonolithConfig(
     maintenanceModePermission: String,
     // Miscellaneous
     baseHealth: Int,
+    serverTimeZoneUtcOffset: String,
     shutdownMessage: String
-)
+) {
+  val serverTimeZone: ZoneId = ZoneId.ofOffset(
+    "UTC",
+    ZoneOffset.of(serverTimeZoneUtcOffset)
+  )
+}
