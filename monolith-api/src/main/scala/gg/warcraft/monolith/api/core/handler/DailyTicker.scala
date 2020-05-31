@@ -26,15 +26,14 @@ package gg.warcraft.monolith.api.core.handler
 
 import java.time.LocalDate
 
-import gg.warcraft.monolith.api.core.{DailyTickEvent, MonolithConfig}
+import gg.warcraft.monolith.api.core.DailyTickEvent
 import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
 
-class DailyTicker(config: MonolithConfig)(implicit
+class DailyTicker(implicit
     eventService: EventService,
     dataService: ServerDataService
 ) extends Runnable {
-  import config._
   import dataService._
 
   override def run(): Unit = {

@@ -40,15 +40,16 @@ class ServerDataService(implicit
   import database._
 
   private final val ERR_LAST_DAILY_TICK =
-    "Failed to retrieve last daily tick from database! Falling back to today."
+    "Failed to retrieve last daily tick from database, falling back to today!"
 
-  private var serverTimeZone: ZoneId = _
   private var _lastDailyTick: LocalDate = _
+  private var _serverTimeZone: ZoneId = _
 
   def lastDailyTick: LocalDate = _lastDailyTick
+  def serverTimeZone: ZoneId = _serverTimeZone
 
   def readConfig(config: MonolithConfig): Unit = {
-    serverTimeZone = config.serverTimeZone
+    _serverTimeZone = config.serverTimeZone
 
     _lastDailyTick = {
       val epochDay = database.run {

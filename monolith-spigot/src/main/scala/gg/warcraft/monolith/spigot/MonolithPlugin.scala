@@ -74,10 +74,11 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
     authService.readConfig(config)
     blockBuildService.readConfig(config)
+    serverDataService.readConfig(config)
     blockBackupService.restoreBackups()
 
     enableHandlers()
-    enableTasks(config)
+    enableTasks()
     enableEventMappers()
   }
 
@@ -109,8 +110,8 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService.subscribe(new TeamStaffCommandHandler)
   }
 
-  private def enableTasks(config: MonolithConfig): Unit = {
-    taskService.runTask(1.seconds, new DailyTicker(config).run)
+  private def enableTasks(): Unit = {
+    taskService.runTask(1.seconds, new DailyTicker().run)
     taskService.runTask(1.ticks, new PlayerDataTicker().run)
     taskService.runTask(4.ticks, new PortalTicker().run)
   }
