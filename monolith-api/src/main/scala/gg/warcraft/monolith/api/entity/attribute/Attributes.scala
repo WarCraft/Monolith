@@ -31,9 +31,9 @@ case class Attributes(modifiers: Set[Attribute.Modifier]) {
 
   def get(attribute: Attribute): Float =
     if (!computed.contains(attribute)) {
-      val flat = modifiersByGroup(Attribute.Modifier.FLAT)
+      val flat = modifiersByGroup.getOrElse(Attribute.Modifier.FLAT, Set.empty)
         .foldRight(0f) { _.value + _ }
-      val percent = modifiersByGroup(Attribute.Modifier.PERCENT)
+      val percent = modifiersByGroup.getOrElse(Attribute.Modifier.PERCENT, Set.empty)
         .foldRight(0f) { _.value + _ }
       val value = flat + (1 + percent) * flat
       computed += (attribute -> value)
