@@ -25,6 +25,7 @@
 package gg.warcraft.monolith.api.menu
 
 import gg.warcraft.monolith.api.core.ColorCode._
+import gg.warcraft.monolith.api.core.FormatCode._
 import gg.warcraft.monolith.api.item.{ItemType, ItemTypeOrVariant}
 import gg.warcraft.monolith.api.player.Player
 
@@ -33,8 +34,8 @@ case class Button(
     title: String,
     tooltip: List[String]
 )(val action: Click => Unit) {
-  lazy val formattedTitle: String = s"$WHITE$title"
-  lazy val formattedTooltip: List[String] = tooltip.map { it => s"$GRAY$it" }
+  lazy val formattedTitle: String = s"$RESET$WHITE$title"
+  lazy val formattedTooltip: List[String] = tooltip.map { it => s"$RESET$GRAY$it" }
 }
 
 trait SkullButton extends Button {
