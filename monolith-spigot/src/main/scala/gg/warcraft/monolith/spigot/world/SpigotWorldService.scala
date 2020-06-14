@@ -53,9 +53,9 @@ class SpigotWorldService(
     private implicit val soundMapper: SpigotSoundMapper
 ) extends WorldService {
   private final val blockVariantPackage =
-    "gg.warcraft.monolith.api.world.block.variant"
+    "gg.warcraft.monolith.api.block.variant"
   private final val blockStatePackage =
-    "gg.warcraft.monolith.api.world.block.state"
+    "gg.warcraft.monolith.api.block.state"
 
   override def parseData(data: String): Data = {
     if (data.contains("Variant:")) {
