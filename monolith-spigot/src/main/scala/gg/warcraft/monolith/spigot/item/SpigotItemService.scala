@@ -44,7 +44,7 @@ class SpigotItemService(
     private implicit val worldService: WorldService
 ) extends ItemService {
   private final val itemVariantPackage =
-    "gg.warcraft.monolith.api.world.item.variant"
+    "gg.warcraft.monolith.api.item.variant"
 
   override def parseData(data: String): Data = try {
     if (data.contains(':')) {
