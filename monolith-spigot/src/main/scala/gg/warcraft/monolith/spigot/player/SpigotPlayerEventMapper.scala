@@ -24,6 +24,8 @@
 
 package gg.warcraft.monolith.spigot.player
 
+import java.util.concurrent.TimeUnit
+
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.player.{
@@ -43,6 +45,8 @@ import org.bukkit.event.player.{
 }
 import org.bukkit.inventory.EquipmentSlot
 
+import scala.concurrent.{Await, Promise}
+import scala.concurrent.duration.Duration
 import scala.util.chaining._
 
 class SpigotPlayerEventMapper(implicit
@@ -52,14 +56,23 @@ class SpigotPlayerEventMapper(implicit
     locationMapper: SpigotLocationMapper,
     itemMapper: SpigotItemMapper
 ) extends Listener {
+  private final val playerPreConnectEventTimeout = Duration(1, TimeUnit.SECONDS)
+
   @EventHandler
   def preConnect(event: AsyncPlayerPreLoginEvent): Unit = {
-    val reducedEvent = PlayerPreConnectEvent(event.getUniqueId, event.getName)
-      .pipe { eventService.publish(_) }
-    if (!reducedEvent.allowed) {
-      event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER)
-      event.setKickMessage("Failed to connect to the server.")
+    val promise = Promise[Unit]
+    taskService.evalNextTick {
+      PlayerPreConnectEvent(event.getUniqueId, event.getName)
+        .pipe { eventService.publish(_) }
+        .tap { reducedEvent =>
+          if (!reducedEvent.allowed) {
+            event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER)
+            event.setKickMessage("Failed to connect to the server.")
+          }
+          promise.success()
+        }
     }
+    Await.result(promise.future, playerPreConnectEventTimeout)
   }
 
   @EventHandler

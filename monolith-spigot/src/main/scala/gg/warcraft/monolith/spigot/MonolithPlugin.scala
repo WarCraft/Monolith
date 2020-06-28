@@ -112,7 +112,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
   private def enableTasks(): Unit = {
     taskService.runTask(1.seconds, new DailyTicker().run)
-    taskService.runTask(1.ticks, new PlayerDataTicker().run)
+    taskService.runTask(1.seconds, new PlayerDataTicker().run)
     taskService.runTask(4.ticks, new PortalTicker().run)
   }
 }
