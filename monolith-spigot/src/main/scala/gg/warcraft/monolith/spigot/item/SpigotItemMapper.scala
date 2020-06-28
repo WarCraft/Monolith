@@ -98,20 +98,25 @@ class SpigotItemMapper(
       val meta = item.getItemMeta
       if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_UNBREAKABLE) else false
     }
+    lazy val mdl = (item: SpigotItem) => {
+      val meta = item.getItemMeta
+      if (meta != null && meta.hasCustomModelData) Some(meta.getCustomModelData)
+      else None
+    }
     def variant[T <: ItemVariant](item: SpigotItem): T =
       variantMapper.map(item.getType).asInstanceOf[T]
 
     // Lazily construct tuples for all the different types of parameter sets
     lazy val p = (item: SpigotItem) => // default params tuple builder
-      (name(item), tt(item), count(item), attr(item), hAttr(item))
+      (name(item), tt(item), count(item), attr(item), hAttr(item), mdl(item))
     lazy val s = (item: SpigotItem) => // singleton params tuple builder
-      (name(item), tt(item), attr(item), hAttr(item))
+      (name(item), tt(item), attr(item), hAttr(item), mdl(item))
     lazy val d = (i: SpigotItem) => // durable params tuple builder
-      (name(i), tt(i), attr(i), hAttr(i), dura(i), unbr(i), hUnbr(i))
+      (name(i), tt(i), attr(i), hAttr(i), mdl(i), dura(i), unbr(i), hUnbr(i))
     def v[T <: ItemVariant](i: SpigotItem) = // variable params tuple builder
-    (variant[T](i), name(i), tt(i), count(i), attr(i), hAttr(i))
+    (variant[T](i), name(i), tt(i), count(i), attr(i), hAttr(i), mdl(i))
     def e[T <: ItemVariant](i: SpigotItem) = // equipment params tuple builder
-    (variant[T](i), name(i), tt(i), attr(i), hAttr(i), dura(i), unbr(i), hUnbr(i))
+    (variant[T](i), name(i), tt(i), attr(i), hAttr(i), mdl(i), dura(i), unbr(i), hUnbr(i))
 
     // Map item builder
     val builder: SpigotItem => Item = material match {
@@ -510,6 +515,7 @@ class SpigotItemMapper(
       meta.setDisplayName(item.name)
     } else meta.setDisplayName(item.name)
     meta.setLore(item.tooltip.asJava)
+    if (item.customModelData.isDefined) meta.setCustomModelData(item.customModelData.get)
     if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
     spigotItem.setItemMeta(meta)
 

@@ -33,7 +33,8 @@ case class Andesite(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[AndesiteVariant]
     with StackableItem {
   val `type` = ItemType.ANDESITE
@@ -45,7 +46,8 @@ case class Anvil(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[AnvilVariant]
     with StackableItem {
   val `type` = ItemType.ANVIL
@@ -56,7 +58,8 @@ case class Apple(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.APPLE
   override val edible = true
@@ -67,7 +70,8 @@ case class ArmorStand(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.ARMOR_STAND
   override def maxCount = 16
@@ -79,7 +83,8 @@ case class Arrow(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ArrowVariant]
     with StackableItem {
   val `type` = ItemType.ARROW
@@ -91,6 +96,7 @@ case class Axe(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -111,7 +117,8 @@ case class Bamboo(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BAMBOO
 }
@@ -122,7 +129,8 @@ case class Banner(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BannerVariant]
     with StackableItem {
   val `type` = ItemType.BANNER
@@ -134,7 +142,8 @@ case class BannerPattern(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BannerPatternVariant] {
   val `type` = ItemType.BANNER_PATTERN
 }
@@ -144,7 +153,8 @@ case class Barrel(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BARREL
 }
@@ -154,7 +164,8 @@ case class Barrier(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BARRIER
 }
@@ -164,7 +175,8 @@ case class Beacon(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BEACON
 }
@@ -175,7 +187,8 @@ case class Bed(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BedVariant]
     with StackableItem {
   val `type` = ItemType.BED
@@ -186,7 +199,8 @@ case class Bedrock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BEDROCK
 }
@@ -196,7 +210,8 @@ case class BeeNest(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BEE_NEST
 }
@@ -207,7 +222,8 @@ case class Beef(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BeefVariant]
     with StackableItem {
   val `type` = ItemType.BEEF
@@ -219,7 +235,8 @@ case class Beehive(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BEEHIVE
 }
@@ -229,7 +246,8 @@ case class Beetroot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BEETROOT
   override val edible = true
@@ -240,7 +258,8 @@ case class Bell(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BELL
 }
@@ -250,7 +269,8 @@ case class BlastFurnace(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BLAST_FURNACE
 }
@@ -260,7 +280,8 @@ case class BlazePowder(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BLAZE_POWDER
 }
@@ -270,7 +291,8 @@ case class BlazeRod(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BLAZE_ROD
 }
@@ -281,7 +303,8 @@ case class Boat(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BoatVariant]
     with StackableItem {
   val `type` = ItemType.BOAT
@@ -292,7 +315,8 @@ case class Bone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BONE
 }
@@ -302,7 +326,8 @@ case class BoneBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BONE_BLOCK
 }
@@ -312,7 +337,8 @@ case class BoneMeal(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BONE_MEAL
 }
@@ -322,7 +348,8 @@ case class BottleOfEnchanting(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BOTTLE_OF_ENCHANTING
 }
@@ -332,7 +359,8 @@ case class Book(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BOOK
 }
@@ -341,7 +369,8 @@ case class BookAndQuill(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.BOOK_AND_QUILL
 }
@@ -351,7 +380,8 @@ case class Bookshelf(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BOOKSHELF
 }
@@ -362,6 +392,7 @@ case class Boots(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -382,6 +413,7 @@ case class Bow(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -395,7 +427,8 @@ case class Bowl(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BOWL
 }
@@ -405,7 +438,8 @@ case class Bread(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BREAD
   override val edible = true
@@ -416,7 +450,8 @@ case class BrewingStand(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BREWING_STAND
 }
@@ -427,7 +462,8 @@ case class Brick(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BrickVariant]
     with StackableItem {
   val `type` = ItemType.BRICK
@@ -439,7 +475,8 @@ case class BrickBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BrickBlockVariant]
     with StackableItem {
   val `type` = ItemType.BRICK_BLOCK
@@ -451,7 +488,8 @@ case class Bucket(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[BucketVariant]
     with StackableItem {
   val `type` = ItemType.BUCKET
@@ -464,7 +502,8 @@ case class Button(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ButtonVariant]
     with StackableItem {
   val `type` = ItemType.BUTTON
@@ -475,7 +514,8 @@ case class Cactus(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CACTUS
 }
@@ -484,7 +524,8 @@ case class Cake(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.CAKE
 }
@@ -494,7 +535,8 @@ case class Campfire(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CAMPFIRE
 }
@@ -505,7 +547,8 @@ case class Carpet(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CarpetVariant]
     with StackableItem {
   val `type` = ItemType.CARPET
@@ -516,7 +559,8 @@ case class Carrot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CARROT
   override val edible = true
@@ -527,6 +571,7 @@ case class CarrotOnAStick(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -540,7 +585,8 @@ case class CartographyTable(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CARTOGRAPHY_TABLE
 }
@@ -550,7 +596,8 @@ case class Charcoal(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CHARCOAL
 }
@@ -560,7 +607,8 @@ case class Cauldron(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CAULDRON
 }
@@ -571,7 +619,8 @@ case class Chest(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ChestVariant]
     with StackableItem {
   val `type` = ItemType.CHEST
@@ -583,6 +632,7 @@ case class Chestplate(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -604,7 +654,8 @@ case class Chicken(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ChickenVariant]
     with StackableItem {
   val `type` = ItemType.CHICKEN
@@ -616,7 +667,8 @@ case class ChorusFlower(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CHORUS_FLOWER
 }
@@ -627,7 +679,8 @@ case class ChorusFruit(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ChorusFruitVariant]
     with StackableItem {
   val `type` = ItemType.CHORUS_FRUIT
@@ -640,7 +693,8 @@ case class ChorusPlant(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CHORUS_PLANT
 }
@@ -650,7 +704,8 @@ case class Clay(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CLAY
 }
@@ -660,7 +715,8 @@ case class ClayBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CLAY_BLOCK
 }
@@ -670,7 +726,8 @@ case class Clock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CLOCK
 }
@@ -680,7 +737,8 @@ case class Coal(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COAL
 }
@@ -690,7 +748,8 @@ case class CoalBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COAL_BLOCK
 }
@@ -700,7 +759,8 @@ case class CoalOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COAL_ORE
 }
@@ -711,7 +771,8 @@ case class Cobblestone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CobblestoneVariant]
     with StackableItem {
   val `type` = ItemType.COBBLESTONE
@@ -722,7 +783,8 @@ case class Cobweb(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COBWEB
 }
@@ -732,7 +794,8 @@ case class CocoaBeans(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COCOA_BEANS
 }
@@ -743,7 +806,8 @@ case class Cod(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CodVariant]
     with StackableItem {
   val `type` = ItemType.CHICKEN
@@ -756,7 +820,8 @@ case class CommandBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CommandBlockVariant]
     with StackableItem {
   val `type` = ItemType.COMMAND_BLOCK
@@ -767,7 +832,8 @@ case class Comparator(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COMPARATOR
 }
@@ -777,7 +843,8 @@ case class Compass(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COMPASS
 }
@@ -787,7 +854,8 @@ case class Composter(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COMPOSTER
 }
@@ -798,7 +866,8 @@ case class Concrete(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ConcreteVariant]
     with StackableItem {
   val `type` = ItemType.CONCRETE
@@ -810,7 +879,8 @@ case class ConcretePowder(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ConcretePowderVariant]
     with StackableItem {
   val `type` = ItemType.CONCRETE_POWDER
@@ -821,7 +891,8 @@ case class Conduit(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CONDUIT
 }
@@ -831,7 +902,8 @@ case class Cookie(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.COOKIE
   override val edible = true
@@ -843,7 +915,8 @@ case class Coral(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CoralVariant]
     with StackableItem {
   val `type` = ItemType.CORAL
@@ -855,7 +928,8 @@ case class CoralBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CoralBlockVariant]
     with StackableItem {
   val `type` = ItemType.CORAL_BLOCK
@@ -867,7 +941,8 @@ case class CoralFan(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[CoralFanVariant]
     with StackableItem {
   val `type` = ItemType.CORAL_FAN
@@ -878,7 +953,8 @@ case class CraftingTable(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CRAFTING_TABLE
 }
@@ -888,6 +964,7 @@ case class Crossbow(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -901,7 +978,8 @@ case class DaylightDetector(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DAYLIGHT_DETECTOR
 }
@@ -911,7 +989,8 @@ case class DeadBush(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DEAD_BUSH
 }
@@ -920,7 +999,8 @@ case class DebugStick(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.DEBUG_STICK
 }
@@ -930,7 +1010,8 @@ case class Diamond(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DIAMOND
 }
@@ -940,7 +1021,8 @@ case class DiamondBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DIAMOND_BLOCK
 }
@@ -950,7 +1032,8 @@ case class DiamondOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DIAMOND_ORE
 }
@@ -961,7 +1044,8 @@ case class Diorite(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[DioriteVariant]
     with StackableItem {
   val `type` = ItemType.DIORITE
@@ -973,7 +1057,8 @@ case class Dirt(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[DirtVariant]
     with StackableItem {
   val `type` = ItemType.DIRT
@@ -984,7 +1069,8 @@ case class Dispenser(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DISPENSER
 }
@@ -995,7 +1081,8 @@ case class Door(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[DoorVariant]
     with StackableItem {
   val `type` = ItemType.DOOR
@@ -1006,7 +1093,8 @@ case class DragonBreath(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DRAGON_BREATH
 }
@@ -1016,7 +1104,8 @@ case class DragonEgg(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DRAGON_EGG
 }
@@ -1026,7 +1115,8 @@ case class DriedKelp(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DRIED_KELP
   override val edible = true
@@ -1037,7 +1127,8 @@ case class DriedKelpBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DRIED_KELP_BLOCK
 }
@@ -1047,7 +1138,8 @@ case class Dropper(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.DROPPER
 }
@@ -1058,7 +1150,8 @@ case class Dye(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[DyeVariant]
     with StackableItem {
   val `type` = ItemType.DYE
@@ -1069,7 +1162,8 @@ case class Egg(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.EGG
 }
@@ -1079,6 +1173,7 @@ case class Elytra(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1092,7 +1187,8 @@ case class Emerald(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.EMERALD
 }
@@ -1102,7 +1198,8 @@ case class EmeraldBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.EMERALD_BLOCK
 }
@@ -1112,7 +1209,8 @@ case class EmeraldOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.EMERALD_ORE
 }
@@ -1121,7 +1219,8 @@ case class EnchantedBook(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.ENCHANTED_BOOK
 }
@@ -1131,7 +1230,8 @@ case class EnchantingTable(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.ENCHANTING_TABLE
 }
@@ -1141,7 +1241,8 @@ case class EndCrystal(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.END_CRYSTAL
 }
@@ -1151,7 +1252,8 @@ case class EndPortalFrame(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.END_PORTAL_FRAME
 }
@@ -1161,7 +1263,8 @@ case class EndRod(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.END_ROD
 }
@@ -1171,7 +1274,8 @@ case class EndStone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.END_STONE
 }
@@ -1181,7 +1285,8 @@ case class EndStoneBrick(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.END_STONE
 }
@@ -1191,7 +1296,8 @@ case class EnderEye(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.ENDER_EYE
 }
@@ -1201,7 +1307,8 @@ case class EnderPearl(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.ENDER_PEARL
   override def maxCount = 16
@@ -1212,7 +1319,8 @@ case class Farmland(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FARMLAND
 }
@@ -1222,7 +1330,8 @@ case class Feather(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FEATHER
 }
@@ -1233,7 +1342,8 @@ case class Fence(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[FenceVariant]
     with StackableItem {
   val `type` = ItemType.FENCE
@@ -1245,7 +1355,8 @@ case class Fern(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[FernVariant]
     with StackableItem {
   val `type` = ItemType.FERN
@@ -1256,7 +1367,8 @@ case class FireCharge(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FIRE_CHARGE
 }
@@ -1266,7 +1378,8 @@ case class FireworkRocket(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FIREWORK_ROCKET
 }
@@ -1277,7 +1390,8 @@ case class FireworkStar(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[FireworkStarVariant]
     with StackableItem {
   val `type` = ItemType.FIREWORK_STAR
@@ -1288,6 +1402,7 @@ case class FishingRod(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1301,7 +1416,8 @@ case class FletchingTable(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FLETCHING_TABLE
 }
@@ -1311,7 +1427,8 @@ case class Flint(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FLINT
 }
@@ -1321,6 +1438,7 @@ case class FlintAndSteel(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1335,7 +1453,8 @@ case class Flower(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[FlowerVariant]
     with StackableItem {
   val `type` = ItemType.FLOWER
@@ -1346,7 +1465,8 @@ case class FlowerPot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FLOWER_POT
 }
@@ -1356,7 +1476,8 @@ case class Furnace(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.FURNACE
 }
@@ -1367,7 +1488,8 @@ case class FenceGate(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[FenceGateVariant]
     with StackableItem {
   val `type` = ItemType.FENCE_GATE
@@ -1378,7 +1500,8 @@ case class GhastTear(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GHAST_TEAR
 }
@@ -1389,7 +1512,8 @@ case class Glass(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[GlassVariant]
     with StackableItem {
   val `type` = ItemType.GLASS
@@ -1400,7 +1524,8 @@ case class GlassBottle( // TODO add empty, honey, water, dragon's breath variant
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GLASS_BOTTLE
 }
@@ -1411,7 +1536,8 @@ case class GlassPane(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[GlassPaneVariant]
     with StackableItem {
   val `type` = ItemType.GLASS_PANE
@@ -1423,7 +1549,8 @@ case class GlazedTerracotta(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[GlazedTerracottaVariant]
     with StackableItem {
   val `type` = ItemType.GLAZED_TERRACOTTA
@@ -1434,7 +1561,8 @@ case class Glowstone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GLOWSTONE
 }
@@ -1444,7 +1572,8 @@ case class GlowstoneDust(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GLOWSTONE_DUST
 }
@@ -1454,7 +1583,8 @@ case class GoldBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GOLD_BLOCK
 }
@@ -1464,7 +1594,8 @@ case class GoldIngot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GOLD_INGOT
 }
@@ -1474,7 +1605,8 @@ case class GoldNugget(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GOLD_NUGGET
 }
@@ -1484,7 +1616,8 @@ case class GoldOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GOLD_ORE
 }
@@ -1495,7 +1628,8 @@ case class GoldenApple(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item
     with StackableItem {
   val `type` = ItemType.GOLDEN_APPLE
@@ -1509,7 +1643,8 @@ case class GoldenCarrot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GOLDEN_CARROT
   override val edible = true
@@ -1520,7 +1655,8 @@ case class GoldenMelonSlice(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GOLDEN_MELON_SLICE
 }
@@ -1531,7 +1667,8 @@ case class Granite(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[GraniteVariant]
     with StackableItem {
   val `type` = ItemType.GRANITE
@@ -1543,7 +1680,8 @@ case class Grass(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[GrassVariant]
     with StackableItem {
   val `type` = ItemType.GRASS
@@ -1554,7 +1692,8 @@ case class GrassBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GRASS_BLOCK
 }
@@ -1564,7 +1703,8 @@ case class GrassPath(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GRASS_PATH
 }
@@ -1574,7 +1714,8 @@ case class Gravel(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GRAVEL
 }
@@ -1584,7 +1725,8 @@ case class Grindstone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GRINDSTONE
 }
@@ -1594,7 +1736,8 @@ case class Gunpowder(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GUNPOWDER
 }
@@ -1604,7 +1747,8 @@ case class HayBale(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.HAY_BALE
 }
@@ -1614,7 +1758,8 @@ case class HeartOfTheSea(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.HEART_OF_THE_SEA
 }
@@ -1625,6 +1770,7 @@ case class Helmet(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1646,6 +1792,7 @@ case class Hoe(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1666,7 +1813,8 @@ case class HoneyBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.HONEY_BLOCK
 }
@@ -1676,7 +1824,8 @@ case class Honeycomb(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.HONEYCOMB
 }
@@ -1686,7 +1835,8 @@ case class HoneycombBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.HONEYCOMB_BLOCK
 }
@@ -1696,7 +1846,8 @@ case class Hopper(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.HOPPER
 }
@@ -1706,7 +1857,8 @@ case class HorseArmor(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[HorseArmorVariant] {
   val `type` = ItemType.HORSE_ARMOR
 }
@@ -1717,7 +1869,8 @@ case class Ice(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[IceVariant]
     with StackableItem {
   val `type` = ItemType.ICE
@@ -1729,7 +1882,8 @@ case class InfestedBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[InfestedBlockVariant]
     with StackableItem {
   val `type` = ItemType.INFESTED_BLOCK
@@ -1740,7 +1894,8 @@ case class InkSac(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.INK_SAC
 }
@@ -1750,7 +1905,8 @@ case class IronBars(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.IRON_BARS
 }
@@ -1760,7 +1916,8 @@ case class IronBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.IRON_BLOCK
 }
@@ -1770,7 +1927,8 @@ case class IronIngot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.IRON_INGOT
 }
@@ -1780,7 +1938,8 @@ case class IronNugget(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.IRON_NUGGET
 }
@@ -1790,7 +1949,8 @@ case class IronOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.IRON_ORE
 }
@@ -1800,7 +1960,8 @@ case class ItemFrame(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.ITEM_FRAME
 }
@@ -1810,7 +1971,8 @@ case class JackOfTheLantern(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.JACK_OF_THE_LANTERN
 }
@@ -1820,7 +1982,8 @@ case class JigsawBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.JIGSAW_BLOCK
 }
@@ -1830,7 +1993,8 @@ case class Jukebox(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.JUKEBOX
 }
@@ -1840,7 +2004,8 @@ case class Kelp(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.KELP
 }
@@ -1849,7 +2014,8 @@ case class KnowledgeBook(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.KNOWLEDGE_BOOK
 }
@@ -1859,7 +2025,8 @@ case class Ladder(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LADDER
 }
@@ -1869,7 +2036,8 @@ case class Lantern(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LANTERN
 }
@@ -1879,7 +2047,8 @@ case class Lapis(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LAPIS
 }
@@ -1889,7 +2058,8 @@ case class LapisBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LAPIS_BLOCK
 }
@@ -1899,7 +2069,8 @@ case class LapisOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LAPIS_ORE
 }
@@ -1909,7 +2080,8 @@ case class Lead(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LEAD
 }
@@ -1919,7 +2091,8 @@ case class Leather(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LEATHER
 }
@@ -1930,7 +2103,8 @@ case class Leaves(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[LeavesVariant]
     with StackableItem {
   val `type` = ItemType.LEAVES
@@ -1941,7 +2115,8 @@ case class Lectern(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LECTERN
 }
@@ -1952,6 +2127,7 @@ case class Leggings(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -1972,7 +2148,8 @@ case class Lever(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LEVER
 }
@@ -1982,7 +2159,8 @@ case class LilyPad(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LILY_PAD
 }
@@ -1993,7 +2171,8 @@ case class Log(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[LogVariant]
     with StackableItem {
   val `type` = ItemType.LOG
@@ -2004,7 +2183,8 @@ case class Loom(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LOOM
 }
@@ -2014,7 +2194,8 @@ case class MagmaBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MAGMA_BLOCK
 }
@@ -2024,7 +2205,8 @@ case class MagmaCream(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MAGMA_CREAM
 }
@@ -2035,7 +2217,8 @@ case class Map(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MAP
   def withFilled(filled: Boolean): Map =
@@ -2047,7 +2230,8 @@ case class Melon(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MELON
 }
@@ -2057,7 +2241,8 @@ case class MelonSlice(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MELON_SLICE
   override val edible = true
@@ -2069,7 +2254,8 @@ case class Minecart(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[MinecartVariant]
     with StackableItem {
   val `type` = ItemType.MINECART
@@ -2081,7 +2267,8 @@ case class MobHead(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[MobHeadVariant]
     with StackableItem {
   val `type` = ItemType.MOB_HEAD
@@ -2093,7 +2280,8 @@ case class Mushroom(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[MushroomVariant]
     with StackableItem {
   val `type` = ItemType.MUSHROOM
@@ -2105,7 +2293,8 @@ case class MushroomBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[MushroomBlockVariant]
     with StackableItem {
   val `type` = ItemType.MUSHROOM_BLOCK
@@ -2117,7 +2306,8 @@ case class MusicDisc(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[MusicDiscVariant]
     with StackableItem {
   val `type` = ItemType.MUSIC_DISC
@@ -2129,7 +2319,8 @@ case class Mutton(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[MuttonVariant]
     with StackableItem {
   val `type` = ItemType.MUTTON
@@ -2141,7 +2332,8 @@ case class Mycelium(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MYCELIUM
 }
@@ -2151,7 +2343,8 @@ case class NameTag(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NAME_TAG
 }
@@ -2161,7 +2354,8 @@ case class NautilusShell(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NAUTILUS_SHELL
 }
@@ -2171,7 +2365,8 @@ case class Netherrack(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NETHERRACK
 }
@@ -2181,7 +2376,8 @@ case class NetherStar(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NETHER_STAR
 }
@@ -2191,7 +2387,8 @@ case class NetherWart(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NETHER_WART
 }
@@ -2201,7 +2398,8 @@ case class NetherWartBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NETHER_WART_BLOCK
 }
@@ -2211,7 +2409,8 @@ case class NoteBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NOTE_BLOCK
 }
@@ -2221,7 +2420,8 @@ case class Observer(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.OBSERVER
 }
@@ -2231,7 +2431,8 @@ case class Obsidian(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.OBSIDIAN
 }
@@ -2241,7 +2442,8 @@ case class Painting(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PAINTING
 }
@@ -2251,7 +2453,8 @@ case class Paper(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PAPER
 }
@@ -2261,7 +2464,8 @@ case class PhantomMembrane(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PHANTOM_MEMBRANE
 }
@@ -2272,7 +2476,8 @@ case class Plant(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PlantVariant]
     with StackableItem {
   val `type` = ItemType.PLANT
@@ -2284,7 +2489,8 @@ case class PlayerHead(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.MOB_HEAD
 }
@@ -2295,6 +2501,7 @@ case class Pickaxe(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2316,7 +2523,8 @@ case class Pillar(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PillarVariant]
     with StackableItem {
   val `type` = ItemType.PILLAR
@@ -2328,7 +2536,8 @@ case class Piston(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PistonVariant]
     with StackableItem {
   val `type` = ItemType.PISTON
@@ -2342,7 +2551,8 @@ case class Planks(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PlanksVariant]
     with StackableItem {
   val `type` = ItemType.PLANKS
@@ -2353,7 +2563,8 @@ case class Podzol(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PODZOL
 }
@@ -2364,7 +2575,8 @@ case class Porkchop(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PorkchopVariant]
     with StackableItem {
   val `type` = ItemType.PORKCHOP
@@ -2377,7 +2589,8 @@ case class Potato(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PotatoVariant]
     with StackableItem {
   val `type` = ItemType.POTATO
@@ -2390,7 +2603,8 @@ case class Potion(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PotionVariant] {
   val `type` = ItemType.POTION
   def withHideEffects(hideEffects: Boolean): this.type =
@@ -2403,7 +2617,8 @@ case class PressurePlate(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PressurePlateVariant]
     with StackableItem {
   val `type` = ItemType.PRESSURE_PLATE
@@ -2415,7 +2630,8 @@ case class Prismarine(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[PrismarineVariant]
     with StackableItem {
   val `type` = ItemType.PRISMARINE
@@ -2426,7 +2642,8 @@ case class PrismarineCrystals(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PRISMARINE_CRYSTALS
 }
@@ -2436,7 +2653,8 @@ case class PrismarineShard(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PRISMARINE_SHARD
 }
@@ -2446,7 +2664,8 @@ case class Pufferfish(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PUFFERFISH
   override val edible = true
@@ -2458,7 +2677,8 @@ case class Pumpkin(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PUMPKIN
 }
@@ -2468,7 +2688,8 @@ case class PumpkinPie(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PUMPKIN_PIE
   override val edible = true
@@ -2479,7 +2700,8 @@ case class PurpurBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.PURPUR_BLOCK
 }
@@ -2489,7 +2711,8 @@ case class Quartz(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.QUARTZ
 }
@@ -2500,7 +2723,8 @@ case class QuartzBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[QuartzBlockVariant]
     with StackableItem {
   val `type` = ItemType.QUARTZ_BLOCK
@@ -2511,7 +2735,8 @@ case class QuartzOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.QUARTZ_ORE
 }
@@ -2522,7 +2747,8 @@ case class Rabbit(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[RabbitVariant]
     with StackableItem {
   val `type` = ItemType.RABBIT
@@ -2534,7 +2760,8 @@ case class RabbitFoot(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.RABBIT_FOOT
 }
@@ -2544,7 +2771,8 @@ case class RabbitHide(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.RABBIT_HIDE
 }
@@ -2555,7 +2783,8 @@ case class Rail(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[RailVariant]
     with StackableItem {
   val `type` = ItemType.RAIL
@@ -2566,7 +2795,8 @@ case class Repeater(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.REPEATER
 }
@@ -2576,7 +2806,8 @@ case class Redstone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE
 }
@@ -2586,7 +2817,8 @@ case class RedstoneBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_BLOCK
 }
@@ -2596,7 +2828,8 @@ case class RedstoneLamp(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_LAMP
 }
@@ -2606,7 +2839,8 @@ case class RedstoneOre(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_ORE
 }
@@ -2616,7 +2850,8 @@ case class RedstoneTorch(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.REDSTONE_TORCH
 }
@@ -2626,7 +2861,8 @@ case class RottenFlesh(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.ROTTEN_FLESH
   override val edible = true
@@ -2636,7 +2872,8 @@ case class Saddle(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.SADDLE
 }
@@ -2647,7 +2884,8 @@ case class Salmon(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SalmonVariant]
     with StackableItem {
   val `type` = ItemType.SALMON
@@ -2660,7 +2898,8 @@ case class Sand(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SandVariant]
     with StackableItem {
   val `type` = ItemType.SAND
@@ -2672,7 +2911,8 @@ case class Sandstone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SandstoneVariant]
     with StackableItem {
   val `type` = ItemType.SANDSTONE
@@ -2684,7 +2924,8 @@ case class Sapling(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SaplingVariant]
     with StackableItem {
   val `type` = ItemType.SAPLING
@@ -2695,7 +2936,8 @@ case class Scaffolding(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SCAFFOLDING
 }
@@ -2705,7 +2947,8 @@ case class Scute(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SCUTE
 }
@@ -2715,7 +2958,8 @@ case class Seagrass(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SEAGRASS
 }
@@ -2725,7 +2969,8 @@ case class SeaLantern(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SEA_LANTERN
 }
@@ -2735,7 +2980,8 @@ case class SeaPickle(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SEA_PICKLE
 }
@@ -2746,7 +2992,8 @@ case class Seeds(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SeedsVariant]
     with StackableItem {
   val `type` = ItemType.SEEDS
@@ -2757,6 +3004,7 @@ case class Shears(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2770,6 +3018,7 @@ case class Shield(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2784,6 +3033,7 @@ case class Shovel(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -2805,7 +3055,8 @@ case class ShulkerBox(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[ShulkerBoxVariant]
     with StackableItem {
   val `type` = ItemType.SHULKER_BOX
@@ -2816,7 +3067,8 @@ case class ShulkerShell(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SHULKER_SHELL
 }
@@ -2827,7 +3079,8 @@ case class Sign(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SignVariant]
     with StackableItem {
   val `type` = ItemType.SIGN
@@ -2840,7 +3093,8 @@ case class Slab(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SlabVariant]
     with StackableItem {
   val `type` = ItemType.SLAB
@@ -2851,7 +3105,8 @@ case class Slimeball(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SLIMEBALL
 }
@@ -2861,7 +3116,8 @@ case class SlimeBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SLIME_BLOCK
 }
@@ -2871,7 +3127,8 @@ case class SmithingTable(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SMITHING_TABLE
 }
@@ -2881,7 +3138,8 @@ case class Smoker(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SMOKER
 }
@@ -2891,7 +3149,8 @@ case class Snow(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SNOW
 }
@@ -2901,7 +3160,8 @@ case class Snowball(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SNOWBALL
   override def maxCount = 16
@@ -2912,7 +3172,8 @@ case class SnowBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SNOW_BLOCK
 }
@@ -2922,7 +3183,8 @@ case class SoulSand(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SOUL_SAND
 }
@@ -2933,7 +3195,8 @@ case class SpawnEgg(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SpawnEggVariant]
     with StackableItem {
   val `type` = ItemType.SPAWN_EGG
@@ -2944,7 +3207,8 @@ case class Spawner(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SPAWNER
 }
@@ -2955,7 +3219,8 @@ case class SpiderEye(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SpiderEyeVariant]
     with StackableItem {
   val `type` = ItemType.SPIDER_EYE
@@ -2969,7 +3234,8 @@ case class Sponge(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[SpongeVariant]
     with StackableItem {
   val `type` = ItemType.SPONGE
@@ -2981,7 +3247,8 @@ case class Stairs(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[StairsVariant]
     with StackableItem {
   val `type` = ItemType.SLAB
@@ -2993,7 +3260,8 @@ case class Stew(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[StewVariant]
     with StackableItem {
   val `type` = ItemType.STEW
@@ -3005,7 +3273,8 @@ case class Stick(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.STICK
 }
@@ -3016,7 +3285,8 @@ case class Stone(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[StoneVariant]
     with StackableItem {
   val `type` = ItemType.STONE
@@ -3028,7 +3298,8 @@ case class StoneBrick(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[StoneBrickVariant]
     with StackableItem {
   val `type` = ItemType.STONE
@@ -3039,7 +3310,8 @@ case class Stonecutter(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.STONECUTTER
 }
@@ -3050,7 +3322,8 @@ case class StructureBlock(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[StructureBlockVariant]
     with StackableItem {
   val `type` = ItemType.STRUCTURE_BLOCK
@@ -3061,7 +3334,8 @@ case class PieceOfString(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.STRING
 }
@@ -3071,7 +3345,8 @@ case class Sugar(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SUGAR
 }
@@ -3081,7 +3356,8 @@ case class SugarCane(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SUGAR_CANE
 }
@@ -3091,7 +3367,8 @@ case class SweetBerries(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SWEET_BERRIES
   override val edible = true
@@ -3103,6 +3380,7 @@ case class Sword(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -3124,7 +3402,8 @@ case class Terracotta(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[TerracottaVariant]
     with StackableItem {
   val `type` = ItemType.TERRACOTTA
@@ -3135,7 +3414,8 @@ case class TNT(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.TNT
 }
@@ -3145,7 +3425,8 @@ case class Torch(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.TORCH
 }
@@ -3154,7 +3435,8 @@ case class TotemOfUndying(
     name: String,
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends Item {
   val `type` = ItemType.TOTEM_OF_UNDYING
 }
@@ -3165,7 +3447,8 @@ case class Trapdoor(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[TrapdoorVariant]
     with StackableItem {
   val `type` = ItemType.TRAPDOOR
@@ -3176,6 +3459,7 @@ case class Trident(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -3189,7 +3473,8 @@ case class TripwireHook(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.TRIPWIRE_HOOK
 }
@@ -3199,7 +3484,8 @@ case class TropicalFish(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.TROPICAL_FISH
   override val edible = true
@@ -3210,7 +3496,8 @@ case class TurtleEgg(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.TURTLE_EGG
 }
@@ -3220,6 +3507,7 @@ case class TurtleHelmet(
     tooltip: List[String] = Nil,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
     durability: Int,
     unbreakable: Boolean,
     hideUnbreakable: Boolean
@@ -3233,7 +3521,8 @@ case class Vines(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.VINES
 }
@@ -3244,7 +3533,8 @@ case class Wall(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[WallVariant]
     with StackableItem {
   val `type` = ItemType.WALL
@@ -3256,7 +3546,8 @@ case class WeightedPressurePlate(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[WeightedPressurePlateVariant]
     with StackableItem {
   val `type` = ItemType.WEIGHTED_PRESSURE_PLATE
@@ -3267,7 +3558,8 @@ case class Wheat(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.WHEAT
 }
@@ -3278,7 +3570,8 @@ case class Wood(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[WoodVariant]
     with StackableItem {
   val `type` = ItemType.WOOD
@@ -3290,7 +3583,8 @@ case class Wool(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends VariableItem[WoolVariant]
     with StackableItem {
   val `type` = ItemType.WOOL
@@ -3301,7 +3595,8 @@ case class WrittenBook(
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
-    hideAttributes: Boolean = false
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.WRITTEN_BOOK
   override def maxCount = 16

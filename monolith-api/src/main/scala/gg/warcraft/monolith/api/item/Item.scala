@@ -47,6 +47,7 @@ trait Item extends CaseTrait {
   @varargs def withTooltip(tooltip: String*): this.type =
     copyWith("tooltip", List(tooltip: _*))
 
+  // TODO what are these?
   val attributes: Set[String]
   def getAttributes: util.Set[String] = attributes.asJava
   @varargs def hasAttributes(attributes: String*): Boolean =
@@ -61,6 +62,10 @@ trait Item extends CaseTrait {
   val hideAttributes: Boolean
   def withHideAttributes(hideAttributes: Boolean): this.type =
     copyWith("hideAttributes", hideAttributes)
+
+  val customModelData: Option[Int]
+  def withCustomModelData(customModelData: Option[Int]): this.type =
+    copyWith("customModelData", customModelData)
 
   def isVariant(variant: ItemVariant): Boolean = false
   def hasData(data: ItemTypeOrVariant): Boolean = this.`type` == data
