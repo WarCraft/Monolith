@@ -51,6 +51,9 @@ object Block {
       case BlockFace.DOWN  => worldService.getBlock(block.location + (0, -1, 0))
     }.toList
   }
+
+  implicit def toBlockLocation(block: Block): BlockLocation = block.location
+  implicit def toLocation(block: Block): Location = block.location.toLocation
 }
 
 trait Block extends CaseTrait {
