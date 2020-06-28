@@ -61,6 +61,10 @@ class EventService(implicit logger: Logger) {
     }
   }
 
+  def <<(event: Event): Unit = publish(event)
+
+  def <<[T <: PreEvent](event: T): T = publish(event)
+
   def subscribe(handler: Event.Handler): Unit = {
     println(s"SUBSCRIBING ${handler.getClass.getSimpleName} (${handlers.size})")
     handlers ::= handler
