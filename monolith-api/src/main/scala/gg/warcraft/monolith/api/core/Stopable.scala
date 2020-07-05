@@ -22,41 +22,8 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.effect
+package gg.warcraft.monolith.api.core
 
-import gg.warcraft.monolith.api.core.{Duration, Stopable}
-import gg.warcraft.monolith.api.core.task.{Task, TaskService}
-import gg.warcraft.monolith.api.world.Location
-
-abstract class Effect(implicit
-    taskService: TaskService
-) extends Runnable
-    with Stopable {
-  protected val location: () => Location
-  protected val period: Duration
-
-  private var renderers: List[EffectRenderer] = Nil
-  private var task: Task = _
-
-  def tick(): Unit = {}
-
-  final def addRenderer(renderer: EffectRenderer): Unit =
-    renderers ::= renderer
-
-  final def clearRenderers(): Unit =
-    renderers = Nil
-
-  final def start(): Unit =
-    task = taskService.runTask(period, run)
-
-  final override def run(): Unit = {
-    tick()
-    renderers.foreach { _.render(location()) }
-  }
-
-  final def stop(): Unit =
-    task.cancel()
-
-  final def stop(delay: Duration): Unit =
-    taskService.runLater(delay, stop)
+trait Stopable {
+  def stop(): Unit
 }
