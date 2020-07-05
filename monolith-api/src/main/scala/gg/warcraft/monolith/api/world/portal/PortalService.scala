@@ -24,39 +24,51 @@
 
 package gg.warcraft.monolith.api.world.portal
 
-import gg.warcraft.monolith.api.core.Cancellable
+import gg.warcraft.monolith.api.effect.Effect
 import gg.warcraft.monolith.api.entity.{Entity, EntityService}
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.world.Location
 
-class PortalService(
-    implicit entityService: EntityService
+class PortalService(implicit
+    entityService: EntityService
 ) {
   private final val TELEPORT_RADIUS = 1
 
-  private var _portals: List[Portal] = Nil
+  private var _portals: Set[Portal] = Set.empty
 
-  def portals: List[Portal] = _portals
+  def portals: Set[Portal] = _portals
 
   def spawnPortal(
       entryLocation: Location,
       exitLocation: Location,
       exitOrientation: Vector3f,
       predicate: Entity => Boolean,
-      effect: Cancellable
+      effect: Effect
   ): Portal = {
     val portal = Portal(
       entryLocation,
       exitLocation,
-      exitOrientation
-    )(predicate, effect)
-    _portals ::= portal
+      exitOrientation,
+      predicate,
+      effect
+    )
+    _portals += portal
     portal
   }
 
+  def updatePortal(
+      portal: Portal,
+      predicate: Entity => Boolean,
+      effect: Effect
+  ): Unit = {
+    portal.effect.stop()
+    effect.start()
+    _portals += portal.copy(predicate = predicate, effect = effect)
+  }
+
   def removePortal(portal: Portal): Unit = {
-    _portals = _portals filter { _ != portal }
-    portal.effect.cancel()
+    _portals -= portal
+    portal.effect.stop()
   }
 
   private[portal] def tick(portal: Portal): Unit = {
@@ -67,8 +79,8 @@ class PortalService(
       .filter { predicate.apply }
       .foreach { it =>
         if (exitOrientation == null)
-          entityService teleportEntity (it.id, exitLocation)
-        else entityService teleportEntity (it.id, exitLocation, exitOrientation)
+          entityService.teleportEntity(it.id, exitLocation)
+        else entityService.teleportEntity(it.id, exitLocation, exitOrientation)
       }
   }
 }
