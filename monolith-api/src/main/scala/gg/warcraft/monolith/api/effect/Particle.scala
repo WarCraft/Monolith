@@ -36,9 +36,6 @@ sealed trait Particle {
 
   def speed(speed: Float, amount: Int): Particle =
     new SpeedParticle(this, speed, amount)
-
-  def multi(particles: Particle*): Particle =
-    new MultiParticle(particles: _*)
 }
 
 private class ColorParticle(
@@ -163,4 +160,7 @@ object Particle {
     case object White extends Color
     case object Yellow extends Color
   }
+
+  def multi(particles: Particle*): Particle =
+    new MultiParticle(particles: _*)
 }
