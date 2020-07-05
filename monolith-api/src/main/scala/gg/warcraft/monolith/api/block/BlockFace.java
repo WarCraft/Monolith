@@ -34,7 +34,7 @@ public enum BlockFace {
     UP,
     DOWN;
 
-    BlockFace getOpposite() {
+    public BlockFace getOpposite() {
         switch (this) {
             case NORTH:
                 return BlockFace.SOUTH;
@@ -51,7 +51,7 @@ public enum BlockFace {
         }
     }
 
-    Vector3f toVector() {
+    public Vector3f toVector() {
         switch (this) {
             case NORTH:
                 return new Vector3f(0, 0, -1);

@@ -24,6 +24,7 @@
 
 package gg.warcraft.monolith.api.world;
 
+import gg.warcraft.monolith.api.block.BlockFace;
 import gg.warcraft.monolith.api.math.Vector3f;
 
 public enum Direction {
@@ -75,6 +76,21 @@ public enum Direction {
                 return new Vector3f(0, 0, 1);
             case WEST:
                 return new Vector3f(-1, 0, 0);
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    public BlockFace toBlockFace() {
+        switch(this) {
+            case NORTH:
+                return BlockFace.NORTH;
+            case EAST:
+                return BlockFace.EAST;
+            case SOUTH:
+                return BlockFace.SOUTH;
+            case WEST:
+                return BlockFace.WEST;
             default:
                 throw new IllegalArgumentException();
         }
