@@ -25,6 +25,7 @@
 package gg.warcraft.monolith.api.effect
 
 import gg.warcraft.monolith.api.core.{Duration, Stopable}
+import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.task.{Task, TaskService}
 import gg.warcraft.monolith.api.world.Location
 
@@ -33,7 +34,7 @@ abstract class Effect(implicit
 ) extends Runnable
     with Stopable {
   protected val location: () => Location
-  protected val period: Duration
+  protected val period: Duration = 1.ticks
 
   private var renderers: List[EffectRenderer] = Nil
   private var task: Task = _
