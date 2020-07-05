@@ -24,6 +24,8 @@
 
 package gg.warcraft.monolith.api.world;
 
+import gg.warcraft.monolith.api.math.Vector3f;
+
 public enum Direction {
     NORTH,
     EAST,
@@ -61,5 +63,20 @@ public enum Direction {
         int targetOrdinal = startingOrdinal + ordinalDifference;
         int adjustedOrdinal = targetOrdinal % 4;
         return Direction.values()[adjustedOrdinal];
+    }
+
+    public Vector3f toVector3f() {
+        switch (this) {
+            case NORTH:
+                return new Vector3f(0, 0, -1);
+            case EAST:
+                return new Vector3f(1, 0, 0);
+            case SOUTH:
+                return new Vector3f(0, 0, 1);
+            case WEST:
+                return new Vector3f(-1, 0, 0);
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }
