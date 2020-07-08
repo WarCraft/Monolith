@@ -24,6 +24,12 @@
 
 package gg.warcraft.monolith.api.core
 
+trait Startable {
+  def start(): Unit
+}
+
 trait Stopable {
   def stop(): Unit
 }
+
+trait Playable extends Startable with Stopable
