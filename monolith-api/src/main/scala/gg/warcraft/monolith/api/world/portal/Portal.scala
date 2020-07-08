@@ -27,12 +27,20 @@ package gg.warcraft.monolith.api.world.portal
 import gg.warcraft.monolith.api.effect.Effect
 import gg.warcraft.monolith.api.entity.Entity
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.Location
+import gg.warcraft.monolith.api.world.{Direction, Location}
 
 case class Portal(
-    entryLocation: Location,
-    exitLocation: Location,
-    exitOrientation: Vector3f,
+    entry: Location,
+    exit: Location,
+    orientation: Option[Vector3f],
     predicate: Entity => Boolean,
     effect: Effect
 )
+
+object Portal {
+  case class Config(
+      entry: Location,
+      exit: Location,
+      orientation: Option[Direction]
+  )
+}

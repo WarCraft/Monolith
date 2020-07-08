@@ -26,8 +26,6 @@ package gg.warcraft.monolith.api.world.portal
 
 import gg.warcraft.monolith.api.effect.Effect
 import gg.warcraft.monolith.api.entity.{Entity, EntityService}
-import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.Location
 
 class PortalService(implicit
     entityService: EntityService
@@ -39,19 +37,12 @@ class PortalService(implicit
   def portals: Set[Portal] = _portals
 
   def spawnPortal(
-      entryLocation: Location,
-      exitLocation: Location,
-      exitOrientation: Vector3f,
+      config: Portal.Config,
       predicate: Entity => Boolean,
       effect: Effect
   ): Portal = {
-    val portal = Portal(
-      entryLocation,
-      exitLocation,
-      exitOrientation,
-      predicate,
-      effect
-    )
+    val orientation = config.orientation.map { _.toVector3f }
+    val portal = Portal(config.entry, config.exit, orientation, predicate, effect)
     _portals += portal
     portal
   }
@@ -62,25 +53,28 @@ class PortalService(implicit
       effect: Effect
   ): Unit = {
     portal.effect.stop()
-    effect.start()
     _portals += portal.copy(predicate = predicate, effect = effect)
+    effect.start()
   }
 
   def removePortal(portal: Portal): Unit = {
-    _portals -= portal
     portal.effect.stop()
+    _portals -= portal
   }
 
   private[portal] def tick(portal: Portal): Unit = {
     import portal._
     entityService
-      .getNearbyEntities(entryLocation, TELEPORT_RADIUS)
+      .getNearbyEntities(entry, TELEPORT_RADIUS)
       .filter { _.typed == Entity.Type.PLAYER }
       .filter { predicate.apply }
-      .foreach { it =>
-        if (exitOrientation == null)
-          entityService.teleportEntity(it.id, exitLocation)
-        else entityService.teleportEntity(it.id, exitLocation, exitOrientation)
+      .foreach { player =>
+        orientation match {
+          case Some(orientation) =>
+            entityService.teleportEntity(player.id, exit, orientation)
+          case None =>
+            entityService.teleportEntity(player.id, exit)
+        }
       }
   }
 }
