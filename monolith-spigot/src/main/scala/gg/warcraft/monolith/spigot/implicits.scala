@@ -29,6 +29,7 @@ import java.util.logging.Logger
 import gg.warcraft.monolith.api.block.backup.BlockBackupService
 import gg.warcraft.monolith.api.block.build.BlockBuildService
 import gg.warcraft.monolith.api.block.spoofing.BlockSpoofingService
+import gg.warcraft.monolith.api.block.BlockService
 import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.command.CommandService
 import gg.warcraft.monolith.api.core.data.ServerDataService
@@ -131,6 +132,8 @@ object implicits {
     new SpigotVectorMapper
 
   // Block
+  implicit lazy val blockService: BlockService =
+    new SpigotBlockService
   implicit lazy val blockBackupService: BlockBackupService =
     new SpigotBlockBackupService
   implicit lazy val blockBuildService: BlockBuildService =
