@@ -94,7 +94,7 @@ object Codecs {
     def durationDecoder: MappedEncoding[String, Duration] =
       MappedEncoding { _.toInt.millis }
     def durationEncoder: MappedEncoding[Duration, String] =
-      MappedEncoding { _.millis }
+      MappedEncoding { _.millis.toString }
 
     def teamDecoder(implicit
         teamService: TeamService
