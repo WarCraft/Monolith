@@ -25,6 +25,7 @@
 package gg.warcraft.monolith.api.core
 
 import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
+import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
 import gg.warcraft.monolith.api.world.{World, WorldService}
@@ -52,6 +53,10 @@ object Codecs {
     def blockDataEncoder: Encoder[BlockTypeVariantOrState] =
       Encoder.encodeString.contramap { _.toString }
 
+    def durationDecoder: Decoder[Duration] =
+      Decoder.decodeString.emapTry { it => { Try { it.toInt.seconds } } }
+    // NOTE not sure what default durationEncoder to use
+
     def itemDataDecoder(implicit
         itemService: ItemService
     ): Decoder[ItemTypeOrVariant] =
@@ -77,6 +82,11 @@ object Codecs {
       MappedEncoding { f }
     def enumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
+
+    def durationDecoder: MappedEncoding[String, Duration] =
+      MappedEncoding { _.toInt.millis }
+    def durationEncoder: MappedEncoding[Duration, String] =
+      MappedEncoding { _.millis }
 
     def teamDecoder(implicit
         teamService: TeamService
