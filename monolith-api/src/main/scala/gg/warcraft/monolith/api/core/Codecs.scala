@@ -28,7 +28,7 @@ import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
-import gg.warcraft.monolith.api.world.{World, WorldService}
+import gg.warcraft.monolith.api.world.{Direction, World, WorldService}
 import io.circe.{Decoder, Encoder}
 import io.getquill.MappedEncoding
 
@@ -52,6 +52,9 @@ object Codecs {
       Decoder.decodeString.emapTry { it => { Try { worldService.parseData(it) } } }
     def blockDataEncoder: Encoder[BlockTypeVariantOrState] =
       Encoder.encodeString.contramap { _.toString }
+
+    def directionDecoder: Decoder[Direction] = enumDecoder(Direction.valueOf)
+    def directionEncoder: Encoder[Direction] = enumEncoder[Direction]
 
     def durationDecoder: Decoder[Duration] =
       Decoder.decodeString.emapTry { it => { Try { it.toInt.seconds } } }
@@ -82,6 +85,11 @@ object Codecs {
       MappedEncoding(f)
     def enumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
+
+    def directionDecoder: MappedEncoding[String, Direction] =
+      enumDecoder(Direction.valueOf)
+    def directionEncoder: MappedEncoding[Direction, String] =
+      enumEncoder[Direction]
 
     def durationDecoder: MappedEncoding[String, Duration] =
       MappedEncoding { _.toInt.millis }
