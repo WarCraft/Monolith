@@ -74,12 +74,12 @@ object Codecs {
 
   object Quill {
     def enumerDecoder[T <: Enumeration](f: String => T): MappedEncoding[String, T] =
-      MappedEncoding { f }
+      MappedEncoding(f)
     def enumerEncoder[T <: Enumeration]: MappedEncoding[T, String] =
       MappedEncoding { _.toString }
 
     def enumDecoder[T <: Enum[T]](f: String => T): MappedEncoding[String, T] =
-      MappedEncoding { f }
+      MappedEncoding(f)
     def enumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
 
@@ -91,14 +91,14 @@ object Codecs {
     def teamDecoder(implicit
         teamService: TeamService
     ): MappedEncoding[String, Option[Team]] =
-      MappedEncoding { teamService.teams.get }
+      MappedEncoding(teamService.teams.get)
     def teamEncoder: MappedEncoding[Team, String] =
       MappedEncoding { _.name }
 
     def worldDecoder(implicit
         worldService: WorldService
     ): MappedEncoding[String, World] =
-      MappedEncoding { it => worldService.getWorld(it) }
+      MappedEncoding(worldService.getWorld)
     def worldEncoder: MappedEncoding[World, String] =
       MappedEncoding { _.name }
   }
