@@ -50,13 +50,15 @@ object Codecs {
         worldService: WorldService
     ): Decoder[BlockTypeVariantOrState] =
       Decoder.decodeString.emapTry { it => { Try { worldService.parseData(it) } } }
-    def blockDataEncoder: Encoder[BlockTypeVariantOrState] =
+    implicit lazy val blockDataEncoder: Encoder[BlockTypeVariantOrState] =
       Encoder.encodeString.contramap { _.toString }
 
-    def directionDecoder: Decoder[Direction] = enumDecoder(Direction.valueOf)
-    def directionEncoder: Encoder[Direction] = enumEncoder[Direction]
+    implicit lazy val directionDecoder: Decoder[Direction] =
+      enumDecoder(Direction.valueOf)
+    implicit lazy val directionEncoder: Encoder[Direction] =
+      enumEncoder[Direction]
 
-    def durationDecoder: Decoder[Duration] =
+    implicit lazy val durationDecoder: Decoder[Duration] =
       Decoder.decodeString.emapTry { it => { Try { it.toInt.seconds } } }
     // NOTE not sure what default durationEncoder to use
 
@@ -64,14 +66,12 @@ object Codecs {
         itemService: ItemService
     ): Decoder[ItemTypeOrVariant] =
       Decoder.decodeString.emapTry { it => { Try { itemService.parseData(it) } } }
-    def itemDataEncoder: Encoder[ItemTypeOrVariant] =
+    implicit lazy val itemDataEncoder: Encoder[ItemTypeOrVariant] =
       Encoder.encodeString.contramap { _.toString }
 
-    def worldDecoder(implicit
-        worldService: WorldService
-    ): Decoder[World] =
+    def worldDecoder(implicit worldService: WorldService): Decoder[World] =
       Decoder.decodeString.emapTry { it => Try { worldService.getWorld(it) } }
-    def worldEncoder: Encoder[World] =
+    implicit lazy val worldEncoder: Encoder[World] =
       Encoder.encodeString.contramap { _.name }
   }
 
@@ -86,28 +86,28 @@ object Codecs {
     def enumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
 
-    def directionDecoder: MappedEncoding[String, Direction] =
+    implicit lazy val directionDecoder: MappedEncoding[String, Direction] =
       enumDecoder(Direction.valueOf)
-    def directionEncoder: MappedEncoding[Direction, String] =
+    implicit lazy val directionEncoder: MappedEncoding[Direction, String] =
       enumEncoder[Direction]
 
-    def durationDecoder: MappedEncoding[String, Duration] =
+    implicit lazy val durationDecoder: MappedEncoding[String, Duration] =
       MappedEncoding { _.toInt.millis }
-    def durationEncoder: MappedEncoding[Duration, String] =
+    implicit lazy val durationEncoder: MappedEncoding[Duration, String] =
       MappedEncoding { _.millis.toString }
 
     def teamDecoder(implicit
         teamService: TeamService
     ): MappedEncoding[String, Option[Team]] =
       MappedEncoding(teamService.teams.get)
-    def teamEncoder: MappedEncoding[Team, String] =
+    implicit lazy val teamEncoder: MappedEncoding[Team, String] =
       MappedEncoding { _.name }
 
     def worldDecoder(implicit
         worldService: WorldService
     ): MappedEncoding[String, World] =
       MappedEncoding(worldService.getWorld)
-    def worldEncoder: MappedEncoding[World, String] =
+    implicit lazy val worldEncoder: MappedEncoding[World, String] =
       MappedEncoding { _.name }
   }
 }
