@@ -33,6 +33,7 @@ lazy val api = (project in file("monolith-api"))
       "org.xerial" % "sqlite-jdbc" % "3.31.1",
       "io.circe" %% "circe-core" % "0.13.0",
       "io.circe" %% "circe-generic" % "0.13.0",
+      "io.circe" %% "circe-generic-extras" % "0.13.0",
       "io.circe" %% "circe-parser" % "0.13.0",
       "io.circe" %% "circe-yaml" % "0.13.1",
       "io.getquill" %% "quill-jdbc" % "3.5.1",

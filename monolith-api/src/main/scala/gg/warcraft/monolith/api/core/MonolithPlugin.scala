@@ -29,8 +29,9 @@ import java.util.logging.Logger
 import java.util.Properties
 
 import com.typesafe.config.ConfigFactory
+import io.circe.{Decoder, Error}
+import io.circe.generic.extras.Configuration
 import io.circe.yaml.parser
-import io.circe.Decoder
 import io.getquill.{
   H2Dialect, H2JdbcContext, MySQLDialect, MysqlJdbcContext, NamingStrategy,
   OracleDialect, OracleJdbcContext, PostgresDialect, PostgresJdbcContext,
@@ -50,12 +51,13 @@ trait MonolithPlugin {
 
   private[monolith] var databases: List[JdbcContext[_, _]] = Nil
 
+  protected implicit val circe: Configuration = Configuration.default.withDefaults
   protected implicit val context: ExecutionContext = ExecutionContext.global
 
   protected def parseConfig[A: Decoder](config: String, fallback: Boolean = false)(
       implicit logger: Logger
   ): A = {
-    def onError(err: io.circe.Error): A = {
+    def onError(err: Error): A = {
       logger.severe(err.getMessage)
       if (fallback) {
         logger.severe(WARN_DEFAULT_CONFIG)
