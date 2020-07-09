@@ -59,7 +59,7 @@ object Codecs {
       enumEncoder[Direction]
 
     implicit lazy val durationDecoder: Decoder[Duration] =
-      Decoder.decodeString.emapTry { it => { Try { it.toInt.seconds } } }
+      Decoder.decodeInt.emapTry { it => { Try { it.seconds } } }
     // NOTE not sure what default durationEncoder to use
 
     def itemDataDecoder(implicit
@@ -91,10 +91,10 @@ object Codecs {
     implicit lazy val directionEncoder: MappedEncoding[Direction, String] =
       enumEncoder[Direction]
 
-    implicit lazy val durationDecoder: MappedEncoding[String, Duration] =
-      MappedEncoding { _.toInt.millis }
-    implicit lazy val durationEncoder: MappedEncoding[Duration, String] =
-      MappedEncoding { _.millis.toString }
+    implicit lazy val durationDecoder: MappedEncoding[Int, Duration] =
+      MappedEncoding { _.millis }
+    implicit lazy val durationEncoder: MappedEncoding[Duration, Int] =
+      MappedEncoding { _.millis }
 
     def teamDecoder(implicit
         teamService: TeamService
