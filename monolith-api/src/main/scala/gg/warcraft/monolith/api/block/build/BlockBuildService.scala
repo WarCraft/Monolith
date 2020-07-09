@@ -61,9 +61,9 @@ class BlockBuildService(implicit
       .filter { _.nonEmpty }
       .map { _.get }
       .foreach { build =>
-        buildsByType = buildsByType get build.typed match {
-          case Some(builds) => buildsByType + (build.typed -> (build :: builds))
-          case None         => Map.empty + (build.typed -> (build :: Nil))
+        buildsByType = buildsByType.updatedWith(build.typed) {
+          case Some(builds) => Some(build :: builds)
+          case None         => Some(build :: Nil)
         }
         buildsByModel += (s"${build.typed}:${build.model}" -> build)
       }
