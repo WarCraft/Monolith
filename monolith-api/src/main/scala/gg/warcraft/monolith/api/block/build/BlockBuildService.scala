@@ -105,9 +105,9 @@ class BlockBuildService(implicit
         nextSign = nextSign.head.getRelative(nextDirection)
       }
 
-      val allLines = sign.lines ++ extraSigns.flatMap { _.lines }
+      val data = extraSigns.flatMap { _.lines }.filter{ _.nonEmpty }
 
-      BlockBuild(s"$typed:$model", typed, model, allLines, boundingBox) |> Some.apply
+      BlockBuild(s"$typed:$model", typed, model, data, boundingBox) |> Some.apply
     } else None // sign contains extra data for another build
   }
 
