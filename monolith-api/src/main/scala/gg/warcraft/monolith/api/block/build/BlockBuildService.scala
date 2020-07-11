@@ -32,6 +32,8 @@ import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.WorldService
 
+import scala.util.chaining._
+
 class BlockBuildService(implicit
     logger: Logger,
     worldService: WorldService
@@ -70,10 +72,9 @@ class BlockBuildService(implicit
 
     val endTime = System.currentTimeMillis
     val duration = (endTime - startTime) / 1000
-    logger info s"Initialized ${buildsByModel.size} builds in $duration seconds:"
+    logger.info(s"Initialized ${buildsByModel.size} builds in $duration seconds:")
     buildsByType foreach {
-      case (typed, builds) =>
-        logger info s"${builds.length} ${typed}s"
+      case (typed, builds) => logger.info(s"${builds.length}x $typed")
     }
   }
 
@@ -91,19 +92,19 @@ class BlockBuildService(implicit
           |""".stripMargin
       )
 
-      val Array(typed, model) = header split ":"
+      val Array(typed, model) = header.split(":")
       val boundingBox = computeBoundingBox(config, sign)
       val nextDirection = config.buildRepositoryOrientation.rotate(90)
       var extraSigns: List[Sign] = Nil
       // FIXME
-      var nextSign = sign getRelative BlockFace.valueOf(nextDirection.name())
+      var nextSign = sign.getRelative(BlockFace.valueOf(nextDirection.name))
       while (nextSign.head.`type` == BlockType.SIGN) {
         extraSigns ::= nextSign.head.asInstanceOf[Sign]
         // FIXME
-        nextSign = nextSign.head getRelative BlockFace.valueOf(nextDirection.name())
+        nextSign = nextSign.head.getRelative(BlockFace.valueOf(nextDirection.name))
       }
 
-      val allLines = sign.lines ++ (extraSigns flatMap { _.lines })
+      val allLines = sign.lines ++ extraSigns.flatMap { _.lines }
 
       BlockBuild(s"$typed:$model", typed, model, allLines, boundingBox) |> Some.apply
     } else None // sign contains extra data for another build
@@ -140,9 +141,8 @@ class BlockBuildService(implicit
     var searching = true
     var searchedBlocks: Set[Block] = Set.empty
     var glassBlocks: Set[Block] = Set.empty
-    var newGlassBlocks: Set[Block] = Set.empty
+    var newGlassBlocks: Set[Block] = Set(attachedTo)
 
-    newGlassBlocks += attachedTo
     while (searching) {
       val currentBlocks = newGlassBlocks
         .flatMap {
@@ -153,14 +153,15 @@ class BlockBuildService(implicit
             BlockFace.WEST
           )
         }
-        .filter { !searchedBlocks.contains(_) }
-      searchedBlocks ++= currentBlocks
+        .diff(searchedBlocks)
+        .tap { searchedBlocks ++= _ }
 
       newGlassBlocks = currentBlocks
         .filter { _.`type` == BlockType.GLASS }
-        .filter { !glassBlocks.contains(_) }
-      if (newGlassBlocks.isEmpty) searching = false
+        .diff(glassBlocks)
       glassBlocks ++= newGlassBlocks
+
+      searching = newGlassBlocks.nonEmpty
     }
 
     glassBlocks

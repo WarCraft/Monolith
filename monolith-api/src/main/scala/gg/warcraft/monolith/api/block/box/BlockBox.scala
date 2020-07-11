@@ -94,20 +94,25 @@ case class BlockBox(
 }
 
 object BlockBox {
+  private final val blockBoxAccumulator: (World, Int, Int, Int, Int, Int, Int) = {
+    import Int.{MaxValue, MinValue}
+    (null, MaxValue, MaxValue, MaxValue, MinValue, MinValue, MinValue)
+  }
+
   def apply(blocks: Iterable[Block]): BlockBox = {
     if (blocks.nonEmpty) {
       blocks
-        .foldLeft((null: World, 0, 0, 0, 0, 0, 0)) { (boundingBox, block) =>
+        .foldLeft(blockBoxAccumulator) { (boundingBox, block) =>
           import block.location._
           (
             if (boundingBox._1 == null || boundingBox._1 == world) world
             else throw new IllegalArgumentException("all block worlds must _ == _"),
-            Math min (boundingBox._2, x),
-            Math min (boundingBox._3, y),
-            Math min (boundingBox._4, z),
-            Math max (boundingBox._5, x),
-            Math max (boundingBox._6, y),
-            Math max (boundingBox._7, z)
+            Math.min(boundingBox._2, x),
+            Math.min(boundingBox._3, y),
+            Math.min(boundingBox._4, z),
+            Math.max(boundingBox._5, x),
+            Math.max(boundingBox._6, y),
+            Math.max(boundingBox._7, z)
           )
         }
         .pipe { boundingBox =>
