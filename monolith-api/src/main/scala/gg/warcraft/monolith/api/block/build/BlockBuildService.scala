@@ -30,7 +30,7 @@ import gg.warcraft.monolith.api.block.{Block, BlockFace, BlockType, Sign}
 import gg.warcraft.monolith.api.block.box.{BlockBox, BlockBoxReader}
 import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.util.chaining._
-import gg.warcraft.monolith.api.world.WorldService
+import gg.warcraft.monolith.api.world.{Direction, WorldService}
 
 import scala.util.chaining._
 
@@ -94,14 +94,15 @@ class BlockBuildService(implicit
 
       val Array(typed, model) = header.split(":")
       val boundingBox = computeBoundingBox(config, sign)
-      val nextDirection = config.buildRepositoryOrientation.rotate(90)
+      val nextDirection = Direction
+        .valueOf(sign.direction.get.name)
+        .rotate(90)
+        .toBlockFace
       var extraSigns: List[Sign] = Nil
-      // FIXME
-      var nextSign = sign.getRelative(BlockFace.valueOf(nextDirection.name))
+      var nextSign = sign.getRelative(nextDirection)
       while (nextSign.head.`type` == BlockType.SIGN) {
         extraSigns ::= nextSign.head.asInstanceOf[Sign]
-        // FIXME
-        nextSign = nextSign.head.getRelative(BlockFace.valueOf(nextDirection.name))
+        nextSign = nextSign.head.getRelative(nextDirection)
       }
 
       val allLines = sign.lines ++ extraSigns.flatMap { _.lines }
