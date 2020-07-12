@@ -45,7 +45,7 @@ class SpigotBlockService(
 
   override def getNearbyBlocks(location: Location, radius: Float): List[Block] = {
     val min: BlockLocation = location - (radius, radius, radius)
-    val max: BlockLocation = location - (radius, radius, radius)
+    val max: BlockLocation = location + (radius, radius, radius)
     val boundingBox = BlockBox(location.world, min, max)
     val reader = new BlockBoxReader(boundingBox, Direction.NORTH)
     reader.getBlocks.filter { block =>
