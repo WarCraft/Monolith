@@ -28,7 +28,7 @@ import java.util.function.Predicate
 
 import gg.warcraft.monolith.api.block.Block
 import gg.warcraft.monolith.api.math.Vector3i
-import gg.warcraft.monolith.api.world.{BlockLocation, World}
+import gg.warcraft.monolith.api.world.{BlockLocation, Location, World}
 
 import scala.util.chaining._
 
@@ -48,7 +48,22 @@ case class BlockBox(
   val upper: Int = max.y
   val lower: Int = min.y
 
-  lazy val size: Int = (east - west) * (upper - lower) * (south - north)
+  lazy val width: Int = east - west
+  lazy val height: Int = upper - lower
+  lazy val length: Int = south - north
+  lazy val size: Int = width * height * length
+
+  lazy val halfWidth: Float = width / 2f
+  lazy val halfHeight: Float = height / 2f
+  lazy val halfLength: Float = length / 2f
+
+  lazy val center: Location =
+    Location(world, (west + halfWidth, lower + halfHeight, south + halfLength))
+  lazy val floorCenter: Location =
+    Location(world, (west + halfWidth, lower.toFloat, south + halfLength))
+
+  lazy val centerBlock: BlockLocation = center.toBlockLocation
+  lazy val floorCenterBlock: BlockLocation = floorCenter.toBlockLocation
 
   override def test(loc: BlockLocation): Boolean = {
     if (loc.world == world) {
@@ -58,8 +73,13 @@ case class BlockBox(
     } else false
   }
 
-  def translate(vec: Vector3i): BlockBox =
+  def translate(vec: Vector3i, world: World = world): BlockBox =
     BlockBox(world, min + vec, max + vec)
+
+  def move(loc: BlockLocation): BlockBox = {
+    val translation = loc - floorCenterBlock
+    translate(translation, loc.world)
+  }
 
   def rotateY(pivot: BlockLocation, degrees: Int): BlockBox = {
     require(degrees % 90 == 0, s"degrees is $degrees, must be a multiple of 90")
@@ -99,7 +119,7 @@ object BlockBox {
     (null, MaxValue, MaxValue, MaxValue, MinValue, MinValue, MinValue)
   }
 
-  def apply(blocks: Iterable[Block]): BlockBox = {
+  def apply(blocks: Iterable[Block]): BlockBox =
     if (blocks.nonEmpty) {
       blocks
         .foldLeft(blockBoxAccumulator) { (boundingBox, block) =>
@@ -122,5 +142,4 @@ object BlockBox {
           BlockBox(_1, min, max)
         }
     } else throw new IllegalArgumentException("blocks must be nonEmpty")
-  }
 }
