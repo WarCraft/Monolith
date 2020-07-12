@@ -55,8 +55,6 @@ class SpigotBlockBackupService(implicit
     Codecs.Quill.worldDecoder
   private implicit val worldEncoder: MappedEncoding[World, String] =
     Codecs.Quill.worldEncoder
-  private implicit val dataInsertMeta: InsertMeta[BlockBackup] =
-    insertMeta[BlockBackup]()
 
   private val cache: mutable.Map[UUID, BlockBackup] = mutable.Map.empty
   private val metaDataKey = getClass.getCanonicalName
