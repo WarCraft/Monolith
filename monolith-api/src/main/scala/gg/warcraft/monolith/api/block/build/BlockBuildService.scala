@@ -96,7 +96,7 @@ class BlockBuildService(implicit
       val boundingBox = computeBoundingBox(config, sign)
       val nextDirection = Direction
         .valueOf(sign.direction.get.name)
-        .rotate(90)
+        .rotate(-90)
         .toBlockFace
       var extraSigns: List[Sign] = Nil
       var nextSign = sign.getRelative(nextDirection)
