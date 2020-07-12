@@ -81,7 +81,7 @@ case class BlockBox(
     translate(translation, loc.world)
   }
 
-  def rotateY(pivot: BlockLocation, degrees: Int): BlockBox = {
+  def rotateY(degrees: Int, pivot: BlockLocation = floorCenterBlock): BlockBox = {
     require(degrees % 90 == 0, s"degrees is $degrees, must be a multiple of 90")
 
     val deltaNorth = pivot.z - north
