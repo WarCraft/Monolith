@@ -58,7 +58,10 @@ public enum Direction {
         if (rotation % 90 != 0) {
             throw new IllegalArgumentException("Illegal rotation of " + rotation + ", needs to be a multiple of 90");
         }
-        int adjustedRotation = rotation % 360;
+        int normalizedRotation = rotation % 360;
+        int adjustedRotation = normalizedRotation < 0
+                ? normalizedRotation + 360
+                : normalizedRotation;
         int ordinalDifference = adjustedRotation / 90;
         int startingOrdinal = ordinal();
         int targetOrdinal = startingOrdinal + ordinalDifference;
@@ -82,7 +85,7 @@ public enum Direction {
     }
 
     public BlockFace toBlockFace() {
-        switch(this) {
+        switch (this) {
             case NORTH:
                 return BlockFace.NORTH;
             case EAST:
