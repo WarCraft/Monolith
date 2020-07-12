@@ -75,6 +75,13 @@ case class PlayerCurrencyLostEvent(
 ) extends Event
     with PlayerEvent
 
+// GAME MODE
+case class PlayerGameModeChangedEvent(
+    player: Player,
+    current: Player.Mode
+) extends Event
+    with PlayerEvent
+
 // INTERACT TODO do these events make sense with only player data?
 case class PlayerPreInteractEvent(
     player: Player,

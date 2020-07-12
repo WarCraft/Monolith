@@ -30,9 +30,9 @@ import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.player.{
   PlayerConnectEvent, PlayerDisconnectEvent, PlayerEquipmentChangedEvent,
-  PlayerInteractEvent, PlayerPreConnectEvent, PlayerPreInteractEvent,
-  PlayerPrePunchEvent, PlayerPreRespawnEvent, PlayerPunchEvent, PlayerRespawnEvent,
-  PlayerService
+  PlayerGameModeChangedEvent, PlayerInteractEvent, PlayerPreConnectEvent,
+  PlayerPreInteractEvent, PlayerPrePunchEvent, PlayerPreRespawnEvent,
+  PlayerPunchEvent, PlayerRespawnEvent, PlayerService
 }
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
@@ -54,7 +54,8 @@ class SpigotPlayerEventMapper(implicit
     taskService: TaskService,
     playerService: PlayerService,
     locationMapper: SpigotLocationMapper,
-    itemMapper: SpigotItemMapper
+    itemMapper: SpigotItemMapper,
+    gameModeMapper: SpigotGameModeMapper
 ) extends Listener {
   private final val playerPreConnectEventTimeout = Duration(1, TimeUnit.SECONDS)
 
@@ -175,5 +176,12 @@ class SpigotPlayerEventMapper(implicit
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val location = locationMapper.map(event.getRespawnLocation)
     PlayerRespawnEvent(player, location).tap { eventService.publish }
+  }
+
+  @EventHandler(priority = EventPriority.MONITOR)
+  def onGameMode(event: SpigotPlayerGameModeChangedEvent): Unit = {
+    val player = playerService.getPlayer(event.getPlayer.getUniqueId)
+    val current = gameModeMapper.map(event.getNewGameMode)
+    PlayerGameModeChangedEvent(player, current)
   }
 }
