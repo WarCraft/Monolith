@@ -39,11 +39,12 @@ import gg.warcraft.monolith.api.player.data.{
 }
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
 import gg.warcraft.monolith.api.player.statistic.StatisticCacheHandler
-import gg.warcraft.monolith.api.world.{Direction, World}
+import gg.warcraft.monolith.api.world.World
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.block.SpigotBlockEventMapper
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
 import gg.warcraft.monolith.spigot.core.command.SpigotCommandEventMapper
+import gg.warcraft.monolith.spigot.core.SpigotBaseHealthHandler
 import gg.warcraft.monolith.spigot.entity.SpigotEntityEventMapper
 import gg.warcraft.monolith.spigot.item.SpigotItemEventMapper
 import gg.warcraft.monolith.spigot.menu.SpigotMenuHandler
@@ -78,7 +79,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
     enableHandlers()
     enableTasks()
-    enableEventMappers()
+    enableEventMappers(config)
   }
 
   override def onDisable(): Unit = {
@@ -86,7 +87,8 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     super.onDisable()
   }
 
-  private def enableEventMappers(): Unit = {
+  private def enableEventMappers(config: MonolithConfig): Unit = {
+    subscribe(new SpigotBaseHealthHandler(config))
     subscribe(new SpigotBlockEventMapper)
     subscribe(new SpigotCommandEventMapper)
     subscribe(new SpigotCombatEventMapper)
