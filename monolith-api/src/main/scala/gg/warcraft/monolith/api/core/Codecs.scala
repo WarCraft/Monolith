@@ -69,6 +69,13 @@ object Codecs {
     implicit lazy val itemDataEncoder: Encoder[ItemTypeOrVariant] =
       Encoder.encodeString.contramap { _.toString }
 
+    def teamDecoder(implicit
+        teamService: TeamService
+    ): Decoder[Option[Team]] =
+      Decoder.decodeString.emapTry { it => { Try { teamService.teams.get(it) } } }
+    implicit lazy val teamEncoder: Encoder[Team] =
+      Encoder.encodeString.contramap { _.name }
+
     def worldDecoder(implicit worldService: WorldService): Decoder[World] =
       Decoder.decodeString.emapTry { it => Try { worldService.getWorld(it) } }
     implicit lazy val worldEncoder: Encoder[World] =
