@@ -53,7 +53,8 @@ class PlayerDataService(implicit
 
   private var _data: Map[UUID, PlayerData] = Map.empty
 
-  def getPlayerData(id: UUID): Future[PlayerData] =
+  def data: Map[UUID, PlayerData] = _data
+  def dataFuture(id: UUID): Future[PlayerData] =
     _data.get(id) match {
       case Some(data) => data |> Future.successful
       case None =>
@@ -67,8 +68,7 @@ class PlayerDataService(implicit
         }
     }
 
-  // TODO change access level
-  private[monolith] def setPlayerData(data: PlayerData): Unit = {
+  private[player] def setPlayerData(data: PlayerData): Unit = {
     _data += (data.id -> data)
     Future {
       database.run {

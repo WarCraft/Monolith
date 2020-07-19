@@ -76,7 +76,7 @@ class SpigotPlayerAdapter(player: SpigotPlayer)(implicit
 
   override def team: Option[Team] = data.team
   override def data: PlayerData =
-    dataService.getPlayerData(id).getOrThrow
+    dataService.dataFuture(id).getOrThrow
   override def currencies: Currencies =
     currencyService.currenciesFuture(id).getOrThrow
   override def statistics: Statistics =

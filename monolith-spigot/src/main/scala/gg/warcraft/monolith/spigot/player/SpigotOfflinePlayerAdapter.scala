@@ -47,7 +47,7 @@ class SpigotOfflinePlayerAdapter(player: OfflineSpigotPlayer)(implicit
   override def isOnline: Boolean = false
 
   override def data: Future[PlayerData] =
-    dataService getPlayerData player.getUniqueId
+    dataService.dataFuture(player.getUniqueId)
   override def currencies: Future[Currencies] =
     currencyService.currenciesFuture(player.getUniqueId)
   override def statistics: Future[Statistics] =

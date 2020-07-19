@@ -27,16 +27,14 @@ package gg.warcraft.monolith.api.entity.team
 import gg.warcraft.monolith.api.core.auth.{AuthService, Principal}
 import gg.warcraft.monolith.api.core.command.{Command, CommandService}
 import gg.warcraft.monolith.api.core.event.{Event, EventService}
-import gg.warcraft.monolith.api.entity.EntityTeamChangedEvent
-import gg.warcraft.monolith.api.player.Player
-import gg.warcraft.monolith.api.player.data.PlayerDataService
+import gg.warcraft.monolith.api.player.{Player, PlayerService}
 
 class TeamStaffCommandHandler(implicit
     eventService: EventService,
     commandService: CommandService,
     authService: AuthService,
     teamService: TeamService,
-    playerDataService: PlayerDataService
+    playerService: PlayerService
 ) extends Command.Handler
     with Event.Handler {
   import teamService._
@@ -52,20 +50,7 @@ class TeamStaffCommandHandler(implicit
       else if (!teams.contains(command.name)) Command.invalid
       else {
         val team = teams.get(command.name)
-        val oldData = player.data
-        if (oldData.team != team) {
-          val newData = oldData.copy(team = team)
-          playerDataService.setPlayerData(newData)
-
-          // TODO fire this event in an appropriate place
-          eventService.publish(
-            EntityTeamChangedEvent(
-              player,
-              oldData.team,
-              newData.team
-            )
-          )
-        }
+        playerService.setTeam(player.id, team)
         Command.success
       }
     case _ => Command.playersOnly

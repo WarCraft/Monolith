@@ -63,7 +63,7 @@ class EntityDataService(implicit
       run {
         query[EntityData]
           .insert { lift(data) }
-          .onConflictUpdate(_.id)((_1, _2) => _1.team -> _2.team)
+          .onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
       }
     }
   }

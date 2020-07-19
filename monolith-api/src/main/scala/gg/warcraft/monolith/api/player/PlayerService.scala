@@ -27,15 +27,34 @@ package gg.warcraft.monolith.api.player
 import java.util.UUID
 
 import gg.warcraft.monolith.api.core.Message
-import gg.warcraft.monolith.api.entity.Equipment
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.entity.{EntityTeamChangedEvent, Equipment}
+import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.item.Item
+import gg.warcraft.monolith.api.player.data.PlayerDataService
 
-trait PlayerService {
+import scala.util.chaining._
+
+abstract class PlayerService(implicit
+    eventService: EventService,
+    dataService: PlayerDataService
+) {
   def getPlayer(id: UUID): Player
   def getPlayerOption(id: UUID): Option[Player]
   def getOfflinePlayer(id: UUID): OfflinePlayer
   def getOnlinePlayers: List[Player]
   def resolvePlayerId(name: String): UUID
+
+  def setTeam(id: UUID, team: Option[Team]): Unit = {
+    val oldData = dataService.data(id)
+    if (oldData.team != team) {
+      val newData = oldData.copy(team = team)
+      dataService.setPlayerData(newData)
+
+      EntityTeamChangedEvent(getPlayer(id), oldData.team, newData.team)
+        .pipe { eventService.publish }
+    }
+  }
 
   def setExperience(id: UUID, progress: Float): Unit
   def setLevel(id: UUID, level: Int): Unit
