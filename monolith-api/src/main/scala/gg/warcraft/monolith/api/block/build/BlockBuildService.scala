@@ -51,11 +51,10 @@ class BlockBuildService(implicit
     logger.info("Initializing build repository, this may take a while...")
     val startTime = System.currentTimeMillis
 
-    import config._
-    new BlockBoxReader(buildRepositoryBox, buildRepositoryOrientation)
-      .sliceY(
-        buildRepositoryBox.lower
-      ) // TODO have slice return a new reader on which getBlocks(ignore) can be called
+    import config.buildRepository._
+    new BlockBoxReader(boundingBox, orientation)
+      // TODO have slice return a new reader on which getBlocks(ignore) can be called
+      .sliceY(boundingBox.lower)
       .filter { _.`type` == BlockType.SIGN }
       .map { _.asInstanceOf[Sign] }
       .filter { _.direction.isDefined }
@@ -117,7 +116,7 @@ class BlockBuildService(implicit
 
     val foundationBB = BlockBox(glassBlocks)
     val maxY =
-      new BlockBoxReader(foundationBB, config.buildRepositoryOrientation).getBlocks
+      new BlockBoxReader(foundationBB, config.buildRepository.orientation).getBlocks
         .map { _.location |> worldService.getHighestBlock }
         .map { _.location.y }
         .reduce { Math.max }

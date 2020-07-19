@@ -59,6 +59,7 @@ class SpigotBlockBackupService(implicit
   private val cache: mutable.Map[UUID, BlockBackup] = mutable.Map.empty
   private val metaDataKey = getClass.getCanonicalName
 
+  // TODO allow creating multiple backups at once for db call grouping
   override def createBackup(location: BlockLocation): UUID = {
     val block = locationMapper.map(location).getBlock
 

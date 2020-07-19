@@ -40,8 +40,7 @@ case class MonolithConfig(
     moderatingItem: ItemType,
     debuggingItem: ItemType,
     // Build Repository
-    buildRepositoryBox: BlockBox,
-    buildRepositoryOrientation: Direction,
+    buildRepository: BuildRepositoryConfig,
     // Maintenance Mode
     maintenanceMode: Boolean,
     maintenanceModePermission: String,
@@ -55,3 +54,8 @@ case class MonolithConfig(
     ZoneOffset.of(serverTimeZoneUtcOffset)
   )
 }
+
+case class BuildRepositoryConfig(
+    boundingBox: BlockBox,
+    orientation: Direction
+)
