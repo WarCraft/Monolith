@@ -29,7 +29,7 @@ import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.task.{Task, TaskService}
 import gg.warcraft.monolith.api.world.Location
 
-abstract class Effect(autoStart: Boolean = true)(implicit
+abstract class Effect(implicit
     taskService: TaskService
 ) extends Runnable
     with Playable {
@@ -38,8 +38,6 @@ abstract class Effect(autoStart: Boolean = true)(implicit
 
   private var renderers: List[EffectRenderer] = Nil
   private var task: Task = _
-
-  if (autoStart) start()
 
   def tick(): Unit = {}
 
