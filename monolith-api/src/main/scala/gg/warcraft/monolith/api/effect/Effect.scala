@@ -39,7 +39,7 @@ abstract class Effect(autoStart: Boolean = true)(implicit
   private var renderers: List[EffectRenderer] = Nil
   private var task: Task = _
 
-  if (autoStart) taskService.runLater(1.ticks, start)
+  if (autoStart) start()
 
   def tick(): Unit = {}
 
