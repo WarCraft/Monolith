@@ -105,8 +105,8 @@ object Codecs {
 
     def teamDecoder(implicit
         teamService: TeamService
-    ): MappedEncoding[String, Option[Team]] =
-      MappedEncoding(teamService.teams.get)
+    ): MappedEncoding[String, Team] =
+      MappedEncoding { teamService.teams(_) }
     implicit lazy val teamEncoder: MappedEncoding[Team, String] =
       MappedEncoding { _.name }
 

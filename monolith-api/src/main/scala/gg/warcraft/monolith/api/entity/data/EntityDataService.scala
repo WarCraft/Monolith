@@ -44,7 +44,7 @@ class EntityDataService(implicit
 ) {
   import database._
 
-  private implicit val teamDecoder: MappedEncoding[String, Option[Team]] =
+  private implicit val teamDecoder: MappedEncoding[String, Team] =
     Codecs.Quill.teamDecoder
   private implicit val teamEncoder: MappedEncoding[Team, String] =
     Codecs.Quill.teamEncoder

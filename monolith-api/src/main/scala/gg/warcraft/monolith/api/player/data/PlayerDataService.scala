@@ -46,7 +46,7 @@ class PlayerDataService(implicit
 ) {
   import database._
 
-  private implicit val teamDecoder: MappedEncoding[String, Option[Team]] =
+  private implicit val teamDecoder: MappedEncoding[String, Team] =
     Codecs.Quill.teamDecoder
   private implicit val teamEncoder: MappedEncoding[Team, String] =
     Codecs.Quill.teamEncoder
@@ -62,7 +62,7 @@ class PlayerDataService(implicit
           database.run {
             query[PlayerData] filter { _.id == lift(id) }
           }.headOption match {
-            case Some(playerData) => playerData.asInstanceOf[PlayerData]
+            case Some(playerData) => playerData
             case None             => PlayerData(id)
           }
         }
@@ -90,15 +90,19 @@ class PlayerDataService(implicit
     val newLastSeen = System.currentTimeMillis
     statisticService.increaseStatistic("TimePlayed", newLastSeen - oldLastSeen, id)
     setPlayerData(data.copy(timeLastSeen = newLastSeen))
+    println(s"updatePlayerData PLAYERDATA IS NOW ${_data(id)}")
   }
 
-  private[data] def loadPlayerData(id: UUID): Option[PlayerData] =
+  private[data] def loadPlayerData(id: UUID): Option[PlayerData] = {
+    println(s"loadPlayerData TEAMSERVICE HAS ${teamService.teams}")
     database.run { query[PlayerData].filter { _.id == lift(id) } }
       .headOption
+      .tap { it => println(s"loadPlayerData RETURNING $it") }
       .tap {
         case Some(data) => _data += (data.id -> data)
         case None       =>
       }
+  }
 
   private[data] def invalidatePlayerData(id: UUID): Unit =
     _data -= id
