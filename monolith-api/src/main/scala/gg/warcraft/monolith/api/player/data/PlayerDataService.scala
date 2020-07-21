@@ -90,19 +90,15 @@ class PlayerDataService(implicit
     val newLastSeen = System.currentTimeMillis
     statisticService.increaseStatistic("TimePlayed", newLastSeen - oldLastSeen, id)
     setPlayerData(data.copy(timeLastSeen = newLastSeen))
-    println(s"updatePlayerData PLAYERDATA IS NOW ${_data(id)}")
   }
 
-  private[data] def loadPlayerData(id: UUID): Option[PlayerData] = {
-    println(s"loadPlayerData TEAMSERVICE HAS ${teamService.teams}")
+  private[data] def loadPlayerData(id: UUID): Option[PlayerData] =
     database.run { query[PlayerData].filter { _.id == lift(id) } }
       .headOption
-      .tap { it => println(s"loadPlayerData RETURNING $it") }
       .tap {
         case Some(data) => _data += (data.id -> data)
         case None       =>
       }
-  }
 
   private[data] def invalidatePlayerData(id: UUID): Unit =
     _data -= id

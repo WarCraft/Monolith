@@ -28,6 +28,7 @@ import java.util.UUID
 
 import gg.warcraft.monolith.api.player.{Player, PlayerService}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingService
+import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.spigot.player.SpigotPlayer
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
@@ -72,13 +73,11 @@ class SpigotPlayerHidingService(implicit
 
   override def updateHideFrom(id: UUID): Unit = {} // TODO fix access modifier
 
-  override def reveal(id: UUID): Unit = {
-    val player = server.getPlayer(id)
-    if (player != null) {
+  override def reveal(id: UUID): Unit =
+    server.getPlayer(id) ?? { player =>
       hiddenPlayers -= id
       server.getOnlinePlayers.asScala.foreach { _.showPlayer(plugin, player) }
     }
-  }
 
   override def revealTo(id: UUID, to: UUID): Unit = {
     val player = server.getPlayer(id)
