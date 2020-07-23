@@ -25,41 +25,33 @@
 package gg.warcraft.monolith.api.entity.team
 
 import gg.warcraft.monolith.api.core.auth.{AuthService, Principal}
-import gg.warcraft.monolith.api.core.command.{Command, CommandService}
-import gg.warcraft.monolith.api.core.event.{Event, EventService}
+import gg.warcraft.monolith.api.core.command.Command
 import gg.warcraft.monolith.api.player.{Player, PlayerService}
 
-class TeamStaffCommandHandler(implicit
-    eventService: EventService,
-    commandService: CommandService,
-    authService: AuthService,
-    teamService: TeamService,
-    playerService: PlayerService
-) extends Command.Handler
-    with Event.Handler {
-  import teamService._
+class TeamStaffCommand() extends Command("team")
 
-  override def handle(
-      principal: Principal,
-      command: Command,
-      args: String*
-  ): Command.Result = principal match {
-    case player: Player =>
-      if (!authService.isStaff(player)) Command.invalid
-      else if (args.nonEmpty) Command.invalid
-      else if (!teams.contains(command.name)) Command.invalid
-      else {
-        val team = teams.get(command.name)
-        playerService.setTeam(player.id, team)
-        Command.success
-      }
-    case _ => Command.playersOnly
-  }
-
-  override def handle(event: Event): Unit = event match {
-    case TeamRegisteredEvent(name, _, _) =>
-      val command = Command(name, Nil)
-      commandService.registerCommand(command, this)
-    case _ =>
+object TeamStaffCommand {
+  class Handler(implicit
+      authService: AuthService,
+      teamService: TeamService,
+      playerService: PlayerService
+  ) extends Command.Handler {
+    override def handle(
+        principal: Principal,
+        command: Command,
+        args: String*
+    ): Command.Result = principal match {
+      case player: Player =>
+        if (!authService.isStaff(player)) Command.invalid
+        else if (args.length != 1) Command.invalid
+        else
+          teamService.teams.get(args.head) match {
+            case team @ Some(_) =>
+              playerService.setTeam(player.id, team)
+              Command.success
+            case None => Command.invalid
+          }
+      case _ => Command.playersOnly
+    }
   }
 }

@@ -1,20 +1,17 @@
-# Staff Permissions
-staffPermission: monolith.staff
-modPermission: monolith.mod
-adminPermission: monolith.admin
-devPermission: monolith.dev
-
-# Staff Tools
-moderatingItem: FLINT
-debuggingItem: DEBUG_STICK
-
-# Build Repository
 buildRepository:
   boundingBox:
     world: world
     min: { x: 0, y: 0, z: 0 }
     max: { x: 0, y: 0, z: 0 }
   orientation: NORTH
+
+teams: []
+
+# Staff Permissions
+staffPermission: monolith.staff
+modPermission: monolith.mod
+adminPermission: monolith.admin
+devPermission: monolith.dev
 
 # Maintenance Mode
 maintenanceMode: false

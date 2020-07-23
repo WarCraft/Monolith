@@ -27,14 +27,8 @@ package gg.warcraft.monolith.api.entity.team
 import gg.warcraft.monolith.api.core.ColorCode
 import gg.warcraft.monolith.api.effect.Particle
 
-trait Team {
-  val name: String
-  val chatColor: ColorCode
-  val particleColor: Particle.Color
-
-  override def toString: String = name
-}
-
-object Team {
-  implicit def toString(team: Team): String = team.toString
-}
+case class Team(
+    name: String,
+    chatColor: ColorCode,
+    particleColor: Particle.Color
+)

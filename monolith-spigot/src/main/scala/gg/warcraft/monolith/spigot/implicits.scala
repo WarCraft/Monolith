@@ -36,6 +36,7 @@ import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.core.types.DatabaseContext
+import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.effect.ParticleAdapter
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
 import gg.warcraft.monolith.api.entity.data.EntityDataService
@@ -79,6 +80,8 @@ import org.bukkit.plugin.Plugin
 import scala.concurrent.ExecutionContext
 
 object implicits {
+  private var _config: MonolithConfig = _
+
   private var _server: Server = _
   private var _plugin: Plugin = _
   private var _logger: Logger = _
@@ -88,7 +91,7 @@ object implicits {
   private var _eventService: EventService = _
   private var _taskService: TaskService = _
 
-  private[spigot] def init()(implicit
+  private[spigot] def init(config: MonolithConfig)(implicit
       server: Server,
       plugin: Plugin,
       logger: Logger,
@@ -97,6 +100,7 @@ object implicits {
       eventService: EventService,
       taskService: TaskService
   ): Unit = {
+    _config = config
     _server = server
     _plugin = plugin
     _logger = logger
@@ -182,7 +186,7 @@ object implicits {
   implicit lazy val statusService: StatusService =
     new StatusService
   implicit lazy val teamService: TeamService =
-    new TeamService
+    new TeamService(_config)
   implicit lazy val entityService: EntityService =
     new SpigotEntityService
   implicit lazy val entityDataService: EntityDataService =

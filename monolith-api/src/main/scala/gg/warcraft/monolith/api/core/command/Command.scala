@@ -29,7 +29,7 @@ import gg.warcraft.monolith.api.core.auth.Principal
 
 case class Command(
     name: String,
-    aliases: List[String],
+    aliases: List[String] = Nil,
     usage: Option[Message] = None
 )
 

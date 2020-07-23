@@ -24,6 +24,7 @@
 
 package gg.warcraft.monolith.spigot
 
+import gg.warcraft.monolith.api.block.backup.BlockBackupCommand
 import gg.warcraft.monolith.api.core.{MonolithConfig, ServerShutdownEvent}
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
@@ -31,7 +32,7 @@ import gg.warcraft.monolith.api.core.Codecs.Circe._
 import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.data.EntityDataCacheHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
-import gg.warcraft.monolith.api.entity.team.TeamStaffCommandHandler
+import gg.warcraft.monolith.api.entity.team.TeamStaffCommand
 import gg.warcraft.monolith.api.item.ItemType
 import gg.warcraft.monolith.api.player.currency.CurrencyCacheHandler
 import gg.warcraft.monolith.api.player.data.{
@@ -57,27 +58,30 @@ import io.getquill.{SnakeCase, SqliteDialect}
 class MonolithPlugin extends SpigotMonolithPlugin {
   import implicits._
 
+  private var config: MonolithConfig = _
+
   override def onLoad(): Unit = {
     super.onLoad()
+
+    implicit val itemTypeDec: Decoder[ItemType] = enumDecoder(ItemType.valueOf)
+    implicit val worldDec: Decoder[World] = worldDecoder
+    config = parseConfig[MonolithConfig](getConfig.saveToString())
 
     implicit val databaseContext: DatabaseContext =
       initDatabase(SqliteDialect, SnakeCase, getDataFolder)
     upgradeDatabase(getDataFolder, getClassLoader)
 
-    implicits.init()
+    implicits.init(config)
   }
 
   override def onEnable(): Unit = {
-    implicit val itemTypeDec: Decoder[ItemType] = enumDecoder(ItemType.valueOf)
-    implicit val worldDec: Decoder[World] = worldDecoder
-
-    val config = parseConfig[MonolithConfig](getConfig.saveToString())
     authService.readConfig(config)
     blockBuildService.readConfig(config)
     serverDataService.readConfig(config)
     blockBackupService.restoreBackups()
 
     enableHandlers()
+    enableCommands()
     enableTasks()
     enableEventMappers(config)
   }
@@ -85,6 +89,18 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   override def onDisable(): Unit = {
     eventService.publish(new ServerShutdownEvent)
     super.onDisable()
+  }
+
+  private def enableCommands(): Unit = {
+    commandService.registerCommand(
+      new BlockBackupCommand(),
+      new BlockBackupCommand.Handler
+    )
+
+    commandService.registerCommand(
+      new TeamStaffCommand(),
+      new TeamStaffCommand.Handler()
+    )
   }
 
   private def enableEventMappers(config: MonolithConfig): Unit = {
@@ -108,7 +124,6 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService.subscribe(new StatusHandler)
     eventService.subscribe(new PlayerDataCacheHandler)
     eventService.subscribe(new PlayerHidingHandler)
-    eventService.subscribe(new TeamStaffCommandHandler)
   }
 
   private def enableTasks(): Unit = {
