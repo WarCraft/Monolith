@@ -22,33 +22,29 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.core.command
+package gg.warcraft.monolith.api.core.auth.command
 
-import gg.warcraft.monolith.api.core.Message
-import gg.warcraft.monolith.api.core.auth.Principal
+import gg.warcraft.monolith.api.core.auth.{AuthService, Principal}
+import gg.warcraft.monolith.api.core.command.Command
+import gg.warcraft.monolith.api.player.Player
 
-case class Command(
-    name: String,
-    aliases: List[String] = Nil,
-    usage: Option[Message] = None
-)
+class BuildModeCommand() extends Command("build")
 
-object Command {
-  sealed trait Result
-
-  final case object success extends Result
-  final case class success(messages: List[Message]) extends Result
-
-  final case object invalid extends Result
-  final case object consoleOnly extends Result
-  final case object playersOnly extends Result
-
-  trait Handler { // TODO change args to List[String]
-    def handle(executor: Principal, command: Command, args: String*): Command.Result
-  }
-
-  def apply(name: String, aliases: List[String], usage: String): Command = {
-    val usageMessage = Message.server(usage)
-    Command(name, aliases, Some(usageMessage))
+object BuildModeCommand {
+  class Handler(implicit
+      authService: AuthService
+  ) extends Command.Handler {
+    override def handle(
+        principal: Principal,
+        command: Command,
+        args: String*
+    ): Command.Result = principal match {
+      case player: Player =>
+        if (authService.isStaff(player)) {
+          authService.toggleBuilding(player)
+          Command.success
+        } else Command.invalid
+      case _ => Command.playersOnly
+    }
   }
 }

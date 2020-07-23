@@ -91,7 +91,7 @@ object implicits {
   private var _eventService: EventService = _
   private var _taskService: TaskService = _
 
-  private[spigot] def init(config: MonolithConfig)(implicit
+  private[spigot] def init()(implicit
       server: Server,
       plugin: Plugin,
       logger: Logger,
@@ -100,7 +100,6 @@ object implicits {
       eventService: EventService,
       taskService: TaskService
   ): Unit = {
-    _config = config
     _server = server
     _plugin = plugin
     _logger = logger
@@ -109,6 +108,9 @@ object implicits {
     _eventService = eventService
     _taskService = taskService
   }
+
+  private[spigot] def configure(config: MonolithConfig): Unit =
+    _config = config
 
   private[spigot] def monolithEventService(logger: Logger): EventService =
     if (_eventService != null) _eventService else new EventService()(logger)
@@ -125,7 +127,7 @@ object implicits {
   private implicit lazy val taskService: TaskService = _taskService
 
   implicit lazy val authService: AuthService =
-    new AuthService
+    new AuthService(_config)
   implicit lazy val serverDataService: ServerDataService =
     new ServerDataService
 

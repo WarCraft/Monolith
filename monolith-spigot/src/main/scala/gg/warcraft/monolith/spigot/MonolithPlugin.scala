@@ -25,10 +25,13 @@
 package gg.warcraft.monolith.spigot
 
 import gg.warcraft.monolith.api.block.backup.BlockBackupCommand
-import gg.warcraft.monolith.api.core.{MonolithConfig, ServerShutdownEvent}
+import gg.warcraft.monolith.api.core.{ColorCode, MonolithConfig, ServerShutdownEvent}
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.core.Codecs.Circe._
+import gg.warcraft.monolith.api.core.auth.command.{
+  BuildModeCommand, DebugModeCommand, ModModeCommand
+}
 import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.data.EntityDataCacheHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
@@ -58,24 +61,24 @@ import io.getquill.{SnakeCase, SqliteDialect}
 class MonolithPlugin extends SpigotMonolithPlugin {
   import implicits._
 
-  private var config: MonolithConfig = _
-
   override def onLoad(): Unit = {
     super.onLoad()
-
-    implicit val itemTypeDec: Decoder[ItemType] = enumDecoder(ItemType.valueOf)
-    implicit val worldDec: Decoder[World] = worldDecoder
-    config = parseConfig[MonolithConfig](getConfig.saveToString())
 
     implicit val databaseContext: DatabaseContext =
       initDatabase(SqliteDialect, SnakeCase, getDataFolder)
     upgradeDatabase(getDataFolder, getClassLoader)
 
-    implicits.init(config)
+    implicits.init()
   }
 
   override def onEnable(): Unit = {
-    authService.readConfig(config)
+    implicit val colorCodeDec: Decoder[ColorCode] = enumDecoder(ColorCode.valueOf)
+    implicit val itemTypeDec: Decoder[ItemType] = enumDecoder(ItemType.valueOf)
+    implicit val worldDec: Decoder[World] = worldDecoder
+    val config = parseConfig[MonolithConfig](getConfig.saveToString())
+
+    implicits.configure(config)
+
     blockBuildService.readConfig(config)
     serverDataService.readConfig(config)
     blockBackupService.restoreBackups()
@@ -92,14 +95,30 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   private def enableCommands(): Unit = {
+    // Auth
     commandService.registerCommand(
-      new BlockBackupCommand(),
+      new BuildModeCommand,
+      new BuildModeCommand.Handler
+    )
+    commandService.registerCommand(
+      new ModModeCommand,
+      new ModModeCommand.Handler
+    )
+    commandService.registerCommand(
+      new DebugModeCommand,
+      new DebugModeCommand.Handler
+    )
+
+    // Block
+    commandService.registerCommand(
+      new BlockBackupCommand,
       new BlockBackupCommand.Handler
     )
 
+    // Entity
     commandService.registerCommand(
-      new TeamStaffCommand(),
-      new TeamStaffCommand.Handler()
+      new TeamStaffCommand,
+      new TeamStaffCommand.Handler
     )
   }
 

@@ -24,37 +24,26 @@
 
 package gg.warcraft.monolith.api.core.auth
 
-import gg.warcraft.monolith.api.core.MonolithConfig
-import gg.warcraft.monolith.api.item.ItemType
+import java.util.UUID
 
-class AuthService {
-  var devPermission: String = _
-  var staffPermission: String = _
-  var modPermission: String = _
-  var adminPermission: String = _
-  var debuggingItem: ItemType = _
-  var moderatingItem: ItemType = _
+import gg.warcraft.monolith.api.core.{Message, MonolithConfig}
 
-  def readConfig(config: MonolithConfig): Unit = {
-    devPermission = config.devPermission
-    staffPermission = config.staffPermission
-    modPermission = config.modPermission
-    adminPermission = config.adminPermission
-    debuggingItem = config.debuggingItem
-    moderatingItem = config.moderatingItem
-  }
+class AuthService(config: MonolithConfig) {
+  private final val buildingOnMessage = Message.server("Building Mode: On")
+  private final val buildingOffMessage = Message.server("Building Mode: Off")
+  private final val moderatingOnMessage = Message.server("Moderating Mode: On")
+  private final val moderatingOffMessage = Message.server("Moderating Mode: Off")
+  private final val debuggingOnMessage = Message.server("Debugging Mode: On")
+  private final val debuggingOffMessage = Message.server("Debugging Mode: Off")
 
-  private def hasOffHand(principal: Principal, offHand: ItemType): Boolean =
-    principal.equipment.offHand match {
-      case Some(item) => item.`type` == offHand
-      case None       => false
-    }
+  private val staffPermission: String = config.staffPermission
+  private val modPermission: String = config.modPermission
+  private val adminPermission: String = config.adminPermission
+  private val devPermission: String = config.devPermission
 
-  def isDev(principal: Principal): Boolean =
-    principal.hasPermission(devPermission)
-
-  def isDebugging(principal: Principal): Boolean =
-    isDev(principal) && hasOffHand(principal, debuggingItem)
+  private var _building: Set[UUID] = Set.empty
+  private var _moderating: Set[UUID] = Set.empty
+  private var _debugging: Set[UUID] = Set.empty
 
   def isStaff(principal: Principal): Boolean =
     principal.hasPermission(staffPermission)
@@ -65,6 +54,42 @@ class AuthService {
   def isAdmin(principal: Principal): Boolean =
     principal.hasPermission(adminPermission)
 
+  def isDev(principal: Principal): Boolean =
+    principal.hasPermission(devPermission)
+
+  def isBuilding(principal: Principal): Boolean =
+    isStaff(principal) && _building.contains(principal.id)
+
   def isModerating(principal: Principal): Boolean =
-    isMod(principal) && hasOffHand(principal, moderatingItem)
+    isMod(principal) && _moderating.contains(principal.id)
+
+  def isDebugging(principal: Principal): Boolean =
+    isDev(principal) && _debugging.contains(principal.id)
+
+  private[auth] def toggleBuilding(principal: Principal): Unit =
+    if (_building.contains(principal.id)) {
+      _building -= principal.id
+      principal.sendMessage(buildingOffMessage)
+    } else {
+      _building += principal.id
+      principal.sendMessage(buildingOnMessage)
+    }
+
+  private[auth] def toggleModerating(principal: Principal): Unit =
+    if (_moderating.contains(principal.id)) {
+      _moderating -= principal.id
+      principal.sendMessage(moderatingOffMessage)
+    } else {
+      _moderating += principal.id
+      principal.sendMessage(moderatingOnMessage)
+    }
+
+  private[auth] def toggleDebugging(principal: Principal): Unit =
+    if (_debugging.contains(principal.id)) {
+      _debugging -= principal.id
+      principal.sendMessage(debuggingOffMessage)
+    } else {
+      _debugging += principal.id
+      principal.sendMessage(debuggingOnMessage)
+    }
 }
