@@ -22,27 +22,14 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.core.auth.command
+package gg.warcraft.monolith.api.core.auth
 
-import gg.warcraft.monolith.api.core.auth.{AuthService, Principal}
-import gg.warcraft.monolith.api.core.command.Command
-import gg.warcraft.monolith.api.player.Player
+import gg.warcraft.monolith.api.core.event.Event
+import gg.warcraft.monolith.api.player.PlayerDisconnectEvent
 
-class BuildModeCommand() extends Command("build")
-
-object BuildModeCommand {
-  class Handler(implicit
-      authService: AuthService
-  ) extends Command.Handler {
-    override def handle(
-        principal: Principal,
-        command: Command,
-        args: String*
-    ): Command.Result = principal match {
-      case player: Player =>
-        if (authService.toggleBuilding(player)) Command.success
-        else Command.invalid
-      case _ => Command.playersOnly
-    }
+class AuthModeHandler(implicit authService: AuthService) extends Event.Handler {
+  override def handle(event: Event): Unit = event match {
+    case PlayerDisconnectEvent(player) => authService.disableAllModes(player)
+    case _                             =>
   }
 }

@@ -40,10 +40,8 @@ object DebugModeCommand {
         args: String*
     ): Command.Result = principal match {
       case player: Player =>
-        if (authService.isDev(player)) {
-          authService.toggleDebugging(player)
-          Command.success
-        } else Command.invalid
+        if (authService.toggleDebugging(player)) Command.success
+        else Command.invalid
       case _ => Command.playersOnly
     }
   }

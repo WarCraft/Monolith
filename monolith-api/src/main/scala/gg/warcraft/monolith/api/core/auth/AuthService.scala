@@ -66,30 +66,42 @@ class AuthService(config: MonolithConfig) {
   def isDebugging(principal: Principal): Boolean =
     isDev(principal) && _debugging.contains(principal.id)
 
-  private[auth] def toggleBuilding(principal: Principal): Unit =
+  private[auth] def toggleBuilding(principal: Principal): Boolean =
     if (_building.contains(principal.id)) {
       _building -= principal.id
       principal.sendMessage(buildingOffMessage)
-    } else {
+      true
+    } else if (isStaff(principal)) {
       _building += principal.id
       principal.sendMessage(buildingOnMessage)
-    }
+      true
+    } else false
 
-  private[auth] def toggleModerating(principal: Principal): Unit =
+  private[auth] def toggleModerating(principal: Principal): Boolean =
     if (_moderating.contains(principal.id)) {
       _moderating -= principal.id
       principal.sendMessage(moderatingOffMessage)
-    } else {
+      true
+    } else if (isMod(principal)) {
       _moderating += principal.id
       principal.sendMessage(moderatingOnMessage)
-    }
+      true
+    } else false
 
-  private[auth] def toggleDebugging(principal: Principal): Unit =
+  private[auth] def toggleDebugging(principal: Principal): Boolean =
     if (_debugging.contains(principal.id)) {
       _debugging -= principal.id
       principal.sendMessage(debuggingOffMessage)
-    } else {
+      true
+    } else if (isDev(principal)) {
       _debugging += principal.id
       principal.sendMessage(debuggingOnMessage)
-    }
+      true
+    } else false
+
+  private[auth] def disableAllModes(principal: Principal): Unit = {
+    _building -= principal.id
+    _moderating -= principal.id
+    _debugging -= principal.id
+  }
 }

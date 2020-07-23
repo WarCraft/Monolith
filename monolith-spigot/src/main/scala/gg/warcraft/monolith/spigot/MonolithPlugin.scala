@@ -32,6 +32,7 @@ import gg.warcraft.monolith.api.core.Codecs.Circe._
 import gg.warcraft.monolith.api.core.auth.command.{
   BuildModeCommand, DebugModeCommand, ModModeCommand
 }
+import gg.warcraft.monolith.api.core.auth.AuthModeHandler
 import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.entity.data.EntityDataCacheHandler
 import gg.warcraft.monolith.api.entity.status.StatusHandler
@@ -136,6 +137,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   private def enableHandlers(): Unit = {
+    eventService.subscribe(new AuthModeHandler)
     eventService.subscribe(new DebuggingHandler)
     eventService.subscribe(new EntityDataCacheHandler)
     eventService.subscribe(new CurrencyCacheHandler)

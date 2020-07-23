@@ -40,10 +40,8 @@ object ModModeCommand {
         args: String*
     ): Command.Result = principal match {
       case player: Player =>
-        if (authService.isMod(player)) {
-          authService.toggleModerating(player)
-          Command.success
-        } else Command.invalid
+        if (authService.toggleModerating(player)) Command.success
+        else Command.invalid
       case _ => Command.playersOnly
     }
   }
