@@ -54,8 +54,11 @@ trait MonolithPlugin {
   protected implicit val circe: Configuration = Configuration.default.withDefaults
   protected implicit val context: ExecutionContext = ExecutionContext.global
 
-  protected def parseConfig[A: Decoder](config: String, fallback: Boolean = false)(
-      implicit logger: Logger
+  protected def parseConfig[A: Decoder](
+      config: String,
+      fallback: Boolean = false
+  )(implicit
+      logger: Logger
   ): A = {
     def onError(err: Error): A = {
       logger.severe(err.getMessage)
@@ -79,25 +82,28 @@ trait MonolithPlugin {
   protected def initDatabase[D <: SqlIdiom, N <: NamingStrategy](
       dialect: D,
       naming: N,
-      dataFolder: File
+      dataFolder: File // TODO path: String
   ): JdbcContext[D, N] = {
-    val databaseProps = new Properties()
-    databaseProps.setProperty("driverClassName", "org.sqlite.JDBC")
-    val databasePath = s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
-    databaseProps.setProperty("jdbcUrl", s"jdbc:sqlite:$databasePath")
-    val databaseConfig = ConfigFactory.parseProperties(databaseProps)
+    val props = new Properties()
+    props.setProperty("driverClassName", "org.sqlite.JDBC")
+    val path = s"${dataFolder.getAbsolutePath}${File.separator}database.sqlite"
+    props.setProperty("jdbcUrl", s"jdbc:sqlite:$path")
+    val config = ConfigFactory.parseProperties(props)
     val database = dialect match {
-      case _: H2Dialect       => new H2JdbcContext(naming, databaseConfig)
-      case _: MySQLDialect    => new MysqlJdbcContext(naming, databaseConfig)
-      case _: OracleDialect   => new OracleJdbcContext(naming, databaseConfig)
-      case _: PostgresDialect => new PostgresJdbcContext(naming, databaseConfig)
-      case _: SqliteDialect   => new SqliteJdbcContext(naming, databaseConfig)
+      case _: H2Dialect       => new H2JdbcContext(naming, config)
+      case _: MySQLDialect    => new MysqlJdbcContext(naming, config)
+      case _: OracleDialect   => new OracleJdbcContext(naming, config)
+      case _: PostgresDialect => new PostgresJdbcContext(naming, config)
+      case _: SqliteDialect   => new SqliteJdbcContext(naming, config)
     }
     databases ::= database
     database.asInstanceOf[JdbcContext[D, N]]
   }
 
-  protected def upgradeDatabase(dataFolder: File, classLoader: ClassLoader)(implicit
+  protected def upgradeDatabase(
+      dataFolder: File,
+      classLoader: ClassLoader
+  )(implicit
       logger: Logger
   ): Unit = {
     val databasePath = s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
