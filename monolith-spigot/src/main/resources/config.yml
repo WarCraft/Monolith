@@ -5,6 +5,10 @@ buildRepository:
     max: { x: 0, y: 0, z: 0 }
   orientation: NORTH
 
+maintenanceMode:
+  active: no
+  permission: monolith.staff
+
 teams: []
 
 # Staff Permissions
@@ -12,10 +16,6 @@ staffPermission: monolith.staff
 modPermission: monolith.mod
 adminPermission: monolith.admin
 devPermission: monolith.dev
-
-# Maintenance Mode
-maintenanceMode: false
-maintenanceModePermission: monolith.staff
 
 # Miscellaneous
 baseHealth: 20

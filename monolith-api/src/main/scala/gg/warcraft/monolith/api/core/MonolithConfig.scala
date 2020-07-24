@@ -32,15 +32,13 @@ import gg.warcraft.monolith.api.world.Direction
 
 case class MonolithConfig(
     buildRepository: BuildRepositoryConfig,
+    maintenanceMode: MaintenanceModeConfig,
     teams: List[Team],
     // Staff Permissions
     staffPermission: String,
     modPermission: String,
     adminPermission: String,
     devPermission: String,
-    // Maintenance Mode
-    maintenanceMode: Boolean,
-    maintenanceModePermission: String,
     // Miscellaneous
     baseHealth: Int,
     serverTimeZoneUtcOffset: String,
@@ -55,4 +53,9 @@ case class MonolithConfig(
 case class BuildRepositoryConfig(
     boundingBox: BlockBox,
     orientation: Direction
+)
+
+case class MaintenanceModeConfig(
+    active: Boolean,
+    permission: String
 )
