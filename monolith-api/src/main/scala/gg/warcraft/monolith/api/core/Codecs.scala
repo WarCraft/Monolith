@@ -26,6 +26,7 @@ package gg.warcraft.monolith.api.core
 
 import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
 import gg.warcraft.monolith.api.core.Duration._
+import gg.warcraft.monolith.api.effect.Particle
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
 import gg.warcraft.monolith.api.world.{Direction, World, WorldService}
@@ -68,6 +69,31 @@ object Codecs {
       Decoder.decodeString.emapTry { it => { Try { itemService.parseData(it) } } }
     implicit lazy val itemDataEncoder: Encoder[ItemTypeOrVariant] =
       Encoder.encodeString.contramap { _.toString }
+
+    implicit lazy val particleColorDecoder: Decoder[Particle.Color] =
+      Decoder.decodeString.emapTry { it =>
+        Try {
+          it match {
+            case "Aqua"    => Particle.Color.Aqua
+            case "Black"   => Particle.Color.Black
+            case "Blue"    => Particle.Color.Blue
+            case "Fuchsia" => Particle.Color.Fuchsia
+            case "Gray"    => Particle.Color.Gray
+            case "Green"   => Particle.Color.Green
+            case "Lime"    => Particle.Color.Lime
+            case "Maroon"  => Particle.Color.Maroon
+            case "Navy"    => Particle.Color.Navy
+            case "Olive"   => Particle.Color.Olive
+            case "Orange"  => Particle.Color.Orange
+            case "Purple"  => Particle.Color.Purple
+            case "Red"     => Particle.Color.Red
+            case "Silver"  => Particle.Color.Silver
+            case "Teal"    => Particle.Color.Teal
+            case "White"   => Particle.Color.White
+            case "Yellow"  => Particle.Color.Yellow
+          }
+        }
+      }
 
     def teamDecoder(implicit
         teamService: TeamService
