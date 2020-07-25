@@ -45,7 +45,7 @@ object TeamStaffCommand {
         if (!authService.isStaff(player)) Command.invalid
         else if (args.length != 1) Command.invalid
         else
-          teamService.teams.get(args.head) match {
+          teamService.teams.get(args.head.capitalize) match {
             case team @ Some(_) =>
               playerService.setTeam(player.id, team)
               Command.success
