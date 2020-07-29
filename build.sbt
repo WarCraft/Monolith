@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "gg.warcraft",
   version := "15.0.0-SNAPSHOT",
-  scalaVersion := "2.13.2",
+  scalaVersion := "2.13.3",
   scalacOptions ++= Seq(
     "-language:implicitConversions"
   ),
@@ -20,7 +20,7 @@ lazy val assemblySettings = Seq(
 )
 
 lazy val commonDependencies = Seq(
-  "org.scalatest" %% "scalatest" % "3.1.2" % Test
+  "org.scalatest" %% "scalatest" % "3.2.0" % Test
 )
 
 lazy val api = (project in file("monolith-api"))
@@ -28,17 +28,15 @@ lazy val api = (project in file("monolith-api"))
     name := "monolith-api",
     commonSettings,
     libraryDependencies ++= commonDependencies ++ Seq(
-      "org.flywaydb" % "flyway-core" % "6.4.2",
-      "org.joml" % "joml" % "1.9.24",
-      "org.xerial" % "sqlite-jdbc" % "3.31.1",
+      "org.flywaydb" % "flyway-core" % "6.5.2",
+      "org.joml" % "joml" % "1.9.25",
+      "org.xerial" % "sqlite-jdbc" % "3.32.3.2",
       "io.circe" %% "circe-core" % "0.13.0",
       "io.circe" %% "circe-generic" % "0.13.0",
       "io.circe" %% "circe-generic-extras" % "0.13.0",
       "io.circe" %% "circe-parser" % "0.13.0",
       "io.circe" %% "circe-yaml" % "0.13.1",
-      "io.getquill" %% "quill-jdbc" % "3.5.1",
-
-      "com.fasterxml.jackson.core" % "jackson-databind" % "2.10.0"
+      "io.getquill" %% "quill-jdbc" % "3.5.2"
     )
   )
 
