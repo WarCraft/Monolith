@@ -38,10 +38,10 @@ class StatusService(
   private val statuses = mutable.Map[UUID, Status]()
 
   private[status] def loadStatus(playerId: UUID): Unit =
-    statuses put (playerId, new Status)
+    statuses.put(playerId, new Status)
 
   private[status] def invalidateStatus(entityId: UUID): Unit =
-    statuses remove entityId
+    statuses.remove(entityId)
 
   def getStatus(entityId: UUID): Status =
     statuses.getOrElseUpdate(entityId, new Status)

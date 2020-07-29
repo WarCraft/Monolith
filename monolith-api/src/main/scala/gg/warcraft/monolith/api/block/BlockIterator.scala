@@ -78,7 +78,7 @@ class BlockIterator(origin: Location, target: Location)(implicit
         val boundingBox = new AABBf(minCorner, minCorner + (1, 1, 1))
         val iteratorRay = new Rayf(origin.translation, direction)
         val intersectionResult = new Vector2f()
-        if (boundingBox.intersectRay(iteratorRay, intersectionResult)) {
+        if (boundingBox.intersectsRay(iteratorRay, intersectionResult)) {
           val nearIntersectionScalar = intersectionResult.x
           val intersection = origin + (direction * nearIntersectionScalar)
           return Block.Intersection(block, intersection) |> Some.apply

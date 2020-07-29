@@ -255,7 +255,7 @@ abstract class EntityService(implicit
         val jomlBoundingBox =
           new AABBf(entity.boundingBox.min, entity.boundingBox.max)
         val result =
-          jomlBoundingBox.intersectLineSegment(intersectionLine, intersectionResult)
+          jomlBoundingBox.intersectsLineSegment(intersectionLine, intersectionResult)
         if (result != Intersectionf.OUTSIDE) {
           if (intersectionResult.x < closestIntersectionScalar) {
             closestIntersectionScalar = intersectionResult.x
