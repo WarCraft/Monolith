@@ -90,7 +90,7 @@ object string {
   }
 
   @inline implicit final class StringOps(private val self: String) extends AnyVal {
-    def stripChatCodes: String = self.replace("§[0-9a-z]", "")
+    def stripChatCodes: String = self.replaceAll("§[0-9a-z]", "")
   }
 }
 
