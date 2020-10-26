@@ -31,11 +31,15 @@ case class Attributes(modifiers: Set[Attribute.Modifier]) {
 
   def get(attribute: Attribute): Float =
     if (!computed.contains(attribute)) {
-      val flat = modifiersByGroup.getOrElse(Attribute.Modifier.FLAT, Set.empty)
+      val flat = modifiersByGroup
+        .getOrElse(Attribute.Modifier.FLAT, Set.empty)
+        .filter { _.attribute == attribute }
         .foldRight(0f) { _.value + _ }
-      val percent = modifiersByGroup.getOrElse(Attribute.Modifier.PERCENT, Set.empty)
+      val percent = modifiersByGroup
+        .getOrElse(Attribute.Modifier.PERCENT, Set.empty)
+        .filter { _.attribute == attribute }
         .foldRight(0f) { _.value + _ }
-      val value = flat + (1 + percent) * flat
+      val value = (1 + percent) * flat
       computed += (attribute -> value)
       value
     } else computed(attribute)
