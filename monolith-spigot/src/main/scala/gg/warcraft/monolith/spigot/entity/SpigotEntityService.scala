@@ -30,8 +30,8 @@ import java.util.logging.Logger
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.{Entity, EntityService}
 import gg.warcraft.monolith.api.entity.Entity.Type
+import gg.warcraft.monolith.api.entity._
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
 import gg.warcraft.monolith.api.entity.data.{EntityData, EntityDataService}
 import gg.warcraft.monolith.api.entity.status.StatusService
@@ -46,7 +46,8 @@ import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.player.SpigotPlayer
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Server
-import org.bukkit.entity.EntityType
+import org.bukkit.attribute.Attribute
+import org.bukkit.entity.{EntityType, LivingEntity}
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
 
@@ -172,58 +173,34 @@ class SpigotEntityService(implicit
     getSpigotEntity(id).foreach { _.setHealth(0) }
 
   override def healEntity(id: UUID, amount: CombatValue): Unit =
-    getSpigotEntity(id).foreach { entity => }
+    getEntityOption(id).foreach { entity =>
+      val preEvent = eventService << EntityPreHealEvent(entity, amount)
+      if (preEvent.allowed) {
+        val reducedAmount = preEvent.heal
+        server.getEntity(id) match {
+          case it: LivingEntity =>
+            val maxHealth =
+              it.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue.toFloat
+            val prevHealth = it.getHealth.toFloat
+            val newHealth = Math.min(prevHealth + reducedAmount.modified, maxHealth)
+            it.setHealth(newHealth)
 
-  /*
-   private void publishHealthChangedEvent(UUID entityId, EntityType entityType, float previousHealth) {
-        Entity newEntity = entityQueryService.getEntity(entityId);
-        if (newEntity.getAttributes() == null) {
-            return; // FIXME not all entities on server have attributes, could this be due to migration?
+            eventService << EntityHealEvent(entity, reducedAmount)
+            if (newHealth != prevHealth) {
+              val prevPercentHealth = prevHealth / maxHealth
+              val newPercentHealth = newHealth / maxHealth
+              eventService << EntityHealthChangedEvent(
+                entity,
+                prevHealth,
+                prevPercentHealth,
+                newHealth,
+                newPercentHealth
+              )
+            }
+          case _ =>
         }
-        float newHealth = newEntity.getHealth();
-        if (newHealth != previousHealth) { // FIXME should this be in the server event mappers instead? atm it will only trigger of Monolith health changes
-            float maxHealth = newEntity.getAttributes().getValue(GenericAttribute.MAX_HEALTH);
-            float previousPercentHealth = previousHealth / maxHealth;
-            float newPercentHealth = newHealth / maxHealth;
-            EntityHealthChangedEvent entityHealthChangedEvent = new EntityHealthChangedEvent(entityId, entityType,
-                    previousHealth, previousPercentHealth, newHealth, newPercentHealth);
-            eventService.publish(entityHealthChangedEvent);
-        }
+      }
     }
-
-    @Override
-    public void heal(UUID entityId, CombatValue amount) {
-        Entity entity = entityQueryService.getEntity(entityId);
-        EntityType entityType = entity.getType();
-        EntityPreHealEvent entityPreHealEvent = new EntityPreHealEvent(entityId, entityType, amount, false, false);
-        eventService.publish(entityPreHealEvent);
-        if (!entityPreHealEvent.allowed()) {
-            return;
-        }
-
-        float previousHealth = entity.getHealth();
-
-        CombatValue heal = entityPreHealEvent.heal();
-        entityServerAdapter.heal(entityId, heal.modified());
-
-        EntityHealEvent entityHealEvent = new EntityHealEvent(entityId, entityType, heal);
-        eventService.publish(entityHealEvent);
-
-        publishHealthChangedEvent(entityId, entityType, previousHealth);
-    }
-
-
-     @Override
-    public void heal(UUID entityId, float amount) {
-        Entity entity = server.getEntity(entityId);
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            double maxHealth = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-            double newHealth = Math.min(livingEntity.getHealth() + amount, maxHealth);
-            livingEntity.setHealth(newHealth);
-        }
-    }
-   */
 
   override def burnEntity(id: UUID, duration: Duration): Unit =
     getSpigotEntity(id).foreach { entity =>
