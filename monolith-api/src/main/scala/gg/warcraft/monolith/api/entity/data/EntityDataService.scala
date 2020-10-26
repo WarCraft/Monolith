@@ -27,11 +27,11 @@ package gg.warcraft.monolith.api.entity.data
 import java.util.UUID
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.core.Codecs
+import gg.warcraft.monolith.api.core.Codecs.Quill._
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
-import io.getquill.{SnakeCase, SqliteDialect}
 import io.getquill.context.jdbc.JdbcContext
+import io.getquill.{SnakeCase, SqliteDialect}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,10 +44,7 @@ class EntityDataService(implicit
 ) {
   import database._
 
-  private implicit val teamDecoder: MappedEncoding[String, Team] =
-    Codecs.Quill.teamDecoder
-  private implicit val teamEncoder: MappedEncoding[Team, String] =
-    Codecs.Quill.teamEncoder
+  private implicit val _teamDecoder: MappedEncoding[String, Team] = teamDecoder
 
   private var _data: Map[UUID, EntityData] = Map.empty
 
