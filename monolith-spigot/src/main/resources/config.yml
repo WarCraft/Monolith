@@ -6,7 +6,7 @@ buildRepository:
   orientation: NORTH
 
 database:
-  # if embedded is set to yes the plugin will create an H2 database
+  # if embedded is set to yes the plugin will create an SQLite database
   # in the plugin data folder and doesn't require any other setup.
   embedded: yes
   # if embedded is set to no the plugin will attempt to connect to a
