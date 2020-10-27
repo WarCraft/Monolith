@@ -27,7 +27,6 @@ package gg.warcraft.monolith.api.core.data
 import java.time.{LocalDate, ZoneId}
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.core.MonolithConfig
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -35,10 +34,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class ServerDataService(implicit
     logger: Logger,
     context: ExecutionContext,
-    database: DatabaseContext
+    repository: ServerDataRepository
 ) {
-  import database._
-
   private final val ERR_LAST_DAILY_TICK =
     "Failed to retrieve last daily tick from database, falling back to today!"
 
@@ -52,9 +49,7 @@ class ServerDataService(implicit
     _serverTimeZone = config.serverTimeZone
 
     _lastDailyTick = {
-      val epochDay = database.run {
-        query[ServerData].filter { _.data == "last_daily_tick" }
-      }.headOption.flatMap { _.intValue }.getOrElse(-1L)
+      val epochDay = repository.lastDailyTick
       if (epochDay <= 0) {
         if (epochDay < 0) logger.severe(ERR_LAST_DAILY_TICK)
         LocalDate.now(serverTimeZone)
@@ -64,14 +59,6 @@ class ServerDataService(implicit
 
   def updateLastDailyTick(): Future[Unit] = Future {
     _lastDailyTick = LocalDate.now(serverTimeZone)
-    val data = ServerData(
-      "last_daily_tick",
-      intValue = Some(_lastDailyTick.toEpochDay)
-    )
-    database.run {
-      query[ServerData]
-        .insert { lift(data) }
-        .onConflictUpdate(_.data)((_t, _e) => _t.intValue -> _e.intValue)
-    }
+    repository.lastDailyTick = _lastDailyTick.toEpochDay
   }
 }
