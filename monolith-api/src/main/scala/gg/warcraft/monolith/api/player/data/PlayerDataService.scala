@@ -27,12 +27,9 @@ package gg.warcraft.monolith.api.player.data
 import java.util.UUID
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.core.Codecs
-import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
+import gg.warcraft.monolith.api.entity.team.TeamService
 import gg.warcraft.monolith.api.player.statistic.StatisticService
 import gg.warcraft.monolith.api.util.chaining._
-import io.getquill.{SnakeCase, SqliteDialect}
-import io.getquill.context.jdbc.JdbcContext
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.chaining._
@@ -40,17 +37,10 @@ import scala.util.chaining._
 class PlayerDataService(implicit
     logger: Logger,
     context: ExecutionContext,
-    database: JdbcContext[SqliteDialect, SnakeCase],
+    repository: PlayerDataRepository,
     statisticService: StatisticService,
     teamService: TeamService
 ) {
-  import database._
-
-  private implicit val teamDecoder: MappedEncoding[String, Team] =
-    Codecs.Quill.teamDecoder
-  private implicit val teamEncoder: MappedEncoding[Team, String] =
-    Codecs.Quill.teamEncoder
-
   private var _data: Map[UUID, PlayerData] = Map.empty
 
   def data: Map[UUID, PlayerData] = _data
@@ -59,9 +49,7 @@ class PlayerDataService(implicit
       case Some(data) => data |> Future.successful
       case None =>
         Future {
-          database.run {
-            query[PlayerData] filter { _.id == lift(id) }
-          }.headOption match {
+          repository.load(id) match {
             case Some(playerData) => playerData
             case None             => PlayerData(id)
           }
@@ -70,17 +58,7 @@ class PlayerDataService(implicit
 
   private[player] def setPlayerData(data: PlayerData): Unit = {
     _data += (data.id -> data)
-    Future {
-      database.run {
-        query[PlayerData]
-          .insert { lift(data) }
-          .onConflictUpdate(_.id)(
-            (t, e) => t.team -> e.team,
-            (t, e) => t.timeConnected -> e.timeConnected,
-            (t, e) => t.timeLastSeen -> e.timeLastSeen
-          )
-      }
-    }
+    repository.save(data)
     // TODO if team has changed fire event, or move to playerservice?
   }
 
@@ -93,12 +71,10 @@ class PlayerDataService(implicit
   }
 
   private[data] def loadPlayerData(id: UUID): Option[PlayerData] =
-    database.run { query[PlayerData].filter { _.id == lift(id) } }
-      .headOption
-      .tap {
-        case Some(data) => _data += (data.id -> data)
-        case None       =>
-      }
+    repository.load(id).tap {
+      case Some(data) => _data += (data.id -> data)
+      case None       =>
+    }
 
   private[data] def invalidatePlayerData(id: UUID): Unit =
     _data -= id
