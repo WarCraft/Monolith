@@ -26,12 +26,16 @@ package gg.warcraft.monolith.api.entity.team
 
 import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.core.event.EventService
+import io.getquill.MappedEncoding
 
 class TeamService(config: MonolithConfig)(implicit
     eventService: EventService
 ) {
   private var _teams: Map[String, Team] =
     config.teams.map { team => (team.name, team) }.toMap
+
+  val decoder: MappedEncoding[String, Team] = MappedEncoding { teams(_) }
+  val encoder: MappedEncoding[Team, String] = MappedEncoding { _.name }
 
   def teams: Map[String, Team] = _teams
 

@@ -29,44 +29,29 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.Codecs.Quill._
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
-import io.getquill.context.jdbc.JdbcContext
-import io.getquill.{SnakeCase, SqliteDialect}
+import gg.warcraft.monolith.api.entity.team.TeamService
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class EntityDataService(implicit
     logger: Logger,
     context: ExecutionContext,
-    database: JdbcContext[SqliteDialect, SnakeCase],
+    repository: EntityDataRepository,
     eventService: EventService,
     teamService: TeamService
 ) {
-  import database._
-
-  private implicit val _teamDecoder: MappedEncoding[String, Team] = teamDecoder
-
-  private var _data: Map[UUID, EntityData] = Map.empty
-
   // initialize entity data, as players are stored separately all entities are
   // expected to not spawn often or to be short lived and not clog the data map.
-  run { query[EntityData] }.foreach { it => _data += (it.id -> it) }
-
+  private var _data: Map[UUID, EntityData] = repository.all
   def data: Map[UUID, EntityData] = _data
 
   private[entity] def setEntityData(data: EntityData): Unit = {
     _data += (data.id -> data)
-    Future {
-      run {
-        query[EntityData]
-          .insert { lift(data) }
-          .onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
-      }
-    }
+    repository.save(data)
   }
 
   private[entity] def deleteEntityData(id: UUID): Unit = {
     _data -= id
-    Future { run { query[EntityData].filter { _.id == lift(id) }.delete } }
+    repository.delete(id)
   }
 }
