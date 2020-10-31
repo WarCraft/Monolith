@@ -31,11 +31,8 @@ import gg.warcraft.monolith.api.core.Codecs.Quill._
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.team.TeamService
 
-import scala.concurrent.ExecutionContext
-
 class EntityDataService(implicit
     logger: Logger,
-    context: ExecutionContext,
     repository: EntityDataRepository,
     eventService: EventService,
     teamService: TeamService

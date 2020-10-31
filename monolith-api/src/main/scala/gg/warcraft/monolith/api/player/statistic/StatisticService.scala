@@ -29,25 +29,22 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.util.future._
 
 import scala.collection.concurrent
-import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.jdk.CollectionConverters._
-import scala.util.{Failure, Success}
 import scala.util.chaining._
+import scala.util.{Failure, Success}
 
 class StatisticService(implicit
     logger: Logger,
     executionContext: ExecutionContext,
-    database: DatabaseContext,
+    repository: StatisticRepository,
     taskService: TaskService
 ) {
-  import database._
-
   private val _statistics: concurrent.Map[UUID, Statistics] =
     new ConcurrentHashMap[UUID, Statistics]().asScala
 
@@ -61,16 +58,12 @@ class StatisticService(implicit
   def statistics(playerId: UUID): Statistics =
     statisticsFuture(playerId).getOrThrow
 
+  // TODO should repositories always return a Future allowing the service to determine what methodology to use?
   def statisticsFuture(playerId: UUID): Future[Statistics] =
     _statistics.get(playerId) match {
       case Some(statistics) => Future.successful(statistics)
-      case None =>
-        Future {
-          database.run { query[Statistic].filter { _.playerId == lift(playerId) } }
-            .iterator.map { it => it.statistic -> it }
-            .toMap.pipe { new Statistics(_) }
-          // don't update cache for offline players
-        }
+      case None             => Future { repository.load(playerId) }
+      // don't update cache for offline players
     }
 
   private def updateStatistic(
@@ -90,22 +83,13 @@ class StatisticService(implicit
       }
     }
 
-    Future {
-      database.run {
-        liftQuery(deltaStatistics).foreach { statistic =>
-          query[Statistic]
-            .insert { statistic }
-            .onConflictUpdate(_.playerId, _.statistic) {
-              (t, e) => t.value -> (t.value + e.value)
-            }
-        }
-      }
-    }
+    repository.save(deltaStatistics: _*)
   }
 
   /** Increases a player's statistic by amount. Statistics are permanent. For daily
     * or weekly statistics that need to be reset append the statistic's name with a
-    * unique identifier. */
+    * unique identifier.
+    */
   def increaseStatistic(statistic: String, amount: Long, playerIds: UUID*): Unit = {
     val deltaStatistic = playerIds.map { Statistic(_, statistic, amount) }
     updateStatistic(_.increase(amount), deltaStatistic: _*).immediatelyOrOnComplete {
