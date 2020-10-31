@@ -30,26 +30,23 @@ import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.core.types.DatabaseContext
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.util.future._
 
 import scala.collection.concurrent
-import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.jdk.CollectionConverters._
-import scala.util.{Failure, Success}
 import scala.util.chaining._
+import scala.util.{Failure, Success}
 
 class CurrencyService(implicit
     logger: Logger,
     executionContext: ExecutionContext,
-    database: DatabaseContext,
+    repository: CurrencyRepository,
     eventService: EventService,
     taskService: TaskService
 ) {
-  import database._
-
   private val _currencies: concurrent.Map[UUID, Currencies] =
     new ConcurrentHashMap[UUID, Currencies]().asScala
 
@@ -66,13 +63,8 @@ class CurrencyService(implicit
   def currenciesFuture(playerId: UUID): Future[Currencies] =
     _currencies.get(playerId) match {
       case Some(currencies) => Future.successful(currencies)
-      case None =>
-        Future {
-          database.run { query[Currency].filter { _.playerId == lift(playerId) } }
-            .iterator.map { it => it.currency -> it }
-            .toMap.pipe { new Currencies(_) }
-          // don't update cache for offline players
-        }
+      case None             => Future { repository.load(playerId) }
+      // don't update cache for offline players
     }
 
   private def updateCurrency(
@@ -92,22 +84,12 @@ class CurrencyService(implicit
       }
     }
 
-    Future {
-      database.run {
-        liftQuery(deltaCurrencies).foreach { currency =>
-          query[Currency]
-            .insert { currency }
-            .onConflictUpdate(_.playerId, _.currency)(
-              (t, e) => t.amount -> (t.amount + e.amount),
-              (t, e) => t.lifetime -> (t.lifetime + e.lifetime)
-            )
-        }
-      }
-    }
+    repository.save(deltaCurrencies: _*)
   }
 
   /** Adds an amount of currency to the player. This increments both their currency
-    * as well as their lifetime currency. */
+    * as well as their lifetime currency.
+    */
   def addCurrency(currency: String, amount: Int, playerIds: UUID*): Unit = {
     val deltaCurrencies = playerIds.map { Currency(_, currency, amount, amount) }
     updateCurrency(_.add(amount), deltaCurrencies: _*).immediatelyOrOnComplete {
@@ -123,7 +105,8 @@ class CurrencyService(implicit
 
   /** Removes an amount of currency from the player, but leaves the lifetime currency
     * in tact. Throws an IllegalArgumentException if the player does not have
-    * sufficient funds. */
+    * sufficient funds.
+    */
   def removeCurrency(currency: String, amount: Int, playerId: UUID): Unit = {
     _currencies(playerId) // ensure player is online, will throw otherwise
     val deltaCurrency = Currency(playerId, currency, -amount)
@@ -139,7 +122,8 @@ class CurrencyService(implicit
 
   /** Revokes an amount of currency from the player without regard for whether the
     * player actually has sufficient funds while also removing lifetime currency
-    * from the player. This is generally only useful to respond to chargebacks. */
+    * from the player. This is generally only useful to respond to chargebacks.
+    */
   def revokeCurrency(currency: String, amount: Int, playerId: UUID): Unit = {
     val deltaCurrency = Currency(playerId, currency, -amount, -amount)
     updateCurrency(_.revoke(amount), deltaCurrency).immediatelyOrOnComplete {
