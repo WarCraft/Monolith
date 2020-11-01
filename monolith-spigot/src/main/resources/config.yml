@@ -23,13 +23,13 @@ maintenanceMode:
   active: no
   permission: monolith.staff
 
-teams: []
+staffPermissions:
+  staff: monolith.staff
+  mod: monolith.mod
+  admin: monolith.admin
+  dev: monolith.dev
 
-# Staff Permissions
-staffPermission: monolith.staff
-modPermission: monolith.mod
-adminPermission: monolith.admin
-devPermission: monolith.dev
+teams: []
 
 # Miscellaneous
 baseHealth: 20

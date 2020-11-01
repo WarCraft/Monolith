@@ -26,7 +26,9 @@ package gg.warcraft.monolith.api.core.auth
 
 import java.util.UUID
 
-import gg.warcraft.monolith.api.core.{Message, MonolithConfig}
+import gg.warcraft.monolith.api.core.{
+  Message, MonolithConfig, StaffPermissionsConfig
+}
 
 class AuthService(config: MonolithConfig) {
   private final val buildingOnMessage = Message.server("Building Mode: On")
@@ -36,26 +38,23 @@ class AuthService(config: MonolithConfig) {
   private final val debuggingOnMessage = Message.server("Debugging Mode: On")
   private final val debuggingOffMessage = Message.server("Debugging Mode: Off")
 
-  private val staffPermission: String = config.staffPermission
-  private val modPermission: String = config.modPermission
-  private val adminPermission: String = config.adminPermission
-  private val devPermission: String = config.devPermission
+  private val permissions: StaffPermissionsConfig = config.staffPermissions
 
   private var _building: Set[UUID] = Set.empty
   private var _moderating: Set[UUID] = Set.empty
   private var _debugging: Set[UUID] = Set.empty
 
   def isStaff(principal: Principal): Boolean =
-    principal.hasPermission(staffPermission)
+    principal.hasPermission(permissions.staff)
 
   def isMod(principal: Principal): Boolean =
-    principal.hasPermission(modPermission)
+    principal.hasPermission(permissions.mod)
 
   def isAdmin(principal: Principal): Boolean =
-    principal.hasPermission(adminPermission)
+    principal.hasPermission(permissions.admin)
 
   def isDev(principal: Principal): Boolean =
-    principal.hasPermission(devPermission)
+    principal.hasPermission(permissions.dev)
 
   def isBuilding(principal: Principal): Boolean =
     isStaff(principal) && _building.contains(principal.id)
