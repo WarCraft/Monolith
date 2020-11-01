@@ -24,12 +24,10 @@
 
 package gg.warcraft.monolith.api.block.backup
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.world.BlockLocation
 
 trait BlockBackupService {
-  def createBackup(location: BlockLocation): UUID
-  def restoreBackup(id: UUID): Boolean
+  def createBackup(location: BlockLocation): Long
+  def restoreBackup(id: Long): Boolean
   def restoreBackups(): Unit
 }

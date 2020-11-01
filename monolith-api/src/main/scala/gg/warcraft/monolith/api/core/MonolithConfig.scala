@@ -32,13 +32,10 @@ import gg.warcraft.monolith.api.world.Direction
 
 case class MonolithConfig(
     buildRepository: BuildRepositoryConfig,
+    database: DatabaseConfig,
     maintenanceMode: MaintenanceModeConfig,
+    staffPermissions: StaffPermissionsConfig,
     teams: List[Team],
-    // Staff Permissions
-    staffPermission: String,
-    modPermission: String,
-    adminPermission: String,
-    devPermission: String,
     // Miscellaneous
     baseHealth: Int,
     serverTimeZoneUtcOffset: String,
@@ -55,7 +52,28 @@ case class BuildRepositoryConfig(
     orientation: Direction
 )
 
+case class DatabaseConfig(
+    embedded: Boolean,
+    postgres: Option[PostgresConfig]
+)
+
+case class PostgresConfig(
+    host: String,
+    port: Int,
+    database: String,
+    user: String,
+    password: String,
+    ssl: Boolean
+)
+
 case class MaintenanceModeConfig(
     active: Boolean,
     permission: String
+)
+
+case class StaffPermissionsConfig(
+    staff: String,
+    mod: String,
+    admin: String,
+    dev: String
 )

@@ -32,12 +32,11 @@ class TeamService(config: MonolithConfig)(implicit
     eventService: EventService
 ) {
   private var _teams: Map[String, Team] =
-    config.teams.map { team => (team.name, team) }.toMap
+    config.teams.map { it => it.name -> it }.toMap
+  def teams: Map[String, Team] = _teams
 
   val decoder: MappedEncoding[String, Team] = MappedEncoding { teams(_) }
   val encoder: MappedEncoding[Team, String] = MappedEncoding { _.name }
-
-  def teams: Map[String, Team] = _teams
 
   def registerTeam(team: Team): Unit =
     if (!_teams.contains(team.name)) {

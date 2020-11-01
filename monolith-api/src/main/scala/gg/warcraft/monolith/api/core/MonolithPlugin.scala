@@ -25,34 +25,30 @@
 package gg.warcraft.monolith.api.core
 
 import java.io.File
-import java.util.logging.Logger
 import java.util.Properties
+import java.util.logging.Logger
 
-import com.typesafe.config.ConfigFactory
-import io.circe.{Decoder, Error}
+import com.typesafe.config.{Config, ConfigFactory}
 import io.circe.generic.extras.Configuration
 import io.circe.yaml.parser
-import io.getquill.{
-  H2Dialect, H2JdbcContext, MySQLDialect, MysqlJdbcContext, NamingStrategy,
-  OracleDialect, OracleJdbcContext, PostgresDialect, PostgresJdbcContext,
-  SqliteDialect, SqliteJdbcContext
-}
+import io.circe.{Decoder, Error}
 import io.getquill.context.jdbc.JdbcContext
-import io.getquill.context.sql.idiom.SqlIdiom
 import org.flywaydb.core.Flyway
 
 import scala.concurrent.ExecutionContext
 import scala.io.Source
+import scala.util.chaining._
 
 trait MonolithPlugin {
   private final val WARN_DEFAULT_CONFIG = "Falling back to default config!"
   private final val ERR_CONFIG_FAILED = "Failed to parse (default) config!"
   private final val separator = File.separator
 
-  private[monolith] var databases: List[JdbcContext[_, _]] = Nil
-
   protected implicit val circe: Configuration = Configuration.default.withDefaults
   protected implicit val context: ExecutionContext = ExecutionContext.global
+
+  // TODO collect repositories and add close method
+  private[monolith] var databases: List[JdbcContext[_, _]] = Nil
 
   protected def parseConfig[A: Decoder](
       config: String,
@@ -79,41 +75,64 @@ trait MonolithPlugin {
     }
   }
 
-  protected def initDatabase[D <: SqlIdiom, N <: NamingStrategy](
-      dialect: D,
-      naming: N,
-      dataFolder: File // TODO path: String
-  ): JdbcContext[D, N] = {
-    val props = new Properties()
-    props.setProperty("driverClassName", "org.sqlite.JDBC")
-    val path = s"${dataFolder.getAbsolutePath}${File.separator}database.sqlite"
-    props.setProperty("jdbcUrl", s"jdbc:sqlite:$path")
-    val config = ConfigFactory.parseProperties(props)
-    val database = dialect match {
-      case _: H2Dialect       => new H2JdbcContext(naming, config)
-      case _: MySQLDialect    => new MysqlJdbcContext(naming, config)
-      case _: OracleDialect   => new OracleJdbcContext(naming, config)
-      case _: PostgresDialect => new PostgresJdbcContext(naming, config)
-      case _: SqliteDialect   => new SqliteJdbcContext(naming, config)
+  protected def parseDatabaseConfig(
+      config: DatabaseConfig,
+      dataFolder: File
+  ): Config =
+    if (config.embedded) {
+      val props = new Properties()
+      props.setProperty("driverClassName", "org.sqlite.JDBC")
+      val path = s"${dataFolder.getAbsolutePath}${File.separator}database.sqlite"
+      props.setProperty("jdbcUrl", s"jdbc:sqlite:$path")
+      ConfigFactory.parseProperties(props)
+    } else config.postgres match {
+      case Some(postgres) =>
+        val props = new Properties()
+        props.setProperty(
+          "dataSourceClassName",
+          "org.postgresql.ds.PGSimpleDataSource"
+        )
+        props.setProperty("dataSource.serverName", postgres.host)
+        props.setProperty("dataSource.portNumber", postgres.port.toString)
+        props.setProperty("dataSource.databaseName", postgres.database)
+        props.setProperty("dataSource.user", postgres.user)
+        props.setProperty("dataSource.password", postgres.password)
+        props.setProperty("connectionTimeout", 30000.toString)
+        ConfigFactory.parseProperties(props)
+      case None => throw new IllegalStateException(
+          "Embedded database is disabled, but Postgres config is missing."
+        )
     }
-    databases ::= database
-    database.asInstanceOf[JdbcContext[D, N]]
-  }
 
   protected def upgradeDatabase(
+      config: DatabaseConfig,
       dataFolder: File,
       classLoader: ClassLoader
   )(implicit
       logger: Logger
   ): Unit = {
-    val databasePath = s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
-    if (new File(databasePath).exists) {
-      val flyway = Flyway
-        .configure(classLoader)
-        .dataSource(s"jdbc:sqlite:$databasePath", null, null)
-        .load
-      val migrations = flyway.migrate()
-      logger.info(s"Applied $migrations new database schema migrations.")
-    } else logger.warning(s"Failed to migrate $databasePath, it's missing.")
+    val flyway = Flyway
+      .configure(classLoader)
+      .pipe { it =>
+        if (config.embedded) {
+          val databasePath =
+            s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
+          it.dataSource(s"jdbc:sqlite:$databasePath", null, null)
+            .locations("classpath:/db/migration/sqlite")
+        } else config.postgres match {
+          case Some(postgres) =>
+            it.dataSource(
+              s"jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}",
+              postgres.user,
+              postgres.password
+            ).locations("classpath:/db/migration/postgres")
+          case None => throw new IllegalStateException(
+              "Embedded database is disabled, but Postgres config is missing."
+            )
+        }
+      }
+      .load
+    val migrations = flyway.migrate()
+    logger.info(s"Applied $migrations new database schema migrations.")
   }
 }

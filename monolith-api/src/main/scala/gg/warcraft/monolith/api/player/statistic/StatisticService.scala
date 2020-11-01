@@ -59,6 +59,7 @@ class StatisticService(implicit
     statisticsFuture(playerId).getOrThrow
 
   // TODO should repositories always return a Future allowing the service to determine what methodology to use?
+  // TODO this also allows SQLite repositories to work on the main thread regardless of using a Future
   def statisticsFuture(playerId: UUID): Future[Statistics] =
     _statistics.get(playerId) match {
       case Some(statistics) => Future.successful(statistics)

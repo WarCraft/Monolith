@@ -26,28 +26,31 @@ package gg.warcraft.monolith.spigot
 
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.block.backup.BlockBackupService
+import gg.warcraft.monolith.api.block.BlockService
+import gg.warcraft.monolith.api.block.backup.{
+  BlockBackupRepository, BlockBackupService
+}
 import gg.warcraft.monolith.api.block.build.BlockBuildService
 import gg.warcraft.monolith.api.block.spoofing.BlockSpoofingService
-import gg.warcraft.monolith.api.block.BlockService
+import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.core.auth.AuthService
 import gg.warcraft.monolith.api.core.command.CommandService
-import gg.warcraft.monolith.api.core.data.ServerDataService
+import gg.warcraft.monolith.api.core.data.{ServerDataRepository, ServerDataService}
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.core.types.DatabaseContext
-import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.effect.ParticleAdapter
-import gg.warcraft.monolith.api.entity.attribute.AttributeService
-import gg.warcraft.monolith.api.entity.data.EntityDataService
-import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.entity.EntityService
+import gg.warcraft.monolith.api.entity.attribute.AttributeService
+import gg.warcraft.monolith.api.entity.data.{EntityDataRepository, EntityDataService}
+import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.entity.team.TeamService
-import gg.warcraft.monolith.api.player.currency.CurrencyService
-import gg.warcraft.monolith.api.player.data.PlayerDataService
-import gg.warcraft.monolith.api.player.statistic.StatisticService
 import gg.warcraft.monolith.api.player.PlayerService
+import gg.warcraft.monolith.api.player.currency.{CurrencyRepository, CurrencyService}
+import gg.warcraft.monolith.api.player.data.{PlayerDataRepository, PlayerDataService}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingService
+import gg.warcraft.monolith.api.player.statistic.{
+  StatisticRepository, StatisticService
+}
 import gg.warcraft.monolith.api.world.portal.PortalService
 import gg.warcraft.monolith.spigot.block._
 import gg.warcraft.monolith.spigot.block.backup.SpigotBlockBackupService
@@ -58,21 +61,21 @@ import gg.warcraft.monolith.spigot.combat.{
 import gg.warcraft.monolith.spigot.effect.{
   SpigotParticleAdapter, SpigotParticleMapper
 }
-import gg.warcraft.monolith.spigot.entity.{
-  SpigotEntityEventMapper, SpigotEntityService, SpigotEntityTypeMapper
-}
 import gg.warcraft.monolith.spigot.entity.attribute.{
   SpigotAttributeMapper, SpigotAttributeService
+}
+import gg.warcraft.monolith.spigot.entity.{
+  SpigotEntityEventMapper, SpigotEntityService, SpigotEntityTypeMapper
 }
 import gg.warcraft.monolith.spigot.item._
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.menu.{
   SpigotButtonMapper, SpigotMenuMapper, SpigotMenuService
 }
+import gg.warcraft.monolith.spigot.player.hiding.SpigotPlayerHidingService
 import gg.warcraft.monolith.spigot.player.{
   SpigotGameModeMapper, SpigotPlayerEventMapper, SpigotPlayerService
 }
-import gg.warcraft.monolith.spigot.player.hiding.SpigotPlayerHidingService
 import gg.warcraft.monolith.spigot.world._
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
@@ -86,7 +89,6 @@ object implicits {
   private var _plugin: Plugin = _
   private var _logger: Logger = _
 
-  private var _database: DatabaseContext = _
   private var _commandService: CommandService = _
   private var _eventService: EventService = _
   private var _taskService: TaskService = _
@@ -95,7 +97,6 @@ object implicits {
       server: Server,
       plugin: Plugin,
       logger: Logger,
-      database: DatabaseContext,
       commandService: CommandService,
       eventService: EventService,
       taskService: TaskService
@@ -103,14 +104,37 @@ object implicits {
     _server = server
     _plugin = plugin
     _logger = logger
-    _database = database
     _commandService = commandService
     _eventService = eventService
     _taskService = taskService
   }
 
-  private[spigot] def configure(config: MonolithConfig): Unit =
+  private var _serverDataRepository: ServerDataRepository = _
+  private var _entityDataRepository: EntityDataRepository = _
+  private var _playerDataRepository: PlayerDataRepository = _
+  private var _currencyRepository: CurrencyRepository = _
+  private var _statisticRepository: StatisticRepository = _
+  private var _blockBackupRepository: BlockBackupRepository = _
+
+  private[spigot] def configure(
+      config: MonolithConfig,
+      repositories: (
+          ServerDataRepository,
+          EntityDataRepository,
+          PlayerDataRepository,
+          CurrencyRepository,
+          StatisticRepository,
+          BlockBackupRepository
+      )
+  ): Unit = {
     _config = config
+    _serverDataRepository = repositories._1
+    _entityDataRepository = repositories._2
+    _playerDataRepository = repositories._3
+    _currencyRepository = repositories._4
+    _statisticRepository = repositories._5
+    _blockBackupRepository = repositories._6
+  }
 
   private[spigot] def monolithEventService(logger: Logger): EventService =
     if (_eventService != null) _eventService else new EventService()(logger)
@@ -120,9 +144,22 @@ object implicits {
   private implicit lazy val plugin: Plugin = _plugin
   private implicit lazy val logger: Logger = _logger
 
+  // Persistence
+  private implicit lazy val serverDataRepository: ServerDataRepository =
+    _serverDataRepository
+  private implicit lazy val entityDataRepository: EntityDataRepository =
+    _entityDataRepository
+  private implicit lazy val playerDataRepository: PlayerDataRepository =
+    _playerDataRepository
+  private implicit lazy val currencyRepository: CurrencyRepository =
+    _currencyRepository
+  private implicit lazy val statisticRepository: StatisticRepository =
+    _statisticRepository
+  private implicit lazy val blockBackupRepository: BlockBackupRepository =
+    _blockBackupRepository
+
   // Core
   private implicit final val context: ExecutionContext = ExecutionContext.global
-  private implicit lazy val database: DatabaseContext = _database
   private implicit lazy val eventService: EventService = _eventService
   private implicit lazy val taskService: TaskService = _taskService
 
