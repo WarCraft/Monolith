@@ -1,7 +1,7 @@
 lazy val projectSettings = Seq(
   organization := "gg.warcraft",
   version := "15.0.0-SNAPSHOT",
-  scalaVersion := "2.13.3",
+  scalaVersion := "2.13.4",
   scalacOptions ++= Seq(
     "-language:implicitConversions"
   ),
@@ -19,24 +19,24 @@ lazy val assemblySettings = Seq(
   }
 )
 
-val circeVersion = "0.13.0"
+val circeVersion = "0.13.+"
 
 lazy val api = (project in file("monolith-api"))
   .settings(
     name := "monolith-api",
     projectSettings,
     libraryDependencies ++= Seq(
-      "org.flywaydb" % "flyway-core" % "6.5.5",
-      "org.joml" % "joml" % "1.9.25",
-      "org.xerial" % "sqlite-jdbc" % "3.32.3.2",
-      "io.circe" %% "circe-core" % circeVersion,
-      "io.circe" %% "circe-generic" % circeVersion,
-      "io.circe" %% "circe-generic-extras" % circeVersion,
-      "io.circe" %% "circe-parser" % circeVersion,
-      "io.circe" %% "circe-yaml" % "0.13.1",
-      "io.getquill" %% "quill-jdbc" % "3.5.2"
+      "org.flywaydb" % "flyway-core" % "6.5.+",
+      "org.joml" % "joml" % "1.9.+",
+      "org.xerial" % "sqlite-jdbc" % "3.32.+",
+      "io.circe" % "circe-core_2.13" % circeVersion,
+      "io.circe" % "circe-generic_2.13" % circeVersion,
+      "io.circe" % "circe-generic-extras_2.13" % circeVersion,
+      "io.circe" % "circe-parser_2.13" % circeVersion,
+      "io.circe" % "circe-yaml_2.13" % circeVersion,
+      "io.getquill" % "quill-jdbc_2.13" % "3.5.+"
     ) ++ Seq(
-      "org.scalatest" %% "scalatest" % "3.2.1" % Test
+      "org.scalatest" % "scalatest_2.13" % "3.2.+" % Test
     )
   )
 
@@ -71,9 +71,9 @@ lazy val bootstrap = (project in file("monolith-bootstrap"))
     ),
     libraryDependencies ++= Seq(
       "com.destroystokyo.paper" % "paper-api" % "1.15.2-R0.1-SNAPSHOT" % Provided,
-      "io.circe" %% "circe-core" % circeVersion,
-      "io.circe" %% "circe-generic" % circeVersion,
-      "io.circe" %% "circe-parser" % circeVersion,
-      "io.circe" %% "circe-yaml" % "0.13.1"
+      "io.circe" % "circe-core_2.13" % circeVersion,
+      "io.circe" % "circe-generic_2.13" % circeVersion,
+      "io.circe" % "circe-parser_2.13" % circeVersion,
+      "io.circe" % "circe-yaml_2.13" % circeVersion
     )
   )
