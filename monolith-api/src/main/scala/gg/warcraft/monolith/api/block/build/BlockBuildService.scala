@@ -26,8 +26,9 @@ package gg.warcraft.monolith.api.block.build
 
 import java.util.logging.Logger
 
-import gg.warcraft.monolith.api.block.{Block, BlockFace, BlockType, Sign}
 import gg.warcraft.monolith.api.block.box.{BlockBox, BlockBoxReader}
+import gg.warcraft.monolith.api.block.extensions._
+import gg.warcraft.monolith.api.block.{Block, BlockFace, BlockType, Sign}
 import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.{Direction, WorldService}
@@ -99,12 +100,12 @@ class BlockBuildService(implicit
         .toBlockFace
       var extraSigns: List[Sign] = Nil
       var nextSign = sign.getRelative(nextDirection)
-      while (nextSign.head.`type` == BlockType.SIGN) {
-        extraSigns ::= nextSign.head.asInstanceOf[Sign]
-        nextSign = nextSign.head.getRelative(nextDirection)
+      while (nextSign.`type` == BlockType.SIGN) {
+        extraSigns ::= nextSign.asInstanceOf[Sign]
+        nextSign = nextSign.getRelative(nextDirection)
       }
 
-      val data = extraSigns.flatMap { _.lines }.filter{ _.nonEmpty }
+      val data = extraSigns.flatMap { _.lines }.filter { _.nonEmpty }
 
       BlockBuild(s"$typed:$model", typed, model, data, boundingBox) |> Some.apply
     } else None // sign contains extra data for another build
@@ -145,14 +146,7 @@ class BlockBuildService(implicit
 
     while (searching) {
       val currentBlocks = newGlassBlocks
-        .flatMap {
-          _.getRelative(
-            BlockFace.NORTH,
-            BlockFace.EAST,
-            BlockFace.SOUTH,
-            BlockFace.WEST
-          )
-        }
+        .flatMap { _.getHorizontalRelatives() }
         .diff(searchedBlocks)
         .tap { searchedBlocks ++= _ }
 

@@ -27,7 +27,7 @@ package gg.warcraft.monolith.api.block
 import java.util
 
 import gg.warcraft.monolith.api.core.CaseTrait
-import gg.warcraft.monolith.api.world.{BlockLocation, Location, WorldService}
+import gg.warcraft.monolith.api.world.{BlockLocation, Location}
 
 import scala.annotation.varargs
 import scala.jdk.CollectionConverters._
@@ -38,19 +38,6 @@ object Block {
       // TODO face: BlockFace,
       location: Location
   )
-
-  @inline final implicit class Extensions(block: Block)(
-      implicit worldService: WorldService
-  ) {
-    def getRelative(directions: BlockFace*): List[Block] = directions.map {
-      case BlockFace.NORTH => worldService.getBlock(block.location + (0, 0, -1))
-      case BlockFace.EAST  => worldService.getBlock(block.location + (1, 0, 0))
-      case BlockFace.SOUTH => worldService.getBlock(block.location + (0, 0, 1))
-      case BlockFace.WEST  => worldService.getBlock(block.location + (-1, 0, 0))
-      case BlockFace.UP    => worldService.getBlock(block.location + (0, 1, 0))
-      case BlockFace.DOWN  => worldService.getBlock(block.location + (0, -1, 0))
-    }.toList
-  }
 
   implicit def toBlockLocation(block: Block): BlockLocation = block.location
   implicit def toLocation(block: Block): Location = block.location.toLocation
