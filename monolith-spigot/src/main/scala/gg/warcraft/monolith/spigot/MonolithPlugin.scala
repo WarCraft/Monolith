@@ -92,7 +92,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
     blockBuildService.readConfig(config)
     serverDataService.readConfig(config)
-    blockBackupService.restoreBackups()
+    blockBackupService.restoreAllBackups()
 
     enableHandlers()
     enableCommands()

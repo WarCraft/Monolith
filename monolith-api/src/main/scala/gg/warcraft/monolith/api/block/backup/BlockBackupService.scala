@@ -27,7 +27,9 @@ package gg.warcraft.monolith.api.block.backup
 import gg.warcraft.monolith.api.world.BlockLocation
 
 trait BlockBackupService {
-  def createBackup(location: BlockLocation): Long
-  def restoreBackup(id: Long): Boolean
-  def restoreBackups(): Unit
+  def createBackup(location: BlockLocation): Int
+  def createBackups(locations: Seq[BlockLocation]): Range.Inclusive
+  def restoreBackup(id: Int): Unit
+  def restoreBackups(ids: Range.Inclusive): Unit
+  def restoreAllBackups(): Unit
 }

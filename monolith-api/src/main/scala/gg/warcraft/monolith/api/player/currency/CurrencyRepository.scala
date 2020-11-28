@@ -27,10 +27,10 @@ package gg.warcraft.monolith.api.player.currency
 import java.util.UUID
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill.teamDecoder
+import gg.warcraft.monolith.api.core.Codecs.Quill._
 import io.getquill._
-import io.getquill.context.Context
-import io.getquill.idiom.Idiom
+import io.getquill.context.jdbc.JdbcContext
+import io.getquill.context.sql.idiom.SqlIdiom
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.chaining.scalaUtilChainingOps
@@ -43,16 +43,16 @@ trait CurrencyRepository {
   ): Future[Unit]
 }
 
-private trait CurrencyContext[I <: Idiom, N <: NamingStrategy] {
-  this: Context[I, N] =>
+private trait CurrencyContext[I <: SqlIdiom, N <: NamingStrategy] {
+  this: JdbcContext[I, N] =>
 
   def loadCurrencies = quote {
-    (q: Query[Currency], id: UUID) => q.filter { _.playerId == lift(id) }
+    (q: Query[Currency], id: UUID) => q.filter { _.playerId == id }
   }
 
   def upsertCurrency = quote {
-    (q: EntityQuery[Currency], Currency: Currency) =>
-      q.insert { Currency }
+    (q: EntityQuery[Currency], currency: Currency) =>
+      q.insert(currency)
         .onConflictUpdate(_.playerId, _.currency)(
           (t, e) => t.amount -> (t.amount + e.amount),
           (t, e) => t.lifetime -> (t.lifetime + e.lifetime)
@@ -68,7 +68,7 @@ private[monolith] class PostgresCurrencyRepository(
   import databaseContext._
 
   override def load(id: UUID): Currencies =
-    run { loadCurrencies(query[Currency], id) }
+    run { loadCurrencies(query[Currency], lift(id)) }
       .iterator.map { it => it.currency -> it }
       .toMap.pipe { new Currencies(_) }
 
@@ -76,9 +76,7 @@ private[monolith] class PostgresCurrencyRepository(
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit] = Future {
     run {
-      liftQuery(Currencies).foreach { Currency =>
-        upsertCurrency(query[Currency], Currency)
-      }
+      liftQuery(Currencies).foreach { it => upsertCurrency(query[Currency], it) }
     }
   }
 }
@@ -91,7 +89,7 @@ private[monolith] class SqliteCurrencyRepository(
   import context._
 
   override def load(id: UUID): Currencies =
-    run { loadCurrencies(query[Currency], id) }
+    run { loadCurrencies(query[Currency], lift(id)) }
       .iterator.map { it => it.currency -> it }
       .toMap.pipe { new Currencies(_) }
 
@@ -99,9 +97,7 @@ private[monolith] class SqliteCurrencyRepository(
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit] = Future {
     run {
-      liftQuery(Currencies).foreach { Currency =>
-        upsertCurrency(query[Currency], Currency)
-      }
+      liftQuery(Currencies).foreach { it => upsertCurrency(query[Currency], it) }
     }
   }
 }

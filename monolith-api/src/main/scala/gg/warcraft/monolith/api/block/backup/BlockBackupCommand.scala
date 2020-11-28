@@ -42,7 +42,7 @@ object BlockBackupCommand {
     ): Command.Result = executor match {
       case player: Player =>
         if (authService.isAdmin(player)) {
-          blockBackupService.restoreBackups()
+          blockBackupService.restoreAllBackups()
           Command.success
         } else Command.invalid
       case _ => Command.playersOnly

@@ -27,10 +27,10 @@ package gg.warcraft.monolith.api.player.statistic
 import java.util.UUID
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill.teamDecoder
+import gg.warcraft.monolith.api.core.Codecs.Quill._
 import io.getquill._
-import io.getquill.context.Context
-import io.getquill.idiom.Idiom
+import io.getquill.context.jdbc.JdbcContext
+import io.getquill.context.sql.idiom.SqlIdiom
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.chaining.scalaUtilChainingOps
@@ -43,16 +43,16 @@ trait StatisticRepository {
   ): Future[Unit]
 }
 
-private trait StatisticContext[I <: Idiom, N <: NamingStrategy] {
-  this: Context[I, N] =>
+private trait StatisticContext[I <: SqlIdiom, N <: NamingStrategy] {
+  this: JdbcContext[I, N] =>
 
   def loadStatistics = quote {
-    (q: Query[Statistic], id: UUID) => q.filter { _.playerId == lift(id) }
+    (q: Query[Statistic], id: UUID) => q.filter { _.playerId == id }
   }
 
   def upsertStatistic = quote {
     (q: EntityQuery[Statistic], statistic: Statistic) =>
-      q.insert { statistic }
+      q.insert(statistic)
         .onConflictUpdate(_.playerId, _.statistic) {
           (t, e) => t.value -> (t.value + e.value)
         }
@@ -67,7 +67,7 @@ private[monolith] class PostgresStatisticRepository(
   import databaseContext._
 
   override def load(id: UUID): Statistics =
-    run { loadStatistics(query[Statistic], id) }
+    run { loadStatistics(query[Statistic], lift(id)) }
       .iterator.map { it => it.statistic -> it }
       .toMap.pipe { new Statistics(_) }
 
@@ -75,9 +75,7 @@ private[monolith] class PostgresStatisticRepository(
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit] = Future {
     run {
-      liftQuery(statistics).foreach { statistic =>
-        upsertStatistic(query[Statistic], statistic)
-      }
+      liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
     }
   }
 }
@@ -90,7 +88,7 @@ private[monolith] class SqliteStatisticRepository(
   import context._
 
   override def load(id: UUID): Statistics =
-    run { loadStatistics(query[Statistic], id) }
+    run { loadStatistics(query[Statistic], lift(id)) }
       .iterator.map { it => it.statistic -> it }
       .toMap.pipe { new Statistics(_) }
 
@@ -98,9 +96,7 @@ private[monolith] class SqliteStatisticRepository(
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit] = Future {
     run {
-      liftQuery(statistics).foreach { statistic =>
-        upsertStatistic(query[Statistic], statistic)
-      }
+      liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
     }
   }
 }

@@ -24,16 +24,13 @@
 
 package gg.warcraft.monolith.spigot.block.backup
 
-import java.util.UUID
 import java.util.logging.Logger
 
 import gg.warcraft.monolith.api.block.backup.{
   BlockBackup, BlockBackupRepository, BlockBackupService
 }
-import gg.warcraft.monolith.api.core.Codecs
-import gg.warcraft.monolith.api.world.{BlockLocation, World, WorldService}
+import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import io.getquill.MappedEncoding
 import org.bukkit.Bukkit
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
@@ -45,78 +42,71 @@ class SpigotBlockBackupService(implicit
     plugin: Plugin,
     logger: Logger,
     repository: BlockBackupRepository,
-    locationMapper: SpigotLocationMapper,
-    worldService: WorldService
+    locationMapper: SpigotLocationMapper
 ) extends BlockBackupService {
   private implicit val executionContext: ExecutionContext =
     ExecutionContext.global
-  private implicit val worldDecoder: MappedEncoding[String, World] =
-    Codecs.Quill.worldDecoder
-  private implicit val worldEncoder: MappedEncoding[World, String] =
-    Codecs.Quill.worldEncoder
 
-  private val cache: mutable.Map[Long, BlockBackup] = mutable.Map.empty
+  private val cache: mutable.Map[Int, Option[BlockBackup]] = mutable.LinkedHashMap()
   private val metaDataKey = getClass.getCanonicalName
 
   // TODO allow creating multiple backups at once for db call grouping
-  override def createBackup(location: BlockLocation): Long = {
+  override def createBackup(location: BlockLocation): Int = {
     val block = locationMapper.map(location).getBlock
 
-    // check for existing backup
+    // get existing backup
     val metaData = block.getMetadata(metaDataKey)
-    if (!metaData.isEmpty) {
-      val id = metaData.get(0).asString()
-      return UUID.fromString(id)
-    }
+    val existingBackup =
+      if (metaData.isEmpty) None
+      else cache(metaData.get(0).asInt())
 
     // create backup
-    val data = block.getBlockData.getAsString()
-    val backup = BlockBackup(0, location, data)
-
-    // TODO retrieve id from database and untangle this workflow
-    // TODO should id be UUID after all to avoid calls to delete of id - 1?
+    val id = cache.size
+    val data = existingBackup match {
+      case Some(backup) => backup.data
+      case None         => block.getBlockData.getAsString()
+    }
+    val backup = BlockBackup(id, location, data)
 
     // set existing backup
-    val metaDataValue = new FixedMetadataValue(plugin, id.toString)
+    val metaDataValue = new FixedMetadataValue(plugin, id)
     block.setMetadata(metaDataKey, metaDataValue)
 
     // save backup
     repository.save(backup)
-    cache.put(id, backup)
+    cache += Some(backup)
 
     id
   }
 
-  private def restoreBackup(backup: BlockBackup): Boolean = {
-    // check it equals existing backup
-    val block = locationMapper.map(backup.location).getBlock
-    val metaData = block.getMetadata(metaDataKey)
-    if (!metaData.isEmpty && metaData.get(0).asString() != backup.id.toString) {
-      println(s"Attempted to restore backup for block with different meta data")
-      return false
-    }
-
-    // restore backup
-    val blockState = block.getState
-    val blockData = Bukkit.createBlockData(backup.data)
-    blockState.setBlockData(blockData)
-    blockState.update(true, false)
-
-    // delete backup
-    block.removeMetadata(metaDataKey, plugin)
-    repository.delete(backup.id)
-    cache.remove(backup.id)
-
-    true
+  override def createBackups(locations: Seq[BlockLocation]): Range.Inclusive = {
+    val ids = locations.map(createBackup)
+    ids.head to (ids.head + ids.size)
   }
 
-  override def restoreBackup(id: Long): Boolean = cache.get(id) match {
-    case Some(it) => restoreBackup(it)
-    case None     => false
+  override def restoreBackup(id: Int): Unit = {
+    cache(id).foreach(restoreBackup)
+    repository.delete(id)
+    cache -= id
   }
 
-  override def restoreBackups(): Unit = {
+  override def restoreBackups(ids: Range.Inclusive): Unit = {
+    ids.flatMap { cache(_) }.foreach(restoreBackup)
+    repository.deleteRange(ids)
+    cache --= ids
+  }
+
+  override def restoreAllBackups(): Unit = {
     repository.all.foreach(restoreBackup)
     cache.clear
+  }
+
+  private def restoreBackup(backup: BlockBackup): Unit = {
+    val block = locationMapper.map(backup.location).getBlock
+    val blockData = Bukkit.createBlockData(backup.data)
+    val blockState = block.getState
+    blockState.setBlockData(blockData)
+    blockState.update(true, false)
+    block.removeMetadata(metaDataKey, plugin)
   }
 }

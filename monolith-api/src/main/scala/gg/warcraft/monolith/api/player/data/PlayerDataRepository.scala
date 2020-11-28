@@ -27,78 +27,75 @@ package gg.warcraft.monolith.api.player.data
 import java.util.UUID
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill.teamDecoder
+import gg.warcraft.monolith.api.core.Codecs.Quill._
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import io.getquill._
-import io.getquill.context.Context
-import io.getquill.idiom.Idiom
+import io.getquill.context.jdbc.JdbcContext
+import io.getquill.context.sql.idiom.SqlIdiom
 
 import scala.concurrent.{ExecutionContext, Future}
 
 trait PlayerDataRepository {
-  def load(id: UUID)(implicit teamService: TeamService): Option[PlayerData]
+  def load(id: UUID): Option[PlayerData]
 
   def save(data: PlayerData)(implicit
-      teamService: TeamService,
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit]
 }
 
-private trait PlayerDataContext[I <: Idiom, N <: NamingStrategy] {
-  this: Context[I, N] =>
+private trait PlayerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
+  this: JdbcContext[I, N] =>
 
-  def loadData(implicit teamService: TeamService) = {
-    implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
-    quote { (q: Query[PlayerData], id: UUID) => q.filter { _.id == lift(id) } }
+  def loadData = quote {
+    (q: Query[PlayerData], id: UUID) => q.filter { _.id == id }
   }
 
-  def upsertData(implicit teamService: TeamService) = {
-    implicit val encoder: MappedEncoding[Team, String] = teamService.encoder
-    quote {
-      (q: EntityQuery[PlayerData], data: PlayerData) =>
-        q.insert { lift(data) }.onConflictUpdate(_.id)(
-          (t, e) => t.team -> e.team,
-          (t, e) => t.timeConnected -> e.timeConnected,
-          (t, e) => t.timeLastSeen -> e.timeLastSeen
-        )
-    }
+  def upsertData = quote {
+    (q: EntityQuery[PlayerData], data: PlayerData) =>
+      q.insert(data).onConflictUpdate(_.id)(
+        (t, e) => t.team -> e.team,
+        (t, e) => t.timeConnected -> e.timeConnected,
+        (t, e) => t.timeLastSeen -> e.timeLastSeen
+      )
   }
 }
 
 private[monolith] class PostgresPlayerDataRepository(
     config: Config
+)(implicit
+    teamService: TeamService
 ) extends PlayerDataRepository {
+  private implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
+
   private val databaseContext = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with PlayerDataContext[PostgresDialect, SnakeCase]
   import databaseContext._
 
-  override def load(id: UUID)(implicit
-      teamService: TeamService
-  ): Option[PlayerData] =
-    run { loadData(teamService)(query[PlayerData], id) }.headOption
+  override def load(id: UUID): Option[PlayerData] =
+    run { loadData(query[PlayerData], lift(id)) }.headOption
 
   override def save(data: PlayerData)(implicit
-      teamService: TeamService,
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit] =
-    Future { run { upsertData(teamService)(query[PlayerData], data) } }
+    Future { run { upsertData(query[PlayerData], lift(data)) } }
 }
 
 private[monolith] class SqlitePlayerDataRepository(
     config: Config
+)(implicit
+    teamService: TeamService
 ) extends PlayerDataRepository {
+  private implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
+
   private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with PlayerDataContext[SqliteDialect, SnakeCase]
   import context._
 
-  override def load(id: UUID)(implicit
-      teamService: TeamService
-  ): Option[PlayerData] =
-    run { loadData(teamService)(query[PlayerData], id) }.headOption
+  override def load(id: UUID): Option[PlayerData] =
+    run { loadData(query[PlayerData], lift(id)) }.headOption
 
   override def save(data: PlayerData)(implicit
-      teamService: TeamService,
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit] =
-    Future { run { upsertData(teamService)(query[PlayerData], data) } }
+    Future { run { upsertData(query[PlayerData], lift(data)) } }
 }

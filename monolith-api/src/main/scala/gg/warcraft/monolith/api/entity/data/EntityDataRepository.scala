@@ -27,19 +27,18 @@ package gg.warcraft.monolith.api.entity.data
 import java.util.UUID
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill.teamDecoder
+import gg.warcraft.monolith.api.core.Codecs.Quill._
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import io.getquill._
-import io.getquill.context.Context
-import io.getquill.idiom.Idiom
+import io.getquill.context.jdbc.JdbcContext
+import io.getquill.context.sql.idiom.SqlIdiom
 
 import scala.concurrent.{ExecutionContext, Future}
 
 trait EntityDataRepository {
-  def all(implicit teamService: TeamService): Map[UUID, EntityData]
+  def all(): Map[UUID, EntityData]
 
   def save(data: EntityData)(implicit
-      teamService: TeamService,
       executionContext: ExecutionContext = ExecutionContext.global
   ): Future[Unit]
 
@@ -48,67 +47,75 @@ trait EntityDataRepository {
   ): Future[Unit]
 }
 
-private trait EntityDataContext[I <: Idiom, N <: NamingStrategy] {
-  this: Context[I, N] =>
+private trait EntityDataContext[I <: SqlIdiom, N <: NamingStrategy] {
+  this: JdbcContext[I, N] =>
 
-  def queryAllData(implicit teamService: TeamService) = {
-    implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
-    quote { (q: Query[EntityData]) => q }
+  def queryAllData = quote {
+    (q: Query[EntityData]) => q
   }
 
-  def upsertData(implicit teamService: TeamService) = {
-    implicit val encoder: MappedEncoding[Team, String] = teamService.encoder
-    quote {
-      (q: EntityQuery[EntityData], data: EntityData) =>
-        q.insert { lift(data) }.onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
-    }
+  def upsertData = quote {
+    (q: EntityQuery[EntityData], data: EntityData) =>
+      q.insert(data).onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
   }
 
   def deleteData = quote {
-    (q: EntityQuery[EntityData], id: UUID) => q.filter { _.id == lift(id) }.delete
+    (q: EntityQuery[EntityData], id: UUID) => q.filter { _.id == id }.delete
   }
 }
 
 private[monolith] class PostgresEntityDataRepository(
     config: Config
+)(implicit
+    teamService: TeamService
 ) extends EntityDataRepository {
+  private implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
+
   private val databaseContext = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with EntityDataContext[PostgresDialect, SnakeCase]
   import databaseContext._
 
-  override def all(implicit teamService: TeamService): Map[UUID, EntityData] =
-    run { queryAllData(teamService)(query[EntityData]) }
+  override def all(): Map[UUID, EntityData] =
+    run { queryAllData(query[EntityData]) }
       .map { it => it.id -> it }.toMap
 
   override def save(data: EntityData)(implicit
-      teamService: TeamService,
       executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] =
-    Future { run { upsertData(teamService)(query[EntityData], data) } }
+  ): Future[Unit] = Future {
+    run { upsertData(query[EntityData], lift(data)) }
+  }
 
   override def delete(id: UUID)(implicit
       executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future { run { deleteData(id) } }
+  ): Future[Unit] = Future {
+    run { deleteData(query[EntityData], lift(id)) }
+  }
 }
 
 private[monolith] class SqliteEntityDataRepository(
     config: Config
+)(implicit
+    teamService: TeamService
 ) extends EntityDataRepository {
+  private implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
+
   private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with EntityDataContext[SqliteDialect, SnakeCase]
   import context._
 
-  override def all(implicit teamService: TeamService): Map[UUID, EntityData] =
-    run { queryAllData(teamService)(query[EntityData]) }
+  override def all(): Map[UUID, EntityData] =
+    run { queryAllData(query[EntityData]) }
       .map { it => it.id -> it }.toMap
 
   override def save(data: EntityData)(implicit
-      teamService: TeamService,
       executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] =
-    Future { run { upsertData(teamService)(query[EntityData], data) } }
+  ): Future[Unit] = Future {
+    run { upsertData(query[EntityData], lift(data)) }
+  }
 
   override def delete(id: UUID)(implicit
       executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future { run { deleteData(id) } }
+  ): Future[Unit] = Future {
+    run { deleteData(query[EntityData], lift(id)) }
+  }
 }

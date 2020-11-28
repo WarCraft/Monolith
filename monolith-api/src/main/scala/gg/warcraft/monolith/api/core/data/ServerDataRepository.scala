@@ -26,27 +26,26 @@ package gg.warcraft.monolith.api.core.data
 
 import com.typesafe.config.Config
 import io.getquill._
-import io.getquill.context.Context
-import io.getquill.idiom.Idiom
+import io.getquill.context.jdbc.JdbcContext
+import io.getquill.context.sql.idiom.SqlIdiom
 
 trait ServerDataRepository {
   def lastDailyTick: Long
   def lastDailyTick_=(value: Long): Unit
 }
 
-private trait ServerDataContext[I <: Idiom, N <: NamingStrategy] {
-  this: Context[I, N] =>
+private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
+  this: JdbcContext[I, N] =>
 
   final val last_daily_tick = "last_daily_tick"
 
   def queryLastDailyTick = quote {
-    (q: Query[ServerData]) => q.filter { _.data == last_daily_tick }
+    (q: Query[ServerData]) => q.filter { _.data == lift(last_daily_tick) }
   }
 
   def upsertLastDailyTick = quote {
     (q: EntityQuery[ServerData], data: ServerData) =>
-      q.insert { lift(data) }
-        .onConflictUpdate(_.data)((t, e) => t.intValue -> e.intValue)
+      q.insert(data).onConflictUpdate(_.data)((t, e) => t.intValue -> e.intValue)
   }
 }
 
@@ -63,7 +62,7 @@ private[monolith] class PostgresServerDataRepository(
 
   override def lastDailyTick_=(value: Long): Unit = {
     val data = ServerData(last_daily_tick, intValue = Some(value))
-    upsertLastDailyTick(data)
+    run { upsertLastDailyTick(query[ServerData], lift(data)) }
   }
 }
 
@@ -80,6 +79,6 @@ private[monolith] class SqliteServerDataRepository(
 
   override def lastDailyTick_=(value: Long): Unit = {
     val data = ServerData(last_daily_tick, intValue = Some(value))
-    upsertLastDailyTick(data)
+    run { upsertLastDailyTick(query[ServerData], lift(data)) }
   }
 }

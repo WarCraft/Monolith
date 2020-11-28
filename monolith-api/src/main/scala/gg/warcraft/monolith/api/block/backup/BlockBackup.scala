@@ -27,7 +27,7 @@ package gg.warcraft.monolith.api.block.backup
 import gg.warcraft.monolith.api.world.BlockLocation
 
 case class BlockBackup(
-    id: Long,
+    id: Int,
     location: BlockLocation,
     data: String
 )
