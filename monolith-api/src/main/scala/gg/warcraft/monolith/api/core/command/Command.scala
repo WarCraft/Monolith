@@ -36,12 +36,12 @@ case class Command(
 object Command {
   sealed trait Result
 
-  final case object success extends Result
+  case object success extends Result
   final case class success(messages: List[Message]) extends Result
 
-  final case object invalid extends Result
-  final case object consoleOnly extends Result
-  final case object playersOnly extends Result
+  case object invalid extends Result
+  case object consoleOnly extends Result
+  case object playersOnly extends Result
 
   trait Handler { // TODO change args to List[String]
     def handle(executor: Principal, command: Command, args: String*): Command.Result
