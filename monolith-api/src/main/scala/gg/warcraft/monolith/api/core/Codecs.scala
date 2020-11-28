@@ -48,9 +48,9 @@ object Codecs {
       Encoder.encodeString.contramap[T] { _.name }
 
     def blockDataDecoder(implicit
-        worldService: WorldService
+        service: WorldService
     ): Decoder[BlockTypeVariantOrState] =
-      Decoder.decodeString.emapTry { it => { Try { worldService.parseData(it) } } }
+      Decoder.decodeString.emapTry { it => { Try { service.parseData(it) } } }
     implicit lazy val blockDataEncoder: Encoder[BlockTypeVariantOrState] =
       Encoder.encodeString.contramap { _.toString }
 
@@ -63,10 +63,8 @@ object Codecs {
       Decoder.decodeInt.emapTry { it => { Try { it.seconds } } }
     // NOTE not sure what default durationEncoder to use
 
-    def itemDataDecoder(implicit
-        itemService: ItemService
-    ): Decoder[ItemTypeOrVariant] =
-      Decoder.decodeString.emapTry { it => { Try { itemService.parseData(it) } } }
+    def itemDataDecoder(implicit service: ItemService): Decoder[ItemTypeOrVariant] =
+      Decoder.decodeString.emapTry { it => { Try { service.parseData(it) } } }
     implicit lazy val itemDataEncoder: Encoder[ItemTypeOrVariant] =
       Encoder.encodeString.contramap { _.toString }
 
@@ -95,10 +93,8 @@ object Codecs {
         }
       }
 
-    def teamDecoder(implicit
-        teamService: TeamService
-    ): Decoder[Option[Team]] =
-      Decoder.decodeString.emapTry { it => { Try { teamService.teams.get(it) } } }
+    def teamDecoder(implicit service: TeamService): Decoder[Option[Team]] =
+      Decoder.decodeString.emapTry { it => { Try { service.teams.get(it) } } }
     implicit lazy val teamEncoder: Encoder[Team] =
       Encoder.encodeString.contramap { _.name }
 
@@ -129,17 +125,13 @@ object Codecs {
     implicit lazy val durationEncoder: MappedEncoding[Duration, Int] =
       MappedEncoding { _.millis }
 
-    def teamDecoder(implicit
-        teamService: TeamService
-    ): MappedEncoding[String, Team] =
-      MappedEncoding { teamService.teams(_) }
+    def teamDecoder(implicit service: TeamService): MappedEncoding[String, Team] =
+      MappedEncoding { service.teams(_) }
     implicit lazy val teamEncoder: MappedEncoding[Team, String] =
       MappedEncoding { _.name }
 
-    def worldDecoder(implicit
-        worldService: WorldService
-    ): MappedEncoding[String, World] =
-      MappedEncoding(worldService.getWorld)
+    def worldDecoder(implicit service: WorldService): MappedEncoding[String, World] =
+      MappedEncoding(service.getWorld)
     implicit lazy val worldEncoder: MappedEncoding[World, String] =
       MappedEncoding { _.name }
   }
