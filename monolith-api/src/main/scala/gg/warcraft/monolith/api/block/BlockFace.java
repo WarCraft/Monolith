@@ -26,6 +26,8 @@ package gg.warcraft.monolith.api.block;
 
 import gg.warcraft.monolith.api.math.Vector3f;
 
+// TODO in Dotty reimpl this to extend a Direction interface and have individual
+// TODO elements extends HorizontalDirection or VerticalDirection
 public enum BlockFace {
     NORTH,
     EAST,
