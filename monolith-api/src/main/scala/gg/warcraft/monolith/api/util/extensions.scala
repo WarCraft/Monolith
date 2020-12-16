@@ -84,6 +84,11 @@ object number {
   }
 }
 
+object option {
+  @inline implicit def toOption[T](self: T): Option[T] = Some(self)
+  @inline implicit def fromOption[T](self: Some[T]): T = self.get
+}
+
 object string {
   @inline implicit final class CharOps(private val self: Char) extends AnyVal {
     def isVowel: Boolean = "aeiou".contains(self)
