@@ -74,7 +74,7 @@ class SpigotBlockBackupService(implicit
 
     // save backup
     repository.save(backup)
-    cache += Some(backup)
+    cache += backup.id -> Some(backup)
 
     id
   }
@@ -91,7 +91,7 @@ class SpigotBlockBackupService(implicit
   }
 
   override def restoreBackups(ids: Range.Inclusive): Unit = {
-    ids.flatMap { cache(_) }.foreach(restoreBackup)
+    ids.flatMap(cache).foreach(restoreBackup)
     repository.deleteRange(ids)
     cache --= ids
   }
