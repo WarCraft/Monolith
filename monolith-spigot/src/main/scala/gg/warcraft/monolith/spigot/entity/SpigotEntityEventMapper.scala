@@ -24,29 +24,23 @@
 
 package gg.warcraft.monolith.spigot.entity
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.combat.{CombatSource, CombatValue}
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
-import gg.warcraft.monolith.api.entity.{
-  EntityAttackEvent, EntityDamageEvent, EntityDeathEvent, EntityFatalDamageEvent,
-  EntityHealthChangedEvent, EntityInteractEvent, EntityPreAttackEvent,
-  EntityPreDamageEvent, EntityPreDeathEvent, EntityPreFatalDamageEvent,
-  EntityPreInteractEvent, EntityPreSpawnEvent, EntityService, EntitySpawnEvent
-}
+import gg.warcraft.monolith.api.entity._
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.entity.{EntityType, LivingEntity}
-import org.bukkit.event.{EventHandler, EventPriority, Listener}
-import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.Server
 import org.bukkit.attribute.Attribute
+import org.bukkit.entity.{EntityType, LivingEntity}
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.plugin.Plugin
 
+import java.util.UUID
 import scala.collection.mutable
 import scala.jdk.CollectionConverters._
 import scala.util.chaining._
@@ -77,7 +71,7 @@ class SpigotEntityEventMapper(implicit
     val entity = spigotEntityService.getEntityAdapter(spigotEntity).get
     val location = locationMapper.map(event.getEntity.getLocation)
     EntityPreSpawnEvent(entity, location, event.isCancelled)
-      .pipe { eventService.publish(_) }
+      .pipe(eventService.publish)
       .tap { reducedEvent =>
         if (reducedEvent.allowed && reducedEvent.location != location)
           taskService.evalNextTick {
@@ -293,13 +287,13 @@ class SpigotEntityEventMapper(implicit
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val entityStatus = statusService.getStatus(entity.id)
     val drops = event.getDrops.asScala
-      .map { itemMapper.map }
+      .map(itemMapper.map)
       .filter { _.isDefined }
       .map { _.get }
       .toList
     val reducedEvent = EntityPreDeathEvent(entity, drops)
-      .tap { eventService.publish(_) }
-      .tap { entityStatus.reduce(_) }
+      .tap(eventService.publish)
+      .tap(entityStatus.reduce)
     val reducedDrops = reducedEvent.drops
     val reducedSpigotDrops = reducedDrops.map { itemMapper.map }.asJava
     event.getDrops.clear()
@@ -307,5 +301,6 @@ class SpigotEntityEventMapper(implicit
     EntityDeathEvent(entity, reducedDrops)
       .tap { entityStatus.handle }
       .tap { eventService.publish }
+    eventService << EntityRemoveEvent(entity.id, hasDied = true)
   }
 }

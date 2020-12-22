@@ -24,14 +24,14 @@
 
 package gg.warcraft.monolith.api.entity
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.combat.CombatValue
 import gg.warcraft.monolith.api.core.event.{CancellableEvent, Event, PreEvent}
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.item.Item
 import gg.warcraft.monolith.api.player.Player
 import gg.warcraft.monolith.api.world.Location
+
+import java.util.UUID
 
 trait EntityEvent
 
@@ -163,6 +163,13 @@ case class EntityPathfindEvent(
 ) extends Event
     with EntityEvent
 
+// REMOVE
+case class EntityRemoveEvent(
+    entityId: UUID,
+    hasDied: Boolean
+) extends Event
+    with EntityEvent
+
 // SPAWN
 case class EntityPreSpawnEvent(
     entity: Entity,
@@ -179,8 +186,10 @@ case class EntitySpawnEvent(
     with EntityEvent
 
 case class EntityPreDespawnEvent(
-    entity: Entity
-) extends Event
+    entity: Entity,
+    cancelled: Boolean = false,
+    explicitlyAllowed: Boolean = false
+) extends CancellableEvent
     with EntityEvent
 
 case class EntityDespawnEvent(

@@ -24,8 +24,6 @@
 
 package gg.warcraft.monolith.api.entity
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.block.BlockIterator
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
@@ -38,6 +36,7 @@ import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.{Location, WorldService}
 import org.joml.{AABBf, Intersectionf, LineSegmentf, Vector2f}
 
+import java.util.UUID
 import scala.collection.mutable
 import scala.util.chaining._
 
@@ -108,8 +107,7 @@ abstract class EntityService(implicit
     heavyEntity(id, duration)
   }
 
-  /**
-    * Curve fitting on https://mycurvefit.com/ with the assumption that we
+  /** Curve fitting on https://mycurvefit.com/ with the assumption that we
     * always want the Y component of the knock back vector to be 10% of the
     * length of the direction of said vector and manually checking what
     * strength modifier would be required to be knocked back x amount of
@@ -150,8 +148,7 @@ abstract class EntityService(implicit
     knockBackEntity(id, direction, distance)
   }
 
-  /**
-    * Curve fitting on https://mycurvefit.com/ with manually checking what
+  /** Curve fitting on https://mycurvefit.com/ with manually checking what
     * strength modifier would be required to be knocked up x amount of
     * blocks giving the following data set:
     * distance    modifier
@@ -185,8 +182,7 @@ abstract class EntityService(implicit
     setVelocity(id, velocity)
   }
 
-  /**
-    * Curve fitting on https://mycurvefit.com/ by manually checking what
+  /** Curve fitting on https://mycurvefit.com/ by manually checking what
     * strength modifier would be required to leap forward x amount of
     * blocks giving the following data set:
     * distance    modifier

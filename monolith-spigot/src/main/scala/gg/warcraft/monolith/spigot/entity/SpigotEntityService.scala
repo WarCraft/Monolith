@@ -24,9 +24,6 @@
 
 package gg.warcraft.monolith.spigot.entity
 
-import java.util.UUID
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
 import gg.warcraft.monolith.api.core.event.EventService
@@ -51,6 +48,8 @@ import org.bukkit.entity.{EntityType, LivingEntity}
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
 
+import java.util.UUID
+import java.util.logging.Logger
 import scala.jdk.CollectionConverters._
 
 class SpigotEntityService(implicit
@@ -145,8 +144,8 @@ class SpigotEntityService(implicit
   }
 
   override def removeEntity(id: UUID): Unit = {
-    deleteEntityData(id)
     getSpigotEntity(id).foreach { _.remove() }
+    eventService << EntityRemoveEvent(id, hasDied = false)
   }
 
   override def teleportEntity(

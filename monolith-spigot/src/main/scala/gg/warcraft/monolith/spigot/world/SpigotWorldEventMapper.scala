@@ -25,99 +25,64 @@
 package gg.warcraft.monolith.spigot.world
 
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.world.ChunkPreLoadEvent
-import org.bukkit.event.{EventHandler, EventPriority, Listener}
+import gg.warcraft.monolith.api.entity.{
+  EntityDespawnEvent, EntityPreDespawnEvent, EntityPreRespawnEvent,
+  EntityRespawnEvent
+}
+import gg.warcraft.monolith.spigot.entity.SpigotEntityService
+import org.bukkit.Chunk
 import org.bukkit.event.world.{ChunkLoadEvent, ChunkUnloadEvent}
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotWorldEventMapper(implicit
-    eventService: EventService
+    eventService: EventService,
+    entityService: SpigotEntityService
 ) extends Listener {
+  private var despawnEvents: Map[Chunk, List[EntityPreDespawnEvent]] = Map.empty
+  private var respawnEvents: Map[Chunk, List[EntityPreRespawnEvent]] = Map.empty
+
   @EventHandler(priority = EventPriority.HIGH)
   def preLoad(event: ChunkLoadEvent): Unit = {
-    val chunk = event.getChunk
-    val preLoadEvent = ChunkPreLoadEvent()
-    eventService.publish(preLoadEvent)
-    /*
-      Chunk chunk = event.getChunk();
-      ChunkLoadedEvent chunkLoadedEvent = new ChunkLoadedEvent(chunk.getX(), chunk.getZ());
-      eventService.publish(chunkLoadedEvent);
-
-      Set<Entity> allowedRespawns = new HashSet<>();
-      for (Entity entity : chunk.getEntities()) {
-          UUID entityId = entity.getUniqueId();
-          EntityType entityType = EntityType.valueOf(entity.getType().name());
-          Location entityLocation = locationMapper.map(entity.getLocation());
-          EntityPreRespawnEvent preRespawnEvent = new SimpleEntityPreRespawnEvent(entityId, entityType, entityLocation, false);
-          eventService.publish(preRespawnEvent);
-          // TODO if the spawn location is changed on the pre event nothing actually happens
-          if (!preRespawnEvent.isCancelled() || preRespawnEvent.isExplicitlyAllowed()) {
-              allowedRespawns.add(entity);
-          } else {
-              entity.remove(); // TODO should this be called on the next tick instead?
-          }
-      }
-
-      for (Entity entity : allowedRespawns) {
-          UUID entityId = entity.getUniqueId();
-          EntityType entityType = EntityType.valueOf(entity.getType().name());
-          Location entityLocation = locationMapper.map(entity.getLocation());
-          EntityRespawnEvent respawnEvent = new SimpleEntityRespawnEvent(entityId, entityType, entityLocation);
-          eventService.publish(respawnEvent);
-      }
-   */
+    val events = event.getChunk.getEntities
+      .flatMap { it => entityService.getEntityOption(it.getUniqueId) }
+      .map { it => EntityPreRespawnEvent(it, it.location) }
+      .map(eventService.publish)
+    respawnEvents += (event.getChunk -> events)
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
   def onLoad(event: ChunkLoadEvent): Unit = {
-    event.getChunk.getEntities.foreach { entity =>
-      // TODO fire entity respawn events
+    respawnEvents(event.getChunk).foreach { preEvent =>
+      import preEvent._
+      if (allowed) {
+        entityService.teleportEntity(
+          entity.id,
+          location,
+          entity.eyeLocation.rotation
+        )
+        eventService << EntityRespawnEvent(entity, location)
+      } else entityService.removeEntity(entity.id)
     }
+    respawnEvents -= event.getChunk
   }
 
   @EventHandler(priority = EventPriority.HIGH)
   def preUnload(event: ChunkUnloadEvent): Unit = {
-    /*
-      Chunk chunk = event.getChunk();
-      ChunkPreUnloadEvent preUnloadEvent = new ChunkPreUnloadEvent(chunk.getX(), chunk.getZ(), false);
-      eventService.publish(preUnloadEvent);
-//        if (preUnloadEvent.isExplicitlyAllowed()) {
-//            event.setCancelled(false);
-//            return;
-//        } else if (preUnloadEvent.isCancelled()) {
-//            event.setCancelled(true);
-//            return;
-//        }
-
-      boolean cancelled = false;
-      for (Entity entity : chunk.getEntities()) {
-          UUID entityId = entity.getUniqueId();
-          EntityType entityType = EntityType.valueOf(entity.getType().name());
-          EntityPreDespawnEvent preDespawnEvent = new SimpleEntityPreDespawnEvent(entityId, entityType, false);
-          eventService.publish(preDespawnEvent);
-          if (preDespawnEvent.isCancelled() && !preDespawnEvent.isExplicitlyAllowed()) {
-              cancelled = true;
-              break;
-          }
-      }
-//        if (cancelled) {
-//            event.setCancelled(true);
-//        }
-   */
+    val events = event.getChunk.getEntities
+      .flatMap { it => entityService.getEntityOption(it.getUniqueId) }
+      .map { EntityPreDespawnEvent(_) }
+      .map(eventService.publish)
+    despawnEvents += (event.getChunk -> events)
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
   def onUnload(event: ChunkUnloadEvent): Unit = {
-    /*
-      Chunk chunk = event.getChunk();
-      ChunkUnloadedEvent unloadedEvent = new ChunkUnloadedEvent(chunk.getX(), chunk.getZ());
-      eventService.publish(unloadedEvent);
-
-      for (Entity entity : chunk.getEntities()) {
-          UUID entityId = entity.getUniqueId();
-          EntityType entityType = EntityType.valueOf(entity.getType().name());
-          EntityDespawnEvent despawnEvent = new SimpleEntityDespawnEvent(entityId, entityType);
-          eventService.publish(despawnEvent);
-      }
-   */
+    despawnEvents(event.getChunk).foreach { preEvent =>
+      import preEvent._
+      if (allowed) {
+        eventService << EntityDespawnEvent(entity)
+      } else entityService.removeEntity(entity.id)
+    }
+    despawnEvents -= event.getChunk
   }
 }
