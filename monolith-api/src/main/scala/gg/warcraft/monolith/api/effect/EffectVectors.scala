@@ -49,6 +49,9 @@ object EffectVectors {
     new EffectVectors(vectors.toList)
   }
 
+  def line(target: Vector3f, count: Int): EffectVectors =
+    line(Vector3f(), target, count)
+
   def origin(): EffectVectors = new EffectVectors(Vector3f() :: Nil)
 
   def point(point: Vector3f): EffectVectors = new EffectVectors(point :: Nil)
