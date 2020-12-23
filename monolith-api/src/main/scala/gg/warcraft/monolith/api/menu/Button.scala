@@ -43,6 +43,12 @@ trait SkullButton extends Button {
 }
 
 object Button {
+  def noop(
+      icon: ItemTypeOrVariant,
+      title: String,
+      tooltip: List[String]
+  ): Button = Button(icon, title, tooltip) { _ => }
+
   def skull(
       name: String,
       title: String,
