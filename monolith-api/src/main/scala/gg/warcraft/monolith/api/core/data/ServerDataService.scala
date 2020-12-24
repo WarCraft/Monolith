@@ -24,11 +24,10 @@
 
 package gg.warcraft.monolith.api.core.data
 
-import java.time.{LocalDate, ZoneId}
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.MonolithConfig
 
+import java.time.{LocalDate, LocalDateTime, ZoneId}
+import java.util.logging.Logger
 import scala.concurrent.{ExecutionContext, Future}
 
 class ServerDataService(implicit
@@ -44,6 +43,7 @@ class ServerDataService(implicit
 
   def lastDailyTick: LocalDate = _lastDailyTick
   def serverTimeZone: ZoneId = _serverTimeZone
+  def serverTime: LocalDateTime = LocalDateTime.now(serverTimeZone)
 
   def readConfig(config: MonolithConfig): Unit = {
     _serverTimeZone = config.serverTimeZone

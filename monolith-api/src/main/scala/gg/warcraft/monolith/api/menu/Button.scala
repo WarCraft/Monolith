@@ -43,18 +43,25 @@ trait SkullButton extends Button {
 }
 
 object Button {
+  def apply(
+      icon: ItemTypeOrVariant,
+      title: String,
+      tooltip: String*
+  )(action: Click => Unit): Button =
+    Button(icon, title, tooltip.toList)(action)
+
   def noop(
       icon: ItemTypeOrVariant,
       title: String,
-      tooltip: List[String]
-  ): Button = Button(icon, title, tooltip) { _ => }
+      tooltip: String*
+  ): Button = Button(icon, title, tooltip.toList) { _ => }
 
   def skull(
       name: String,
       title: String,
-      tooltip: List[String]
+      tooltip: String*
   )(action: Click => Unit): Button =
-    new Button(ItemType.MOB_HEAD, title, tooltip)(action) with SkullButton {
+    new Button(ItemType.MOB_HEAD, title, tooltip.toList)(action) with SkullButton {
       override val playerName: String = name
     }
 
