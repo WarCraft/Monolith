@@ -39,15 +39,16 @@ class ServerDataService(implicit
     "Failed to retrieve last daily tick from database, falling back to today!"
 
   private var _lastDailyTick: LocalDate = _
-  private var _serverTimeZone: ZoneId = _
-
   def lastDailyTick: LocalDate = _lastDailyTick
+
+  private var _serverTimeZone: ZoneId = _
   def serverTimeZone: ZoneId = _serverTimeZone
   def serverTime: LocalDateTime = LocalDateTime.now(serverTimeZone)
 
-  def readConfig(config: MonolithConfig): Unit = {
-    _serverTimeZone = config.serverTimeZone
+  private var _today: LocalDate = _
+  def today: LocalDate = _today
 
+  def readConfig(config: MonolithConfig): Unit = {
     _lastDailyTick = {
       val epochDay = repository.lastDailyTick
       if (epochDay <= 0) {
@@ -55,10 +56,15 @@ class ServerDataService(implicit
         LocalDate.now(serverTimeZone)
       } else LocalDate.ofEpochDay(epochDay)
     }
+
+    _serverTimeZone = config.serverTimeZone
+    _today = LocalDate.now(_serverTimeZone)
   }
 
   def updateLastDailyTick(): Future[Unit] = Future {
     _lastDailyTick = LocalDate.now(serverTimeZone)
     repository.lastDailyTick = _lastDailyTick.toEpochDay
+
+    _today = LocalDate.now(_serverTimeZone)
   }
 }
