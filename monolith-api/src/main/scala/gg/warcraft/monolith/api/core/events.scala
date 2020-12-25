@@ -26,6 +26,8 @@ package gg.warcraft.monolith.api.core
 
 import gg.warcraft.monolith.api.core.event.Event
 
+import java.time.LocalDate
+
 /** A DailyTickEvent is fired exactly once every day on the first server tick of that
   * day. It's purpose is to provide a simple mechanism to listen to to kick off tasks
   * that should run once a day.
@@ -36,7 +38,10 @@ import gg.warcraft.monolith.api.core.event.Event
   * the current day when the server is restarted and will not retroactively fire for
   * any days where the server was offline for 24 hours.
   */
-case class DailyTickEvent() extends Event
+case class DailyTickEvent(
+    today: LocalDate,
+    yesterday: LocalDate
+) extends Event
 
 /** The ServerShutdownEvent is a utility event that allows subscribers to perform
   * shutdown tasks without having to be notified from their own plugin's onDisable

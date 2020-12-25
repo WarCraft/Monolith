@@ -62,9 +62,9 @@ class ServerDataService(implicit
   }
 
   def updateLastDailyTick(): Future[Unit] = Future {
-    _lastDailyTick = LocalDate.now(serverTimeZone)
+    _lastDailyTick = LocalDate.now(_serverTimeZone)
     repository.lastDailyTick = _lastDailyTick.toEpochDay
 
-    _today = LocalDate.now(_serverTimeZone)
+    _today = _lastDailyTick
   }
 }

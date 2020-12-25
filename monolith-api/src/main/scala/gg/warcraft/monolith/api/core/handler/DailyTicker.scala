@@ -24,11 +24,11 @@
 
 package gg.warcraft.monolith.api.core.handler
 
-import java.time.LocalDate
-
 import gg.warcraft.monolith.api.core.DailyTickEvent
 import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.EventService
+
+import java.time.LocalDate
 
 class DailyTicker(implicit
     eventService: EventService,
@@ -38,9 +38,10 @@ class DailyTicker(implicit
 
   override def run(): Unit = {
     val today = LocalDate.now(serverTimeZone)
-    if (lastDailyTick != today) {
+    if (today.isAfter(lastDailyTick)) {
+      val yesterday = lastDailyTick
       updateLastDailyTick()
-      eventService publish DailyTickEvent()
+      eventService << DailyTickEvent(today, yesterday)
     }
   }
 }
