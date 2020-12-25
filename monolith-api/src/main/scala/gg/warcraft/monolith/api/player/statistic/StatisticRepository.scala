@@ -24,23 +24,25 @@
 
 package gg.warcraft.monolith.api.player.statistic
 
-import java.util.UUID
-
 import com.typesafe.config.Config
 import gg.warcraft.monolith.api.core.Codecs.Quill._
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
-import scala.concurrent.{ExecutionContext, Future}
+import java.util.UUID
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.util.chaining.scalaUtilChainingOps
 
 trait StatisticRepository {
   def load(id: UUID): Statistics
 
-  def save(statistics: Statistic*)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit]
+  def save(statistics: Statistic*): Future[Unit]
+
+  def queryAll(like: String): Future[List[Statistic]]
+
+  def deleteAll(like: String): Future[Unit]
 }
 
 private trait StatisticContext[I <: SqlIdiom, N <: NamingStrategy] {
@@ -57,27 +59,40 @@ private trait StatisticContext[I <: SqlIdiom, N <: NamingStrategy] {
           (t, e) => t.value -> (t.value + e.value)
         }
   }
+
+  def queryLike = quote {
+    (q: EntityQuery[Statistic], like: String) => q.filter { _.statistic.like(like) }
+  }
+
+  def deleteLike = quote {
+    (q: EntityQuery[Statistic], like: String) =>
+      q.filter { _.statistic.like(like) }.delete
+  }
 }
 
 private[monolith] class PostgresStatisticRepository(
     config: Config
 ) extends StatisticRepository {
-  private val databaseContext = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
+  private val context = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with StatisticContext[PostgresDialect, SnakeCase]
-  import databaseContext._
+  import context._
 
   override def load(id: UUID): Statistics =
     run { loadStatistics(query[Statistic], lift(id)) }
       .iterator.map { it => it.statistic -> it }
       .toMap.pipe { new Statistics(_) }
 
-  override def save(statistics: Statistic*)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def save(statistics: Statistic*): Future[Unit] = Future {
     run {
       liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
     }
   }
+
+  override def queryAll(like: String): Future[List[Statistic]] =
+    Future { run { queryLike(query[Statistic], lift(like)) } }
+
+  override def deleteAll(like: String): Future[Unit] =
+    Future { run { deleteLike(query[Statistic], lift(like)) } }
 }
 
 private[monolith] class SqliteStatisticRepository(
@@ -92,11 +107,15 @@ private[monolith] class SqliteStatisticRepository(
       .iterator.map { it => it.statistic -> it }
       .toMap.pipe { new Statistics(_) }
 
-  override def save(statistics: Statistic*)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def save(statistics: Statistic*): Future[Unit] = Future {
     run {
       liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
     }
   }
+
+  override def queryAll(like: String): Future[List[Statistic]] =
+    Future { run { queryLike(query[Statistic], lift(like)) } }
+
+  override def deleteAll(like: String): Future[Unit] =
+    Future { run { deleteLike(query[Statistic], lift(like)) } }
 }
