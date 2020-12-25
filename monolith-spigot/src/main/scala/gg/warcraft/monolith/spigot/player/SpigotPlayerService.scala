@@ -149,6 +149,7 @@ class SpigotPlayerService(implicit
     }
   }
 
+  // TODO delete in favor of ItemService variant
   override def giveItem(id: UUID, item: Item*): List[Item] = {
     server.getPlayer(id) match {
       case player: SpigotPlayer =>
