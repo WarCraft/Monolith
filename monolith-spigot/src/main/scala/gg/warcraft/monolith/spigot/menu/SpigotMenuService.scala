@@ -24,37 +24,36 @@
 
 package gg.warcraft.monolith.spigot.menu
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.menu.{Menu, MenuService}
 import org.bukkit.Server
 
+import java.util.UUID
+
 class SpigotMenuService(
-    implicit server: Server,
+    implicit
+    server: Server,
     taskService: TaskService,
     menuMapper: SpigotMenuMapper
 ) extends MenuService {
-  private var menus: Map[UUID, Menu] = Map.empty
-
-  override def getMenu(viewerId: UUID): Option[Menu] =
-    menus.get(viewerId)
+  private var _menus: Map[UUID, Menu] = Map.empty
+  def menus: Map[UUID, Menu] = _menus
 
   override def showMenu(viewerId: UUID, menu: Menu): Unit = {
-    val inventory = menuMapper map (menu, viewerId)
+    val inventory = menuMapper.map(menu, viewerId)
     taskService.runNextTick(() => {
-      val player = server getPlayer viewerId
-      if (player != null) player openInventory inventory
-      else menus -= viewerId
+      val player = server.getPlayer(viewerId)
+      if (player != null) player.openInventory(inventory)
+      else _menus -= viewerId
     })
-    menus += (viewerId -> menu)
+    _menus += (viewerId -> menu)
   }
 
   override def closeMenu(viewerId: UUID): Unit = {
     taskService.runNextTick(() => {
-      val player = server getPlayer viewerId
+      val player = server.getPlayer(viewerId)
       if (player != null) player.closeInventory()
     })
-    menus -= viewerId
+    _menus -= viewerId
   }
 }

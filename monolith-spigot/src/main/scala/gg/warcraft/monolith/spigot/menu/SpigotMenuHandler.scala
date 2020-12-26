@@ -24,10 +24,10 @@
 
 package gg.warcraft.monolith.spigot.menu
 
-import gg.warcraft.monolith.api.menu.{Click, Menu, MenuService}
+import gg.warcraft.monolith.api.menu.{Button, Click, Menu, MenuService}
 import gg.warcraft.monolith.api.player.PlayerService
-import org.bukkit.event.{EventHandler, EventPriority, Listener}
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotMenuHandler(implicit
     menuService: MenuService,
@@ -38,13 +38,21 @@ class SpigotMenuHandler(implicit
       menu.buttons.get(event.getRawSlot) match {
         case Some(button) =>
           val player = playerService.getPlayer(event.getWhoClicked.getUniqueId)
-          button.action.apply(
-            Click(
-              player,
-              event.isLeftClick,
-              event.isShiftClick
-            )
-          )
+          val click = Click(player, event.isLeftClick, event.isShiftClick)
+          button.action.apply(click) match {
+            case Button.noop =>
+            case Button.closeMenu =>
+              menuService.closeMenu(player.id)
+            case Button.closeMenu(message) =>
+              menuService.closeMenu(player.id)
+              playerService.sendMessage(player.id, message)
+            case Button.updateMenu(menu) =>
+              menuService.showMenu(player.id, menu(player))
+            case Button.updateButton(button) =>
+              val updatedButtons = menu.buttons + (event.getRawSlot -> button)
+              val updatedMenu = menu.copy(buttons = updatedButtons)
+              menuService.showMenu(player.id, updatedMenu)
+          }
         case None =>
       }
     }
@@ -55,7 +63,7 @@ class SpigotMenuHandler(implicit
     if (event.getInventory.getHolder.isInstanceOf[SpigotMenuHolder]) {
       event.setCancelled(true)
       menuService
-        .getMenu(event.getWhoClicked.getUniqueId)
+        .menus.get(event.getWhoClicked.getUniqueId)
         .map { onClick(event, _) }
     }
   }

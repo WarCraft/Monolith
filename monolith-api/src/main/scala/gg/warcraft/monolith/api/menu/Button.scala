@@ -26,6 +26,7 @@ package gg.warcraft.monolith.api.menu
 
 import gg.warcraft.monolith.api.core.ColorCode._
 import gg.warcraft.monolith.api.core.FormatCode._
+import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.item.{ItemType, ItemTypeOrVariant}
 import gg.warcraft.monolith.api.player.Player
 
@@ -33,7 +34,7 @@ case class Button(
     icon: ItemTypeOrVariant,
     title: String,
     tooltip: List[String]
-)(val action: Click => Unit) {
+)(val action: Click => Button.Result) {
   lazy val formattedTitle: String = s"$RESET$WHITE$title"
   lazy val formattedTooltip: List[String] = tooltip.map { it => s"$RESET$GRAY$it" }
 }
@@ -43,24 +44,32 @@ trait SkullButton extends Button {
 }
 
 object Button {
+  sealed trait Result
+
+  case object noop extends Result
+  case object closeMenu extends Result
+  final case class closeMenu(message: Message) extends Result
+  final case class updateMenu(menu: Player => Menu) extends Result
+  final case class updateButton(button: Button) extends Result
+
   def apply(
       icon: ItemTypeOrVariant,
       title: String,
       tooltip: String*
-  )(action: Click => Unit): Button =
+  )(action: Click => Result): Button =
     Button(icon, title, tooltip.toList)(action)
 
   def noop(
       icon: ItemTypeOrVariant,
       title: String,
       tooltip: String*
-  ): Button = Button(icon, title, tooltip.toList) { _ => }
+  ): Button = Button(icon, title, tooltip.toList) { _ => noop }
 
   def skull(
       name: String,
       title: String,
       tooltip: String*
-  )(action: Click => Unit): Button =
+  )(action: Click => Result): Button =
     new Button(ItemType.MOB_HEAD, title, tooltip.toList)(action) with SkullButton {
       override val playerName: String = name
     }
@@ -69,8 +78,6 @@ object Button {
       menuService: MenuService
   ): Button = {
     val tooltip = "[CLICK] To go back to" :: "the previous menu" :: Nil
-    Button(ItemType.DOOR, "Back", tooltip) { click =>
-      menuService.showMenu(click.player.id, menu(click.player))
-    }
+    Button(ItemType.DOOR, "Back", tooltip) { _ => updateMenu(menu) }
   }
 }
