@@ -40,12 +40,15 @@ trait StatisticRepository {
 
   def save(statistics: Statistic*): Future[Unit]
 
+  // TODO think of better way to extend monolith repos
+  def queryTop(count: Int, like: String): Future[List[Statistic]]
+
   def queryAll(like: String): Future[List[Statistic]]
 
   def deleteAll(like: String): Future[Unit]
 }
 
-private trait StatisticContext[I <: SqlIdiom, N <: NamingStrategy] {
+trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
   def loadStatistics = quote {
@@ -60,6 +63,11 @@ private trait StatisticContext[I <: SqlIdiom, N <: NamingStrategy] {
         }
   }
 
+  def queryTopLike = quote {
+    (q: Query[Statistic], count: Int, like: String) =>
+      q.filter { _.statistic.like(like) }.sortBy { _.value }(Ord.desc).take(count)
+  }
+
   def queryLike = quote {
     (q: EntityQuery[Statistic], like: String) => q.filter { _.statistic.like(like) }
   }
@@ -70,12 +78,12 @@ private trait StatisticContext[I <: SqlIdiom, N <: NamingStrategy] {
   }
 }
 
-private[monolith] class PostgresStatisticRepository(
+class PostgresStatisticRepository(
     config: Config
 ) extends StatisticRepository {
-  private val context = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
-    with StatisticContext[PostgresDialect, SnakeCase]
-  import context._
+  private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
+    with StatisticRepositoryContext[PostgresDialect, SnakeCase]
+  import database._
 
   override def load(id: UUID): Statistics =
     run { loadStatistics(query[Statistic], lift(id)) }
@@ -87,6 +95,9 @@ private[monolith] class PostgresStatisticRepository(
       liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
     }
   }
+
+  override def queryTop(count: Int, like: String): Future[List[Statistic]] =
+    Future { run { queryTopLike(query[Statistic], lift(count), lift(like)) } }
 
   override def queryAll(like: String): Future[List[Statistic]] =
     Future { run { queryLike(query[Statistic], lift(like)) } }
@@ -95,12 +106,12 @@ private[monolith] class PostgresStatisticRepository(
     Future { run { deleteLike(query[Statistic], lift(like)) } }
 }
 
-private[monolith] class SqliteStatisticRepository(
+class SqliteStatisticRepository(
     config: Config
 ) extends StatisticRepository {
-  private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
-    with StatisticContext[SqliteDialect, SnakeCase]
-  import context._
+  private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
+    with StatisticRepositoryContext[SqliteDialect, SnakeCase]
+  import database._
 
   override def load(id: UUID): Statistics =
     run { loadStatistics(query[Statistic], lift(id)) }
@@ -112,6 +123,9 @@ private[monolith] class SqliteStatisticRepository(
       liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
     }
   }
+
+  override def queryTop(count: Int, like: String): Future[List[Statistic]] =
+    Future { run { queryTopLike(query[Statistic], lift(count), lift(like)) } }
 
   override def queryAll(like: String): Future[List[Statistic]] =
     Future { run { queryLike(query[Statistic], lift(like)) } }
