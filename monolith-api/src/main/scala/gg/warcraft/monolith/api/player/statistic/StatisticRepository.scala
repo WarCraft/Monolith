@@ -41,7 +41,7 @@ trait StatisticRepository {
   def save(statistics: Statistic*): Future[Unit]
 
   // TODO think of better way to extend monolith repos
-  def queryTop(count: Int, like: String): Future[List[Statistic]]
+  def queryTop(count: Int, statistic: String): Future[List[Statistic]]
 
   def queryAll(like: String): Future[List[Statistic]]
 
@@ -64,8 +64,8 @@ trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
   }
 
   def queryTopLike = quote {
-    (q: Query[Statistic], count: Int, like: String) =>
-      q.filter { _.statistic.like(like) }.sortBy { _.value }(Ord.desc).take(count)
+    (q: Query[Statistic], count: Int, statistic: String) =>
+      q.filter { _.statistic == statistic }.sortBy { _.value }(Ord.desc).take(count)
   }
 
   def queryLike = quote {
@@ -96,8 +96,8 @@ class PostgresStatisticRepository(
     }
   }
 
-  override def queryTop(count: Int, like: String): Future[List[Statistic]] =
-    Future { run { queryTopLike(query[Statistic], lift(count), lift(like)) } }
+  override def queryTop(count: Int, statistic: String): Future[List[Statistic]] =
+    Future { run { queryTopLike(query[Statistic], lift(count), lift(statistic)) } }
 
   override def queryAll(like: String): Future[List[Statistic]] =
     Future { run { queryLike(query[Statistic], lift(like)) } }
@@ -124,8 +124,8 @@ class SqliteStatisticRepository(
     }
   }
 
-  override def queryTop(count: Int, like: String): Future[List[Statistic]] =
-    Future { run { queryTopLike(query[Statistic], lift(count), lift(like)) } }
+  override def queryTop(count: Int, statistic: String): Future[List[Statistic]] =
+    Future { run { queryTopLike(query[Statistic], lift(count), lift(statistic)) } }
 
   override def queryAll(like: String): Future[List[Statistic]] =
     Future { run { queryLike(query[Statistic], lift(like)) } }
