@@ -138,7 +138,7 @@ case class PlayerRespawnEvent(
 case class PlayerStatisticsChangedEvent(
     player: Player,
     statistic: String,
-    amount: Int,
-    newCurrent: Int
+    amount: Long,
+    newCurrent: Long
 ) extends Event
     with PlayerEvent
