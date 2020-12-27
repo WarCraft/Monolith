@@ -29,3 +29,11 @@ case class Menu(
     size: MenuSize,
     buttons: Map[Int, Button]
 )
+
+object Menu {
+  def apply(
+      title: String,
+      size: MenuSize,
+      buttons: (Int, Button)*
+  ): Menu = Menu(title, size, buttons.toMap)
+}
