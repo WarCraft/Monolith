@@ -24,15 +24,14 @@
 
 package gg.warcraft.monolith.api.player
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.{EntityTeamChangedEvent, Equipment}
 import gg.warcraft.monolith.api.entity.team.Team
+import gg.warcraft.monolith.api.entity.{EntityTeamChangedEvent, Equipment}
 import gg.warcraft.monolith.api.item.Item
 import gg.warcraft.monolith.api.player.data.PlayerDataService
 
+import java.util.UUID
 import scala.util.chaining._
 
 abstract class PlayerService(implicit
@@ -63,7 +62,7 @@ abstract class PlayerService(implicit
       id: UUID,
       slot: Equipment.Slot,
       item: Item,
-      force: Boolean
+      force: Boolean = false
   ): Boolean
   def giveItem(id: UUID, item: Item*): List[Item]
 
