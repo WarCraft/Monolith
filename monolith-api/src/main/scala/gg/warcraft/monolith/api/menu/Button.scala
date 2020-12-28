@@ -44,7 +44,7 @@ trait SkullButton extends Button {
 }
 
 object Button {
-  sealed trait Result
+  sealed trait Result // TODO make union with Unit in Scala 3
 
   case object noop extends Result
   case object closeMenu extends Result
@@ -53,7 +53,7 @@ object Button {
   final case class updateButton(button: Button) extends Result
 
   def apply(
-      icon: ItemTypeOrVariant,
+      icon: ItemTypeOrVariant, // TODO make union with String in Scala 3
       title: String,
       tooltip: String*
   )(action: Click => Result): Button =
