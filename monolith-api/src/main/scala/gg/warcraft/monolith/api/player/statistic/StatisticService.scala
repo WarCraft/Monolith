@@ -24,14 +24,13 @@
 
 package gg.warcraft.monolith.api.player.statistic
 
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.util.future._
 
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
+import java.util.logging.Logger
 import scala.collection.concurrent
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext, Future}
@@ -104,15 +103,21 @@ class StatisticService(implicit
     }
   }
 
-  def increaseStatistic(playerId: UUID, amount: Long, statistics: String*): Unit = {
-    val deltaStatistic = statistics.map { Statistic(playerId, _, amount) }
+  def increaseStatistics(
+      statistics: List[String],
+      amount: Long,
+      playerIds: UUID*
+  ): Unit = {
+    val deltaStatistic = statistics.flatMap { statistic =>
+      playerIds.map { Statistic(_, statistic, amount) }
+    }
     updateStatistic(_.increase(amount), deltaStatistic: _*).immediatelyOrOnComplete {
       case Success(_) => // TODO fire statistic events
       case Failure(exception) =>
         logger.severe {
-          s"""Failed to increase ${statistics.size} statistics by $amount for $playerId!
+          s"""Failed to increase $statistics by $amount for ${playerIds.size} players!
              |${exception.getMessage}
-             |${statistics.mkString("\n")}""".stripMargin
+             |${playerIds.mkString("\n")}""".stripMargin
         }
     }
   }
