@@ -28,9 +28,9 @@ import gg.warcraft.monolith.api.core.auth.{AuthService, Principal}
 import gg.warcraft.monolith.api.core.command.Command
 import gg.warcraft.monolith.api.player.Player
 
-class BlockBackupCommand() extends Command("restore-all")
+class RestoreAllBlockBackupsCommand() extends Command("restore-all")
 
-object BlockBackupCommand {
+object RestoreAllBlockBackupsCommand {
   class Handler(implicit
       authService: AuthService,
       blockBackupService: BlockBackupService

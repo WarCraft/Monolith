@@ -25,7 +25,7 @@
 package gg.warcraft.monolith.spigot
 
 import gg.warcraft.monolith.api.block.backup.{
-  BlockBackupCommand, BlockBackupRepository, PostgresBlockBackupRepository,
+  RestoreAllBlockBackupsCommand, BlockBackupRepository, PostgresBlockBackupRepository,
   SqliteBlockBackupRepository
 }
 import gg.warcraft.monolith.api.core.Codecs.Circe._
@@ -152,8 +152,8 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
     // Block
     commandService.registerCommand(
-      new BlockBackupCommand,
-      new BlockBackupCommand.Handler
+      new RestoreAllBlockBackupsCommand,
+      new RestoreAllBlockBackupsCommand.Handler
     )
 
     // Entity
