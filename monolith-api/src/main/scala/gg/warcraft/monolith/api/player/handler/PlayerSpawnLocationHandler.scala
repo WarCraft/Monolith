@@ -22,32 +22,30 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.entity.team
+package gg.warcraft.monolith.api.player.handler
 
-import gg.warcraft.monolith.api.core.MonolithConfig
-import gg.warcraft.monolith.api.core.event.EventService
-import io.getquill.MappedEncoding
+import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
+import gg.warcraft.monolith.api.entity.{EntityService, EntityTeamChangedEvent}
+import gg.warcraft.monolith.api.math.Vector3f
+import gg.warcraft.monolith.api.player.{Player, PlayerPreRespawnEvent}
 
-class TeamService(config: MonolithConfig)(implicit
-    eventService: EventService
-) {
-  private var _teams: Map[String, Team] =
-    config.teams.map { it => it.name -> it }.toMap
-  def teams: Map[String, Team] = _teams
+class PlayerSpawnLocationHandler(implicit
+    entityService: EntityService
+) extends Event.Handler {
+  override def handle(event: Event): Unit = event match {
+    case EntityTeamChangedEvent(player: Player, Some(_), Some(team)) =>
+      team.spawn.foreach { spawn =>
+        // TODO set teleport direction
+        entityService.teleportEntity(player.id, spawn, Vector3f())
+      }
 
-  val decoder: MappedEncoding[String, Team] = MappedEncoding { teams(_) }
-  val encoder: MappedEncoding[Team, String] = MappedEncoding { _.name }
+    case _ =>
+  }
 
-  def registerTeam(team: Team): Unit =
-    if (!_teams.contains(team.name)) {
-      _teams += team.name -> team
-      eventService << TeamRegisterEvent(team)
-    } else throw new IllegalArgumentException(s"Team ${team.name} already exists!")
+  override def reduce[T <: PreEvent](event: T): T = event match {
+    case event @ PlayerPreRespawnEvent(player, _) =>
+      event.copy(location = player.team.get.spawn.get).asInstanceOf[T]
 
-  def deregisterTeam(team: String): Unit =
-    if (_teams.contains(team)) {
-      val it = _teams(team)
-      _teams -= team
-      eventService << TeamDeregisterEvent(it)
-    } else throw new IllegalArgumentException(s"Team $team doesn't exist!")
+    case _ => event
+  }
 }

@@ -26,4 +26,6 @@ package gg.warcraft.monolith.api.entity.team
 
 import gg.warcraft.monolith.api.core.event.Event
 
-case class TeamRegisteredEvent(team: Team) extends Event
+case class TeamRegisterEvent(team: Team) extends Event
+
+case class TeamDeregisterEvent(team: Team) extends Event
