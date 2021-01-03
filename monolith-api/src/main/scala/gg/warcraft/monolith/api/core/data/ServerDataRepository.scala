@@ -32,6 +32,7 @@ import io.getquill.context.sql.idiom.SqlIdiom
 trait ServerDataRepository {
   def load(data: String): Option[String]
   def save(data: String, value: String): Unit
+  def delete(data: String): Unit
 }
 
 private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
@@ -49,6 +50,12 @@ private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
     val serverData = ServerData(data, value)
     query.insert(serverData).onConflictUpdate(_.data)((t, e) => t.value -> e.value)
   }
+
+  def deleteData(data: String)(implicit
+      query: Quoted[EntityQuery[ServerData]]
+  ) = quote {
+    query.filter { _.data == lift(data) }.delete
+  }
 }
 
 private[monolith] class PostgresServerDataRepository(
@@ -63,9 +70,11 @@ private[monolith] class PostgresServerDataRepository(
   override def load(data: String): Option[String] =
     run { queryData(data) }.headOption.map { _.value }
 
-  override def save(data: String, value: String): Unit = {
+  override def save(data: String, value: String): Unit =
     run { upsertData(data, value) }
-  }
+
+  override def delete(data: String): Unit =
+    run { deleteData(data) }
 }
 
 private[monolith] class SqliteServerDataRepository(
@@ -80,7 +89,9 @@ private[monolith] class SqliteServerDataRepository(
   override def load(data: String): Option[String] =
     run { queryData(data) }.headOption.map { _.value }
 
-  override def save(data: String, value: String): Unit = {
+  override def save(data: String, value: String): Unit =
     run { upsertData(data, value) }
-  }
+
+  override def delete(data: String): Unit =
+    run { deleteData(data) }
 }
