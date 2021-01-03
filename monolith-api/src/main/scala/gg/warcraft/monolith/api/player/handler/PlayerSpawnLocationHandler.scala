@@ -34,17 +34,15 @@ class PlayerSpawnLocationHandler(implicit
 ) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
     case EntityTeamChangedEvent(player: Player, Some(_), Some(team)) =>
-      team.spawn.foreach { spawn =>
-        // TODO set teleport direction
-        entityService.teleportEntity(player.id, spawn, Vector3f())
-      }
+      // TODO set teleport direction
+      entityService.teleportEntity(player.id, team.spawn, Vector3f())
 
     case _ =>
   }
 
   override def reduce[T <: PreEvent](event: T): T = event match {
     case event @ PlayerPreRespawnEvent(player, _) =>
-      event.copy(location = player.team.get.spawn.get).asInstanceOf[T]
+      event.copy(location = player.team.get.spawn).asInstanceOf[T]
 
     case _ => event
   }

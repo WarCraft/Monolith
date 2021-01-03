@@ -31,7 +31,7 @@ import gg.warcraft.monolith.api.world.Location
 case class Team(
     id: String,
     name: String,
-    spawn: Option[Location],
-    chatColor: Option[ColorCode],
-    particleColor: Option[Particle.Color]
+    spawn: Location,
+    chatColor: ColorCode,
+    particleColor: Particle.Color
 )
