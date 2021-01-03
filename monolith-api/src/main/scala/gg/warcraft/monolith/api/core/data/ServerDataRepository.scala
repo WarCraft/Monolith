@@ -30,55 +30,57 @@ import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
 trait ServerDataRepository {
-  def lastDailyTick: Long
-  def lastDailyTick_=(value: Long): Unit
+  def load(data: String): Option[String]
+  def save(data: String, value: String): Unit
 }
 
 private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  final val last_daily_tick = "last_daily_tick"
-
-  def queryLastDailyTick = quote {
-    (q: Query[ServerData]) => q.filter { _.data == lift(last_daily_tick) }
+  def queryData(data: String)(implicit
+      query: Quoted[EntityQuery[ServerData]]
+  ) = quote {
+    query.filter { _.data == lift(data) }
   }
 
-  def upsertLastDailyTick = quote {
-    (q: EntityQuery[ServerData], data: ServerData) =>
-      q.insert(data).onConflictUpdate(_.data)((t, e) => t.intValue -> e.intValue)
+  def upsertData(data: String, value: String)(implicit
+      query: Quoted[EntityQuery[ServerData]]
+  ) = quote {
+    val serverData = ServerData(data, value)
+    query.insert(serverData).onConflictUpdate(_.data)((t, e) => t.value -> e.value)
   }
 }
 
 private[monolith] class PostgresServerDataRepository(
     config: Config
 ) extends ServerDataRepository {
-  private val context = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with ServerDataContext[PostgresDialect, SnakeCase]
-  import context._
+  import database._
 
-  override def lastDailyTick: Long =
-    run { queryLastDailyTick(query[ServerData]) }
-      .headOption.flatMap { _.intValue }.getOrElse(-1L)
+  private implicit val q = quote { query[ServerData] }
 
-  override def lastDailyTick_=(value: Long): Unit = {
-    val data = ServerData(last_daily_tick, intValue = Some(value))
-    run { upsertLastDailyTick(query[ServerData], lift(data)) }
+  override def load(data: String): Option[String] =
+    run { queryData(data) }.headOption.map { _.value }
+
+  override def save(data: String, value: String): Unit = {
+    run { upsertData(data, value) }
   }
 }
 
 private[monolith] class SqliteServerDataRepository(
     config: Config
 ) extends ServerDataRepository {
-  private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with ServerDataContext[SqliteDialect, SnakeCase]
-  import context._
+  import database._
 
-  override def lastDailyTick: Long =
-    run { queryLastDailyTick(query[ServerData]) }
-      .headOption.flatMap { _.intValue }.getOrElse(-1L)
+  private implicit val q = quote { query[ServerData] }
 
-  override def lastDailyTick_=(value: Long): Unit = {
-    val data = ServerData(last_daily_tick, intValue = Some(value))
-    run { upsertLastDailyTick(query[ServerData], lift(data)) }
+  override def load(data: String): Option[String] =
+    run { queryData(data) }.headOption.map { _.value }
+
+  override def save(data: String, value: String): Unit = {
+    run { upsertData(data, value) }
   }
 }

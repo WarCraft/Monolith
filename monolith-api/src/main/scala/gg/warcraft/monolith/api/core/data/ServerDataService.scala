@@ -35,6 +35,7 @@ class ServerDataService(implicit
     context: ExecutionContext,
     repository: ServerDataRepository
 ) {
+  private final val last_daily_tick = "last_daily_tick"
   private final val ERR_LAST_DAILY_TICK =
     "Failed to retrieve last daily tick from database, falling back to today!"
 
@@ -50,7 +51,7 @@ class ServerDataService(implicit
 
   def readConfig(config: MonolithConfig): Unit = {
     _lastDailyTick = {
-      val epochDay = repository.lastDailyTick
+      val epochDay = repository.load(last_daily_tick).map { _.toLong }.getOrElse(0L)
       if (epochDay <= 0) {
         if (epochDay < 0) logger.severe(ERR_LAST_DAILY_TICK)
         LocalDate.now(serverTimeZone)
@@ -63,7 +64,7 @@ class ServerDataService(implicit
 
   def updateLastDailyTick(): Future[Unit] = Future {
     _lastDailyTick = LocalDate.now(_serverTimeZone)
-    repository.lastDailyTick = _lastDailyTick.toEpochDay
+    repository.save(last_daily_tick, _lastDailyTick.toEpochDay.toString)
 
     _today = _lastDailyTick
   }

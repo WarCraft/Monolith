@@ -24,13 +24,12 @@
 
 package gg.warcraft.monolith.api.player.data
 
-import java.util.UUID
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.entity.team.TeamService
 import gg.warcraft.monolith.api.player.statistic.StatisticService
 import gg.warcraft.monolith.api.util.chaining._
 
+import java.util.UUID
+import java.util.logging.Logger
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.chaining._
 

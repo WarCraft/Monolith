@@ -26,7 +26,5 @@ package gg.warcraft.monolith.api.core.data
 
 case class ServerData(
     data: String,
-    intValue: Option[Long] = None,
-    floatValue: Option[Float] = None,
-    stringValue: Option[String] = None
+    value: String
 )
