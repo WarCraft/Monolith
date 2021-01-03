@@ -25,8 +25,8 @@
 package gg.warcraft.monolith.spigot
 
 import gg.warcraft.monolith.api.block.backup.{
-  RestoreAllBlockBackupsCommand, BlockBackupRepository, PostgresBlockBackupRepository,
-  SqliteBlockBackupRepository
+  BlockBackupRepository, PostgresBlockBackupRepository,
+  RestoreAllBlockBackupsCommand, SqliteBlockBackupRepository
 }
 import gg.warcraft.monolith.api.core.Codecs.Circe._
 import gg.warcraft.monolith.api.core.Duration._
@@ -188,8 +188,13 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   private def enableTasks(): Unit = {
-    taskService.runTask(1.seconds, new DailyTicker().run)
-    taskService.runTask(1.seconds, new PlayerDataTicker().run)
-    taskService.runTask(4.ticks, new PortalTicker().run)
+    val dailyTicker = new DailyTicker()
+    taskService.runTask(1.seconds, () => dailyTicker.run())
+
+    val playerDataTicker = new PlayerDataTicker()
+    taskService.runTask(1.seconds, () => playerDataTicker.run())
+
+    val portalTicker = new PortalTicker()
+    taskService.runTask(4.ticks, () => portalTicker.run())
   }
 }

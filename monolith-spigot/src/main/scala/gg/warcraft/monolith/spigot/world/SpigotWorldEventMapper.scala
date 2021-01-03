@@ -25,18 +25,14 @@
 package gg.warcraft.monolith.spigot.world
 
 import gg.warcraft.monolith.api.core.event.EventService
-import gg.warcraft.monolith.api.entity.{
-  EntityDespawnEvent, EntityPreDespawnEvent, EntityPreRespawnEvent,
-  EntityRespawnEvent
-}
-import gg.warcraft.monolith.spigot.entity.SpigotEntityService
+import gg.warcraft.monolith.api.entity._
 import org.bukkit.Chunk
 import org.bukkit.event.world.{ChunkLoadEvent, ChunkUnloadEvent}
 import org.bukkit.event.{EventHandler, EventPriority, Listener}
 
 class SpigotWorldEventMapper(implicit
     eventService: EventService,
-    entityService: SpigotEntityService
+    entityService: EntityService
 ) extends Listener {
   private var despawnEvents: Map[Chunk, List[EntityPreDespawnEvent]] = Map.empty
   private var respawnEvents: Map[Chunk, List[EntityPreRespawnEvent]] = Map.empty
@@ -46,7 +42,8 @@ class SpigotWorldEventMapper(implicit
     val events = event.getChunk.getEntities
       .flatMap { it => entityService.getEntityOption(it.getUniqueId) }
       .map { it => EntityPreRespawnEvent(it, it.location) }
-      .map(eventService.publish)
+      .map { eventService.publish(_) }
+      .toList
     respawnEvents += (event.getChunk -> events)
   }
 
@@ -71,7 +68,8 @@ class SpigotWorldEventMapper(implicit
     val events = event.getChunk.getEntities
       .flatMap { it => entityService.getEntityOption(it.getUniqueId) }
       .map { EntityPreDespawnEvent(_) }
-      .map(eventService.publish)
+      .map { eventService.publish(_) }
+      .toList
     despawnEvents += (event.getChunk -> events)
   }
 

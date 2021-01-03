@@ -71,7 +71,7 @@ class SpigotEntityEventMapper(implicit
     val entity = spigotEntityService.getEntityAdapter(spigotEntity).get
     val location = locationMapper.map(event.getEntity.getLocation)
     EntityPreSpawnEvent(entity, location, event.isCancelled)
-      .pipe(eventService.publish)
+      .pipe { eventService.publish(_) }
       .tap { reducedEvent =>
         if (reducedEvent.allowed && reducedEvent.location != location)
           taskService.evalNextTick {
@@ -292,8 +292,8 @@ class SpigotEntityEventMapper(implicit
       .map { _.get }
       .toList
     val reducedEvent = EntityPreDeathEvent(entity, drops)
-      .tap(eventService.publish)
-      .tap(entityStatus.reduce)
+      .tap { eventService.publish(_) }
+      .tap { entityStatus.reduce(_) }
     val reducedDrops = reducedEvent.drops
     val reducedSpigotDrops = reducedDrops.map { itemMapper.map }.asJava
     event.getDrops.clear()
