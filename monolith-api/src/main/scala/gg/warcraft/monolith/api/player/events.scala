@@ -82,7 +82,7 @@ case class PlayerGameModeChangedEvent(
 ) extends Event
     with PlayerEvent
 
-// INTERACT TODO do these events make sense with only player data?
+// INTERACT TODO do these events make sense with only player data? Is this only for air?
 case class PlayerPreInteractEvent(
     player: Player,
     cancelled: Boolean = false,

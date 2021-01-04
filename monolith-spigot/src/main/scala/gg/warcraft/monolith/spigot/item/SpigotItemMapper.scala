@@ -24,18 +24,17 @@
 
 package gg.warcraft.monolith.spigot.item
 
-import java.util
-
 import gg.warcraft.monolith.api.block.variant._
 import gg.warcraft.monolith.api.item._
 import gg.warcraft.monolith.api.item.variant.{StructureBlockVariant, _}
 import gg.warcraft.monolith.spigot.Extensions._
-import org.bukkit.{Material, NamespacedKey}
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.Damageable
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.Plugin
+import org.bukkit.{Material, NamespacedKey}
 
+import java.util
 import scala.jdk.CollectionConverters._
 
 private object SpigotItemMapper {
@@ -60,7 +59,7 @@ class SpigotItemMapper(
     if (material.name.endsWith("AIR")) return _ => None
 
     // Compute common item data TODO map default name and item attributes
-    val name                            = (item: SpigotItem) => {
+    val name = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) {
         val data = meta.getPersistentDataContainer
@@ -69,7 +68,7 @@ class SpigotItemMapper(
         } else meta.getDisplayName
       } else ""
     }
-    val tt: SpigotItem => List[String]  = (item: SpigotItem) => {
+    val tt: SpigotItem => List[String] = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null && meta.getLore != null) meta.getLore.asScala.toList
       else List.empty
@@ -78,7 +77,7 @@ class SpigotItemMapper(
       val meta = item.getItemMeta
       if (meta != null) Set.empty else Set.empty
     }
-    val hAttr                           = (item: SpigotItem) => {
+    val hAttr = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES) else false
     }
@@ -114,9 +113,19 @@ class SpigotItemMapper(
     lazy val d = (i: SpigotItem) => // durable params tuple builder
       (name(i), tt(i), attr(i), hAttr(i), mdl(i), dura(i), unbr(i), hUnbr(i))
     def v[T <: ItemVariant](i: SpigotItem) = // variable params tuple builder
-    (variant[T](i), name(i), tt(i), count(i), attr(i), hAttr(i), mdl(i))
+      (variant[T](i), name(i), tt(i), count(i), attr(i), hAttr(i), mdl(i))
     def e[T <: ItemVariant](i: SpigotItem) = // equipment params tuple builder
-    (variant[T](i), name(i), tt(i), attr(i), hAttr(i), mdl(i), dura(i), unbr(i), hUnbr(i))
+      (
+        variant[T](i),
+        name(i),
+        tt(i),
+        attr(i),
+        hAttr(i),
+        mdl(i),
+        dura(i),
+        unbr(i),
+        hUnbr(i)
+      )
 
     // Map item builder
     val builder: SpigotItem => Item = material match {
@@ -335,7 +344,7 @@ class SpigotItemMapper(
         i =>
           GoldenApple(enchanted = true, name(i), tt(i), count(i), attr(i), hAttr(i))
 
-        // MAP
+      // MAP
       case Material.MAP =>
         (i => Map(filled = false, name(i), tt(i), count(i), attr(i), hAttr(i)))
 
@@ -479,7 +488,13 @@ class SpigotItemMapper(
   }
 
   def map(item: Item): SpigotItem = {
-    if (item == null) return new SpigotItem(Material.AIR)
+    item match { // return early on null and no stack size
+      case null =>
+        return new SpigotItem(Material.AIR)
+      case it: StackableItem if it.count == 0 =>
+        return new SpigotItem(Material.AIR)
+      case _ =>
+    }
 
     val material = item match {
       case it: VariableItem[_] => variantMapper.map(it)
@@ -515,7 +530,8 @@ class SpigotItemMapper(
       meta.setDisplayName(item.name)
     } else meta.setDisplayName(item.name)
     meta.setLore(item.tooltip.asJava)
-    if (item.customModelData.isDefined) meta.setCustomModelData(item.customModelData.get)
+    if (item.customModelData.isDefined)
+      meta.setCustomModelData(item.customModelData.get)
     if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
     spigotItem.setItemMeta(meta)
 
