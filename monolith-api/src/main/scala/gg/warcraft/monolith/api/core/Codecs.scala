@@ -30,7 +30,7 @@ import gg.warcraft.monolith.api.effect.Particle
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
 import gg.warcraft.monolith.api.world.{Direction, World, WorldService}
-import io.circe.{Decoder, Encoder}
+import io.circe.{Decoder, Encoder, KeyDecoder}
 import io.getquill.MappedEncoding
 
 import scala.util.Try
@@ -95,6 +95,8 @@ object Codecs {
 
     def teamDecoder(implicit service: TeamService): Decoder[Option[Team]] =
       Decoder.decodeString.emapTry { it => { Try { service.teams.get(it) } } }
+    def teamKeyDecoder(implicit service: TeamService): KeyDecoder[Team] =
+      KeyDecoder.instance(it => service.teams.get(it))
     implicit lazy val teamEncoder: Encoder[Team] =
       Encoder.encodeString.contramap { _.name }
 
