@@ -30,12 +30,12 @@ import gg.warcraft.monolith.api.util.chaining._
 
 import java.util.UUID
 import java.util.logging.Logger
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.util.chaining._
 
 class PlayerDataService(implicit
     logger: Logger,
-    context: ExecutionContext,
     repository: PlayerDataRepository,
     statisticService: StatisticService,
     teamService: TeamService

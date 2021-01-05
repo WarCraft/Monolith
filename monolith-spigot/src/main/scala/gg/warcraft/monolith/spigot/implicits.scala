@@ -24,8 +24,6 @@
 
 package gg.warcraft.monolith.spigot
 
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.block.BlockService
 import gg.warcraft.monolith.api.block.backup.{
   BlockBackupRepository, BlockBackupService
@@ -80,7 +78,7 @@ import gg.warcraft.monolith.spigot.world._
 import org.bukkit.Server
 import org.bukkit.plugin.Plugin
 
-import scala.concurrent.ExecutionContext
+import java.util.logging.Logger
 
 object implicits {
   private var _config: MonolithConfig = _
@@ -159,7 +157,7 @@ object implicits {
     _blockBackupRepository
 
   // Core
-  private implicit final val context: ExecutionContext = ExecutionContext.global
+  private implicit lazy val commandService: CommandService = _commandService
   private implicit lazy val eventService: EventService = _eventService
   private implicit lazy val taskService: TaskService = _taskService
 

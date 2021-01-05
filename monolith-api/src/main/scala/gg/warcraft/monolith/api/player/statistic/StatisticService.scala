@@ -32,15 +32,15 @@ import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger
 import scala.collection.concurrent
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{Await, Future}
 import scala.jdk.CollectionConverters._
 import scala.util.chaining._
 import scala.util.{Failure, Success}
 
 class StatisticService(implicit
     logger: Logger,
-    executionContext: ExecutionContext,
     repository: StatisticRepository,
     taskService: TaskService
 ) {

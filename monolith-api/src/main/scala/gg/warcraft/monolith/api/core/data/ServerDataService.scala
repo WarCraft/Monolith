@@ -28,11 +28,11 @@ import gg.warcraft.monolith.api.core.MonolithConfig
 
 import java.time.{LocalDate, LocalDateTime, ZoneId}
 import java.util.logging.Logger
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class ServerDataService(implicit
     logger: Logger,
-    context: ExecutionContext,
     repository: ServerDataRepository
 ) {
   private final val last_daily_tick = "last_daily_tick"

@@ -24,25 +24,24 @@
 
 package gg.warcraft.monolith.api.player.currency
 
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.util.future._
 
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
+import java.util.logging.Logger
 import scala.collection.concurrent
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{Await, Future}
 import scala.jdk.CollectionConverters._
 import scala.util.chaining._
 import scala.util.{Failure, Success}
 
 class CurrencyService(implicit
     logger: Logger,
-    executionContext: ExecutionContext,
     repository: CurrencyRepository,
     eventService: EventService,
     taskService: TaskService
