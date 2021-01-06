@@ -37,6 +37,13 @@ import scala.util.Try
 
 object Codecs {
   object Circe {
+    def anyDecoder[T](f: String => T): Decoder[T] =
+      Decoder.decodeString.emapTry { it => { Try { f(it) } } }
+    def anyKeyDecoder[T](f: String => T): KeyDecoder[T] =
+      KeyDecoder.instance { it => Option(f(it)) }
+    def anyEncoder[T](f: T => String): Encoder[T] =
+      Encoder.encodeString.contramap[T](f)
+
     def enumerDecoder[T <: Enumeration](f: String => T): Decoder[T] =
       Decoder.decodeString.emapTry { it => { Try { f(it) } } }
     def enumerEncoder[T <: Enumeration]: Encoder[T] =
@@ -93,7 +100,9 @@ object Codecs {
         }
       }
 
-    def teamDecoder(implicit service: TeamService): Decoder[Option[Team]] =
+    def teamDecoder(implicit service: TeamService): Decoder[Team] =
+      Decoder.decodeString.emapTry { it => { Try { service.teams(it) } } }
+    def teamOptionDecoder(implicit service: TeamService): Decoder[Option[Team]] =
       Decoder.decodeString.emapTry { it => { Try { service.teams.get(it) } } }
     def teamKeyDecoder(implicit service: TeamService): KeyDecoder[Team] =
       KeyDecoder.instance(it => service.teams.get(it))
