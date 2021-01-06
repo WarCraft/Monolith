@@ -68,4 +68,13 @@ class ServerDataService(implicit
 
     _today = _lastDailyTick
   }
+
+  def load(data: String): Option[String] =
+    repository.load(data)
+
+  def save(data: String, value: String): Unit =
+    repository.save(data, value)
+
+  def delete(data: String): Unit =
+    repository.delete(data)
 }
