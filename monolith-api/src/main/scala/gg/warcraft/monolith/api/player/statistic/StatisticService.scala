@@ -57,6 +57,12 @@ class StatisticService(implicit
   def statistics(playerId: UUID): Statistics =
     statisticsFuture(playerId).getOrThrow
 
+  def queryStatistics(like: String): Future[List[Statistic]] =
+    repository.queryAll(like)
+
+  def queryTop(limit: Int, statistic: String): Future[List[Statistic]] =
+    repository.queryTop(limit, statistic)
+
   // TODO should repositories always return a Future allowing the service to determine what methodology to use?
   // TODO this also allows SQLite repositories to work on the main thread regardless of using a Future
   def statisticsFuture(playerId: UUID): Future[Statistics] =
@@ -86,10 +92,6 @@ class StatisticService(implicit
     repository.save(deltaStatistics: _*)
   }
 
-  /** Increases a player's statistic by amount. Statistics are permanent. For daily
-    * or weekly statistics that need to be reset append the statistic's name with a
-    * unique identifier.
-    */
   def increaseStatistic(statistic: String, amount: Long, playerIds: UUID*): Unit = {
     val deltaStatistic = playerIds.map { Statistic(_, statistic, amount) }
     updateStatistic(_.increase(amount), deltaStatistic: _*).immediatelyOrOnComplete {
