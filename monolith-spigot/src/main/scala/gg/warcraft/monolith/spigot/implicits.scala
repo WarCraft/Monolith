@@ -46,6 +46,9 @@ import gg.warcraft.monolith.api.player.PlayerService
 import gg.warcraft.monolith.api.player.currency.{CurrencyRepository, CurrencyService}
 import gg.warcraft.monolith.api.player.data.{PlayerDataRepository, PlayerDataService}
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingService
+import gg.warcraft.monolith.api.player.statistic.archive.{
+  StatisticArchiveRepository, StatisticArchiveService
+}
 import gg.warcraft.monolith.api.player.statistic.{
   StatisticRepository, StatisticService
 }
@@ -112,6 +115,7 @@ object implicits {
   private var _playerDataRepository: PlayerDataRepository = _
   private var _currencyRepository: CurrencyRepository = _
   private var _statisticRepository: StatisticRepository = _
+  private var _statisticArchiveRepository: StatisticArchiveRepository = _
   private var _blockBackupRepository: BlockBackupRepository = _
 
   private[spigot] def configure(
@@ -122,6 +126,7 @@ object implicits {
           PlayerDataRepository,
           CurrencyRepository,
           StatisticRepository,
+          StatisticArchiveRepository,
           BlockBackupRepository
       )
   ): Unit = {
@@ -131,7 +136,8 @@ object implicits {
     _playerDataRepository = repositories._3
     _currencyRepository = repositories._4
     _statisticRepository = repositories._5
-    _blockBackupRepository = repositories._6
+    _statisticArchiveRepository = repositories._6
+    _blockBackupRepository = repositories._7
   }
 
   private[spigot] def monolithEventService(logger: Logger): EventService =
@@ -153,6 +159,8 @@ object implicits {
     _currencyRepository
   private implicit lazy val statisticRepository: StatisticRepository =
     _statisticRepository
+  private implicit lazy val statisticArchiveRepository: StatisticArchiveRepository =
+    _statisticArchiveRepository
   private implicit lazy val blockBackupRepository: BlockBackupRepository =
     _blockBackupRepository
 
@@ -241,6 +249,8 @@ object implicits {
     new CurrencyService
   implicit lazy val statisticService: StatisticService =
     new StatisticService
+  implicit lazy val statisticArchiveService: StatisticArchiveService =
+    new StatisticArchiveService
   implicit lazy val playerService: PlayerService =
     new SpigotPlayerService
   implicit lazy val playerDataService: PlayerDataService =

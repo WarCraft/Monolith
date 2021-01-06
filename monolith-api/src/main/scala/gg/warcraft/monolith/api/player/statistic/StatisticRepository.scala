@@ -40,15 +40,14 @@ trait StatisticRepository {
 
   def save(statistics: Statistic*): Future[Unit]
 
-  // TODO think of better way to extend monolith repos
   def queryTop(count: Int, statistic: String): Future[List[Statistic]]
 
   def queryAll(like: String): Future[List[Statistic]]
 
-  def deleteAll(like: String): Future[Unit]
+  private[statistic] def deleteAll(like: String): Future[Unit]
 }
 
-trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
+private trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
   def loadStatistics = quote {
@@ -78,7 +77,7 @@ trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
   }
 }
 
-class PostgresStatisticRepository(
+private[monolith] class PostgresStatisticRepository(
     config: Config
 ) extends StatisticRepository {
   private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
@@ -106,7 +105,7 @@ class PostgresStatisticRepository(
     Future { run { deleteLike(query[Statistic], lift(like)) } }
 }
 
-class SqliteStatisticRepository(
+private[monolith] class SqliteStatisticRepository(
     config: Config
 ) extends StatisticRepository {
   private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)

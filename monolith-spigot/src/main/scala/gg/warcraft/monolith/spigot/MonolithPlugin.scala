@@ -54,6 +54,10 @@ import gg.warcraft.monolith.api.player.currency.{
 }
 import gg.warcraft.monolith.api.player.data._
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
+import gg.warcraft.monolith.api.player.statistic.archive.{
+  PostgresStatisticArchiveRepository, SqliteStatisticArchiveRepository,
+  StatisticArchiveRepository
+}
 import gg.warcraft.monolith.api.player.statistic.{
   PostgresStatisticRepository, SqliteStatisticRepository, StatisticCacheHandler,
   StatisticRepository
@@ -111,6 +115,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
       PlayerDataRepository,
       CurrencyRepository,
       StatisticRepository,
+      StatisticArchiveRepository,
       BlockBackupRepository
   ) =
     if (config.embedded) {
@@ -121,6 +126,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
         new SqlitePlayerDataRepository(sqliteConfig),
         new SqliteCurrencyRepository(sqliteConfig),
         new SqliteStatisticRepository(sqliteConfig),
+        new SqliteStatisticArchiveRepository(sqliteConfig),
         new SqliteBlockBackupRepository(sqliteConfig)
       )
     } else {
@@ -131,6 +137,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
         new PostgresPlayerDataRepository(postgresConfig),
         new PostgresCurrencyRepository(postgresConfig),
         new PostgresStatisticRepository(postgresConfig),
+        new PostgresStatisticArchiveRepository(postgresConfig),
         new PostgresBlockBackupRepository(postgresConfig)
       )
     }
