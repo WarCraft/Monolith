@@ -24,17 +24,15 @@
 
 package gg.warcraft.monolith.api.core
 
-import java.io.File
-import java.util.Properties
-import java.util.logging.Logger
-
 import com.typesafe.config.{Config, ConfigFactory}
-import io.circe.generic.extras.Configuration
 import io.circe.yaml.parser
 import io.circe.{Decoder, Error}
 import io.getquill.context.jdbc.JdbcContext
 import org.flywaydb.core.Flyway
 
+import java.io.File
+import java.util.Properties
+import java.util.logging.Logger
 import scala.concurrent.ExecutionContext
 import scala.io.Source
 import scala.util.chaining._
@@ -44,7 +42,7 @@ trait MonolithPlugin {
   private final val ERR_CONFIG_FAILED = "Failed to parse (default) config!"
   private final val separator = File.separator
 
-  protected implicit val circe: Configuration = Configuration.default.withDefaults
+  //protected implicit val circe: Configuration = Configuration.default.withDefaults
   protected implicit val context: ExecutionContext = ExecutionContext.global
 
   // TODO collect repositories and add close method
