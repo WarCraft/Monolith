@@ -60,8 +60,6 @@ import gg.warcraft.monolith.api.player.statistic.{
   PostgresStatisticRepository, SqliteStatisticRepository, StatisticCacheHandler,
   StatisticRepository
 }
-import gg.warcraft.monolith.api.util.codecs.circe._
-import gg.warcraft.monolith.api.util.codecs.monolith._
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.block.SpigotBlockEventMapper
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
@@ -83,6 +81,10 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   override def onEnable(): Unit = {
+    import gg.warcraft.monolith.api.util.codecs.circe._
+    import gg.warcraft.monolith.api.util.codecs.monolith.{
+      colorCodeDecoder, directionDecoder, particleColorDecoder, worldDecoder
+    }
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
 
     upgradeDatabase(config.database, getDataFolder, getClassLoader)
