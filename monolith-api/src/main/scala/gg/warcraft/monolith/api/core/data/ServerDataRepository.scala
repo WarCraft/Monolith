@@ -38,23 +38,17 @@ trait ServerDataRepository {
 private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  def queryData(data: String)(implicit
-      query: Quoted[EntityQuery[ServerData]]
-  ) = quote {
-    query.filter { _.data == lift(data) }
+  def queryData = quote {
+    (q: EntityQuery[ServerData], data: String) => q.filter { _.data == data }
   }
 
-  def upsertData(data: String, value: String)(implicit
-      query: Quoted[EntityQuery[ServerData]]
-  ) = quote {
-    val serverData = ServerData(data, value)
-    query.insert(serverData).onConflictUpdate(_.data)((t, e) => t.value -> e.value)
+  def upsertData = quote {
+    (q: EntityQuery[ServerData], data: ServerData) =>
+      q.insert(data).onConflictUpdate(_.data)((t, e) => t.value -> e.value)
   }
 
-  def deleteData(data: String)(implicit
-      query: Quoted[EntityQuery[ServerData]]
-  ) = quote {
-    query.filter { _.data == lift(data) }.delete
+  def deleteData = quote {
+    (q: EntityQuery[ServerData], data: String) => q.filter { _.data == data }.delete
   }
 }
 
@@ -65,16 +59,16 @@ private[monolith] class PostgresServerDataRepository(
     with ServerDataContext[PostgresDialect, SnakeCase]
   import database._
 
-  private implicit val q = quote { query[ServerData] }
-
   override def load(data: String): Option[String] =
-    run { queryData(data) }.headOption.map { _.value }
+    run { queryData(query[ServerData], lift(data)) }.headOption.map { _.value }
 
-  override def save(data: String, value: String): Unit =
-    run { upsertData(data, value) }
+  override def save(data: String, value: String): Unit = {
+    val serverData = ServerData(data, value)
+    run { upsertData(query[ServerData], lift(serverData)) }
+  }
 
   override def delete(data: String): Unit =
-    run { deleteData(data) }
+    run { deleteData(query[ServerData], lift(data)) }
 }
 
 private[monolith] class SqliteServerDataRepository(
@@ -84,14 +78,14 @@ private[monolith] class SqliteServerDataRepository(
     with ServerDataContext[SqliteDialect, SnakeCase]
   import database._
 
-  private implicit val q = quote { query[ServerData] }
-
   override def load(data: String): Option[String] =
-    run { queryData(data) }.headOption.map { _.value }
+    run { queryData(query[ServerData], lift(data)) }.headOption.map { _.value }
 
-  override def save(data: String, value: String): Unit =
-    run { upsertData(data, value) }
+  override def save(data: String, value: String): Unit = {
+    val serverData = ServerData(data, value)
+    run { upsertData(query[ServerData], lift(serverData)) }
+  }
 
   override def delete(data: String): Unit =
-    run { deleteData(data) }
+    run { deleteData(query[ServerData], lift(data)) }
 }
