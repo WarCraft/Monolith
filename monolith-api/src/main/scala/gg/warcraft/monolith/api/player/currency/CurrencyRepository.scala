@@ -24,14 +24,12 @@
 
 package gg.warcraft.monolith.api.player.currency
 
-import java.util.UUID
-
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill._
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
+import java.util.UUID
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.chaining.scalaUtilChainingOps
 
@@ -63,9 +61,9 @@ private trait CurrencyContext[I <: SqlIdiom, N <: NamingStrategy] {
 private[monolith] class PostgresCurrencyRepository(
     config: Config
 ) extends CurrencyRepository {
-  private val databaseContext = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with CurrencyContext[PostgresDialect, SnakeCase]
-  import databaseContext._
+  import database._
 
   override def load(id: UUID): Currencies =
     run { loadCurrencies(query[Currency], lift(id)) }
@@ -84,9 +82,9 @@ private[monolith] class PostgresCurrencyRepository(
 private[monolith] class SqliteCurrencyRepository(
     config: Config
 ) extends CurrencyRepository {
-  private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with CurrencyContext[SqliteDialect, SnakeCase]
-  import context._
+  import database._
 
   override def load(id: UUID): Currencies =
     run { loadCurrencies(query[Currency], lift(id)) }

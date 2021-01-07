@@ -24,17 +24,16 @@
 
 package gg.warcraft.monolith.spigot.block.backup
 
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.block.backup.{
   BlockBackup, BlockBackupRepository, BlockBackupService
 }
-import gg.warcraft.monolith.api.world.BlockLocation
+import gg.warcraft.monolith.api.world.{BlockLocation, WorldService}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Bukkit
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.plugin.Plugin
 
+import java.util.logging.Logger
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext
 
@@ -42,7 +41,8 @@ class SpigotBlockBackupService(implicit
     plugin: Plugin,
     logger: Logger,
     repository: BlockBackupRepository,
-    locationMapper: SpigotLocationMapper
+    locationMapper: SpigotLocationMapper,
+    worldService: WorldService
 ) extends BlockBackupService {
   private implicit val executionContext: ExecutionContext =
     ExecutionContext.global
@@ -97,7 +97,7 @@ class SpigotBlockBackupService(implicit
   }
 
   override def restoreAllBackups(): Unit = {
-    repository.all.foreach(restoreBackup)
+    repository.all().foreach(restoreBackup)
     cache.clear
   }
 

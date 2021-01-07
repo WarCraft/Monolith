@@ -25,28 +25,26 @@
 package gg.warcraft.monolith.api.block.backup
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill._
-import gg.warcraft.monolith.api.world.{World, WorldService}
+import gg.warcraft.monolith.api.world.WorldService
+import gg.warcraft.monolith.api.util.codecs.monolith._
+import gg.warcraft.monolith.api.util.codecs.quill._
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 trait BlockBackupRepository {
-  def all: List[BlockBackup]
+  def all()(implicit
+      worldService: WorldService
+  ): List[BlockBackup]
 
-  def save(data: BlockBackup)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit]
+  def save(data: BlockBackup): Future[Unit]
 
-  def delete(id: Int)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit]
+  def delete(id: Int): Future[Unit]
 
-  def deleteRange(ids: Range.Inclusive)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit]
+  def deleteRange(ids: Range.Inclusive): Future[Unit]
 }
 
 private trait BlockBackupContext[I <: SqlIdiom, N <: NamingStrategy] {
@@ -72,66 +70,50 @@ private trait BlockBackupContext[I <: SqlIdiom, N <: NamingStrategy] {
 
 private[monolith] class PostgresBlockBackupRepository(
     config: Config
-)(implicit
-    worldService: WorldService
 ) extends BlockBackupRepository {
-  private implicit val decoder: MappedEncoding[String, World] = worldDecoder
-
-  private val databaseContext = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with BlockBackupContext[PostgresDialect, SnakeCase]
-  import databaseContext._
+  import database._
 
-  override def all: List[BlockBackup] =
+  override def all()(implicit
+      worldService: WorldService
+  ): List[BlockBackup] =
     run { queryAllBackups(query[BlockBackup]) }
 
-  override def save(data: BlockBackup)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def save(data: BlockBackup): Future[Unit] = Future {
     run { insertBackup(query[BlockBackup], lift(data)) }
   }
 
-  override def delete(id: Int)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def delete(id: Int): Future[Unit] = Future {
     run { deleteBackup(query[BlockBackup], lift(id)) }
   }
 
-  override def deleteRange(ids: Range.Inclusive)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def deleteRange(ids: Range.Inclusive): Future[Unit] = Future {
     run { deleteBackups(query[BlockBackup], lift(ids.start), lift(ids.`end`)) }
   }
 }
 
 private[monolith] class SqliteBlockBackupRepository(
     config: Config
-)(implicit
-    worldService: WorldService
 ) extends BlockBackupRepository {
-  private implicit val decoder: MappedEncoding[String, World] = worldDecoder
-
-  private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with BlockBackupContext[SqliteDialect, SnakeCase]
-  import context._
+  import database._
 
-  override def all: List[BlockBackup] =
+  override def all()(implicit
+      worldService: WorldService
+  ): List[BlockBackup] =
     run { queryAllBackups(query[BlockBackup]) }
 
-  override def save(data: BlockBackup)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def save(data: BlockBackup): Future[Unit] = Future {
     run { insertBackup(query[BlockBackup], lift(data)) }
   }
 
-  override def delete(id: Int)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def delete(id: Int): Future[Unit] = Future {
     run { deleteBackup(query[BlockBackup], lift(id)) }
   }
 
-  override def deleteRange(ids: Range.Inclusive)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def deleteRange(ids: Range.Inclusive): Future[Unit] = Future {
     run { deleteBackups(query[BlockBackup], lift(ids.start), lift(ids.`end`)) }
   }
 }

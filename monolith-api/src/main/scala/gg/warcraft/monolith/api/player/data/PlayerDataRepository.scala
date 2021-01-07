@@ -24,23 +24,24 @@
 
 package gg.warcraft.monolith.api.player.data
 
-import java.util.UUID
-
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill._
-import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
+import gg.warcraft.monolith.api.entity.team.TeamService
+import gg.warcraft.monolith.api.util.codecs.monolith._
+import gg.warcraft.monolith.api.util.codecs.quill._
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
-import scala.concurrent.{ExecutionContext, Future}
+import java.util.UUID
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 trait PlayerDataRepository {
-  def load(id: UUID): Option[PlayerData]
+  def load(id: UUID)(implicit
+      teamService: TeamService
+  ): Option[PlayerData]
 
-  def save(data: PlayerData)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit]
+  def save(data: PlayerData): Future[Unit]
 }
 
 private trait PlayerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
@@ -62,40 +63,34 @@ private trait PlayerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
 
 private[monolith] class PostgresPlayerDataRepository(
     config: Config
-)(implicit
-    teamService: TeamService
 ) extends PlayerDataRepository {
-  private implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
-
-  private val databaseContext = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with PlayerDataContext[PostgresDialect, SnakeCase]
-  import databaseContext._
+  import database._
 
-  override def load(id: UUID): Option[PlayerData] =
+  override def load(id: UUID)(implicit
+      teamService: TeamService
+  ): Option[PlayerData] =
     run { loadData(query[PlayerData], lift(id)) }.headOption
 
-  override def save(data: PlayerData)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] =
-    Future { run { upsertData(query[PlayerData], lift(data)) } }
+  override def save(data: PlayerData): Future[Unit] = Future {
+    run { upsertData(query[PlayerData], lift(data)) }
+  }
 }
 
 private[monolith] class SqlitePlayerDataRepository(
     config: Config
-)(implicit
-    teamService: TeamService
 ) extends PlayerDataRepository {
-  private implicit val decoder: MappedEncoding[String, Team] = teamService.decoder
-
-  private val context = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
+  private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with PlayerDataContext[SqliteDialect, SnakeCase]
-  import context._
+  import database._
 
-  override def load(id: UUID): Option[PlayerData] =
+  override def load(id: UUID)(implicit
+      teamService: TeamService
+  ): Option[PlayerData] =
     run { loadData(query[PlayerData], lift(id)) }.headOption
 
-  override def save(data: PlayerData)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] =
-    Future { run { upsertData(query[PlayerData], lift(data)) } }
+  override def save(data: PlayerData): Future[Unit] = Future {
+    run { upsertData(query[PlayerData], lift(data)) }
+  }
 }

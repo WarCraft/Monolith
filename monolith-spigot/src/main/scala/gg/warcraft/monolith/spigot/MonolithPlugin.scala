@@ -28,7 +28,6 @@ import gg.warcraft.monolith.api.block.backup.{
   BlockBackupRepository, PostgresBlockBackupRepository,
   RestoreAllBlockBackupsCommand, SqliteBlockBackupRepository
 }
-import gg.warcraft.monolith.api.core.Codecs.Circe._
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.auth.AuthModeHandler
 import gg.warcraft.monolith.api.core.auth.command.{
@@ -39,7 +38,7 @@ import gg.warcraft.monolith.api.core.data.{
 }
 import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
 import gg.warcraft.monolith.api.core.{
-  ColorCode, DatabaseConfig, MonolithConfig, ServerShutdownEvent
+  DatabaseConfig, MonolithConfig, ServerShutdownEvent
 }
 import gg.warcraft.monolith.api.entity.data.{
   EntityDataCacheHandler, EntityDataRepository, PostgresEntityDataRepository,
@@ -47,7 +46,6 @@ import gg.warcraft.monolith.api.entity.data.{
 }
 import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.entity.team.TeamStaffCommand
-import gg.warcraft.monolith.api.item.ItemType
 import gg.warcraft.monolith.api.player.currency.{
   CurrencyCacheHandler, CurrencyRepository, PostgresCurrencyRepository,
   SqliteCurrencyRepository
@@ -62,7 +60,8 @@ import gg.warcraft.monolith.api.player.statistic.{
   PostgresStatisticRepository, SqliteStatisticRepository, StatisticCacheHandler,
   StatisticRepository
 }
-import gg.warcraft.monolith.api.world.World
+import gg.warcraft.monolith.api.util.codecs.circe._
+import gg.warcraft.monolith.api.util.codecs.monolith._
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.block.SpigotBlockEventMapper
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
@@ -73,7 +72,6 @@ import gg.warcraft.monolith.spigot.item.SpigotItemEventMapper
 import gg.warcraft.monolith.spigot.menu.SpigotMenuHandler
 import gg.warcraft.monolith.spigot.player.SpigotPlayerEventMapper
 import gg.warcraft.monolith.spigot.world.SpigotWorldEventMapper
-import io.circe.Decoder
 import io.circe.generic.auto._
 
 class MonolithPlugin extends SpigotMonolithPlugin {
@@ -85,9 +83,6 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   override def onEnable(): Unit = {
-    implicit val colorCodeDec: Decoder[ColorCode] = enumDecoder(ColorCode.valueOf)
-    implicit val itemTypeDec: Decoder[ItemType] = enumDecoder(ItemType.valueOf)
-    implicit val worldDec: Decoder[World] = worldDecoder
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
 
     upgradeDatabase(config.database, getDataFolder, getClassLoader)

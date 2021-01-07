@@ -24,7 +24,87 @@
 
 package gg.warcraft.monolith.api.util
 
-// TODO impl codecs like util.chaining
-object circe {}
+import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
+import gg.warcraft.monolith.api.core.ColorCode
+import gg.warcraft.monolith.api.effect.Particle
+import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
+import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
+import gg.warcraft.monolith.api.world.{Direction, World, WorldService}
+import io.circe.{Decoder, Encoder, KeyDecoder}
+import io.getquill.MappedEncoding
 
-object quill {}
+import scala.util.Try
+
+object codecs {
+
+  object monolith {
+    implicit def blockDataDecoder(implicit
+        service: WorldService
+    ): String => BlockTypeVariantOrState =
+      service.parseData
+    implicit val blockDataEncoder: BlockTypeVariantOrState => String =
+      _.toString
+
+    implicit val colorCodeDecoder: String => ColorCode =
+      ColorCode.valueOf
+    implicit val colorCodeEncoder: ColorCode => String =
+      _.name
+
+    implicit val directionDecoder: String => Direction =
+      Direction.valueOf
+    implicit val directionEncoder: Direction => String =
+      _.name
+
+    implicit def itemDataDecoder(implicit
+        service: ItemService
+    ): String => ItemTypeOrVariant =
+      service.parseData
+    implicit val itemDataEncoder: ItemTypeOrVariant => String =
+      _.toString
+
+    implicit val particleColorDecoder: String => Particle.Color =
+      Particle.Color.valueOf
+
+    implicit def teamDecoder(implicit
+        service: TeamService
+    ): String => Team =
+      service.teams
+    implicit def teamOptionDecoder(implicit
+        service: TeamService
+    ): String => Option[Team] =
+      service.teams.get _
+    implicit val teamEncoder: Team => String =
+      _.id
+
+    implicit def worldDecoder(implicit
+        service: WorldService
+    ): String => World =
+      service.getWorld
+    implicit val worldEncoder: World => String =
+      _.name
+  }
+
+  object circe {
+    implicit def circeDecoder[T](implicit f: String => T): Decoder[T] =
+      Decoder.decodeString.emapTry { it => { Try { f(it) } } }
+    implicit def circeKeyDecoder[T](implicit f: String => T): KeyDecoder[T] =
+      KeyDecoder.instance { it => Option(f(it)) }
+    implicit def circeEncoder[T](implicit f: T => String): Encoder[T] =
+      Encoder.encodeString.contramap[T](f)
+    implicit def circeEnumEncoder[T <: Enum[T]]: Encoder[T] =
+      Encoder.encodeString.contramap[T] { _.name }
+  }
+
+  object quill {
+    implicit def quillDecoder[T](implicit
+        f: String => T
+    ): MappedEncoding[String, T] =
+      MappedEncoding(f)
+    implicit def quillEncoder[T](implicit
+        f: T => String
+    ): MappedEncoding[T, String] =
+      MappedEncoding(f)
+    implicit def quillEnumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
+      MappedEncoding { _.name }
+  }
+}

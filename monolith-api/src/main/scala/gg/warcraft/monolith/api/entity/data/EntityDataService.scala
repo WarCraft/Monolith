@@ -24,12 +24,11 @@
 
 package gg.warcraft.monolith.api.entity.data
 
-import java.util.UUID
-import java.util.logging.Logger
-
-import gg.warcraft.monolith.api.core.Codecs.Quill._
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.entity.team.TeamService
+
+import java.util.UUID
+import java.util.logging.Logger
 
 class EntityDataService(implicit
     logger: Logger,

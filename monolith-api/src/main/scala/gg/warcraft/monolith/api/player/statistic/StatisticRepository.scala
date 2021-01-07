@@ -25,7 +25,6 @@
 package gg.warcraft.monolith.api.player.statistic
 
 import com.typesafe.config.Config
-import gg.warcraft.monolith.api.core.Codecs.Quill._
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom

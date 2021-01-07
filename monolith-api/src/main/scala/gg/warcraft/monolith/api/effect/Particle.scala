@@ -159,6 +159,26 @@ object Particle {
     case object Teal extends Color
     case object White extends Color
     case object Yellow extends Color
+
+    def valueOf(string: String): Color = string match {
+      case "Aqua"    => Particle.Color.Aqua
+      case "Black"   => Particle.Color.Black
+      case "Blue"    => Particle.Color.Blue
+      case "Fuchsia" => Particle.Color.Fuchsia
+      case "Gray"    => Particle.Color.Gray
+      case "Green"   => Particle.Color.Green
+      case "Lime"    => Particle.Color.Lime
+      case "Maroon"  => Particle.Color.Maroon
+      case "Navy"    => Particle.Color.Navy
+      case "Olive"   => Particle.Color.Olive
+      case "Orange"  => Particle.Color.Orange
+      case "Purple"  => Particle.Color.Purple
+      case "Red"     => Particle.Color.Red
+      case "Silver"  => Particle.Color.Silver
+      case "Teal"    => Particle.Color.Teal
+      case "White"   => Particle.Color.White
+      case "Yellow"  => Particle.Color.Yellow
+    }
   }
 
   def multi(particles: Particle*): Particle =
