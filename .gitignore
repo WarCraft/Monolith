@@ -31,3 +31,8 @@ project/metals.sbt
 
 /target/
 */target/
+
+.bsp/
+
+# Mac
+**/.DS_Store
