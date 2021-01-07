@@ -35,7 +35,6 @@ import org.bukkit.plugin.Plugin
 
 import java.util.logging.Logger
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext
 
 class SpigotBlockBackupService(implicit
     plugin: Plugin,
@@ -44,9 +43,6 @@ class SpigotBlockBackupService(implicit
     locationMapper: SpigotLocationMapper,
     worldService: WorldService
 ) extends BlockBackupService {
-  private implicit val executionContext: ExecutionContext =
-    ExecutionContext.global
-
   private val cache: mutable.Map[Int, Option[BlockBackup]] = mutable.LinkedHashMap()
   private val metaDataKey = getClass.getCanonicalName
 

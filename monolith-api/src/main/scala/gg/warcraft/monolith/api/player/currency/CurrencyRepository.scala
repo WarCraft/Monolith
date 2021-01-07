@@ -30,15 +30,14 @@ import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
 import java.util.UUID
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.util.chaining.scalaUtilChainingOps
 
 trait CurrencyRepository {
   def load(id: UUID): Currencies
 
-  def save(Currencies: Currency*)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit]
+  def save(Currencies: Currency*): Future[Unit]
 }
 
 private trait CurrencyContext[I <: SqlIdiom, N <: NamingStrategy] {
@@ -70,9 +69,7 @@ private[monolith] class PostgresCurrencyRepository(
       .iterator.map { it => it.currency -> it }
       .toMap.pipe { new Currencies(_) }
 
-  override def save(Currencies: Currency*)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def save(Currencies: Currency*): Future[Unit] = Future {
     run {
       liftQuery(Currencies).foreach { it => upsertCurrency(query[Currency], it) }
     }
@@ -91,9 +88,7 @@ private[monolith] class SqliteCurrencyRepository(
       .iterator.map { it => it.currency -> it }
       .toMap.pipe { new Currencies(_) }
 
-  override def save(Currencies: Currency*)(implicit
-      executionContext: ExecutionContext = ExecutionContext.global
-  ): Future[Unit] = Future {
+  override def save(Currencies: Currency*): Future[Unit] = Future {
     run {
       liftQuery(Currencies).foreach { it => upsertCurrency(query[Currency], it) }
     }
