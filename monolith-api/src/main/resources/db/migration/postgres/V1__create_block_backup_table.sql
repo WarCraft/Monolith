@@ -1,6 +1,6 @@
 CREATE TABLE block_backup
 (
-    id    BIGSERIAL,
+    id    BIGINT PRIMARY KEY,
     world VARCHAR(32) NOT NULL,
     x     INTEGER     NOT NULL,
     y     INTEGER     NOT NULL,
