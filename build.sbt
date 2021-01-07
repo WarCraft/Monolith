@@ -20,6 +20,7 @@ lazy val assemblySettings = Seq(
 )
 
 val circeVersion = "0.13.+"
+val jomlVersion = "1.10.+"
 
 lazy val api = (project in file("monolith-api"))
   .settings(
@@ -27,7 +28,8 @@ lazy val api = (project in file("monolith-api"))
     projectSettings,
     libraryDependencies ++= Seq(
       "org.flywaydb" % "flyway-core" % "7.4.+",
-      "org.joml" % "joml" % "1.10.+",
+      "org.joml" % "joml" % jomlVersion,
+      "org.joml" % "joml-primitives" % jomlVersion,
       "org.xerial" % "sqlite-jdbc" % "3.34.+",
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,

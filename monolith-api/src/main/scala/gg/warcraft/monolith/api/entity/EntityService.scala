@@ -34,7 +34,8 @@ import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.{Location, WorldService}
-import org.joml.{AABBf, Intersectionf, LineSegmentf, Vector2f}
+import org.joml.Vector2f
+import org.joml.primitives.{AABBf, Intersectionf, LineSegmentf}
 
 import java.util.UUID
 import scala.collection.mutable

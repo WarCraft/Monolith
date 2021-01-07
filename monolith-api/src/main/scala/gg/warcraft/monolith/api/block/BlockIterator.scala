@@ -27,7 +27,8 @@ package gg.warcraft.monolith.api.block
 import gg.warcraft.monolith.api.math.Vector3f
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.api.world.{BlockLocation, Location, WorldService}
-import org.joml.{AABBf, Rayf, Vector2f}
+import org.joml.Vector2f
+import org.joml.primitives.{AABBf, Rayf}
 
 import scala.annotation.tailrec
 
