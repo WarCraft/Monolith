@@ -82,9 +82,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
 
   override def onEnable(): Unit = {
     import gg.warcraft.monolith.api.util.codecs.circe._
-    import gg.warcraft.monolith.api.util.codecs.monolith.{
-      colorCodeDecoder, directionDecoder, particleColorDecoder, worldDecoder
-    }
+    import gg.warcraft.monolith.api.util.codecs.monolith.{teamDecoder => _, _}
     val config = parseConfig[MonolithConfig](getConfig.saveToString())
 
     upgradeDatabase(config.database, getDataFolder, getClassLoader)
