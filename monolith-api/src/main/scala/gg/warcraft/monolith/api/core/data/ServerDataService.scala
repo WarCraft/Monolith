@@ -50,23 +50,23 @@ class ServerDataService(implicit
   def today: LocalDate = _today
 
   def readConfig(config: MonolithConfig): Unit = {
+    _serverTimeZone = config.serverTimeZone
+    _today = LocalDate.now(_serverTimeZone)
+
     _lastDailyTick = {
       val epochDay = repository.load(last_daily_tick).map { _.toLong }.getOrElse(0L)
       if (epochDay <= 0) {
         if (epochDay < 0) logger.severe(ERR_LAST_DAILY_TICK)
-        LocalDate.now(serverTimeZone)
+        LocalDate.now(_serverTimeZone)
       } else LocalDate.ofEpochDay(epochDay)
     }
-
-    _serverTimeZone = config.serverTimeZone
-    _today = LocalDate.now(_serverTimeZone)
   }
 
   def updateLastDailyTick(): Future[Unit] = Future {
+    _today = _lastDailyTick
+
     _lastDailyTick = LocalDate.now(_serverTimeZone)
     repository.save(last_daily_tick, _lastDailyTick.toEpochDay.toString)
-
-    _today = _lastDailyTick
   }
 
   def load(data: String): Option[String] =
