@@ -51,6 +51,8 @@ object Codecs {
 
     def enumDecoder[T <: Enum[T]](f: String => T): Decoder[T] =
       Decoder.decodeString.emapTry { it => { Try { f(it) } } }
+    def enumKeyDecoder[T <: Enum[T]](f: String => T): KeyDecoder[T] =
+      KeyDecoder.instance { it => Option(f(it)) }
     def enumEncoder[T <: Enum[T]]: Encoder[T] =
       Encoder.encodeString.contramap[T] { _.name }
 
