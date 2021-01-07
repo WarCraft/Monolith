@@ -126,7 +126,7 @@ trait MonolithPlugin {
         }
       }
       .load
-    val migrations = flyway.migrate()
+    val migrations = flyway.migrate().migrationsExecuted
     logger.info(s"Applied $migrations new database schema migrations.")
   }
 }
