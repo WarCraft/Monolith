@@ -26,25 +26,21 @@ package gg.warcraft.monolith.api.entity.team
 
 import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.core.event.EventService
-import io.getquill.MappedEncoding
 
 class TeamService(config: MonolithConfig)(implicit
     eventService: EventService
 ) {
-  private var _teams: Map[String, Team] =
-    config.teams.map { it => it.name -> it }.toMap
-  def teams: Map[String, Team] = _teams
-
-  val decoder: MappedEncoding[String, Team] = MappedEncoding { teams(_) }
-  val encoder: MappedEncoding[Team, String] = MappedEncoding { _.name }
+  private var _teams: Map[Team.Id, Team] =
+    config.teams.map { it => it.id -> it }.toMap
+  def teams: Map[Team.Id, Team] = _teams
 
   def registerTeam(team: Team): Unit =
-    if (!_teams.contains(team.name)) {
-      _teams += team.name -> team
+    if (!_teams.contains(team.id)) {
+      _teams += team.id -> team
       eventService << TeamRegisterEvent(team)
-    } else throw new IllegalArgumentException(s"Team ${team.name} already exists!")
+    } else throw new IllegalArgumentException(s"Team ${team.id} already exists!")
 
-  def deregisterTeam(team: String): Unit =
+  def deregisterTeam(team: Team.Id): Unit =
     if (_teams.contains(team)) {
       val it = _teams(team)
       _teams -= team

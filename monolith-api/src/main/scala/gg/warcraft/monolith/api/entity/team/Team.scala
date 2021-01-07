@@ -29,9 +29,13 @@ import gg.warcraft.monolith.api.effect.Particle
 import gg.warcraft.monolith.api.world.Location
 
 case class Team(
-    id: String,
+    id: Team.Id,
     name: String,
     spawn: Location,
     chatColor: ColorCode,
     particleColor: Particle.Color
 )
+
+object Team {
+  type Id = String
+}
