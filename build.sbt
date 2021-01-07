@@ -26,17 +26,17 @@ lazy val api = (project in file("monolith-api"))
     name := "monolith-api",
     projectSettings,
     libraryDependencies ++= Seq(
-      "org.flywaydb" % "flyway-core" % "6.5.+",
-      "org.joml" % "joml" % "1.9.+",
-      "org.xerial" % "sqlite-jdbc" % "3.32.+",
-      "io.circe" % "circe-core_2.13" % circeVersion,
-      "io.circe" % "circe-generic_2.13" % circeVersion,
-      "io.circe" % "circe-generic-extras_2.13" % circeVersion,
-      "io.circe" % "circe-parser_2.13" % circeVersion,
-      "io.circe" % "circe-yaml_2.13" % circeVersion,
-      "io.getquill" % "quill-jdbc_2.13" % "3.5.+"
+      "org.flywaydb" % "flyway-core" % "7.4.+",
+      "org.joml" % "joml" % "1.10.+",
+      "org.xerial" % "sqlite-jdbc" % "3.34.+",
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion,
+      "io.circe" %% "circe-generic-extras" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion,
+      "io.circe" %% "circe-yaml" % circeVersion,
+      "io.getquill" %% "quill-jdbc" % "3.6.+"
     ) ++ Seq(
-      "org.scalatest" % "scalatest_2.13" % "3.2.+" % Test
+      "org.scalatest" %% "scalatest" % "3.2.+" % Test
     )
   )
 
@@ -71,9 +71,9 @@ lazy val bootstrap = (project in file("monolith-bootstrap"))
     ),
     libraryDependencies ++= Seq(
       "com.destroystokyo.paper" % "paper-api" % "1.15.2-R0.1-SNAPSHOT" % Provided,
-      "io.circe" % "circe-core_2.13" % circeVersion,
-      "io.circe" % "circe-generic_2.13" % circeVersion,
-      "io.circe" % "circe-parser_2.13" % circeVersion,
-      "io.circe" % "circe-yaml_2.13" % circeVersion
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion,
+      "io.circe" %% "circe-yaml" % circeVersion
     )
   )
