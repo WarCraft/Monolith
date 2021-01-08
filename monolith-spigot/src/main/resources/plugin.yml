@@ -6,5 +6,6 @@ author: fishb6nes
 website: http://warcraft.gg
 
 main: gg.warcraft.monolith.spigot.MonolithPlugin
-softdepend: [Multiverse-Core]
-loadbefore: [EssentialsX]
+load: STARTUP
+softdepend: [ Multiverse-Core ]
+loadbefore: [ EssentialsX ]

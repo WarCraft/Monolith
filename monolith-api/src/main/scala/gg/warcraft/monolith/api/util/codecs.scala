@@ -36,7 +36,6 @@ import io.getquill.MappedEncoding
 import scala.util.Try
 
 object codecs {
-
   object monolith {
     implicit def blockDataDecoder(implicit
         service: WorldService

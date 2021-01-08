@@ -25,7 +25,9 @@
 package gg.warcraft.monolith.api.entity.data
 
 import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
-import gg.warcraft.monolith.api.entity.{EntityPreSpawnEvent, EntityRemoveEvent}
+import gg.warcraft.monolith.api.entity.{
+  EntityPreRespawnEvent, EntityPreSpawnEvent, EntityRemoveEvent
+}
 
 class EntityDataCacheHandler(implicit
     service: EntityDataService
@@ -37,6 +39,9 @@ class EntityDataCacheHandler(implicit
 
   override def handle(event: PreEvent): Unit = event match {
     case EntityPreSpawnEvent(entity, _, _, _) =>
+      if (!service.data.contains(entity.id))
+        service.setEntityData(EntityData(entity.id))
+    case EntityPreRespawnEvent(entity, _, _, _) =>
       if (!service.data.contains(entity.id))
         service.setEntityData(EntityData(entity.id))
     case _ =>
