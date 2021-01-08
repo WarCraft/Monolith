@@ -93,6 +93,11 @@ object codecs {
       Encoder.encodeString.contramap[T](f)
     implicit def circeEnumEncoder[T <: Enum[T]]: Encoder[T] =
       Encoder.encodeString.contramap[T] { _.name }
+
+    implicit def circeIntDecoder[T](implicit f: Int => T): Decoder[T] =
+      Decoder.decodeInt.emapTry { it => { Try { f(it) } } }
+    implicit def circeIntEncoder[T](implicit f: T => Int): Encoder[T] =
+      Encoder.encodeInt.contramap[T](f)
   }
 
   object quill {
@@ -106,5 +111,14 @@ object codecs {
       MappedEncoding(f)
     implicit def quillEnumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
+
+    implicit def quillIntDecoder[T](implicit
+        f: Int => T
+    ): MappedEncoding[Int, T] =
+      MappedEncoding(f)
+    implicit def quillIntEncoder[T](implicit
+        f: T => Int
+    ): MappedEncoding[T, Int] =
+      MappedEncoding(f)
   }
 }
