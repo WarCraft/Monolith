@@ -24,19 +24,19 @@
 
 package gg.warcraft.monolith.spigot.entity
 
-import java.util.UUID
-
-import gg.warcraft.monolith.api.entity.{Entity, Equipment}
-import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.entity.Entity.Type
-import gg.warcraft.monolith.api.entity.attribute.{Attributes, AttributeService}
+import gg.warcraft.monolith.api.entity.attribute.{AttributeService, Attributes}
 import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.status.{Status, StatusService}
+import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
+import gg.warcraft.monolith.api.entity.{Entity, Equipment}
 import gg.warcraft.monolith.api.math.{AABBf, Vector3f}
 import gg.warcraft.monolith.api.world.Location
 import gg.warcraft.monolith.spigot.item.SpigotItemMapper
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
+
+import java.util.UUID
 
 class SpigotEntityAdapter(entity: SpigotEntity)(implicit
     attributeService: AttributeService,
@@ -52,7 +52,7 @@ class SpigotEntityAdapter(entity: SpigotEntity)(implicit
   override lazy val id: UUID = entity.getUniqueId
   override lazy val typed: Type = entityTypeMapper.map(entity.getType)
 
-  override def team: Option[Team] = dataService.data(id).team
+  override def team: Option[Team] = dataService.data.get(id).flatMap { _.team }
   override def attributes: Attributes = attributeService.getAttributes(id)
   override def status: Status = statusService.getStatus(id)
 
