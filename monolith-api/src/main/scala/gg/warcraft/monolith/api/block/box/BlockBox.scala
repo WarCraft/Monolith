@@ -24,12 +24,11 @@
 
 package gg.warcraft.monolith.api.block.box
 
-import java.util.function.Predicate
-
 import gg.warcraft.monolith.api.block.Block
 import gg.warcraft.monolith.api.math.Vector3i
 import gg.warcraft.monolith.api.world.{BlockLocation, Location, World}
 
+import java.util.function.Predicate
 import scala.util.chaining._
 
 case class BlockBox(
@@ -142,4 +141,7 @@ object BlockBox {
           BlockBox(_1, min, max)
         }
     } else throw new IllegalArgumentException("blocks must be nonEmpty")
+
+  def empty(world: World): BlockBox =
+    BlockBox(world, Vector3i(), Vector3i())
 }
