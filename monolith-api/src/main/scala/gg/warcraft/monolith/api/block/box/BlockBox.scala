@@ -141,7 +141,4 @@ object BlockBox {
           BlockBox(_1, min, max)
         }
     } else throw new IllegalArgumentException("blocks must be nonEmpty")
-
-  def empty(world: World): BlockBox =
-    BlockBox(world, Vector3i(), Vector3i())
 }
