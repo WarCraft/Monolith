@@ -25,7 +25,8 @@
 package gg.warcraft.monolith.api.util
 
 import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
-import gg.warcraft.monolith.api.core.ColorCode
+import gg.warcraft.monolith.api.core.Duration.DurationOps
+import gg.warcraft.monolith.api.core.{ColorCode, Duration}
 import gg.warcraft.monolith.api.effect.Particle
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
@@ -93,10 +94,10 @@ object codecs {
     implicit def circeEnumEncoder[T <: Enum[T]]: Encoder[T] =
       Encoder.encodeString.contramap[T] { _.name }
 
-    implicit def circeIntDecoder[T](implicit f: Int => T): Decoder[T] =
-      Decoder.decodeInt.emapTry { it => { Try { f(it) } } }
-    implicit def circeIntEncoder[T](implicit f: T => Int): Encoder[T] =
-      Encoder.encodeInt.contramap[T](f)
+    implicit def circeDurationDecoder: Decoder[Duration] =
+      Decoder.decodeInt.emapTry { it => { Try { it.seconds } } }
+    implicit def circeDurationEncoder: Encoder[Duration] =
+      Encoder.encodeInt.contramap { _.seconds }
   }
 
   object quill {
@@ -111,13 +112,9 @@ object codecs {
     implicit def quillEnumEncoder[T <: Enum[T]]: MappedEncoding[T, String] =
       MappedEncoding { _.name }
 
-    implicit def quillIntDecoder[T](implicit
-        f: Int => T
-    ): MappedEncoding[Int, T] =
-      MappedEncoding(f)
-    implicit def quillIntEncoder[T](implicit
-        f: T => Int
-    ): MappedEncoding[T, Int] =
-      MappedEncoding(f)
+    implicit def quillDurationDecoder: MappedEncoding[Int, Duration] =
+      MappedEncoding { _.seconds }
+    implicit def quillDurationEncoder: MappedEncoding[Duration, Int] =
+      MappedEncoding { _.seconds }
   }
 }
