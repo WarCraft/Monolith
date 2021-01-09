@@ -24,13 +24,14 @@
 
 package gg.warcraft.monolith.api.player.data
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.entity.team.Team
+
+import java.time.LocalDateTime
+import java.util.UUID
 
 case class PlayerData(
     id: UUID,
-    team: Option[Team] = None,
-    timeConnected: Long = 0,
-    timeLastSeen: Long = 0
+    team: Option[Team],
+    timeConnected: LocalDateTime,
+    timeLastSeen: LocalDateTime
 )

@@ -24,11 +24,13 @@
 
 package gg.warcraft.monolith.api.player.data
 
+import gg.warcraft.monolith.api.core.data.ServerDataService
 import gg.warcraft.monolith.api.core.event.{Event, PreEvent}
 import gg.warcraft.monolith.api.player.{PlayerDisconnectEvent, PlayerPreConnectEvent}
 
 class PlayerDataCacheHandler(implicit
-    service: PlayerDataService
+    service: PlayerDataService,
+    serverDataService: ServerDataService
 ) extends Event.Handler {
   override def handle(event: Event): Unit = event match {
     case PlayerDisconnectEvent(player) =>
@@ -39,7 +41,7 @@ class PlayerDataCacheHandler(implicit
 
   override def reduce[T <: PreEvent](event: T): T = event match {
     case PlayerPreConnectEvent(playerId, _, _, _) =>
-      val now = System.currentTimeMillis
+      val now = serverDataService.serverTime
       val newData = service.loadPlayerData(playerId) match {
         case Some(data) => data.copy(timeConnected = now, timeLastSeen = now)
         case None       => PlayerData(playerId, None, now, now)
