@@ -69,10 +69,6 @@ object codecs {
         service: TeamService
     ): String => Team =
       service.teams
-    implicit def teamOptionDecoder(implicit
-        service: TeamService
-    ): String => Option[Team] =
-      service.teams.get _
     implicit val teamEncoder: Team => String =
       _.id
 
