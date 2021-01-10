@@ -24,57 +24,54 @@
 
 package gg.warcraft.monolith.api.core.data
 
-import gg.warcraft.monolith.api.core.MonolithConfig
+import gg.warcraft.monolith.api.core.event.EventService
+import gg.warcraft.monolith.api.core.{DailyTickEvent, MonolithConfig}
+import gg.warcraft.monolith.api.util.types._
+import gg.warcraft.monolith.api.util.types.tags._
+import shapeless.tag
 
 import java.time.{LocalDate, LocalDateTime, ZoneId}
 import java.util.logging.Logger
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 
 class ServerDataService(implicit
     logger: Logger,
-    repository: ServerDataRepository
+    repository: ServerDataRepository,
+    eventService: EventService
 ) {
-  private final val last_daily_tick = "last_daily_tick"
   private final val ERR_LAST_DAILY_TICK =
-    "Failed to retrieve last daily tick from database, falling back to today!"
+    "Server data is missing from the database! Last daily tick will fall back to today."
 
-  private var _lastDailyTick: LocalDate = _
-  def lastDailyTick: LocalDate = _lastDailyTick
+  private var _data: ServerData = _
+  private[data] def data: ServerData = _data
 
   private var _serverTimeZone: ZoneId = _
   def serverTimeZone: ZoneId = _serverTimeZone
-  def serverTime: LocalDateTime = LocalDateTime.now(serverTimeZone)
 
-  private var _today: LocalDate = _
-  def today: LocalDate = _today
+  def serverTime: MonolithDateTime =
+    tag[MonolithDateTimeTag][LocalDateTime](LocalDateTime.now(serverTimeZone))
+  def serverDate: MonolithDate =
+    tag[MonolithDateTag][LocalDate](LocalDate.now(serverTimeZone))
 
   def readConfig(config: MonolithConfig): Unit = {
     _serverTimeZone = config.serverTimeZone
-    _today = LocalDate.now(_serverTimeZone)
 
-    _lastDailyTick = {
-      val epochDay = repository.load(last_daily_tick).map { _.toLong }.getOrElse(0L)
-      if (epochDay <= 0) {
-        if (epochDay < 0) logger.severe(ERR_LAST_DAILY_TICK)
-        LocalDate.now(_serverTimeZone)
-      } else LocalDate.ofEpochDay(epochDay)
+    repository.load match {
+      case Some(data) => _data = data
+      case None =>
+        logger.severe(ERR_LAST_DAILY_TICK)
+        _data = ServerData(serverDate)
     }
   }
 
-  def updateLastDailyTick(): Future[Unit] = Future {
-    _today = _lastDailyTick
+  private[data] def tickDay(): Unit = {
+    val today = serverDate
+    if (today.isAfter(_data.lastDailyTick)) {
+      val yesterday = _data.lastDailyTick
 
-    _lastDailyTick = LocalDate.now(_serverTimeZone)
-    repository.save(last_daily_tick, _lastDailyTick.toEpochDay.toString)
+      _data = _data.copy(lastDailyTick = today)
+      repository.save(_data)
+
+      eventService << DailyTickEvent(today, yesterday)
+    }
   }
-
-  def load(data: String): Option[String] =
-    repository.load(data)
-
-  def save(data: String, value: String): Unit =
-    repository.save(data, value)
-
-  def delete(data: String): Unit =
-    repository.delete(data)
 }

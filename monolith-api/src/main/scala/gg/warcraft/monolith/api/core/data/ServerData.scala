@@ -24,7 +24,8 @@
 
 package gg.warcraft.monolith.api.core.data
 
+import gg.warcraft.monolith.api.util.types.MonolithDate
+
 case class ServerData(
-    data: String,
-    value: String
+    lastDailyTick: MonolithDate
 )

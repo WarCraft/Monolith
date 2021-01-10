@@ -25,30 +25,28 @@
 package gg.warcraft.monolith.api.core.data
 
 import com.typesafe.config.Config
+import gg.warcraft.monolith.api.util.codecs.quill._
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
 trait ServerDataRepository {
-  def load(data: String): Option[String]
-  def save(data: String, value: String): Unit
-  def delete(data: String): Unit
+  def load: Option[ServerData]
+  def save(data: ServerData): Future[Unit]
 }
 
 private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
   def queryData = quote {
-    (q: EntityQuery[ServerData], data: String) => q.filter { _.data == data }
+    (q: EntityQuery[ServerData]) => q
   }
 
   def upsertData = quote {
-    (q: EntityQuery[ServerData], data: ServerData) =>
-      q.insert(data).onConflictUpdate(_.data)((t, e) => t.value -> e.value)
-  }
-
-  def deleteData = quote {
-    (q: EntityQuery[ServerData], data: String) => q.filter { _.data == data }.delete
+    (q: EntityQuery[ServerData], data: ServerData) => q.update(data)
   }
 }
 
@@ -59,16 +57,12 @@ private[monolith] class PostgresServerDataRepository(
     with ServerDataContext[PostgresDialect, SnakeCase]
   import database._
 
-  override def load(data: String): Option[String] =
-    run { queryData(query[ServerData], lift(data)) }.headOption.map { _.value }
+  override def load: Option[ServerData] =
+    run { queryData(query[ServerData]) }.headOption
 
-  override def save(data: String, value: String): Unit = {
-    val serverData = ServerData(data, value)
-    run { upsertData(query[ServerData], lift(serverData)) }
+  override def save(data: ServerData): Future[Unit] = Future {
+    run { upsertData(query[ServerData], lift(data)) }
   }
-
-  override def delete(data: String): Unit =
-    run { deleteData(query[ServerData], lift(data)) }
 }
 
 private[monolith] class SqliteServerDataRepository(
@@ -78,14 +72,10 @@ private[monolith] class SqliteServerDataRepository(
     with ServerDataContext[SqliteDialect, SnakeCase]
   import database._
 
-  override def load(data: String): Option[String] =
-    run { queryData(query[ServerData], lift(data)) }.headOption.map { _.value }
+  override def load: Option[ServerData] =
+    run { queryData(query[ServerData]) }.headOption
 
-  override def save(data: String, value: String): Unit = {
-    val serverData = ServerData(data, value)
-    run { upsertData(query[ServerData], lift(serverData)) }
+  override def save(data: ServerData): Future[Unit] = Future {
+    run { upsertData(query[ServerData], lift(data)) }
   }
-
-  override def delete(data: String): Unit =
-    run { deleteData(query[ServerData], lift(data)) }
 }

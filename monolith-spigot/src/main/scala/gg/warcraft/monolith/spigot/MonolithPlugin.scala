@@ -24,42 +24,21 @@
 
 package gg.warcraft.monolith.spigot
 
-import gg.warcraft.monolith.api.block.backup.{
-  BlockBackupRepository, PostgresBlockBackupRepository,
-  RestoreAllBlockBackupsCommand, SqliteBlockBackupRepository
-}
+import gg.warcraft.monolith.api.block.backup.{BlockBackupRepository, PostgresBlockBackupRepository, RestoreAllBlockBackupsCommand, SqliteBlockBackupRepository}
 import gg.warcraft.monolith.api.core.Duration._
 import gg.warcraft.monolith.api.core.auth.AuthModeHandler
-import gg.warcraft.monolith.api.core.auth.command.{
-  BuildModeCommand, DebugModeCommand, ModModeCommand
-}
-import gg.warcraft.monolith.api.core.data.{
-  PostgresServerDataRepository, ServerDataRepository, SqliteServerDataRepository
-}
-import gg.warcraft.monolith.api.core.handler.{DailyTicker, DebuggingHandler}
-import gg.warcraft.monolith.api.core.{
-  DatabaseConfig, MonolithConfig, ServerShutdownEvent
-}
-import gg.warcraft.monolith.api.entity.data.{
-  EntityDataCacheHandler, EntityDataRepository, PostgresEntityDataRepository,
-  SqliteEntityDataRepository
-}
+import gg.warcraft.monolith.api.core.auth.command.{BuildModeCommand, DebugModeCommand, ModModeCommand}
+import gg.warcraft.monolith.api.core.data.{DailyTickHandler, PostgresServerDataRepository, ServerDataRepository, SqliteServerDataRepository}
+import gg.warcraft.monolith.api.core.handler.DebuggingHandler
+import gg.warcraft.monolith.api.core.{DatabaseConfig, MonolithConfig, ServerShutdownEvent}
+import gg.warcraft.monolith.api.entity.data.{EntityDataCacheHandler, EntityDataRepository, PostgresEntityDataRepository, SqliteEntityDataRepository}
 import gg.warcraft.monolith.api.entity.status.StatusHandler
 import gg.warcraft.monolith.api.entity.team.TeamStaffCommand
-import gg.warcraft.monolith.api.player.currency.{
-  CurrencyCacheHandler, CurrencyRepository, PostgresCurrencyRepository,
-  SqliteCurrencyRepository
-}
+import gg.warcraft.monolith.api.player.currency.{CurrencyCacheHandler, CurrencyRepository, PostgresCurrencyRepository, SqliteCurrencyRepository}
 import gg.warcraft.monolith.api.player.data._
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
-import gg.warcraft.monolith.api.player.statistic.archive.{
-  PostgresStatisticArchiveRepository, SqliteStatisticArchiveRepository,
-  StatisticArchiveRepository
-}
-import gg.warcraft.monolith.api.player.statistic.{
-  PostgresStatisticRepository, SqliteStatisticRepository, StatisticCacheHandler,
-  StatisticRepository
-}
+import gg.warcraft.monolith.api.player.statistic.archive.{PostgresStatisticArchiveRepository, SqliteStatisticArchiveRepository, StatisticArchiveRepository}
+import gg.warcraft.monolith.api.player.statistic.{PostgresStatisticRepository, SqliteStatisticRepository, StatisticCacheHandler, StatisticRepository}
 import gg.warcraft.monolith.api.world.portal.PortalTicker
 import gg.warcraft.monolith.spigot.block.SpigotBlockEventMapper
 import gg.warcraft.monolith.spigot.combat.SpigotCombatEventMapper
@@ -190,7 +169,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
   }
 
   private def enableTasks(): Unit = {
-    val dailyTicker = new DailyTicker()
+    val dailyTicker = new DailyTickHandler()
     taskService.runTask(1.seconds, () => dailyTicker.run())
 
     val playerDataTicker = new PlayerDataTicker()

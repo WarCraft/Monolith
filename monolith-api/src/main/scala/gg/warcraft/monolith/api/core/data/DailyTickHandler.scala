@@ -22,26 +22,10 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.core.handler
+package gg.warcraft.monolith.api.core.data
 
-import gg.warcraft.monolith.api.core.DailyTickEvent
-import gg.warcraft.monolith.api.core.data.ServerDataService
-import gg.warcraft.monolith.api.core.event.EventService
-
-import java.time.LocalDate
-
-class DailyTicker(implicit
-    eventService: EventService,
-    dataService: ServerDataService
+class DailyTickHandler(implicit
+    service: ServerDataService
 ) extends Runnable {
-  import dataService._
-
-  override def run(): Unit = {
-    val today = LocalDate.now(serverTimeZone)
-    if (today.isAfter(lastDailyTick)) {
-      val yesterday = lastDailyTick
-      updateLastDailyTick()
-      eventService << DailyTickEvent(today, yesterday)
-    }
-  }
+  override def run(): Unit = service.tickDay()
 }
