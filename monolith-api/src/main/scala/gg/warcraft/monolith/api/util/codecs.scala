@@ -30,10 +30,14 @@ import gg.warcraft.monolith.api.core.{ColorCode, Duration}
 import gg.warcraft.monolith.api.effect.Particle
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
+import gg.warcraft.monolith.api.util.types.tags.{
+  MonolithDateTag, MonolithDateTimeTag
+}
 import gg.warcraft.monolith.api.util.types.{MonolithDate, MonolithDateTime}
 import gg.warcraft.monolith.api.world.{Direction, World, WorldService}
 import io.circe.{Decoder, Encoder, KeyDecoder}
 import io.getquill.MappedEncoding
+import shapeless.tag
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, LocalDateTime}
@@ -121,11 +125,17 @@ object codecs {
     implicit val quillDateTimeFormatter: DateTimeFormatter =
       DateTimeFormatter.ISO_DATE_TIME
     implicit def quillDateDecoder: MappedEncoding[String, MonolithDate] =
-      MappedEncoding { LocalDate.parse(_, quillDateFormatter) }
+      MappedEncoding { data =>
+        val localDate = LocalDate.parse(data, quillDateFormatter)
+        tag[MonolithDateTag][LocalDate](localDate)
+      }
     implicit def quillDateEncoder: MappedEncoding[MonolithDate, String] =
       MappedEncoding { _.format(quillDateFormatter) }
     implicit def quillDateTimeDecoder: MappedEncoding[String, MonolithDateTime] =
-      MappedEncoding { LocalDateTime.parse(_, quillDateTimeFormatter) }
+      MappedEncoding { data =>
+        val localDateTime = LocalDateTime.parse(data, quillDateTimeFormatter)
+        tag[MonolithDateTimeTag][LocalDateTime](localDateTime)
+      }
     implicit def quillDateTimeEncoder: MappedEncoding[MonolithDateTime, String] =
       MappedEncoding { _.format(quillDateTimeFormatter) }
   }
