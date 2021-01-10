@@ -38,8 +38,10 @@ class ServerDataService(implicit
     repository: ServerDataRepository,
     eventService: EventService
 ) {
-  private final val ERR_LAST_DAILY_TICK =
-    "Server data is missing from the database! Last daily tick will fall back to today."
+  private final val ERR_MISSING_SERVER_DATA =
+    "Server data is missing from the database! " +
+      "Last daily tick will fall back to today. " +
+      "If this is the first time Monolith is running this is normal."
 
   private var _data: ServerData = _
   private[data] def data: ServerData = _data
@@ -58,7 +60,7 @@ class ServerDataService(implicit
     repository.load match {
       case Some(data) => _data = data
       case None =>
-        logger.severe(ERR_LAST_DAILY_TICK)
+        logger.severe(ERR_MISSING_SERVER_DATA)
         _data = ServerData(serverDate)
     }
   }
