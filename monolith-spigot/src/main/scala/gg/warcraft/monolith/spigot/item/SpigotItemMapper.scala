@@ -524,12 +524,15 @@ class SpigotItemMapper(
 
     // Update item meta
     val meta = spigotItem.getItemMeta
+
     if (item.name.contains("§")) {
       val data = meta.getPersistentDataContainer
       data.set(itemNameKey, PersistentDataType.STRING, item.name)
       meta.setDisplayName(item.name)
     } else meta.setDisplayName(item.name)
+
     meta.setLore(item.tooltip.asJava)
+
     if (item.customModelData.isDefined)
       meta.setCustomModelData(item.customModelData.get)
     if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
