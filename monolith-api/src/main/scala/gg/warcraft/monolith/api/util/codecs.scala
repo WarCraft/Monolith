@@ -120,10 +120,7 @@ object codecs {
     implicit def quillDurationEncoder: MappedEncoding[Duration, Int] =
       MappedEncoding { _.seconds }
 
-    implicit val quillDateFormatter: DateTimeFormatter =
-      DateTimeFormatter.ISO_DATE
-    implicit val quillDateTimeFormatter: DateTimeFormatter =
-      DateTimeFormatter.ISO_DATE_TIME
+    private val quillDateFormatter = DateTimeFormatter.ISO_DATE
     implicit def quillDateDecoder: MappedEncoding[String, MonolithDate] =
       MappedEncoding { data =>
         val localDate = LocalDate.parse(data, quillDateFormatter)
@@ -131,6 +128,8 @@ object codecs {
       }
     implicit def quillDateEncoder: MappedEncoding[MonolithDate, String] =
       MappedEncoding { _.format(quillDateFormatter) }
+
+    private val quillDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME
     implicit def quillDateTimeDecoder: MappedEncoding[String, MonolithDateTime] =
       MappedEncoding { data =>
         val localDateTime = LocalDateTime.parse(data, quillDateTimeFormatter)
