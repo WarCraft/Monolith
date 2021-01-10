@@ -32,10 +32,19 @@ import gg.warcraft.monolith.api.world.{Direction, Location}
 case class Portal(
     entry: Location,
     exit: Location,
-    orientation: Option[Vector3f],
-    predicate: Entity => Boolean,
-    effect: Effect
-)
+    orientation: Option[Vector3f]
+) {
+  private var _predicate: Entity => Boolean = _ => false
+  def predicate: Entity => Boolean = _predicate
+  def predicate_=(predicate: Entity => Boolean): Unit = _predicate = predicate
+
+  private var _effect: Option[Effect] = None
+  def effect: Option[Effect] = _effect
+  def effect_=(effect: Option[Effect]): Unit = {
+    _effect.foreach { _.stop() }
+    _effect = effect
+  }
+}
 
 object Portal {
   case class Config(

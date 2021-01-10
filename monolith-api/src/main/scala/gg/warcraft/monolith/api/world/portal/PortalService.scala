@@ -33,32 +33,23 @@ class PortalService(implicit
   private final val TELEPORT_RADIUS = 1
 
   private var _portals: Set[Portal] = Set.empty
-
   def portals: Set[Portal] = _portals
 
   def spawnPortal(
       config: Portal.Config,
-      predicate: Entity => Boolean,
-      effect: Effect
+      predicate: Entity => Boolean = _ => false,
+      effect: Option[Effect]
   ): Portal = {
     val orientation = config.orientation.map { _.toVector3f }
-    val portal = Portal(config.entry, config.exit, orientation, predicate, effect)
+    val portal = Portal(config.entry, config.exit, orientation)
+    portal.predicate = predicate
+    portal.effect = effect
     _portals += portal
     portal
   }
 
-  def updatePortal(
-      portal: Portal,
-      predicate: Entity => Boolean,
-      effect: Effect
-  ): Unit = {
-    portal.effect.stop()
-    _portals += portal.copy(predicate = predicate, effect = effect)
-    effect.start()
-  }
-
   def removePortal(portal: Portal): Unit = {
-    portal.effect.stop()
+    portal.effect.foreach { _.stop() }
     _portals -= portal
   }
 
