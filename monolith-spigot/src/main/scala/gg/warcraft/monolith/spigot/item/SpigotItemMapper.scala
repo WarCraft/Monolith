@@ -552,7 +552,7 @@ class SpigotItemMapper(
         variant match {
           case it: HelmetVariant     => if (it.name.contains('_')) setColor(it.name)
           case it: ChestplateVariant => if (it.name.contains('_')) setColor(it.name)
-          case it: ChestplateVariant => if (it.name.contains('_')) setColor(it.name)
+          case it: LeggingsVariant   => if (it.name.contains('_')) setColor(it.name)
           case it: BootsVariant      => if (it.name.contains('_')) setColor(it.name)
         }
       case _ =>
