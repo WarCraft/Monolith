@@ -24,6 +24,7 @@
 
 package gg.warcraft.monolith.spigot.effect
 
+import gg.warcraft.monolith.api.core.Color
 import gg.warcraft.monolith.api.effect.{Particle, ParticleAdapter}
 import gg.warcraft.monolith.api.world.Location
 import gg.warcraft.monolith.spigot.player.SpigotPlayer
@@ -62,7 +63,7 @@ class SpigotParticleAdapter(implicit
   override def display(
       particle: Particle,
       location: Location,
-      color: Particle.Color
+      color: Color
   ): Unit = {
     val spigotLocation = locationMapper.map(location)
     val spigotParticle = particleMapper.map(particle)

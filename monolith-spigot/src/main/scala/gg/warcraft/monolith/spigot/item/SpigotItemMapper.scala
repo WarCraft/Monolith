@@ -25,11 +25,13 @@
 package gg.warcraft.monolith.spigot.item
 
 import gg.warcraft.monolith.api.block.variant._
+import gg.warcraft.monolith.api.core.Color
 import gg.warcraft.monolith.api.item._
 import gg.warcraft.monolith.api.item.variant.{StructureBlockVariant, _}
 import gg.warcraft.monolith.spigot.Extensions._
+import gg.warcraft.monolith.spigot.core.SpigotColorMapper
 import org.bukkit.inventory.ItemFlag
-import org.bukkit.inventory.meta.Damageable
+import org.bukkit.inventory.meta.{Damageable, LeatherArmorMeta}
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.Plugin
 import org.bukkit.{Material, NamespacedKey}
@@ -45,7 +47,8 @@ private object SpigotItemMapper {
 class SpigotItemMapper(
     private implicit val plugin: Plugin,
     private implicit val typeMapper: SpigotItemTypeMapper,
-    private implicit val variantMapper: SpigotItemVariantMapper
+    private implicit val variantMapper: SpigotItemVariantMapper,
+    private implicit val colorMapper: SpigotColorMapper
 ) {
   private val itemNameKey = new NamespacedKey(plugin, "canonicalDisplayName")
 
@@ -58,15 +61,17 @@ class SpigotItemMapper(
   private def compute(material: Material): SpigotItem => Option[Item] = {
     if (material.name.endsWith("AIR")) return _ => None
 
-    // Compute common item data TODO map default name and item attributes
+    // Compute common item data TODO map default name and item attributes, make new itemStack and use from there?
     val name = (item: SpigotItem) => {
       val meta = item.getItemMeta
       if (meta != null) {
         val data = meta.getPersistentDataContainer
         if (data.has(itemNameKey, PersistentDataType.STRING)) {
           data.get(itemNameKey, PersistentDataType.STRING)
-        } else meta.getDisplayName
-      } else ""
+        } else if (meta.hasDisplayName) {
+          meta.getDisplayName
+        } else item.getI18NDisplayName
+      } else item.getI18NDisplayName
     }
     val tt: SpigotItem => List[String] = (item: SpigotItem) => {
       val meta = item.getItemMeta
@@ -496,8 +501,11 @@ class SpigotItemMapper(
       case _ =>
     }
 
+    var variant: ItemVariant = null
     val material = item match {
-      case it: VariableItem[_] => variantMapper.map(it)
+      case it: VariableItem[_] =>
+        variant = it.variant
+        variantMapper.map(it)
 
       case it: GoldenApple =>
         if (it.enchanted) Material.ENCHANTED_GOLDEN_APPLE
@@ -532,6 +540,23 @@ class SpigotItemMapper(
     } else meta.setDisplayName(item.name)
 
     meta.setLore(item.tooltip.asJava)
+
+    meta match {
+      case leather: LeatherArmorMeta =>
+        def setColor(name: String): Unit = {
+          val colorName = name.split('_')(0)
+          val color = Color.valueOf(colorName)
+          val spigotColor = colorMapper.map(color)
+          leather.setColor(spigotColor)
+        }
+        variant match {
+          case it: HelmetVariant     => if (it.name.contains('_')) setColor(it.name)
+          case it: ChestplateVariant => if (it.name.contains('_')) setColor(it.name)
+          case it: ChestplateVariant => if (it.name.contains('_')) setColor(it.name)
+          case it: BootsVariant      => if (it.name.contains('_')) setColor(it.name)
+        }
+      case _ =>
+    }
 
     if (item.customModelData.isDefined)
       meta.setCustomModelData(item.customModelData.get)

@@ -24,13 +24,13 @@
 
 package gg.warcraft.monolith.spigot.item
 
-import java.util
-
 import gg.warcraft.monolith.api.block.BlockVariant
 import gg.warcraft.monolith.api.item._
 import gg.warcraft.monolith.api.item.variant._
 import gg.warcraft.monolith.spigot.block.SpigotBlockVariantMapper
 import org.bukkit.Material
+
+import java.util
 
 private object SpigotItemVariantMapper {
   private final val materialCache: util.EnumMap[Material, ItemVariant] =
@@ -367,6 +367,24 @@ class SpigotItemVariantMapper(
     case BootsVariant.GOLD      => Material.GOLDEN_BOOTS
     case BootsVariant.DIAMOND   => Material.DIAMOND_BOOTS
 
+    case BootsVariant.AQUA_LEATHER    => Material.LEATHER_BOOTS
+    case BootsVariant.BLACK_LEATHER   => Material.LEATHER_BOOTS
+    case BootsVariant.BLUE_LEATHER    => Material.LEATHER_BOOTS
+    case BootsVariant.FUCHSIA_LEATHER => Material.LEATHER_BOOTS
+    case BootsVariant.GRAY_LEATHER    => Material.LEATHER_BOOTS
+    case BootsVariant.GREEN_LEATHER   => Material.LEATHER_BOOTS
+    case BootsVariant.LIME_LEATHER    => Material.LEATHER_BOOTS
+    case BootsVariant.MAROON_LEATHER  => Material.LEATHER_BOOTS
+    case BootsVariant.NAVY_LEATHER    => Material.LEATHER_BOOTS
+    case BootsVariant.OLIVE_LEATHER   => Material.LEATHER_BOOTS
+    case BootsVariant.ORANGE_LEATHER  => Material.LEATHER_BOOTS
+    case BootsVariant.PURPLE_LEATHER  => Material.LEATHER_BOOTS
+    case BootsVariant.RED_LEATHER     => Material.LEATHER_BOOTS
+    case BootsVariant.SILVER_LEATHER  => Material.LEATHER_BOOTS
+    case BootsVariant.TEAL_LEATHER    => Material.LEATHER_BOOTS
+    case BootsVariant.WHITE_LEATHER   => Material.LEATHER_BOOTS
+    case BootsVariant.YELLOW_LEATHER  => Material.LEATHER_BOOTS
+
     // BRICK
     case BrickVariant.NORMAL => Material.BRICK
     case BrickVariant.NETHER => Material.NETHER_BRICK
@@ -389,6 +407,24 @@ class SpigotItemVariantMapper(
     case ChestplateVariant.IRON      => Material.IRON_CHESTPLATE
     case ChestplateVariant.GOLD      => Material.GOLDEN_CHESTPLATE
     case ChestplateVariant.DIAMOND   => Material.DIAMOND_CHESTPLATE
+
+    case ChestplateVariant.AQUA_LEATHER    => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.BLACK_LEATHER   => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.BLUE_LEATHER    => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.FUCHSIA_LEATHER => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.GRAY_LEATHER    => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.GREEN_LEATHER   => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.LIME_LEATHER    => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.MAROON_LEATHER  => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.NAVY_LEATHER    => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.OLIVE_LEATHER   => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.ORANGE_LEATHER  => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.PURPLE_LEATHER  => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.RED_LEATHER     => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.SILVER_LEATHER  => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.TEAL_LEATHER    => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.WHITE_LEATHER   => Material.LEATHER_CHESTPLATE
+    case ChestplateVariant.YELLOW_LEATHER  => Material.LEATHER_CHESTPLATE
 
     // CHICKEN
     case ChickenVariant.RAW    => Material.CHICKEN
@@ -445,6 +481,24 @@ class SpigotItemVariantMapper(
     case HelmetVariant.GOLD      => Material.GOLDEN_HELMET
     case HelmetVariant.DIAMOND   => Material.DIAMOND_HELMET
 
+    case HelmetVariant.AQUA_LEATHER    => Material.LEATHER_HELMET
+    case HelmetVariant.BLACK_LEATHER   => Material.LEATHER_HELMET
+    case HelmetVariant.BLUE_LEATHER    => Material.LEATHER_HELMET
+    case HelmetVariant.FUCHSIA_LEATHER => Material.LEATHER_HELMET
+    case HelmetVariant.GRAY_LEATHER    => Material.LEATHER_HELMET
+    case HelmetVariant.GREEN_LEATHER   => Material.LEATHER_HELMET
+    case HelmetVariant.LIME_LEATHER    => Material.LEATHER_HELMET
+    case HelmetVariant.MAROON_LEATHER  => Material.LEATHER_HELMET
+    case HelmetVariant.NAVY_LEATHER    => Material.LEATHER_HELMET
+    case HelmetVariant.OLIVE_LEATHER   => Material.LEATHER_HELMET
+    case HelmetVariant.ORANGE_LEATHER  => Material.LEATHER_HELMET
+    case HelmetVariant.PURPLE_LEATHER  => Material.LEATHER_HELMET
+    case HelmetVariant.RED_LEATHER     => Material.LEATHER_HELMET
+    case HelmetVariant.SILVER_LEATHER  => Material.LEATHER_HELMET
+    case HelmetVariant.TEAL_LEATHER    => Material.LEATHER_HELMET
+    case HelmetVariant.WHITE_LEATHER   => Material.LEATHER_HELMET
+    case HelmetVariant.YELLOW_LEATHER  => Material.LEATHER_HELMET
+
     // HOE
     case HoeVariant.WOOD    => Material.WOODEN_HOE
     case HoeVariant.STONE   => Material.STONE_HOE
@@ -464,6 +518,24 @@ class SpigotItemVariantMapper(
     case LeggingsVariant.IRON      => Material.IRON_LEGGINGS
     case LeggingsVariant.GOLD      => Material.GOLDEN_LEGGINGS
     case LeggingsVariant.DIAMOND   => Material.DIAMOND_LEGGINGS
+
+    case LeggingsVariant.AQUA_LEATHER    => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.BLACK_LEATHER   => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.BLUE_LEATHER    => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.FUCHSIA_LEATHER => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.GRAY_LEATHER    => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.GREEN_LEATHER   => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.LIME_LEATHER    => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.MAROON_LEATHER  => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.NAVY_LEATHER    => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.OLIVE_LEATHER   => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.ORANGE_LEATHER  => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.PURPLE_LEATHER  => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.RED_LEATHER     => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.SILVER_LEATHER  => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.TEAL_LEATHER    => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.WHITE_LEATHER   => Material.LEATHER_LEGGINGS
+    case LeggingsVariant.YELLOW_LEATHER  => Material.LEATHER_LEGGINGS
 
     // MINECART
     case MinecartVariant.EMPTY => Material.MINECART

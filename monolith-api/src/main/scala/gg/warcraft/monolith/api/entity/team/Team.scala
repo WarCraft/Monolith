@@ -24,8 +24,7 @@
 
 package gg.warcraft.monolith.api.entity.team
 
-import gg.warcraft.monolith.api.core.ColorCode
-import gg.warcraft.monolith.api.effect.Particle
+import gg.warcraft.monolith.api.core.{Color, ColorCode}
 import gg.warcraft.monolith.api.world.Location
 
 case class Team(
@@ -33,7 +32,7 @@ case class Team(
     name: String,
     spawn: Location,
     chatColor: ColorCode,
-    particleColor: Particle.Color
+    particleColor: Color
 )
 
 object Team {

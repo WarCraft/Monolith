@@ -24,6 +24,7 @@
 
 package gg.warcraft.monolith.spigot.effect
 
+import gg.warcraft.monolith.api.core.Color
 import gg.warcraft.monolith.api.effect.Particle
 import org.bukkit.{Color => SpigotColor, Particle => SpigotParticle}
 
@@ -134,45 +135,23 @@ class SpigotParticleMapper { // TODO optimize big match statement
   private final val spigotYellow =
     new SpigotParticle.DustOptions(SpigotColor.YELLOW, 1)
 
-  def map(color: Particle.Color): SpigotParticle.DustOptions = color match {
-    case Particle.Color.Aqua    => spigotAqua
-    case Particle.Color.Black   => spigotBlack
-    case Particle.Color.Blue    => spigotBlue
-    case Particle.Color.Fuchsia => spigotFuchsia
-    case Particle.Color.Gray    => spigotGray
-    case Particle.Color.Green   => spigotGreen
-    case Particle.Color.Lime    => spigotLime
-    case Particle.Color.Maroon  => spigotMaroon
-    case Particle.Color.Navy    => spigotNavy
-    case Particle.Color.Olive   => spigotOlive
-    case Particle.Color.Orange  => spigotOrange
-    case Particle.Color.Purple  => spigotPurple
-    case Particle.Color.Red     => spigotRed
-    case Particle.Color.Silver  => spigotSilver
-    case Particle.Color.Teal    => spigotTeal
-    case Particle.Color.White   => spigotWhite
-    case Particle.Color.Yellow  => spigotYellow
+  def map(color: Color): SpigotParticle.DustOptions = color match {
+    case Color.Aqua    => spigotAqua
+    case Color.Black   => spigotBlack
+    case Color.Blue    => spigotBlue
+    case Color.Fuchsia => spigotFuchsia
+    case Color.Gray    => spigotGray
+    case Color.Green   => spigotGreen
+    case Color.Lime    => spigotLime
+    case Color.Maroon  => spigotMaroon
+    case Color.Navy    => spigotNavy
+    case Color.Olive   => spigotOlive
+    case Color.Orange  => spigotOrange
+    case Color.Purple  => spigotPurple
+    case Color.Red     => spigotRed
+    case Color.Silver  => spigotSilver
+    case Color.Teal    => spigotTeal
+    case Color.White   => spigotWhite
+    case Color.Yellow  => spigotYellow
   }
 }
-
-/*
-  def map(color: Particle.Color): (Double, Double, Double) = color match {
-    case Particle.Color.Aqua    => (AQUA.getRed, AQUA.getGreen, AQUA.getBlue)
-    case Particle.Color.Black   => (BLACK.getRed, BLACK.getGreen, BLACK.getBlue)
-    case Particle.Color.Blue    => (BLUE.getRed, BLUE.getGreen, BLUE.getBlue)
-    case Particle.Color.Fuchsia => (FUCHSIA.getRed, FUCHSIA.getGreen, FUCHSIA.getBlue)
-    case Particle.Color.Gray    => (GRAY.getRed, GRAY.getGreen, GRAY.getBlue)
-    case Particle.Color.Green   => (GREEN.getRed, GREEN.getGreen, GREEN.getBlue)
-    case Particle.Color.Lime    => (LIME.getRed, LIME.getGreen, LIME.getBlue)
-    case Particle.Color.Maroon  => (MAROON.getRed, MAROON.getGreen, MAROON.getBlue)
-    case Particle.Color.Navy    => (NAVY.getRed, NAVY.getGreen, NAVY.getBlue)
-    case Particle.Color.Olive   => (OLIVE.getRed, OLIVE.getGreen, OLIVE.getBlue)
-    case Particle.Color.Orange  => (ORANGE.getRed, ORANGE.getGreen, ORANGE.getBlue)
-    case Particle.Color.Purple  => (PURPLE.getRed, PURPLE.getGreen, PURPLE.getBlue)
-    case Particle.Color.Red     => (RED.getRed, RED.getGreen, RED.getBlue)
-    case Particle.Color.Silver  => (SILVER.getRed, SILVER.getGreen, SILVER.getBlue)
-    case Particle.Color.Teal    => (TEAL.getRed, TEAL.getGreen, TEAL.getBlue)
-    case Particle.Color.White   => (WHITE.getRed, WHITE.getGreen, WHITE.getBlue)
-    case Particle.Color.Yellow  => (YELLOW.getRed, YELLOW.getGreen, YELLOW.getBlue)
-  }
- */

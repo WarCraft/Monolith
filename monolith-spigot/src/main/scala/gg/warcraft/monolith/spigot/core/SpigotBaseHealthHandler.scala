@@ -26,15 +26,16 @@ package gg.warcraft.monolith.spigot.core
 
 import gg.warcraft.monolith.api.core.MonolithConfig
 import org.bukkit.attribute.Attribute
-import org.bukkit.event.{EventHandler, Listener}
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.{EventHandler, Listener}
 
 class SpigotBaseHealthHandler(config: MonolithConfig) extends Listener {
   private val baseHealth = config.baseHealth
 
   @EventHandler
   def on(event: PlayerJoinEvent): Unit = {
-    val maxHealth = event.getPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-    maxHealth.setBaseValue(baseHealth)
+    val attribute = event.getPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH)
+    attribute.getModifiers.forEach { it => attribute.removeModifier(it) }
+    attribute.setBaseValue(baseHealth)
   }
 }

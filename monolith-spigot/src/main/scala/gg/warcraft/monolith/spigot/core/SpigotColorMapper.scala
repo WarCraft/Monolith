@@ -22,16 +22,29 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.effect
+package gg.warcraft.monolith.spigot.core
 
 import gg.warcraft.monolith.api.core.Color
-import gg.warcraft.monolith.api.world.Location
+import org.bukkit.{Color => SpigotColor}
 
-trait ParticleAdapter {
-  protected final val DEFAULT_RANGE: Float = 64
-  protected final val DEFAULT_HALF_RANGE: Float = DEFAULT_RANGE / 2
-
-  def display(particle: Particle, location: Location): Unit
-  def display(particle: Particle, location: Location, color: Color): Unit
-  def display(particle: Particle, loc: Location, speed: Float, amount: Int): Unit
+class SpigotColorMapper {
+  def map(color: Color): SpigotColor = color match {
+    case Color.Aqua    => SpigotColor.AQUA
+    case Color.Black   => SpigotColor.BLACK
+    case Color.Blue    => SpigotColor.BLUE
+    case Color.Fuchsia => SpigotColor.FUCHSIA
+    case Color.Gray    => SpigotColor.GRAY
+    case Color.Green   => SpigotColor.GREEN
+    case Color.Lime    => SpigotColor.LIME
+    case Color.Maroon  => SpigotColor.MAROON
+    case Color.Navy    => SpigotColor.NAVY
+    case Color.Olive   => SpigotColor.OLIVE
+    case Color.Orange  => SpigotColor.ORANGE
+    case Color.Purple  => SpigotColor.PURPLE
+    case Color.Red     => SpigotColor.RED
+    case Color.Silver  => SpigotColor.SILVER
+    case Color.Teal    => SpigotColor.TEAL
+    case Color.White   => SpigotColor.WHITE
+    case Color.Yellow  => SpigotColor.YELLOW
+  }
 }

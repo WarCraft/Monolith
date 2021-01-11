@@ -24,6 +24,7 @@
 
 package gg.warcraft.monolith.api.effect
 
+import gg.warcraft.monolith.api.core.Color
 import gg.warcraft.monolith.api.world.Location
 
 sealed trait Particle {
@@ -31,7 +32,7 @@ sealed trait Particle {
       adapter: ParticleAdapter
   ): Unit = adapter.display(this, location)
 
-  def color(color: Particle.Color): Particle =
+  def color(color: Color): Particle =
     new ColorParticle(this, color)
 
   def speed(speed: Float, amount: Int): Particle =
@@ -40,7 +41,7 @@ sealed trait Particle {
 
 private class ColorParticle(
     particle: Particle,
-    color: Particle.Color
+    color: Color
 ) extends Particle {
   override def display(location: Location)(implicit
       adapter: ParticleAdapter
@@ -139,47 +140,6 @@ object Particle {
   case object WaterDrop extends Particle
   case object WaterSplash extends Particle
   case object WaterWake extends Particle
-
-  sealed trait Color
-  object Color {
-    case object Aqua extends Color
-    case object Black extends Color
-    case object Blue extends Color
-    case object Fuchsia extends Color
-    case object Gray extends Color
-    case object Green extends Color
-    case object Lime extends Color
-    case object Maroon extends Color
-    case object Navy extends Color
-    case object Olive extends Color
-    case object Orange extends Color
-    case object Purple extends Color
-    case object Red extends Color
-    case object Silver extends Color
-    case object Teal extends Color
-    case object White extends Color
-    case object Yellow extends Color
-
-    def valueOf(string: String): Color = string match {
-      case "Aqua"    => Particle.Color.Aqua
-      case "Black"   => Particle.Color.Black
-      case "Blue"    => Particle.Color.Blue
-      case "Fuchsia" => Particle.Color.Fuchsia
-      case "Gray"    => Particle.Color.Gray
-      case "Green"   => Particle.Color.Green
-      case "Lime"    => Particle.Color.Lime
-      case "Maroon"  => Particle.Color.Maroon
-      case "Navy"    => Particle.Color.Navy
-      case "Olive"   => Particle.Color.Olive
-      case "Orange"  => Particle.Color.Orange
-      case "Purple"  => Particle.Color.Purple
-      case "Red"     => Particle.Color.Red
-      case "Silver"  => Particle.Color.Silver
-      case "Teal"    => Particle.Color.Teal
-      case "White"   => Particle.Color.White
-      case "Yellow"  => Particle.Color.Yellow
-    }
-  }
 
   def multi(particles: Particle*): Particle =
     new MultiParticle(particles: _*)
