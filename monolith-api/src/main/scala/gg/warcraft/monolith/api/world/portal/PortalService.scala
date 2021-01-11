@@ -30,8 +30,6 @@ import gg.warcraft.monolith.api.entity.{Entity, EntityService}
 class PortalService(implicit
     entityService: EntityService
 ) {
-  private final val TELEPORT_RADIUS = 1
-
   private var _portals: Set[Portal] = Set.empty
   def portals: Set[Portal] = _portals
 
@@ -41,7 +39,7 @@ class PortalService(implicit
       effect: Option[Effect]
   ): Portal = {
     val orientation = config.orientation.map { _.toVector3f }
-    val portal = Portal(config.entry, config.exit, orientation)
+    val portal = Portal(config.entry, config.radius, config.exit, orientation)
     portal.predicate = predicate
     portal.effect = effect
     _portals += portal
@@ -56,7 +54,7 @@ class PortalService(implicit
   private[portal] def tick(portal: Portal): Unit = {
     import portal._
     entityService
-      .getNearbyEntities(entry, TELEPORT_RADIUS)
+      .getNearbyEntities(entry, portal.radius)
       .filter { _.typed == Entity.Type.PLAYER }
       .filter { predicate.apply }
       .foreach { player =>

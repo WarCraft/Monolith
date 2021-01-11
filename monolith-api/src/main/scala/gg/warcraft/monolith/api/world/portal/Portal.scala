@@ -31,6 +31,7 @@ import gg.warcraft.monolith.api.world.{Direction, Location}
 
 case class Portal(
     entry: Location,
+    radius: Int,
     exit: Location,
     orientation: Option[Vector3f]
 ) {
@@ -49,7 +50,8 @@ case class Portal(
 object Portal {
   case class Config(
       entry: Location,
+      radius: Int,
       exit: Location,
       orientation: Option[Direction]
-  )
+  ) // TODO merge with case class constructor as union type in Scala 3
 }
