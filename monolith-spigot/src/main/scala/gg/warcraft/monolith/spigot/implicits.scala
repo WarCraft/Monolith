@@ -59,6 +59,7 @@ import gg.warcraft.monolith.spigot.block.spoofing.SpigotBlockSpoofingService
 import gg.warcraft.monolith.spigot.combat.{
   SpigotCombatEventMapper, SpigotPotionMapper
 }
+import gg.warcraft.monolith.spigot.core.SpigotColorMapper
 import gg.warcraft.monolith.spigot.effect.{
   SpigotParticleAdapter, SpigotParticleMapper
 }
@@ -173,6 +174,8 @@ object implicits {
     new AuthService(_config)
   implicit lazy val serverDataService: ServerDataService =
     new ServerDataService
+  implicit lazy val colorMapper: SpigotColorMapper =
+    new SpigotColorMapper
 
   // Math
   implicit lazy val boundingBoxMapper: SpigotAABBfMapper =
