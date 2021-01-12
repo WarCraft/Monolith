@@ -566,13 +566,10 @@ class SpigotItemMapper(
     } else meta.setDisplayName(item.name)
 
     // TODO map skull meta
-    println(s"Setting item meta for ${meta.getDisplayName}")
     meta match {
       case leather: LeatherArmorMeta =>
-        println(s"meta is leather armor, variant is $variant")
         def setColor(name: String): Unit = {
           val colorName = name.split('_')(0)
-          println(s"Setting leather color to $colorName")
           val color = Color.valueOf(colorName)
           val spigotColor = colorMapper.map(color)
           leather.setColor(spigotColor)
@@ -584,7 +581,6 @@ class SpigotItemMapper(
           case it: BootsVariant      => if (it.name.contains('_')) setColor(it.name)
         }
       case _ =>
-        println(s"meta is NOT leather armor")
     }
 
     if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
