@@ -28,11 +28,13 @@ import com.typesafe.config.Config
 import gg.warcraft.monolith.api.entity.team.TeamService
 import gg.warcraft.monolith.api.util.codecs.monolith._
 import gg.warcraft.monolith.api.util.codecs.quill._
+import gg.warcraft.monolith.api.util.future.FutureOps
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
 import java.util.UUID
+import java.util.logging.Logger
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -47,11 +49,11 @@ trait PlayerDataRepository {
 private trait PlayerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  def loadData = quote {
+  def queryById = quote {
     (q: Query[PlayerData], id: UUID) => q.filter { _.id == id }
   }
 
-  def upsertData = quote {
+  def upsert = quote {
     (q: EntityQuery[PlayerData], data: PlayerData) =>
       q.insert(data).onConflictUpdate(_.id)(
         (t, e) => t.team -> e.team,
@@ -63,6 +65,8 @@ private trait PlayerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
 
 private[monolith] class PostgresPlayerDataRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends PlayerDataRepository {
   private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with PlayerDataContext[PostgresDialect, SnakeCase]
@@ -71,15 +75,17 @@ private[monolith] class PostgresPlayerDataRepository(
   override def load(id: UUID)(implicit
       teamService: TeamService
   ): Option[PlayerData] =
-    run { loadData(query[PlayerData], lift(id)) }.headOption
+    run { queryById(query[PlayerData], lift(id)) }.headOption
 
-  override def save(data: PlayerData): Future[Unit] = Future {
-    run { upsertData(query[PlayerData], lift(data)) }
-  }
+  override def save(data: PlayerData) = Future[Unit] {
+    run { upsert(query[PlayerData], lift(data)) }
+  }.andThenLog("PlayerDataRepository", "upsert", data)
 }
 
 private[monolith] class SqlitePlayerDataRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends PlayerDataRepository {
   private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with PlayerDataContext[SqliteDialect, SnakeCase]
@@ -88,9 +94,9 @@ private[monolith] class SqlitePlayerDataRepository(
   override def load(id: UUID)(implicit
       teamService: TeamService
   ): Option[PlayerData] =
-    run { loadData(query[PlayerData], lift(id)) }.headOption
+    run { queryById(query[PlayerData], lift(id)) }.headOption
 
-  override def save(data: PlayerData): Future[Unit] = Future {
-    run { upsertData(query[PlayerData], lift(data)) }
-  }
+  override def save(data: PlayerData) = Future[Unit] {
+    run { upsert(query[PlayerData], lift(data)) }
+  }.andThenLog("PlayerDataRepository", "upsert", data)
 }

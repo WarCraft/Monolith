@@ -26,10 +26,12 @@ package gg.warcraft.monolith.api.core.data
 
 import com.typesafe.config.Config
 import gg.warcraft.monolith.api.util.codecs.quill._
+import gg.warcraft.monolith.api.util.future.FutureOps
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
+import java.util.logging.Logger
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -41,41 +43,45 @@ trait ServerDataRepository {
 private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  def queryData = quote {
+  def queryAll = quote {
     (q: EntityQuery[ServerData]) => q
   }
 
-  def upsertData = quote {
+  def upsert = quote {
     (q: EntityQuery[ServerData], data: ServerData) => q.update(data)
   }
 }
 
 private[monolith] class PostgresServerDataRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends ServerDataRepository {
   private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with ServerDataContext[PostgresDialect, SnakeCase]
   import database._
 
   override def load: Option[ServerData] =
-    run { queryData(query[ServerData]) }.headOption
+    run { queryAll(query[ServerData]) }.headOption
 
-  override def save(data: ServerData): Future[Unit] = Future {
-    run { upsertData(query[ServerData], lift(data)) }
-  }
+  override def save(data: ServerData) = Future[Unit] {
+    run { upsert(query[ServerData], lift(data)) }
+  }.andThenLog("ServerDataRepository", "upsert", data)
 }
 
 private[monolith] class SqliteServerDataRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends ServerDataRepository {
   private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with ServerDataContext[SqliteDialect, SnakeCase]
   import database._
 
   override def load: Option[ServerData] =
-    run { queryData(query[ServerData]) }.headOption
+    run { queryAll(query[ServerData]) }.headOption
 
-  override def save(data: ServerData): Future[Unit] = Future {
-    run { upsertData(query[ServerData], lift(data)) }
-  }
+  override def save(data: ServerData) = Future[Unit] {
+    run { upsert(query[ServerData], lift(data)) }
+  }.andThenLog("ServerDataRepository", "upsert", data)
 }

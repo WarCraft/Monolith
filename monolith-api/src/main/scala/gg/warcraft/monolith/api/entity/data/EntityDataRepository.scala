@@ -28,16 +28,18 @@ import com.typesafe.config.Config
 import gg.warcraft.monolith.api.entity.team.TeamService
 import gg.warcraft.monolith.api.util.codecs.monolith._
 import gg.warcraft.monolith.api.util.codecs.quill._
+import gg.warcraft.monolith.api.util.future.FutureOps
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
 import java.util.UUID
+import java.util.logging.Logger
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait EntityDataRepository {
-  def all()(implicit
+  def loadAll()(implicit
       teamService: TeamService
   ): Map[UUID, EntityData]
 
@@ -49,60 +51,64 @@ trait EntityDataRepository {
 private trait EntityDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  def queryAllData = quote {
+  def queryAll = quote {
     (q: Query[EntityData]) => q
   }
 
-  def upsertData = quote {
+  def upsert = quote {
     (q: EntityQuery[EntityData], data: EntityData) =>
       q.insert(data).onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
   }
 
-  def deleteData = quote {
+  def deleteById = quote {
     (q: EntityQuery[EntityData], id: UUID) => q.filter { _.id == id }.delete
   }
 }
 
 private[monolith] class PostgresEntityDataRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends EntityDataRepository {
   private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with EntityDataContext[PostgresDialect, SnakeCase]
   import database._
 
-  override def all()(implicit
+  override def loadAll()(implicit
       teamService: TeamService
   ): Map[UUID, EntityData] =
-    run { queryAllData(query[EntityData]) }
+    run { queryAll(query[EntityData]) }
       .map { it => it.id -> it }.toMap
 
-  override def save(data: EntityData): Future[Unit] = Future {
-    run { upsertData(query[EntityData], lift(data)) }
-  }
+  override def save(data: EntityData) = Future[Unit] {
+    run { upsert(query[EntityData], lift(data)) }
+  }.andThenLog("EntityDataRepository", "upsert", data)
 
-  override def delete(id: UUID): Future[Unit] = Future {
-    run { deleteData(query[EntityData], lift(id)) }
-  }
+  override def delete(id: UUID) = Future[Unit] {
+    run { deleteById(query[EntityData], lift(id)) }
+  }.andThenLog("EntityDataRepository", "deleteById", id)
 }
 
 private[monolith] class SqliteEntityDataRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends EntityDataRepository {
   private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with EntityDataContext[SqliteDialect, SnakeCase]
   import database._
 
-  override def all()(implicit
+  override def loadAll()(implicit
       teamService: TeamService
   ): Map[UUID, EntityData] =
-    run { queryAllData(query[EntityData]) }
+    run { queryAll(query[EntityData]) }
       .map { it => it.id -> it }.toMap
 
-  override def save(data: EntityData): Future[Unit] = Future {
-    run { upsertData(query[EntityData], lift(data)) }
-  }
+  override def save(data: EntityData) = Future[Unit] {
+    run { upsert(query[EntityData], lift(data)) }
+  }.andThenLog("EntityDataRepository", "upsert", data)
 
-  override def delete(id: UUID): Future[Unit] = Future {
-    run { deleteData(query[EntityData], lift(id)) }
-  }
+  override def delete(id: UUID) = Future[Unit] {
+    run { deleteById(query[EntityData], lift(id)) }
+  }.andThenLog("EntityDataRepository", "deleteById", id)
 }

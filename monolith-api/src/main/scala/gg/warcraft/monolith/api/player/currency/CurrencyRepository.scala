@@ -25,11 +25,13 @@
 package gg.warcraft.monolith.api.player.currency
 
 import com.typesafe.config.Config
+import gg.warcraft.monolith.api.util.future.FutureOps
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
 import java.util.UUID
+import java.util.logging.Logger
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.chaining.scalaUtilChainingOps
@@ -37,17 +39,19 @@ import scala.util.chaining.scalaUtilChainingOps
 trait CurrencyRepository {
   def load(id: UUID): Currencies
 
-  def save(Currencies: Currency*): Future[Unit]
+  def save(Currency: Currency): Future[Unit]
+
+  def save(Currencies: List[Currency]): Future[Unit]
 }
 
 private trait CurrencyContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  def loadCurrencies = quote {
+  def queryById = quote {
     (q: Query[Currency], id: UUID) => q.filter { _.playerId == id }
   }
 
-  def upsertCurrency = quote {
+  def upsert = quote {
     (q: EntityQuery[Currency], currency: Currency) =>
       q.insert(currency)
         .onConflictUpdate(_.playerId, _.currency)(
@@ -59,38 +63,46 @@ private trait CurrencyContext[I <: SqlIdiom, N <: NamingStrategy] {
 
 private[monolith] class PostgresCurrencyRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends CurrencyRepository {
   private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with CurrencyContext[PostgresDialect, SnakeCase]
   import database._
 
   override def load(id: UUID): Currencies =
-    run { loadCurrencies(query[Currency], lift(id)) }
+    run { queryById(query[Currency], lift(id)) }
       .iterator.map { it => it.currency -> it }
       .toMap.pipe { new Currencies(_) }
 
-  override def save(Currencies: Currency*): Future[Unit] = Future {
-    run {
-      liftQuery(Currencies).foreach { it => upsertCurrency(query[Currency], it) }
-    }
-  }
+  override def save(currency: Currency) = Future[Unit] {
+    run { upsert(query[Currency], lift(currency)) }
+  }.andThenLog("CurrencyRepository", "upsert", currency)
+
+  override def save(currencies: List[Currency]) = Future[Unit] {
+    run { liftQuery(currencies).foreach { it => upsert(query[Currency], it) } }
+  }.andThenLog("CurrencyRepository", "upsert", currencies)
 }
 
 private[monolith] class SqliteCurrencyRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends CurrencyRepository {
   private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with CurrencyContext[SqliteDialect, SnakeCase]
   import database._
 
   override def load(id: UUID): Currencies =
-    run { loadCurrencies(query[Currency], lift(id)) }
+    run { queryById(query[Currency], lift(id)) }
       .iterator.map { it => it.currency -> it }
       .toMap.pipe { new Currencies(_) }
 
-  override def save(Currencies: Currency*): Future[Unit] = Future {
-    run {
-      liftQuery(Currencies).foreach { it => upsertCurrency(query[Currency], it) }
-    }
-  }
+  override def save(currency: Currency) = Future[Unit] {
+    run { upsert(query[Currency], lift(currency)) }
+  }.andThenLog("CurrencyRepository", "upsert", currency)
+
+  override def save(currencies: List[Currency]) = Future[Unit] {
+    run { liftQuery(currencies).foreach { it => upsert(query[Currency], it) } }
+  }.andThenLog("CurrencyRepository", "upsert", currencies)
 }
