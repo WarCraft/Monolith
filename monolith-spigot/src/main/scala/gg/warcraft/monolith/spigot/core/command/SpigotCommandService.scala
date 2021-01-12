@@ -24,15 +24,13 @@
 
 package gg.warcraft.monolith.spigot.core.command
 
-import java.lang.reflect.Constructor
-import java.util.UUID
-
 import gg.warcraft.monolith.api.core.command.{Command, CommandService}
-import gg.warcraft.monolith.api.util.typing._
 import org.bukkit.Server
 import org.bukkit.command.PluginCommand
 import org.bukkit.plugin.Plugin
 
+import java.lang.reflect.Constructor
+import java.util.UUID
 import scala.jdk.CollectionConverters._
 
 class SpigotCommandService(implicit
