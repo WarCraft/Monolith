@@ -24,15 +24,12 @@
 
 package gg.warcraft.monolith.spigot.item
 
-import java.util.UUID
-
-import gg.warcraft.monolith.api.item.{
-  Item, ItemService, ItemType, ItemVariant, StackableItem, VariableItem
-}
+import gg.warcraft.monolith.api.item._
 import gg.warcraft.monolith.api.world.{Location, WorldService}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
 import org.bukkit.Server
 
+import java.util.UUID
 import scala.annotation.varargs
 
 class SpigotItemService(
@@ -46,32 +43,36 @@ class SpigotItemService(
   private final val itemVariantPackage =
     "gg.warcraft.monolith.api.item.variant"
 
-  override def parseData(data: String): Data = try {
-    if (data.contains(':')) {
-      val Array(enum, value) = data.split(':')
-      val clazz = Class.forName(s"$itemVariantPackage.$enum")
-      val valueOf = clazz.getMethod("valueOf", classOf[String])
-      valueOf.invoke(null, value).asInstanceOf[ItemVariant]
-    } else {
-      ItemType.valueOf(data)
+  override def parseData(data: String): Data =
+    try {
+      if (data.contains(':')) {
+        val Array(enum, value) = data.split(':')
+        val clazz = Class.forName(s"$itemVariantPackage.$enum")
+        val valueOf = clazz.getMethod("valueOf", classOf[String])
+        valueOf.invoke(null, value).asInstanceOf[ItemVariant]
+      } else {
+        ItemType.valueOf(data)
+      }
+    } catch {
+      case _: ClassNotFoundException =>
+        worldService.parseData(data).asInstanceOf[Data]
     }
-  } catch {
-    case _: ClassNotFoundException =>
-      worldService.parseData(data).asInstanceOf[Data]
-  }
 
   // TODO this method is sometimes used for its material mapping
-  override def create(data: Data): Item = {
-    val material = data match {
-      case it: ItemType    => typeMapper.map(it)
-      case it: ItemVariant => variantMapper.map(it)
+  override def create(data: Data): Item =
+    data match {
+      case data: ItemType =>
+        val material = typeMapper.map(data)
+        val item = new SpigotItem(material)
+        itemMapper.map(item).get
+      case data: ItemVariant => create(data)
     }
-    val item = new SpigotItem(material)
-    itemMapper.map(item).get
-  }
 
-  override def create[T <: ItemVariant](variant: T): VariableItem[T] =
-    create(variant).asInstanceOf[VariableItem[T]]
+  override def create[T <: ItemVariant](variant: T): VariableItem[T] = {
+    val material = variantMapper.map(variant)
+    val item = new SpigotItem(material)
+    itemMapper.map(item, Some(variant)).get.asInstanceOf[VariableItem[T]]
+  }
 
   override def giveTo(playerId: UUID, data: Data, count: Int): Boolean = {
     val player = server.getPlayer(playerId)
@@ -132,7 +133,9 @@ class SpigotItemService(
     val spigotInventory = player.getInventory
     val spigotItems = items.map(itemMapper.map)
     // TODO merge counts of identical items before performing this check
-    if (spigotItems.forall(it => spigotInventory.containsAtLeast(it, it.getAmount))) {
+    if (
+      spigotItems.forall(it => spigotInventory.containsAtLeast(it, it.getAmount))
+    ) {
       spigotInventory.removeItem(spigotItems: _*)
       true
     } else false

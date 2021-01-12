@@ -400,11 +400,11 @@ case class Boots(
     with DurableItem {
   val `type` = ItemType.BOOTS
   override def maxDurability: Int = variant match {
-    case BootsVariant.LEATHER   => 65
-    case BootsVariant.CHAINMAIL => 195
-    case BootsVariant.IRON      => 195
-    case BootsVariant.GOLD      => 91
-    case BootsVariant.DIAMOND   => 429
+    case it if it.leather   => 65
+    case it if it.chainmail => 195
+    case it if it.iron      => 195
+    case it if it.gold      => 91
+    case it if it.diamond   => 429
   }
 }
 
@@ -640,11 +640,11 @@ case class Chestplate(
     with DurableItem {
   val `type` = ItemType.CHESTPLATE
   override def maxDurability: Int = variant match {
-    case ChestplateVariant.LEATHER   => 80
-    case ChestplateVariant.CHAINMAIL => 240
-    case ChestplateVariant.IRON      => 240
-    case ChestplateVariant.GOLD      => 112
-    case ChestplateVariant.DIAMOND   => 528
+    case it if it.leather   => 80
+    case it if it.chainmail => 240
+    case it if it.iron      => 240
+    case it if it.gold      => 112
+    case it if it.diamond   => 528
   }
 }
 
@@ -1778,11 +1778,11 @@ case class Helmet(
     with DurableItem {
   val `type` = ItemType.HELMET
   override def maxDurability: Int = variant match {
-    case HelmetVariant.LEATHER   => 55
-    case HelmetVariant.CHAINMAIL => 165
-    case HelmetVariant.IRON      => 165
-    case HelmetVariant.GOLD      => 77
-    case HelmetVariant.DIAMOND   => 363
+    case it if it.leather   => 55
+    case it if it.chainmail => 165
+    case it if it.iron      => 165
+    case it if it.gold      => 77
+    case it if it.diamond   => 363
   }
 }
 
@@ -2135,11 +2135,11 @@ case class Leggings(
     with DurableItem {
   val `type` = ItemType.LEGGINGS
   override def maxDurability: Int = variant match {
-    case LeggingsVariant.LEATHER   => 75
-    case LeggingsVariant.CHAINMAIL => 225
-    case LeggingsVariant.IRON      => 225
-    case LeggingsVariant.GOLD      => 105
-    case LeggingsVariant.DIAMOND   => 495
+    case it if it.leather   => 75
+    case it if it.chainmail => 225
+    case it if it.iron      => 225
+    case it if it.gold      => 105
+    case it if it.diamond   => 495
   }
 }
 

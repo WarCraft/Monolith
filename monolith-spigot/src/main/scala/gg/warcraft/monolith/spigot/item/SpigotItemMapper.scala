@@ -40,8 +40,10 @@ import java.util
 import scala.jdk.CollectionConverters._
 
 private object SpigotItemMapper {
-  private final val cache: util.EnumMap[Material, SpigotItem => Option[Item]] =
-    new util.EnumMap(classOf[Material])
+  private final val cache: util.EnumMap[
+    Material,
+    ((SpigotItem, Option[ItemVariant])) => Option[Item]
+  ] = new util.EnumMap(classOf[Material])
 }
 
 class SpigotItemMapper(
@@ -52,17 +54,23 @@ class SpigotItemMapper(
 ) {
   private val itemNameKey = new NamespacedKey(plugin, "canonicalDisplayName")
 
-  def map(item: SpigotItem): Option[Item] = {
+  def map(
+      item: SpigotItem,
+      overrideVariant: Option[ItemVariant] = None
+  ): Option[Item] = {
     if (item == null) return None
     val builder = SpigotItemMapper.cache.computeIfAbsent(item.getType, compute)
-    builder.apply(item)
+    builder.apply(item, overrideVariant)
   }
 
-  private def compute(material: Material): SpigotItem => Option[Item] = {
+  private def compute(
+      material: Material
+  ): ((SpigotItem, Option[ItemVariant])) => Option[Item] = {
     if (material.name.endsWith("AIR")) return _ => None
 
     // Compute common item data TODO map default name and item attributes, make new itemStack and use from there?
-    val name = (item: SpigotItem) => {
+    val name = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+      val item = itemAndVariantOverride._1
       val meta = item.getItemMeta
       if (meta != null) {
         val data = meta.getPersistentDataContainer
@@ -73,53 +81,70 @@ class SpigotItemMapper(
         } else item.getI18NDisplayName
       } else item.getI18NDisplayName
     }
-    val tt: SpigotItem => List[String] = (item: SpigotItem) => {
-      val meta = item.getItemMeta
-      if (meta != null && meta.getLore != null) meta.getLore.asScala.toList
-      else List.empty
-    }
-    val attr: SpigotItem => Set[String] = (item: SpigotItem) => {
-      val meta = item.getItemMeta
-      if (meta != null) Set.empty else Set.empty
-    }
-    val hAttr = (item: SpigotItem) => {
-      val meta = item.getItemMeta
+    val tt: ((SpigotItem, Option[ItemVariant])) => List[String] =
+      (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+        val meta = itemAndVariantOverride._1.getItemMeta
+        if (meta != null && meta.getLore != null) meta.getLore.asScala.toList
+        else List.empty
+      }
+    val attr: ((SpigotItem, Option[ItemVariant])) => Set[String] =
+      (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+        val meta = itemAndVariantOverride._1.getItemMeta
+        if (meta != null) Set.empty else Set.empty
+      }
+    val hAttr = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+      val meta = itemAndVariantOverride._1.getItemMeta
       if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES) else false
     }
 
     // Lazily compute generic item data
-    lazy val count = (item: SpigotItem) => item.getAmount
-    lazy val dura = (item: SpigotItem) => {
+    lazy val count = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) =>
+      itemAndVariantOverride._1.getAmount
+    lazy val dura = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+      val item = itemAndVariantOverride._1
       val meta = item.getItemMeta
       val damage = if (meta != null) meta.asInstanceOf[Damageable].getDamage else 0
       item.getType.getMaxDurability - damage
     }
-    lazy val unbr = (item: SpigotItem) => {
-      val meta = item.getItemMeta
+    lazy val unbr = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+      val meta = itemAndVariantOverride._1.getItemMeta
       if (meta != null) meta.isUnbreakable else false
     }
-    lazy val hUnbr = (item: SpigotItem) => {
-      val meta = item.getItemMeta
+    lazy val hUnbr = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+      val meta = itemAndVariantOverride._1.getItemMeta
       if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_UNBREAKABLE) else false
     }
-    lazy val mdl = (item: SpigotItem) => {
-      val meta = item.getItemMeta
+    lazy val mdl = (itemAndVariantOverride: (SpigotItem, Option[ItemVariant])) => {
+      val meta = itemAndVariantOverride._1.getItemMeta
       if (meta != null && meta.hasCustomModelData) Some(meta.getCustomModelData)
       else None
     }
-    def variant[T <: ItemVariant](item: SpigotItem): T =
-      variantMapper.map(item.getType).asInstanceOf[T]
+    def variant[T <: ItemVariant](itemAndVariantOverride: (
+        SpigotItem,
+        Option[ItemVariant]
+    )): T =
+      itemAndVariantOverride._2 match {
+        case Some(variant) => variant.asInstanceOf[T]
+        case None =>
+          val item = itemAndVariantOverride._1
+          variantMapper.map(item.getType).asInstanceOf[T]
+      }
 
     // Lazily construct tuples for all the different types of parameter sets
-    lazy val p = (item: SpigotItem) => // default params tuple builder
-      (name(item), tt(item), count(item), attr(item), hAttr(item), mdl(item))
-    lazy val s = (item: SpigotItem) => // singleton params tuple builder
-      (name(item), tt(item), attr(item), hAttr(item), mdl(item))
-    lazy val d = (i: SpigotItem) => // durable params tuple builder
+    // default params tuple builder
+    lazy val p = (i: (SpigotItem, Option[ItemVariant])) =>
+      (name(i), tt(i), count(i), attr(i), hAttr(i), mdl(i))
+    // singleton params tuple builder
+    lazy val s = (i: (SpigotItem, Option[ItemVariant])) =>
+      (name(i), tt(i), attr(i), hAttr(i), mdl(i))
+    // durable params tuple builder
+    lazy val d = (i: (SpigotItem, Option[ItemVariant])) =>
       (name(i), tt(i), attr(i), hAttr(i), mdl(i), dura(i), unbr(i), hUnbr(i))
-    def v[T <: ItemVariant](i: SpigotItem) = // variable params tuple builder
+    // variable params tuple builder
+    def v[T <: ItemVariant](i: (SpigotItem, Option[ItemVariant])) =
       (variant[T](i), name(i), tt(i), count(i), attr(i), hAttr(i), mdl(i))
-    def e[T <: ItemVariant](i: SpigotItem) = // equipment params tuple builder
+    // equipment params tuple builder
+    def e[T <: ItemVariant](i: (SpigotItem, Option[ItemVariant])) =
       (
         variant[T](i),
         name(i),
@@ -133,7 +158,7 @@ class SpigotItemMapper(
       )
 
     // Map item builder
-    val builder: SpigotItem => Item = material match {
+    val builder: ((SpigotItem, Option[ItemVariant])) => Item = material match {
       case Material.APPLE                  => (i => Apple.tupled(p(i)))
       case Material.ARMOR_STAND            => (i => ArmorStand.tupled(p(i)))
       case Material.BAMBOO                 => (i => Bamboo.tupled(p(i)))
@@ -477,19 +502,20 @@ class SpigotItemMapper(
           HorseArmor(v, name(item), tt(item), attr(item), hAttr(item))
 
       case m if m.isPotion =>
-        item =>
-          val v = variant[PotionVariant](item)
-          val meta = item.getItemMeta
+        i =>
+          val v = variant[PotionVariant](i)
+          val meta = i._1.getItemMeta
           val hideEffects =
             if (meta != null) meta.hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)
             else false
-          Potion(v, hideEffects, name(item), tt(item), attr(item), hAttr(item))
+          Potion(v, hideEffects, name(i), tt(i), attr(i), hAttr(i))
 
       case m if m.isWeightedPressurePlate =>
         (item => WeightedPressurePlate.tupled(v[WeightedPressurePlateVariant](item)))
     }
 
-    (item: SpigotItem) => Option(builder.apply(item))
+    itemAndVariantOverride: (SpigotItem, Option[ItemVariant]) =>
+      Option(builder.apply(itemAndVariantOverride._1, itemAndVariantOverride._2))
   }
 
   def map(item: Item): SpigotItem = {
@@ -539,12 +565,14 @@ class SpigotItemMapper(
       meta.setDisplayName(item.name)
     } else meta.setDisplayName(item.name)
 
-    meta.setLore(item.tooltip.asJava)
-
+    // TODO map skull meta
+    println(s"Setting item meta for ${meta.getDisplayName}")
     meta match {
       case leather: LeatherArmorMeta =>
+        println(s"meta is leather armor, variant is $variant")
         def setColor(name: String): Unit = {
           val colorName = name.split('_')(0)
+          println(s"Setting leather color to $colorName")
           val color = Color.valueOf(colorName)
           val spigotColor = colorMapper.map(color)
           leather.setColor(spigotColor)
@@ -556,15 +584,14 @@ class SpigotItemMapper(
           case it: BootsVariant      => if (it.name.contains('_')) setColor(it.name)
         }
       case _ =>
+        println(s"meta is NOT leather armor")
     }
 
-    if (item.customModelData.isDefined)
-      meta.setCustomModelData(item.customModelData.get)
     if (item.hideAttributes) meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+    meta.setLore(item.tooltip.asJava)
+    item.customModelData.foreach { meta.setCustomModelData(_) }
+
     spigotItem.setItemMeta(meta)
-
-    // TODO map skull meta
-
     spigotItem
   }
 }

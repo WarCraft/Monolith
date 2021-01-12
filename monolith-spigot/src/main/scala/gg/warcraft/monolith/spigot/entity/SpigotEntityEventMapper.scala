@@ -287,7 +287,7 @@ class SpigotEntityEventMapper(implicit
     val entity = entityService.getEntity(event.getEntity.getUniqueId)
     val entityStatus = statusService.getStatus(entity.id)
     val drops = event.getDrops.asScala
-      .map(itemMapper.map)
+      .map { itemMapper.map(_, None) }
       .filter { _.isDefined }
       .map { _.get }
       .toList

@@ -34,7 +34,11 @@ class SpigotInventory(
     implicit private val itemMapper: SpigotItemMapper
 ) extends Inventory {
   override lazy val items: List[Item] =
-    inventory.getContents.map(itemMapper.map).filter(_.isDefined).map(_.get).toList
+    inventory.getContents
+      .map { itemMapper.map(_, None) }
+      .filter(_.isDefined)
+      .map(_.get)
+      .toList
 
   override def hasSpace(count: Int): Boolean =
     count <= inventory.getStorageContents.count(_ == null)

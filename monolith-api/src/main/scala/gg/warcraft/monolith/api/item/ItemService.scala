@@ -24,10 +24,9 @@
 
 package gg.warcraft.monolith.api.item
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.world.Location
 
+import java.util.UUID
 import scala.annotation.varargs
 
 trait ItemService {

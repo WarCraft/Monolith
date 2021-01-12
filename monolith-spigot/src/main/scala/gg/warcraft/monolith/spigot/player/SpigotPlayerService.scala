@@ -24,9 +24,6 @@
 
 package gg.warcraft.monolith.spigot.player
 
-import java.util.UUID
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.core.event.EventService
 import gg.warcraft.monolith.api.core.task.TaskService
@@ -37,10 +34,10 @@ import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.entity.team.TeamService
 import gg.warcraft.monolith.api.item.Item
-import gg.warcraft.monolith.api.player.{OfflinePlayer, Player, PlayerService}
 import gg.warcraft.monolith.api.player.currency.CurrencyService
 import gg.warcraft.monolith.api.player.data.PlayerDataService
 import gg.warcraft.monolith.api.player.statistic.StatisticService
+import gg.warcraft.monolith.api.player.{OfflinePlayer, Player, PlayerService}
 import gg.warcraft.monolith.api.util.chaining._
 import gg.warcraft.monolith.spigot.entity.SpigotEntityTypeMapper
 import gg.warcraft.monolith.spigot.item.{
@@ -48,9 +45,11 @@ import gg.warcraft.monolith.spigot.item.{
 }
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.{Material, Server}
 import org.bukkit.inventory.PlayerInventory
+import org.bukkit.{Material, Server}
 
+import java.util.UUID
+import java.util.logging.Logger
 import scala.jdk.CollectionConverters._
 
 class SpigotPlayerService(implicit
@@ -157,7 +156,7 @@ class SpigotPlayerService(implicit
         val undelivered = player.getInventory.addItem(spigotItems: _*)
         if (!undelivered.isEmpty) {
           undelivered.values.asScala
-            .map { itemMapper.map }
+            .map { itemMapper.map(_, None) }
             .filter { _.isDefined }
             .map { _.get }
             .toList
