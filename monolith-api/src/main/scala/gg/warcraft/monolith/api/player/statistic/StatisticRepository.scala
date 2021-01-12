@@ -25,11 +25,13 @@
 package gg.warcraft.monolith.api.player.statistic
 
 import com.typesafe.config.Config
+import gg.warcraft.monolith.api.util.future.FutureOps
 import io.getquill._
 import io.getquill.context.jdbc.JdbcContext
 import io.getquill.context.sql.idiom.SqlIdiom
 
 import java.util.UUID
+import java.util.logging.Logger
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.chaining.scalaUtilChainingOps
@@ -37,7 +39,9 @@ import scala.util.chaining.scalaUtilChainingOps
 trait StatisticRepository {
   def load(id: UUID): Statistics
 
-  def save(statistics: Statistic*): Future[Unit]
+  def save(statistic: Statistic): Future[Unit]
+
+  def save(statistics: List[Statistic]): Future[Unit]
 
   def queryTop(count: Int, statistic: String): Future[List[Statistic]]
 
@@ -49,11 +53,11 @@ trait StatisticRepository {
 private trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
   this: JdbcContext[I, N] =>
 
-  def loadStatistics = quote {
+  def loadById = quote {
     (q: Query[Statistic], id: UUID) => q.filter { _.playerId == id }
   }
 
-  def upsertStatistic = quote {
+  def upsert = quote {
     (q: EntityQuery[Statistic], statistic: Statistic) =>
       q.insert(statistic)
         .onConflictUpdate(_.playerId, _.statistic) {
@@ -66,11 +70,11 @@ private trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
       q.filter { _.statistic == statistic }.sortBy { _.value }(Ord.desc).take(count)
   }
 
-  def queryLike = quote {
+  def queryAllLike = quote {
     (q: EntityQuery[Statistic], like: String) => q.filter { _.statistic.like(like) }
   }
 
-  def deleteLike = quote {
+  def deleteAllLike = quote {
     (q: EntityQuery[Statistic], like: String) =>
       q.filter { _.statistic.like(like) }.delete
   }
@@ -78,56 +82,70 @@ private trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
 
 private[monolith] class PostgresStatisticRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends StatisticRepository {
   private val database = new PostgresJdbcContext[SnakeCase](SnakeCase, config)
     with StatisticRepositoryContext[PostgresDialect, SnakeCase]
   import database._
 
   override def load(id: UUID): Statistics =
-    run { loadStatistics(query[Statistic], lift(id)) }
+    run { loadById(query[Statistic], lift(id)) }
       .iterator.map { it => it.statistic -> it }
       .toMap.pipe { new Statistics(_) }
 
-  override def save(statistics: Statistic*): Future[Unit] = Future {
-    run {
-      liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
-    }
-  }
+  override def save(statistic: Statistic) = Future[Unit] {
+    run { upsert(query[Statistic], lift(statistic)) }
+  }.andThenLog("StatisticRepository", "save", statistic)
 
-  override def queryTop(count: Int, statistic: String): Future[List[Statistic]] =
-    Future { run { queryTopLike(query[Statistic], lift(count), lift(statistic)) } }
+  override def save(statistics: List[Statistic]) = Future[Unit] {
+    run { liftQuery(statistics).foreach { it => upsert(query[Statistic], it) } }
+  }.andThenLog("StatisticRepository", "save", statistics)
 
-  override def queryAll(like: String): Future[List[Statistic]] =
-    Future { run { queryLike(query[Statistic], lift(like)) } }
+  override def queryTop(count: Int, statistic: String) = Future[List[Statistic]] {
+    run { queryTopLike(query[Statistic], lift(count), lift(statistic)) }
+  }.andThenLog("StatisticRepository", "queryTopLike", count, statistic)
 
-  override def deleteAll(like: String): Future[Unit] =
-    Future { run { deleteLike(query[Statistic], lift(like)) } }
+  override def queryAll(like: String) = Future[List[Statistic]] {
+    run { queryAllLike(query[Statistic], lift(like)) }
+  }.andThenLog("StatisticRepository", "queryAllLike", like)
+
+  override def deleteAll(like: String) = Future[Unit] {
+    run { deleteAllLike(query[Statistic], lift(like)) }
+  }.andThenLog("StatisticRepository", "deleteAllLike", like)
 }
 
 private[monolith] class SqliteStatisticRepository(
     config: Config
+)(implicit
+    logger: Logger
 ) extends StatisticRepository {
   private val database = new SqliteJdbcContext[SnakeCase](SnakeCase, config)
     with StatisticRepositoryContext[SqliteDialect, SnakeCase]
   import database._
 
   override def load(id: UUID): Statistics =
-    run { loadStatistics(query[Statistic], lift(id)) }
+    run { loadById(query[Statistic], lift(id)) }
       .iterator.map { it => it.statistic -> it }
       .toMap.pipe { new Statistics(_) }
 
-  override def save(statistics: Statistic*): Future[Unit] = Future {
-    run {
-      liftQuery(statistics).foreach { it => upsertStatistic(query[Statistic], it) }
-    }
-  }
+  override def save(statistic: Statistic) = Future[Unit] {
+    run { upsert(query[Statistic], lift(statistic)) }
+  }.andThenLog("StatisticRepository", "save", statistic)
 
-  override def queryTop(count: Int, statistic: String): Future[List[Statistic]] =
-    Future { run { queryTopLike(query[Statistic], lift(count), lift(statistic)) } }
+  override def save(statistics: List[Statistic]) = Future[Unit] {
+    run { liftQuery(statistics).foreach { it => upsert(query[Statistic], it) } }
+  }.andThenLog("StatisticRepository", "save", statistics)
 
-  override def queryAll(like: String): Future[List[Statistic]] =
-    Future { run { queryLike(query[Statistic], lift(like)) } }
+  override def queryTop(count: Int, statistic: String) = Future[List[Statistic]] {
+    run { queryTopLike(query[Statistic], lift(count), lift(statistic)) }
+  }.andThenLog("StatisticRepository", "queryTopLike", count, statistic)
 
-  override def deleteAll(like: String): Future[Unit] =
-    Future { run { deleteLike(query[Statistic], lift(like)) } }
+  override def queryAll(like: String) = Future[List[Statistic]] {
+    run { queryAllLike(query[Statistic], lift(like)) }
+  }.andThenLog("StatisticRepository", "queryAllLike", like)
+
+  override def deleteAll(like: String) = Future[Unit] {
+    run { deleteAllLike(query[Statistic], lift(like)) }
+  }.andThenLog("StatisticRepository", "deleteAllLike", like)
 }

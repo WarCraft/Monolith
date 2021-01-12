@@ -89,7 +89,7 @@ class StatisticService(implicit
       }
     }
 
-    repository.save(deltaStatistics: _*)
+    repository.save(deltaStatistics.toList)
   }
 
   def increaseStatistic(statistic: String, amount: Long, playerIds: UUID*): Unit = {

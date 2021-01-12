@@ -25,8 +25,8 @@
 package gg.warcraft.monolith.api.player.statistic
 
 import gg.warcraft.monolith.api.player.statistic.archive.StatisticArchive
+import gg.warcraft.monolith.api.util.types.MonolithDate
 
-import java.time.LocalDate
 import java.util.UUID
 
 case class Statistic(
@@ -37,6 +37,6 @@ case class Statistic(
   def increase(amount: Long): Statistic =
     copy(value = value + amount)
 
-  def archive(day: LocalDate): StatisticArchive =
+  def archive(day: MonolithDate): StatisticArchive =
     StatisticArchive(playerId, statistic, value, day)
 }
