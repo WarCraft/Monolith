@@ -24,14 +24,13 @@
 
 package gg.warcraft.monolith.api.player
 
-import gg.warcraft.monolith.api.core.{GameMode, Message}
 import gg.warcraft.monolith.api.core.auth.Principal
+import gg.warcraft.monolith.api.core.{GameMode, Message}
 import gg.warcraft.monolith.api.entity.Entity
 import gg.warcraft.monolith.api.item.Inventory
 import gg.warcraft.monolith.api.player.currency.Currencies
 import gg.warcraft.monolith.api.player.data.PlayerData
 import gg.warcraft.monolith.api.player.statistic.Statistics
-import gg.warcraft.monolith.api.util.typing._
 
 object Player {
   type Mode = GameMode.Value
@@ -54,7 +53,7 @@ trait Player extends Entity with Principal {
   def sendTitle(title: String = "", subTitle: String = ""): Unit
 
   override def equals(other: Any): Boolean =
-    other.is[Player] && other.as[Player].id == id
+    other.isInstanceOf[Player] && other.asInstanceOf[Player].id == id
 
   override def hashCode(): Int = id.hashCode
 }

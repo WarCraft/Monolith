@@ -77,7 +77,7 @@ class SpigotBlockBackupService(implicit
 
   override def createBackups(locations: Seq[BlockLocation]): Range.Inclusive = {
     val ids = locations.map(createBackup)
-    ids.head to (ids.head + ids.size)
+    ids.head to ids.last
   }
 
   override def restoreBackup(id: Int): Unit = {
@@ -93,7 +93,8 @@ class SpigotBlockBackupService(implicit
   }
 
   override def restoreAllBackups(): Unit = {
-    repository.all().foreach(restoreBackup)
+    repository.loadAll().foreach(restoreBackup)
+    repository.deleteAll()
     cache.clear
   }
 

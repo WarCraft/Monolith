@@ -42,7 +42,7 @@ class SpigotCommandService(implicit
   private val pluginCommandConstructor: Constructor[PluginCommand] =
     classOf[PluginCommand]
       .getDeclaredConstructors()(0)
-      .as[Constructor[PluginCommand]]
+      .asInstanceOf[Constructor[PluginCommand]]
   pluginCommandConstructor.setAccessible(true)
 
   override def executeCommand(playerId: UUID, label: String, args: String*): Unit = {

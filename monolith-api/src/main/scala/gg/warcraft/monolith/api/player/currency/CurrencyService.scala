@@ -83,7 +83,7 @@ class CurrencyService(implicit
       }
     }
 
-    repository.save(deltaCurrencies: _*)
+    repository.save(deltaCurrencies.toList)
   }
 
   /** Adds an amount of currency to the player. This increments both their currency

@@ -27,6 +27,7 @@ package gg.warcraft.monolith.api.util
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.util.chaining._
 
+import java.util.logging.Logger
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
@@ -51,6 +52,16 @@ object future {
   @inline implicit final class FutureOps[T](
       private val self: Future[T]
   ) extends AnyVal {
+    def andThenLog(repository: String, method: String, params: Any*)(
+        implicit
+        context: ExecutionContext,
+        logger: Logger
+    ): Future[T] = self.andThen {
+      case Success(result) =>
+        // TODO logger.info { s"$repository::$method ${params.mkString(", ")}" }
+      case Failure(exception) => logger.severe(exception.getMessage)
+    }
+
     def immediatelyOrOnComplete[U](f: Try[T] => U)(implicit
         context: ExecutionContext,
         taskService: TaskService
@@ -96,12 +107,5 @@ object string {
 
   @inline implicit final class StringOps(private val self: String) extends AnyVal {
     def stripChatCodes: String = self.replaceAll("§[0-9a-z]", "")
-  }
-}
-
-object typing {
-  @inline implicit final class TypeOps[A](private val self: A) extends AnyVal {
-    def is[B]: Boolean = self.isInstanceOf[B]
-    def as[B]: B = self.asInstanceOf[B]
   }
 }

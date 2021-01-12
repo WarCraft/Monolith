@@ -38,7 +38,7 @@ class EntityDataService(implicit
 ) {
   // initialize entity data, as players are stored separately all entities are
   // expected to not spawn often or to be short lived and not clog the data map.
-  private var _data: Map[UUID, EntityData] = repository.all
+  private var _data: Map[UUID, EntityData] = repository.loadAll
   def data: Map[UUID, EntityData] = _data
 
   private[entity] def setEntityData(data: EntityData): Unit = {
