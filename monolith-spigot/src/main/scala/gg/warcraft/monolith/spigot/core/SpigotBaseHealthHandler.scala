@@ -25,17 +25,29 @@
 package gg.warcraft.monolith.spigot.core
 
 import gg.warcraft.monolith.api.core.MonolithConfig
+import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.entity.EntityService
 import org.bukkit.attribute.Attribute
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.{EventHandler, Listener}
 
-class SpigotBaseHealthHandler(config: MonolithConfig) extends Listener {
+import scala.jdk.CollectionConverters.CollectionHasAsScala
+
+class SpigotBaseHealthHandler(config: MonolithConfig)(implicit
+    taskService: TaskService,
+    entityService: EntityService
+) extends Listener {
   private val baseHealth = config.baseHealth
 
   @EventHandler
   def on(event: PlayerJoinEvent): Unit = {
-    val attribute = event.getPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-    attribute.getModifiers.forEach { it => attribute.removeModifier(it) }
+    val player = event.getPlayer
+    val attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)
+    attribute.getModifiers.asScala
+      .filter { _.getName.startsWith("monolith.") }
+      .foreach(attribute.removeModifier)
     attribute.setBaseValue(baseHealth)
+
+    taskService.runNextTick { () => player.setHealth(player.getHealth) }
   }
 }

@@ -26,10 +26,10 @@ package gg.warcraft.monolith.spigot.entity.attribute
 
 import gg.warcraft.monolith.api.entity.attribute.Attribute
 import gg.warcraft.monolith.api.entity.attribute.Attribute.Generic._
+import org.bukkit.attribute.Attribute._
 import org.bukkit.attribute.{
   Attribute => SpigotAttribute, AttributeModifier => SpigotAttributeModifier
 }
-import org.bukkit.attribute.Attribute._
 
 class SpigotAttributeMapper {
   def map(attribute: SpigotAttribute): Attribute.Generic = attribute match {
@@ -72,7 +72,7 @@ class SpigotAttributeMapper {
     }
 
   def map(modifier: Attribute.Modifier): SpigotAttributeModifier = {
-    val name = modifier.attribute.name
+    val name = s"monolith.${modifier.attribute.name}"
     val amount = modifier.value.toDouble
     val operation = map(modifier.typed)
     new SpigotAttributeModifier(name, amount, operation)

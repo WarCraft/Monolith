@@ -53,6 +53,10 @@ class ServerDataService(implicit
     tag[MonolithDateTimeTag][LocalDateTime](LocalDateTime.now(serverTimeZone))
   def serverDate: MonolithDate =
     tag[MonolithDateTag][LocalDate](LocalDate.now(serverTimeZone))
+  def yesterday: MonolithDate =
+    tag[MonolithDateTag][LocalDate](LocalDate.now(serverTimeZone).minusDays(1))
+  def tomorrow: MonolithDate =
+    tag[MonolithDateTag][LocalDate](LocalDate.now(serverTimeZone).plusDays(1))
 
   def readConfig(config: MonolithConfig): Unit = {
     _serverTimeZone = config.serverTimeZone

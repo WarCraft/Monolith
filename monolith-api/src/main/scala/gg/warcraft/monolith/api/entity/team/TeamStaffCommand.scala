@@ -44,15 +44,11 @@ object TeamStaffCommand {
       case player: Player =>
         if (!authService.isStaff(player)) Command.invalid
         else if (args.length != 1) Command.invalid
-        else {
-          lazy val lowercaseName = teamService.teams.get(args.head)
-          lazy val capitalizedName = teamService.teams.get(args.head.capitalize)
-          lowercaseName.orElse(capitalizedName) match {
-            case team @ Some(_) =>
-              playerService.setTeam(player.id, team)
-              Command.success
-            case None => Command.invalid
-          }
+        else teamService.teams.get(args.head.toUpperCase) match {
+          case team @ Some(_) =>
+            playerService.setTeam(player.id, team)
+            Command.success
+          case None => Command.invalid
         }
       case _ => Command.playersOnly
     }

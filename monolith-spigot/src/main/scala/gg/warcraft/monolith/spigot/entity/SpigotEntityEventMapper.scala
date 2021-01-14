@@ -295,12 +295,14 @@ class SpigotEntityEventMapper(implicit
       .tap { eventService.publish(_) }
       .tap { entityStatus.reduce(_) }
     val reducedDrops = reducedEvent.drops
-    val reducedSpigotDrops = reducedDrops.map { itemMapper.map }.asJava
+    val reducedSpigotDrops = reducedDrops.map(itemMapper.map).asJava
     event.getDrops.clear()
     event.getDrops.addAll(reducedSpigotDrops)
     EntityDeathEvent(entity, reducedDrops)
       .tap { entityStatus.handle }
       .tap { eventService.publish }
-    eventService << EntityRemoveEvent(entity.id, hasDied = true)
+    if (entity.typed != EntityType.PLAYER) {
+      eventService << EntityRemoveEvent(entity.id, hasDied = true)
+    }
   }
 }

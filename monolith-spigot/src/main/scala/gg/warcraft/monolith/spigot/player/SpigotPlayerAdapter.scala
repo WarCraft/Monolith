@@ -24,22 +24,20 @@
 
 package gg.warcraft.monolith.spigot.player
 
-import java.util.logging.Logger
-
 import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.core.task.TaskService
+import gg.warcraft.monolith.api.entity.Entity
+import gg.warcraft.monolith.api.entity.Entity.Type
 import gg.warcraft.monolith.api.entity.attribute.AttributeService
 import gg.warcraft.monolith.api.entity.data.EntityDataService
 import gg.warcraft.monolith.api.entity.status.StatusService
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
-import gg.warcraft.monolith.api.entity.Entity
-import gg.warcraft.monolith.api.entity.Entity.Type
 import gg.warcraft.monolith.api.item.Inventory
 import gg.warcraft.monolith.api.player.Player
 import gg.warcraft.monolith.api.player.Player.Mode
 import gg.warcraft.monolith.api.player.currency.{Currencies, CurrencyService}
 import gg.warcraft.monolith.api.player.data.{PlayerData, PlayerDataService}
-import gg.warcraft.monolith.api.player.statistic.{Statistics, StatisticService}
+import gg.warcraft.monolith.api.player.statistic.{StatisticService, Statistics}
 import gg.warcraft.monolith.api.util.future._
 import gg.warcraft.monolith.spigot.entity.{
   SpigotEntityAdapter, SpigotEntityTypeMapper
@@ -49,6 +47,8 @@ import gg.warcraft.monolith.spigot.item.{
 }
 import gg.warcraft.monolith.spigot.math.{SpigotAABBfMapper, SpigotVectorMapper}
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
+
+import java.util.logging.Logger
 
 class SpigotPlayerAdapter(player: SpigotPlayer)(implicit
     logger: Logger,
