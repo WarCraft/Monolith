@@ -57,9 +57,9 @@ case class BlockBox(
   lazy val halfLength: Float = length / 2f
 
   lazy val center: Location =
-    Location(world, (west + halfWidth, lower + halfHeight, south + halfLength))
+    Location(world, (west + halfWidth, lower + halfHeight, north + halfLength))
   lazy val floorCenter: Location =
-    Location(world, (west + halfWidth, lower.toFloat, south + halfLength))
+    Location(world, (west + halfWidth, lower.toFloat, north + halfLength))
 
   lazy val centerBlock: BlockLocation = center.toBlockLocation
   lazy val floorCenterBlock: BlockLocation = floorCenter.toBlockLocation

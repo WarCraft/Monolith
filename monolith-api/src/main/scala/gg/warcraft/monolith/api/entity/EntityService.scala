@@ -25,6 +25,7 @@
 package gg.warcraft.monolith.api.entity
 
 import gg.warcraft.monolith.api.block.BlockIterator
+import gg.warcraft.monolith.api.block.box.BlockBox
 import gg.warcraft.monolith.api.combat.{CombatValue, PotionEffect}
 import gg.warcraft.monolith.api.core.Duration
 import gg.warcraft.monolith.api.core.Duration._
@@ -58,6 +59,8 @@ abstract class EntityService(implicit
   def getNearbyEntities(loc: Location, radius: (Float, Float, Float)): List[Entity]
   def getNearbyEntities(loc: Location, radius: Float): List[Entity] =
     getNearbyEntities(loc, (radius, radius, radius))
+  def getEntitiesWithin(box: BlockBox): List[Entity] =
+    getNearbyEntities(box.center, (box.halfWidth, box.halfHeight, box.halfLength))
 
   def setTeam(id: UUID, team: Option[Team]): Unit = {
     val oldData = dataService.data(id)
