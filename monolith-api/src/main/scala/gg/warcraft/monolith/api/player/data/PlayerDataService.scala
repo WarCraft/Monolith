@@ -29,7 +29,6 @@ import gg.warcraft.monolith.api.entity.team.TeamService
 import gg.warcraft.monolith.api.player.statistic.StatisticService
 import gg.warcraft.monolith.api.util.chaining._
 
-import java.time.ZoneOffset
 import java.util.UUID
 import java.util.logging.Logger
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -65,14 +64,9 @@ class PlayerDataService(implicit
   }
 
   private[data] def updatePlayerData(id: UUID): Unit = {
-    val data = _data(id)
-    val oldLastSeen = data.timeLastSeen
-    val newLastSeen = serverDataService.serverTime
-
-    val timePlayed = newLastSeen.toEpochSecond(ZoneOffset.UTC) -
-      oldLastSeen.toEpochSecond(ZoneOffset.UTC)
-    statisticService.increaseStatistic("TimePlayed", timePlayed, id)
-    setPlayerData(data.copy(timeLastSeen = newLastSeen))
+    val outdated = _data(id)
+    val updated = outdated.copy(timeLastSeen = serverDataService.serverTime)
+    setPlayerData(updated)
   }
 
   private[data] def loadPlayerData(id: UUID): Option[PlayerData] =
