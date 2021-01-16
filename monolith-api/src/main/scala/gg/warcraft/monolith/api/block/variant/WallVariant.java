@@ -28,6 +28,11 @@ import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum WallVariant implements BlockVariant, ItemVariant {
+    // BLACKSTONE
+    BLACKSTONE,
+    POLISHED_BLACKSTONE,
+    POLISHED_BLACKSTONE_BRICK,
+
     // BRICK
     BRICK,
     NETHER_BRICK,

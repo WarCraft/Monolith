@@ -29,6 +29,11 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum BrickBlockVariant implements BlockVariant, ItemVariant {
     NORMAL,
+
+    CRACKED_POLISHED_BLACKSTONE,
+
     NETHER,
+    CHISELED_NETHER,
+    CRACKED_NETHER,
     RED_NETHER,
 }

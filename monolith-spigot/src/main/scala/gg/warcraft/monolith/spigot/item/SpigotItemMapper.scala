@@ -159,6 +159,7 @@ class SpigotItemMapper(
 
     // Map item builder
     val builder: ((SpigotItem, Option[ItemVariant])) => Item = material match {
+      case Material.ANCIENT_DEBRIS         => (i => AncientDebris.tupled(p(i)))
       case Material.APPLE                  => (i => Apple.tupled(p(i)))
       case Material.ARMOR_STAND            => (i => ArmorStand.tupled(p(i)))
       case Material.BAMBOO                 => (i => Bamboo.tupled(p(i)))
@@ -184,11 +185,11 @@ class SpigotItemMapper(
       case Material.BREWING_STAND          => (i => BrewingStand.tupled(p(i)))
       case Material.CACTUS                 => (i => Cactus.tupled(p(i)))
       case Material.CAKE                   => (i => Cake.tupled(s(i)))
-      case Material.CAMPFIRE               => (i => Campfire.tupled(p(i)))
       case Material.CARROT                 => (i => Carrot.tupled(p(i)))
       case Material.CARROT_ON_A_STICK      => (i => CarrotOnAStick.tupled(d(i)))
       case Material.CARTOGRAPHY_TABLE      => (i => CartographyTable.tupled(p(i)))
       case Material.CAULDRON               => (i => Cauldron.tupled(p(i)))
+      case Material.CHAIN                  => (i => Chain.tupled(p(i)))
       case Material.CHARCOAL               => (i => Charcoal.tupled(p(i)))
       case Material.CHORUS_FLOWER          => (i => ChorusFlower.tupled(p(i)))
       case Material.CHORUS_PLANT           => (i => ChorusPlant.tupled(p(i)))
@@ -207,6 +208,7 @@ class SpigotItemMapper(
       case Material.COOKIE                 => (i => Cookie.tupled(p(i)))
       case Material.CRAFTING_TABLE         => (i => CraftingTable.tupled(p(i)))
       case Material.CROSSBOW               => (i => Crossbow.tupled(d(i)))
+      case Material.CRYING_OBSIDIAN        => (i => CryingObsidian.tupled(p(i)))
       case Material.DAYLIGHT_DETECTOR      => (i => DaylightDetector.tupled(p(i)))
       case Material.DEAD_BUSH              => (i => DeadBush.tupled(p(i)))
       case Material.DEBUG_STICK            => (i => DebugStick.tupled(s(i)))
@@ -245,6 +247,7 @@ class SpigotItemMapper(
       case Material.FLOWER_POT             => (i => FlowerPot.tupled(p(i)))
       case Material.FURNACE                => (i => Furnace.tupled(p(i)))
       case Material.GHAST_TEAR             => (i => GhastTear.tupled(p(i)))
+      case Material.GILDED_BLACKSTONE      => (i => GildedBlackstone.tupled(p(i)))
       case Material.GLASS_BOTTLE           => (i => GlassBottle.tupled(p(i)))
       case Material.GLISTERING_MELON_SLICE => (i => GoldenMelonSlice.tupled(p(i)))
       case Material.GLOWSTONE              => (i => Glowstone.tupled(p(i)))
@@ -278,7 +281,6 @@ class SpigotItemMapper(
       case Material.KELP                   => (i => Kelp.tupled(p(i)))
       case Material.KNOWLEDGE_BOOK         => (i => KnowledgeBook.tupled(s(i)))
       case Material.LADDER                 => (i => Ladder.tupled(p(i)))
-      case Material.LANTERN                => (i => Lantern.tupled(p(i)))
       case Material.LAPIS_BLOCK            => (i => LapisBlock.tupled(p(i)))
       case Material.LAPIS_LAZULI           => (i => Lapis.tupled(p(i)))
       case Material.LAPIS_ORE              => (i => LapisOre.tupled(p(i)))
@@ -287,6 +289,7 @@ class SpigotItemMapper(
       case Material.LECTERN                => (i => Lectern.tupled(p(i)))
       case Material.LEVER                  => (i => Lever.tupled(p(i)))
       case Material.LILY_PAD               => (i => LilyPad.tupled(p(i)))
+      case Material.LODESTONE              => (i => Lodestone.tupled(p(i)))
       case Material.LOOM                   => (i => Loom.tupled(p(i)))
       case Material.MAGMA_BLOCK            => (i => MagmaBlock.tupled(p(i)))
       case Material.MAGMA_CREAM            => (i => MagmaCream.tupled(p(i)))
@@ -296,10 +299,14 @@ class SpigotItemMapper(
       case Material.NAME_TAG               => (i => NameTag.tupled(p(i)))
       case Material.NAUTILUS_SHELL         => (i => NautilusShell.tupled(p(i)))
       case Material.NETHERRACK             => (i => Netherrack.tupled(p(i)))
+      case Material.NETHER_GOLD_ORE        => (i => NetherGoldOre.tupled(p(i)))
       case Material.NETHER_QUARTZ_ORE      => (i => QuartzOre.tupled(p(i)))
+      case Material.NETHER_SPROUTS         => (i => NetherSprouts.tupled(p(i)))
       case Material.NETHER_STAR            => (i => NetherStar.tupled(p(i)))
       case Material.NETHER_WART            => (i => NetherWart.tupled(p(i)))
-      case Material.NETHER_WART_BLOCK      => (i => NetherWartBlock.tupled(p(i)))
+      case Material.NETHERITE_BLOCK        => (i => NetheriteBlock.tupled(p(i)))
+      case Material.NETHERITE_INGOT        => (i => NetheriteIngot.tupled(p(i)))
+      case Material.NETHERITE_SCRAP        => (i => NetheriteScrap.tupled(p(i)))
       case Material.NOTE_BLOCK             => (i => NoteBlock.tupled(p(i)))
       case Material.OBSERVER               => (i => Observer.tupled(p(i)))
       case Material.OBSIDIAN               => (i => Obsidian.tupled(p(i)))
@@ -321,6 +328,7 @@ class SpigotItemMapper(
       case Material.REDSTONE_ORE           => (i => RedstoneOre.tupled(p(i)))
       case Material.REDSTONE_TORCH         => (i => RedstoneTorch.tupled(p(i)))
       case Material.REPEATER               => (i => Repeater.tupled(p(i)))
+      case Material.RESPAWN_ANCHOR         => (i => RespawnAnchor.tupled(p(i)))
       case Material.ROTTEN_FLESH           => (i => RottenFlesh.tupled(p(i)))
       case Material.SADDLE                 => (i => Saddle.tupled(s(i)))
       case Material.SCAFFOLDING            => (i => Scaffolding.tupled(p(i)))
@@ -330,6 +338,7 @@ class SpigotItemMapper(
       case Material.SEA_PICKLE             => (i => SeaPickle.tupled(p(i)))
       case Material.SHEARS                 => (i => Shears.tupled(d(i)))
       case Material.SHIELD                 => (i => Shield.tupled(d(i)))
+      case Material.SHROOMLIGHT            => (i => Shroomlight.tupled(p(i)))
       case Material.SHULKER_SHELL          => (i => ShulkerShell.tupled(p(i)))
       case Material.SLIME_BALL             => (i => Slimeball.tupled(p(i)))
       case Material.SLIME_BLOCK            => (i => SlimeBlock.tupled(p(i)))
@@ -339,6 +348,7 @@ class SpigotItemMapper(
       case Material.SNOWBALL               => (i => Snowball.tupled(p(i)))
       case Material.SNOW_BLOCK             => (i => SnowBlock.tupled(p(i)))
       case Material.SOUL_SAND              => (i => SoulSand.tupled(p(i)))
+      case Material.SOUL_SOIL              => (i => SoulSoil.tupled(p(i)))
       case Material.SPAWNER                => (i => Spawner.tupled(p(i)))
       case Material.STICK                  => (i => Stick.tupled(p(i)))
       case Material.STONECUTTER            => (i => Stonecutter.tupled(p(i)))
@@ -346,8 +356,8 @@ class SpigotItemMapper(
       case Material.SUGAR                  => (i => Sugar.tupled(p(i)))
       case Material.SUGAR_CANE             => (i => SugarCane.tupled(p(i)))
       case Material.SWEET_BERRIES          => (i => SweetBerries.tupled(p(i)))
+      case Material.TARGET                 => (i => Target.tupled(p(i)))
       case Material.TNT                    => (i => TNT.tupled(p(i)))
-      case Material.TORCH                  => (i => Torch.tupled(p(i)))
       case Material.TOTEM_OF_UNDYING       => (i => TotemOfUndying.tupled(s(i)))
       case Material.TRIDENT                => (i => Trident.tupled(d(i)))
       case Material.TRIPWIRE_HOOK          => (i => TripwireHook.tupled(p(i)))
@@ -389,19 +399,26 @@ class SpigotItemMapper(
       case Material.CARVED_PUMPKIN =>
         (i => Pumpkin(carved = true, name(i), tt(i), count(i), attr(i), hAttr(i)))
 
+      // WARPED_FUNGUS_ON_A_STICK
+      case Material.WARPED_FUNGUS_ON_A_STICK =>
+        (i => WarpedFungusOnAStick.tupled(d(i)))
+
       case m if m.isAndesite   => (i => Andesite.tupled(v[AndesiteVariant](i)))
       case m if m.isAnvil      => (i => Anvil.tupled(v[AnvilVariant](i)))
       case m if m.isArrow      => (i => Arrow.tupled(v[ArrowVariant](i)))
       case m if m.isAxe        => (i => Axe.tupled(e[AxeVariant](i)))
       case m if m.isBanner     => (i => Banner.tupled(v[BannerVariant](i)))
+      case m if m.isBasalt     => (i => Basalt.tupled(v[BasaltVariant](i)))
       case m if m.isBed        => (i => Bed.tupled(v[BedVariant](i)))
       case m if m.isBeef       => (i => Beef.tupled(v[BeefVariant](i)))
+      case m if m.isBlackstone => (i => Blackstone.tupled(v[BlackstoneVariant](i)))
       case m if m.isBoat       => (i => Boat.tupled(v[BoatVariant](i)))
       case m if m.isBoots      => (i => Boots.tupled(e[BootsVariant](i)))
       case m if m.isBrick      => (i => Brick.tupled(v[BrickVariant](i)))
       case m if m.isBrickBlock => (i => BrickBlock.tupled(v[BrickBlockVariant](i)))
       case m if m.isBucket     => (i => Bucket.tupled(v[BucketVariant](i)))
       case m if m.isButton     => (i => Button.tupled(v[ButtonVariant](i)))
+      case m if m.isCampfire   => (i => Campfire.tupled(v[CampfireVariant](i)))
       case m if m.isCarpet     => (i => Carpet.tupled(v[CarpetVariant](i)))
       case m if m.isChest      => (i => Chest.tupled(v[ChestVariant](i)))
       case m if m.isChestplate => (i => Chestplate.tupled(e[ChestplateVariant](i)))
@@ -419,6 +436,7 @@ class SpigotItemMapper(
       case m if m.isFenceGate  => (i => FenceGate.tupled(v[FenceGateVariant](i)))
       case m if m.isFern       => (i => Fern.tupled(v[FernVariant](i)))
       case m if m.isFlower     => (i => Flower.tupled(v[FlowerVariant](i)))
+      case m if m.isFungus     => (i => Fungus.tupled(v[FungusVariant](i)))
       case m if m.isGlass      => (i => Glass.tupled(v[GlassVariant](i)))
       case m if m.isGlassPane  => (i => GlassPane.tupled(v[GlassPaneVariant](i)))
       case m if m.isGranite    => (i => Granite.tupled(v[GraniteVariant](i)))
@@ -426,6 +444,7 @@ class SpigotItemMapper(
       case m if m.isHelmet     => (i => Helmet.tupled(e[HelmetVariant](i)))
       case m if m.isHoe        => (i => Hoe.tupled(e[HoeVariant](i)))
       case m if m.isIce        => (i => Ice.tupled(v[IceVariant](i)))
+      case m if m.isLantern    => (i => Lantern.tupled(v[LanternVariant](i)))
       case m if m.isLeaves     => (i => Leaves.tupled(v[LeavesVariant](i)))
       case m if m.isLeggings   => (i => Leggings.tupled(e[LeggingsVariant](i)))
       case m if m.isLog        => (i => Log.tupled(v[LogVariant](i)))
@@ -434,6 +453,7 @@ class SpigotItemMapper(
       case m if m.isMushroom   => (i => Mushroom.tupled(v[MushroomVariant](i)))
       case m if m.isMusicDisc  => (i => MusicDisc.tupled(v[MusicDiscVariant](i)))
       case m if m.isMutton     => (i => Mutton.tupled(v[MuttonVariant](i)))
+      case m if m.isNylium     => (i => Nylium.tupled(v[NyliumVariant](i)))
       case m if m.isPickaxe    => (i => Pickaxe.tupled(e[PickaxeVariant](i)))
       case m if m.isPillar     => (i => Pillar.tupled(v[PillarVariant](i)))
       case m if m.isPiston     => (i => Piston.tupled(v[PistonVariant](i)))
@@ -444,6 +464,7 @@ class SpigotItemMapper(
       case m if m.isPrismarine => (i => Prismarine.tupled(v[PrismarineVariant](i)))
       case m if m.isRabbit     => (i => Rabbit.tupled(v[RabbitVariant](i)))
       case m if m.isRail       => (i => Rail.tupled(v[RailVariant](i)))
+      case m if m.isRoots      => (i => Roots.tupled(v[RootsVariant](i)))
       case m if m.isSalmon     => (i => Salmon.tupled(v[SalmonVariant](i)))
       case m if m.isSand       => (i => Sand.tupled(v[SandVariant](i)))
       case m if m.isSandstone  => (i => Sandstone.tupled(v[SandstoneVariant](i)))
@@ -462,6 +483,7 @@ class SpigotItemMapper(
       case m if m.isStoneBrick => (i => StoneBrick.tupled(v[StoneBrickVariant](i)))
       case m if m.isSword      => (i => Sword.tupled(e[SwordVariant](i)))
       case m if m.isTerracotta => (i => Terracotta.tupled(v[TerracottaVariant](i)))
+      case m if m.isTorch      => (i => Torch.tupled(v[TorchVariant](i)))
       case m if m.isTrapdoor   => (i => Trapdoor.tupled(v[TrapdoorVariant](i)))
       case m if m.isWall       => (i => Wall.tupled(v[WallVariant](i)))
       case m if m.isWood       => (i => Wood.tupled(v[WoodVariant](i)))
@@ -480,6 +502,10 @@ class SpigotItemMapper(
         (item => InfestedBlock.tupled(v[InfestedBlockVariant](item)))
       case m if m.isMushroomBlock =>
         (item => MushroomBlock.tupled(v[MushroomBlockVariant](item)))
+      case m if m.isNetherWartBlock =>
+        (item => NetherWartBlock.tupled(v[NetherWartBlockVariant](item)))
+      case m if m.isNetherVines =>
+        (item => NetherVines.tupled(v[NetherVinesVariant](item)))
       case m if m.isPressurePlate =>
         (item => PressurePlate.tupled(v[PressurePlateVariant](item)))
       case m if m.isQuartzBlock =>
@@ -529,10 +555,6 @@ class SpigotItemMapper(
 
     var variant: ItemVariant = null
     val material = item match {
-      case it: VariableItem[_] =>
-        variant = it.variant
-        variantMapper.map(it)
-
       case it: GoldenApple =>
         if (it.enchanted) Material.ENCHANTED_GOLDEN_APPLE
         else Material.GOLDEN_APPLE
@@ -544,6 +566,10 @@ class SpigotItemMapper(
       case it: Pumpkin =>
         if (it.carved) Material.CARVED_PUMPKIN
         else Material.PUMPKIN
+
+      case it: VariableItem[_] =>
+        variant = it.variant
+        variantMapper.map(it)
 
       case it => typeMapper.map(it.`type`)
     }

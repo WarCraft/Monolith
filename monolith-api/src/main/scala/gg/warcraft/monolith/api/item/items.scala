@@ -27,6 +27,17 @@ package gg.warcraft.monolith.api.item
 import gg.warcraft.monolith.api.block.variant._
 import gg.warcraft.monolith.api.item.variant.{StructureBlockVariant, _}
 
+case class AncientDebris(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.ANCIENT_DEBRIS
+}
+
 case class Andesite(
     variant: AndesiteVariant,
     name: String,
@@ -104,11 +115,12 @@ case class Axe(
     with DurableItem {
   val `type` = ItemType.AXE
   override def maxDurability: Int = variant match {
-    case AxeVariant.WOOD    => 59
-    case AxeVariant.STONE   => 131
-    case AxeVariant.IRON    => 250
-    case AxeVariant.GOLD    => 32
-    case AxeVariant.DIAMOND => 1561
+    case AxeVariant.WOOD      => 59
+    case AxeVariant.STONE     => 131
+    case AxeVariant.IRON      => 250
+    case AxeVariant.GOLD      => 32
+    case AxeVariant.DIAMOND   => 1561
+    case AxeVariant.NETHERITE => 2031
   }
 }
 
@@ -168,6 +180,19 @@ case class Barrier(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BARRIER
+}
+
+case class Basalt(
+    variant: BasaltVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[BasaltVariant]
+    with StackableItem {
+  val `type` = ItemType.BASALT
 }
 
 case class Beacon(
@@ -262,6 +287,19 @@ case class Bell(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.BELL
+}
+
+case class Blackstone(
+    variant: BlackstoneVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[BlackstoneVariant]
+    with StackableItem {
+  val `type` = ItemType.BLACKSTONE
 }
 
 case class BlastFurnace(
@@ -405,6 +443,7 @@ case class Boots(
     case it if it.iron      => 195
     case it if it.gold      => 91
     case it if it.diamond   => 429
+    case it if it.netherite => 481
   }
 }
 
@@ -531,13 +570,15 @@ case class Cake(
 }
 
 case class Campfire(
+    variant: CampfireVariant,
     name: String,
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
     customModelData: Option[Int] = None
-) extends StackableItem {
+) extends VariableItem[CampfireVariant]
+    with StackableItem {
   val `type` = ItemType.CAMPFIRE
 }
 
@@ -589,6 +630,17 @@ case class CartographyTable(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CARTOGRAPHY_TABLE
+}
+
+case class Chain(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.CHAIN
 }
 
 case class Charcoal(
@@ -645,6 +697,7 @@ case class Chestplate(
     case it if it.iron      => 240
     case it if it.gold      => 112
     case it if it.diamond   => 528
+    case it if it.netherite => 592
   }
 }
 
@@ -957,6 +1010,17 @@ case class CraftingTable(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.CRAFTING_TABLE
+}
+
+case class CryingObsidian(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.CRYING_OBSIDIAN
 }
 
 case class Crossbow(
@@ -1471,6 +1535,19 @@ case class FlowerPot(
   val `type` = ItemType.FLOWER_POT
 }
 
+case class Fungus(
+    variant: FungusVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[FungusVariant]
+    with StackableItem {
+  val `type` = ItemType.FUNGUS
+}
+
 case class Furnace(
     name: String,
     tooltip: List[String] = Nil,
@@ -1504,6 +1581,17 @@ case class GhastTear(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.GHAST_TEAR
+}
+
+case class GildedBlackstone(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.GILDED_BLACKSTONE
 }
 
 case class Glass(
@@ -1783,6 +1871,7 @@ case class Helmet(
     case it if it.iron      => 165
     case it if it.gold      => 77
     case it if it.diamond   => 363
+    case it if it.netherite => 407
   }
 }
 
@@ -1800,11 +1889,12 @@ case class Hoe(
     with DurableItem {
   val `type` = ItemType.HOE
   override def maxDurability: Int = variant match {
-    case HoeVariant.WOOD    => 59
-    case HoeVariant.STONE   => 131
-    case HoeVariant.IRON    => 250
-    case HoeVariant.GOLD    => 32
-    case HoeVariant.DIAMOND => 1561
+    case HoeVariant.WOOD      => 59
+    case HoeVariant.STONE     => 131
+    case HoeVariant.IRON      => 250
+    case HoeVariant.GOLD      => 32
+    case HoeVariant.DIAMOND   => 1561
+    case HoeVariant.NETHERITE => 2031
   }
 }
 
@@ -2032,13 +2122,15 @@ case class Ladder(
 }
 
 case class Lantern(
+    variant: LanternVariant,
     name: String,
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
     customModelData: Option[Int] = None
-) extends StackableItem {
+) extends VariableItem[LanternVariant]
+    with StackableItem {
   val `type` = ItemType.LANTERN
 }
 
@@ -2140,6 +2232,7 @@ case class Leggings(
     case it if it.iron      => 225
     case it if it.gold      => 105
     case it if it.diamond   => 495
+    case it if it.netherite => 555
   }
 }
 
@@ -2163,6 +2256,17 @@ case class LilyPad(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.LILY_PAD
+}
+
+case class Lodestone(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.LODESTONE
 }
 
 case class Log(
@@ -2371,6 +2475,28 @@ case class Netherrack(
   val `type` = ItemType.NETHERRACK
 }
 
+case class NetherGoldOre(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.NETHER_GOLD_ORE
+}
+
+case class NetherSprouts(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.NETHER_SPROUTS
+}
+
 case class NetherStar(
     name: String,
     tooltip: List[String] = Nil,
@@ -2380,6 +2506,19 @@ case class NetherStar(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NETHER_STAR
+}
+
+case class NetherVines(
+    variant: NetherVinesVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[NetherVinesVariant]
+    with StackableItem {
+  val `type` = ItemType.NETHER_VINES
 }
 
 case class NetherWart(
@@ -2394,6 +2533,19 @@ case class NetherWart(
 }
 
 case class NetherWartBlock(
+    variant: NetherWartBlockVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[NetherWartBlockVariant]
+    with StackableItem {
+  val `type` = ItemType.NETHER_WART_BLOCK
+}
+
+case class NetheriteBlock(
     name: String,
     tooltip: List[String] = Nil,
     count: Int = 1,
@@ -2401,7 +2553,29 @@ case class NetherWartBlock(
     hideAttributes: Boolean = false,
     customModelData: Option[Int] = None
 ) extends StackableItem {
-  val `type` = ItemType.NETHER_WART_BLOCK
+  val `type` = ItemType.NETHERITE_BLOCK
+}
+
+case class NetheriteIngot(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.NETHERITE_INGOT
+}
+
+case class NetheriteScrap(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.NETHERITE_SCRAP
 }
 
 case class NoteBlock(
@@ -2413,6 +2587,19 @@ case class NoteBlock(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.NOTE_BLOCK
+}
+
+case class Nylium(
+    variant: NyliumVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[NyliumVariant]
+    with StackableItem {
+  val `type` = ItemType.NYLIUM
 }
 
 case class Observer(
@@ -2509,11 +2696,12 @@ case class Pickaxe(
     with DurableItem {
   val `type` = ItemType.PICKAXE
   override def maxDurability: Int = variant match {
-    case PickaxeVariant.WOOD    => 59
-    case PickaxeVariant.STONE   => 131
-    case PickaxeVariant.IRON    => 250
-    case PickaxeVariant.GOLD    => 32
-    case PickaxeVariant.DIAMOND => 1561
+    case PickaxeVariant.WOOD      => 59
+    case PickaxeVariant.STONE     => 131
+    case PickaxeVariant.IRON      => 250
+    case PickaxeVariant.GOLD      => 32
+    case PickaxeVariant.DIAMOND   => 1561
+    case PickaxeVariant.NETHERITE => 2031
   }
 }
 
@@ -2856,6 +3044,30 @@ case class RedstoneTorch(
   val `type` = ItemType.REDSTONE_TORCH
 }
 
+case class RespawnAnchor(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.RESPAWN_ANCHOR
+}
+
+case class Roots(
+    variant: RootsVariant,
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends VariableItem[RootsVariant]
+    with StackableItem {
+  val `type` = ItemType.ROOTS
+}
+
 case class RottenFlesh(
     name: String,
     tooltip: List[String] = Nil,
@@ -3041,12 +3253,24 @@ case class Shovel(
     with DurableItem {
   val `type` = ItemType.SHOVEL
   override def maxDurability: Int = variant match {
-    case ShovelVariant.WOOD    => 59
-    case ShovelVariant.STONE   => 131
-    case ShovelVariant.IRON    => 250
-    case ShovelVariant.GOLD    => 32
-    case ShovelVariant.DIAMOND => 1561
+    case ShovelVariant.WOOD      => 59
+    case ShovelVariant.STONE     => 131
+    case ShovelVariant.IRON      => 250
+    case ShovelVariant.GOLD      => 32
+    case ShovelVariant.DIAMOND   => 1561
+    case ShovelVariant.NETHERITE => 2031
   }
+}
+
+case class Shroomlight(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.SHROOMLIGHT
 }
 
 case class ShulkerBox(
@@ -3187,6 +3411,17 @@ case class SoulSand(
     customModelData: Option[Int] = None
 ) extends StackableItem {
   val `type` = ItemType.SOUL_SAND
+}
+
+case class SoulSoil(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.SOUL_SOIL
 }
 
 case class SpawnEgg(
@@ -3388,12 +3623,24 @@ case class Sword(
     with DurableItem {
   val `type` = ItemType.SWORD
   override def maxDurability: Int = variant match {
-    case SwordVariant.WOOD    => 59
-    case SwordVariant.STONE   => 131
-    case SwordVariant.IRON    => 250
-    case SwordVariant.GOLD    => 32
-    case SwordVariant.DIAMOND => 1561
+    case SwordVariant.WOOD      => 59
+    case SwordVariant.STONE     => 131
+    case SwordVariant.IRON      => 250
+    case SwordVariant.GOLD      => 32
+    case SwordVariant.DIAMOND   => 1561
+    case SwordVariant.NETHERITE => 2031
   }
+}
+
+case class Target(
+    name: String,
+    tooltip: List[String] = Nil,
+    count: Int = 1,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None
+) extends StackableItem {
+  val `type` = ItemType.TARGET
 }
 
 case class Terracotta(
@@ -3421,13 +3668,15 @@ case class TNT(
 }
 
 case class Torch(
+    variant: TorchVariant,
     name: String,
     tooltip: List[String] = Nil,
     count: Int = 1,
     attributes: Set[String] = Set.empty,
     hideAttributes: Boolean = false,
     customModelData: Option[Int] = None
-) extends StackableItem {
+) extends VariableItem[TorchVariant]
+    with StackableItem {
   val `type` = ItemType.TORCH
 }
 
@@ -3502,6 +3751,7 @@ case class TurtleEgg(
   val `type` = ItemType.TURTLE_EGG
 }
 
+// TODO should this be a HelmetVariant?
 case class TurtleHelmet(
     name: String,
     tooltip: List[String] = Nil,
@@ -3538,6 +3788,20 @@ case class Wall(
 ) extends VariableItem[WallVariant]
     with StackableItem {
   val `type` = ItemType.WALL
+}
+
+case class WarpedFungusOnAStick(
+    name: String,
+    tooltip: List[String] = Nil,
+    attributes: Set[String] = Set.empty,
+    hideAttributes: Boolean = false,
+    customModelData: Option[Int] = None,
+    durability: Int,
+    unbreakable: Boolean,
+    hideUnbreakable: Boolean
+) extends DurableItem {
+  val `type` = ItemType.WARPED_FUNGUS_ON_A_STICK
+  override def maxDurability = 100
 }
 
 case class WeightedPressurePlate(

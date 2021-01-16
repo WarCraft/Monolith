@@ -27,47 +27,51 @@ package gg.warcraft.monolith.api.item.variant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum BootsVariant implements ItemVariant {
-    LEATHER(true, false, false, false, false),
-    CHAINMAIL(false, true, false, false, false),
-    IRON(false, false, true, false, false),
-    GOLD(false, false, false, true, false),
-    DIAMOND(false, false, false, false, true),
+    LEATHER(true, false, false, false, false, false),
+    CHAINMAIL(false, true, false, false, false, false),
+    IRON(false, false, true, false, false, false),
+    GOLD(false, false, false, true, false, false),
+    DIAMOND(false, false, false, false, true, false),
+    NETHERITE(false, false, false, false, false, true),
 
-    AQUA_LEATHER(true, false, false, false, false),
-    BLACK_LEATHER(true, false, false, false, false),
-    BLUE_LEATHER(true, false, false, false, false),
-    FUCHSIA_LEATHER(true, false, false, false, false),
-    GRAY_LEATHER(true, false, false, false, false),
-    GREEN_LEATHER(true, false, false, false, false),
-    LIME_LEATHER(true, false, false, false, false),
-    MAROON_LEATHER(true, false, false, false, false),
-    NAVY_LEATHER(true, false, false, false, false),
-    OLIVE_LEATHER(true, false, false, false, false),
-    ORANGE_LEATHER(true, false, false, false, false),
-    PURPLE_LEATHER(true, false, false, false, false),
-    RED_LEATHER(true, false, false, false, false),
-    SILVER_LEATHER(true, false, false, false, false),
-    TEAL_LEATHER(true, false, false, false, false),
-    WHITE_LEATHER(true, false, false, false, false),
-    YELLOW_LEATHER(true, false, false, false, false);
+    AQUA_LEATHER(true, false, false, false, false, false),
+    BLACK_LEATHER(true, false, false, false, false, false),
+    BLUE_LEATHER(true, false, false, false, false, false),
+    FUCHSIA_LEATHER(true, false, false, false, false, false),
+    GRAY_LEATHER(true, false, false, false, false, false),
+    GREEN_LEATHER(true, false, false, false, false, false),
+    LIME_LEATHER(true, false, false, false, false, false),
+    MAROON_LEATHER(true, false, false, false, false, false),
+    NAVY_LEATHER(true, false, false, false, false, false),
+    OLIVE_LEATHER(true, false, false, false, false, false),
+    ORANGE_LEATHER(true, false, false, false, false, false),
+    PURPLE_LEATHER(true, false, false, false, false, false),
+    RED_LEATHER(true, false, false, false, false, false),
+    SILVER_LEATHER(true, false, false, false, false, false),
+    TEAL_LEATHER(true, false, false, false, false, false),
+    WHITE_LEATHER(true, false, false, false, false, false),
+    YELLOW_LEATHER(true, false, false, false, false, false);
 
     public final boolean leather;
     public final boolean chainmail;
     public final boolean iron;
     public final boolean gold;
     public final boolean diamond;
+    public final boolean netherite;
 
     BootsVariant(
             boolean leather,
             boolean chainmail,
             boolean iron,
             boolean gold,
-            boolean diamond
+            boolean diamond,
+            boolean netherite
     ) {
         this.leather = leather;
         this.chainmail = chainmail;
         this.iron = iron;
         this.gold = gold;
         this.diamond = diamond;
+        this.netherite = netherite;
     }
 }

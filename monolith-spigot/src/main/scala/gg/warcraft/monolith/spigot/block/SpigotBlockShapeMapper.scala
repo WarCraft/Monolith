@@ -25,9 +25,13 @@
 package gg.warcraft.monolith.spigot.block
 
 import gg.warcraft.monolith.api.block._
-import gg.warcraft.monolith.api.block.shape.{RailsShape, StairsShape}
+import gg.warcraft.monolith.api.block.shape.{
+  JigsawBlockShape, RailsShape, StairsShape
+}
 import gg.warcraft.monolith.spigot.Extensions._
+import org.bukkit.Material
 import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}
+import org.bukkit.block.data.`type`.Jigsaw.{Orientation => SpigotJigsawShape}
 import org.bukkit.block.data.`type`.Stairs.{Shape => SpigotStairsShape}
 
 class SpigotBlockShapeMapper {
@@ -35,6 +39,10 @@ class SpigotBlockShapeMapper {
     val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
+      case Material.JIGSAW =>
+        val shape = data.asInstanceOf[SpigotJigsaw].getOrientation
+        map(shape)
+
       case it if it.isRail =>
         val shape = data.asInstanceOf[SpigotRail].getShape
         map(shape)
@@ -51,6 +59,10 @@ class SpigotBlockShapeMapper {
     val data: SpigotBlockData = spigotData
 
     block.shape match {
+      case it: JigsawBlockShape =>
+        val shape = map(it)
+        data.asInstanceOf[SpigotJigsaw].setOrientation(shape)
+
       case it: RailsShape =>
         val shape = map(it)
         data.asInstanceOf[SpigotRail].setShape(shape)
@@ -61,6 +73,36 @@ class SpigotBlockShapeMapper {
 
       case _ => throw new IllegalArgumentException(s"${block.`type`}")
     }
+  }
+
+  def map(shape: SpigotJigsawShape): JigsawBlockShape = shape match {
+    case SpigotJigsawShape.DOWN_EAST  => JigsawBlockShape.DOWN_EAST
+    case SpigotJigsawShape.DOWN_NORTH => JigsawBlockShape.DOWN_NORTH
+    case SpigotJigsawShape.DOWN_SOUTH => JigsawBlockShape.DOWN_SOUTH
+    case SpigotJigsawShape.DOWN_WEST  => JigsawBlockShape.DOWN_WEST
+    case SpigotJigsawShape.UP_EAST    => JigsawBlockShape.UP_EAST
+    case SpigotJigsawShape.UP_NORTH   => JigsawBlockShape.UP_NORTH
+    case SpigotJigsawShape.UP_SOUTH   => JigsawBlockShape.UP_SOUTH
+    case SpigotJigsawShape.UP_WEST    => JigsawBlockShape.UP_WEST
+    case SpigotJigsawShape.WEST_UP    => JigsawBlockShape.WEST_UP
+    case SpigotJigsawShape.EAST_UP    => JigsawBlockShape.EAST_UP
+    case SpigotJigsawShape.NORTH_UP   => JigsawBlockShape.NORTH_UP
+    case SpigotJigsawShape.SOUTH_UP   => JigsawBlockShape.SOUTH_UP
+  }
+
+  def map(shape: JigsawBlockShape): SpigotJigsawShape = shape match {
+    case JigsawBlockShape.DOWN_EAST  => SpigotJigsawShape.DOWN_EAST
+    case JigsawBlockShape.DOWN_NORTH => SpigotJigsawShape.DOWN_NORTH
+    case JigsawBlockShape.DOWN_SOUTH => SpigotJigsawShape.DOWN_SOUTH
+    case JigsawBlockShape.DOWN_WEST  => SpigotJigsawShape.DOWN_WEST
+    case JigsawBlockShape.UP_EAST    => SpigotJigsawShape.UP_EAST
+    case JigsawBlockShape.UP_NORTH   => SpigotJigsawShape.UP_NORTH
+    case JigsawBlockShape.UP_SOUTH   => SpigotJigsawShape.UP_SOUTH
+    case JigsawBlockShape.UP_WEST    => SpigotJigsawShape.UP_WEST
+    case JigsawBlockShape.WEST_UP    => SpigotJigsawShape.WEST_UP
+    case JigsawBlockShape.EAST_UP    => SpigotJigsawShape.EAST_UP
+    case JigsawBlockShape.NORTH_UP   => SpigotJigsawShape.NORTH_UP
+    case JigsawBlockShape.SOUTH_UP   => SpigotJigsawShape.SOUTH_UP
   }
 
   def map(shape: SpigotRailsShape): RailsShape = shape match {

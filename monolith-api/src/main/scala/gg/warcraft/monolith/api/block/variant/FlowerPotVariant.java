@@ -44,6 +44,14 @@ public enum FlowerPotVariant implements BlockVariant {
     WHITE_TULIP,
     WITHER_ROSE,
 
+    // FUNGUS
+    CRIMSON_FUNGUS,
+    WARPED_FUNGUS,
+
+    // ROOTS
+    CRIMSON_ROOTS,
+    WARPED_ROOTS,
+
     // SAPLING
     ACACIA,
     BIRCH,

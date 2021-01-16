@@ -31,5 +31,6 @@ public enum BannerPatternVariant implements ItemVariant {
     FLOWER,
     GLOBE,
     MOJANG,
+    PIGLIN,
     SKULL,
 }

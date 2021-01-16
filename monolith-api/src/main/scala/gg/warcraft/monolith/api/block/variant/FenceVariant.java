@@ -36,4 +36,7 @@ public enum FenceVariant implements BlockVariant, ItemVariant {
     SPRUCE,
 
     NETHER_BRICK,
+
+    CRIMSON_FUNGI,
+    WARPED_FUNGI,
 }

@@ -24,14 +24,14 @@
 
 package gg.warcraft.monolith.api.entity
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.block.Block
 import gg.warcraft.monolith.api.entity.attribute.Attributes
 import gg.warcraft.monolith.api.entity.status.Status
 import gg.warcraft.monolith.api.entity.team.Team
-import gg.warcraft.monolith.api.math.{ AABBf, Vector3f }
+import gg.warcraft.monolith.api.math.{AABBf, Vector3f}
 import gg.warcraft.monolith.api.world.Location
+
+import java.util.UUID
 
 trait Entity {
   val id: UUID
@@ -57,13 +57,13 @@ object Entity {
   object Type extends Enumeration {
     val ARMOR_STAND, BAT, BEE, BLAZE, CAT, CAVE_SPIDER, CHICKEN, COD, COW, CREEPER,
     DOLPHIN, DONKEY, DROWNED, ELDER_GUARDIAN, ENDER_DRAGON, ENDERMAN, ENDERMITE,
-    EVOKER, FOX, GHAST, GIANT, GUARDIAN, HORSE, HUSK, ILLUSIONER, IRON_GOLEM,
+    EVOKER, FOX, GHAST, GIANT, GUARDIAN, HOGLIN, HORSE, HUSK, ILLUSIONER, IRON_GOLEM,
     LLAMA, MAGMA_CUBE, MULE, MUSHROOM_COW, OCELOT, PANDA, PARROT, PHANTOM, PIG,
-    PIG_ZOMBIE, PILLAGER, PLAYER, POLAR_BEAR, PUFFERFISH, RABBIT, RAVAGER,
+    PIGLIN, PIGLIN_BRUTE, PILLAGER, PLAYER, POLAR_BEAR, PUFFERFISH, RABBIT, RAVAGER,
     SALMON, SHEEP, SHULKER, SILVERFISH, SKELETON, SKELETON_HORSE, SLIME, SNOWMAN,
-    SPIDER, SQUID, STRAY, TRADER_LLAMA, TROPICAL_FISH, TURTLE, VEX, VILLAGER,
-    VINDICATOR, WANDERING_TRADER, WITCH, WITHER, WITHER_SKELETON, WOLF, ZOMBIE,
-    ZOMBIE_HORSE, ZOMBIE_VILLAGER = Value
+    SPIDER, SQUID, STRAY, STRIDER, TRADER_LLAMA, TROPICAL_FISH, TURTLE, VEX,
+    VILLAGER, VINDICATOR, WANDERING_TRADER, WITCH, WITHER, WITHER_SKELETON, WOLF,
+    ZOGLIN, ZOMBIE, ZOMBIE_HORSE, ZOMBIE_PIGLIN, ZOMBIE_VILLAGER = Value
   }
 
   case class Intersection(

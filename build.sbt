@@ -1,6 +1,6 @@
 lazy val projectSettings = Seq(
   organization := "gg.warcraft",
-  version := "15.0.0-SNAPSHOT",
+  version := "16.0.0-SNAPSHOT",
   scalaVersion := "2.13.4",
   scalacOptions ++= Seq(
     "-language:implicitConversions"
@@ -59,7 +59,7 @@ lazy val spigot = (project in file("monolith-spigot"))
       "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
     ),
     libraryDependencies ++= Seq(
-      "com.destroystokyo.paper" % "paper-api" % "1.15.2-R0.1-SNAPSHOT" % Provided
+      "com.destroystokyo.paper" % "paper-api" % "1.16.4-R0.1-SNAPSHOT" % Provided
     )
   )
   .dependsOn(api)
@@ -72,7 +72,7 @@ lazy val bootstrap = (project in file("monolith-bootstrap"))
       "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
     ),
     libraryDependencies ++= Seq(
-      "com.destroystokyo.paper" % "paper-api" % "1.15.2-R0.1-SNAPSHOT" % Provided,
+      "com.destroystokyo.paper" % "paper-api" % "1.16.4-R0.1-SNAPSHOT" % Provided,
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,

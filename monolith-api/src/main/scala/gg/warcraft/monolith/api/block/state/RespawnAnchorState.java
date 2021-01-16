@@ -22,21 +22,25 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.block.variant;
+package gg.warcraft.monolith.api.block.state;
 
-import gg.warcraft.monolith.api.block.BlockVariant;
-import gg.warcraft.monolith.api.item.ItemVariant;
+import gg.warcraft.monolith.api.block.BlockState;
 
-public enum ButtonVariant implements BlockVariant, ItemVariant {
-    ACACIA,
-    BIRCH,
-    DARK_OAK,
-    JUNGLE,
-    OAK,
-    SPRUCE,
+public enum RespawnAnchorState implements BlockState {
+    CHARGES_0,
+    CHARGES_1,
+    CHARGES_2,
+    CHARGES_3,
+    CHARGES_4;
 
-    STONE,
+    private static final RespawnAnchorState[] finalValues = values();
 
-    CRIMSON_FUNGI,
-    WARPED_FUNGI,
+    public static RespawnAnchorState valueOf(int data) {
+        return finalValues[data];
+    }
+
+    @Override
+    public int toInt() {
+        return ordinal();
+    }
 }

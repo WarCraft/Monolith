@@ -24,13 +24,14 @@
 
 package gg.warcraft.monolith.api.block
 
-import java.util
-
-import gg.warcraft.monolith.api.block.shape.{RailsShape, StairsShape}
+import gg.warcraft.monolith.api.block.shape.{
+  JigsawBlockShape, RailsShape, StairsShape
+}
 import gg.warcraft.monolith.api.block.state._
 import gg.warcraft.monolith.api.block.variant._
 import gg.warcraft.monolith.api.world.BlockLocation
 
+import java.util
 import scala.annotation.varargs
 import scala.jdk.CollectionConverters._
 
@@ -40,6 +41,12 @@ final case class Air(
 ) extends VariableBlock[AirVariant] {
   override val `type` = BlockType.AIR
   override val solid: Boolean = false
+}
+
+final case class AncientDebris(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.ANCIENT_DEBRIS
 }
 
 final case class Andesite(
@@ -94,6 +101,15 @@ final case class Barrier(
     location: BlockLocation
 ) extends Block {
   override val `type` = BlockType.BARRIER
+}
+
+final case class Basalt(
+    location: BlockLocation,
+    variant: BasaltVariant,
+    orientation: BlockOrientation
+) extends VariableBlock[BasaltVariant]
+    with OrientedBlock {
+  override val `type` = BlockType.BASALT
 }
 
 final case class Beacon(
@@ -152,6 +168,13 @@ final case class Bell(
     direction: BlockFace
 ) extends DirectedBlock {
   override val `type` = BlockType.BELL
+}
+
+final case class Blackstone(
+    location: BlockLocation,
+    variant: BlackstoneVariant
+) extends VariableBlock[BlackstoneVariant] {
+  override val `type` = BlockType.BLACKSTONE
 }
 
 final case class BlastFurnace(
@@ -230,11 +253,13 @@ final case class Cake(
 
 final case class Campfire(
     location: BlockLocation,
+    variant: CampfireVariant,
     direction: BlockFace,
     flooded: Boolean,
     lit: Boolean,
     signal: Boolean
-) extends DirectedBlock
+) extends VariableBlock[CampfireVariant]
+    with DirectedBlock
     with FloodableBlock
     with LightableBlock {
   override val `type` = BlockType.CAMPFIRE
@@ -268,6 +293,15 @@ final case class Cauldron(
     state: CauldronState
 ) extends StatefulBlock[CauldronState] {
   override val `type` = BlockType.CAULDRON
+}
+
+final case class Chain(
+    location: BlockLocation,
+    orientation: BlockOrientation,
+    flooded: Boolean
+) extends OrientedBlock
+    with FloodableBlock {
+  override val `type` = BlockType.CHAIN
 }
 
 // TODO add DOUBLE_LEFT/DOUBLE_RIGHT/SINGLE
@@ -421,6 +455,12 @@ final case class CraftingTable(
     location: BlockLocation
 ) extends Block {
   override val `type` = BlockType.CRAFTING_TABLE
+}
+
+final case class CryingObsidian(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.CRYING_OBSIDIAN
 }
 
 final case class DaylightDetector(
@@ -598,9 +638,11 @@ final case class Fern(
 
 final case class Fire(
     location: BlockLocation,
+    variant: FireVariant,
     state: FireState,
     extensions: Set[BlockFace]
-) extends StatefulBlock[FireState]
+) extends VariableBlock[FireVariant]
+    with StatefulBlock[FireState]
     with ExtendableBlock {
   override val `type` = BlockType.FIRE
   override val solid: Boolean = false
@@ -657,6 +699,19 @@ final case class FenceGate(
   override val `type` = BlockType.FENCE_GATE
   def withWall(wall: Boolean): FenceGate =
     copyWith("wall", wall)
+}
+
+final case class Fungus(
+    location: BlockLocation,
+    variant: FungusVariant
+) extends VariableBlock[FungusVariant] {
+  override val `type` = BlockType.FUNGUS
+}
+
+final case class GildedBlackstone(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.GILDED_BLACKSTONE
 }
 
 final case class Glass(
@@ -814,8 +869,8 @@ final case class IronOre(
 
 final case class JigsawBlock(
     location: BlockLocation,
-    direction: BlockFace
-) extends DirectedBlock {
+    shape: JigsawBlockShape
+) extends ShapedBlock[JigsawBlockShape] {
   override val `type` = BlockType.JIGSAW_BLOCK
 }
 
@@ -848,8 +903,9 @@ final case class Ladder(
 
 final case class Lantern(
     location: BlockLocation,
+    variant: LanternVariant,
     hanging: Boolean
-) extends Block {
+) extends VariableBlock[LanternVariant] {
   override val `type` = BlockType.LANTERN
   def withHanging(hanging: Boolean): Lantern =
     copyWith("hanging", hanging)
@@ -911,6 +967,12 @@ final case class LilyPad(
 ) extends Block {
   override val `type` = BlockType.LILY_PAD
   override val solid: Boolean = false
+}
+
+final case class Lodestone(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.LODESTONE
 }
 
 final case class Log(
@@ -998,9 +1060,32 @@ final case class Netherrack(
   override val `type` = BlockType.NETHERRACK
 }
 
-final case class NetherWartBlock(
+final case class NetherGoldOre(
     location: BlockLocation
 ) extends Block {
+  override val `type` = BlockType.NETHER_GOLD_ORE
+}
+
+final case class NetherSprouts(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.NETHER_SPROUTS
+  override val solid = false
+}
+
+final case class NetherVines(
+    location: BlockLocation,
+    variant: NetherVinesVariant,
+    state: NetherVinesState
+) extends VariableBlock[NetherVinesVariant]
+    with StatefulBlock[NetherVinesState] {
+  override val `type` = BlockType.NETHER_VINES
+}
+
+final case class NetherWartBlock(
+    location: BlockLocation,
+    variant: NetherWartBlockVariant
+) extends VariableBlock[NetherWartBlockVariant] {
   override val `type` = BlockType.NETHER_WART_BLOCK
 }
 
@@ -1012,6 +1097,12 @@ final case class NetherWarts(
   override val solid: Boolean = false
 }
 
+final case class NetheriteBlock(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.NETHERITE_BLOCK
+}
+
 final case class NoteBlock(
     location: BlockLocation,
     variant: NoteBlockVariant,
@@ -1021,6 +1112,13 @@ final case class NoteBlock(
     with StatefulBlock[NoteBlockState]
     with PowerableBlock {
   override val `type` = BlockType.NOTE_BLOCK
+}
+
+final case class Nylium(
+    location: BlockLocation,
+    variant: NyliumVariant
+) extends VariableBlock[NyliumVariant] {
+  override val `type` = BlockType.NYLIUM
 }
 
 final case class Observer(
@@ -1223,6 +1321,20 @@ final case class Repeater(
     copyWith("locked", locked)
 }
 
+final case class RespawnAnchor(
+    location: BlockLocation,
+    state: RespawnAnchorState
+) extends StatefulBlock[RespawnAnchorState] {
+  override val `type` = BlockType.RESPAWN_ANCHOR
+}
+
+final case class Roots(
+    location: BlockLocation,
+    variant: RootsVariant
+) extends VariableBlock[RootsVariant] {
+  override val `type` = BlockType.ROOTS
+}
+
 final case class Sand(
     location: BlockLocation,
     variant: SandVariant
@@ -1282,6 +1394,12 @@ final case class SeaPickle(
     with FloodableBlock {
   override val `type` = BlockType.SEA_PICKLE
   override val solid: Boolean = false
+}
+
+final case class Shroomlight(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.SHROOMLIGHT
 }
 
 final case class ShulkerBox(
@@ -1365,6 +1483,12 @@ final case class SoulSand(
   override val `type` = BlockType.SOUL_SAND
 }
 
+final case class SoulSoil(
+    location: BlockLocation
+) extends Block {
+  override val `type` = BlockType.SOUL_SOIL
+}
+
 final case class Spawner(
     location: BlockLocation
 ) extends Block {
@@ -1437,6 +1561,13 @@ final case class SweetBerryBush(
   override val solid: Boolean = false
 }
 
+final case class Target(
+    location: BlockLocation,
+    state: TargetState
+) extends StatefulBlock[TargetState] {
+  override val `type` = BlockType.TARGET
+}
+
 final case class Terracotta(
     location: BlockLocation,
     variant: TerracottaVariant
@@ -1455,9 +1586,11 @@ final case class TNT(
 
 final case class Torch(
     location: BlockLocation,
+    variant: TorchVariant,
     direction: BlockFace,
     wall: Boolean
-) extends DirectedBlock {
+) extends VariableBlock[TorchVariant]
+    with DirectedBlock {
   override val `type` = BlockType.TORCH
   override val solid: Boolean = false
   def withWall(wall: Boolean): Torch =
@@ -1530,10 +1663,9 @@ final case class Vines(
 final case class Wall(
     location: BlockLocation,
     variant: WallVariant,
-    extensions: Set[BlockFace],
+    heights: Map[BlockFace, WallHeight],
     flooded: Boolean
 ) extends VariableBlock[WallVariant]
-    with ExtendableBlock
     with FloodableBlock {
   override val `type` = BlockType.WALL
 }

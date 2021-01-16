@@ -34,4 +34,7 @@ public enum FenceGateVariant implements BlockVariant, ItemVariant {
     JUNGLE,
     OAK,
     SPRUCE,
+
+    CRIMSON_FUNGI,
+    WARPED_FUNGI,
 }

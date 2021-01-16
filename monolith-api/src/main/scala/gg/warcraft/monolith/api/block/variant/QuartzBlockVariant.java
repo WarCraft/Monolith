@@ -29,6 +29,7 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum QuartzBlockVariant implements BlockVariant, ItemVariant {
     NORMAL,
+    BRICKS,
     CHISELED,
     SMOOTH,
 }

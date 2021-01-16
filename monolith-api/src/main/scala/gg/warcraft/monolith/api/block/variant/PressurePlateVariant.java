@@ -36,4 +36,7 @@ public enum PressurePlateVariant implements BlockVariant, ItemVariant {
     SPRUCE,
 
     STONE,
+
+    CRIMSON_FUNGI,
+    WARPED_FUNGI,
 }

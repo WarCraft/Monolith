@@ -211,6 +211,8 @@ object implicits {
     new SpigotBlockTypeMapper
   implicit lazy val blockVariantMapper: SpigotBlockVariantMapper =
     new SpigotBlockVariantMapper
+  implicit lazy val wallHeightMapper: SpigotWallHeightMapper =
+    new SpigotWallHeightMapper
   implicit lazy val blockMapper: SpigotBlockMapper =
     new SpigotBlockMapper
   implicit lazy val blockEventMapper: SpigotBlockEventMapper =

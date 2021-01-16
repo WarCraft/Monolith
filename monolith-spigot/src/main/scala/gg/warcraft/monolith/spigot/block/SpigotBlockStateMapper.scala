@@ -24,13 +24,13 @@
 
 package gg.warcraft.monolith.spigot.block
 
-import java.util
-
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.block.state._
 import gg.warcraft.monolith.api.block.variant.BambooVariant
-import org.bukkit.{Material, Note => SpigotNote}
 import org.bukkit.block.data.{Ageable, AnaloguePowerable, Levelled}
+import org.bukkit.{Material, Note => SpigotNote}
+
+import java.util
 
 private object SpigotBlockStateMapper {
   private final val matCache: util.EnumMap[Material, SpigotBlockData => BlockState] =
@@ -59,6 +59,9 @@ class SpigotBlockStateMapper {
 
     case it: RepeaterState =>
       data.asInstanceOf[SpigotRepeater].setDelay(it.toInt)
+
+    case it: RespawnAnchorState =>
+      data.asInstanceOf[SpigotRespawnAnchor].setCharges(it.toInt)
 
     case it: SaplingState =>
       data.asInstanceOf[SpigotSapling].setStage(it.toInt)
@@ -104,21 +107,15 @@ class SpigotBlockStateMapper {
       case Material.COMPOSTER        => (data => ComposterState.valueOf(level(data)))
       case Material.FIRE             => (data => FireState.valueOf(age(data)))
       case Material.FROSTED_ICE      => (data => FrostState.valueOf(age(data)))
-      case Material.KELP             => (data => KelpState.valueOf(age(data)))
       case Material.LAVA             => (data => LavaState.valueOf(level(data)))
-      case Material.MELON_STEM       => (data => MelonStemState.valueOf(age(data)))
       case Material.NETHER_WART      => (data => NetherWartState.valueOf(age(data)))
       case Material.POTATOES         => (data => PotatoState.valueOf(age(data)))
-      case Material.PUMPKIN_STEM     => (data => PumpkinStemState.valueOf(age(data)))
       case Material.REDSTONE_WIRE    => (data => RedstoneWireState.valueOf(power(data)))
       case Material.SUGAR_CANE       => (data => SugarCaneState.valueOf(age(data)))
       case Material.SWEET_BERRY_BUSH => (data => SweetBerryState.valueOf(age(data)))
+      case Material.TARGET           => (data => TargetState.valueOf(power(data)))
       case Material.WATER            => (data => WaterState.valueOf(level(data)))
       case Material.WHEAT            => (data => WheatState.valueOf(age(data)))
-
-      case Material.KELP_PLANT            => (_ => KelpState.FULLY_GROWN)
-      case Material.ATTACHED_MELON_STEM   => (_ => MelonStemState.ATTACHED)
-      case Material.ATTACHED_PUMPKIN_STEM => (_ => PumpkinStemState.ATTACHED)
 
       // BAMBOO
       case Material.BAMBOO =>
@@ -132,17 +129,42 @@ class SpigotBlockStateMapper {
           val bites = data.asInstanceOf[SpigotCake].getBites
           CakeState.valueOf(bites)
 
+      // KELP
+      case Material.KELP       => (data => KelpState.valueOf(age(data)))
+      case Material.KELP_PLANT => (_ => KelpState.FULLY_GROWN)
+
+      // MELON_STEM
+      case Material.MELON_STEM          => (data => MelonStemState.valueOf(age(data)))
+      case Material.ATTACHED_MELON_STEM => (_ => MelonStemState.ATTACHED)
+
+      // NETHER_VINES
+      case Material.TWISTING_VINES | Material.WEEPING_VINES =>
+        (data => NetherVinesState.valueOf(age(data)))
+
+      case Material.TWISTING_VINES_PLANT | Material.WEEPING_VINES_PLANT =>
+        (_ => NetherVinesState.FULLY_GROWN)
+
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
         data =>
           val note = data.asInstanceOf[SpigotNoteBlock].getNote.getId
           NoteBlockState.valueOf(note)
 
+      // PUMPKIN_STEM
+      case Material.PUMPKIN_STEM          => (data => PumpkinStemState.valueOf(age(data)))
+      case Material.ATTACHED_PUMPKIN_STEM => (_ => PumpkinStemState.ATTACHED)
+
       // REPEATER
       case Material.REPEATER =>
         data =>
           val delay = data.asInstanceOf[SpigotRepeater].getDelay
           RepeaterState.valueOf(delay)
+
+      // RESPAWN_ANCHOR
+      case Material.RESPAWN_ANCHOR =>
+        data =>
+          val charges = data.asInstanceOf[SpigotRespawnAnchor].getCharges
+          RespawnAnchorState.valueOf(charges)
 
       // SAPLING
       case Material.ACACIA_SAPLING | Material.BIRCH_SAPLING |
@@ -178,38 +200,40 @@ class SpigotBlockStateMapper {
   }
 
   def compute(state: BlockState): Material = state match {
-    case _: BambooState       => Material.BAMBOO
-    case _: BeeNestState      => Material.BEE_NEST
-    case _: BeehiveState      => Material.BEEHIVE
-    case _: BeetrootState     => Material.BEETROOTS
-    case _: CactusState       => Material.CACTUS
-    case _: CakeState         => Material.CAKE
-    case _: CarrotState       => Material.CARROTS
-    case _: CauldronState     => Material.CAULDRON
-    case _: ChorusFlowerState => Material.CHORUS_FLOWER
-    case _: CocoaState        => Material.COCOA
-    case _: ComposterState    => Material.COMPOSTER
-    case _: FireState         => Material.FIRE
-    case _: FrostState        => Material.FROSTED_ICE
-    case _: LavaState         => Material.LAVA
-    case _: MelonStemState    => Material.MELON_STEM
-    case _: NetherWartState   => Material.NETHER_WART
-    case _: NoteBlockState    => Material.NOTE_BLOCK
-    case _: PotatoState       => Material.POTATOES
-    case _: PumpkinStemState  => Material.PUMPKIN_STEM
-    case _: RedstoneWireState => Material.REDSTONE_WIRE
-    case _: RepeaterState     => Material.REPEATER
-    case _: SeaPickleState    => Material.SEA_PICKLE
-    case _: SugarCaneState    => Material.SUGAR_CANE
-    case _: SweetBerryState   => Material.SWEET_BERRY_BUSH
-    case _: WaterState        => Material.WATER
-    case _: WheatState        => Material.WHEAT
+    case _: BambooState        => Material.BAMBOO
+    case _: BeeNestState       => Material.BEE_NEST
+    case _: BeehiveState       => Material.BEEHIVE
+    case _: BeetrootState      => Material.BEETROOTS
+    case _: CactusState        => Material.CACTUS
+    case _: CakeState          => Material.CAKE
+    case _: CarrotState        => Material.CARROTS
+    case _: CauldronState      => Material.CAULDRON
+    case _: ChorusFlowerState  => Material.CHORUS_FLOWER
+    case _: CocoaState         => Material.COCOA
+    case _: ComposterState     => Material.COMPOSTER
+    case _: FireState          => Material.FIRE
+    case _: FrostState         => Material.FROSTED_ICE
+    case _: LavaState          => Material.LAVA
+    case _: MelonStemState     => Material.MELON_STEM
+    case _: NetherWartState    => Material.NETHER_WART
+    case _: NoteBlockState     => Material.NOTE_BLOCK
+    case _: PotatoState        => Material.POTATOES
+    case _: PumpkinStemState   => Material.PUMPKIN_STEM
+    case _: RedstoneWireState  => Material.REDSTONE_WIRE
+    case _: RepeaterState      => Material.REPEATER
+    case _: RespawnAnchorState => Material.RESPAWN_ANCHOR
+    case _: SeaPickleState     => Material.SEA_PICKLE
+    case _: SugarCaneState     => Material.SUGAR_CANE
+    case _: SweetBerryState    => Material.SWEET_BERRY_BUSH
+    case _: TargetState        => Material.TARGET
+    case _: WaterState         => Material.WATER
+    case _: WheatState         => Material.WHEAT
 
     // KELP
     case KelpState.FULLY_GROWN => Material.KELP_PLANT
     case _: KelpState          => Material.KELP
 
-    // NOTE BambooState can not be mapped due to its compound nature, and Saplings &
-    // WeightedPressurePlates can not be mapped as they also need a variant
+    // NOTE BambooState can not be mapped due to its compound nature, and Saplings,
+    // WeightedPressurePlates & NetherVines can not be mapped as they also need a variant
   }
 }

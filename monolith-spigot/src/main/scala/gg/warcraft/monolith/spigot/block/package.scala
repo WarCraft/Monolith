@@ -24,12 +24,12 @@
 
 package gg.warcraft.monolith.spigot
 
-import org.bukkit.block.{Block, BlockState, Sign}
-import org.bukkit.block.data.{BlockData, Rail}
 import org.bukkit.block.data.`type`._
+import org.bukkit.block.data.{BlockData, Rail}
+import org.bukkit.block.{Block, BlockState, Sign}
+import org.bukkit.event.Event
 import org.bukkit.event.block.{BlockBreakEvent, BlockPlaceEvent}
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.Event
 
 package object block {
   // Block meta types
@@ -50,6 +50,7 @@ package object block {
   type SpigotDropper = Dispenser
   type SpigotEndPortalFrame = EndPortalFrame
   type SpigotHopper = Hopper
+  type SpigotJigsaw = Jigsaw
   type SpigotJukebox = Jukebox
   type SpigotLantern = Lantern
   type SpigotLectern = Lectern
@@ -58,6 +59,7 @@ package object block {
   type SpigotPistonHead = PistonHead
   type SpigotRail = Rail
   type SpigotRepeater = Repeater
+  type SpigotRespawnAnchor = RespawnAnchor
   type SpigotSapling = Sapling
   type SpigotSeaPickle = SeaPickle
   type SpigotSign = Sign
@@ -68,6 +70,7 @@ package object block {
   type SpigotTripwire = Tripwire
   type SpigotTripwireHook = TripwireHook
   type SpigotTurtleEgg = TurtleEgg
+  type SpigotWall = Wall
 
   // Block event types
   type SpigotEvent = Event

@@ -34,4 +34,7 @@ public enum PlanksVariant implements BlockVariant, ItemVariant {
     JUNGLE,
     OAK,
     SPRUCE,
+
+    CRIMSON_FUNGI,
+    WARPED_FUNGI,
 }

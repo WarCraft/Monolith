@@ -24,15 +24,15 @@
 
 package gg.warcraft.monolith.spigot.block
 
-import java.util
-
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.block.variant._
-import org.bukkit.{Material, Instrument => SpigotInstrument}
 import org.bukkit.block.data.`type`.Bamboo.{Leaves => SpigotBambooLeaves}
 import org.bukkit.block.data.`type`.Comparator.{Mode => SpigotComparatorMode}
 import org.bukkit.block.data.`type`.StructureBlock.{Mode => SpigotStructureMode}
 import org.bukkit.block.data.`type`.TechnicalPiston.{Type => SpigotPistonType}
+import org.bukkit.{Material, Instrument => SpigotInstrument}
+
+import java.util
 
 private object SpigotBlockVariantMapper {
   private final val materialCache: util.EnumMap[Material, BlockVariant] =
@@ -145,6 +145,10 @@ class SpigotBlockVariantMapper {
     case Material.WHITE_WALL_BANNER      => BannerVariant.WHITE
     case Material.YELLOW_WALL_BANNER     => BannerVariant.YELLOW
 
+    // BASALT
+    case Material.BASALT          => BasaltVariant.NORMAL
+    case Material.POLISHED_BASALT => BasaltVariant.POLISHED
+
     // BED
     case Material.BLACK_BED      => BedVariant.BLACK
     case Material.BLUE_BED       => BedVariant.BLUE
@@ -163,10 +167,21 @@ class SpigotBlockVariantMapper {
     case Material.WHITE_BED      => BedVariant.WHITE
     case Material.YELLOW_BED     => BedVariant.YELLOW
 
+    // BLACKSTONE
+    case Material.BLACKSTONE                   => BlackstoneVariant.NORMAL
+    case Material.POLISHED_BLACKSTONE          => BlackstoneVariant.POLISHED
+    case Material.CHISELED_POLISHED_BLACKSTONE => BlackstoneVariant.CHISELED_POLISHED
+
     // BRICK_BLOCK
-    case Material.BRICKS            => BrickBlockVariant.NORMAL
-    case Material.NETHER_BRICKS     => BrickBlockVariant.NETHER
-    case Material.RED_NETHER_BRICKS => BrickBlockVariant.RED_NETHER
+    case Material.BRICKS => BrickBlockVariant.NORMAL
+
+    case Material.CRACKED_POLISHED_BLACKSTONE_BRICKS =>
+      BrickBlockVariant.CRACKED_POLISHED_BLACKSTONE
+
+    case Material.NETHER_BRICKS          => BrickBlockVariant.NETHER
+    case Material.CHISELED_NETHER_BRICKS => BrickBlockVariant.CHISELED_NETHER
+    case Material.CRACKED_NETHER_BRICKS  => BrickBlockVariant.CRACKED_NETHER
+    case Material.RED_NETHER_BRICKS      => BrickBlockVariant.RED_NETHER
 
     // BUTTON
     case Material.ACACIA_BUTTON   => ButtonVariant.ACACIA
@@ -177,6 +192,13 @@ class SpigotBlockVariantMapper {
     case Material.SPRUCE_BUTTON   => ButtonVariant.SPRUCE
 
     case Material.STONE_BUTTON => ButtonVariant.STONE
+
+    case Material.CRIMSON_BUTTON => ButtonVariant.CRIMSON_FUNGI
+    case Material.WARPED_BUTTON  => ButtonVariant.WARPED_FUNGI
+
+    // CAMPFIRE
+    case Material.CAMPFIRE      => CampfireVariant.NORMAL
+    case Material.SOUL_CAMPFIRE => CampfireVariant.SOUL
 
     // CARPET
     case Material.BLACK_CARPET      => CarpetVariant.BLACK
@@ -315,6 +337,9 @@ class SpigotBlockVariantMapper {
 
     case Material.IRON_DOOR => DoorVariant.IRON
 
+    case Material.CRIMSON_DOOR => DoorVariant.CRIMSON_FUNGI
+    case Material.WARPED_DOOR  => DoorVariant.WARPED_FUNGI
+
     // FENCE
     case Material.ACACIA_FENCE   => FenceVariant.ACACIA
     case Material.BIRCH_FENCE    => FenceVariant.BIRCH
@@ -325,6 +350,9 @@ class SpigotBlockVariantMapper {
 
     case Material.NETHER_BRICK_FENCE => FenceVariant.NETHER_BRICK
 
+    case Material.CRIMSON_FENCE => FenceVariant.CRIMSON_FUNGI
+    case Material.WARPED_FENCE  => FenceVariant.WARPED_FUNGI
+
     // FENCE_GATE
     case Material.ACACIA_FENCE_GATE   => FenceGateVariant.ACACIA
     case Material.BIRCH_FENCE_GATE    => FenceGateVariant.BIRCH
@@ -333,9 +361,16 @@ class SpigotBlockVariantMapper {
     case Material.OAK_FENCE_GATE      => FenceGateVariant.OAK
     case Material.SPRUCE_FENCE_GATE   => FenceGateVariant.SPRUCE
 
+    case Material.CRIMSON_FENCE_GATE => FenceGateVariant.CRIMSON_FUNGI
+    case Material.WARPED_FENCE_GATE  => FenceGateVariant.WARPED_FUNGI
+
     // FERN
     case Material.FERN       => FernVariant.NORMAL
     case Material.LARGE_FERN => FernVariant.TALL
+
+    // FIRE
+    case Material.FIRE      => FireVariant.NORMAL
+    case Material.SOUL_FIRE => FireVariant.SOUL
 
     // FLOWER
     case Material.ALLIUM             => FlowerVariant.ALLIUM
@@ -369,6 +404,12 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_WITHER_ROSE        => FlowerPotVariant.WITHER_ROSE
     case Material.POTTED_LILY_OF_THE_VALLEY => FlowerPotVariant.LILY_OF_THE_VALLEY
 
+    case Material.POTTED_CRIMSON_FUNGUS => FlowerPotVariant.CRIMSON_FUNGUS
+    case Material.POTTED_WARPED_FUNGUS  => FlowerPotVariant.WARPED_FUNGUS
+
+    case Material.POTTED_CRIMSON_ROOTS => FlowerPotVariant.CRIMSON_ROOTS
+    case Material.POTTED_WARPED_ROOTS  => FlowerPotVariant.WARPED_ROOTS
+
     case Material.POTTED_BROWN_MUSHROOM => FlowerPotVariant.BROWN_MUSHROOM
     case Material.POTTED_RED_MUSHROOM   => FlowerPotVariant.RED_MUSHROOM
 
@@ -383,6 +424,10 @@ class SpigotBlockVariantMapper {
     case Material.POTTED_CACTUS    => FlowerPotVariant.CACTUS
     case Material.POTTED_DEAD_BUSH => FlowerPotVariant.DEAD_BUSH
     case Material.POTTED_FERN      => FlowerPotVariant.FERN
+
+    // FUNGUS
+    case Material.CRIMSON_FUNGUS => FungusVariant.CRIMSON
+    case Material.WARPED_FUNGUS  => FungusVariant.WARPED
 
     // GLASS
     case Material.GLASS                    => GlassVariant.NORMAL
@@ -466,6 +511,10 @@ class SpigotBlockVariantMapper {
     case Material.INFESTED_MOSSY_STONE_BRICKS =>
       InfestedBlockVariant.MOSSY_STONE_BRICK
 
+    // LANTERN
+    case Material.LANTERN      => LanternVariant.NORMAL
+    case Material.SOUL_LANTERN => LanternVariant.SOUL
+
     // LEAVES
     case Material.ACACIA_LEAVES   => LeavesVariant.ACACIA
     case Material.BIRCH_LEAVES    => LeavesVariant.BIRCH
@@ -488,6 +537,9 @@ class SpigotBlockVariantMapper {
     case Material.STRIPPED_JUNGLE_LOG   => LogVariant.STRIPPED_JUNGLE
     case Material.STRIPPED_OAK_LOG      => LogVariant.STRIPPED_OAK
     case Material.STRIPPED_SPRUCE_LOG   => LogVariant.STRIPPED_SPRUCE
+
+    case Material.CRIMSON_STEM => LogVariant.CRIMSON_FUNGI
+    case Material.WARPED_STEM  => LogVariant.WARPED_FUNGI
 
     // MOB_HEAD
     case Material.CREEPER_HEAD          => MobHeadVariant.CREEPER
@@ -513,6 +565,17 @@ class SpigotBlockVariantMapper {
     case Material.RED_MUSHROOM_BLOCK   => MushroomBlockVariant.RED
     case Material.MUSHROOM_STEM        => MushroomBlockVariant.STEM
 
+    // NETHER_VINES
+    case Material.TWISTING_VINES       => NetherVinesVariant.TWISTING
+    case Material.TWISTING_VINES_PLANT => NetherVinesVariant.TWISTING
+
+    case Material.WEEPING_VINES       => NetherVinesVariant.WEEPING
+    case Material.WEEPING_VINES_PLANT => NetherVinesVariant.WEEPING
+
+    // NYLIUM
+    case Material.CRIMSON_NYLIUM => NyliumVariant.CRIMSON
+    case Material.WARPED_NYLIUM  => NyliumVariant.WARPED
+
     // PILLAR
     case Material.PURPUR_PILLAR => PillarVariant.PURPUR
     case Material.QUARTZ_PILLAR => PillarVariant.QUARTZ
@@ -528,6 +591,9 @@ class SpigotBlockVariantMapper {
     case Material.JUNGLE_PLANKS   => PlanksVariant.JUNGLE
     case Material.OAK_PLANKS      => PlanksVariant.OAK
     case Material.SPRUCE_PLANKS   => PlanksVariant.SPRUCE
+
+    case Material.CRIMSON_PLANKS => PlanksVariant.CRIMSON_FUNGI
+    case Material.WARPED_PLANKS  => PlanksVariant.WARPED_FUNGI
 
     // PLANT
     case Material.SUNFLOWER => PlantVariant.SUNFLOWER
@@ -545,6 +611,9 @@ class SpigotBlockVariantMapper {
 
     case Material.STONE_PRESSURE_PLATE => PressurePlateVariant.STONE
 
+    case Material.CRIMSON_PRESSURE_PLATE => PressurePlateVariant.CRIMSON_FUNGI
+    case Material.WARPED_PRESSURE_PLATE  => PressurePlateVariant.WARPED_FUNGI
+
     // PRISMARINE
     case Material.PRISMARINE        => PrismarineVariant.NORMAL
     case Material.DARK_PRISMARINE   => PrismarineVariant.DARK
@@ -552,6 +621,7 @@ class SpigotBlockVariantMapper {
 
     // QUARTZ_BLOCK
     case Material.QUARTZ_BLOCK          => QuartzBlockVariant.NORMAL
+    case Material.QUARTZ_BRICKS         => QuartzBlockVariant.BRICKS
     case Material.CHISELED_QUARTZ_BLOCK => QuartzBlockVariant.CHISELED
     case Material.SMOOTH_QUARTZ         => QuartzBlockVariant.SMOOTH
 
@@ -560,6 +630,10 @@ class SpigotBlockVariantMapper {
     case Material.ACTIVATOR_RAIL => RailVariant.ACTIVATOR
     case Material.DETECTOR_RAIL  => RailVariant.DETECTOR
     case Material.POWERED_RAIL   => RailVariant.POWERED
+
+    // ROOTS
+    case Material.CRIMSON_ROOTS => RootsVariant.CRIMSON
+    case Material.WARPED_ROOTS  => RootsVariant.WARPED
 
     // SANDSTONE
     case Material.SANDSTONE          => SandstoneVariant.NORMAL
@@ -618,7 +692,17 @@ class SpigotBlockVariantMapper {
     case Material.OAK_WALL_SIGN      => SignVariant.OAK
     case Material.SPRUCE_WALL_SIGN   => SignVariant.SPRUCE
 
+    case Material.CRIMSON_SIGN      => SignVariant.CRIMSON_FUNGI
+    case Material.CRIMSON_WALL_SIGN => SignVariant.CRIMSON_FUNGI
+    case Material.WARPED_SIGN       => SignVariant.WARPED_FUNGI
+    case Material.WARPED_WALL_SIGN  => SignVariant.WARPED_FUNGI
+
     // SLAB
+    case Material.BLACKSTONE_SLAB          => SlabVariant.BLACKSTONE
+    case Material.POLISHED_BLACKSTONE_SLAB => SlabVariant.POLISHED_BLACKSTONE
+    case Material.POLISHED_BLACKSTONE_BRICK_SLAB =>
+      SlabVariant.POLISHED_BLACKSTONE_BRICK
+
     case Material.BRICK_SLAB            => SlabVariant.BRICK
     case Material.NETHER_BRICK_SLAB     => SlabVariant.NETHER_BRICK
     case Material.RED_NETHER_BRICK_SLAB => SlabVariant.RED_NETHER_BRICK
@@ -627,6 +711,9 @@ class SpigotBlockVariantMapper {
     case Material.MOSSY_COBBLESTONE_SLAB => SlabVariant.MOSSY_COBBLESTONE
 
     case Material.END_STONE_BRICK_SLAB => SlabVariant.END_STONE_BRICK
+
+    case Material.CRIMSON_SLAB => SlabVariant.CRIMSON_FUNGI
+    case Material.WARPED_SLAB  => SlabVariant.WARPED_FUNGI
 
     case Material.PETRIFIED_OAK_SLAB => SlabVariant.PETRIFIED_OAK
 
@@ -674,6 +761,11 @@ class SpigotBlockVariantMapper {
     case Material.WET_SPONGE => SpongeVariant.WET
 
     // STAIRS
+    case Material.BLACKSTONE_STAIRS          => StairsVariant.BLACKSTONE
+    case Material.POLISHED_BLACKSTONE_STAIRS => StairsVariant.POLISHED_BLACKSTONE
+    case Material.POLISHED_BLACKSTONE_BRICK_STAIRS =>
+      StairsVariant.POLISHED_BLACKSTONE_BRICK
+
     case Material.BRICK_STAIRS            => StairsVariant.BRICK
     case Material.NETHER_BRICK_STAIRS     => StairsVariant.NETHER_BRICK
     case Material.RED_NETHER_BRICK_STAIRS => StairsVariant.RED_NETHER_BRICK
@@ -682,6 +774,9 @@ class SpigotBlockVariantMapper {
     case Material.MOSSY_COBBLESTONE_STAIRS => StairsVariant.MOSSY_COBBLESTONE
 
     case Material.END_STONE_BRICK_STAIRS => StairsVariant.END_STONE_BRICK
+
+    case Material.CRIMSON_STAIRS => StairsVariant.CRIMSON_FUNGI
+    case Material.WARPED_STAIRS  => StairsVariant.WARPED_FUNGI
 
     case Material.PRISMARINE_STAIRS       => StairsVariant.PRISMARINE
     case Material.PRISMARINE_BRICK_STAIRS => StairsVariant.PRISMARINE_BRICK
@@ -760,7 +855,15 @@ class SpigotBlockVariantMapper {
 
     case Material.IRON_TRAPDOOR => TrapdoorVariant.IRON
 
+    case Material.CRIMSON_TRAPDOOR => TrapdoorVariant.CRIMSON_FUNGI
+    case Material.WARPED_TRAPDOOR  => TrapdoorVariant.WARPED_FUNGI
+
     // WALL
+    case Material.BLACKSTONE_WALL          => WallVariant.BLACKSTONE
+    case Material.POLISHED_BLACKSTONE_WALL => WallVariant.POLISHED_BLACKSTONE
+    case Material.POLISHED_BLACKSTONE_BRICK_WALL =>
+      WallVariant.POLISHED_BLACKSTONE_BRICK
+
     case Material.BRICK_WALL            => WallVariant.BRICK
     case Material.NETHER_BRICK_WALL     => WallVariant.NETHER_BRICK
     case Material.RED_NETHER_BRICK_WALL => WallVariant.RED_NETHER_BRICK
@@ -794,12 +897,18 @@ class SpigotBlockVariantMapper {
     case Material.OAK_WOOD      => WoodVariant.OAK
     case Material.SPRUCE_WOOD   => WoodVariant.SPRUCE
 
+    case Material.CRIMSON_HYPHAE => WoodVariant.CRIMSON_FUNGI
+    case Material.WARPED_HYPHAE  => WoodVariant.WARPED_FUNGI
+
     case Material.STRIPPED_ACACIA_WOOD   => WoodVariant.STRIPPED_ACACIA
     case Material.STRIPPED_BIRCH_WOOD    => WoodVariant.STRIPPED_BIRCH
     case Material.STRIPPED_DARK_OAK_WOOD => WoodVariant.STRIPPED_DARK_OAK
     case Material.STRIPPED_JUNGLE_WOOD   => WoodVariant.STRIPPED_JUNGLE
     case Material.STRIPPED_OAK_WOOD      => WoodVariant.STRIPPED_OAK
     case Material.STRIPPED_SPRUCE_WOOD   => WoodVariant.STRIPPED_SPRUCE
+
+    case Material.STRIPPED_CRIMSON_HYPHAE => WoodVariant.STRIPPED_CRIMSON_FUNGI
+    case Material.STRIPPED_WARPED_HYPHAE  => WoodVariant.STRIPPED_WARPED_FUNGI
 
     // WOOL
     case Material.BLACK_WOOL      => WoolVariant.BLACK
@@ -855,6 +964,10 @@ class SpigotBlockVariantMapper {
     case BannerVariant.WHITE      => Material.WHITE_BANNER
     case BannerVariant.YELLOW     => Material.YELLOW_BANNER
 
+    // BASALT
+    case BasaltVariant.NORMAL   => Material.BASALT
+    case BasaltVariant.POLISHED => Material.POLISHED_BASALT
+
     // BED
     case BedVariant.BLACK      => Material.BLACK_BED
     case BedVariant.BLUE       => Material.BLUE_BED
@@ -873,10 +986,21 @@ class SpigotBlockVariantMapper {
     case BedVariant.WHITE      => Material.WHITE_BED
     case BedVariant.YELLOW     => Material.YELLOW_BED
 
+    // BLACKSTONE
+    case BlackstoneVariant.NORMAL            => Material.BLACKSTONE
+    case BlackstoneVariant.POLISHED          => Material.POLISHED_BLACKSTONE
+    case BlackstoneVariant.CHISELED_POLISHED => Material.CHISELED_POLISHED_BLACKSTONE
+
     // BRICK_BLOCK
-    case BrickBlockVariant.NORMAL     => Material.BRICKS
-    case BrickBlockVariant.NETHER     => Material.NETHER_BRICKS
-    case BrickBlockVariant.RED_NETHER => Material.RED_NETHER_BRICKS
+    case BrickBlockVariant.NORMAL => Material.BRICKS
+
+    case BrickBlockVariant.CRACKED_POLISHED_BLACKSTONE =>
+      Material.CRACKED_POLISHED_BLACKSTONE_BRICKS
+
+    case BrickBlockVariant.NETHER          => Material.NETHER_BRICKS
+    case BrickBlockVariant.CHISELED_NETHER => Material.CHISELED_NETHER_BRICKS
+    case BrickBlockVariant.CRACKED_NETHER  => Material.CRACKED_NETHER_BRICKS
+    case BrickBlockVariant.RED_NETHER      => Material.RED_NETHER_BRICKS
 
     // BUTTON
     case ButtonVariant.ACACIA   => Material.ACACIA_BUTTON
@@ -887,6 +1011,13 @@ class SpigotBlockVariantMapper {
     case ButtonVariant.SPRUCE   => Material.SPRUCE_BUTTON
 
     case ButtonVariant.STONE => Material.STONE_BUTTON
+
+    case ButtonVariant.CRIMSON_FUNGI => Material.CRIMSON_BUTTON
+    case ButtonVariant.WARPED_FUNGI  => Material.WARPED_BUTTON
+
+    // CAMPFIRE
+    case CampfireVariant.NORMAL => Material.CAMPFIRE
+    case CampfireVariant.SOUL   => Material.SOUL_CAMPFIRE
 
     // CARPET
     case CarpetVariant.BLACK      => Material.BLACK_CARPET
@@ -1013,6 +1144,9 @@ class SpigotBlockVariantMapper {
 
     case DoorVariant.IRON => Material.IRON_DOOR
 
+    case DoorVariant.CRIMSON_FUNGI => Material.CRIMSON_DOOR
+    case DoorVariant.WARPED_FUNGI  => Material.WARPED_DOOR
+
     // FENCE
     case FenceVariant.ACACIA   => Material.ACACIA_FENCE
     case FenceVariant.BIRCH    => Material.BIRCH_FENCE
@@ -1023,6 +1157,9 @@ class SpigotBlockVariantMapper {
 
     case FenceVariant.NETHER_BRICK => Material.NETHER_BRICK_FENCE
 
+    case FenceVariant.CRIMSON_FUNGI => Material.CRIMSON_FENCE
+    case FenceVariant.WARPED_FUNGI  => Material.WARPED_FENCE
+
     // FENCE_GATE
     case FenceGateVariant.ACACIA   => Material.ACACIA_FENCE_GATE
     case FenceGateVariant.BIRCH    => Material.BIRCH_FENCE_GATE
@@ -1031,9 +1168,16 @@ class SpigotBlockVariantMapper {
     case FenceGateVariant.OAK      => Material.OAK_FENCE_GATE
     case FenceGateVariant.SPRUCE   => Material.SPRUCE_FENCE_GATE
 
+    case FenceGateVariant.CRIMSON_FUNGI => Material.CRIMSON_FENCE_GATE
+    case FenceGateVariant.WARPED_FUNGI  => Material.WARPED_FENCE_GATE
+
     // FERN
     case FernVariant.NORMAL => Material.FERN
     case FernVariant.TALL   => Material.LARGE_FERN
+
+    // FIRE
+    case FireVariant.NORMAL => Material.FIRE
+    case FireVariant.SOUL   => Material.SOUL_FIRE
 
     // FLOWER
     case FlowerVariant.ALLIUM             => Material.ALLIUM
@@ -1067,6 +1211,12 @@ class SpigotBlockVariantMapper {
     case FlowerPotVariant.WITHER_ROSE        => Material.POTTED_WITHER_ROSE
     case FlowerPotVariant.LILY_OF_THE_VALLEY => Material.POTTED_LILY_OF_THE_VALLEY
 
+    case FlowerPotVariant.CRIMSON_FUNGUS => Material.POTTED_CRIMSON_FUNGUS
+    case FlowerPotVariant.WARPED_FUNGUS  => Material.POTTED_WARPED_FUNGUS
+
+    case FlowerPotVariant.CRIMSON_ROOTS => Material.POTTED_CRIMSON_ROOTS
+    case FlowerPotVariant.WARPED_ROOTS  => Material.POTTED_WARPED_ROOTS
+
     case FlowerPotVariant.BROWN_MUSHROOM => Material.POTTED_BROWN_MUSHROOM
     case FlowerPotVariant.RED_MUSHROOM   => Material.POTTED_RED_MUSHROOM
 
@@ -1081,6 +1231,10 @@ class SpigotBlockVariantMapper {
     case FlowerPotVariant.CACTUS    => Material.POTTED_CACTUS
     case FlowerPotVariant.DEAD_BUSH => Material.POTTED_DEAD_BUSH
     case FlowerPotVariant.FERN      => Material.POTTED_FERN
+
+    // FUNGUS
+    case FungusVariant.CRIMSON => Material.CRIMSON_FUNGUS
+    case FungusVariant.WARPED  => Material.WARPED_FUNGUS
 
     // GLASS
     case GlassVariant.NORMAL     => Material.GLASS
@@ -1164,6 +1318,10 @@ class SpigotBlockVariantMapper {
     case IceVariant.PACKED => Material.PACKED_ICE
     case IceVariant.BLUE   => Material.BLUE_ICE
 
+    // LANTERN
+    case LanternVariant.NORMAL => Material.LANTERN
+    case LanternVariant.SOUL   => Material.SOUL_LANTERN
+
     // LEAVES
     case LeavesVariant.ACACIA   => Material.ACACIA_LEAVES
     case LeavesVariant.BIRCH    => Material.BIRCH_LEAVES
@@ -1180,12 +1338,18 @@ class SpigotBlockVariantMapper {
     case LogVariant.OAK      => Material.OAK_LOG
     case LogVariant.SPRUCE   => Material.SPRUCE_LOG
 
+    case LogVariant.CRIMSON_FUNGI => Material.CRIMSON_STEM
+    case LogVariant.WARPED_FUNGI  => Material.WARPED_STEM
+
     case LogVariant.STRIPPED_ACACIA   => Material.STRIPPED_ACACIA_LOG
     case LogVariant.STRIPPED_BIRCH    => Material.STRIPPED_BIRCH_LOG
     case LogVariant.STRIPPED_DARK_OAK => Material.STRIPPED_DARK_OAK_LOG
     case LogVariant.STRIPPED_JUNGLE   => Material.STRIPPED_JUNGLE_LOG
     case LogVariant.STRIPPED_OAK      => Material.STRIPPED_OAK_LOG
     case LogVariant.STRIPPED_SPRUCE   => Material.STRIPPED_SPRUCE_LOG
+
+    case LogVariant.STRIPPED_CRIMSON_FUNGI => Material.STRIPPED_CRIMSON_STEM
+    case LogVariant.STRIPPED_WARPED_FUNGI  => Material.STRIPPED_WARPED_STEM
 
     // MOB_HEAD
     case MobHeadVariant.CREEPER         => Material.CREEPER_HEAD
@@ -1203,6 +1367,14 @@ class SpigotBlockVariantMapper {
     case MushroomBlockVariant.BROWN => Material.BROWN_MUSHROOM_BLOCK
     case MushroomBlockVariant.RED   => Material.RED_MUSHROOM_BLOCK
     case MushroomBlockVariant.STEM  => Material.MUSHROOM_STEM
+
+    // NETHER_VINES
+    case NetherVinesVariant.TWISTING => Material.TWISTING_VINES
+    case NetherVinesVariant.WEEPING  => Material.WEEPING_VINES
+
+    // NYLIUM
+    case NyliumVariant.CRIMSON => Material.CRIMSON_NYLIUM
+    case NyliumVariant.WARPED  => Material.WARPED_NYLIUM
 
     // PILLAR
     case PillarVariant.PURPUR => Material.PURPUR_PILLAR
@@ -1224,6 +1396,9 @@ class SpigotBlockVariantMapper {
     case PlanksVariant.OAK      => Material.OAK_PLANKS
     case PlanksVariant.SPRUCE   => Material.SPRUCE_PLANKS
 
+    case PlanksVariant.CRIMSON_FUNGI => Material.CRIMSON_PLANKS
+    case PlanksVariant.WARPED_FUNGI  => Material.WARPED_PLANKS
+
     // PLANT
     case PlantVariant.SUNFLOWER => Material.SUNFLOWER
     case PlantVariant.LILAC     => Material.LILAC
@@ -1240,6 +1415,9 @@ class SpigotBlockVariantMapper {
 
     case PressurePlateVariant.STONE => Material.STONE_PRESSURE_PLATE
 
+    case PressurePlateVariant.CRIMSON_FUNGI => Material.CRIMSON_PRESSURE_PLATE
+    case PressurePlateVariant.WARPED_FUNGI  => Material.WARPED_PRESSURE_PLATE
+
     // PRISMARINE
     case PrismarineVariant.NORMAL => Material.PRISMARINE
     case PrismarineVariant.BRICK  => Material.PRISMARINE_BRICKS
@@ -1247,6 +1425,7 @@ class SpigotBlockVariantMapper {
 
     // QUARTZ_BLOCK
     case QuartzBlockVariant.NORMAL   => Material.QUARTZ_BLOCK
+    case QuartzBlockVariant.BRICKS   => Material.QUARTZ_BRICKS
     case QuartzBlockVariant.CHISELED => Material.CHISELED_QUARTZ_BLOCK
     case QuartzBlockVariant.SMOOTH   => Material.SMOOTH_QUARTZ
 
@@ -1255,6 +1434,10 @@ class SpigotBlockVariantMapper {
     case RailVariant.ACTIVATOR => Material.ACTIVATOR_RAIL
     case RailVariant.DETECTOR  => Material.DETECTOR_RAIL
     case RailVariant.POWERED   => Material.POWERED_RAIL
+
+    // ROOTS
+    case RootsVariant.CRIMSON => Material.CRIMSON_ROOTS
+    case RootsVariant.WARPED  => Material.WARPED_ROOTS
 
     // SAND
     case SandVariant.NORMAL => Material.SAND
@@ -1306,7 +1489,15 @@ class SpigotBlockVariantMapper {
     case SignVariant.OAK      => Material.OAK_SIGN
     case SignVariant.SPRUCE   => Material.SPRUCE_SIGN
 
+    case SignVariant.CRIMSON_FUNGI => Material.CRIMSON_SIGN
+    case SignVariant.WARPED_FUNGI  => Material.WARPED_SIGN
+
     // SLAB
+    case SlabVariant.BLACKSTONE          => Material.BLACKSTONE_SLAB
+    case SlabVariant.POLISHED_BLACKSTONE => Material.POLISHED_BLACKSTONE_SLAB
+    case SlabVariant.POLISHED_BLACKSTONE_BRICK =>
+      Material.POLISHED_BLACKSTONE_BRICK_SLAB
+
     case SlabVariant.BRICK            => Material.BRICK_SLAB
     case SlabVariant.NETHER_BRICK     => Material.NETHER_BRICK_SLAB
     case SlabVariant.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_SLAB
@@ -1315,6 +1506,9 @@ class SpigotBlockVariantMapper {
     case SlabVariant.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_SLAB
 
     case SlabVariant.END_STONE_BRICK => Material.END_STONE_BRICK_SLAB
+
+    case SlabVariant.CRIMSON_FUNGI => Material.CRIMSON_SLAB
+    case SlabVariant.WARPED_FUNGI  => Material.WARPED_SLAB
 
     case SlabVariant.PETRIFIED_OAK => Material.PETRIFIED_OAK_SLAB
 
@@ -1362,6 +1556,11 @@ class SpigotBlockVariantMapper {
     case SpongeVariant.WET    => Material.WET_SPONGE
 
     // STAIRS
+    case StairsVariant.BLACKSTONE          => Material.BLACKSTONE_STAIRS
+    case StairsVariant.POLISHED_BLACKSTONE => Material.POLISHED_BLACKSTONE_STAIRS
+    case StairsVariant.POLISHED_BLACKSTONE_BRICK =>
+      Material.POLISHED_BLACKSTONE_BRICK_STAIRS
+
     case StairsVariant.BRICK            => Material.BRICK_STAIRS
     case StairsVariant.NETHER_BRICK     => Material.NETHER_BRICK_STAIRS
     case StairsVariant.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_STAIRS
@@ -1370,6 +1569,9 @@ class SpigotBlockVariantMapper {
     case StairsVariant.MOSSY_COBBLESTONE => Material.MOSSY_COBBLESTONE_STAIRS
 
     case StairsVariant.END_STONE_BRICK => Material.END_STONE_BRICK_STAIRS
+
+    case StairsVariant.CRIMSON_FUNGI => Material.CRIMSON_STAIRS
+    case StairsVariant.WARPED_FUNGI  => Material.WARPED_STAIRS
 
     case StairsVariant.PRISMARINE       => Material.PRISMARINE_STAIRS
     case StairsVariant.PRISMARINE_BRICK => Material.PRISMARINE_BRICK_STAIRS
@@ -1449,7 +1651,15 @@ class SpigotBlockVariantMapper {
 
     case TrapdoorVariant.IRON => Material.IRON_TRAPDOOR
 
+    case TrapdoorVariant.CRIMSON_FUNGI => Material.CRIMSON_TRAPDOOR
+    case TrapdoorVariant.WARPED_FUNGI  => Material.WARPED_TRAPDOOR
+
     // WALL
+    case WallVariant.BLACKSTONE          => Material.BLACKSTONE_WALL
+    case WallVariant.POLISHED_BLACKSTONE => Material.POLISHED_BLACKSTONE_WALL
+    case WallVariant.POLISHED_BLACKSTONE_BRICK =>
+      Material.POLISHED_BLACKSTONE_BRICK_WALL
+
     case WallVariant.BRICK            => Material.BRICK_WALL
     case WallVariant.NETHER_BRICK     => Material.NETHER_BRICK_WALL
     case WallVariant.RED_NETHER_BRICK => Material.RED_NETHER_BRICK_WALL
@@ -1483,12 +1693,18 @@ class SpigotBlockVariantMapper {
     case WoodVariant.OAK      => Material.OAK_WOOD
     case WoodVariant.SPRUCE   => Material.SPRUCE_WOOD
 
+    case WoodVariant.CRIMSON_FUNGI => Material.CRIMSON_HYPHAE
+    case WoodVariant.WARPED_FUNGI  => Material.WARPED_HYPHAE
+
     case WoodVariant.STRIPPED_ACACIA   => Material.STRIPPED_ACACIA_WOOD
     case WoodVariant.STRIPPED_BIRCH    => Material.STRIPPED_BIRCH_WOOD
     case WoodVariant.STRIPPED_DARK_OAK => Material.STRIPPED_DARK_OAK_WOOD
     case WoodVariant.STRIPPED_JUNGLE   => Material.STRIPPED_JUNGLE_WOOD
     case WoodVariant.STRIPPED_OAK      => Material.STRIPPED_OAK_WOOD
     case WoodVariant.STRIPPED_SPRUCE   => Material.STRIPPED_SPRUCE_WOOD
+
+    case WoodVariant.STRIPPED_CRIMSON_FUNGI => Material.STRIPPED_CRIMSON_HYPHAE
+    case WoodVariant.STRIPPED_WARPED_FUNGI  => Material.STRIPPED_WARPED_HYPHAE
 
     // WOOL
     case WoolVariant.BLACK      => Material.BLACK_WOOL

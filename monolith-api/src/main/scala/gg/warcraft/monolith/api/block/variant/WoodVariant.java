@@ -35,12 +35,18 @@ public enum WoodVariant implements BlockVariant, ItemVariant {
     OAK(false),
     SPRUCE(false),
 
+    CRIMSON_FUNGI(false),
+    WARPED_FUNGI(false),
+
     STRIPPED_ACACIA(true),
     STRIPPED_BIRCH(true),
     STRIPPED_DARK_OAK(true),
     STRIPPED_JUNGLE(true),
     STRIPPED_OAK(true),
-    STRIPPED_SPRUCE(true);
+    STRIPPED_SPRUCE(true),
+
+    STRIPPED_CRIMSON_FUNGI(true),
+    STRIPPED_WARPED_FUNGI(true);
 
     public final boolean stripped;
 

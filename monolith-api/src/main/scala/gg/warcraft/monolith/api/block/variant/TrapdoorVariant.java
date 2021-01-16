@@ -36,4 +36,7 @@ public enum TrapdoorVariant implements BlockVariant, ItemVariant {
     SPRUCE,
 
     IRON,
+
+    CRIMSON_FUNGI,
+    WARPED_FUNGI,
 }

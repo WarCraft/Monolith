@@ -28,6 +28,11 @@ import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum StairsVariant implements BlockVariant, ItemVariant {
+    // BLACKSTONE
+    BLACKSTONE,
+    POLISHED_BLACKSTONE,
+    POLISHED_BLACKSTONE_BRICK,
+
     // BRICK
     BRICK,
     NETHER_BRICK,
@@ -39,6 +44,10 @@ public enum StairsVariant implements BlockVariant, ItemVariant {
 
     // END_STONE_BRICK
     END_STONE_BRICK,
+
+    // FUNGI
+    CRIMSON_FUNGI,
+    WARPED_FUNGI,
 
     // PRISMARINE
     PRISMARINE,

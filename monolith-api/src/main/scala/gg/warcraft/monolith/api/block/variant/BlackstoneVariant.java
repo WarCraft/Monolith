@@ -27,16 +27,8 @@ package gg.warcraft.monolith.api.block.variant;
 import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
-public enum ButtonVariant implements BlockVariant, ItemVariant {
-    ACACIA,
-    BIRCH,
-    DARK_OAK,
-    JUNGLE,
-    OAK,
-    SPRUCE,
-
-    STONE,
-
-    CRIMSON_FUNGI,
-    WARPED_FUNGI,
+public enum BlackstoneVariant implements BlockVariant, ItemVariant {
+    NORMAL,
+    POLISHED,
+    CHISELED_POLISHED,
 }

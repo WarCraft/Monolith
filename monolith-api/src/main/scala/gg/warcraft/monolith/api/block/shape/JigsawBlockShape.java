@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.block.variant;
+package gg.warcraft.monolith.api.block.shape;
 
-import gg.warcraft.monolith.api.block.BlockVariant;
-import gg.warcraft.monolith.api.item.ItemVariant;
+import gg.warcraft.monolith.api.block.BlockShape;
 
-public enum ButtonVariant implements BlockVariant, ItemVariant {
-    ACACIA,
-    BIRCH,
-    DARK_OAK,
-    JUNGLE,
-    OAK,
-    SPRUCE,
-
-    STONE,
-
-    CRIMSON_FUNGI,
-    WARPED_FUNGI,
+public enum JigsawBlockShape implements BlockShape {
+    DOWN_EAST,
+    DOWN_NORTH,
+    DOWN_SOUTH,
+    DOWN_WEST,
+    UP_EAST,
+    UP_NORTH,
+    UP_SOUTH,
+    UP_WEST,
+    WEST_UP,
+    EAST_UP,
+    NORTH_UP,
+    SOUTH_UP,
 }

@@ -35,6 +35,7 @@ public enum MusicDiscVariant implements ItemVariant {
     DISC_FAR,
     DISC_MALL,
     DISC_MELLOHI,
+    DISC_PIGSTEP,
     DISC_STAL,
     DISC_STRAD,
     DISC_WAIT,
