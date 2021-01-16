@@ -61,7 +61,7 @@ abstract class PlayerService(implicit
   def setEquipment(
       id: UUID,
       slot: Equipment.Slot,
-      item: Item,
+      item: Option[Item],
       force: Boolean = false
   ): Boolean
   def giveItem(id: UUID, item: Item*): List[Item]

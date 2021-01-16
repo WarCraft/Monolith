@@ -125,12 +125,12 @@ class SpigotPlayerService(implicit
   override def setEquipment(
       id: UUID,
       slot: Slot,
-      item: Item,
+      item: Option[Item],
       force: Boolean = false
   ): Boolean = server.getPlayer(id) ?? { player =>
     val inventory = player.getInventory
     val (unequip, equipAction) = getEquipActions(inventory, slot)
-    val mapItemAndEquip = () => equipAction.apply(itemMapper map item)
+    val mapItemAndEquip = () => equipAction.apply(item.map(itemMapper.map).orNull)
     if (unequip.getType == Material.AIR) {
       mapItemAndEquip()
       !force
