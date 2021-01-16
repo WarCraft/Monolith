@@ -131,21 +131,10 @@ class SpigotPlayerService(implicit
     val inventory = player.getInventory
     val (unequip, equipAction) = getEquipActions(inventory, slot)
     val mapItemAndEquip = () => equipAction.apply(item.map(itemMapper.map).orNull)
-    if (unequip.getType == Material.AIR) {
+    if (unequip.getType == Material.AIR || force) {
       mapItemAndEquip()
-      !force
-    } else {
-      val undelivered = inventory.addItem(unequip)
-      if (undelivered.isEmpty) {
-        mapItemAndEquip()
-        !force
-      } else {
-        if (force) {
-          mapItemAndEquip()
-          true
-        } else false
-      }
-    }
+      true
+    } else false
   }
 
   // TODO delete in favor of ItemService variant
