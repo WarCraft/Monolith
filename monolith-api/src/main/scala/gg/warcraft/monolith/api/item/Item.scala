@@ -108,6 +108,8 @@ trait StackableItem extends Item {
   val count: Int
   def withCount(count: Int): this.type =
     copyWith("count", count)
+  def oneLessOrNone: Option[this.type] =
+    if(count > 1) Some(withCount(count - 1)) else None
 
   def maxCount: Int = 64
   require(count > 0 && count <= maxCount, {
