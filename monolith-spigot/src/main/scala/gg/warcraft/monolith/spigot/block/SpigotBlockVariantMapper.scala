@@ -73,6 +73,7 @@ class SpigotBlockVariantMapper {
     case CoralFan(_, variant, Some(_), _)      => mapWall(variant)
     case MobHead(_, variant, Some(_), _)       => mapWall(variant)
     case Sign(_, variant, Some(_), _, _, _, _) => mapWall(variant)
+    case Torch(_, variant, _, true)            => mapWall(variant)
 
     case it: VariableBlock[_] => map(it.variant)
   }
@@ -1647,6 +1648,10 @@ class SpigotBlockVariantMapper {
     case TerracottaVariant.WHITE      => Material.WHITE_TERRACOTTA
     case TerracottaVariant.YELLOW     => Material.YELLOW_TERRACOTTA
 
+    // TORCH
+    case TorchVariant.NORMAL => Material.TORCH
+    case TorchVariant.SOUL   => Material.SOUL_TORCH
+
     // TRAPDOOR
     case TrapdoorVariant.ACACIA   => Material.ACACIA_TRAPDOOR
     case TrapdoorVariant.BIRCH    => Material.BIRCH_TRAPDOOR
@@ -1866,5 +1871,13 @@ class SpigotBlockVariantMapper {
     case SignVariant.JUNGLE   => Material.JUNGLE_WALL_SIGN
     case SignVariant.OAK      => Material.OAK_WALL_SIGN
     case SignVariant.SPRUCE   => Material.SPRUCE_WALL_SIGN
+
+    case SignVariant.CRIMSON_FUNGI => Material.CRIMSON_WALL_SIGN
+    case SignVariant.WARPED_FUNGI  => Material.WARPED_WALL_SIGN
+  }
+
+  private def mapWall(variant: TorchVariant): Material = variant match {
+    case TorchVariant.NORMAL => Material.WALL_TORCH
+    case TorchVariant.SOUL   => Material.SOUL_WALL_TORCH
   }
 }

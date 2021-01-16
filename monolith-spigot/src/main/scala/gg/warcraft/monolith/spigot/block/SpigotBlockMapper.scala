@@ -592,14 +592,6 @@ class SpigotBlockMapper(
     // Create new block data object
     val material =
       block match { // TODO match on block.type for jump table performance in Scala 3
-        case it: Kelp =>
-          if (it.state == KelpState.FULLY_GROWN) Material.KELP_PLANT
-          else Material.KELP
-
-        case it: MelonStem =>
-          if (it.state == MelonStemState.ATTACHED) Material.ATTACHED_MELON_STEM
-          else Material.MELON_STEM
-
         case it: NetherVines => it.variant match {
             case NetherVinesVariant.TWISTING => it.state match {
                 case NetherVinesState.FULLY_GROWN => Material.TWISTING_VINES_PLANT
@@ -609,7 +601,17 @@ class SpigotBlockMapper(
                 case NetherVinesState.FULLY_GROWN => Material.WEEPING_VINES_PLANT
                 case _                            => Material.WEEPING_VINES
               }
-          }
+          } // TODO is it possible to move this into variantMapper.map?
+
+        case it: VariableBlock[_] => variantMapper.map(it)
+
+        case it: Kelp =>
+          if (it.state == KelpState.FULLY_GROWN) Material.KELP_PLANT
+          else Material.KELP
+
+        case it: MelonStem =>
+          if (it.state == MelonStemState.ATTACHED) Material.ATTACHED_MELON_STEM
+          else Material.MELON_STEM
 
         case it: PumpkinStem =>
           if (it.state == PumpkinStemState.ATTACHED) Material.ATTACHED_PUMPKIN_STEM
@@ -623,17 +625,7 @@ class SpigotBlockMapper(
           if (it.tall) Material.TALL_SEAGRASS
           else Material.SEAGRASS
 
-        case it: Torch => it.variant match {
-            case TorchVariant.NORMAL =>
-              if (it.wall) Material.WALL_TORCH
-              else Material.TORCH
-            case TorchVariant.SOUL =>
-              if (it.wall) Material.SOUL_WALL_TORCH
-              else Material.SOUL_TORCH
-          }
-
-        case it: VariableBlock[_] => variantMapper.map(it)
-        case it                   => typeMapper.map(it.`type`)
+        case it => typeMapper.map(it.`type`)
       }
 
     val data = Bukkit.createBlockData(material)
