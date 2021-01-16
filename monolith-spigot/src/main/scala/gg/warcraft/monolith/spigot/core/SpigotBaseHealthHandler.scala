@@ -31,8 +31,6 @@ import org.bukkit.attribute.Attribute
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.{EventHandler, Listener}
 
-import scala.jdk.CollectionConverters.CollectionHasAsScala
-
 class SpigotBaseHealthHandler(config: MonolithConfig)(implicit
     taskService: TaskService,
     entityService: EntityService
@@ -43,9 +41,6 @@ class SpigotBaseHealthHandler(config: MonolithConfig)(implicit
   def on(event: PlayerJoinEvent): Unit = {
     val player = event.getPlayer
     val attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-    attribute.getModifiers.asScala
-      .filter { _.getName.startsWith("monolith.") }
-      .foreach(attribute.removeModifier)
     attribute.setBaseValue(baseHealth)
 
     taskService.runNextTick { () => player.setHealth(player.getHealth) }
