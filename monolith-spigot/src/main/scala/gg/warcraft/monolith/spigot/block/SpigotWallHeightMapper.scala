@@ -43,7 +43,7 @@ class SpigotWallHeightMapper {
   }
 
   def map(wall: SpigotWall): Map[BlockFace, WallHeight] = Map(
-    BlockFace.UP -> map(wall.getHeight(SpigotBlockFace.UP)),
+    BlockFace.UP -> (if (wall.isUp) WallHeight.TALL else WallHeight.NONE),
     BlockFace.NORTH -> map(wall.getHeight(SpigotBlockFace.NORTH)),
     BlockFace.EAST -> map(wall.getHeight(SpigotBlockFace.EAST)),
     BlockFace.SOUTH -> map(wall.getHeight(SpigotBlockFace.SOUTH)),
@@ -51,10 +51,8 @@ class SpigotWallHeightMapper {
   )
 
   def map(wall: SpigotWall, heights: Map[BlockFace, WallHeight]): Unit = {
-    wall.setHeight(
-      SpigotBlockFace.UP,
-      map(heights.getOrElse(BlockFace.UP, WallHeight.NONE))
-    )
+    val upHeight = heights.getOrElse(BlockFace.UP, WallHeight.NONE)
+    wall.setUp(if (upHeight == WallHeight.TALL) true else false)
     wall.setHeight(
       SpigotBlockFace.NORTH,
       map(heights.getOrElse(BlockFace.NORTH, WallHeight.NONE))
