@@ -69,6 +69,7 @@ trait Item extends CaseTrait {
 
   def isVariant(variant: ItemVariant): Boolean = false
   def hasData(data: ItemTypeOrVariant): Boolean = this.`type` == data
+  def data: ItemTypeOrVariant = this.`type`
 }
 
 trait DurableItem extends Item {
@@ -126,4 +127,5 @@ trait VariableItem[T <: ItemVariant] extends Item {
     this.variant == variant
   override def hasData(data: ItemTypeOrVariant): Boolean =
     this.variant == data || super.hasData(data)
+  override def data: ItemTypeOrVariant = variant
 }
