@@ -25,10 +25,13 @@
 package gg.warcraft.monolith.spigot.item
 
 import gg.warcraft.monolith.api.block.BlockVariant
+import gg.warcraft.monolith.api.core.Color
 import gg.warcraft.monolith.api.item._
 import gg.warcraft.monolith.api.item.variant._
 import gg.warcraft.monolith.spigot.block.SpigotBlockVariantMapper
+import gg.warcraft.monolith.spigot.core.SpigotColorMapper
 import org.bukkit.Material
+import org.bukkit.inventory.meta.LeatherArmorMeta
 
 import java.util
 
@@ -41,13 +44,35 @@ private object SpigotItemVariantMapper {
 }
 
 class SpigotItemVariantMapper(
-    private implicit val blockMapper: SpigotBlockVariantMapper
+    private implicit val blockMapper: SpigotBlockVariantMapper,
+    private implicit val colorMapper: SpigotColorMapper
 ) {
   def map(material: Material): ItemVariant =
     SpigotItemVariantMapper.materialCache.computeIfAbsent(material, compute)
 
-  def map(item: SpigotItem): ItemVariant =
-    map(item.getType)
+  def map(item: SpigotItem): ItemVariant = {
+    val variant = map(item.getType)
+
+    item.getItemMeta match {
+      case leather: LeatherArmorMeta =>
+        colorMapper.map(leather.getColor) match {
+          case Some(color) =>
+            val name = Color.toString(color)
+            variant match {
+              case it: HelmetVariant =>
+                HelmetVariant.valueOf(s"${name}_${it.name}")
+              case it: ChestplateVariant =>
+                ChestplateVariant.valueOf(s"${name}_${it.name}")
+              case it: LeggingsVariant =>
+                LeggingsVariant.valueOf(s"${name}_${it.name}")
+              case it: BootsVariant =>
+                BootsVariant.valueOf(s"${name}_${it.name}")
+            }
+          case None => variant
+        }
+      case _ => variant
+    }
+  }
 
   def map(variant: ItemVariant): Material =
     SpigotItemVariantMapper.variantCache.computeIfAbsent(variant, compute)

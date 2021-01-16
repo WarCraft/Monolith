@@ -47,4 +47,47 @@ class SpigotColorMapper {
     case Color.White   => SpigotColor.WHITE
     case Color.Yellow  => SpigotColor.YELLOW
   }
+
+  private val spigotColors = List(
+    SpigotColor.AQUA,
+    SpigotColor.BLACK,
+    SpigotColor.BLUE,
+    SpigotColor.FUCHSIA,
+    SpigotColor.GRAY,
+    SpigotColor.GREEN,
+    SpigotColor.LIME,
+    SpigotColor.MAROON,
+    SpigotColor.NAVY,
+    SpigotColor.OLIVE,
+    SpigotColor.ORANGE,
+    SpigotColor.PURPLE,
+    SpigotColor.RED,
+    SpigotColor.SILVER,
+    SpigotColor.TEAL,
+    SpigotColor.WHITE,
+    SpigotColor.YELLOW
+  )
+
+  def map(color: SpigotColor): Option[Color] = {
+    spigotColors.find { _ == color }.flatMap {
+      case SpigotColor.AQUA    => Some(Color.Aqua)
+      case SpigotColor.BLACK   => Some(Color.Black)
+      case SpigotColor.BLUE    => Some(Color.Blue)
+      case SpigotColor.FUCHSIA => Some(Color.Fuchsia)
+      case SpigotColor.GRAY    => Some(Color.Gray)
+      case SpigotColor.GREEN   => Some(Color.Green)
+      case SpigotColor.LIME    => Some(Color.Lime)
+      case SpigotColor.MAROON  => Some(Color.Maroon)
+      case SpigotColor.NAVY    => Some(Color.Navy)
+      case SpigotColor.OLIVE   => Some(Color.Olive)
+      case SpigotColor.ORANGE  => Some(Color.Orange)
+      case SpigotColor.PURPLE  => Some(Color.Purple)
+      case SpigotColor.RED     => Some(Color.Red)
+      case SpigotColor.SILVER  => Some(Color.Silver)
+      case SpigotColor.TEAL    => Some(Color.Teal)
+      case SpigotColor.WHITE   => Some(Color.White)
+      case SpigotColor.YELLOW  => Some(Color.Yellow)
+      case _                   => None
+    }
+  }
 }

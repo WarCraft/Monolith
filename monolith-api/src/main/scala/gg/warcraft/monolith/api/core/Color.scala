@@ -40,4 +40,25 @@ object Color {
     case "WHITE"   => Color.White
     case "YELLOW"  => Color.Yellow
   }
+
+  // TODO refactor Color into list of String vals
+  def toString(color: Color): String = color match {
+    case Color.Aqua    => "AQUA"
+    case Color.Black   => "BLACK"
+    case Color.Blue    => "BLUE"
+    case Color.Fuchsia => "FUCHSIA"
+    case Color.Gray    => "GRAY"
+    case Color.Green   => "GREEN"
+    case Color.Lime    => "LIME"
+    case Color.Maroon  => "MAROON"
+    case Color.Navy    => "NAVY"
+    case Color.Olive   => "OLIVE"
+    case Color.Orange  => "ORANGE"
+    case Color.Purple  => "PURPLE"
+    case Color.Red     => "RED"
+    case Color.Silver  => "SILVER"
+    case Color.Teal    => "TEAL"
+    case Color.White   => "WHITE"
+    case Color.Yellow  => "YELLOW"
+  }
 }
