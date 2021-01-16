@@ -58,7 +58,7 @@ object future {
         logger: Logger
     ): Future[T] = self.andThen {
       case Success(result) =>
-        // TODO logger.info { s"$repository::$method ${params.mkString(", ")}" }
+      // TODO logger.info { s"$repository::$method ${params.mkString(", ")}" }
       case Failure(exception) => logger.severe(exception.getMessage)
     }
 
@@ -107,5 +107,6 @@ object string {
 
   @inline implicit final class StringOps(private val self: String) extends AnyVal {
     def stripChatCodes: String = self.replaceAll("§[0-9a-z]", "")
+    def beautify: String = self.split('_').map { _.capitalize }.mkString(" ")
   }
 }
