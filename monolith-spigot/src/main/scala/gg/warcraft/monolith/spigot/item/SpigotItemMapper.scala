@@ -127,7 +127,7 @@ class SpigotItemMapper(
         case Some(variant) => variant.asInstanceOf[T]
         case None =>
           val item = itemAndVariantOverride._1
-          variantMapper.map(item.getType).asInstanceOf[T]
+          variantMapper.map(item).asInstanceOf[T]
       }
 
     // Lazily construct tuples for all the different types of parameter sets
