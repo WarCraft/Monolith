@@ -33,11 +33,11 @@ import gg.warcraft.monolith.api.block.variant._
 import gg.warcraft.monolith.api.world.BlockLocation
 import gg.warcraft.monolith.spigot.Extensions._
 import gg.warcraft.monolith.spigot.world.SpigotLocationMapper
-import org.bukkit.block.data.{Rail => _, _}
 import org.bukkit.block.data.`type`.Bed.{Part => SpigotBedPart}
 import org.bukkit.block.data.`type`.Door.{Hinge => SpigotDoorHinge}
 import org.bukkit.block.data.`type`.Slab.{Type => SpigotSlabType}
 import org.bukkit.block.data.`type`.Switch
+import org.bukkit.block.data.{Rail => _, _}
 import org.bukkit.{Bukkit, Material}
 
 import java.util
@@ -622,6 +622,15 @@ class SpigotBlockMapper(
         case it: Seagrass => // TODO SeagrassVariant (BlockVariant only)
           if (it.tall) Material.TALL_SEAGRASS
           else Material.SEAGRASS
+
+        case it: Torch => it.variant match {
+            case TorchVariant.NORMAL =>
+              if (it.wall) Material.WALL_TORCH
+              else Material.TORCH
+            case TorchVariant.SOUL =>
+              if (it.wall) Material.SOUL_WALL_TORCH
+              else Material.SOUL_TORCH
+          }
 
         case it: VariableBlock[_] => variantMapper.map(it)
         case it                   => typeMapper.map(it.`type`)

@@ -845,6 +845,12 @@ class SpigotBlockVariantMapper {
     case Material.WHITE_TERRACOTTA      => TerracottaVariant.WHITE
     case Material.YELLOW_TERRACOTTA     => TerracottaVariant.YELLOW
 
+    // TORCH
+    case Material.TORCH           => TorchVariant.NORMAL
+    case Material.WALL_TORCH      => TorchVariant.NORMAL
+    case Material.SOUL_TORCH      => TorchVariant.SOUL
+    case Material.SOUL_WALL_TORCH => TorchVariant.SOUL
+
     // TRAPDOOR
     case Material.ACACIA_TRAPDOOR   => TrapdoorVariant.ACACIA
     case Material.BIRCH_TRAPDOOR    => TrapdoorVariant.BIRCH
