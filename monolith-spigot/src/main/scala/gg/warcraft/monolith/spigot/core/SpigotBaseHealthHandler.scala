@@ -24,6 +24,7 @@
 
 package gg.warcraft.monolith.spigot.core
 
+import gg.warcraft.monolith.api.core.Duration.DurationOps
 import gg.warcraft.monolith.api.core.MonolithConfig
 import gg.warcraft.monolith.api.core.task.TaskService
 import gg.warcraft.monolith.api.entity.EntityService
@@ -41,8 +42,9 @@ class SpigotBaseHealthHandler(config: MonolithConfig)(implicit
   def on(event: PlayerJoinEvent): Unit = {
     val player = event.getPlayer
     val attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-    attribute.setBaseValue(baseHealth)
+    if (attribute.getBaseValue != baseHealth) attribute.setBaseValue(baseHealth)
 
-    taskService.runNextTick { () => player.setHealth(player.getHealth) }
+    taskService.runLater(1.ticks, () => player.setHealth(player.getHealth + 1))
+    taskService.runLater(2.ticks, () => player.setHealth(player.getHealth - 1))
   }
 }
