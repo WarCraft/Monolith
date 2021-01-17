@@ -27,6 +27,7 @@ package gg.warcraft.monolith.api.util
 import gg.warcraft.monolith.api.block.BlockTypeVariantOrState
 import gg.warcraft.monolith.api.core.Duration.DurationOps
 import gg.warcraft.monolith.api.core.{Color, ColorCode, Duration}
+import gg.warcraft.monolith.api.entity.Entity
 import gg.warcraft.monolith.api.entity.team.{Team, TeamService}
 import gg.warcraft.monolith.api.item.{ItemService, ItemTypeOrVariant}
 import gg.warcraft.monolith.api.util.types.tags.{
@@ -60,6 +61,11 @@ object codecs {
       Direction.valueOf
     implicit val directionEncoder: Direction => String =
       _.name
+
+    implicit val entityTypeDecoder: String => Entity.Type =
+      Entity.Type.withName
+    implicit val entityTypeEncoder: Entity.Type => String =
+      _.toString
 
     implicit def itemDataDecoder(implicit
         service: ItemService
