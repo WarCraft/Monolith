@@ -24,11 +24,10 @@
 
 package gg.warcraft.monolith.api.block
 
-import java.util
-
 import gg.warcraft.monolith.api.core.CaseTrait
 import gg.warcraft.monolith.api.world.{BlockLocation, Location}
 
+import java.util
 import scala.annotation.varargs
 import scala.jdk.CollectionConverters._
 
@@ -56,9 +55,10 @@ trait Block extends CaseTrait {
   val y: Int = location.y
   val z: Int = location.z
 
+  val data: BlockTypeVariantOrState = `type`
+  def hasData(data: BlockTypeVariantOrState): Boolean = this.`type` == data
   def isVariant(variant: BlockVariant): Boolean = false
   def hasState(state: BlockState): Boolean = false
-  def hasData(data: BlockTypeVariantOrState): Boolean = this.`type` == data
 }
 
 trait AttachedBlock extends Block {
@@ -152,10 +152,11 @@ trait StatefulBlock[T <: BlockState] extends Block {
   def withState(state: T): this.type =
     copyWith("state", state)
 
-  override def hasState(state: BlockState): Boolean =
-    this.state == state
+  override val data: BlockTypeVariantOrState = state
   override def hasData(data: BlockTypeVariantOrState): Boolean =
     this.state == data || super.hasData(data)
+  override def hasState(state: BlockState): Boolean =
+    this.state == state
 }
 
 trait VariableBlock[T <: BlockVariant] extends Block {
@@ -163,8 +164,9 @@ trait VariableBlock[T <: BlockVariant] extends Block {
   def withVariant(variant: T): this.type =
     copyWith("variant", variant)
 
-  override def isVariant(variant: BlockVariant): Boolean =
-    this.variant == variant
+  override val data: BlockTypeVariantOrState = variant
   override def hasData(data: BlockTypeVariantOrState): Boolean =
     this.variant == data || super.hasData(data)
+  override def isVariant(variant: BlockVariant): Boolean =
+    this.variant == variant
 }
