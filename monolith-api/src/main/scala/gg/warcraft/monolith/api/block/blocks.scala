@@ -904,8 +904,10 @@ final case class Ladder(
 final case class Lantern(
     location: BlockLocation,
     variant: LanternVariant,
+    flooded: Boolean,
     hanging: Boolean
-) extends VariableBlock[LanternVariant] {
+) extends VariableBlock[LanternVariant]
+    with FloodableBlock {
   override val `type` = BlockType.LANTERN
   def withHanging(hanging: Boolean): Lantern =
     copyWith("hanging", hanging)

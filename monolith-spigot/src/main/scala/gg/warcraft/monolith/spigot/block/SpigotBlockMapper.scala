@@ -505,7 +505,7 @@ class SpigotBlockMapper(
       case m if m.isLantern =>
         block =>
           val hanging = data[SpigotLantern](block).isHanging
-          Lantern(loc(block), v[LanternVariant](block), hanging)
+          Lantern(loc(block), v[LanternVariant](block), flooded(block), hanging)
 
       // MUSHROOM_BLOCK
       case m if m.isMushroomBlock =>
