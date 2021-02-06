@@ -43,6 +43,11 @@ class SpigotCommandService(implicit
       .asInstanceOf[Constructor[PluginCommand]]
   pluginCommandConstructor.setAccessible(true)
 
+  override def executeCommand(label: String, args: String*): Unit = {
+    val command = s"$label ${args.mkString(" ")}"
+    server.dispatchCommand(server.getConsoleSender, command)
+  }
+
   override def executeCommand(playerId: UUID, label: String, args: String*): Unit = {
     val player = server.getPlayer(playerId)
     if (player != null) {

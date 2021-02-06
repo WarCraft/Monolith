@@ -24,11 +24,10 @@
 
 package gg.warcraft.monolith.api.core.command
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.core.Message
 import gg.warcraft.monolith.api.core.auth.Principal
 
+import java.util.UUID
 import scala.util.chaining._
 
 abstract class CommandService {
@@ -41,6 +40,8 @@ abstract class CommandService {
   private var _handlers: Map[Command, Command.Handler] = Map.empty
 
   def commands: Map[String, Command] = _commands
+
+  def executeCommand(label: String, args: String*): Unit
 
   def executeCommand(playerId: UUID, label: String, args: String*): Unit
 
