@@ -30,6 +30,7 @@ lazy val api = (project in file("monolith-api"))
       "org.flywaydb" % "flyway-core" % "7.4.+",
       "org.joml" % "joml" % jomlVersion,
       "org.joml" % "joml-primitives" % jomlVersion,
+      "org.postgresql" % "postgresql" % "42.2.18",
       "org.xerial" % "sqlite-jdbc" % "3.34.+",
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
