@@ -92,7 +92,8 @@ trait MonolithPlugin {
         props.setProperty("dataSource.databaseName", postgres.database)
         props.setProperty("dataSource.user", postgres.user)
         props.setProperty("dataSource.password", postgres.password)
-        props.setProperty("connectionTimeout", 30000.toString)
+        props.setProperty("maximumPoolSize", postgres.poolSize.toString)
+        props.setProperty("connectionTimeout", 10000.toString)
         ConfigFactory.parseProperties(props)
       case None => throw new IllegalStateException(
           "Embedded database is disabled, but Postgres config is missing."

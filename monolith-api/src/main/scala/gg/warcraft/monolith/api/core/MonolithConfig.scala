@@ -24,11 +24,11 @@
 
 package gg.warcraft.monolith.api.core
 
-import java.time.{ZoneId, ZoneOffset}
-
 import gg.warcraft.monolith.api.block.box.BlockBox
 import gg.warcraft.monolith.api.entity.team.Team
 import gg.warcraft.monolith.api.world.Direction
+
+import java.time.{ZoneId, ZoneOffset}
 
 case class MonolithConfig(
     buildRepository: BuildRepositoryConfig,
@@ -63,6 +63,7 @@ case class PostgresConfig(
     database: String,
     user: String,
     password: String,
+    poolSize: Int,
     ssl: Boolean
 )
 
