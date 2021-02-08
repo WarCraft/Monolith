@@ -24,22 +24,16 @@
 
 package gg.warcraft.monolith.spigot.world
 
-import java.util.UUID
-
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.math.Vector3f
-import gg.warcraft.monolith.api.world.{
-  BlockLocation, Location, Sound, SoundCategory, World, WorldService
-}
-import gg.warcraft.monolith.spigot.block.{
-  SpigotBlock, SpigotBlockMapper, SpigotBlockStateMapper, SpigotBlockTypeMapper,
-  SpigotBlockVariantMapper
-}
-import org.bukkit.{Material, Server}
+import gg.warcraft.monolith.api.world._
+import gg.warcraft.monolith.spigot.block._
 import org.bukkit.block.{BlockFace => SpigotBlockFace}
 import org.bukkit.projectiles.ProjectileSource
 import org.bukkit.util.Vector
+import org.bukkit.{Material, Server}
 
+import java.util.UUID
 import scala.jdk.CollectionConverters._
 
 class SpigotWorldService(
@@ -133,20 +127,20 @@ class SpigotWorldService(
     data match {
       case it: BlockType =>
         val material = blockTypeMapper.map(it)
-        spigotBlock.setType(Material.AIR)
-        spigotBlock.setType(material)
+        spigotBlock.setType(Material.AIR, /* physics */ false)
+        spigotBlock.setType(material, /* physics */ false)
       case it: BlockVariant =>
         // TODO this doesnt set all variants due to block state
         val material = blockVariantMapper.map(it)
-        spigotBlock.setType(Material.AIR)
-        spigotBlock.setType(material)
+        spigotBlock.setType(Material.AIR, /* physics */ false)
+        spigotBlock.setType(material, /* physics */ false)
       case it: BlockState =>
         val material = blockStateMapper.map(it)
-        spigotBlock.setType(Material.AIR)
-        spigotBlock.setType(material)
+        spigotBlock.setType(Material.AIR, /* physics */ false)
+        spigotBlock.setType(material, /* physics */ false)
         val blockData = spigotBlock.getBlockData
         blockStateMapper.map(it, blockData)
-        spigotBlock.setBlockData(blockData)
+        spigotBlock.setBlockData(blockData, /* physics */ false)
     }
   }
 
