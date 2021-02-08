@@ -41,9 +41,10 @@ class PlayerSpawnLocationHandler(implicit
   }
 
   override def reduce[T <: PreEvent](event: T): T = event match {
-    case event @ PlayerPreRespawnEvent(player, _) =>
-      event.copy(location = player.team.get.spawn).asInstanceOf[T]
-
+    case event @ PlayerPreRespawnEvent(player, _) => player.team match {
+        case Some(team) => event.copy(location = team.spawn).asInstanceOf[T]
+        case None       => event
+      }
     case _ => event
   }
 }

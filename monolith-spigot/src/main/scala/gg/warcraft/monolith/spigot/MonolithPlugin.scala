@@ -52,6 +52,7 @@ import gg.warcraft.monolith.api.player.currency.{
   SqliteCurrencyRepository
 }
 import gg.warcraft.monolith.api.player.data._
+import gg.warcraft.monolith.api.player.handler.PlayerSpawnLocationHandler
 import gg.warcraft.monolith.api.player.hiding.PlayerHidingHandler
 import gg.warcraft.monolith.api.player.statistic.archive.{
   PostgresStatisticArchiveRepository, SqliteStatisticArchiveRepository,
@@ -188,6 +189,7 @@ class MonolithPlugin extends SpigotMonolithPlugin {
     eventService.subscribe(new StatusHandler)
     eventService.subscribe(new PlayerDataCacheHandler)
     eventService.subscribe(new PlayerHidingHandler)
+    eventService.subscribe(new PlayerSpawnLocationHandler)
   }
 
   private def enableTasks(): Unit = {
