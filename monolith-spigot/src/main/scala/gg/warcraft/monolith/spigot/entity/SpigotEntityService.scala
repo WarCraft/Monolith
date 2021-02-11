@@ -144,8 +144,12 @@ class SpigotEntityService(implicit
   }
 
   override def removeEntity(id: UUID): Unit = {
-    getSpigotEntity(id).foreach { _.remove() }
-    eventService << EntityRemoveEvent(id, hasDied = false)
+    getSpigotEntity(id) match {
+      case Some(entity) if entity.getType != EntityType.PLAYER =>
+        entity.remove()
+        eventService << EntityRemoveEvent(id, hasDied = false)
+      case _ =>
+    }
   }
 
   override def teleportEntity(
