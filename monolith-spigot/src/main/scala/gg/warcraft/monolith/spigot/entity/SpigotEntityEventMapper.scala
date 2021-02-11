@@ -301,7 +301,7 @@ class SpigotEntityEventMapper(implicit
     EntityDeathEvent(entity, reducedDrops)
       .tap { entityStatus.handle }
       .tap { eventService.publish }
-    if (entity.typed != EntityType.PLAYER) {
+    if (entity.typed != Entity.Type.PLAYER) {
       eventService << EntityRemoveEvent(entity.id, hasDied = true)
     }
   }
