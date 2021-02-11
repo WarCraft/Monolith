@@ -111,22 +111,16 @@ trait MonolithPlugin {
       .configure(classLoader)
       .pipe { it =>
         if (config.embedded) {
-          val databasePath =
-            s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
-          it.dataSource(s"jdbc:sqlite:$databasePath", null, null)
-            .locations("classpath:/db/migration/sqlite")
+          val path = s"${dataFolder.getAbsolutePath}${separator}database.sqlite"
+          it.dataSource(s"jdbc:sqlite:$path", null, null)
         } else config.postgres match {
-          case Some(postgres) =>
-            it.dataSource(
-              s"jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}",
-              postgres.user,
-              postgres.password
-            ).locations("classpath:/db/migration/postgres")
-          case None => throw new IllegalStateException(
-              "Embedded database is disabled, but Postgres config is missing."
-            )
+          case Some(PostgresConfig(host, port, database, user, password, _, _)) =>
+            it.dataSource(s"jdbc:postgresql://$host:$port/$database", user, password)
+          case None =>
+            val err = "Embedded database is disabled, but Postgres config is missing"
+            throw new IllegalStateException(err)
         }
-      }
+      }.pipe { _.locations("classpath:/db/migration") }
       .load
     val migrations = flyway.migrate().migrationsExecuted
     logger.info(s"Applied $migrations new database schema migrations.")
