@@ -94,6 +94,11 @@ abstract class EntityService(implicit
       direction: Vector3f = null
   ): Unit
 
+  def crippleEntity(id:UUID, duration: Duration):Unit = {
+    removePotionEffect(id, PotionEffect.SLOW)
+    addPotionEffect(id, PotionEffect(PotionEffect.SLOW, 7, duration))
+  }
+
   def heavyEntity(id: UUID, duration: Duration): Unit = {
     val entity = getEntity(id)
     val location = entity.location
@@ -106,8 +111,7 @@ abstract class EntityService(implicit
   }
 
   def freezeEntity(id: UUID, duration: Duration): Unit = {
-    removePotionEffect(id, PotionEffect.SLOW)
-    addPotionEffect(id, PotionEffect(PotionEffect.SLOW, 7, duration))
+    crippleEntity(id, duration)
     heavyEntity(id, duration)
   }
 
