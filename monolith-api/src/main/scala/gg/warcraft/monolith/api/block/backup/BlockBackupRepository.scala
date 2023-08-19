@@ -59,7 +59,7 @@ private trait BlockBackupContext[I <: SqlIdiom, N <: NamingStrategy] {
   }
 
   def insert = quote {
-    (q: EntityQuery[BlockBackup], backup: BlockBackup) => q.insert { backup }
+    (q: EntityQuery[BlockBackup], backup: BlockBackup) => q.insertValue { backup }
   }
 
   def deleteById = quote {

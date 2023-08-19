@@ -59,7 +59,7 @@ private trait StatisticRepositoryContext[I <: SqlIdiom, N <: NamingStrategy] {
 
   def upsert = quote {
     (q: EntityQuery[Statistic], statistic: Statistic) =>
-      q.insert(statistic)
+      q.insertValue(statistic)
         .onConflictUpdate(_.playerId, _.statistic) {
           (t, e) => t.value -> (t.value + e.value)
         }

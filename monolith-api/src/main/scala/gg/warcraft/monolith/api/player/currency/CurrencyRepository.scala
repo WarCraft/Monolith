@@ -53,7 +53,7 @@ private trait CurrencyContext[I <: SqlIdiom, N <: NamingStrategy] {
 
   def upsert = quote {
     (q: EntityQuery[Currency], currency: Currency) =>
-      q.insert(currency)
+      q.insertValue(currency)
         .onConflictUpdate(_.playerId, _.currency)(
           (t, e) => t.amount -> (t.amount + e.amount),
           (t, e) => t.lifetime -> (t.lifetime + e.lifetime)

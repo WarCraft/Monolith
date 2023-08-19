@@ -57,7 +57,7 @@ private trait EntityDataContext[I <: SqlIdiom, N <: NamingStrategy] {
 
   def upsert = quote {
     (q: EntityQuery[EntityData], data: EntityData) =>
-      q.insert(data).onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
+      q.insertValue(data).onConflictUpdate(_.id) { (t, e) => t.team -> e.team }
   }
 
   def deleteById = quote {

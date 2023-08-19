@@ -26,7 +26,6 @@ package gg.warcraft.monolith.api.item
 
 import java.util
 
-import scala.annotation.varargs
 import scala.jdk.CollectionConverters._
 
 trait Inventory {
@@ -34,7 +33,7 @@ trait Inventory {
   def getItems: util.List[Item] = items.asJava
 
   def hasSpace(count: Int): Boolean
-  def hasSpaceFor(@varargs items: Item*): Boolean
+  def hasSpaceFor(items: Item*): Boolean
 
   def contains(`type`: ItemType, count: Int): Boolean
   def contains(`type`: ItemType): Boolean

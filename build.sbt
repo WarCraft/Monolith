@@ -1,7 +1,7 @@
 lazy val projectSettings = Seq(
   organization := "gg.warcraft",
   version := "16.0.0-SNAPSHOT",
-  scalaVersion := "2.13.4",
+  scalaVersion := "2.13.11",
   scalacOptions ++= Seq(
     "-language:implicitConversions"
   ),
@@ -11,15 +11,15 @@ lazy val projectSettings = Seq(
 )
 
 lazy val assemblySettings = Seq(
-  assemblyJarName in assembly := s"${name.value}-${version.value}-all.jar",
-  assemblyMergeStrategy in assembly := {
+  assembly / assemblyJarName := s"${name.value}-${version.value}-all.jar",
+  assembly / assemblyMergeStrategy := {
     case PathList("META-INF", _ @_*) => MergeStrategy.discard
     case "module-info.class"         => MergeStrategy.discard
-    case it                          => (assemblyMergeStrategy in assembly).value(it)
+    case it                          => (assembly / assemblyMergeStrategy).value(it)
   }
 )
 
-val circeVersion = "0.13.+"
+val circeVersion = "0.14.2"
 val jomlVersion = "1.10.+"
 
 lazy val api = (project in file("monolith-api"))
@@ -27,17 +27,17 @@ lazy val api = (project in file("monolith-api"))
     name := "monolith-api",
     projectSettings,
     libraryDependencies ++= Seq(
-      "org.flywaydb" % "flyway-core" % "7.4.+",
+      "org.flywaydb" % "flyway-core" % "9.21.+",
       "org.joml" % "joml" % jomlVersion,
       "org.joml" % "joml-primitives" % jomlVersion,
-      "org.postgresql" % "postgresql" % "42.2.+",
-      "org.xerial" % "sqlite-jdbc" % "3.34.+",
+      "org.postgresql" % "postgresql" % "42.5.+",
+      "org.xerial" % "sqlite-jdbc" % "3.41.+",
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-generic-extras" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,
       "io.circe" %% "circe-yaml" % circeVersion,
-      "io.getquill" %% "quill-jdbc" % "3.6.+"
+      "io.getquill" %% "quill-jdbc" % "3.19.+"
     ) ++ Seq(
       "org.scalatest" %% "scalatest" % "3.2.+" % Test
     )

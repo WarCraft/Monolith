@@ -21,7 +21,7 @@ private trait StatisticArchiveContext[I <: SqlIdiom, N <: NamingStrategy] {
 
   def insert = quote {
     (q: EntityQuery[StatisticArchive], statistic: StatisticArchive) =>
-      q.insert(statistic)
+      q.insertValue(statistic)
   }
 }
 

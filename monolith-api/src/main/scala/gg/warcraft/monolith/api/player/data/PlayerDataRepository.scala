@@ -55,7 +55,7 @@ private trait PlayerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
 
   def upsert = quote {
     (q: EntityQuery[PlayerData], data: PlayerData) =>
-      q.insert(data).onConflictUpdate(_.id)(
+      q.insertValue(data).onConflictUpdate(_.id)(
         (t, e) => t.team -> e.team,
         (t, e) => t.timeConnected -> e.timeConnected,
         (t, e) => t.timeLastSeen -> e.timeLastSeen

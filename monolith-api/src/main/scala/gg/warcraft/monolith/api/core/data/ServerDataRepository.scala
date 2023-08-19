@@ -48,7 +48,7 @@ private trait ServerDataContext[I <: SqlIdiom, N <: NamingStrategy] {
   }
 
   def upsert = quote {
-    (q: EntityQuery[ServerData], data: ServerData) => q.update(data)
+    (q: EntityQuery[ServerData], data: ServerData) => q.updateValue(data)
   }
 }
 
