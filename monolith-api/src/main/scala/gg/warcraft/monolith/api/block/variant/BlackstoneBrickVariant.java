@@ -22,18 +22,12 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.block.state
+package gg.warcraft.monolith.api.block.variant;
 
-import gg.warcraft.monolith.api.block.BlockState
+import gg.warcraft.monolith.api.block.BlockVariant;
+import gg.warcraft.monolith.api.item.ItemVariant;
 
-case class TurtleEggState(
-    age: TurtleEggAge,
-    count: TurtleEggCount
-) extends BlockState {
-  // TODO fix this design inconsistency
-  override def toInt: Int = throw new IllegalArgumentException()
-
-  /* Java interop */
-  def withAge(age: TurtleEggAge): TurtleEggState = copy(age = age)
-  def withCount(count: TurtleEggCount): TurtleEggState = copy(count = count)
+public enum BlackstoneBrickVariant implements BlockVariant, ItemVariant {
+    POLISHED,
+    CRACKED_POLISHED,
 }

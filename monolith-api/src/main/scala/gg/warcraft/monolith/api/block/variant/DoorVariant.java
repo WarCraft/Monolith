@@ -30,13 +30,17 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum DoorVariant implements BlockVariant, ItemVariant {
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
 
-    IRON,
+    BAMBOO,
 
     CRIMSON_FUNGI,
     WARPED_FUNGI,
+
+    IRON,
 }

@@ -30,4 +30,5 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum BasaltVariant implements BlockVariant, ItemVariant {
     NORMAL,
     POLISHED,
+    SMOOTH,
 }

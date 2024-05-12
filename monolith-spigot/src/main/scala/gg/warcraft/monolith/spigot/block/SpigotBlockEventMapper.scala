@@ -59,7 +59,7 @@ class SpigotBlockEventMapper(implicit
   @EventHandler(priority = EventPriority.HIGH)
   def preBreak(event: SpigotBlockBreakEvent): Unit = {
     logger.info("Handling SpigotBlockBreakEvent")
-    val block = blockMapper.map(event.getBlock).get
+    val block = blockMapper.mapBlockToOption(event.getBlock).get
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val cancelled = event.isCancelled
     val preBreakEvent = BlockPreBreakEvent(block, player, None, cancelled)
@@ -81,7 +81,7 @@ class SpigotBlockEventMapper(implicit
     val alternativeDrops = alternativeDropsByEvent.remove(event)
     if (event.isCancelled) return
 
-    val block = blockMapper.map(event.getBlock).get
+    val block = blockMapper.mapBlockToOption(event.getBlock).get
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val breakEvent = BlockBreakEvent(block, player, alternativeDrops)
 
@@ -96,8 +96,8 @@ class SpigotBlockEventMapper(implicit
   @EventHandler(priority = EventPriority.HIGH)
   def prePlace(event: SpigotBlockPlaceEvent): Unit = {
     logger.info("Handling SpigotBlockPlaceEvent")
-    val block = blockMapper.map(event.getBlock).get
-    val againstBlock = blockMapper.map(event.getBlockAgainst).get
+    val block = blockMapper.mapBlockToOption(event.getBlock).get
+    val againstBlock = blockMapper.mapBlockToOption(event.getBlockAgainst).get
     val againstBlockFace = null // TODO
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val cancelled = event.isCancelled
@@ -116,8 +116,8 @@ class SpigotBlockEventMapper(implicit
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   def onPlace(event: SpigotBlockPlaceEvent): Unit = {
     logger.info("Handling SpigotBlockPlaceEvent MONITOR")
-    val block = blockMapper.map(event.getBlock).get
-    val againstBlock = blockMapper.map(event.getBlockAgainst).get
+    val block = blockMapper.mapBlockToOption(event.getBlock).get
+    val againstBlock = blockMapper.mapBlockToOption(event.getBlockAgainst).get
     val blockFace = null // TODO calc from 2 blocks
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val placeEvent = BlockPlaceEvent(block, againstBlock, blockFace, player)
@@ -126,7 +126,7 @@ class SpigotBlockEventMapper(implicit
   }
 
   private def prePunch(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock).get
+    val block = blockMapper.mapBlockToOption(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val cancelled = event.isCancelled
@@ -140,7 +140,7 @@ class SpigotBlockEventMapper(implicit
   }
 
   private def preInteract(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock).get
+    val block = blockMapper.mapBlockToOption(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val cancelled = event.isCancelled
@@ -151,7 +151,7 @@ class SpigotBlockEventMapper(implicit
   }
 
   private def preTrigger(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock).get
+    val block = blockMapper.mapBlockToOption(event.getClickedBlock).get
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val cancelled = event.isCancelled
     val preTriggerEvent = BlockPreTriggerEvent(block, player, cancelled)
@@ -172,7 +172,7 @@ class SpigotBlockEventMapper(implicit
   }
 
   private def onPunch(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock).get
+    val block = blockMapper.mapBlockToOption(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val punchEvent = BlockPunchEvent(block, blockFace, player)
@@ -181,7 +181,7 @@ class SpigotBlockEventMapper(implicit
   }
 
   private def onInteract(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock).get
+    val block = blockMapper.mapBlockToOption(event.getClickedBlock).get
     val blockFace = blockFaceMapper.map(event.getBlockFace)
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val interactEvent = BlockInteractEvent(block, blockFace, player)
@@ -190,7 +190,7 @@ class SpigotBlockEventMapper(implicit
   }
 
   private def onTrigger(event: SpigotPlayerInteractEvent): Unit = {
-    val block = blockMapper.map(event.getClickedBlock).get
+    val block = blockMapper.mapBlockToOption(event.getClickedBlock).get
     val player = playerService.getPlayer(event.getPlayer.getUniqueId)
     val triggerEvent = BlockTriggerEvent(block, player)
 

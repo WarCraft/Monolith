@@ -81,7 +81,7 @@ class SpigotCombatEventMapper(implicit
     val shooterId = getEntityId(shooter)
     val block = event.getHitBlock match {
       case null => None
-      case it   => blockMapper.map(it)
+      case it   => blockMapper.mapBlockToOption(it)
     }
     val blockFace = event.getHitBlockFace match {
       case null => None
@@ -115,7 +115,7 @@ class SpigotCombatEventMapper(implicit
     val shooterId = getEntityId(shooter)
     val block = event.getHitBlock match {
       case null => None
-      case it   => blockMapper.map(it)
+      case it   => blockMapper.mapBlockToOption(it)
     }
     val blockFace = event.getHitBlockFace match {
       case null => None

@@ -29,6 +29,10 @@ import gg.warcraft.monolith.api.block.BlockVariant;
 public enum FlowerPotVariant implements BlockVariant {
     EMPTY,
 
+    // BUSH
+    AZALEA_BUSH,
+    FLOWERING_AZALEA_BUSH,
+
     // FLOWER
     ALLIUM,
     AZURE_BLUET,
@@ -41,6 +45,7 @@ public enum FlowerPotVariant implements BlockVariant {
     PINK_TULIP,
     POPPY,
     RED_TULIP,
+    TORCHFLOWER,
     WHITE_TULIP,
     WITHER_ROSE,
 
@@ -55,8 +60,10 @@ public enum FlowerPotVariant implements BlockVariant {
     // SAPLING
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
 

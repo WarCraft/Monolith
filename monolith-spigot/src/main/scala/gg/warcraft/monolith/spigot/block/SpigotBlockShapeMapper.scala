@@ -26,19 +26,26 @@ package gg.warcraft.monolith.spigot.block
 
 import gg.warcraft.monolith.api.block._
 import gg.warcraft.monolith.api.block.shape.{
-  JigsawBlockShape, RailsShape, StairsShape
+  DripstoneShape, JigsawBlockShape, RailsShape, StairsShape
 }
 import gg.warcraft.monolith.spigot.Extensions._
 import org.bukkit.Material
 import org.bukkit.block.data.Rail.{Shape => SpigotRailsShape}
 import org.bukkit.block.data.`type`.Jigsaw.{Orientation => SpigotJigsawShape}
+import org.bukkit.block.data.`type`.PointedDripstone.{
+  Thickness => SpigotDripstoneShape
+}
 import org.bukkit.block.data.`type`.Stairs.{Shape => SpigotStairsShape}
 
 class SpigotBlockShapeMapper {
-  def map(block: SpigotBlock): BlockShape = {
+  def mapMaterialToShape(block: SpigotBlock): BlockShape = {
     val data: SpigotBlockData = block.getState.getBlockData
 
     block.getType match {
+      case Material.POINTED_DRIPSTONE =>
+        val shape = data.asInstanceOf[SpigotDripstone].getThickness
+        map(shape)
+
       case Material.JIGSAW =>
         val shape = data.asInstanceOf[SpigotJigsaw].getOrientation
         map(shape)
@@ -55,24 +62,38 @@ class SpigotBlockShapeMapper {
     }
   }
 
-  def map(block: ShapedBlock[_], spigotData: SpigotBlockData): Unit = {
-    val data: SpigotBlockData = spigotData
+  def mapShapeToData(shape: BlockShape, data: SpigotBlockData): Unit = shape match {
+    case it: DripstoneShape =>
+      val shape = map(it)
+      data.asInstanceOf[SpigotDripstone].setThickness(shape)
 
-    block.shape match {
-      case it: JigsawBlockShape =>
-        val shape = map(it)
-        data.asInstanceOf[SpigotJigsaw].setOrientation(shape)
+    case it: JigsawBlockShape =>
+      val shape = map(it)
+      data.asInstanceOf[SpigotJigsaw].setOrientation(shape)
 
-      case it: RailsShape =>
-        val shape = map(it)
-        data.asInstanceOf[SpigotRail].setShape(shape)
+    case it: RailsShape =>
+      val shape = map(it)
+      data.asInstanceOf[SpigotRail].setShape(shape)
 
-      case it: StairsShape =>
-        val shape = map(it)
-        data.asInstanceOf[SpigotStairs].setShape(shape)
+    case it: StairsShape =>
+      val shape = map(it)
+      data.asInstanceOf[SpigotStairs].setShape(shape)
+  }
 
-      case _ => throw new IllegalArgumentException(s"${block.`type`}")
-    }
+  def map(shape: SpigotDripstoneShape): DripstoneShape = shape match {
+    case SpigotDripstoneShape.BASE      => DripstoneShape.BASE
+    case SpigotDripstoneShape.MIDDLE    => DripstoneShape.MIDDLE
+    case SpigotDripstoneShape.FRUSTUM   => DripstoneShape.FRUSTUM
+    case SpigotDripstoneShape.TIP       => DripstoneShape.TIP
+    case SpigotDripstoneShape.TIP_MERGE => DripstoneShape.MERGE
+  }
+
+  def map(shape: DripstoneShape): SpigotDripstoneShape = shape match {
+    case DripstoneShape.BASE    => SpigotDripstoneShape.BASE
+    case DripstoneShape.MIDDLE  => SpigotDripstoneShape.MIDDLE
+    case DripstoneShape.FRUSTUM => SpigotDripstoneShape.FRUSTUM
+    case DripstoneShape.TIP     => SpigotDripstoneShape.TIP
+    case DripstoneShape.MERGE   => SpigotDripstoneShape.TIP_MERGE
   }
 
   def map(shape: SpigotJigsawShape): JigsawBlockShape = shape match {

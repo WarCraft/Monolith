@@ -30,13 +30,18 @@ public enum BucketVariant implements ItemVariant {
     EMPTY,
 
     // FISH
+    AXOLOTL,
     COD,
     PUFFERFISH,
     SALMON,
+    TADPOLE,
     TROPICAL_FISH,
 
     // LIQUID
     LAVA,
     MILK,
     WATER,
+
+    // OTHER
+    POWDER_SNOW
 }

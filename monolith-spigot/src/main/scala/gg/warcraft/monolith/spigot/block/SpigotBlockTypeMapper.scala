@@ -24,10 +24,10 @@
 
 package gg.warcraft.monolith.spigot.block
 
-import java.util
-
 import gg.warcraft.monolith.api.block.BlockType
 import org.bukkit.Material
+
+import java.util
 
 private object SpigotBlockTypeMapper {
   private final val cache: util.EnumMap[BlockType, Material] =
@@ -39,14 +39,16 @@ class SpigotBlockTypeMapper {
     SpigotBlockTypeMapper.cache.computeIfAbsent(`type`, compute)
 
   private def compute(`type`: BlockType): Material = `type` match {
-    case BlockType.BRICK_BLOCK     => Material.BRICKS
+    case BlockType.BRICKS_BLOCK    => Material.BRICKS
     case BlockType.CLAY_BLOCK      => Material.CLAY
     case BlockType.COCOA_POD       => Material.COCOA
+    case BlockType.DRIPSTONE       => Material.POINTED_DRIPSTONE
     case BlockType.END_STONE_BRICK => Material.END_STONE_BRICKS
     case BlockType.FROST           => Material.FROSTED_ICE
     case BlockType.HAY_BALE        => Material.HAY_BLOCK
     case BlockType.INFESTED_BLOCK  => Material.INFESTED_STONE
     case BlockType.JIGSAW_BLOCK    => Material.JIGSAW
+    case BlockType.MUD_BRICK       => Material.MUD_BRICKS
     case BlockType.NETHER_WARTS    => Material.NETHER_WART
     case BlockType.QUARTZ_ORE      => Material.NETHER_QUARTZ_ORE
 

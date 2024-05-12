@@ -22,21 +22,13 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.block.state;
+package gg.warcraft.monolith.api.block.variant;
 
-public enum TurtleEggCount {
-    COUNT_1,
-    COUNT_2,
-    COUNT_3,
-    COUNT_4;
+import gg.warcraft.monolith.api.block.BlockVariant;
+import gg.warcraft.monolith.api.item.ItemVariant;
 
-    private static final TurtleEggCount[] finalValues = values();
-
-    public static TurtleEggCount valueOf(int data) {
-        return finalValues[data - 1];
-    }
-
-    public int toInt() {
-        return ordinal() + 1;
-    }
+public enum DeepslateStoneVariant implements BlockVariant, ItemVariant {
+    CHISELED,
+    COBBLED,
+    POLISHED,
 }

@@ -28,8 +28,9 @@ import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum InfestedBlockVariant implements BlockVariant, ItemVariant {
-    STONE,
     COBBLESTONE,
+    DEEPSLATE,
+    STONE,
 
     STONE_BRICK,
     CRACKED_STONE_BRICK,

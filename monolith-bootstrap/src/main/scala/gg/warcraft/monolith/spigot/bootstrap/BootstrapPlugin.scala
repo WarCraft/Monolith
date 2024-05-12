@@ -48,7 +48,7 @@ class BootstrapPlugin extends JavaPlugin with Listener {
 
   private def disable(plugin: String): Unit = {
     val instance = manager getPlugin plugin
-    manager disablePlugin (instance, true)
+    manager disablePlugin (instance)
   }
 
   private def enableAll(): Unit = {

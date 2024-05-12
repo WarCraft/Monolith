@@ -30,10 +30,14 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum SignVariant implements BlockVariant, ItemVariant {
     ACACIA, // TODO add _WOOD suffixes now that there's other variants?
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
+
+    BAMBOO,
 
     CRIMSON_FUNGI,
     WARPED_FUNGI,

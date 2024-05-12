@@ -1,9 +1,11 @@
 lazy val projectSettings = Seq(
   organization := "gg.warcraft",
-  version := "16.0.0-SNAPSHOT",
-  scalaVersion := "2.13.11",
+  version := "20.2.4-SNAPSHOT",
+  scalaVersion := "2.13.12",
   scalacOptions ++= Seq(
-    "-language:implicitConversions"
+    "-language:implicitConversions",
+    "-Ypatmat-exhaust-depth",
+    "10"
   ),
   resolvers ++= Seq(
     Resolver.mavenLocal
@@ -19,7 +21,7 @@ lazy val assemblySettings = Seq(
   }
 )
 
-val circeVersion = "0.14.2"
+val circeVersion = "0.14.6"
 val jomlVersion = "1.10.+"
 
 lazy val api = (project in file("monolith-api"))
@@ -27,16 +29,16 @@ lazy val api = (project in file("monolith-api"))
     name := "monolith-api",
     projectSettings,
     libraryDependencies ++= Seq(
-      "org.flywaydb" % "flyway-core" % "9.21.+",
+      "org.flywaydb" % "flyway-core" % "7.4.+",
       "org.joml" % "joml" % jomlVersion,
       "org.joml" % "joml-primitives" % jomlVersion,
       "org.postgresql" % "postgresql" % "42.5.+",
-      "org.xerial" % "sqlite-jdbc" % "3.41.+",
+      "org.xerial" % "sqlite-jdbc" % "3.43.+",
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
-      "io.circe" %% "circe-generic-extras" % circeVersion,
+      "io.circe" %% "circe-generic-extras" % "0.14.3",
       "io.circe" %% "circe-parser" % circeVersion,
-      "io.circe" %% "circe-yaml" % circeVersion,
+      "io.circe" %% "circe-yaml" % "1.15.0",
       "io.getquill" %% "quill-jdbc" % "3.19.+"
     ) ++ Seq(
       "org.scalatest" %% "scalatest" % "3.2.+" % Test
@@ -60,7 +62,7 @@ lazy val spigot = (project in file("monolith-spigot"))
       "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
     ),
     libraryDependencies ++= Seq(
-      "com.destroystokyo.paper" % "paper-api" % "1.16.5-R0.1-SNAPSHOT" % Provided
+      "io.papermc.paper" % "paper-api" % "1.20.2-R0.1-SNAPSHOT" % Provided
     )
   )
   .dependsOn(api)
@@ -73,10 +75,10 @@ lazy val bootstrap = (project in file("monolith-bootstrap"))
       "PaperMC" at "https://papermc.io/repo/repository/maven-public/"
     ),
     libraryDependencies ++= Seq(
-      "com.destroystokyo.paper" % "paper-api" % "1.16.5-R0.1-SNAPSHOT" % Provided,
+      "io.papermc.paper" % "paper-api" % "1.20.2-R0.1-SNAPSHOT" % Provided,
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion,
-      "io.circe" %% "circe-yaml" % circeVersion
+      "io.circe" %% "circe-yaml" % "1.15.0"
     )
   )

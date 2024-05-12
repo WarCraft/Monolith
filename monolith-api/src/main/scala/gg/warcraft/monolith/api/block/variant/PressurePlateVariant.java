@@ -30,13 +30,17 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum PressurePlateVariant implements BlockVariant, ItemVariant {
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
 
-    STONE,
+    BAMBOO,
 
     CRIMSON_FUNGI,
     WARPED_FUNGI,
+
+    STONE,
 }

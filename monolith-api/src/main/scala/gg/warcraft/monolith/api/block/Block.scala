@@ -99,6 +99,20 @@ trait FloodableBlock extends Block {
     copyWith("flooded", flooded)
 }
 
+trait GroupedBlock extends Block {
+  val count: Int
+  def withCount(count: Int): this.type =
+    copyWith("count", count)
+
+  def minCount: Int
+  def maxCount: Int
+  require(
+    count >= minCount && count <= maxCount, {
+      s"count is $count, must be >= $minCount and <= $maxCount"
+    }
+  )
+}
+
 trait HingedBlock extends Block {
   val hinge: BlockHinge
   def withHinge(hinge: BlockHinge): this.type =
@@ -169,4 +183,8 @@ trait VariableBlock[T <: BlockVariant] extends Block {
     this.variant == data || super.hasData(data)
   override def isVariant(variant: BlockVariant): Boolean =
     this.variant == variant
+}
+
+trait WallAttachableBlock extends DirectableBlock {
+  val wall: Boolean = direction.nonEmpty
 }

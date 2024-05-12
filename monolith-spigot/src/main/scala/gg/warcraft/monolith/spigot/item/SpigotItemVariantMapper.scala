@@ -109,10 +109,14 @@ class SpigotItemVariantMapper(
     // BOAT
     case Material.ACACIA_BOAT   => BoatVariant.ACACIA
     case Material.BIRCH_BOAT    => BoatVariant.BIRCH
+    case Material.CHERRY_BOAT   => BoatVariant.CHERRY
     case Material.DARK_OAK_BOAT => BoatVariant.DARK_OAK
     case Material.JUNGLE_BOAT   => BoatVariant.JUNGLE
+    case Material.MANGROVE_BOAT => BoatVariant.MANGROVE
     case Material.OAK_BOAT      => BoatVariant.OAK
     case Material.SPRUCE_BOAT   => BoatVariant.SPRUCE
+
+    case Material.BAMBOO_RAFT => BoatVariant.BAMBOO
 
     // BOOTS
     case Material.LEATHER_BOOTS   => BootsVariant.LEATHER
@@ -129,14 +133,29 @@ class SpigotItemVariantMapper(
     // BUCKET
     case Material.BUCKET => BucketVariant.EMPTY
 
+    case Material.AXOLOTL_BUCKET       => BucketVariant.AXOLOTL
     case Material.COD_BUCKET           => BucketVariant.COD
     case Material.PUFFERFISH_BUCKET    => BucketVariant.PUFFERFISH
     case Material.SALMON_BUCKET        => BucketVariant.SALMON
+    case Material.TADPOLE_BUCKET       => BucketVariant.TADPOLE
     case Material.TROPICAL_FISH_BUCKET => BucketVariant.TROPICAL_FISH
 
     case Material.LAVA_BUCKET  => BucketVariant.LAVA
     case Material.MILK_BUCKET  => BucketVariant.MILK
     case Material.WATER_BUCKET => BucketVariant.WATER
+
+    case Material.POWDER_SNOW_BUCKET => BucketVariant.POWDER_SNOW
+
+    // CHEST_BOAT
+    case Material.ACACIA_CHEST_BOAT   => ChestBoatVariant.ACACIA
+    case Material.BIRCH_CHEST_BOAT    => ChestBoatVariant.BIRCH
+    case Material.DARK_OAK_CHEST_BOAT => ChestBoatVariant.DARK_OAK
+    case Material.JUNGLE_CHEST_BOAT   => ChestBoatVariant.JUNGLE
+    case Material.OAK_CHEST_BOAT      => ChestBoatVariant.OAK
+    case Material.SPRUCE_CHEST_BOAT   => ChestBoatVariant.SPRUCE
+    case Material.CHERRY_CHEST_BOAT   => ChestBoatVariant.CHERRY
+    case Material.MANGROVE_CHEST_BOAT => ChestBoatVariant.MANGROVE
+    case Material.BAMBOO_CHEST_RAFT   => ChestBoatVariant.BAMBOO
 
     // CHESTPLATE
     case Material.LEATHER_CHESTPLATE   => ChestplateVariant.LEATHER
@@ -198,6 +217,10 @@ class SpigotItemVariantMapper(
     case Material.GOLDEN_HORSE_ARMOR  => HorseArmorVariant.GOLD
     case Material.DIAMOND_HORSE_ARMOR => HorseArmorVariant.DIAMOND
 
+    // INK_SAC
+    case Material.INK_SAC      => InkSacVariant.NORMAL
+    case Material.GLOW_INK_SAC => InkSacVariant.GLOW
+
     // LEGGINGS
     case Material.LEATHER_LEGGINGS   => LeggingsVariant.LEATHER
     case Material.CHAINMAIL_LEGGINGS => LeggingsVariant.CHAINMAIL
@@ -216,19 +239,22 @@ class SpigotItemVariantMapper(
     case Material.TNT_MINECART           => MinecartVariant.TNT
 
     // MUSIC_DISC
-    case Material.MUSIC_DISC_11      => MusicDiscVariant.DISC_11
-    case Material.MUSIC_DISC_13      => MusicDiscVariant.DISC_13
-    case Material.MUSIC_DISC_BLOCKS  => MusicDiscVariant.DISC_BLOCKS
-    case Material.MUSIC_DISC_CAT     => MusicDiscVariant.DISC_CAT
-    case Material.MUSIC_DISC_CHIRP   => MusicDiscVariant.DISC_CHIRP
-    case Material.MUSIC_DISC_FAR     => MusicDiscVariant.DISC_FAR
-    case Material.MUSIC_DISC_MALL    => MusicDiscVariant.DISC_MALL
-    case Material.MUSIC_DISC_MELLOHI => MusicDiscVariant.DISC_MELLOHI
-    case Material.MUSIC_DISC_PIGSTEP => MusicDiscVariant.DISC_PIGSTEP
-    case Material.MUSIC_DISC_STAL    => MusicDiscVariant.DISC_STAL
-    case Material.MUSIC_DISC_STRAD   => MusicDiscVariant.DISC_STRAD
-    case Material.MUSIC_DISC_WAIT    => MusicDiscVariant.DISC_WAIT
-    case Material.MUSIC_DISC_WARD    => MusicDiscVariant.DISC_WARD
+    case Material.MUSIC_DISC_5         => MusicDiscVariant.DISC_5
+    case Material.MUSIC_DISC_11        => MusicDiscVariant.DISC_11
+    case Material.MUSIC_DISC_13        => MusicDiscVariant.DISC_13
+    case Material.MUSIC_DISC_BLOCKS    => MusicDiscVariant.DISC_BLOCKS
+    case Material.MUSIC_DISC_CAT       => MusicDiscVariant.DISC_CAT
+    case Material.MUSIC_DISC_CHIRP     => MusicDiscVariant.DISC_CHIRP
+    case Material.MUSIC_DISC_FAR       => MusicDiscVariant.DISC_FAR
+    case Material.MUSIC_DISC_MALL      => MusicDiscVariant.DISC_MALL
+    case Material.MUSIC_DISC_MELLOHI   => MusicDiscVariant.DISC_MELLOHI
+    case Material.MUSIC_DISC_OTHERSIDE => MusicDiscVariant.DISC_OTHERSIDE
+    case Material.MUSIC_DISC_PIGSTEP   => MusicDiscVariant.DISC_PIGSTEP
+    case Material.MUSIC_DISC_RELIC     => MusicDiscVariant.DISC_RELIC
+    case Material.MUSIC_DISC_STAL      => MusicDiscVariant.DISC_STAL
+    case Material.MUSIC_DISC_STRAD     => MusicDiscVariant.DISC_STRAD
+    case Material.MUSIC_DISC_WAIT      => MusicDiscVariant.DISC_WAIT
+    case Material.MUSIC_DISC_WARD      => MusicDiscVariant.DISC_WARD
 
     // MUTTON
     case Material.MUTTON        => MuttonVariant.RAW
@@ -256,6 +282,65 @@ class SpigotItemVariantMapper(
     case Material.LINGERING_POTION => PotionVariant.LINGERING
     case Material.SPLASH_POTION    => PotionVariant.SPLASH
 
+    // POTTERY_SHERD
+    case Material.ANGLER_POTTERY_SHERD     => PotterySherdVariant.ANGLER
+    case Material.ARCHER_POTTERY_SHERD     => PotterySherdVariant.ARCHER
+    case Material.ARMS_UP_POTTERY_SHERD    => PotterySherdVariant.ARMS_UP
+    case Material.BLADE_POTTERY_SHERD      => PotterySherdVariant.BLADE
+    case Material.BREWER_POTTERY_SHERD     => PotterySherdVariant.BREWER
+    case Material.BURN_POTTERY_SHERD       => PotterySherdVariant.BURN
+    case Material.DANGER_POTTERY_SHERD     => PotterySherdVariant.DANGER
+    case Material.EXPLORER_POTTERY_SHERD   => PotterySherdVariant.EXPLORER
+    case Material.FRIEND_POTTERY_SHERD     => PotterySherdVariant.FRIEND
+    case Material.HEARTBREAK_POTTERY_SHERD => PotterySherdVariant.HEARTBREAK
+    case Material.HEART_POTTERY_SHERD      => PotterySherdVariant.HEART
+    case Material.HOWL_POTTERY_SHERD       => PotterySherdVariant.HOWL
+    case Material.MINER_POTTERY_SHERD      => PotterySherdVariant.MINER
+    case Material.MOURNER_POTTERY_SHERD    => PotterySherdVariant.MOURNER
+    case Material.PLENTY_POTTERY_SHERD     => PotterySherdVariant.PLENTY
+    case Material.PRIZE_POTTERY_SHERD      => PotterySherdVariant.PRIZE
+    case Material.SHEAF_POTTERY_SHERD      => PotterySherdVariant.SHEAF
+    case Material.SHELTER_POTTERY_SHERD    => PotterySherdVariant.SHELTER
+    case Material.SKULL_POTTERY_SHERD      => PotterySherdVariant.SKULL
+    case Material.SNORT_POTTERY_SHERD      => PotterySherdVariant.SNORT
+
+    // SMITHING_TEMPLATE
+    case Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.NETHERITE_UPGRADE
+
+    case Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.COAST_ARMOR_TRIM
+    case Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.DUNE_ARMOR_TRIM
+    case Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.EYE_ARMOR_TRIM
+    case Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.HOST_ARMOR_TRIM
+    case Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.RAISER_ARMOR_TRIM
+    case Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.RIB_ARMOR_TRIM
+    case Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.SENTRY_ARMOR_TRIM
+    case Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.SHAPER_ARMOR_TRIM
+    case Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.SNOUT_ARMOR_TRIM
+    case Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.SILENCE_ARMOR_TRIM
+    case Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.SPIRE_ARMOR_TRIM
+    case Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.TIDE_ARMOR_TRIM
+    case Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.VEX_ARMOR_TRIM
+    case Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.WARD_ARMOR_TRIM
+    case Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.WAYFINDER_ARMOR_TRIM
+    case Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE =>
+      SmithingTemplateVariant.WILD_ARMOR_TRIM
+
     // RABBIT
     case Material.RABBIT        => RabbitVariant.RAW
     case Material.COOKED_RABBIT => RabbitVariant.COOKED
@@ -279,9 +364,12 @@ class SpigotItemVariantMapper(
     case Material.NETHERITE_SHOVEL => ShovelVariant.NETHERITE
 
     // SPAWN_EGG
+    case Material.ALLAY_SPAWN_EGG            => SpawnEggVariant.ALLAY
+    case Material.AXOLOTL_SPAWN_EGG          => SpawnEggVariant.AXOLOTL
     case Material.BAT_SPAWN_EGG              => SpawnEggVariant.BAT
     case Material.BEE_SPAWN_EGG              => SpawnEggVariant.BEE
     case Material.BLAZE_SPAWN_EGG            => SpawnEggVariant.BLAZE
+    case Material.CAMEL_SPAWN_EGG            => SpawnEggVariant.CAMEL
     case Material.CAT_SPAWN_EGG              => SpawnEggVariant.CAT
     case Material.CAVE_SPIDER_SPAWN_EGG      => SpawnEggVariant.CAVE_SPIDER
     case Material.CHICKEN_SPAWN_EGG          => SpawnEggVariant.CHICKEN
@@ -292,15 +380,20 @@ class SpigotItemVariantMapper(
     case Material.DONKEY_SPAWN_EGG           => SpawnEggVariant.DONKEY
     case Material.DROWNED_SPAWN_EGG          => SpawnEggVariant.DROWNED
     case Material.ELDER_GUARDIAN_SPAWN_EGG   => SpawnEggVariant.ELDER_GUARDIAN
+    case Material.ENDER_DRAGON_SPAWN_EGG     => SpawnEggVariant.ENDER_DRAGON
     case Material.ENDERMAN_SPAWN_EGG         => SpawnEggVariant.ENDERMAN
     case Material.ENDERMITE_SPAWN_EGG        => SpawnEggVariant.ENDERMITE
     case Material.EVOKER_SPAWN_EGG           => SpawnEggVariant.EVOKER
     case Material.FOX_SPAWN_EGG              => SpawnEggVariant.FOX
+    case Material.FROG_SPAWN_EGG             => SpawnEggVariant.FROG
     case Material.GHAST_SPAWN_EGG            => SpawnEggVariant.GHAST
+    case Material.GLOW_SQUID_SPAWN_EGG       => SpawnEggVariant.GLOW_SQUID
+    case Material.GOAT_SPAWN_EGG             => SpawnEggVariant.GOAT
     case Material.GUARDIAN_SPAWN_EGG         => SpawnEggVariant.GUARDIAN
     case Material.HORSE_SPAWN_EGG            => SpawnEggVariant.HORSE
     case Material.HOGLIN_SPAWN_EGG           => SpawnEggVariant.HOGLIN
     case Material.HUSK_SPAWN_EGG             => SpawnEggVariant.HUSK
+    case Material.IRON_GOLEM_SPAWN_EGG       => SpawnEggVariant.IRON_GOLEM
     case Material.LLAMA_SPAWN_EGG            => SpawnEggVariant.LLAMA
     case Material.MAGMA_CUBE_SPAWN_EGG       => SpawnEggVariant.MAGMA_CUBE
     case Material.MOOSHROOM_SPAWN_EGG        => SpawnEggVariant.MOOSHROOM
@@ -324,10 +417,13 @@ class SpigotItemVariantMapper(
     case Material.SKELETON_HORSE_SPAWN_EGG   => SpawnEggVariant.SKELETON_HORSE
     case Material.SKELETON_SPAWN_EGG         => SpawnEggVariant.SKELETON
     case Material.SLIME_SPAWN_EGG            => SpawnEggVariant.SLIME
+    case Material.SNIFFER_SPAWN_EGG          => SpawnEggVariant.SNIFFER
+    case Material.SNOW_GOLEM_SPAWN_EGG       => SpawnEggVariant.SNOW_GOLEM
     case Material.SPIDER_SPAWN_EGG           => SpawnEggVariant.SPIDER
     case Material.SQUID_SPAWN_EGG            => SpawnEggVariant.SQUID
     case Material.STRAY_SPAWN_EGG            => SpawnEggVariant.STRAY
     case Material.STRIDER_SPAWN_EGG          => SpawnEggVariant.STRIDER
+    case Material.TADPOLE_SPAWN_EGG          => SpawnEggVariant.TADPOLE
     case Material.TRADER_LLAMA_SPAWN_EGG     => SpawnEggVariant.TRADER_LLAMA
     case Material.TROPICAL_FISH_SPAWN_EGG    => SpawnEggVariant.TROPICAL_FISH
     case Material.TURTLE_SPAWN_EGG           => SpawnEggVariant.TURTLE
@@ -335,7 +431,9 @@ class SpigotItemVariantMapper(
     case Material.VILLAGER_SPAWN_EGG         => SpawnEggVariant.VILLAGER
     case Material.VINDICATOR_SPAWN_EGG       => SpawnEggVariant.VINDICATOR
     case Material.WANDERING_TRADER_SPAWN_EGG => SpawnEggVariant.WANDERING_TRADER
+    case Material.WARDEN_SPAWN_EGG           => SpawnEggVariant.WARDEN
     case Material.WITCH_SPAWN_EGG            => SpawnEggVariant.WITCH
+    case Material.WITHER_SPAWN_EGG           => SpawnEggVariant.WITHER
     case Material.WITHER_SKELETON_SPAWN_EGG  => SpawnEggVariant.WITHER_SKELETON
     case Material.WOLF_SPAWN_EGG             => SpawnEggVariant.WOLF
     case Material.ZOGLIN_SPAWN_EGG           => SpawnEggVariant.ZOGLIN
@@ -366,7 +464,8 @@ class SpigotItemVariantMapper(
     case Material.DIAMOND_SWORD   => SwordVariant.DIAMOND
     case Material.NETHERITE_SWORD => SwordVariant.NETHERITE
 
-    case it: Material => blockMapper.map(it).asInstanceOf[ItemVariant]
+    case it: Material =>
+      blockMapper.mapMaterialToVariant(it).asInstanceOf[ItemVariant]
   }
 
   private def compute(variant: ItemVariant): Material = variant match {
@@ -398,10 +497,14 @@ class SpigotItemVariantMapper(
     // BOAT
     case BoatVariant.ACACIA   => Material.ACACIA_BOAT
     case BoatVariant.BIRCH    => Material.BIRCH_BOAT
+    case BoatVariant.CHERRY   => Material.CHERRY_BOAT
     case BoatVariant.DARK_OAK => Material.DARK_OAK_BOAT
     case BoatVariant.JUNGLE   => Material.JUNGLE_BOAT
+    case BoatVariant.MANGROVE => Material.MANGROVE_BOAT
     case BoatVariant.OAK      => Material.OAK_BOAT
     case BoatVariant.SPRUCE   => Material.SPRUCE_BOAT
+
+    case BoatVariant.BAMBOO => Material.BAMBOO_RAFT
 
     // BOOTS
     case BootsVariant.LEATHER   => Material.LEATHER_BOOTS
@@ -436,14 +539,29 @@ class SpigotItemVariantMapper(
     // BUCKET
     case BucketVariant.EMPTY => Material.BUCKET
 
+    case BucketVariant.AXOLOTL       => Material.AXOLOTL_BUCKET
     case BucketVariant.COD           => Material.COD_BUCKET
     case BucketVariant.PUFFERFISH    => Material.PUFFERFISH_BUCKET
     case BucketVariant.SALMON        => Material.SALMON_BUCKET
+    case BucketVariant.TADPOLE       => Material.TADPOLE_BUCKET
     case BucketVariant.TROPICAL_FISH => Material.TROPICAL_FISH_BUCKET
 
     case BucketVariant.LAVA  => Material.LAVA_BUCKET
     case BucketVariant.MILK  => Material.MILK_BUCKET
     case BucketVariant.WATER => Material.WATER_BUCKET
+
+    case BucketVariant.POWDER_SNOW => Material.POWDER_SNOW_BUCKET
+
+    // CHEST_BOAT
+    case ChestBoatVariant.ACACIA   => Material.ACACIA_CHEST_BOAT
+    case ChestBoatVariant.BIRCH    => Material.BIRCH_CHEST_BOAT
+    case ChestBoatVariant.DARK_OAK => Material.DARK_OAK_CHEST_BOAT
+    case ChestBoatVariant.JUNGLE   => Material.JUNGLE_CHEST_BOAT
+    case ChestBoatVariant.OAK      => Material.OAK_CHEST_BOAT
+    case ChestBoatVariant.SPRUCE   => Material.SPRUCE_CHEST_BOAT
+    case ChestBoatVariant.CHERRY   => Material.CHERRY_CHEST_BOAT
+    case ChestBoatVariant.MANGROVE => Material.MANGROVE_CHEST_BOAT
+    case ChestBoatVariant.BAMBOO   => Material.BAMBOO_CHEST_RAFT
 
     // CHESTPLATE
     case ChestplateVariant.LEATHER   => Material.LEATHER_CHESTPLATE
@@ -559,6 +677,10 @@ class SpigotItemVariantMapper(
     case HorseArmorVariant.GOLD    => Material.GOLDEN_HORSE_ARMOR
     case HorseArmorVariant.DIAMOND => Material.DIAMOND_HORSE_ARMOR
 
+    // INK_SAC
+    case InkSacVariant.NORMAL => Material.INK_SAC
+    case InkSacVariant.GLOW   => Material.GLOW_INK_SAC
+
     // LEGGINGS
     case LeggingsVariant.LEATHER   => Material.LEATHER_LEGGINGS
     case LeggingsVariant.CHAINMAIL => Material.CHAINMAIL_LEGGINGS
@@ -595,19 +717,22 @@ class SpigotItemVariantMapper(
     case MinecartVariant.TNT           => Material.TNT_MINECART
 
     // MUSIC_DISC
-    case MusicDiscVariant.DISC_11      => Material.MUSIC_DISC_11
-    case MusicDiscVariant.DISC_13      => Material.MUSIC_DISC_13
-    case MusicDiscVariant.DISC_BLOCKS  => Material.MUSIC_DISC_BLOCKS
-    case MusicDiscVariant.DISC_CAT     => Material.MUSIC_DISC_CAT
-    case MusicDiscVariant.DISC_CHIRP   => Material.MUSIC_DISC_CHIRP
-    case MusicDiscVariant.DISC_FAR     => Material.MUSIC_DISC_FAR
-    case MusicDiscVariant.DISC_MALL    => Material.MUSIC_DISC_MALL
-    case MusicDiscVariant.DISC_MELLOHI => Material.MUSIC_DISC_MELLOHI
-    case MusicDiscVariant.DISC_PIGSTEP => Material.MUSIC_DISC_PIGSTEP
-    case MusicDiscVariant.DISC_STAL    => Material.MUSIC_DISC_STAL
-    case MusicDiscVariant.DISC_STRAD   => Material.MUSIC_DISC_STRAD
-    case MusicDiscVariant.DISC_WAIT    => Material.MUSIC_DISC_WAIT
-    case MusicDiscVariant.DISC_WARD    => Material.MUSIC_DISC_WARD
+    case MusicDiscVariant.DISC_5         => Material.MUSIC_DISC_5
+    case MusicDiscVariant.DISC_11        => Material.MUSIC_DISC_11
+    case MusicDiscVariant.DISC_13        => Material.MUSIC_DISC_13
+    case MusicDiscVariant.DISC_BLOCKS    => Material.MUSIC_DISC_BLOCKS
+    case MusicDiscVariant.DISC_CAT       => Material.MUSIC_DISC_CAT
+    case MusicDiscVariant.DISC_CHIRP     => Material.MUSIC_DISC_CHIRP
+    case MusicDiscVariant.DISC_FAR       => Material.MUSIC_DISC_FAR
+    case MusicDiscVariant.DISC_MALL      => Material.MUSIC_DISC_MALL
+    case MusicDiscVariant.DISC_MELLOHI   => Material.MUSIC_DISC_MELLOHI
+    case MusicDiscVariant.DISC_OTHERSIDE => Material.MUSIC_DISC_OTHERSIDE
+    case MusicDiscVariant.DISC_PIGSTEP   => Material.MUSIC_DISC_PIGSTEP
+    case MusicDiscVariant.DISC_RELIC     => Material.MUSIC_DISC_RELIC
+    case MusicDiscVariant.DISC_STAL      => Material.MUSIC_DISC_STAL
+    case MusicDiscVariant.DISC_STRAD     => Material.MUSIC_DISC_STRAD
+    case MusicDiscVariant.DISC_WAIT      => Material.MUSIC_DISC_WAIT
+    case MusicDiscVariant.DISC_WARD      => Material.MUSIC_DISC_WARD
 
     // MUTTON
     case MuttonVariant.RAW    => Material.MUTTON
@@ -635,6 +760,65 @@ class SpigotItemVariantMapper(
     case PotionVariant.LINGERING => Material.LINGERING_POTION
     case PotionVariant.SPLASH    => Material.SPLASH_POTION
 
+    // POTTERY_SHERD
+    case PotterySherdVariant.ANGLER     => Material.ANGLER_POTTERY_SHERD
+    case PotterySherdVariant.ARCHER     => Material.ARCHER_POTTERY_SHERD
+    case PotterySherdVariant.ARMS_UP    => Material.ARMS_UP_POTTERY_SHERD
+    case PotterySherdVariant.BLADE      => Material.BLADE_POTTERY_SHERD
+    case PotterySherdVariant.BREWER     => Material.BREWER_POTTERY_SHERD
+    case PotterySherdVariant.BURN       => Material.BURN_POTTERY_SHERD
+    case PotterySherdVariant.DANGER     => Material.DANGER_POTTERY_SHERD
+    case PotterySherdVariant.EXPLORER   => Material.EXPLORER_POTTERY_SHERD
+    case PotterySherdVariant.FRIEND     => Material.FRIEND_POTTERY_SHERD
+    case PotterySherdVariant.HEARTBREAK => Material.HEARTBREAK_POTTERY_SHERD
+    case PotterySherdVariant.HEART      => Material.HEART_POTTERY_SHERD
+    case PotterySherdVariant.HOWL       => Material.HOWL_POTTERY_SHERD
+    case PotterySherdVariant.MINER      => Material.MINER_POTTERY_SHERD
+    case PotterySherdVariant.MOURNER    => Material.MOURNER_POTTERY_SHERD
+    case PotterySherdVariant.PLENTY     => Material.PLENTY_POTTERY_SHERD
+    case PotterySherdVariant.PRIZE      => Material.PRIZE_POTTERY_SHERD
+    case PotterySherdVariant.SHEAF      => Material.SHEAF_POTTERY_SHERD
+    case PotterySherdVariant.SHELTER    => Material.SHELTER_POTTERY_SHERD
+    case PotterySherdVariant.SKULL      => Material.SKULL_POTTERY_SHERD
+    case PotterySherdVariant.SNORT      => Material.SNORT_POTTERY_SHERD
+
+    // SMITHING_TEMPLATE
+    case SmithingTemplateVariant.NETHERITE_UPGRADE =>
+      Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE
+
+    case SmithingTemplateVariant.COAST_ARMOR_TRIM =>
+      Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.DUNE_ARMOR_TRIM =>
+      Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.EYE_ARMOR_TRIM =>
+      Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.HOST_ARMOR_TRIM =>
+      Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.RAISER_ARMOR_TRIM =>
+      Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.RIB_ARMOR_TRIM =>
+      Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.SENTRY_ARMOR_TRIM =>
+      Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.SHAPER_ARMOR_TRIM =>
+      Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.SNOUT_ARMOR_TRIM =>
+      Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.SILENCE_ARMOR_TRIM =>
+      Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.SPIRE_ARMOR_TRIM =>
+      Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.TIDE_ARMOR_TRIM =>
+      Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.VEX_ARMOR_TRIM =>
+      Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.WARD_ARMOR_TRIM =>
+      Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.WAYFINDER_ARMOR_TRIM =>
+      Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE
+    case SmithingTemplateVariant.WILD_ARMOR_TRIM =>
+      Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE
+
     // RABBIT
     case RabbitVariant.RAW    => Material.RABBIT
     case RabbitVariant.COOKED => Material.COOKED_RABBIT
@@ -658,9 +842,12 @@ class SpigotItemVariantMapper(
     case ShovelVariant.NETHERITE => Material.NETHERITE_SHOVEL
 
     // SPAWN_EGG
+    case SpawnEggVariant.ALLAY            => Material.ALLAY_SPAWN_EGG
+    case SpawnEggVariant.AXOLOTL          => Material.AXOLOTL_SPAWN_EGG
     case SpawnEggVariant.BAT              => Material.BAT_SPAWN_EGG
     case SpawnEggVariant.BEE              => Material.BEE_SPAWN_EGG
     case SpawnEggVariant.BLAZE            => Material.BLAZE_SPAWN_EGG
+    case SpawnEggVariant.CAMEL            => Material.CAMEL_SPAWN_EGG
     case SpawnEggVariant.CAT              => Material.CAT_SPAWN_EGG
     case SpawnEggVariant.CAVE_SPIDER      => Material.CAVE_SPIDER_SPAWN_EGG
     case SpawnEggVariant.CHICKEN          => Material.CHICKEN_SPAWN_EGG
@@ -671,15 +858,20 @@ class SpigotItemVariantMapper(
     case SpawnEggVariant.DONKEY           => Material.DONKEY_SPAWN_EGG
     case SpawnEggVariant.DROWNED          => Material.DROWNED_SPAWN_EGG
     case SpawnEggVariant.ELDER_GUARDIAN   => Material.ELDER_GUARDIAN_SPAWN_EGG
+    case SpawnEggVariant.ENDER_DRAGON     => Material.ENDER_DRAGON_SPAWN_EGG
     case SpawnEggVariant.ENDERMAN         => Material.ENDERMAN_SPAWN_EGG
     case SpawnEggVariant.ENDERMITE        => Material.ENDERMITE_SPAWN_EGG
     case SpawnEggVariant.EVOKER           => Material.EVOKER_SPAWN_EGG
     case SpawnEggVariant.FOX              => Material.FOX_SPAWN_EGG
+    case SpawnEggVariant.FROG             => Material.FROG_SPAWN_EGG
     case SpawnEggVariant.GHAST            => Material.GHAST_SPAWN_EGG
+    case SpawnEggVariant.GLOW_SQUID       => Material.GLOW_SQUID_SPAWN_EGG
+    case SpawnEggVariant.GOAT             => Material.GOAT_SPAWN_EGG
     case SpawnEggVariant.GUARDIAN         => Material.GUARDIAN_SPAWN_EGG
     case SpawnEggVariant.HORSE            => Material.HORSE_SPAWN_EGG
     case SpawnEggVariant.HOGLIN           => Material.HOGLIN_SPAWN_EGG
     case SpawnEggVariant.HUSK             => Material.HUSK_SPAWN_EGG
+    case SpawnEggVariant.IRON_GOLEM       => Material.IRON_GOLEM_SPAWN_EGG
     case SpawnEggVariant.LLAMA            => Material.LLAMA_SPAWN_EGG
     case SpawnEggVariant.MAGMA_CUBE       => Material.MAGMA_CUBE_SPAWN_EGG
     case SpawnEggVariant.MOOSHROOM        => Material.MOOSHROOM_SPAWN_EGG
@@ -703,10 +895,13 @@ class SpigotItemVariantMapper(
     case SpawnEggVariant.SKELETON_HORSE   => Material.SKELETON_HORSE_SPAWN_EGG
     case SpawnEggVariant.SKELETON         => Material.SKELETON_SPAWN_EGG
     case SpawnEggVariant.SLIME            => Material.SLIME_SPAWN_EGG
+    case SpawnEggVariant.SNIFFER          => Material.SNIFFER_SPAWN_EGG
+    case SpawnEggVariant.SNOW_GOLEM       => Material.SNOW_GOLEM_SPAWN_EGG
     case SpawnEggVariant.SPIDER           => Material.SPIDER_SPAWN_EGG
     case SpawnEggVariant.SQUID            => Material.SQUID_SPAWN_EGG
     case SpawnEggVariant.STRAY            => Material.STRAY_SPAWN_EGG
     case SpawnEggVariant.STRIDER          => Material.STRIDER_SPAWN_EGG
+    case SpawnEggVariant.TADPOLE          => Material.TADPOLE_SPAWN_EGG
     case SpawnEggVariant.TRADER_LLAMA     => Material.TRADER_LLAMA_SPAWN_EGG
     case SpawnEggVariant.TROPICAL_FISH    => Material.TROPICAL_FISH_SPAWN_EGG
     case SpawnEggVariant.TURTLE           => Material.TURTLE_SPAWN_EGG
@@ -714,7 +909,9 @@ class SpigotItemVariantMapper(
     case SpawnEggVariant.VILLAGER         => Material.VILLAGER_SPAWN_EGG
     case SpawnEggVariant.VINDICATOR       => Material.VINDICATOR_SPAWN_EGG
     case SpawnEggVariant.WANDERING_TRADER => Material.WANDERING_TRADER_SPAWN_EGG
+    case SpawnEggVariant.WARDEN           => Material.WARDEN_SPAWN_EGG
     case SpawnEggVariant.WITCH            => Material.WITCH_SPAWN_EGG
+    case SpawnEggVariant.WITHER           => Material.WITHER_SPAWN_EGG
     case SpawnEggVariant.WITHER_SKELETON  => Material.WITHER_SKELETON_SPAWN_EGG
     case SpawnEggVariant.WOLF             => Material.WOLF_SPAWN_EGG
     case SpawnEggVariant.ZOGLIN           => Material.ZOGLIN_SPAWN_EGG
@@ -745,6 +942,6 @@ class SpigotItemVariantMapper(
     case SwordVariant.DIAMOND   => Material.DIAMOND_SWORD
     case SwordVariant.NETHERITE => Material.NETHERITE_SWORD
 
-    case it: BlockVariant => blockMapper.map(it)
+    case it: BlockVariant => blockMapper.mapVariantToMaterial(it)
   }
 }

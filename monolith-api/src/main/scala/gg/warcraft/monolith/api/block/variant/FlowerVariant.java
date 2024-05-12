@@ -39,6 +39,7 @@ public enum FlowerVariant implements BlockVariant, ItemVariant {
     PINK_TULIP,
     POPPY,
     RED_TULIP,
+    TORCHFLOWER,
     WHITE_TULIP,
     WITHER_ROSE,
 }

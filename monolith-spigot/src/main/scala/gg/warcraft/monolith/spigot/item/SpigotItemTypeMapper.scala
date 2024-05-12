@@ -24,10 +24,10 @@
 
 package gg.warcraft.monolith.spigot.item
 
-import java.util
-
 import gg.warcraft.monolith.api.item.ItemType
 import org.bukkit.Material
+
+import java.util
 
 private object SpigotItemTypeMapper {
   private final val cache: util.EnumMap[ItemType, Material] =
@@ -40,15 +40,18 @@ class SpigotItemTypeMapper {
 
   private def compute(`type`: ItemType): Material = `type` match {
     case ItemType.BOTTLE_OF_ENCHANTING => Material.EXPERIENCE_BOTTLE
-    case ItemType.BRICK_BLOCK          => Material.BRICKS
+    case ItemType.BRICKS_BLOCK         => Material.BRICKS
     case ItemType.CLAY                 => Material.CLAY_BALL
     case ItemType.CLAY_BLOCK           => Material.CLAY
+    case ItemType.DISC_FRAGMENT        => Material.DISC_FRAGMENT_5
     case ItemType.GOLDEN_MELON_SLICE   => Material.GLISTERING_MELON_SLICE
     case ItemType.HAY_BALE             => Material.HAY_BLOCK
     case ItemType.INFESTED_BLOCK       => Material.INFESTED_STONE
     case ItemType.JACK_OF_THE_LANTERN  => Material.JACK_O_LANTERN
     case ItemType.JIGSAW_BLOCK         => Material.JIGSAW
     case ItemType.LAPIS                => Material.LAPIS_LAZULI
+    case ItemType.LIGHT_BLOCK          => Material.LIGHT
+    case ItemType.MUD_BRICK            => Material.MUD_BRICKS
     case ItemType.QUARTZ_ORE           => Material.NETHER_QUARTZ_ORE
     case ItemType.SLIMEBALL            => Material.SLIME_BALL
     case ItemType.BOOK_AND_QUILL       => Material.WRITABLE_BOOK

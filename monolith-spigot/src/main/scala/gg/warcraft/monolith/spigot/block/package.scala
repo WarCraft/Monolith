@@ -26,7 +26,7 @@ package gg.warcraft.monolith.spigot
 
 import org.bukkit.block.data.`type`._
 import org.bukkit.block.data.{BlockData, Rail}
-import org.bukkit.block.{Block, BlockState, Sign}
+import org.bukkit.block.{Block, BlockFace, BlockState, Sign}
 import org.bukkit.event.Event
 import org.bukkit.event.block.{BlockBreakEvent, BlockPlaceEvent}
 import org.bukkit.event.player.PlayerInteractEvent
@@ -35,32 +35,42 @@ package object block {
   // Block meta types
   type SpigotBlock = Block
   type SpigotBlockData = BlockData
+  type SpigotBlockFace = BlockFace
   type SpigotBlockState = BlockState
 
   // Spigot block types
   type SpigotBamboo = Bamboo
   type SpigotBed = Bed
+  type SpigotBigDripleaf = BigDripleaf
   type SpigotBubbleColumn = BubbleColumn
   type SpigotCake = Cake
   type SpigotCampfire = Campfire
+  type SpigotCaveVines = CaveVines
+  type SpigotCaveVinesPlant = CaveVinesPlant
   type SpigotCommandBlock = CommandBlock
   type SpigotComparator = Comparator
+  type SpigotCandle = Candle
   type SpigotDoor = Door
   type SpigotDispenser = Dispenser
+  type SpigotDripstone = PointedDripstone
   type SpigotDropper = Dispenser
   type SpigotEndPortalFrame = EndPortalFrame
+  type SpigotGlowLichen = GlowLichen
   type SpigotHopper = Hopper
   type SpigotJigsaw = Jigsaw
   type SpigotJukebox = Jukebox
   type SpigotLantern = Lantern
   type SpigotLectern = Lectern
+  type SpigotLightBlock = Light
   type SpigotNoteBlock = NoteBlock
+  type SpigotPinkPetals = PinkPetals
   type SpigotPiston = Piston
   type SpigotPistonHead = PistonHead
   type SpigotRail = Rail
   type SpigotRepeater = Repeater
   type SpigotRespawnAnchor = RespawnAnchor
   type SpigotSapling = Sapling
+  type SpigotSculkVein = SculkVein
   type SpigotSeaPickle = SeaPickle
   type SpigotSign = Sign
   type SpigotSlab = Slab

@@ -29,9 +29,13 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum LeavesVariant implements BlockVariant, ItemVariant {
     ACACIA,
+    AZALEA,
+    FLOWERING_AZALEA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
 }

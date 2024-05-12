@@ -27,6 +27,7 @@ package gg.warcraft.monolith.api.block.variant;
 import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
+// TODO split normal glass off into Glass block and colored blocks into StainedGlass variable block?
 public enum GlassVariant implements BlockVariant, ItemVariant {
     NORMAL,
 

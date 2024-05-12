@@ -29,8 +29,12 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum BoatVariant implements ItemVariant {
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
+
+    BAMBOO,
 }

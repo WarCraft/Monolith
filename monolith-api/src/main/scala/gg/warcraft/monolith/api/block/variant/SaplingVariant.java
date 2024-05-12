@@ -30,6 +30,7 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum SaplingVariant implements BlockVariant, ItemVariant {
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
     OAK,

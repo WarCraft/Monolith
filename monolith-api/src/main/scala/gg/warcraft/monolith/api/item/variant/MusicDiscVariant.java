@@ -27,6 +27,7 @@ package gg.warcraft.monolith.api.item.variant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
 public enum MusicDiscVariant implements ItemVariant {
+    DISC_5,
     DISC_11,
     DISC_13,
     DISC_BLOCKS,
@@ -35,7 +36,9 @@ public enum MusicDiscVariant implements ItemVariant {
     DISC_FAR,
     DISC_MALL,
     DISC_MELLOHI,
+    DISC_OTHERSIDE,
     DISC_PIGSTEP,
+    DISC_RELIC,
     DISC_STAL,
     DISC_STRAD,
     DISC_WAIT,

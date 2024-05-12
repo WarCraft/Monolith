@@ -27,13 +27,7 @@ package gg.warcraft.monolith.api.block.variant;
 import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
-public enum BrickBlockVariant implements BlockVariant, ItemVariant {
+public enum RedstoneOreVariant implements BlockVariant, ItemVariant {
     NORMAL,
-
-    CRACKED_POLISHED_BLACKSTONE,
-
-    NETHER,
-    CHISELED_NETHER,
-    CRACKED_NETHER,
-    RED_NETHER,
+    DEEPSLATE
 }

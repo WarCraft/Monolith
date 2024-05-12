@@ -22,20 +22,14 @@
  * SOFTWARE.
  */
 
-package gg.warcraft.monolith.api.block.state;
+package gg.warcraft.monolith.api.block.variant;
 
-public enum TurtleEggAge {
-    AGE_0,
-    AGE_1,
-    AGE_2;
+import gg.warcraft.monolith.api.block.BlockVariant;
+import gg.warcraft.monolith.api.item.ItemVariant;
 
-    private static final TurtleEggAge[] finalValues = values();
-
-    public static TurtleEggAge valueOf(int data) {
-        return finalValues[data];
-    }
-
-    public int toInt() {
-        return ordinal();
-    }
+public enum AmethystClusterVariant implements BlockVariant, ItemVariant {
+    SMALL_BUD,
+    MEDIUM_BUD,
+    LARGE_BUD,
+    CLUSTER,
 }

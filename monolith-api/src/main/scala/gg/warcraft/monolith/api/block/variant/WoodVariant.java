@@ -30,20 +30,24 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum WoodVariant implements BlockVariant, ItemVariant {
     ACACIA(false),
     BIRCH(false),
+    CHERRY(false),
     DARK_OAK(false),
     JUNGLE(false),
+    MANGROVE(false),
     OAK(false),
     SPRUCE(false),
 
-    CRIMSON_FUNGI(false),
-    WARPED_FUNGI(false),
-
     STRIPPED_ACACIA(true),
     STRIPPED_BIRCH(true),
+    STRIPPED_CHERRY(true),
     STRIPPED_DARK_OAK(true),
     STRIPPED_JUNGLE(true),
+    STRIPPED_MANGROVE(true),
     STRIPPED_OAK(true),
     STRIPPED_SPRUCE(true),
+
+    CRIMSON_FUNGI(false),
+    WARPED_FUNGI(false),
 
     STRIPPED_CRIMSON_FUNGI(true),
     STRIPPED_WARPED_FUNGI(true);

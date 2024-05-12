@@ -36,6 +36,13 @@ object Extensions {
       Material.VOID_AIR
     )
 
+    private final val amethystCluster = util.EnumSet.of(
+      Material.SMALL_AMETHYST_BUD,
+      Material.MEDIUM_AMETHYST_BUD,
+      Material.LARGE_AMETHYST_BUD,
+      Material.AMETHYST_CLUSTER
+    )
+
     private final val andesite = util.EnumSet.of(
       Material.ANDESITE,
       Material.POLISHED_ANDESITE
@@ -60,6 +67,16 @@ object Extensions {
       Material.GOLDEN_AXE,
       Material.DIAMOND_AXE,
       Material.NETHERITE_AXE
+    )
+
+    private final val azalea = util.EnumSet.of(
+      Material.AZALEA,
+      Material.FLOWERING_AZALEA
+    )
+
+    private final val bambooBlock = util.EnumSet.of(
+      Material.BAMBOO_BLOCK,
+      Material.STRIPPED_BAMBOO_BLOCK
     )
 
     private final val banner = util.EnumSet.of(
@@ -144,13 +161,21 @@ object Extensions {
       Material.CHISELED_POLISHED_BLACKSTONE
     )
 
+    private final val blackstoneBrick = util.EnumSet.of(
+      Material.POLISHED_BLACKSTONE_BRICKS,
+      Material.CRACKED_POLISHED_BLACKSTONE_BRICKS
+    )
+
     private final val boat = util.EnumSet.of(
       Material.ACACIA_BOAT,
       Material.BIRCH_BOAT,
+      Material.CHERRY_BOAT,
       Material.DARK_OAK_BOAT,
       Material.JUNGLE_BOAT,
+      Material.MANGROVE_BOAT,
       Material.OAK_BOAT,
-      Material.SPRUCE_BOAT
+      Material.SPRUCE_BOAT,
+      Material.BAMBOO_RAFT
     )
 
     private final val boots = util.EnumSet.of(
@@ -167,9 +192,10 @@ object Extensions {
       Material.NETHER_BRICK
     )
 
-    private final val brickBlock = util.EnumSet.of(
+    private final val bricksBlock = util.EnumSet.of(
       Material.BRICKS,
-      Material.CRACKED_POLISHED_BLACKSTONE_BRICKS,
+      Material.DEEPSLATE_TILES,
+      Material.CRACKED_DEEPSLATE_TILES,
       Material.NETHER_BRICKS,
       Material.CHISELED_NETHER_BRICKS,
       Material.CRACKED_NETHER_BRICKS,
@@ -178,30 +204,76 @@ object Extensions {
 
     private final val bucket = util.EnumSet.of(
       Material.BUCKET,
+      Material.AXOLOTL_BUCKET,
       Material.COD_BUCKET,
       Material.PUFFERFISH_BUCKET,
       Material.SALMON_BUCKET,
+      Material.TADPOLE_BUCKET,
       Material.TROPICAL_FISH_BUCKET,
       Material.LAVA_BUCKET,
       Material.MILK_BUCKET,
-      Material.WATER_BUCKET
+      Material.WATER_BUCKET,
+      Material.POWDER_SNOW_BUCKET
     )
 
     private final val button = util.EnumSet.of(
-      Material.STONE_BUTTON,
       Material.ACACIA_BUTTON,
       Material.BIRCH_BUTTON,
+      Material.CHERRY_BUTTON,
       Material.DARK_OAK_BUTTON,
       Material.JUNGLE_BUTTON,
+      Material.MANGROVE_BUTTON,
       Material.OAK_BUTTON,
       Material.SPRUCE_BUTTON,
       Material.CRIMSON_BUTTON,
-      Material.WARPED_BUTTON
+      Material.WARPED_BUTTON,
+      Material.BAMBOO_BUTTON,
+      Material.STONE_BUTTON
     )
 
     private final val campfire = util.EnumSet.of(
       Material.CAMPFIRE,
       Material.SOUL_CAMPFIRE
+    )
+
+    private final val candle = util.EnumSet.of(
+      Material.CANDLE,
+      Material.BLACK_CANDLE,
+      Material.BLUE_CANDLE,
+      Material.BROWN_CANDLE,
+      Material.CYAN_CANDLE,
+      Material.GRAY_CANDLE,
+      Material.GREEN_CANDLE,
+      Material.LIGHT_BLUE_CANDLE,
+      Material.LIGHT_GRAY_CANDLE,
+      Material.LIME_CANDLE,
+      Material.MAGENTA_CANDLE,
+      Material.ORANGE_CANDLE,
+      Material.PINK_CANDLE,
+      Material.PURPLE_CANDLE,
+      Material.RED_CANDLE,
+      Material.WHITE_CANDLE,
+      Material.YELLOW_CANDLE
+    )
+
+    private final val candleCake = util.EnumSet.of(
+      Material.CANDLE_CAKE,
+      Material.BLACK_CANDLE_CAKE,
+      Material.BLUE_CANDLE_CAKE,
+      Material.BROWN_CANDLE_CAKE,
+      Material.CYAN_CANDLE_CAKE,
+      Material.GRAY_CANDLE_CAKE,
+      Material.GREEN_CANDLE_CAKE,
+      Material.LIGHT_BLUE_CANDLE_CAKE,
+      Material.LIGHT_GRAY_CANDLE_CAKE,
+      Material.LIME_CANDLE_CAKE,
+      Material.MAGENTA_CANDLE_CAKE,
+      Material.ORANGE_CANDLE_CAKE,
+      Material.PINK_CANDLE_CAKE,
+      Material.PURPLE_CANDLE_CAKE,
+      Material.RED_CANDLE_CAKE,
+      Material.WHITE_CANDLE_CAKE,
+      Material.YELLOW_CANDLE_CAKE
     )
 
     private final val carpet = util.EnumSet.of(
@@ -223,9 +295,21 @@ object Extensions {
       Material.YELLOW_CARPET
     )
 
+    private final val cauldron = util.EnumSet.of(
+      Material.CAULDRON,
+      Material.LAVA_CAULDRON,
+      Material.POWDER_SNOW_CAULDRON,
+      Material.WATER_CAULDRON
+    )
+
     private final val chicken = util.EnumSet.of(
       Material.CHICKEN,
       Material.COOKED_CHICKEN
+    )
+
+    private final val coalOre = util.EnumSet.of(
+      Material.COAL_ORE,
+      Material.DEEPSLATE_COAL_ORE
     )
 
     private final val cobblestone = util.EnumSet.of(
@@ -238,10 +322,46 @@ object Extensions {
       Material.COOKED_COD
     )
 
+    private final val copperBlock = util.EnumSet.of(
+      Material.COPPER_BLOCK,
+      Material.EXPOSED_COPPER,
+      Material.WEATHERED_COPPER,
+      Material.OXIDIZED_COPPER,
+      Material.WAXED_COPPER_BLOCK,
+      Material.WAXED_EXPOSED_COPPER,
+      Material.WAXED_WEATHERED_COPPER,
+      Material.WAXED_OXIDIZED_COPPER,
+      Material.CUT_COPPER,
+      Material.EXPOSED_CUT_COPPER,
+      Material.WEATHERED_CUT_COPPER,
+      Material.OXIDIZED_CUT_COPPER,
+      Material.WAXED_CUT_COPPER,
+      Material.WAXED_EXPOSED_CUT_COPPER,
+      Material.WAXED_WEATHERED_CUT_COPPER,
+      Material.WAXED_OXIDIZED_CUT_COPPER
+    )
+
+    private final val copperOre = util.EnumSet.of(
+      Material.COPPER_ORE,
+      Material.DEEPSLATE_COPPER_ORE
+    )
+
     private final val chest = util.EnumSet.of(
       Material.CHEST,
       Material.ENDER_CHEST,
       Material.TRAPPED_CHEST
+    )
+
+    private final val chestBoat = util.EnumSet.of(
+      Material.ACACIA_CHEST_BOAT,
+      Material.BIRCH_CHEST_BOAT,
+      Material.DARK_OAK_CHEST_BOAT,
+      Material.JUNGLE_CHEST_BOAT,
+      Material.OAK_CHEST_BOAT,
+      Material.SPRUCE_CHEST_BOAT,
+      Material.CHERRY_CHEST_BOAT,
+      Material.MANGROVE_CHEST_BOAT,
+      Material.BAMBOO_CHEST_RAFT
     )
 
     private final val chestplate = util.EnumSet.of(
@@ -354,6 +474,22 @@ object Extensions {
       Material.DEAD_TUBE_CORAL_WALL_FAN
     )
 
+    private final val deepslateBrick = util.EnumSet.of(
+      Material.DEEPSLATE_BRICKS,
+      Material.CRACKED_DEEPSLATE_BRICKS
+    )
+
+    private final val deepslateStone = util.EnumSet.of(
+      Material.CHISELED_DEEPSLATE,
+      Material.COBBLED_DEEPSLATE,
+      Material.POLISHED_DEEPSLATE
+    )
+
+    private final val diamondOre = util.EnumSet.of(
+      Material.DIAMOND_ORE,
+      Material.DEEPSLATE_DIAMOND_ORE
+    )
+
     private final val diorite = util.EnumSet.of(
       Material.DIORITE,
       Material.POLISHED_DIORITE
@@ -361,19 +497,23 @@ object Extensions {
 
     private final val dirt = util.EnumSet.of(
       Material.DIRT,
-      Material.COARSE_DIRT
+      Material.COARSE_DIRT,
+      Material.ROOTED_DIRT
     )
 
     private final val door = util.EnumSet.of(
       Material.ACACIA_DOOR,
       Material.BIRCH_DOOR,
+      Material.CHERRY_DOOR,
       Material.DARK_OAK_DOOR,
       Material.JUNGLE_DOOR,
+      Material.MANGROVE_DOOR,
       Material.OAK_DOOR,
       Material.SPRUCE_DOOR,
-      Material.IRON_DOOR,
+      Material.BAMBOO_DOOR,
       Material.CRIMSON_DOOR,
-      Material.WARPED_DOOR
+      Material.WARPED_DOOR,
+      Material.IRON_DOOR
     )
 
     private final val dye = util.EnumSet.of(
@@ -395,25 +535,36 @@ object Extensions {
       Material.YELLOW_DYE
     )
 
+    private final val emeraldOre = util.EnumSet.of(
+      Material.EMERALD_ORE,
+      Material.DEEPSLATE_EMERALD_ORE
+    )
+
     private final val fence = util.EnumSet.of(
       Material.ACACIA_FENCE,
       Material.BIRCH_FENCE,
+      Material.CHERRY_FENCE,
       Material.DARK_OAK_FENCE,
       Material.JUNGLE_FENCE,
+      Material.MANGROVE_FENCE,
       Material.OAK_FENCE,
       Material.SPRUCE_FENCE,
-      Material.NETHER_BRICK_FENCE,
+      Material.BAMBOO_FENCE,
       Material.CRIMSON_FENCE,
-      Material.WARPED_FENCE
+      Material.WARPED_FENCE,
+      Material.NETHER_BRICK_FENCE
     )
 
     private final val fenceGate = util.EnumSet.of(
       Material.ACACIA_FENCE_GATE,
       Material.BIRCH_FENCE_GATE,
+      Material.CHERRY_FENCE_GATE,
       Material.DARK_OAK_FENCE_GATE,
       Material.JUNGLE_FENCE_GATE,
+      Material.MANGROVE_FENCE_GATE,
       Material.OAK_FENCE_GATE,
       Material.SPRUCE_FENCE_GATE,
+      Material.BAMBOO_FENCE_GATE,
       Material.CRIMSON_FENCE_GATE,
       Material.WARPED_FENCE_GATE
     )
@@ -440,12 +591,15 @@ object Extensions {
       Material.PINK_TULIP,
       Material.POPPY,
       Material.RED_TULIP,
+      Material.TORCHFLOWER,
       Material.WHITE_TULIP,
       Material.WITHER_ROSE
     )
 
     private final val flowerPot = util.EnumSet.of(
       Material.FLOWER_POT,
+      Material.POTTED_AZALEA_BUSH,
+      Material.POTTED_FLOWERING_AZALEA_BUSH,
       Material.POTTED_ALLIUM,
       Material.POTTED_AZURE_BLUET,
       Material.POTTED_BLUE_ORCHID,
@@ -457,6 +611,7 @@ object Extensions {
       Material.POTTED_PINK_TULIP,
       Material.POTTED_POPPY,
       Material.POTTED_RED_TULIP,
+      Material.POTTED_TORCHFLOWER,
       Material.POTTED_WHITE_TULIP,
       Material.POTTED_WITHER_ROSE,
       Material.POTTED_BAMBOO,
@@ -467,14 +622,22 @@ object Extensions {
       Material.POTTED_FERN,
       Material.POTTED_ACACIA_SAPLING,
       Material.POTTED_BIRCH_SAPLING,
+      Material.POTTED_CHERRY_SAPLING,
       Material.POTTED_DARK_OAK_SAPLING,
       Material.POTTED_JUNGLE_SAPLING,
+      Material.POTTED_MANGROVE_PROPAGULE,
       Material.POTTED_OAK_SAPLING,
       Material.POTTED_SPRUCE_SAPLING,
       Material.POTTED_CRIMSON_FUNGUS,
       Material.POTTED_CRIMSON_ROOTS,
       Material.POTTED_WARPED_FUNGUS,
       Material.POTTED_WARPED_ROOTS
+    )
+
+    private final val frogLight = util.EnumSet.of(
+      Material.OCHRE_FROGLIGHT,
+      Material.PEARLESCENT_FROGLIGHT,
+      Material.VERDANT_FROGLIGHT
     )
 
     private final val fungus = util.EnumSet.of(
@@ -541,6 +704,11 @@ object Extensions {
       Material.YELLOW_GLAZED_TERRACOTTA
     )
 
+    private final val goldOre = util.EnumSet.of(
+      Material.GOLD_ORE,
+      Material.DEEPSLATE_GOLD_ORE
+    )
+
     private final val granite = util.EnumSet.of(
       Material.GRANITE,
       Material.POLISHED_GRANITE
@@ -585,10 +753,21 @@ object Extensions {
     private final val infestedBlock = util.EnumSet.of(
       Material.INFESTED_STONE,
       Material.INFESTED_COBBLESTONE,
+      Material.INFESTED_DEEPSLATE,
       Material.INFESTED_STONE_BRICKS,
       Material.INFESTED_CRACKED_STONE_BRICKS,
       Material.INFESTED_CHISELED_STONE_BRICKS,
       Material.INFESTED_MOSSY_STONE_BRICKS
+    )
+
+    private final val inkSac = util.EnumSet.of(
+      Material.INK_SAC,
+      Material.GLOW_INK_SAC
+    )
+
+    private final val ironOre = util.EnumSet.of(
+      Material.IRON_ORE,
+      Material.DEEPSLATE_IRON_ORE
     )
 
     private final val lantern = util.EnumSet.of(
@@ -596,11 +775,20 @@ object Extensions {
       Material.SOUL_LANTERN
     )
 
+    private final val lapisOre = util.EnumSet.of(
+      Material.LAPIS_ORE,
+      Material.DEEPSLATE_LAPIS_ORE
+    )
+
     private final val leaves = util.EnumSet.of(
       Material.ACACIA_LEAVES,
+      Material.AZALEA_LEAVES,
+      Material.FLOWERING_AZALEA_LEAVES,
       Material.BIRCH_LEAVES,
+      Material.CHERRY_LEAVES,
       Material.DARK_OAK_LEAVES,
       Material.JUNGLE_LEAVES,
+      Material.MANGROVE_LEAVES,
       Material.OAK_LEAVES,
       Material.SPRUCE_LEAVES
     )
@@ -617,16 +805,20 @@ object Extensions {
     private final val log = util.EnumSet.of(
       Material.ACACIA_LOG,
       Material.BIRCH_LOG,
+      Material.CHERRY_LOG,
       Material.DARK_OAK_LOG,
       Material.JUNGLE_LOG,
+      Material.MANGROVE_LOG,
       Material.OAK_LOG,
       Material.SPRUCE_LOG,
       Material.CRIMSON_STEM,
       Material.WARPED_STEM,
       Material.STRIPPED_ACACIA_LOG,
       Material.STRIPPED_BIRCH_LOG,
+      Material.STRIPPED_CHERRY_LOG,
       Material.STRIPPED_DARK_OAK_LOG,
       Material.STRIPPED_JUNGLE_LOG,
+      Material.STRIPPED_MANGROVE_LOG,
       Material.STRIPPED_OAK_LOG,
       Material.STRIPPED_SPRUCE_LOG,
       Material.STRIPPED_CRIMSON_STEM,
@@ -645,6 +837,7 @@ object Extensions {
     private final val mobHead = util.EnumSet.of(
       Material.CREEPER_HEAD,
       Material.DRAGON_HEAD,
+      Material.PIGLIN_HEAD,
       Material.PLAYER_HEAD,
       Material.SKELETON_SKULL,
       Material.WITHER_SKELETON_SKULL,
@@ -654,6 +847,7 @@ object Extensions {
     private final val wallMobHead = util.EnumSet.of(
       Material.CREEPER_WALL_HEAD,
       Material.DRAGON_WALL_HEAD,
+      Material.PIGLIN_WALL_HEAD,
       Material.PLAYER_WALL_HEAD,
       Material.SKELETON_WALL_SKULL,
       Material.WITHER_SKELETON_WALL_SKULL,
@@ -672,6 +866,7 @@ object Extensions {
     )
 
     private final val musicDisc = util.EnumSet.of(
+      Material.MUSIC_DISC_5,
       Material.MUSIC_DISC_11,
       Material.MUSIC_DISC_13,
       Material.MUSIC_DISC_BLOCKS,
@@ -680,7 +875,9 @@ object Extensions {
       Material.MUSIC_DISC_FAR,
       Material.MUSIC_DISC_MALL,
       Material.MUSIC_DISC_MELLOHI,
+      Material.MUSIC_DISC_OTHERSIDE,
       Material.MUSIC_DISC_PIGSTEP,
+      Material.MUSIC_DISC_RELIC,
       Material.MUSIC_DISC_STAL,
       Material.MUSIC_DISC_STRAD,
       Material.MUSIC_DISC_WAIT,
@@ -731,10 +928,13 @@ object Extensions {
     private final val planks = util.EnumSet.of(
       Material.ACACIA_PLANKS,
       Material.BIRCH_PLANKS,
+      Material.CHERRY_PLANKS,
       Material.DARK_OAK_PLANKS,
       Material.JUNGLE_PLANKS,
+      Material.MANGROVE_PLANKS,
       Material.OAK_PLANKS,
       Material.SPRUCE_PLANKS,
+      Material.BAMBOO_PLANKS,
       Material.CRIMSON_PLANKS,
       Material.WARPED_PLANKS
     )
@@ -763,15 +963,41 @@ object Extensions {
       Material.SPLASH_POTION
     )
 
+    private final val potterySherd = util.EnumSet.of(
+      Material.ANGLER_POTTERY_SHERD,
+      Material.ARCHER_POTTERY_SHERD,
+      Material.ARMS_UP_POTTERY_SHERD,
+      Material.BLADE_POTTERY_SHERD,
+      Material.BREWER_POTTERY_SHERD,
+      Material.BURN_POTTERY_SHERD,
+      Material.DANGER_POTTERY_SHERD,
+      Material.EXPLORER_POTTERY_SHERD,
+      Material.FRIEND_POTTERY_SHERD,
+      Material.HEARTBREAK_POTTERY_SHERD,
+      Material.HEART_POTTERY_SHERD,
+      Material.HOWL_POTTERY_SHERD,
+      Material.MINER_POTTERY_SHERD,
+      Material.MOURNER_POTTERY_SHERD,
+      Material.PLENTY_POTTERY_SHERD,
+      Material.PRIZE_POTTERY_SHERD,
+      Material.SHEAF_POTTERY_SHERD,
+      Material.SHELTER_POTTERY_SHERD,
+      Material.SKULL_POTTERY_SHERD,
+      Material.SNORT_POTTERY_SHERD
+    )
+
     private final val pressurePlate = util.EnumSet.of(
       Material.ACACIA_PRESSURE_PLATE,
       Material.BIRCH_PRESSURE_PLATE,
+      Material.CHERRY_PRESSURE_PLATE,
       Material.DARK_OAK_PRESSURE_PLATE,
       Material.JUNGLE_PRESSURE_PLATE,
+      Material.MANGROVE_PRESSURE_PLATE,
       Material.OAK_PRESSURE_PLATE,
       Material.SPRUCE_PRESSURE_PLATE,
-      Material.STONE_PRESSURE_PLATE,
+      Material.BAMBOO_PRESSURE_PLATE,
       Material.CRIMSON_PRESSURE_PLATE,
+      Material.STONE_PRESSURE_PLATE,
       Material.WARPED_PRESSURE_PLATE
     )
 
@@ -798,6 +1024,11 @@ object Extensions {
       Material.ACTIVATOR_RAIL,
       Material.DETECTOR_RAIL,
       Material.POWERED_RAIL
+    )
+
+    private final val redstoneOre = util.EnumSet.of(
+      Material.REDSTONE_ORE,
+      Material.DEEPSLATE_REDSTONE_ORE
     )
 
     private final val roots = util.EnumSet.of(
@@ -829,6 +1060,7 @@ object Extensions {
     private final val sapling = util.EnumSet.of(
       Material.ACACIA_SAPLING,
       Material.BIRCH_SAPLING,
+      Material.CHERRY_SAPLING,
       Material.DARK_OAK_SAPLING,
       Material.JUNGLE_SAPLING,
       Material.OAK_SAPLING,
@@ -876,13 +1108,36 @@ object Extensions {
       Material.YELLOW_SHULKER_BOX
     )
 
+    private final val smithingTemplate = util.EnumSet.of(
+      Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
+      Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE,
+      Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE
+    )
+
     private final val sign = util.EnumSet.of(
       Material.ACACIA_SIGN,
       Material.BIRCH_SIGN,
+      Material.CHERRY_SIGN,
       Material.DARK_OAK_SIGN,
       Material.JUNGLE_SIGN,
+      Material.MANGROVE_SIGN,
       Material.OAK_SIGN,
       Material.SPRUCE_SIGN,
+      Material.BAMBOO_SIGN,
       Material.CRIMSON_SIGN,
       Material.WARPED_SIGN
     )
@@ -890,12 +1145,43 @@ object Extensions {
     private final val wallSign = util.EnumSet.of(
       Material.ACACIA_WALL_SIGN,
       Material.BIRCH_WALL_SIGN,
+      Material.CHERRY_WALL_SIGN,
       Material.DARK_OAK_WALL_SIGN,
       Material.JUNGLE_WALL_SIGN,
+      Material.MANGROVE_WALL_SIGN,
       Material.OAK_WALL_SIGN,
       Material.SPRUCE_WALL_SIGN,
+      Material.BAMBOO_WALL_SIGN,
       Material.CRIMSON_WALL_SIGN,
       Material.WARPED_WALL_SIGN
+    )
+
+    private final val hangingSign = util.EnumSet.of(
+      Material.ACACIA_HANGING_SIGN,
+      Material.BIRCH_HANGING_SIGN,
+      Material.CHERRY_HANGING_SIGN,
+      Material.DARK_OAK_HANGING_SIGN,
+      Material.JUNGLE_HANGING_SIGN,
+      Material.MANGROVE_HANGING_SIGN,
+      Material.OAK_HANGING_SIGN,
+      Material.SPRUCE_HANGING_SIGN,
+      Material.BAMBOO_HANGING_SIGN,
+      Material.CRIMSON_HANGING_SIGN,
+      Material.WARPED_HANGING_SIGN
+    )
+
+    private final val hangingWallSign = util.EnumSet.of(
+      Material.ACACIA_WALL_HANGING_SIGN,
+      Material.BIRCH_WALL_HANGING_SIGN,
+      Material.CHERRY_WALL_HANGING_SIGN,
+      Material.DARK_OAK_WALL_HANGING_SIGN,
+      Material.JUNGLE_WALL_HANGING_SIGN,
+      Material.MANGROVE_WALL_HANGING_SIGN,
+      Material.OAK_WALL_HANGING_SIGN,
+      Material.SPRUCE_WALL_HANGING_SIGN,
+      Material.BAMBOO_WALL_HANGING_SIGN,
+      Material.CRIMSON_WALL_HANGING_SIGN,
+      Material.WARPED_WALL_HANGING_SIGN
     )
 
     private final val slab = util.EnumSet.of(
@@ -905,6 +1191,10 @@ object Extensions {
       Material.BRICK_SLAB,
       Material.NETHER_BRICK_SLAB,
       Material.RED_NETHER_BRICK_SLAB,
+      Material.DEEPSLATE_BRICK_SLAB,
+      Material.DEEPSLATE_TILE_SLAB,
+      Material.COBBLED_DEEPSLATE_SLAB,
+      Material.POLISHED_DEEPSLATE_SLAB,
       Material.SANDSTONE_SLAB,
       Material.RED_SANDSTONE_SLAB,
       Material.STONE_SLAB,
@@ -914,6 +1204,7 @@ object Extensions {
       Material.DIORITE_SLAB,
       Material.GRANITE_SLAB,
       Material.END_STONE_BRICK_SLAB,
+      Material.MUD_BRICK_SLAB,
       Material.PRISMARINE_SLAB,
       Material.PRISMARINE_BRICK_SLAB,
       Material.DARK_PRISMARINE_SLAB,
@@ -921,8 +1212,10 @@ object Extensions {
       Material.QUARTZ_SLAB,
       Material.ACACIA_SLAB,
       Material.BIRCH_SLAB,
+      Material.CHERRY_SLAB,
       Material.DARK_OAK_SLAB,
       Material.JUNGLE_SLAB,
+      Material.MANGROVE_SLAB,
       Material.OAK_SLAB,
       Material.SPRUCE_SLAB,
       Material.PETRIFIED_OAK_SLAB,
@@ -937,13 +1230,26 @@ object Extensions {
       Material.POLISHED_DIORITE_SLAB,
       Material.POLISHED_GRANITE_SLAB,
       Material.SMOOTH_QUARTZ_SLAB,
+      Material.BAMBOO_SLAB,
+      Material.BAMBOO_MOSAIC_SLAB,
       Material.CRIMSON_SLAB,
-      Material.WARPED_SLAB
+      Material.WARPED_SLAB,
+      Material.CUT_COPPER_SLAB,
+      Material.EXPOSED_CUT_COPPER_SLAB,
+      Material.WEATHERED_CUT_COPPER_SLAB,
+      Material.OXIDIZED_CUT_COPPER_SLAB,
+      Material.WAXED_CUT_COPPER_SLAB,
+      Material.WAXED_EXPOSED_CUT_COPPER_SLAB,
+      Material.WAXED_WEATHERED_CUT_COPPER_SLAB,
+      Material.WAXED_OXIDIZED_CUT_COPPER_SLAB
     )
 
     private final val spawnEgg = util.EnumSet.of(
+      Material.ALLAY_SPAWN_EGG,
+      Material.AXOLOTL_SPAWN_EGG,
       Material.BAT_SPAWN_EGG,
       Material.BLAZE_SPAWN_EGG,
+      Material.CAMEL_SPAWN_EGG,
       Material.CAT_SPAWN_EGG,
       Material.CAVE_SPIDER_SPAWN_EGG,
       Material.CHICKEN_SPAWN_EGG,
@@ -954,15 +1260,18 @@ object Extensions {
       Material.DONKEY_SPAWN_EGG,
       Material.DROWNED_SPAWN_EGG,
       Material.ELDER_GUARDIAN_SPAWN_EGG,
+      Material.ENDER_DRAGON_SPAWN_EGG,
       Material.ENDERMAN_SPAWN_EGG,
       Material.ENDERMITE_SPAWN_EGG,
       Material.EVOKER_SPAWN_EGG,
       Material.FOX_SPAWN_EGG,
+      Material.FROG_SPAWN_EGG,
       Material.GHAST_SPAWN_EGG,
       Material.GUARDIAN_SPAWN_EGG,
       Material.HORSE_SPAWN_EGG,
       Material.HOGLIN_SPAWN_EGG,
       Material.HUSK_SPAWN_EGG,
+      Material.IRON_GOLEM_SPAWN_EGG,
       Material.LLAMA_SPAWN_EGG,
       Material.MAGMA_CUBE_SPAWN_EGG,
       Material.MOOSHROOM_SPAWN_EGG,
@@ -986,10 +1295,13 @@ object Extensions {
       Material.SKELETON_HORSE_SPAWN_EGG,
       Material.SKELETON_SPAWN_EGG,
       Material.SLIME_SPAWN_EGG,
+      Material.SNIFFER_SPAWN_EGG,
+      Material.SNOW_GOLEM_SPAWN_EGG,
       Material.SPIDER_SPAWN_EGG,
       Material.SQUID_SPAWN_EGG,
       Material.STRAY_SPAWN_EGG,
       Material.STRIDER_SPAWN_EGG,
+      Material.TADPOLE_SPAWN_EGG,
       Material.TRADER_LLAMA_SPAWN_EGG,
       Material.TROPICAL_FISH_SPAWN_EGG,
       Material.TURTLE_SPAWN_EGG,
@@ -997,7 +1309,9 @@ object Extensions {
       Material.VILLAGER_SPAWN_EGG,
       Material.VINDICATOR_SPAWN_EGG,
       Material.WANDERING_TRADER_SPAWN_EGG,
+      Material.WARDEN_SPAWN_EGG,
       Material.WITCH_SPAWN_EGG,
+      Material.WITHER_SPAWN_EGG,
       Material.WITHER_SKELETON_SPAWN_EGG,
       Material.WOLF_SPAWN_EGG,
       Material.ZOGLIN_SPAWN_EGG,
@@ -1024,6 +1338,10 @@ object Extensions {
       Material.BRICK_STAIRS,
       Material.NETHER_BRICK_STAIRS,
       Material.RED_NETHER_BRICK_STAIRS,
+      Material.DEEPSLATE_BRICK_STAIRS,
+      Material.DEEPSLATE_TILE_STAIRS,
+      Material.COBBLED_DEEPSLATE_STAIRS,
+      Material.POLISHED_DEEPSLATE_STAIRS,
       Material.SANDSTONE_STAIRS,
       Material.RED_SANDSTONE_STAIRS,
       Material.STONE_STAIRS,
@@ -1033,6 +1351,7 @@ object Extensions {
       Material.DIORITE_STAIRS,
       Material.GRANITE_STAIRS,
       Material.END_STONE_BRICK_STAIRS,
+      Material.MUD_BRICK_STAIRS,
       Material.PRISMARINE_STAIRS,
       Material.PRISMARINE_BRICK_STAIRS,
       Material.DARK_PRISMARINE_STAIRS,
@@ -1040,8 +1359,10 @@ object Extensions {
       Material.QUARTZ_STAIRS,
       Material.ACACIA_STAIRS,
       Material.BIRCH_STAIRS,
+      Material.CHERRY_STAIRS,
       Material.DARK_OAK_STAIRS,
       Material.JUNGLE_STAIRS,
+      Material.MANGROVE_STAIRS,
       Material.OAK_STAIRS,
       Material.SPRUCE_STAIRS,
       Material.SMOOTH_SANDSTONE_STAIRS,
@@ -1052,8 +1373,18 @@ object Extensions {
       Material.POLISHED_DIORITE_STAIRS,
       Material.POLISHED_GRANITE_STAIRS,
       Material.SMOOTH_QUARTZ_STAIRS,
+      Material.BAMBOO_STAIRS,
+      Material.BAMBOO_MOSAIC_STAIRS,
       Material.CRIMSON_STAIRS,
-      Material.WARPED_STAIRS
+      Material.WARPED_STAIRS,
+      Material.CUT_COPPER_STAIRS,
+      Material.EXPOSED_CUT_COPPER_STAIRS,
+      Material.WEATHERED_CUT_COPPER_STAIRS,
+      Material.OXIDIZED_CUT_COPPER_STAIRS,
+      Material.WAXED_CUT_COPPER_STAIRS,
+      Material.WAXED_EXPOSED_CUT_COPPER_STAIRS,
+      Material.WAXED_WEATHERED_CUT_COPPER_STAIRS,
+      Material.WAXED_OXIDIZED_CUT_COPPER_STAIRS
     )
 
     private final val stew = util.EnumSet.of(
@@ -1122,12 +1453,15 @@ object Extensions {
     private final val trapdoor = util.EnumSet.of(
       Material.ACACIA_TRAPDOOR,
       Material.BIRCH_TRAPDOOR,
+      Material.CHERRY_TRAPDOOR,
       Material.DARK_OAK_TRAPDOOR,
       Material.JUNGLE_TRAPDOOR,
+      Material.MANGROVE_TRAPDOOR,
       Material.OAK_TRAPDOOR,
       Material.SPRUCE_TRAPDOOR,
-      Material.IRON_TRAPDOOR,
+      Material.BAMBOO_TRAPDOOR,
       Material.CRIMSON_TRAPDOOR,
+      Material.IRON_TRAPDOOR,
       Material.WARPED_TRAPDOOR
     )
 
@@ -1138,6 +1472,11 @@ object Extensions {
       Material.BRICK_WALL,
       Material.NETHER_BRICK_WALL,
       Material.RED_NETHER_BRICK_WALL,
+      Material.DEEPSLATE_BRICK_WALL,
+      Material.DEEPSLATE_TILE_WALL,
+      Material.COBBLED_DEEPSLATE_WALL,
+      Material.POLISHED_DEEPSLATE_WALL,
+      Material.MUD_BRICK_WALL,
       Material.PRISMARINE_WALL,
       Material.SANDSTONE_WALL,
       Material.RED_SANDSTONE_WALL,
@@ -1159,16 +1498,20 @@ object Extensions {
     private final val wood = util.EnumSet.of(
       Material.ACACIA_WOOD,
       Material.BIRCH_WOOD,
+      Material.CHERRY_WOOD,
       Material.DARK_OAK_WOOD,
       Material.JUNGLE_WOOD,
+      Material.MANGROVE_WOOD,
       Material.OAK_WOOD,
       Material.SPRUCE_WOOD,
       Material.CRIMSON_HYPHAE,
       Material.WARPED_HYPHAE,
       Material.STRIPPED_ACACIA_WOOD,
       Material.STRIPPED_BIRCH_WOOD,
+      Material.STRIPPED_CHERRY_WOOD,
       Material.STRIPPED_DARK_OAK_WOOD,
       Material.STRIPPED_JUNGLE_WOOD,
+      Material.STRIPPED_MANGROVE_WOOD,
       Material.STRIPPED_OAK_WOOD,
       Material.STRIPPED_SPRUCE_WOOD,
       Material.STRIPPED_CRIMSON_HYPHAE,
@@ -1195,27 +1538,38 @@ object Extensions {
     )
 
     def isAir: Boolean = air.contains(material)
+    def isAmethystCluster: Boolean = amethystCluster.contains(material)
     def isAndesite: Boolean = andesite.contains(material)
     def isAnvil: Boolean = anvil.contains(material)
     def isArrow: Boolean = arrow.contains(material)
     def isAxe: Boolean = axe.contains(material)
+    def isAzalea: Boolean = azalea.contains(material)
+    def isBambooBlock: Boolean = bambooBlock.contains(material)
     def isBanner: Boolean = banner.contains(material)
     def isWallBanner: Boolean = wallBanner.contains(material)
+    def isBannerPattern: Boolean = bannerPattern.contains(material)
     def isBasalt: Boolean = basalt.contains(material)
+    def isBed: Boolean = bed.contains(material)
     def isBeef: Boolean = beef.contains(material)
     def isBlackstone: Boolean = blackstone.contains(material)
-    def isBoots: Boolean = boots.contains(material)
-    def isBucket: Boolean = bucket.contains(material)
-    def isBannerPattern: Boolean = bannerPattern.contains(material)
-    def isBed: Boolean = bed.contains(material)
+    def isBlackstoneBrick: Boolean = blackstoneBrick.contains(material)
     def isBoat: Boolean = boat.contains(material)
+    def isBoots: Boolean = boots.contains(material)
     def isBrick: Boolean = brick.contains(material)
-    def isBrickBlock: Boolean = brickBlock.contains(material)
+    def isBricksBlock: Boolean = bricksBlock.contains(material)
+    def isBucket: Boolean = bucket.contains(material)
     def isButton: Boolean = button.contains(material)
     def isCampfire: Boolean = campfire.contains(material)
+    def isCandle: Boolean = candle.contains(material)
+    def isCandleCake: Boolean = candleCake.contains(material)
     def isCarpet: Boolean = carpet.contains(material)
+    def isCauldron: Boolean = cauldron.contains(material)
+    def isCoalOre: Boolean = coalOre.contains(material)
     def isCobblestone: Boolean = cobblestone.contains(material)
+    def isCopperBlock: Boolean = copperBlock.contains(material)
+    def isCopperOre: Boolean = copperOre.contains(material)
     def isChest: Boolean = chest.contains(material)
+    def isChestBoat: Boolean = chestBoat.contains(material)
     def isChestplate: Boolean = chestplate.contains(material)
     def isChicken: Boolean = chicken.contains(material)
     def isChorusFruit: Boolean = chorusFruit.contains(material)
@@ -1227,20 +1581,26 @@ object Extensions {
     def isCoralBlock: Boolean = coralBlock.contains(material)
     def isCoralFan: Boolean = coralFan.contains(material)
     def isCoralWallFan: Boolean = coralWallFan.contains(material)
+    def isDeepslateBrick: Boolean = deepslateBrick.contains(material)
+    def isDeepslateStone: Boolean = deepslateStone.contains(material)
+    def isDiamondOre: Boolean = diamondOre.contains(material)
     def isDiorite: Boolean = diorite.contains(material)
     def isDirt: Boolean = dirt.contains(material)
     def isDoor: Boolean = door.contains(material)
     def isDye: Boolean = dye.contains(material)
+    def isEmeraldOre: Boolean = emeraldOre.contains(material)
     def isFence: Boolean = fence.contains(material)
     def isFenceGate: Boolean = fenceGate.contains(material)
     def isFern: Boolean = fern.contains(material)
     def isFire: Boolean = fire.contains(material)
     def isFlower: Boolean = flower.contains(material)
     def isFlowerPot: Boolean = flowerPot.contains(material)
+    def isFroglight: Boolean = frogLight.contains(material)
     def isFungus: Boolean = fungus.contains(material)
     def isGlass: Boolean = glass.contains(material)
     def isGlassPane: Boolean = glassPane.contains(material)
     def isGlazedTerracotta: Boolean = glazedTerracotta.contains(material)
+    def isGoldOre: Boolean = goldOre.contains(material)
     def isGranite: Boolean = granite.contains(material)
     def isGrass: Boolean = grass.contains(material)
     def isHelmet: Boolean = helmet.contains(material)
@@ -1248,7 +1608,10 @@ object Extensions {
     def isHorseArmor: Boolean = horseArmor.contains(material)
     def isIce: Boolean = ice.contains(material)
     def isInfestedBlock: Boolean = infestedBlock.contains(material)
+    def isInkSac: Boolean = inkSac.contains(material)
+    def isIronOre: Boolean = ironOre.contains(material)
     def isLantern: Boolean = lantern.contains(material)
+    def isLapisOre: Boolean = lapisOre.contains(material)
     def isLeaves: Boolean = leaves.contains(material)
     def isLeggings: Boolean = leggings.contains(material)
     def isLog: Boolean = log.contains(material)
@@ -1270,11 +1633,13 @@ object Extensions {
     def isPorkchop: Boolean = porkchop.contains(material)
     def isPotato: Boolean = potato.contains(material)
     def isPotion: Boolean = potion.contains(material)
+    def isPotterySherd: Boolean = potterySherd.contains(material)
     def isPressurePlate: Boolean = pressurePlate.contains(material)
     def isPrismarine: Boolean = prismarine.contains(material)
     def isQuartzBlock: Boolean = quartzBlock.contains(material)
     def isRabbit: Boolean = rabbit.contains(material)
     def isRail: Boolean = rail.contains(material)
+    def isRedstoneOre: Boolean = redstoneOre.contains(material)
     def isRoots: Boolean = roots.contains(material)
     def isSalmon: Boolean = salmon.contains(material)
     def isSand: Boolean = sand.contains(material)
@@ -1284,8 +1649,11 @@ object Extensions {
     def isSeeds: Boolean = seeds.contains(material)
     def isShovel: Boolean = shovel.contains(material)
     def isShulkerBox: Boolean = shulkerBox.contains(material)
+    def isSmithingTemplate: Boolean = smithingTemplate.contains(material)
     def isSign: Boolean = sign.contains(material)
+    def isHangingSign: Boolean = hangingSign.contains(material)
     def isWallSign: Boolean = wallSign.contains(material)
+    def isHangingWallSign: Boolean = hangingWallSign.contains(material)
     def isSpawnEgg: Boolean = spawnEgg.contains(material)
     def isSpiderEye: Boolean = spiderEye.contains(material)
     def isStew: Boolean = stew.contains(material)

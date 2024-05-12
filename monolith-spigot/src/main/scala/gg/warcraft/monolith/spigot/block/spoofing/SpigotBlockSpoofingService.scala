@@ -48,7 +48,7 @@ class SpigotBlockSpoofingService(
       var playerSpoofedBlocks = spoofedBlocks getOrElse (playerId, Map.empty)
       fakeBlocks foreach { fakeBlock =>
         val spigotLoc = locationMapper map fakeBlock.location
-        val spigotData = blockMapper map fakeBlock
+        val spigotData = blockMapper mapBlockToData fakeBlock
         player sendBlockChange (spigotLoc, spigotData)
         playerSpoofedBlocks += (fakeBlock.location -> fakeBlock)
       }

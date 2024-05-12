@@ -25,8 +25,9 @@
 package gg.warcraft.monolith.spigot.block
 
 import gg.warcraft.monolith.api.block._
+import gg.warcraft.monolith.api.block.data.{BigDripleafTilt, DripstoneDirection}
 import gg.warcraft.monolith.api.block.shape.{
-  JigsawBlockShape, RailsShape, StairsShape
+  DripstoneShape, JigsawBlockShape, RailsShape, StairsShape
 }
 import gg.warcraft.monolith.api.block.state._
 import gg.warcraft.monolith.api.block.variant._
@@ -60,20 +61,21 @@ class SpigotBlockMapper(
     private implicit val variantMapper: SpigotBlockVariantMapper,
     private implicit val wallHeightMapper: SpigotWallHeightMapper
 ) {
-  def map(block: SpigotBlock): Option[Block] = {
-    if (block == null) return None
-    val builder = SpigotBlockMapper.cache.computeIfAbsent(block.getType, compute)
-    Some(builder.apply(block))
-  }
+  def mapBlockToOption(block: SpigotBlock): Option[Block] =
+    if (block != null) {
+      val builder = SpigotBlockMapper.cache
+        .computeIfAbsent(block.getType, findMaterialToBlock)
+      Some(builder.apply(block))
+    } else None
 
-  def compute(material: Material): SpigotBlock => Block = {
+  def findMaterialToBlock(material: Material): SpigotBlock => Block = {
     def data[T](block: SpigotBlock): T = block.getBlockData.asInstanceOf[T]
 
     val loc: SpigotBlock => BlockLocation =
       (block: SpigotBlock) => locationMapper.map(block.getLocation)
 
     // Lazily compute generic block data
-    lazy val flooded = (block: SpigotBlock) => data[Waterlogged](block).isWaterlogged
+    lazy val flood = (block: SpigotBlock) => data[Waterlogged](block).isWaterlogged
     lazy val lit = (block: SpigotBlock) => data[Lightable](block).isLit
     lazy val open = (block: SpigotBlock) => data[Openable](block).isOpen
     lazy val pow = (block: SpigotBlock) => data[Powerable](block).isPowered
@@ -93,15 +95,18 @@ class SpigotBlockMapper(
       rotationMapper.map(data[Rotatable](block).getRotation)
 
     def v[T <: BlockVariant](block: SpigotBlock): T =
-      variantMapper.map(block).asInstanceOf[T]
+      variantMapper.mapBlockToVariant(block).asInstanceOf[T]
     def s[T <: BlockState](block: SpigotBlock): T =
-      stateMapper.map(block).asInstanceOf[T]
+      stateMapper.mapBlockToState(block).asInstanceOf[T]
     def shape[T <: BlockShape](block: SpigotBlock): T =
-      shapeMapper.map(block).asInstanceOf[T]
+      shapeMapper.mapMaterialToShape(block).asInstanceOf[T]
 
     // Map block builder
     material match {
+      case Material.AMETHYST_BLOCK    => (b => AmethystBlock(loc(b)))
       case Material.ANCIENT_DEBRIS    => (b => AncientDebris(loc(b)))
+      case Material.BAMBOO_MOSAIC     => (b => BambooMosaic(loc(b)))
+      case Material.BAMBOO_SAPLING    => (b => BambooSapling(loc(b)))
       case Material.BARRIER           => (b => Barrier(loc(b)))
       case Material.BEACON            => (b => Beacon(loc(b)))
       case Material.BEDROCK           => (b => Bedrock(loc(b)))
@@ -113,58 +118,63 @@ class SpigotBlockMapper(
       case Material.BONE_BLOCK        => (b => BoneBlock(loc(b), ori(b)))
       case Material.BOOKSHELF         => (b => Bookshelf(loc(b)))
       case Material.BREWING_STAND     => (b => BrewingStand(loc(b)))
+      case Material.BUDDING_AMETHYST  => (b => BuddingAmethyst(loc(b)))
       case Material.CACTUS            => (b => Cactus(loc(b), s[CactusState](b)))
       case Material.CAKE              => (b => Cake(loc(b), s[CakeState](b)))
+      case Material.CALCITE           => (b => Calcite(loc(b)))
       case Material.CARROTS           => (b => Carrots(loc(b), s[CarrotState](b)))
-      case Material.CAULDRON          => (b => Cauldron(loc(b), s[CauldronState](b)))
-      case Material.CHAIN             => (b => Chain(loc(b), ori(b), flooded(b)))
+      case Material.CHAIN             => (b => Chain(loc(b), ori(b), flood(b)))
       case Material.CHORUS_PLANT      => (b => ChorusPlant(loc(b), ext(b)))
       case Material.CLAY              => (b => ClayBlock(loc(b)))
       case Material.COAL_BLOCK        => (b => CoalBlock(loc(b)))
-      case Material.COAL_ORE          => (b => CoalOre(loc(b)))
       case Material.COBWEB            => (b => Cobweb(loc(b)))
       case Material.COCOA             => (b => CocoaPod(loc(b), s[CocoaState](b), dir(b)))
       case Material.COMPOSTER         => (b => Composter(loc(b), s[ComposterState](b)))
-      case Material.CONDUIT           => (b => Conduit(loc(b), flooded(b)))
+      case Material.CONDUIT           => (b => Conduit(loc(b), flood(b)))
       case Material.CRAFTING_TABLE    => (b => CraftingTable(loc(b)))
       case Material.CRYING_OBSIDIAN   => (b => CryingObsidian(loc(b)))
       case Material.DEAD_BUSH         => (b => DeadBush(loc(b)))
+      case Material.DEEPSLATE         => (b => Deepslate(loc(b), ori(b)))
       case Material.DIAMOND_BLOCK     => (b => DiamondBlock(loc(b)))
-      case Material.DIAMOND_ORE       => (b => DiamondOre(loc(b)))
+      case Material.DIRT_PATH         => (b => DirtPath(loc(b)))
       case Material.DRAGON_EGG        => (b => DragonEgg(loc(b)))
+      case Material.DRIPSTONE_BLOCK   => (b => DripstoneBlock(loc(b)))
       case Material.EMERALD_BLOCK     => (b => EmeraldBlock(loc(b)))
-      case Material.EMERALD_ORE       => (b => EmeraldOre(loc(b)))
       case Material.END_GATEWAY       => (b => EndGateway(loc(b)))
       case Material.END_PORTAL        => (b => EndPortal(loc(b)))
       case Material.END_ROD           => (b => EndRod(loc(b), dir(b)))
       case Material.END_STONE         => (b => EndStone(loc(b)))
       case Material.FARMLAND          => (b => Farmland(loc(b)))
+      case Material.FROGSPAWN         => (b => Frogspawn(loc(b)))
       case Material.FROSTED_ICE       => (b => Frost(loc(b), s[FrostState](b)))
       case Material.FURNACE           => (b => Furnace(loc(b), dir(b), lit(b)))
       case Material.GILDED_BLACKSTONE => (b => GildedBlackstone(loc(b)))
+      case Material.GLOW_LICHEN       => (b => GlowLichen(loc(b), ext(b), flood(b)))
       case Material.GLOWSTONE         => (b => Glowstone(loc(b)))
       case Material.GOLD_BLOCK        => (b => GoldBlock(loc(b)))
-      case Material.GOLD_ORE          => (b => GoldOre(loc(b)))
       case Material.GRASS_BLOCK       => (b => GrassBlock(loc(b), snowy(b)))
-      case Material.GRASS_PATH        => (b => GrassPath(loc(b)))
       case Material.GRAVEL            => (b => Gravel(loc(b)))
+      case Material.HANGING_ROOTS     => (b => HangingRoots(loc(b)))
       case Material.HAY_BLOCK         => (b => HayBale(loc(b), ori(b)))
       case Material.HONEY_BLOCK       => (b => HoneyBlock(loc(b)))
       case Material.HONEYCOMB_BLOCK   => (b => HoneycombBlock(loc(b)))
       case Material.IRON_BLOCK        => (b => IronBlock(loc(b)))
-      case Material.IRON_BARS         => (b => IronBars(loc(b), ext(b), flooded(b)))
-      case Material.IRON_ORE          => (b => IronOre(loc(b)))
+      case Material.IRON_BARS         => (b => IronBars(loc(b), ext(b), flood(b)))
       case Material.JIGSAW            => (b => JigsawBlock(loc(b), shape[JigsawBlockShape](b)))
-      case Material.LADDER            => (b => Ladder(loc(b), dir(b), flooded(b)))
+      case Material.LADDER            => (b => Ladder(loc(b), dir(b), flood(b)))
       case Material.LAPIS_BLOCK       => (b => LapisBlock(loc(b)))
-      case Material.LAPIS_ORE         => (b => LapisOre(loc(b)))
       case Material.LAVA              => (b => Lava(loc(b), s[LavaState](b)))
       case Material.LEVER             => (b => Lever(loc(b), dir(b), att(b), pow(b)))
       case Material.LILY_PAD          => (b => LilyPad(loc(b)))
       case Material.LODESTONE         => (b => Lodestone(loc(b)))
       case Material.LOOM              => (b => Loom(loc(b), dir(b)))
       case Material.MAGMA_BLOCK       => (b => MagmaBlock(loc(b)))
+      case Material.MANGROVE_ROOTS    => (b => MangroveRoots(loc(b), flood(b)))
       case Material.MELON             => (b => Melon(loc(b)))
+      case Material.MOSS_BLOCK        => (b => MossBlock(loc(b)))
+      case Material.MOSS_CARPET       => (b => MossCarpet(loc(b)))
+      case Material.MUD               => (b => Mud(loc(b)))
+      case Material.MUD_BRICKS        => (b => MudBrick(loc(b)))
       case Material.MYCELIUM          => (b => Mycelium(loc(b), snowy(b)))
       case Material.NETHERRACK        => (b => Netherrack(loc(b)))
       case Material.NETHER_GOLD_ORE   => (b => NetherGoldOre(loc(b)))
@@ -174,26 +184,37 @@ class SpigotBlockMapper(
       case Material.NETHERITE_BLOCK   => (b => NetheriteBlock(loc(b)))
       case Material.OBSERVER          => (b => Observer(loc(b), dir(b), pow(b)))
       case Material.OBSIDIAN          => (b => Obsidian(loc(b)))
+      case Material.PACKED_MUD        => (b => PackedMud(loc(b)))
+      case Material.PITCHER_PLANT     => (b => PitcherPlant(loc(b), bis(b)))
       case Material.PODZOL            => (b => Podzol(loc(b), snowy(b)))
       case Material.POTATOES          => (b => Potatoes(loc(b), s[PotatoState](b)))
+      case Material.POWDER_SNOW       => (b => PowderSnow(loc(b)))
       case Material.PURPUR_BLOCK      => (b => PurpurBlock(loc(b)))
+      case Material.RAW_COPPER_BLOCK  => (b => RawCopperBlock(loc(b)))
+      case Material.RAW_GOLD_BLOCK    => (b => RawGoldBlock(loc(b)))
+      case Material.RAW_IRON_BLOCK    => (b => RawIronBlock(loc(b)))
       case Material.REDSTONE_BLOCK    => (b => RedstoneBlock(loc(b)))
       case Material.REDSTONE_LAMP     => (b => RedstoneLamp(loc(b), lit(b)))
-      case Material.REDSTONE_ORE      => (b => RedstoneOre(loc(b), lit(b)))
       case Material.REDSTONE_TORCH    => (b => RedstoneTorch(loc(b), None, lit(b)))
-      case Material.SCAFFOLDING       => (b => Scaffolding(loc(b), flooded(b)))
+      case Material.SCAFFOLDING       => (b => Scaffolding(loc(b), flood(b)))
+      case Material.SCULK             => (b => Sculk(loc(b)))
+      case Material.SCULK_VEIN        => (b => SculkVein(loc(b), ext(b), flood(b)))
       case Material.SEA_LANTERN       => (b => SeaLantern(loc(b)))
       case Material.SHROOMLIGHT       => (b => Shroomlight(loc(b)))
       case Material.SLIME_BLOCK       => (b => SlimeBlock(loc(b)))
       case Material.SMOKER            => (b => Smoker(loc(b), dir(b), lit(b)))
+      case Material.SMOOTH_BASALT     => (b => SmoothBasalt(loc(b)))
+      case Material.SNIFFER_EGG       => (b => SnifferEgg(loc(b), s[SnifferEggState](b)))
       case Material.SNOW              => (b => Snow(loc(b)))
       case Material.SNOW_BLOCK        => (b => SnowBlock(loc(b)))
       case Material.SOUL_SAND         => (b => SoulSand(loc(b)))
       case Material.SOUL_SOIL         => (b => SoulSoil(loc(b)))
       case Material.SPAWNER           => (b => Spawner(loc(b)))
+      case Material.SPORE_BLOSSOM     => (b => SporeBlossom(loc(b)))
       case Material.STONECUTTER       => (b => Stonecutter(loc(b), dir(b)))
       case Material.SUGAR_CANE        => (b => SugarCane(loc(b), s[SugarCaneState](b)))
-      case Material.TURTLE_EGG        => (b => TurtleEgg(loc(b), s[TurtleEggState](b)))
+      case Material.TINTED_GLASS      => (b => TintedGlass(loc(b)))
+      case Material.TUFF              => (b => Tuff(loc(b)))
       case Material.VINE              => (b => Vines(loc(b), ext(b)))
       case Material.WATER             => (b => Water(loc(b), s[WaterState](b)))
       case Material.WHEAT             => (b => Wheat(loc(b), s[WheatState](b)))
@@ -209,18 +230,38 @@ class SpigotBlockMapper(
       case Material.SMITHING_TABLE    => (b => SmithingTable(loc(b)))
 
       // materials that were simply too long all together
+      case Material.BIG_DRIPLEAF_STEM =>
+        (block => BigDripleafStem(loc(block), dir(block), flood(block)))
       case Material.CHORUS_FLOWER =>
         (block => ChorusFlower(loc(block), s[ChorusFlowerState](block)))
       case Material.COMPARATOR =>
         (b => Comparator(loc(b), v[ComparatorVariant](b), dir(b), pow(b)))
+      case Material.LIGHT =>
+        (b => LightBlock(loc(b), s[LightBlockState](b), flood(b)))
+      case Material.LIGHTNING_ROD =>
+        (b => LightningRod(loc(b), dir(b), flood(b), pow(b)))
+      case Material.MUDDY_MANGROVE_ROOTS =>
+        (b => MuddyMangroveRoots(loc(b), ori(b)))
+      case Material.PITCHER_CROP =>
+        (b => PitcherCrop(loc(b), s[PitcherCropState](b), bis(b)))
       case Material.REDSTONE_WALL_TORCH =>
         (block => RedstoneTorch(loc(block), Some(dir(block)), lit(block)))
       case Material.REDSTONE_WIRE =>
         (block => RedstoneWire(loc(block), s[RedstoneWireState](block)))
+      case Material.REINFORCED_DEEPSLATE =>
+        (b => ReinforcedDeepslate(loc(b)))
       case Material.RESPAWN_ANCHOR =>
         (b => RespawnAnchor(loc(b), s[RespawnAnchorState](b)))
       case Material.SEA_PICKLE =>
-        (block => SeaPickle(loc(block), s[SeaPickleState](block), flooded(block)))
+        (block => SeaPickle(loc(block), s[SeaPickleState](block), flood(block)))
+      case Material.SMALL_DRIPLEAF =>
+        (block => SmallDripleaf(loc(block), bis(block), dir(block), flood(block)))
+      case Material.SUSPICIOUS_GRAVEL =>
+        (b => SuspiciousGravel(loc(b), s[SuspiciousGravelState](b)))
+      case Material.SUSPICIOUS_SAND =>
+        (b => SuspiciousSand(loc(b), s[SuspiciousSandState](b)))
+      case Material.TORCHFLOWER_CROP =>
+        (b => TorchflowerCrop(loc(b), s[TorchflowerCropState](b)))
 
       // BAMBOO
       case Material.BAMBOO =>
@@ -228,15 +269,16 @@ class SpigotBlockMapper(
           val thick = data[SpigotBamboo](block).getAge == 1
           Bamboo(loc(block), v[BambooVariant](block), s[BambooState](block), thick)
 
-      // TODO Split SAPLING into its own block, has different data values than BAMBOO
-      case Material.BAMBOO_SAPLING =>
-        val saplingVariant = BambooVariant.SAPLING
-        val saplingState = BambooState.STAGE_0
-        (block => Bamboo(loc(block), saplingVariant, saplingState, thick = false))
-
-      // BARREL TODO open is currently not exposed by the Spigot API
+      // BARREL
       case Material.BARREL =>
-        (block => Barrel(loc(block), dir(block), open = false))
+        (block => Barrel(loc(block), dir(block), open(block)))
+
+      // BIG_DRIPLEAF
+      case Material.BIG_DRIPLEAF =>
+        block =>
+          val spigotTilt = data[SpigotBigDripleaf](block).getTilt
+          val tilt = BigDripleafTilt.valueOf(spigotTilt.name())
+          BigDripleaf(loc(block), dir(block), flood(block), tilt)
 
       // BUBBLE_COLUMN
       case Material.BUBBLE_COLUMN =>
@@ -244,11 +286,28 @@ class SpigotBlockMapper(
           val drag = data[SpigotBubbleColumn](block).isDrag
           BubbleColumn(loc(block), drag)
 
+      // CAVE_VINES
+      case Material.CAVE_VINES =>
+        block =>
+          val berries = data[SpigotCaveVines](block).isBerries
+          CaveVines(loc(block), s[CaveVinesState](block), berries)
+      case Material.CAVE_VINES_PLANT =>
+        block =>
+          val berries = data[SpigotCaveVinesPlant](block).isBerries
+          CaveVines(loc(block), CaveVinesState.FULLY_GROWN, berries)
+
       // DISPENSER
       case Material.DISPENSER =>
         block =>
           val power = data[SpigotDispenser](block).isTriggered
           Dispenser(loc(block), dir(block), power)
+
+      // DRIPSTONE
+      case Material.POINTED_DRIPSTONE =>
+        block =>
+          val spigotDir = data[SpigotDripstone](block).getVerticalDirection
+          val dir = mapDripstoneDirection(spigotDir)
+          Dripstone(loc(block), shape[DripstoneShape](block), flood(block), dir)
 
       // DROPPER
       case Material.DROPPER =>
@@ -310,6 +369,12 @@ class SpigotBlockMapper(
       // NOTE_BLOCK
       case Material.NOTE_BLOCK =>
         b => NoteBlock(loc(b), v[NoteBlockVariant](b), s[NoteBlockState](b), pow(b))
+
+      // PINK_PETALS
+      case Material.PINK_PETALS =>
+        block =>
+          val count = data[SpigotPinkPetals](block).getFlowerAmount
+          PinkPetals(loc(block), dir(block), count)
 
       // PISTON
       case Material.PISTON | Material.STICKY_PISTON =>
@@ -382,25 +447,38 @@ class SpigotBlockMapper(
           val connected = data[SpigotTripwireHook](block).isAttached
           TripwireHook(loc(block), dir(block), pow(block), connected)
 
+      // TURTLE_EGG
+      case Material.TURTLE_EGG =>
+        block =>
+          val eggs = data[SpigotTurtleEgg](block).getEggs
+          TurtleEgg(loc(block), s[TurtleEggState](block), eggs)
+
       // materials that come in many forms
       case m if m.isAir        => (b => Air(loc(b), v[AirVariant](b)))
       case m if m.isAndesite   => (b => Andesite(loc(b), v[AndesiteVariant](b)))
       case m if m.isAnvil      => (b => Anvil(loc(b), v[AnvilVariant](b), dir(b)))
+      case m if m.isAzalea     => (b => Azalea(loc(b), v[AzaleaVariant](b)))
       case m if m.isBasalt     => (b => Basalt(loc(b), v[BasaltVariant](b), ori(b)))
       case m if m.isBlackstone => (b => Blackstone(loc(b), v[BlackstoneVariant](b)))
-      case m if m.isBrickBlock => (b => BrickBlock(loc(b), v[BrickBlockVariant](b)))
       case m if m.isCarpet     => (b => Carpet(loc(b), v[CarpetVariant](b)))
+      case m if m.isCoalOre    => (b => CoalOre(loc(b), v[CoalOreVariant](b)))
       case m if m.isConcrete   => (b => Concrete(loc(b), v[ConcreteVariant](b)))
-      case m if m.isCoral      => (b => Coral(loc(b), v[CoralVariant](b), flooded(b)))
+      case m if m.isCopperOre  => (b => CopperOre(loc(b), v[CopperOreVariant](b)))
+      case m if m.isCoral      => (b => Coral(loc(b), v[CoralVariant](b), flood(b)))
       case m if m.isCoralBlock => (b => CoralBlock(loc(b), v[CoralBlockVariant](b)))
+      case m if m.isDiamondOre => (b => DiamondOre(loc(b), v[DiamondOreVariant](b)))
       case m if m.isDiorite    => (b => Diorite(loc(b), v[DioriteVariant](b)))
       case m if m.isDirt       => (b => Dirt(loc(b), v[DirtVariant](b)))
+      case m if m.isEmeraldOre => (b => EmeraldOre(loc(b), v[EmeraldOreVariant](b)))
       case m if m.isFlower     => (b => Flower(loc(b), v[FlowerVariant](b)))
       case m if m.isFlowerPot  => (b => FlowerPot(loc(b), v[FlowerPotVariant](b)))
       case m if m.isFungus     => (b => Fungus(loc(b), v[FungusVariant](b)))
       case m if m.isGlass      => (b => Glass(loc(b), v[GlassVariant](b)))
+      case m if m.isGoldOre    => (b => GoldOre(loc(b), v[GoldOreVariant](b)))
       case m if m.isGranite    => (b => Granite(loc(b), v[GraniteVariant](b)))
       case m if m.isIce        => (b => Ice(loc(b), v[IceVariant](b)))
+      case m if m.isIronOre    => (b => IronOre(loc(b), v[IronOreVariant](b)))
+      case m if m.isLapisOre   => (b => LapisOre(loc(b), v[LapisOreVariant](b)))
       case m if m.isLeaves     => (b => Leaves(loc(b), v[LeavesVariant](b)))
       case m if m.isLog        => (b => Log(loc(b), v[LogVariant](b), ori(b)))
       case m if m.isMushroom   => (b => Mushroom(loc(b), v[MushroomVariant](b)))
@@ -420,22 +498,40 @@ class SpigotBlockMapper(
       case m if m.isWool       => (b => Wool(loc(b), v[WoolVariant](b)))
 
       // many form materials that were too long all together
+      case m if m.isBambooBlock =>
+        (b => BambooBlock(loc(b), v[BambooBlockVariant](b), ori(b)))
       case m if m.isBanner =>
         (b => Banner(loc(b), v[BannerVariant](b), Some(rot(b)), None))
       case m if m.isWallBanner =>
         (b => Banner(loc(b), v[BannerVariant](b), None, Some(dir(b))))
+      case m if m.isBlackstoneBrick =>
+        (b => BlackstoneBrick(loc(b), v[BlackstoneBrickVariant](b)))
+      case m if m.isBricksBlock =>
+        (b => BricksBlock(loc(b), v[BricksBlockVariant](b)))
       case m if m.isButton =>
         (b => Button(loc(b), v[ButtonVariant](b), dir(b), att(b), pow(b)))
+      case m if m.isCandleCake =>
+        (b => CandleCake(loc(b), v[CandleCakeVariant](b), lit(b)))
+      case m if m.isCauldron =>
+        (b => Cauldron(loc(b), v[CauldronVariant](b), s[CauldronState](b)))
       case m if m.isCobblestone =>
         (block => Cobblestone(loc(block), v[CobblestoneVariant](block)))
+      case m if m.isCopperBlock =>
+        (b => CopperBlock(loc(b), v[CopperBlockVariant](b)))
       case m if m.isChest =>
-        (b => Chest(loc(b), v[ChestVariant](b), dir(b), flooded(b)))
+        (b => Chest(loc(b), v[ChestVariant](b), dir(b), flood(b)))
       case m if m.isConcretePowder =>
         (block => ConcretePowder(loc(block), v[ConcretePowderVariant](block)))
       case m if m.isCoralFan =>
-        (b => CoralFan(loc(b), v[CoralFanVariant](b), None, flooded(b)))
+        (b => CoralFan(loc(b), v[CoralFanVariant](b), None, flood(b)))
+      case m if m.isDeepslateBrick =>
+        (b => DeepslateBrick(loc(b), v[DeepslateBrickVariant](b)))
+      case m if m.isDeepslateStone =>
+        (b => DeepslateStone(loc(b), v[DeepslateStoneVariant](b)))
       case m if m.isFence =>
-        (b => Fence(loc(b), v[FenceVariant](b), ext(b), flooded(b)))
+        (b => Fence(loc(b), v[FenceVariant](b), ext(b), flood(b)))
+      case m if m.isFroglight =>
+        (b => Froglight(loc(b), v[FroglightVariant](b), ori(b)))
       case m if m.isInfestedBlock =>
         (block => InfestedBlock(loc(block), v[InfestedBlockVariant](block)))
       case m if m.isMobHead =>
@@ -446,12 +542,20 @@ class SpigotBlockMapper(
         (b => NetherWartBlock(loc(b), v[NetherWartBlockVariant](b)))
       case m if m.isQuartzBlock =>
         (block => QuartzBlock(loc(block), v[QuartzBlockVariant](block)))
+      case m if m.isRedstoneOre =>
+        (b => RedstoneOre(loc(b), v[RedstoneOreVariant](b), lit(b)))
       case m if m.isSapling =>
         (b => Sapling(loc(b), v[SaplingVariant](b), s[SaplingState](b)))
       case m if m.isShulkerBox =>
         (block => ShulkerBox(loc(block), v[ShulkerBoxVariant](block), dir(block)))
       case m if m.isStructureBlock =>
         (block => StructureBlock(loc(block), v[StructureBlockVariant](block)))
+
+      // AMETHYST_CLUSTER
+      case m if m.isAmethystCluster =>
+        block =>
+          val variant = v[AmethystClusterVariant](block)
+          AmethystCluster(loc(block), variant, dir(block), flood(block))
 
       // BED TODO map occupied flag
       case m if m.isBed =>
@@ -464,7 +568,7 @@ class SpigotBlockMapper(
         b =>
           val variant = v[CampfireVariant](b)
           val signal = data[SpigotCampfire](b).isSignalFire
-          Campfire(loc(b), variant, dir(b), flooded(b), lit(b), signal)
+          Campfire(loc(b), variant, dir(b), flood(b), lit(b), signal)
 
       // COMMAND_BLOCK
       case m if m.isCommandBlock =>
@@ -473,9 +577,15 @@ class SpigotBlockMapper(
           val variant = v[CommandBlockVariant](block)
           CommandBlock(loc(block), variant, dir(block), conditional)
 
+      // CANDLE
+      case m if m.isCandle =>
+        b =>
+          val candles = data[SpigotCandle](b).getCandles
+          Candle(loc(b), v[CandleVariant](b), flood(b), candles, lit(b))
+
       // CORAL_WALL_FAN
       case m if m.isCoralWallFan =>
-        (b => CoralFan(loc(b), v[CoralFanVariant](b), Some(dir(b)), flooded(b)))
+        (b => CoralFan(loc(b), v[CoralFanVariant](b), Some(dir(b)), flood(b)))
 
       // DOOR
       case m if m.isDoor =>
@@ -495,7 +605,7 @@ class SpigotBlockMapper(
 
       // GLASS_PANE
       case m if m.isGlassPane =>
-        (b => GlassPane(loc(b), v[GlassPaneVariant](b), ext(b), flooded(b)))
+        (b => GlassPane(loc(b), v[GlassPaneVariant](b), ext(b), flood(b)))
 
       // GLAZED_TERRACOTTA
       case m if m.isGlazedTerracotta =>
@@ -505,7 +615,7 @@ class SpigotBlockMapper(
       case m if m.isLantern =>
         block =>
           val hanging = data[SpigotLantern](block).isHanging
-          Lantern(loc(block), v[LanternVariant](block), flooded(block), hanging)
+          Lantern(loc(block), v[LanternVariant](block), flood(block), hanging)
 
       // MUSHROOM_BLOCK
       case m if m.isMushroomBlock =>
@@ -535,7 +645,7 @@ class SpigotBlockMapper(
           val lines = sign.getLines.toList
           val editable = sign.isEditable
           val variant = v[SignVariant](b)
-          Sign(loc(b), variant, None, Some(rot(b)), flooded(b), lines, editable)
+          Sign(loc(b), variant, None, Some(rot(b)), flood(b), lines, editable)
 
       case m if m.isWallSign =>
         b =>
@@ -543,41 +653,58 @@ class SpigotBlockMapper(
           val lines = sign.getLines.toList
           val editable = sign.isEditable
           val variant = v[SignVariant](b)
-          Sign(loc(b), variant, Some(dir(b)), None, flooded(b), lines, editable)
+          Sign(loc(b), variant, Some(dir(b)), None, flood(b), lines, editable)
+
+      // HANGING_SIGN
+      case m if m.isHangingSign =>
+        b =>
+          val sign = b.getState.asInstanceOf[SpigotSign]
+          val lines = sign.getLines.toList
+          val editable = sign.isEditable
+          val variant = v[HangingSignVariant](b)
+          HangingSign(loc(b), variant, None, Some(rot(b)), flood(b), lines, editable)
+
+      case m if m.isHangingWallSign =>
+        b =>
+          val sign = b.getState.asInstanceOf[SpigotSign]
+          val lines = sign.getLines.toList
+          val editable = sign.isEditable
+          val variant = v[HangingSignVariant](b)
+          HangingSign(loc(b), variant, Some(dir(b)), None, flood(b), lines, editable)
 
       // SLAB
       case m if m.isSlab =>
         b =>
           val bisection = mapSlabType(data[SpigotSlab](b).getType)
           if (bisection.isDefined)
-            Slab(loc(b), v[SlabVariant](b), bisection.get, flooded(b))
+            Slab(loc(b), v[SlabVariant](b), bisection.get, flood(b))
           else // TODO map to Planks/non-double-slab type
-            Slab(loc(b), v[SlabVariant](b), BlockBisection.TOP, flooded(b))
+            Slab(loc(b), v[SlabVariant](b), BlockBisection.TOP, flood(b))
 
       // STAIRS
       case m if m.isStairs =>
         block =>
           val variant = v[StairsVariant](block)
           val _shape = shape[StairsShape](block)
-          Stairs(loc(block), variant, _shape, dir(block), bis(block), flooded(block))
+          Stairs(loc(block), variant, _shape, dir(block), bis(block), flood(block))
 
       // TORCH
       case Material.TORCH =>
-        (b => Torch(loc(b), v[TorchVariant](b), BlockFace.UP, wall = false))
+        (b => Torch(loc(b), v[TorchVariant](b), None))
       case Material.WALL_TORCH =>
-        (b => Torch(loc(b), v[TorchVariant](b), dir(b), wall = true))
+        (b => Torch(loc(b), v[TorchVariant](b), Some(dir(b))))
 
       // TRAPDOOR
       case m if m.isTrapdoor =>
         b =>
           val variant = v[TrapdoorVariant](b)
-          Trapdoor(loc(b), variant, dir(b), bis(b), pow(b), flooded(b), open(b))
+          Trapdoor(loc(b), variant, dir(b), bis(b), pow(b), flood(b), open(b))
 
       // WALL
       case m if m.isWall =>
         b =>
           val heights = wallHeightMapper.map(data[SpigotWall](b))
-          Wall(loc(b), v[WallVariant](b), heights, flooded(b))
+          Wall(loc(b), v[WallVariant](b), heights, flood(b))
 
       // WEIGHTED_PRESSURE_PLATE
       case m if m.isWeightedPressurePlate =>
@@ -588,7 +715,7 @@ class SpigotBlockMapper(
     }
   }
 
-  def map(block: Block): SpigotBlockData = {
+  def mapBlockToData(block: Block): SpigotBlockData = {
     // Create new block data object
     val material =
       block match { // TODO match on block.type for jump table performance in Scala 3
@@ -603,20 +730,6 @@ class SpigotBlockMapper(
               }
           } // TODO is it possible to move this into variantMapper.map?
 
-        case it: VariableBlock[_] => variantMapper.map(it)
-
-        case it: Kelp =>
-          if (it.state == KelpState.FULLY_GROWN) Material.KELP_PLANT
-          else Material.KELP
-
-        case it: MelonStem =>
-          if (it.state == MelonStemState.ATTACHED) Material.ATTACHED_MELON_STEM
-          else Material.MELON_STEM
-
-        case it: PumpkinStem =>
-          if (it.state == PumpkinStemState.ATTACHED) Material.ATTACHED_PUMPKIN_STEM
-          else Material.PUMPKIN_STEM
-
         case it: RedstoneTorch =>
           if (it.direction.isEmpty) Material.REDSTONE_TORCH
           else Material.REDSTONE_WALL_TORCH
@@ -625,7 +738,9 @@ class SpigotBlockMapper(
           if (it.tall) Material.TALL_SEAGRASS
           else Material.SEAGRASS
 
-        case it => typeMapper.map(it.`type`)
+        case it: VariableBlock[_] => variantMapper.mapBlockToMaterial(it)
+        case it: StatefulBlock[_] => stateMapper.mapStateToMaterial(it.state)
+        case it                   => typeMapper.map(it.`type`)
       }
 
     val data = Bukkit.createBlockData(material)
@@ -697,63 +812,73 @@ class SpigotBlockMapper(
       extensions.forEach(multipleFacing.setFace(_, true))
     }
 
-    // Set specific block data
+    // Set state, variant and shape block data
     def dataAs[T <: SpigotBlockData]: T = data.asInstanceOf[T]
 
-    if (block.isInstanceOf[StatefulBlock[_ <: BlockState]])
-      stateMapper.map(block.asInstanceOf[StatefulBlock[_ <: BlockState]], data)
-
-    block match {
-      case it: Bamboo         => variantMapper.map(it, data)
-      case it: Comparator     => variantMapper.map(it, data)
-      case it: NoteBlock      => variantMapper.map(it, data)
-      case it: StructureBlock => variantMapper.map(it, data)
-      case _                  => ()
+    if (block.isInstanceOf[StatefulBlock[_ <: BlockState]]) {
+      val state = block.asInstanceOf[StatefulBlock[_ <: BlockState]].state
+      stateMapper.mapStateToData(state, data)
     }
 
+    if (block.isInstanceOf[VariableBlock[_ <: BlockVariant]]) {
+      val variant = block.asInstanceOf[VariableBlock[_ <: BlockVariant]].variant
+      variantMapper.mapVariantToData(variant, data)
+    }
+
+    if (block.isInstanceOf[ShapedBlock[_ <: BlockShape]]) {
+      val shape = block.asInstanceOf[ShapedBlock[_ <: BlockShape]].shape
+      shapeMapper.mapShapeToData(shape, data)
+    }
+
+    // TODO move into separate SpigotBlockDataMapper class
+    // Set custom block data
     block match {
       case it: BubbleColumn   => dataAs[SpigotBubbleColumn].setDrag(it.drag)
       case it: Campfire       => dataAs[SpigotCampfire].setSignalFire(it.signal)
+      case it: Candle         => dataAs[SpigotCandle].setCandles(it.count)
+      case it: Dispenser      => dataAs[SpigotDispenser].setTriggered(it.powered)
+      case it: Dropper        => dataAs[SpigotDropper].setTriggered(it.powered)
       case it: EndPortalFrame => dataAs[SpigotEndPortalFrame].setEye(it.eye)
       case it: Hopper         => dataAs[SpigotHopper].setEnabled(it.powered)
+      case it: Lantern        => dataAs[SpigotLantern].setHanging(it.hanging)
       case it: Piston         => dataAs[SpigotPiston].setExtended(it.extended)
       case it: Repeater       => dataAs[SpigotRepeater].setLocked(it.locked)
       case it: TNT            => dataAs[SpigotTNT].setUnstable(it.unstable)
+      case it: TurtleEgg      => dataAs[SpigotTurtleEgg].setEggs(it.count)
 
       case it: Bamboo =>
-        if (it.variant != BambooVariant.SAPLING) {
-          val age = if (it.thick) 1 else 0
-          dataAs[SpigotBamboo].setAge(age)
-        }
+        val age = if (it.thick) 1 else 0
+        dataAs[SpigotBamboo].setAge(age)
 
       case it: Bed =>
         val part = mapBedPart(it.section)
         dataAs[SpigotBed].setPart(part)
 
+      case it: CaveVines =>
+        if (it.state == CaveVinesState.FULLY_GROWN) {
+          dataAs[SpigotCaveVinesPlant].setBerries(it.berries)
+        } else dataAs[SpigotCaveVines].setBerries(it.berries)
+
       case it: CommandBlock =>
         dataAs[SpigotCommandBlock].setConditional(it.conditional)
 
-      case it: Dispenser =>
-        val triggered = it.powered
-        dataAs[SpigotDispenser].setTriggered(triggered)
+      case it: Dripstone =>
+        val direction = mapDripstoneDirection(it.direction)
+        dataAs[SpigotDripstone].setVerticalDirection(direction)
 
-      case it: Dropper =>
-        val triggered = it.powered
-        dataAs[SpigotDispenser].setTriggered(triggered)
-
-      case it: Lantern =>
-        data.asInstanceOf[SpigotLantern].setHanging(it.hanging)
+      case it: PinkPetals =>
+        dataAs[SpigotPinkPetals].setFlowerAmount(it.count)
 
       case it: Slab =>
         val `type` = mapSlabType(it.section)
-        data.asInstanceOf[SpigotSlab].setType(`type`)
+        dataAs[SpigotSlab].setType(`type`)
 
       case it: Tripwire =>
-        data.asInstanceOf[SpigotTripwire].setAttached(it.connected)
-        data.asInstanceOf[SpigotTripwire].setDisarmed(it.disarmed)
+        dataAs[SpigotTripwire].setAttached(it.connected)
+        dataAs[SpigotTripwire].setDisarmed(it.disarmed)
 
       case it: Wall =>
-        wallHeightMapper.map(data.asInstanceOf[SpigotWall], it.heights)
+        wallHeightMapper.map(dataAs[SpigotWall], it.heights)
 
       // TODO this match seems to be missing quite a few custom block data updates
 
@@ -764,8 +889,14 @@ class SpigotBlockMapper(
     data
   }
 
-  def map(block: Block, state: SpigotBlockState): Unit = block match {
+  def mapBlockToState(block: Block, state: SpigotBlockState): Unit = block match {
+    // TODO update to latest multi side signs and glowable text
     case Sign(_, _, _, _, _, lines, editable) =>
+      val sign = state.asInstanceOf[SpigotSign]
+      lines.zipWithIndex foreach { case (line, i) => sign.setLine(i, line) }
+      sign.setEditable(editable)
+
+    case HangingSign(_, _, _, _, _, lines, editable) =>
       val sign = state.asInstanceOf[SpigotSign]
       lines.zipWithIndex foreach { case (line, i) => sign.setLine(i, line) }
       sign.setEditable(editable)
@@ -791,6 +922,20 @@ class SpigotBlockMapper(
   def mapDoorHinge(hinge: BlockHinge): SpigotDoorHinge = hinge match {
     case BlockHinge.LEFT  => SpigotDoorHinge.LEFT
     case BlockHinge.RIGHT => SpigotDoorHinge.RIGHT
+  }
+
+  def mapDripstoneDirection(dir: SpigotBlockFace): DripstoneDirection =
+    faceMapper.map(dir) match {
+      case BlockFace.UP   => DripstoneDirection.UP
+      case BlockFace.DOWN => DripstoneDirection.DOWN
+    }
+
+  def mapDripstoneDirection(dir: DripstoneDirection): SpigotBlockFace = {
+    val result = dir match {
+      case DripstoneDirection.UP   => BlockFace.UP
+      case DripstoneDirection.DOWN => BlockFace.DOWN
+    }
+    faceMapper.map(result)
   }
 
   def mapSlabType(`type`: SpigotSlabType): Option[BlockBisection] = `type` match {

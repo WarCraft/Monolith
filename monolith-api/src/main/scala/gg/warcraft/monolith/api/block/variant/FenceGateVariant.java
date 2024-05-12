@@ -30,10 +30,14 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum FenceGateVariant implements BlockVariant, ItemVariant {
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
+
+    BAMBOO,
 
     CRIMSON_FUNGI,
     WARPED_FUNGI,

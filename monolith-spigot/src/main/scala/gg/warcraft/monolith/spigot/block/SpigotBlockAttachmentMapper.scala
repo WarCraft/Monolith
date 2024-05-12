@@ -27,6 +27,7 @@ package gg.warcraft.monolith.spigot.block
 import gg.warcraft.monolith.api.block.BlockAttachment
 import org.bukkit.block.data.`type`.Switch
 
+// TODO Switch.Face deprecated, update to FaceAttachable
 class SpigotBlockAttachmentMapper {
   def map(switch: Switch): BlockAttachment = switch.getFace match {
     case Switch.Face.CEILING => BlockAttachment.CEILING

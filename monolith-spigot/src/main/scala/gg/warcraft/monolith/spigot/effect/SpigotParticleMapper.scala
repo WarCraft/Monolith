@@ -30,9 +30,9 @@ import org.bukkit.{Color => SpigotColor, Particle => SpigotParticle}
 
 class SpigotParticleMapper { // TODO optimize big match statement
   def map(particle: Particle): SpigotParticle = particle match {
-    case Particle.Barrier             => SpigotParticle.BARRIER
     case Particle.BlockCrack          => SpigotParticle.BLOCK_CRACK
     case Particle.BlockDust           => SpigotParticle.BLOCK_DUST
+    case Particle.Barrier             => SpigotParticle.BLOCK_MARKER // TODO rename
     case Particle.BubbleColumnUp      => SpigotParticle.BUBBLE_COLUMN_UP
     case Particle.BubblePop           => SpigotParticle.BUBBLE_POP
     case Particle.CampfireCosySmoke   => SpigotParticle.CAMPFIRE_COSY_SMOKE

@@ -77,7 +77,7 @@ class SpigotWorldService(
     import loc._
     val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
-    blockMapper.map(spigotBlock).get
+    blockMapper.mapBlockToOption(spigotBlock).get
   }
 
   override def getBlockIfType(
@@ -89,7 +89,7 @@ class SpigotWorldService(
     val spigotWorld = worldMapper.map(world)
     val spigotBlock = spigotWorld.getBlockAt(x, y, z)
     if (!spigotTypes.contains(spigotBlock.getType)) None
-    else Some(blockMapper.map(spigotBlock).get)
+    else Some(blockMapper.mapBlockToOption(spigotBlock).get)
   }
 
   override def getHighestBlock(loc: BlockLocation): Block = {
@@ -102,20 +102,20 @@ class SpigotWorldService(
     do {
       spigotBlock = spigotBlock.getRelative(SpigotBlockFace.DOWN)
     } while (spigotBlock.isEmpty)
-    blockMapper.map(spigotBlock).get
+    blockMapper.mapBlockToOption(spigotBlock).get
   }
 
   private def update(spigotBlock: SpigotBlock, to: Block): Unit = {
     val spigotBlockState = spigotBlock.getState
 
     // Update block data
-    val newBlockData = blockMapper.map(to)
+    val newBlockData = blockMapper.mapBlockToData(to)
     spigotBlockState.setBlockData(newBlockData)
     spigotBlockState.update( /* force */ true, /* physics */ false)
 
     // Update block state
     val newSpigotBlockState = spigotBlock.getState
-    blockMapper.map(to, newSpigotBlockState)
+    blockMapper.mapBlockToState(to, newSpigotBlockState)
     newSpigotBlockState.update( /* force */ true, /* physics */ false)
   }
 
@@ -130,16 +130,18 @@ class SpigotWorldService(
         spigotBlock.setType(Material.AIR, /* physics */ false)
         spigotBlock.setType(material, /* physics */ false)
       case it: BlockVariant =>
-        // TODO this doesnt set all variants due to block state
-        val material = blockVariantMapper.map(it)
-        spigotBlock.setType(Material.AIR, /* physics */ false)
-        spigotBlock.setType(material, /* physics */ false)
-      case it: BlockState =>
-        val material = blockStateMapper.map(it)
+        val material = blockVariantMapper.mapVariantToMaterial(it)
         spigotBlock.setType(Material.AIR, /* physics */ false)
         spigotBlock.setType(material, /* physics */ false)
         val blockData = spigotBlock.getBlockData
-        blockStateMapper.map(it, blockData)
+        blockVariantMapper.mapVariantToData(it, blockData)
+        spigotBlock.setBlockData(blockData, /* physics */ false)
+      case it: BlockState =>
+        val material = blockStateMapper.mapStateToMaterial(it)
+        spigotBlock.setType(Material.AIR, /* physics */ false)
+        spigotBlock.setType(material, /* physics */ false)
+        val blockData = spigotBlock.getBlockData
+        blockStateMapper.mapStateToData(it, blockData)
         spigotBlock.setBlockData(blockData, /* physics */ false)
     }
   }

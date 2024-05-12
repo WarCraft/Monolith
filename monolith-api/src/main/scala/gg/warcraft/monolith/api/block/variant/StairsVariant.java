@@ -27,20 +27,41 @@ package gg.warcraft.monolith.api.block.variant;
 import gg.warcraft.monolith.api.block.BlockVariant;
 import gg.warcraft.monolith.api.item.ItemVariant;
 
+// TODO make WaxableBlock base trait? also for signs
+
+// TODO split some of these into separate classes: StoneStairs, CopperStairs, PrismarineStairs etc
+// TODO consider Item implementation, might not make sense to split up
 public enum StairsVariant implements BlockVariant, ItemVariant {
     // BLACKSTONE
     BLACKSTONE,
     POLISHED_BLACKSTONE,
     POLISHED_BLACKSTONE_BRICK,
 
-    // BRICK
-    BRICK,
-    NETHER_BRICK,
-    RED_NETHER_BRICK,
+    // BRICKS
+    BRICKS,
+    NETHER_BRICKS,
+    RED_NETHER_BRICKS,
 
     // COBBLESTONE
     COBBLESTONE,
     MOSSY_COBBLESTONE,
+
+    // COPPER
+    CUT_COPPER,
+    EXPOSED_CUT_COPPER,
+    WEATHERED_CUT_COPPER,
+    OXIDIZED_CUT_COPPER,
+
+    WAXED_CUT_COPPER,
+    WAXED_EXPOSED_CUT_COPPER,
+    WAXED_WEATHERED_CUT_COPPER,
+    WAXED_OXIDIZED_CUT_COPPER,
+
+    // DEEPSLATE
+    DEEPSLATE_BRICK,
+    DEEPSLATE_BRICKS,
+    COBBLED_DEEPSLATE,
+    POLISHED_DEEPSLATE,
 
     // END_STONE_BRICK
     END_STONE_BRICK,
@@ -48,6 +69,9 @@ public enum StairsVariant implements BlockVariant, ItemVariant {
     // FUNGI
     CRIMSON_FUNGI,
     WARPED_FUNGI,
+
+    // MUD
+    MUD_BRICK,
 
     // PRISMARINE
     PRISMARINE,
@@ -88,8 +112,13 @@ public enum StairsVariant implements BlockVariant, ItemVariant {
     // WOOD
     ACACIA,
     BIRCH,
+    CHERRY,
     DARK_OAK,
     JUNGLE,
+    MANGROVE,
     OAK,
     SPRUCE,
+
+    BAMBOO,
+    BAMBOO_MOSAIC
 }

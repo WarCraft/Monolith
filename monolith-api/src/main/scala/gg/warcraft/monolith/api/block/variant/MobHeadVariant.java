@@ -30,6 +30,7 @@ import gg.warcraft.monolith.api.item.ItemVariant;
 public enum MobHeadVariant implements BlockVariant, ItemVariant {
     CREEPER,
     DRAGON,
+    PIGLIN,
     PLAYER,
     SKELETON,
     WITHER_SKELETON,
